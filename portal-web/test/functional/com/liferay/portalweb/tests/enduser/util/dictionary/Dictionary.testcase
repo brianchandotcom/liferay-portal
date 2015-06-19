@@ -17,7 +17,7 @@
 		</execute>
 	</set-up>
 
-	<command name="FindDictionaryWord" priority="5">
+	<command name="FindDictionaryWord" priority="4">
 		<var name="dictionaryTerm" value="dog" />
 
 		<execute macro="Page#gotoPG">

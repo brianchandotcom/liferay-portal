@@ -9,7 +9,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="DragAndDrop" priority="5">
+	<command name="DragAndDrop" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

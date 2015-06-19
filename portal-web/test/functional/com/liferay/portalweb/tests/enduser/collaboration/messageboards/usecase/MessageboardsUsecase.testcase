@@ -20,7 +20,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="CopyAndPasteTextInCKEditor" priority="5">
+	<command name="CopyAndPasteTextInCKEditor" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
@@ -106,7 +106,7 @@
 		</execute>
 	</command>
 
-	<command name="SplitMBThread" priority="5">
+	<command name="SplitMBThread" priority="4">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body" />
 		<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
@@ -1125,7 +1125,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoMBThreadXSS" priority="5">
+	<command name="ViewNoMBThreadXSS" priority="4">
 		<var name="source" value="true" />
 		<var name="threadBody" value="[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -1158,7 +1158,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoSubscribeLinksNoWithEmailNotificationsDisabled" priority="5">
+	<command name="ViewNoSubscribeLinksNoWithEmailNotificationsDisabled" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="messageAddedEmailEnabled" value="false" />
 		<var name="messageUpdatedEmailEnabled" value="false" />

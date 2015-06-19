@@ -23,7 +23,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewBlogsEntryRegRoleInline" priority="5">
+	<command name="ViewBlogsEntryRegRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="inlinePermissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
@@ -120,7 +120,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsPortletRegRole" priority="5">
+	<command name="ViewBlogsPortletRegRole" priority="4">
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="portletName1" value="Blogs" />
@@ -178,7 +178,7 @@
 		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
 	</command>
 
-	<command name="ViewBlogsPortletSiteRole" priority="5">
+	<command name="ViewBlogsPortletSiteRole" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />

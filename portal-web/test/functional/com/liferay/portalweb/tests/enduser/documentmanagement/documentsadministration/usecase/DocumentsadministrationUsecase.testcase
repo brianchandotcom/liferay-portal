@@ -23,7 +23,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddAndRemoveMetadataSets" priority="5">
+	<command name="AddAndRemoveMetadataSets" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command name="AllowMultiplePortletConfigurationsPerSite" priority="5">
+	<command name="AllowMultiplePortletConfigurationsPerSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -140,7 +140,7 @@
 		<execute macro="DMPortlet#viewDefaultConfigurationDisplaySettingsPG" />
 	</command>
 
-	<command name="CheckoutAndCheckin" priority="5">
+	<command name="CheckoutAndCheckin" priority="4">
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="portletName" value="Documents and Media" />
 
@@ -323,7 +323,7 @@
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
 	</command>
 
-	<command name="Comments" priority="5">
+	<command name="Comments" priority="4">
 		<var name="pageName" value="Documents and Media Page" />
 
 		<execute macro="Page#gotoContentCP">
@@ -459,7 +459,7 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureXugglerVideoPreviewSizePG" priority="5">
+	<command name="ConfigureXugglerVideoPreviewSizePG" priority="4">
 		<property name="custom.properties" value="dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0" />
 
 		<var name="videoGenerationTimeCounter" value="0" />
@@ -560,7 +560,7 @@
 		<execute function="AssertElementPresent#assertElementPresent" locator1="PGDocumentsandmediaVideoGenerationThumbnail#VIDEO_GENERATION_THUMBNAIL_RESOLUTION" />
 	</command>
 
-	<command name="ImportDocumentWithDBStore" priority="5">
+	<command name="ImportDocumentWithDBStore" priority="4">
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore" />
 
 		<execute macro="Page#gotoContentCP">
@@ -634,7 +634,7 @@
 		</execute>
 	</command>
 
-	<command name="SelectMultipleDocumentsAndDeleteViaActionsButton" priority="5">
+	<command name="SelectMultipleDocumentsAndDeleteViaActionsButton" priority="4">
 		<var name="dmDocumentCounterList" value="1,2,3" />
 
 		<execute macro="Page#addPG">
@@ -748,7 +748,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPortletAfterRenamingDocumentWithDuplicateTitlePG" priority="5">
+	<command name="ViewPortletAfterRenamingDocumentWithDuplicateTitlePG" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>

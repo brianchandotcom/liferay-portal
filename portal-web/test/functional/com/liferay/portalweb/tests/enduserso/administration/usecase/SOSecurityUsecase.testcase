@@ -38,7 +38,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="DashboardXSSDemo" priority="5">
+	<command name="DashboardXSSDemo" priority="4">
 		<var name="adminFirstName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
 		<var name="adminLastName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
 		<var name="adminListName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;, &lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
@@ -960,7 +960,7 @@
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
-	<command name="SiteXSSDemo" priority="5">
+	<command name="SiteXSSDemo" priority="4">
 		<var name="adminFirstName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
 		<var name="adminLastName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />
 		<var name="adminListName" value="&lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;, &lt;script&gt;alert(&quot;Test&quot;);&lt;/script&gt;" />

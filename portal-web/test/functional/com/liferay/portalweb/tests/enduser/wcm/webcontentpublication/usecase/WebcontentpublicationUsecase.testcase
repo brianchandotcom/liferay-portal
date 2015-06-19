@@ -619,7 +619,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherFilterAndOrderByFieldType" priority="5">
+	<command name="AssetPublisherFilterAndOrderByFieldType" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -986,7 +986,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
+	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1100,7 +1100,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherTogglingBetweenSites" priority="5">
+	<command name="AssetPublisherTogglingBetweenSites" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1791,7 +1791,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGRelatedassets#ASSET_EDIT_2" />
 	</command>
 
-	<command name="ViewDeletedWCDArticleAsAdminAndGuestCP" priority="5">
+	<command name="ViewDeletedWCDArticleAsAdminAndGuestCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -2089,7 +2089,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="5">
+	<command name="ViewWebContentWithConfiguredDisplayPageViaAP" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>

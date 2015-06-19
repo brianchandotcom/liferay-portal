@@ -50,7 +50,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddCalendarEventAllDay" priority="5">
+	<command name="AddCalendarEventAllDay" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 		<var name="portletName" value="Calendar" />
@@ -75,7 +75,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54826" name="AddCalendarEventAllDayCommentToCurrentSiteCalendars" priority="5">
+	<command known-issues="LPS-54826" name="AddCalendarEventAllDayCommentToCurrentSiteCalendars" priority="4">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event All Day Comment" />
@@ -123,7 +123,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventAllDayRSVPYes" priority="5">
+	<command known-issues="LPS-51310" name="AddCalendarEventAllDayRSVPYes" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 
@@ -149,7 +149,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventAllDayWithRemindersEnabled" priority="5">
+	<command name="AddCalendarEventAllDayWithRemindersEnabled" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 		<var name="portletName" value="Calendar" />
@@ -180,7 +180,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventAllDayWithTag" priority="5">
+	<command name="AddCalendarEventAllDayWithTag" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 
@@ -212,7 +212,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventAllDayWithUserInvite" priority="5">
+	<command name="AddCalendarEventAllDayWithUserInvite" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 		<var name="resourceNameList" value="Test Test" />
@@ -240,7 +240,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventAllDayWithUserInviteAccept" priority="5">
+	<command known-issues="LPS-51310" name="AddCalendarEventAllDayWithUserInviteAccept" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 		<var name="resourceNameList" value="userfn userln" />
@@ -311,7 +311,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegular" priority="5">
+	<command name="AddCalendarEventRegular" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -335,7 +335,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55805" name="AddCalendarEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="5">
+	<command known-issues="LPS-55805" name="AddCalendarEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -487,7 +487,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54826" name="AddCalendarEventRegularCommentToCurrentSiteCalendars" priority="5">
+	<command known-issues="LPS-54826" name="AddCalendarEventRegularCommentToCurrentSiteCalendars" priority="4">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
@@ -535,7 +535,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54826" name="AddCalendarEventRegularCommentToCurrentSiteCalendarsAndExport" priority="5">
+	<command known-issues="LPS-54826" name="AddCalendarEventRegularCommentToCurrentSiteCalendarsAndExport" priority="4">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Regular Comment" />
@@ -588,7 +588,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegularRSVPYes" priority="5">
+	<command name="AddCalendarEventRegularRSVPYes" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -614,7 +614,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegularWithRemindersEnabled" priority="5">
+	<command name="AddCalendarEventRegularWithRemindersEnabled" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 		<var name="portletName" value="Calendar" />
@@ -649,7 +649,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegularWithTag" priority="5">
+	<command name="AddCalendarEventRegularWithTag" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -681,7 +681,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRegularWithUserInvite" priority="5">
+	<command name="AddCalendarEventRegularWithUserInvite" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 		<var name="resourceNameList" value="Test Test" />
@@ -708,7 +708,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventRegularWithUserInviteAccept" priority="5">
+	<command known-issues="LPS-51310" name="AddCalendarEventRegularWithUserInviteAccept" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 		<var name="resourceNameList" value="userfn userln" />
@@ -783,7 +783,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeating" priority="5">
+	<command name="AddCalendarEventRepeating" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -809,7 +809,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54826" name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" priority="5">
+	<command known-issues="LPS-54826" name="AddCalendarEventRepeatingCommentToCurrentSiteCalendars" priority="4">
 		<var name="calendarName" value="Liferay" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventComment" value="Calendar Event Repeating Comment" />
@@ -859,7 +859,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingMonthly2Times" priority="5">
+	<command name="AddCalendarEventRepeatingMonthly2Times" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -885,7 +885,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingMonthlyThirdWednesday2Times" priority="5">
+	<command name="AddCalendarEventRepeatingMonthlyThirdWednesday2Times" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -913,7 +913,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventRepeatingRSVPYes" priority="5">
+	<command known-issues="LPS-51310" name="AddCalendarEventRepeatingRSVPYes" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -941,7 +941,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingWeekly2Times" priority="5">
+	<command name="AddCalendarEventRepeatingWeekly2Times" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -967,7 +967,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingWithRemindersEnabled" priority="5">
+	<command name="AddCalendarEventRepeatingWithRemindersEnabled" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 		<var name="portletName" value="Calendar" />
@@ -1004,7 +1004,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingWithTag" priority="5">
+	<command name="AddCalendarEventRepeatingWithTag" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -1038,7 +1038,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingWithUserInvite" priority="5">
+	<command name="AddCalendarEventRepeatingWithUserInvite" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 		<var name="resourceNameList" value="Test Test" />
@@ -1068,7 +1068,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="AddCalendarEventRepeatingWithUserInviteAccept" priority="5">
+	<command known-issues="LPS-51310" name="AddCalendarEventRepeatingWithUserInviteAccept" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 		<var name="resourceNameList" value="userfn userln" />
@@ -1145,7 +1145,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingYearly" priority="5">
+	<command name="AddCalendarEventRepeatingYearly" priority="4">
 		<description message="This is a use case for LPS-51402." />
 
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
@@ -1203,7 +1203,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventsViaScheduler" priority="5">
+	<command name="AddCalendarEventsViaScheduler" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1260,7 +1260,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarResource" priority="5">
+	<command name="AddCalendarResource" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 
 		<execute macro="Page#gotoPG">
@@ -1280,7 +1280,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarToCurrentSiteCalendars" priority="5">
+	<command name="AddCalendarToCurrentSiteCalendars" priority="4">
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="site" value="Liferay" />
@@ -1306,7 +1306,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarToMyCalendars" priority="5">
+	<command name="AddCalendarToMyCalendars" priority="4">
 		<var name="calendarName" value="My Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
 		<var name="user" value="Test Test" />
@@ -1332,7 +1332,7 @@
 		</execute>
 	</command>
 
-	<command name="AddEventAsPowerUserWhenSiteMemberNoViewPermissions" priority="5">
+	<command name="AddEventAsPowerUserWhenSiteMemberNoViewPermissions" priority="4">
 		<description message="This is a use case for LPS-55163." />
 
 		<execute macro="Page#gotoCP">
@@ -1415,7 +1415,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53987" name="AddResourceCalendarToOtherCalendars" priority="5">
+	<command known-issues="LPS-53987" name="AddResourceCalendarToOtherCalendars" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="calendarType" value="Other Calendars" />
 
@@ -1447,7 +1447,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserCalendarToOtherCalendars" priority="5">
+	<command name="AddUserCalendarToOtherCalendars" priority="4">
 		<var name="calendarType" value="Other Calendars" />
 		<var name="userCalendarColor" value="668CD9" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -1491,7 +1491,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeCalendarTypeForAllDayEvent" priority="5">
+	<command name="ChangeCalendarTypeForAllDayEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />
 
@@ -1518,7 +1518,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeCalendarTypeForRegularEvent" priority="5">
+	<command name="ChangeCalendarTypeForRegularEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -1544,7 +1544,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeCalendarTypeForRepeatingEvent" priority="5">
+	<command name="ChangeCalendarTypeForRepeatingEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -1572,7 +1572,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeColorCalendarSiteCalendarsEventRegular" priority="5">
+	<command name="ChangeColorCalendarSiteCalendarsEventRegular" priority="4">
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="eventBackgroundColorRGB" value="(208, 219, 240)" />
 		<var name="eventFontColorRGB" value="(104, 142, 217)" />
@@ -1698,7 +1698,7 @@
 		</for>
 	</command>
 
-	<command name="ConfigureDisplayTimeZone" priority="5">
+	<command name="ConfigureDisplayTimeZone" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1807,7 +1807,7 @@
 		</execute>
 	</command>
 
-	<command name="DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent" priority="5">
+	<command name="DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1889,7 +1889,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventRegular"  priority="5">
+	<command name="DeleteCalendarEventRegular"  priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 
@@ -1921,7 +1921,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventRepeatingAllEventsInTheSeries" priority="5">
+	<command name="DeleteCalendarEventRepeatingAllEventsInTheSeries" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -1952,7 +1952,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventRepeatingAllFollowing" priority="5">
+	<command name="DeleteCalendarEventRepeatingAllFollowing" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -1983,7 +1983,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventRepeatingOnlyThisInstance" priority="5">
+	<command name="DeleteCalendarEventRepeatingOnlyThisInstance" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventType" value="Repeating" />
 
@@ -2061,7 +2061,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarMyCalendars" priority="5">
+	<command name="DeleteCalendarMyCalendars" priority="4">
 		<var name="calendarName" value="Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
 		<var name="user" value="Test Test" />
@@ -2087,7 +2087,7 @@
 		<execute macro="Calendar#viewDefault" />
 	</command>
 
-	<command name="DeleteCalendarResource" priority="5">
+	<command name="DeleteCalendarResource" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 
 		<execute macro="Page#gotoPG">
@@ -2115,7 +2115,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteEventAndViewRSSFeed" priority="5">
+	<command name="DeleteEventAndViewRSSFeed" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -2170,7 +2170,7 @@
 		<execute macro="Navigator#closeWindow" />
 	</command>
 
-	<command name="DisableRSSFeedForSiteCalendar" priority="5">
+	<command name="DisableRSSFeedForSiteCalendar" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -2228,7 +2228,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarCurrentSiteCalendars" priority="5">
+	<command name="EditCalendarCurrentSiteCalendars" priority="4">
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarNameEdit" value="Site Calendar Name Edit" />
 		<var name="calendarType" value="Current Site Calendars" />
@@ -2256,7 +2256,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventAllDay" priority="5">
+	<command name="EditCalendarEventAllDay" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
 		<var name="eventType" value="All Day" />
@@ -2286,7 +2286,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventAllDayReminders" priority="5">
+	<command name="EditCalendarEventAllDayReminders" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
 		<var name="eventType" value="All Day" />
@@ -2332,7 +2332,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventAllDayWithUserInvite" priority="5">
+	<command name="EditCalendarEventAllDayWithUserInvite" priority="4">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventTitleEdit" value="Calendar Event All Day Title Edit" />
 		<var name="eventType" value="All Day" />
@@ -2368,7 +2368,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventRegular" priority="5">
+	<command name="EditCalendarEventRegular" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
 		<var name="eventType" value="Regular" />
@@ -2398,7 +2398,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventRegularReminders" priority="5">
+	<command name="EditCalendarEventRegularReminders" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
 		<var name="eventType" value="Regular" />
@@ -2444,7 +2444,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventRegularWithUserInvite" priority="5">
+	<command name="EditCalendarEventRegularWithUserInvite" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventTitleEdit" value="Calendar Event Regular Title Edit" />
 		<var name="eventType" value="Regular" />
@@ -2480,7 +2480,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventRepeating" priority="5">
+	<command name="EditCalendarEventRepeating" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
 		<var name="eventType" value="Repeating" />
@@ -2512,7 +2512,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventRepeatingReminders" priority="5">
+	<command name="EditCalendarEventRepeatingReminders" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
 		<var name="eventType" value="Repeating" />
@@ -2560,7 +2560,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventRepeatingWithUserInvite" priority="5">
+	<command name="EditCalendarEventRepeatingWithUserInvite" priority="4">
 		<var name="eventTitle" value="Calendar Event Repeating Title" />
 		<var name="eventTitleEdit" value="Calendar Event Repeating Title Edit" />
 		<var name="eventType" value="Repeating" />
@@ -2598,7 +2598,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarMyCalendars" priority="5">
+	<command name="EditCalendarMyCalendars" priority="4">
 		<var name="calendarName" value="My Calendar Name" />
 		<var name="calendarNameEdit" value="My Calendar Name Edit" />
 		<var name="calendarType" value="My Calendars" />
@@ -2636,7 +2636,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarResource" priority="5">
+	<command name="EditCalendarResource" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="calendarResourceNameEdit" value="Calendar Resource Name Edit" />
 
@@ -2666,7 +2666,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53987" name="EditInviteEmailTemplateForCalendarResourceCalendar" priority="5">
+	<command known-issues="LPS-53987" name="EditInviteEmailTemplateForCalendarResourceCalendar" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="calendarType" value="Other Calendars" />
 
@@ -2709,7 +2709,7 @@
 		</execute>
 	</command>
 
-	<command name="EditInviteEmailTemplateForCurrentSiteCalendarsCalendar" priority="5">
+	<command name="EditInviteEmailTemplateForCurrentSiteCalendarsCalendar" priority="4">
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="site" value="Liferay" />
@@ -2748,7 +2748,7 @@
 		</execute>
 	</command>
 
-	<command name="EditInviteEmailTemplateForMyCalendarsCalendar" priority="5">
+	<command name="EditInviteEmailTemplateForMyCalendarsCalendar" priority="4">
 		<var name="calendarName" value="My Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
 		<var name="user" value="Test Test" />
@@ -2787,7 +2787,7 @@
 		</execute>
 	</command>
 
-	<command name="EditInviteEmailTemplateForUserCalendar" priority="5">
+	<command name="EditInviteEmailTemplateForUserCalendar" priority="4">
 		<var name="calendarType" value="Other Calendars" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -2836,7 +2836,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53987" name="EditReminderEmailTemplateForCalendarResourceCalendar" priority="5">
+	<command known-issues="LPS-53987" name="EditReminderEmailTemplateForCalendarResourceCalendar" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="calendarType" value="Other Calendars" />
 
@@ -2879,7 +2879,7 @@
 		</execute>
 	</command>
 
-	<command name="EditReminderEmailTemplateForCurrentSiteCalendarsCalendar" priority="5">
+	<command name="EditReminderEmailTemplateForCurrentSiteCalendarsCalendar" priority="4">
 		<var name="calendarName" value="Site Calendar Name" />
 		<var name="calendarType" value="Current Site Calendars" />
 		<var name="site" value="Liferay" />
@@ -2918,7 +2918,7 @@
 		</execute>
 	</command>
 
-	<command name="EditReminderEmailTemplateForMyCalendarsCalendar" priority="5">
+	<command name="EditReminderEmailTemplateForMyCalendarsCalendar" priority="4">
 		<var name="calendarName" value="My Calendar Name" />
 		<var name="calendarType" value="My Calendars" />
 		<var name="user" value="Test Test" />
@@ -2957,7 +2957,7 @@
 		</execute>
 	</command>
 
-	<command name="EditReminderEmailTemplateForUserCalendar" priority="5">
+	<command name="EditReminderEmailTemplateForUserCalendar" priority="4">
 		<var name="calendarType" value="Other Calendars" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -3006,7 +3006,7 @@
 		</execute>
 	</command>
 
-	<command name="EditUserCalendarOtherCalendars" priority="5">
+	<command name="EditUserCalendarOtherCalendars" priority="4">
 		<var name="calendarType" value="Other Calendars" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -3173,7 +3173,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportCalendarAndViewCalendarEventRegularComment" priority="5">
+	<command name="ImportCalendarAndViewCalendarEventRegularComment" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -3196,7 +3196,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportMicrosoftOutlookCalendarICS" priority="5">
+	<command name="ImportMicrosoftOutlookCalendarICS" priority="4">
 		<description message="This is a use case for LPS-53072." />
 
 		<execute macro="Page#gotoPG">
@@ -3211,7 +3211,7 @@
 		</execute>
 	</command>
 
-	<command name="InviteAndViewAdditionalUsers" priority="5">
+	<command name="InviteAndViewAdditionalUsers" priority="4">
 		<description message="This is a use case for LPS-46700." />
 
 		<var name="eventTitle" value="Calendar Event Regular Title" />
@@ -3262,7 +3262,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51310" name="InviteUsersAndViewResponse" priority="5">
+	<command known-issues="LPS-51310" name="InviteUsersAndViewResponse" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -3401,7 +3401,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchForOtherCalendars" priority="5">
+	<command name="SearchForOtherCalendars" priority="4">
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -3503,7 +3503,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchForOtherCalendarsAsNonPowerUser" priority="5">
+	<command name="SearchForOtherCalendarsAsNonPowerUser" priority="4">
 		<description message="This is a use case for LPS-51572." />
 
 		<execute macro="Page#gotoCP">
@@ -3604,7 +3604,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55278" name="View24hourTimeFormat" priority="5">
+	<command known-issues="LPS-55278" name="View24hourTimeFormat" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -3741,7 +3741,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAvailableCalendars" priority="5">
+	<command name="ViewAvailableCalendars" priority="4">
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -3897,7 +3897,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCalendarTimeZoneDefaults" priority="5">
+	<command name="ViewCalendarTimeZoneDefaults" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -3936,7 +3936,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCorrectCalendarOnEventSwitch" priority="5">
+	<command name="ViewCorrectCalendarOnEventSwitch" priority="4">
 		<description message="This is a use case for LPS-51222." />
 
 		<execute macro="Page#gotoPG">
@@ -4083,7 +4083,7 @@
 		</for>
 	</command>
 
-	<command name="ViewEventCalendarChange" priority="5">
+	<command name="ViewEventCalendarChange" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -4207,7 +4207,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewInactiveResourceNotPresent" priority="5">
+	<command name="ViewInactiveResourceNotPresent" priority="4">
 		<description message="This is a use case for LPS-55171." />
 
 		<execute macro="Page#gotoCP">
@@ -4271,7 +4271,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53987" name="ViewInvitedResourceAvailability" priority="5">
+	<command known-issues="LPS-53987" name="ViewInvitedResourceAvailability" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="eventNumber" value="2" />
 		<var name="eventTitle" value="Calendar Event All Day Title" />
@@ -4372,7 +4372,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56092" name="ViewShowMoreLocalization" priority="5">
+	<command known-issues="LPS-56092" name="ViewShowMoreLocalization" priority="4">
 		<description message="This is a use case LPS-54786." />
 
 		<execute macro="Page#gotoPG">
@@ -4422,7 +4422,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteCalendarRSSFeed" priority="5">
+	<command name="ViewSiteCalendarRSSFeed" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -4489,7 +4489,7 @@
 		<execute macro="Navigator#closeWindow" />
 	</command>
 
-	<command name="ViewSiteNameUpdate" priority="5">
+	<command name="ViewSiteNameUpdate" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -4546,7 +4546,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWeekStartMonday" priority="5">
+	<command name="ViewWeekStartMonday" priority="4">
 		<description message="This is a use case for 51127." />
 
 		<execute macro="Page#gotoPG">
@@ -4594,7 +4594,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWeekStartSaturday" priority="5">
+	<command name="ViewWeekStartSaturday" priority="4">
 		<description message="This is a use case for 51127." />
 
 		<execute macro="Page#gotoPG">

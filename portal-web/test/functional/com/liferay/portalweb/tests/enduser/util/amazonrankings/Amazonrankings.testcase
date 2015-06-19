@@ -17,7 +17,7 @@
 		</execute>
 	</set-up>
 
-	<command name="ViewAmazonRankingsPortlet" priority="5">
+	<command name="ViewAmazonRankingsPortlet" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Amazon Rankings Page" />
 		</execute>

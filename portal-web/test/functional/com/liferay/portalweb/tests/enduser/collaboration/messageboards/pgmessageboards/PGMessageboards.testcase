@@ -30,7 +30,7 @@
 		<execute macro="ServerAdministration#tearDownDMFileUploadSettings" />
 	</tear-down>
 
-	<command name="AddMBCategories" priority="5">
+	<command name="AddMBCategories" priority="4">
 		<var name="categoryNameList" value="MB Category1 Name,MB Category2 Name,MB Category3 Name" />
 
 		<for list="${categoryNameList}" param="categoryName" >
@@ -48,7 +48,7 @@
 		</for>
 	</command>
 
-	<command name="AddMBCategory" priority="5">
+	<command name="AddMBCategory" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 
 		<execute macro="Page#gotoPG">
@@ -64,7 +64,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryDescription" priority="5">
+	<command name="AddMBCategoryDescription" priority="4">
 		<var name="categoryDescription" value="MB Category Description" />
 		<var name="categoryDescriptionEnabled" value="true" />
 		<var name="categoryName" value="MB Category Name" />
@@ -86,7 +86,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryNameUTF8" priority="5">
+	<command name="AddMBCategoryNameUTF8" priority="4">
 		<var name="categoryName" value="MB Catègory Name" />
 
 		<execute macro="Page#gotoPG">
@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategorySubcategory" priority="5">
+	<command name="AddMBCategorySubcategory" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryName" value="MB Subcategory Name" />
@@ -136,7 +136,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategorySubcategoryNullName" priority="5">
+	<command name="AddMBCategorySubcategoryNullName" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryNullName" value=" " />
@@ -168,7 +168,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategorySubcategoryThread" priority="5">
+	<command name="AddMBCategorySubcategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryEnabled" value="true" />
@@ -233,7 +233,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadQuestion" priority="5">
+	<command name="AddMBCategoryThreadQuestion" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -282,7 +282,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadUTF8" priority="5">
+	<command name="AddMBCategoryThreadUTF8" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Thrèad Mèssagè Body" />
 		<var name="threadSubject" value="MB Thrèad Mèssagè Subjèct" />
@@ -330,7 +330,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBThread" priority="5">
+	<command name="AddMBThread" priority="4">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -425,7 +425,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBThreadNullBody" priority="5">
+	<command name="AddMBThreadNullBody" priority="4">
 		<var name="threadBody" value="" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -456,7 +456,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBThreadReply" priority="5">
+	<command name="AddMBThreadReply" priority="4">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -514,7 +514,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteMBCategories" priority="5">
+	<command name="DeleteMBCategories" priority="4">
 		<var name="categoryNameList" value="MB Category1 Name,MB Category2 Name,MB Category3 Name" />
 
 		<for list="${categoryNameList}" param="categoryName" >
@@ -536,7 +536,7 @@
 		<execute macro="MessageboardsCategory#viewDefaultPG" />
 	</command>
 
-	<command name="DeleteMBCategory" priority="5">
+	<command name="DeleteMBCategory" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 
 		<execute macro="Page#gotoPG">
@@ -558,7 +558,7 @@
 		<execute macro="MessageboardsCategory#viewDefaultPG" />
 	</command>
 
-	<command name="DeleteMBThread" priority="5">
+	<command name="DeleteMBThread" priority="4">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -580,7 +580,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBCategory" priority="5">
+	<command name="EditMBCategory" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -599,7 +599,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThreadBody" priority="5">
+	<command name="EditMBThreadBody" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -631,7 +631,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThreadSubject" priority="5">
+	<command name="EditMBThreadSubject" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -663,7 +663,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThreadSubjectAndBody" priority="5">
+	<command name="EditMBThreadSubjectAndBody" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -696,7 +696,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveMBCategory1ThreadToCategory2" priority="5">
+	<command name="MoveMBCategory1ThreadToCategory2" priority="4">
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="threadBody" value="MB Thread Message Body" />
@@ -764,7 +764,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveMBCategory1ThreadWithExplanationPostToCategory2" priority="5">
+	<command name="MoveMBCategory1ThreadWithExplanationPostToCategory2" priority="4">
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="explanationBody" value="MB Explanation Post Body" />
@@ -838,7 +838,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="5">
+	<command name="ViewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
@@ -964,7 +964,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command name="ViewMBThreadAndReplyThreadInGmail" priority="5">
+	<command name="ViewMBThreadAndReplyThreadInGmail" priority="4">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
 		<execute macro="Page#gotoCP">
@@ -1125,7 +1125,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command name="ViewSubcategorySubscriptionViaMySubscriptionsPage" priority="5">
+	<command name="ViewSubcategorySubscriptionViaMySubscriptionsPage" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ChatPortletSmoke" priority="5">
+	<command name="ChatPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="chat-portlet" />
 
 		<var name="appName" value="Chat" />

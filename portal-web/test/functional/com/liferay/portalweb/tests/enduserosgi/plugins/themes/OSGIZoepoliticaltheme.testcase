@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ZoePoliticalThemeSmoke" priority="5">
+	<command name="ZoePoliticalThemeSmoke" priority="4">
 		<property name="theme.plugins.includes" value="zoe-political-theme" />
 		<property name="web.plugins.includes" value="resources-importer-web" />
 

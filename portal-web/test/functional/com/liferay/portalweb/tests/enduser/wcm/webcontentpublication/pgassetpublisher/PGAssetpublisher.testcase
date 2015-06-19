@@ -105,7 +105,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCustomTitleViaAP" priority="5">
+	<command name="AddCustomTitleViaAP" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page" />
 		</execute>
@@ -773,7 +773,7 @@
 		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ADD_NEW_MENULIST_CUSTOM_STRUCTURE" value1="Press Release Structure Name" />
 	</command>
 
-	<command name="ConfigureAPPortletDisplayPage" priority="5">
+	<command name="ConfigureAPPortletDisplayPage" priority="4">
 		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
 	</command>
 
@@ -1078,7 +1078,7 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
+	<command name="ConfigureAPPortletSelectedWebContent" priority="4">
 		<execute macro="AssetPublisherPortlet#configureSelectedPG">
 			<var name="selectedAsset" value="Web Content Article" />
 		</execute>

@@ -9,7 +9,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddChildChildSite" priority="5">
+	<command name="AddChildChildSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -51,7 +51,7 @@
 		</execute>
 	</command>
 
-	<command name="AddChildSite" priority="5">
+	<command name="AddChildSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -120,7 +120,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSite" priority="5">
+	<command name="AddSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -138,7 +138,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitesMultiple" priority="5">
+	<command name="AddSitesMultiple" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -249,7 +249,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSite" priority="5">
+	<command name="DeleteSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -267,7 +267,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSite" priority="5">
+	<command name="EditSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -392,7 +392,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSite" priority="5">
+	<command name="SearchSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -410,7 +410,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParent" priority="5">
+	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParent" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -430,7 +430,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParentStaging" priority="5">
+	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParentStaging" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -469,7 +469,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="5">
+	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -565,7 +565,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteHierarchiesViaSitesDirectory" priority="5">
+	<command name="ViewSiteHierarchiesViaSitesDirectory" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

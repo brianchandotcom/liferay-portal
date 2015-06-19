@@ -10,7 +10,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewJSR" priority="5">
+	<command name="ViewJSR" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
 		</execute>

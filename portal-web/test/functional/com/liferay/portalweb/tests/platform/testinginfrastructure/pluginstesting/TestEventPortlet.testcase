@@ -10,7 +10,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewEvent" priority="5">
+	<command name="ViewEvent" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Event Page" />
 		</execute>

@@ -115,7 +115,7 @@
 		<execute function="Close#closeWindow" locator1="SOPage#PAGE_TITLE" />
 	</command>
 
-	<command name="DashboardDemo" priority="5">
+	<command name="DashboardDemo" priority="4">
 		<var name="adminFirstName" value="Test" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />
@@ -711,7 +711,7 @@
 		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_TASKS" value1="Tasks" />
 	</command>
 
-	<command name="SiteDemo" priority="5">
+	<command name="SiteDemo" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -1296,7 +1296,7 @@
 		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />
 	</command>
 
-	<command name="ViewCaptchaCheckWithSORole" priority="5">
+	<command name="ViewCaptchaCheckWithSORole" priority="4">
 		<execute macro="User#logoutPG" />
 
 		<execute function="AssertClick" locator1="PGLogin#CREATE_ACCOUNT_LINK" value1="Create Account" />

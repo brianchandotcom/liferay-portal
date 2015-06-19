@@ -6,33 +6,33 @@
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5879" />
 	<var name="ticketSummary" value="LIFERAYQA-5879: Enable looping on a list" />
 
-	<command name="LoopAtTestCaseLevel" priority="5">
+	<command name="LoopAtTestCaseLevel" priority="4">
 		<for list="1,2,3,4,5" param="number">
 			<echo message="${number}" />
 		</for>
 	</command>
 
-	<command name="LoopContainingContainsIfConditional" priority="5">
+	<command name="LoopContainingContainsIfConditional" priority="4">
 		<execute macro="Iteration#loopContainingContainsIfConditional" />
 	</command>
 
-	<command name="LoopContainingEchoStatement" priority="5">
+	<command name="LoopContainingEchoStatement" priority="4">
 		<execute macro="Iteration#loopContainingEchoStatement" />
 	</command>
 
-	<command name="LoopContainingEqualsIfConditional" priority="5">
+	<command name="LoopContainingEqualsIfConditional" priority="4">
 		<execute macro="Iteration#loopContainingEqualsIfConditional" />
 	</command>
 
-	<command name="LoopOnEmptyList" priority="5">
+	<command name="LoopOnEmptyList" priority="4">
 		<execute macro="Iteration#loopOnEmptyList" />
 	</command>
 
-	<command name="NestedForLoopsWithinMacro" priority="5">
+	<command name="NestedForLoopsWithinMacro" priority="4">
 		<execute macro="Iteration#nestedForLoops" />
 	</command>
 
-	<command name="NestedForLoopsWithinTestcase" priority="5">
+	<command name="NestedForLoopsWithinTestcase" priority="4">
 		<echo message="Test loops: checking to make sure that you can have nested loops" />
 
 		<var name="string" value="" />

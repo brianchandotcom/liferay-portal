@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="121ColumnsLayouttplSmoke" priority="5">
+	<command name="121ColumnsLayouttplSmoke" priority="4">
 		<property name="layouttpl.plugins.includes" value="1-2-1-columns-layouttpl" />
 
 		<var name="appName" value="1-2-1 Columns Layout" />

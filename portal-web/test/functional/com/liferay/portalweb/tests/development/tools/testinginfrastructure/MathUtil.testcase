@@ -2,7 +2,7 @@
 	<property name="testcase.url" value="" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="Difference" priority="5">
+	<command name="Difference" priority="4">
 		<var method="MathUtil#difference('3', '2')" name="difference" />
 
 		<execute macro="TestUtils#assertEquals">
@@ -11,7 +11,7 @@
 		</execute>
 	</command>
 
-	<command name="Product" priority="5">
+	<command name="Product" priority="4">
 		<var method="MathUtil#product('4', '2')" name="product" />
 
 		<execute macro="TestUtils#assertEquals">
@@ -27,7 +27,7 @@
 		</execute>
 	</command>
 
-	<command name="Quotient" priority="5">
+	<command name="Quotient" priority="4">
 		<var method="MathUtil#quotient('6', '2')" name="quotient" />
 
 		<execute macro="TestUtils#assertEquals">
@@ -36,7 +36,7 @@
 		</execute>
 	</command>
 
-	<command name="Sum" priority="5">
+	<command name="Sum" priority="4">
 		<var method="MathUtil#sum('1', '2')" name="sum" />
 
 		<execute macro="TestUtils#assertEquals">

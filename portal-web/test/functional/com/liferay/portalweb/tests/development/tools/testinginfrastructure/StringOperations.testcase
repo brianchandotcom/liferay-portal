@@ -2,7 +2,7 @@
 	<property name="testcase.url" value="" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="GetIPAddress" priority="5">
+	<command name="GetIPAddress" priority="4">
 		<echo message="Test getIPAddress()" />
 
 		<var name="ipAddress" value="${getIPAddress()}" />
@@ -10,7 +10,7 @@
 		<echo message="${ipAddress}" />
 	</command>
 
-	<command name="Increment" priority="5">
+	<command name="Increment" priority="4">
 		<echo message="Test increment()" />
 
 		<var name="number" value="1" />
@@ -30,7 +30,7 @@
 		</execute>
 	</command>
 
-	<command name="Length" priority="5">
+	<command name="Length" priority="4">
 		<echo message="Test length()" />
 
 		<var name="string" value="abcde" />
@@ -50,7 +50,7 @@
 		</execute>
 	</command>
 
-	<command name="Lowercase" priority="5">
+	<command name="Lowercase" priority="4">
 		<echo message="Test lowercase()" />
 
 		<var name="string" value="abCDe" />
@@ -70,7 +70,7 @@
 		</execute>
 	</command>
 
-	<command name="Regex" priority="5">
+	<command name="Regex" priority="4">
 		<var group="0" input="regularexpression=32132" name="regex" pattern="[a-z]*=([0-9]*)" />
 
 		<execute macro="TestUtils#assertEquals">
@@ -86,7 +86,7 @@
 		</execute>
 	</command>
 
-	<command name="Replace" priority="5">
+	<command name="Replace" priority="4">
 		<echo message="Test replace()" />
 
 		<var name="string" value="abcde" />
@@ -106,7 +106,7 @@
 		</execute>
 	</command>
 
-	<command name="Uppercase" priority="5">
+	<command name="Uppercase" priority="4">
 		<echo message="Test uppercase()" />
 
 		<var name="string" value="abCDe" />

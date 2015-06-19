@@ -21,7 +21,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddDocumentComment" priority="5">
+	<command name="AddDocumentComment" priority="4">
 		<var name="commentContent" value="DM Document Comment" />
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -92,7 +92,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDocumentComments" priority="5">
+	<command name="AddDocumentComments" priority="4">
 		<var name="commentContent1" value="DM Document Comment1" />
 		<var name="commentContent2" value="DM Document Comment2" />
 		<var name="commentContent3" value="DM Document Comment3" />
@@ -377,7 +377,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMultipleDocumentsCommentActivities" priority="5">
+	<command name="AddMultipleDocumentsCommentActivities" priority="4">
 		<var name="commentContent" value="DM Document Comment" />
 		<var name="dmDocumentDescription1" value="DM Folder Document1 Description" />
 		<var name="dmDocumentDescription2" value="DM Folder Document2 Description" />
@@ -553,7 +553,7 @@
 		<execute function="AssertTextNotPresent" value1="${commentContent}" />
 	</command>
 
-	<command name="DeleteDocumentComment" priority="5">
+	<command name="DeleteDocumentComment" priority="4">
 		<var name="commentContent" value="DM Document Comment" />
 		<var name="commentContentEdit" value="DM Document Comment Edit" />
 		<var name="dmDocumentDescription" value="DM Document Description" />
@@ -630,7 +630,7 @@
 		<execute function="AssertTextNotPresent" value1="${commentContent}" />
 	</command>
 
-	<command name="EditDocumentComment" priority="5">
+	<command name="EditDocumentComment" priority="4">
 		<var name="commentContent" value="DM Document Comment" />
 		<var name="commentContentEdit" value="DM Document Comment Edit" />
 		<var name="dmDocumentDescription" value="DM Document Description" />
@@ -713,7 +713,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMultipleDocumentsCommentActivities" priority="5">
+	<command name="EditMultipleDocumentsCommentActivities" priority="4">
 		<var name="commentContent" value="DM Document Comment" />
 		<var name="commentContentEdit" value="DM Document Comment Edit" />
 		<var name="dmDocumentDescription1" value="DM Folder Document1 Description" />
@@ -901,7 +901,7 @@
 		<execute function="AssertTextNotPresent" value1="${commentContentEdit}" />
 	</command>
 
-	<command name="ViewDMFolderDocumentActivities" priority="5">
+	<command name="ViewDMFolderDocumentActivities" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentSize" value="22k" />
@@ -986,7 +986,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDMFolderDocumentsActivities" priority="5">
+	<command name="ViewDMFolderDocumentsActivities" priority="4">
 		<var name="dmDocumentDescription1" value="DM Folder Document1 Description" />
 		<var name="dmDocumentDescription2" value="DM Folder Document2 Description" />
 		<var name="dmDocumentDescription3" value="DM Folder Document3 Description" />
@@ -1244,7 +1244,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDMFolderDocumentsCommentsActivities" priority="5">
+	<command name="ViewDMFolderDocumentsCommentsActivities" priority="4">
 		<var name="commentBody1" value="DM Folder Document1 Comment Body" />
 		<var name="commentBody2" value="DM Folder Document2 Comment Body" />
 		<var name="commentBody3" value="DM Folder Document3 Comment Body" />
@@ -1392,7 +1392,7 @@
 		<execute function="AssertTextNotPresent" value1="3 Comments" />
 	</command>
 
-	<command name="ViewMoreDMFolderDocumentsActivities" priority="5">
+	<command name="ViewMoreDMFolderDocumentsActivities" priority="4">
 		<var name="dmDocumentDescription1" value="DM Document1 Description" />
 		<var name="dmDocumentDescription2" value="DM Document2 Description" />
 		<var name="dmDocumentDescription3" value="DM Document3 Description" />

@@ -29,7 +29,7 @@
 		</execute>
 	</tear-down>
 
-	<command name="ApproveBlogsEntriesCPJoinXORNodeWorkflowDefinition" priority="5">
+	<command name="ApproveBlogsEntriesCPJoinXORNodeWorkflowDefinition" priority="4">
 		<description message="This is a use case for LPS-35577." />
 
 		<execute macro="Page#gotoCP">
@@ -234,7 +234,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="ApproveBlogsEntryCP" priority="5">
+	<command known-issues="LRQA-12687" name="ApproveBlogsEntryCP" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -295,7 +295,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="RejectBlogsEntryCP" priority="5">
+	<command known-issues="LRQA-12687" name="RejectBlogsEntryCP" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

@@ -11,7 +11,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewBlogsPortletAsGuestPG" priority="5">
+	<command name="ViewBlogsPortletAsGuestPG" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

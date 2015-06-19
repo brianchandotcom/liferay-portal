@@ -71,7 +71,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePrivateChildPage" priority="5">
+	<command name="AddSitePrivateChildPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -113,7 +113,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePrivatePage" priority="5">
+	<command name="AddSitePrivatePage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -142,7 +142,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePrivatePagePortlet" priority="5">
+	<command name="AddSitePrivatePagePortlet" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -178,7 +178,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePublicChildPage" priority="5">
+	<command name="AddSitePublicChildPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -219,7 +219,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePublicPage" priority="5">
+	<command name="AddSitePublicPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -247,7 +247,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePublicPagePortlet" priority="5">
+	<command name="AddSitePublicPagePortlet" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -283,7 +283,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangePageLayout" priority="5">
+	<command name="ChangePageLayout" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="site Page Name" />
 		</execute>

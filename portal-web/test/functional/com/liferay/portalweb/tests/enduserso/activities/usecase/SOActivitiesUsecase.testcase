@@ -25,7 +25,7 @@
 		<execute macro="SOSite#tearDownCP" />
 	</tear-down>
 
-	<command name="ActivitiesDemo1" priority="5">
+	<command name="ActivitiesDemo1" priority="4">
 		<var name="bookmarksEntryDescription1" value="Bookmarks Entry1 Description" />
 		<var name="bookmarksEntryDescription2" value="Bookmarks Entry2 Description" />
 		<var name="bookmarksEntryDescription3" value="Bookmarks Entry3 Description" />
@@ -525,7 +525,7 @@
 		<execute function="AssertTextNotPresent" value1="${wikiPageContentEdit3}" />
 	</command>
 
-	<command name="ActivitiesDemo2" priority="5">
+	<command name="ActivitiesDemo2" priority="4">
 		<var name="bookmarksEntryDescription1" value="Bookmarks Entry1 Description" />
 		<var name="bookmarksEntryDescription2" value="Bookmarks Entry2 Description" />
 		<var name="bookmarksEntryDescription3" value="Bookmarks Entry3 Description" />
@@ -1713,7 +1713,7 @@
 		<execute function="AssertTextNotPresent" value1="${userName3}" />
 	</command>
 
-	<command known-issues="SOS-2266,SOS-2267" name="ViewDeletedSiteActivities" priority="5">
+	<command known-issues="SOS-2266,SOS-2267" name="ViewDeletedSiteActivities" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -1855,7 +1855,7 @@
 		<execute function="AssertTextNotPresent" value1="FrontPage" />
 	</command>
 
-	<command known-issues="SOS-2370" name="ViewEditedSiteActivities" priority="5">
+	<command known-issues="SOS-2370" name="ViewEditedSiteActivities" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryDescriptionEdit" value="Bookmarks Entry Description Edit" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
@@ -2169,7 +2169,7 @@
 		<execute function="AssertTextNotPresent" value1="${wikiPageContentEdit}" />
 	</command>
 
-	<command known-issues="SOS-2179" name="ViewPrivateSiteActivitiesProfileByNonMember" priority="5">
+	<command known-issues="SOS-2179" name="ViewPrivateSiteActivitiesProfileByNonMember" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />
@@ -2284,7 +2284,7 @@
 		<execute function="AssertTextNotPresent" value1="${wikiPageContentEdit}" />
 	</command>
 
-	<command name="ViewReplyActivities" priority="5">
+	<command name="ViewReplyActivities" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="entryComment" value="Blogs Entry Content Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -2853,7 +2853,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteActivitiesViaDashboard" priority="5">
+	<command name="ViewSiteActivitiesViaDashboard" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -3073,7 +3073,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteActivitiesViaProfile" priority="5">
+	<command name="ViewSiteActivitiesViaProfile" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl1" value="http://www.google.com" />
@@ -3264,7 +3264,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteActivitiesViaSites" priority="5">
+	<command name="ViewSiteActivitiesViaSites" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />

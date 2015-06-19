@@ -109,7 +109,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskComments" priority="5">
+	<command name="AddTaskComments" priority="4">
 		<var name="commentContent1" value="Task Comment1" />
 		<var name="commentContent2" value="Task Comment2" />
 		<var name="pageName" value="Tasks" />
@@ -1247,7 +1247,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="SOActivities#SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG" />
 	</command>
 
-	<command name="ViewTaskAssignedToMeReopened" priority="5">
+	<command name="ViewTaskAssignedToMeReopened" priority="4">
 		<var name="pageName" value="Tasks" />
 		<var name="portletName" value="Tasks" />
 		<var name="siteDescription" value="Open Site Description" />
@@ -1775,7 +1775,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewTasksActivities" priority="5">
+	<command name="ViewTasksActivities" priority="4">
 		<var name="pageName" value="Tasks" />
 		<var name="portletName" value="Tasks" />
 		<var name="siteDescription" value="Open Site Description" />

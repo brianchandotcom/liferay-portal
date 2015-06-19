@@ -28,7 +28,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSitePageXSS" priority="5">
+	<command name="AddSitePageXSS" priority="4">
 		<var name="sitePage3Name"><![CDATA[<script>alert("Site Page 3")</script> />]]></var>
 
 		<execute macro="Page#addPG">

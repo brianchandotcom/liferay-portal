@@ -103,7 +103,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMember" priority="5">
+	<command name="AddMember" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="searchToken" value="Organization" />
@@ -156,7 +156,7 @@
 		</execute>
 	</command>
 
-	<command name="AddOrganization" priority="5">
+	<command name="AddOrganization" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 
@@ -247,7 +247,7 @@
 		</execute>
 	</command>
 
-	<command name="AddOrganizations" priority="5">
+	<command name="AddOrganizations" priority="4">
 		<var name="orgName1" value="Organization Name 1" />
 		<var name="orgName2" value="Organization Name 2" />
 		<var name="orgName3" value="Organization Name 3" />
@@ -308,7 +308,7 @@
 		</execute>
 	</command>
 
-	<command name="AddOrganizationSite" priority="5">
+	<command name="AddOrganizationSite" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteMember" value="Organization" />
@@ -434,7 +434,7 @@
 		</execute>
 	</command>
 
-	<command name="AddOrganizationTeam" priority="5">
+	<command name="AddOrganizationTeam" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteName" value="${orgName}" />
@@ -480,7 +480,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSuborganization" priority="5">
+	<command name="AddSuborganization" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="suborgName" value="Suborganization Name" />
@@ -520,7 +520,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUser" priority="5">
+	<command name="AddUser" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1090,7 +1090,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserScreenNameNumber" priority="5">
+	<command name="AddUserScreenNameNumber" priority="4">
 		<property name="custom.properties" value="users.screen.name.allow.numeric=true" />
 
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -1500,7 +1500,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteOrganization" priority="5">
+	<command name="DeleteOrganization" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 
@@ -1522,7 +1522,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteOrganizationSite" priority="5">
+	<command name="DeleteOrganizationSite" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteMember" value="Organization" />
@@ -1565,7 +1565,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteUser" priority="5">
+	<command name="DeleteUser" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1599,7 +1599,7 @@
 		</execute>
 	</command>
 
-	<command name="EditOrganizationSite" priority="5">
+	<command name="EditOrganizationSite" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgNameEdit" value="Organization Name Edit" />
 		<var name="orgType" value="Regular Organization" />
@@ -1758,7 +1758,7 @@
 		</execute>
 	</command>
 
-	<command name="ErrorAddUserScreenNameNumberSiteId" priority="5">
+	<command name="ErrorAddUserScreenNameNumberSiteId" priority="4">
 		<var name="siteID" value="${siteID}" />
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -1795,7 +1795,7 @@
 		</execute>
 	</command>
 
-	<command name="LoginUser" priority="5">
+	<command name="LoginUser" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1835,7 +1835,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveMember" priority="5">
+	<command name="RemoveMember" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -2036,7 +2036,7 @@
 		<execute function="AssertTextNotPresent" locator1="CPUsersandorganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName2}" />
 	</command>
 
-	<command name="ViewBack" priority="5">
+	<command name="ViewBack" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 
@@ -2054,7 +2054,7 @@
 		<take-screenshot />
 	</command>
 
-	<command name="ViewOrganizationSiteViaSitesDirectory" priority="5">
+	<command name="ViewOrganizationSiteViaSitesDirectory" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgName1" value="Organization Name 1" />
 		<var name="orgName2" value="Organization Name 2" />

@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ThemeLoaderWebSmoke" priority="5">
+	<command name="ThemeLoaderWebSmoke" priority="4">
 		<property name="web.plugins.includes" value="theme-loader-web" />
 
 		<var name="appName" value="Theme Loader" />

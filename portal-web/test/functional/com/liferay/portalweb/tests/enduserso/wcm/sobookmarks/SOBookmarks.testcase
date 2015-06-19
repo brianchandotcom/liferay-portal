@@ -111,7 +111,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBookmarksEntry" priority="5">
+	<command name="AddBookmarksEntry" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -196,7 +196,7 @@
 		<execute function="AssertTextEquals" locator1="SOBookmarksAdd#TAG" value1="${tagName}" />
 	</command>
 
-	<command name="DeleteBookmarksEntryTest" priority="5">
+	<command name="DeleteBookmarksEntryTest" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -226,7 +226,7 @@
 		<execute macro="SOBookmarks#deleteBookmarksEntry" />
 	</command>
 
-	<command name="EditBookmarksEntryTest" priority="5">
+	<command name="EditBookmarksEntryTest" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryDescriptionEdit" value="Bookmarks Entry Description Edit" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />

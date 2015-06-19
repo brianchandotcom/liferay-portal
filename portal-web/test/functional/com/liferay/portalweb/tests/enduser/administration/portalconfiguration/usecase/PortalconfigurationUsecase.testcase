@@ -27,7 +27,7 @@
 		</execute>
 	</command>
 
-	<command name="DefaultPortalLandingPage" priority="5">
+	<command name="DefaultPortalLandingPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>
@@ -72,7 +72,7 @@
 		</execute>
 	</command>
 
-	<command name="PermissionCheckPortalInstances" priority="5">
+	<command name="PermissionCheckPortalInstances" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Instances" />
 		</execute>
@@ -246,7 +246,7 @@
 		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This instance is inactive. Please contact the administrator." />
 	</command>
 
-	<command name="ViewVirtualHostPrivateSitePage" priority="5">
+	<command name="ViewVirtualHostPrivateSitePage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>

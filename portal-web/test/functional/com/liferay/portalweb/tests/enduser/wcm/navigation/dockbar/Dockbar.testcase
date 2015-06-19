@@ -9,7 +9,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="GotoAdministration" priority="5">
+	<command name="GotoAdministration" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -27,7 +27,7 @@
 		</execute>
 	</command>
 
-	<command name="GotoConfiguration" priority="5">
+	<command name="GotoConfiguration" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>
@@ -37,7 +37,7 @@
 		</execute>
 	</command>
 
-	<command name="GotoContent" priority="5">
+	<command name="GotoContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -47,7 +47,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchCollapsedPortlet" priority="5">
+	<command name="SearchCollapsedPortlet" priority="4">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
 		<execute function="AssertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
@@ -61,7 +61,7 @@
 		<execute function="AssertVisible#pauseAssertVisible" locator1="${portletLocator}" />
 	</command>
 
-	<command name="ViewAddPageField" priority="5">
+	<command name="ViewAddPageField" priority="4">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
 		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
@@ -73,7 +73,7 @@
 		<execute function="AssertVisible" locator1="DockbarAddpanelpage#NAME_FIELD" />
 	</command>
 
-	<command name="ViewAddPageFieldEditable" priority="5">
+	<command name="ViewAddPageFieldEditable" priority="4">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
 
 		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
@@ -97,7 +97,7 @@
 		<execute function="AssertClick" locator1="Home#PAGE" value1="Dockbar Test Page" />
 	</command>
 
-	<command name="ViewEditPageFields" priority="5">
+	<command name="ViewEditPageFields" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Dockbar Test Page" />
 		</execute>
@@ -117,7 +117,7 @@
 		<execute function="AssertVisible" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" />
 	</command>
 
-	<command name="ViewEditPageFieldsEditable" priority="5">
+	<command name="ViewEditPageFieldsEditable" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Dockbar Test Page" />
 		</execute>

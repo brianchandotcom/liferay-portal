@@ -24,7 +24,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByActions" priority="5">
+	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByActions" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByDetails" priority="5">
+	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByDetails" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -124,7 +124,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByActions" priority="5">
+	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByActions" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -163,7 +163,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByDetails" priority="5">
+	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByDetails" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -203,7 +203,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskCompletedNoByActions" priority="5">
+	<command known-issues="LPS-51687" name="WithdrawTaskCompletedNoByActions" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -248,7 +248,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskCompletedNoByDetails" priority="5">
+	<command known-issues="LPS-51687" name="WithdrawTaskCompletedNoByDetails" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

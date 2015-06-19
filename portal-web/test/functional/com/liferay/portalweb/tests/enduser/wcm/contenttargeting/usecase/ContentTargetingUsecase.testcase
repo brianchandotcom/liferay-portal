@@ -38,7 +38,7 @@
 		</execute>
 	</set-up>
 
-	<command name="CampaignAddMultipleWithPrioritiesViaCampaignDisplayPortlet" priority="5">
+	<command name="CampaignAddMultipleWithPrioritiesViaCampaignDisplayPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -198,7 +198,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignAddViaCampaignContentDisplayPortlet" priority="5">
+	<command name="CampaignAddViaCampaignContentDisplayPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -295,7 +295,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignDeleteMultiple" priority="5">
+	<command name="CampaignDeleteMultiple" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -355,7 +355,7 @@
 		<execute macro="ContentTargetingCampaign#deleteAllCP" />
 	</command>
 
-	<command name="CampaignViewContentViewsReports" priority="5">
+	<command name="CampaignViewContentViewsReports" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -484,7 +484,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignViewInSimulatorPG" priority="5">
+	<command name="CampaignViewInSimulatorPG" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -566,7 +566,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignViewOtherwiseDisplayContentViaCampaignDisplayPortlet" priority="5">
+	<command name="CampaignViewOtherwiseDisplayContentViaCampaignDisplayPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -686,7 +686,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignViewOtherwiseDontDisplayViaCampaignDisplayPortlet" priority="5">
+	<command name="CampaignViewOtherwiseDontDisplayViaCampaignDisplayPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -853,7 +853,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignViewTrackingActionReports" priority="5">
+	<command name="CampaignViewTrackingActionReports" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -980,7 +980,7 @@
 		</execute>
 	</command>
 
-	<command name="ClusteringWithContentTargeting" priority="5">
+	<command name="ClusteringWithContentTargeting" priority="4">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
 
@@ -1216,7 +1216,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportSmoke" priority="5">
+	<command name="ExportImportSmoke" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 
 		<execute macro="LAR#gotoExportSite">
@@ -1829,7 +1829,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingContentTargeting" priority="5">
+	<command name="StagingContentTargeting" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -2647,7 +2647,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddCategorizationToContent" priority="5">
+	<command name="UserSegmentAddCategorizationToContent" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -2679,7 +2679,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddFromGlobalSiteViaCampaign" priority="5">
+	<command name="UserSegmentAddFromGlobalSiteViaCampaign" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Global" />
@@ -2728,7 +2728,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddFromParentSiteViaCampaign" priority="5">
+	<command name="UserSegmentAddFromParentSiteViaCampaign" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -2796,7 +2796,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddGlobalCategorizationToSiteContent" priority="5">
+	<command name="UserSegmentAddGlobalCategorizationToSiteContent" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Global" />
@@ -2829,7 +2829,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddMultipleViaUserContentDisplayPortletPG" priority="5">
+	<command name="UserSegmentAddMultipleViaUserContentDisplayPortletPG" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -3035,7 +3035,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddParentSiteCategorizationToChildSiteContent" priority="5">
+	<command name="UserSegmentAddParentSiteCategorizationToChildSiteContent" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -3077,7 +3077,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddWithAllViaUserSegmentContentDisplayPortlet" priority="5">
+	<command name="UserSegmentAddWithAllViaUserSegmentContentDisplayPortlet" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3193,7 +3193,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddWithAnyViaUserSegmentContentDisplayPortlet" priority="5">
+	<command name="UserSegmentAddWithAnyViaUserSegmentContentDisplayPortlet" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3308,7 +3308,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddWithBelongsViaUserSegmentContentDisplayPortlet" priority="5">
+	<command name="UserSegmentAddWithBelongsViaUserSegmentContentDisplayPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3438,7 +3438,7 @@
 		<execute function="SikuliClick" locator1="PGUsersegmentcontentdisplay#PREVIEW_DOCUMENT_1_PNG" />
 	</command>
 
-	<command name="UserSegmentAddWithDoesNotBelongViaUserSegmentContentDisplayPortlet" priority="5">
+	<command name="UserSegmentAddWithDoesNotBelongViaUserSegmentContentDisplayPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3585,7 +3585,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentAddWithOtherwiseDontDisplayAnythingViaUserSegmentContentDisplayPortlet" priority="5">
+	<command name="UserSegmentAddWithOtherwiseDontDisplayAnythingViaUserSegmentContentDisplayPortlet" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3661,7 +3661,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentDeleteMultiple" priority="5">
+	<command name="UserSegmentDeleteMultiple" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3706,7 +3706,7 @@
 		<execute macro="ContentTargetingUserSegment#deleteAllCP" />
 	</command>
 
-	<command name="UserSegmentSimulateRulesViaSimulatorPG" priority="5">
+	<command name="UserSegmentSimulateRulesViaSimulatorPG" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3862,7 +3862,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentViewAnyContentWithCategorizationViaContentListPortlet" priority="5">
+	<command name="UserSegmentViewAnyContentWithCategorizationViaContentListPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3909,7 +3909,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentViewInSimulatorPG" priority="5">
+	<command name="UserSegmentViewInSimulatorPG" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -4016,7 +4016,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="WCM-206" name="UserSegmentViewSpecificContentWithCategorizationViaContentListPortlet" priority="5">
+	<command known-issues="WCM-206" name="UserSegmentViewSpecificContentWithCategorizationViaContentListPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />

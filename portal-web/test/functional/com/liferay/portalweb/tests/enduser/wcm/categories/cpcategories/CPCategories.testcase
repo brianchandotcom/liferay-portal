@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategory" priority="5">
+	<command name="AddCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -88,7 +88,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategoryProperties" priority="5">
+	<command name="AddCategoryProperties" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -130,7 +130,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategoryProperty" priority="5">
+	<command name="AddCategoryProperty" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -160,7 +160,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategoryViewableByAnyone" priority="5">
+	<command name="AddCategoryViewableByAnyone" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -313,7 +313,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSubcategory" priority="5">
+	<command name="AddSubcategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -382,7 +382,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabulary" priority="5">
+	<command name="AddVocabulary" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -396,7 +396,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeAllAssetTypes" priority="5">
+	<command name="AddVocabularyAssetTypeAllAssetTypes" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -412,7 +412,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeBlogsEntry" priority="5">
+	<command name="AddVocabularyAssetTypeBlogsEntry" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -428,7 +428,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeBookmarksEntry" priority="5">
+	<command name="AddVocabularyAssetTypeBookmarksEntry" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -444,7 +444,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeDocument" priority="5">
+	<command name="AddVocabularyAssetTypeDocument" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -490,7 +490,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeUser" priority="5">
+	<command name="AddVocabularyAssetTypeUser" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -506,7 +506,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeWebContent" priority="5">
+	<command name="AddVocabularyAssetTypeWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -522,7 +522,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyAssetTypeWikiPage" priority="5">
+	<command name="AddVocabularyAssetTypeWikiPage" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -558,7 +558,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyViewableByGuest" priority="5">
+	<command name="AddVocabularyViewableByGuest" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -710,7 +710,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCategory" priority="5">
+	<command name="DeleteCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -734,7 +734,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCategoryByArrow" priority="5">
+	<command name="DeleteCategoryByArrow" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -839,7 +839,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSubcategoryViaArrow" priority="5">
+	<command name="DeleteSubcategoryViaArrow" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -874,7 +874,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteVocabulary" priority="5">
+	<command name="DeleteVocabulary" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -902,7 +902,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCategory" priority="5">
+	<command name="EditCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -981,7 +981,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSubcategory" priority="5">
+	<command name="EditSubcategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1017,7 +1017,7 @@
 		</execute>
 	</command>
 
-	<command name="EditVocabulary" priority="5">
+	<command name="EditVocabulary" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1078,7 +1078,7 @@
 		</execute>
 	</command>
 
-	<command name="ValidateClickingCloseButtonDoesNotSaveVocabulary" priority="5">
+	<command name="ValidateClickingCloseButtonDoesNotSaveVocabulary" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

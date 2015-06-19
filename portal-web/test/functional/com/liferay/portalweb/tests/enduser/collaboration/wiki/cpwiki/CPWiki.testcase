@@ -13,7 +13,7 @@
 		<execute macro="WikiPage#tearDownCP" />
 	</tear-down>
 
-	<command name="AddWikiFrontPage" priority="5">
+	<command name="AddWikiFrontPage" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
@@ -48,7 +48,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiNode" priority="5">
+	<command name="AddWikiNode" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
@@ -67,7 +67,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPageToNode" priority="5">
+	<command name="AddWikiPageToNode" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
@@ -110,7 +110,7 @@
 		</execute>
 	</command>
 
-	<command name="CompareVersionsWikiPage" priority="5">
+	<command name="CompareVersionsWikiPage" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
@@ -178,7 +178,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWikiNode" priority="5">
+	<command name="DeleteWikiNode" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
@@ -200,7 +200,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWikiNode" priority="5">
+	<command name="EditWikiNode" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
@@ -224,7 +224,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveToRecycleBinFrontPage" priority="5">
+	<command name="MoveToRecycleBinFrontPage" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>

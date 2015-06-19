@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddBookmark" priority="5">
+	<command name="AddBookmark" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -58,7 +58,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder" priority="5">
+	<command name="AddFolder" priority="4">
 		<var name="folderDescription" value="Test Folder Description" />
 		<var name="folderName" value="Test Folder Name" />
 
@@ -77,7 +77,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolderBookmark" priority="5">
+	<command name="AddFolderBookmark" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -126,7 +126,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolderBookmarkURLInvalid" priority="5">
+	<command name="AddFolderBookmarkURLInvalid" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURLInvalid" value="www.liferay.com" />
@@ -157,7 +157,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFolder" priority="5">
+	<command name="DeleteFolder" priority="4">
 		<var name="folderDescription" value="Test Folder Description" />
 		<var name="folderName" value="Test Folder Name" />
 
@@ -180,7 +180,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFolderBookmark" priority="5">
+	<command name="DeleteFolderBookmark" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://liferay.com" />
@@ -223,7 +223,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolder" priority="5">
+	<command name="EditFolder" priority="4">
 		<var name="folderDescription" value="Test Folder Description" />
 		<var name="folderDescriptionEdit" value="Test Folder Description Edit" />
 		<var name="folderName" value="Test Folder Name" />
@@ -250,7 +250,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolderBookmark" priority="5">
+	<command name="EditFolderBookmark" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkDescriptionEdit" value="Test Bookmark Description Edit" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
@@ -299,7 +299,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveFolderBookmarkToFolder" priority="5">
+	<command name="MoveFolderBookmarkToFolder" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://liferay.com" />
@@ -361,7 +361,7 @@
 		<execute function="AssertTextEquals" locator1="PGBookmarksFolder#BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 	</command>
 
-	<command name="RemoveBookmarkPortlet" priority="5">
+	<command name="RemoveBookmarkPortlet" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -369,7 +369,7 @@
 		<execute macro="Portlet#deletePG" />
 	</command>
 
-	<command name="SearchFolderBookmark" priority="5">
+	<command name="SearchFolderBookmark" priority="4">
 		<var name="bookmarkDescription" value="Test Bookmark Description" />
 		<var name="bookmarkName" value="Test Bookmark Name" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />

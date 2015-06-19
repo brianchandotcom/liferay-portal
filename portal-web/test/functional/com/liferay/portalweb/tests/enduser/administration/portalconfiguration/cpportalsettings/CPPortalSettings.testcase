@@ -23,7 +23,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="EditDefaultUserAssociationsOrganizationSites" priority="5">
+	<command name="EditDefaultUserAssociationsOrganizationSites" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteName" value="Organization Name" />
@@ -85,7 +85,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDefaultUserAssociationsRoles" priority="5">
+	<command name="EditDefaultUserAssociationsRoles" priority="4">
 		<var name="roleName" value="Roles Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -136,7 +136,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDefaultUserAssociationsSites" priority="5">
+	<command name="EditDefaultUserAssociationsSites" priority="4">
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -187,7 +187,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDefaultUserAssociationsUserGroups" priority="5">
+	<command name="EditDefaultUserAssociationsUserGroups" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userGroupName" value="UG UserGroup Name" />
@@ -346,7 +346,7 @@
 		<execute macro="PortalSettings#viewAuthenticationSiteMinderCP" />
 	</command>
 
-	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="5">
+	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="4">
 		<var name="childSiteName" value="Child SiteName" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

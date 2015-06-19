@@ -90,7 +90,7 @@
 		</execute>
 	</command>
 
-	<command name="AllowMultiplePortletConfigurationsPerSite" priority="5">
+	<command name="AllowMultiplePortletConfigurationsPerSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -177,7 +177,7 @@
 		<execute macro="BlogsConfiguration#viewDefaultConfigurationRSS" />
 	</command>
 
-	<command name="DemoTrackbackURL" priority="5">
+	<command name="DemoTrackbackURL" priority="4">
 		<var name="ipAddress" value="${getIPAddress()}" />
 
 		<execute macro="Page#gotoPG">
@@ -353,7 +353,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportBlogsCommentLAR" priority="5">
+	<command name="ImportBlogsCommentLAR" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

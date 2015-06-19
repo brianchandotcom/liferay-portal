@@ -21,7 +21,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewDocumentsAndMediaPortletRegRole" priority="5">
+	<command name="ViewDocumentsAndMediaPortletRegRole" priority="4">
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="portletName1" value="Documents and Media" />
@@ -79,7 +79,7 @@
 		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
 	</command>
 
-	<command name="ViewDocumentsAndMediaPortletSiteRole" priority="5">
+	<command name="ViewDocumentsAndMediaPortletSiteRole" priority="4">
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />

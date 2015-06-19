@@ -20,7 +20,7 @@
 		<execute macro="PortalSettings#tearDownCP" />
 	</tear-down>
 
-	<command name="AddUserGroupRegRole" priority="5">
+	<command name="AddUserGroupRegRole" priority="4">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_GROUP_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add User Group" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USER_GROUPS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />

@@ -21,7 +21,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddDisplayTemplateFreeMarker" priority="5">
+	<command name="AddDisplayTemplateFreeMarker" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
@@ -58,7 +58,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDisplayTemplateVelocity" priority="5">
+	<command name="AddDisplayTemplateVelocity" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
@@ -96,7 +96,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFormTemplate" priority="5">
+	<command name="AddFormTemplate" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -152,7 +152,7 @@
 		</execute>
 	</command>
 
-	<command name="AddList" priority="5">
+	<command name="AddList" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
@@ -723,7 +723,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithBooleanField" priority="5">
+	<command name="AddListRecordWithBooleanField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -806,7 +806,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithDateField" priority="5">
+	<command name="AddListRecordWithDateField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="04/01/2017" />
@@ -890,7 +890,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithDecimalField" priority="5">
+	<command name="AddListRecordWithDecimalField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="11.18" />
@@ -973,7 +973,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithDocumentsAndMediaFieldChooseFromDocumentLibrary" priority="5">
+	<command name="AddListRecordWithDocumentsAndMediaFieldChooseFromDocumentLibrary" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Document Title" />
@@ -1058,7 +1058,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithDocumentsAndMediaFieldUpload" priority="5">
+	<command name="AddListRecordWithDocumentsAndMediaFieldUpload" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="document" value="Document_1.txt" />
@@ -1141,7 +1141,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-13522" name="AddListRecordWithGeolocationField" priority="5">
+	<command known-issues="LRQA-13522" name="AddListRecordWithGeolocationField" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -1224,7 +1224,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithHTMLField" priority="5">
+	<command name="AddListRecordWithHTMLField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Record HTML" />
@@ -1307,7 +1307,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithIntegerField" priority="5">
+	<command name="AddListRecordWithIntegerField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="7" />
@@ -1390,7 +1390,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithLinkToPageField" priority="5">
+	<command name="AddListRecordWithLinkToPageField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Test Page" />
@@ -1477,7 +1477,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithNumberField" priority="5">
+	<command name="AddListRecordWithNumberField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="46" />
@@ -1560,7 +1560,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithRadioField" priority="5">
+	<command name="AddListRecordWithRadioField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="option 2" />
@@ -1643,7 +1643,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithSelectField" priority="5">
+	<command name="AddListRecordWithSelectField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="option 2" />
@@ -1726,7 +1726,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithTextBoxField" priority="5">
+	<command name="AddListRecordWithTextBoxField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Text Box Data" />
@@ -1809,7 +1809,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithTextField" priority="5">
+	<command name="AddListRecordWithTextField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Text Data" />
@@ -1892,7 +1892,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinition" priority="5">
+	<command name="CopyDataDefinition" priority="4">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -1971,7 +1971,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinitionWithCopyDisplayTemplates" priority="5">
+	<command name="CopyDataDefinitionWithCopyDisplayTemplates" priority="4">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2061,7 +2061,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinitionWithCopyFormTemplates" priority="5">
+	<command name="CopyDataDefinitionWithCopyFormTemplates" priority="4">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2162,7 +2162,7 @@
 		</execute>
 	</command>
 
-	<command name="CopyDataDefinitionWithCopyFormTemplatesAndCopyDisplayTemplates" priority="5">
+	<command name="CopyDataDefinitionWithCopyFormTemplatesAndCopyDisplayTemplates" priority="4">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Display Template Name" />
@@ -2264,7 +2264,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDataDefinition" priority="5">
+	<command name="DeleteDataDefinition" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
@@ -2295,7 +2295,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDisplayTemplateFreeMarker" priority="5">
+	<command name="DeleteDisplayTemplateFreeMarker" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
@@ -2341,7 +2341,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDisplayTemplateVelocity" priority="5">
+	<command name="DeleteDisplayTemplateVelocity" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
@@ -2386,7 +2386,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFormTemplate" priority="5">
+	<command name="DeleteFormTemplate" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -2430,7 +2430,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteList" priority="5">
+	<command name="DeleteList" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
@@ -2476,7 +2476,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteListRecord" priority="5">
+	<command name="DeleteListRecord" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Text Field" />
@@ -2540,7 +2540,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBooleanFieldFieldLabel" priority="5">
+	<command name="EditBooleanFieldFieldLabel" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -2644,7 +2644,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBooleanFieldName" priority="5">
+	<command name="EditBooleanFieldName" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -2746,7 +2746,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51721" name="EditBooleanFieldShowLabel" priority="5">
+	<command known-issues="LPS-51721" name="EditBooleanFieldShowLabel" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -2839,7 +2839,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBooleanFieldTip" priority="5">
+	<command name="EditBooleanFieldTip" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
@@ -2883,7 +2883,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinition" priority="5">
+	<command name="EditDataDefinition" priority="4">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionDescriptionEdit" value="Data Definition Description Edit" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -2946,7 +2946,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDisplayTemplateFreeMarker" priority="5">
+	<command name="EditDisplayTemplateFreeMarker" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="FreeMarker (.ftl)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
@@ -3006,7 +3006,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDisplayTemplateVelocity" priority="5">
+	<command name="EditDisplayTemplateVelocity" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
@@ -3066,7 +3066,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFormTemplate" priority="5">
+	<command name="EditFormTemplate" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="ddlFormTemplateNameEdit" value="Data Definition Form Template Name Edit" />
@@ -3165,7 +3165,7 @@
 		</execute>
 	</command>
 
-	<command name="EditList" priority="5">
+	<command name="EditList" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListDescription" value="List Description" />
 		<var name="ddlListDescriptionEdit" value="List Description Edit" />
@@ -3226,7 +3226,7 @@
 		</execute>
 	</command>
 
-	<command name="EditListRecord" priority="5">
+	<command name="EditListRecord" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
@@ -3309,7 +3309,7 @@
 		</execute>
 	</command>
 
-	<command name="EditListRecordViaRecordView" priority="5">
+	<command name="EditListRecordViaRecordView" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
@@ -3392,7 +3392,7 @@
 		</execute>
 	</command>
 
-	<command name="EditRadioFieldOptions" priority="5">
+	<command name="EditRadioFieldOptions" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Radio" />
 		<var name="fieldFieldLabel" value="Radio" />
@@ -3441,7 +3441,7 @@
 		</execute>
 	</command>
 
-	<command name="EditRadioFieldOptionsWithUTF8Characters" priority="5">
+	<command name="EditRadioFieldOptionsWithUTF8Characters" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Radio" />
 		<var name="fieldFieldLabel" value="Radio" />
@@ -3490,7 +3490,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSelectFieldOptions" priority="5">
+	<command name="EditSelectFieldOptions" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Select" />
 		<var name="fieldFieldLabel" value="Select" />
@@ -3539,7 +3539,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSelectFieldOptionsWithUTF8Characters" priority="5">
+	<command name="EditSelectFieldOptionsWithUTF8Characters" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Select" />
 		<var name="fieldFieldLabel" value="Select" />
@@ -3588,7 +3588,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51926" name="ImportLAR" priority="5">
+	<command known-issues="LPS-51926" name="ImportLAR" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -3700,7 +3700,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBooleanFieldPredefinedValue" priority="5">
+	<command name="ViewBooleanFieldPredefinedValue" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="No" />
@@ -3824,7 +3824,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52567" name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="5">
+	<command known-issues="LPS-52567" name="ViewCannotAddNonAlphanumericCharactersToFieldName" priority="4">
 		<var name="character1"><![CDATA[`]]></var>
 		<var name="character2"><![CDATA[~]]></var>
 		<var name="character3"><![CDATA[!]]></var>
@@ -3954,7 +3954,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewFormTemplateFields" priority="5">
+	<command name="ViewFormTemplateFields" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -4160,7 +4160,7 @@
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsListRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
-	<command name="ViewNoDuplicatesInOriginalAfterCopy" priority="5">
+	<command name="ViewNoDuplicatesInOriginalAfterCopy" priority="4">
 		<var name="ddlDataDefinitionCopyName" value="Data Definition Copy" />
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />

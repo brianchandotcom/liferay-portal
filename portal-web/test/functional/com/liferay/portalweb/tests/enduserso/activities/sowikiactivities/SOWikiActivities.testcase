@@ -21,7 +21,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddWikiFrontPageComment" priority="5">
+	<command name="AddWikiFrontPageComment" priority="4">
 		<var name="commentContent" value="Wiki FrontPage Comment" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
@@ -113,7 +113,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiFrontPageComments" priority="5">
+	<command name="AddWikiFrontPageComments" priority="4">
 		<var name="commentContent1" value="Wiki FrontPage Comment1" />
 		<var name="commentContent2" value="Wiki FrontPage Comment2" />
 		<var name="commentContent3" value="Wiki FrontPage Comment3" />
@@ -542,7 +542,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2268" name="DeleteWikiFrontPageComment" priority="5">
+	<command known-issues="SOS-2268" name="DeleteWikiFrontPageComment" priority="4">
 		<var name="commentContent" value="Wiki FrontPage Comment" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
@@ -614,7 +614,7 @@
 		<execute function="AssertTextNotPresent" value1="${commentContent}" />
 	</command>
 
-	<command name="EditWikiFrontPageComment" priority="5">
+	<command name="EditWikiFrontPageComment" priority="4">
 		<var name="commentContent" value="Wiki FrontPage Comment" />
 		<var name="commentContentEdit" value="Wiki FrontPage Comment Edit" />
 		<var name="siteDescription" value="Open Site Description" />

@@ -406,7 +406,7 @@
 		</for>
 	</command>
 
-	<command name="SearchXSSAsset" priority="5">
+	<command name="SearchXSSAsset" priority="4">
 		<property name="custom.properties" value="index.search.highlight.enabled=false" />
 
 		<execute macro="Page#addPG">

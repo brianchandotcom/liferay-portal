@@ -20,7 +20,7 @@
 		<execute macro="DMDocumentType#tearDownCP" />
 	</tear-down>
 
-	<command name="AddDocumentsAndMediaNoWorkflowCP" priority="5">
+	<command name="AddDocumentsAndMediaNoWorkflowCP" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 
@@ -47,7 +47,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command known-issues="LPS-53334" name="ApproveDMDocumentCP" priority="5">
+	<command known-issues="LPS-53334" name="ApproveDMDocumentCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -572,7 +572,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53334" name="RejectDMDocumentCP" priority="5">
+	<command known-issues="LPS-53334" name="RejectDMDocumentCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

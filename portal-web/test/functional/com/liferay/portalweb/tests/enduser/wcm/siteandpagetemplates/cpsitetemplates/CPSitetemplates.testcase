@@ -11,7 +11,7 @@
 		<execute macro="SiteTemplates#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSiteTemplate" priority="5">
+	<command name="AddSiteTemplate" priority="4">
 		<var name="siteTemplateActive" value="Yes" />
 
 		<execute macro="Page#gotoCP">
@@ -33,7 +33,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSiteTemplate" priority="5">
+	<command name="DeleteSiteTemplate" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -60,7 +60,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTemplateStatus" priority="5">
+	<command name="EditSiteTemplateStatus" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -98,7 +98,7 @@
 		</execute>
 	</command>
 
-	<command name="LocalizeDefaultSiteTemplates" priority="5">
+	<command name="LocalizeDefaultSiteTemplates" priority="4">
 		<var name="pageTemplateName" value="Page Template Name" />
 
 		<execute macro="Page#gotoCP">
@@ -141,7 +141,7 @@
 		<execute macro="SiteTemplates#viewDefaultCP" />
 	</command>
 
-	<command name="ResetPageChanges" priority="5">
+	<command name="ResetPageChanges" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

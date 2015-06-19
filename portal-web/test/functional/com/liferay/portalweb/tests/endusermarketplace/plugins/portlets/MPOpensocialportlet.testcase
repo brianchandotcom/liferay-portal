@@ -13,7 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="OpenSocialPortletSmoke" priority="5">
+	<command name="OpenSocialPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="opensocial-portlet" />
 
 		<var name="appName" value="OpenSocial Gadget" />

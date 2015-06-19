@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="RemoveNoGuestInlineView" priority="5">
+	<command name="RemoveNoGuestInlineView" priority="4">
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="Welcome" />
 		</execute>

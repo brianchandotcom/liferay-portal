@@ -13,7 +13,7 @@
 		<execute macro="User#tearDownCP" />
 	</tear-down>
 
-	<command name="AddMember" priority="5">
+	<command name="AddMember" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -47,7 +47,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMembersSiteUser" priority="5">
+	<command name="AddMembersSiteUser" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -94,7 +94,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSiteTeam" priority="5">
+	<command name="AddSiteTeam" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -119,7 +119,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSiteTeams" priority="5">
+	<command name="AddSiteTeams" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -164,7 +164,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignMembersSiteTeamUser" priority="5">
+	<command name="AssignMembersSiteTeamUser" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -229,7 +229,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteNoLiferaySite" priority="5">
+	<command name="DeleteNoLiferaySite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -250,7 +250,7 @@
 		<execute function="AssertTextEquals" locator1="CPSites#ERROR_MESSAGE_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
 	</command>
 
-	<command name="DeleteSiteTeam" priority="5">
+	<command name="DeleteSiteTeam" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -279,7 +279,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTeam" priority="5">
+	<command name="EditSiteTeam" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -310,7 +310,7 @@
 		</execute>
 	</command>
 
-	<command name="LimitMembershipParentSite" priority="5">
+	<command name="LimitMembershipParentSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -430,7 +430,7 @@
 		</execute>
 	</command>
 
-	<command name="OrganizationsView" priority="5">
+	<command name="OrganizationsView" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -560,7 +560,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveMember" priority="5">
+	<command name="RemoveMember" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -605,7 +605,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoManualMembershipManagement" priority="5">
+	<command name="ViewNoManualMembershipManagement" priority="4">
 		<execute macro="Site#manageMembershipOptions">
 			<var name="allowManualMembershipManagement" value="true" />
 		</execute>

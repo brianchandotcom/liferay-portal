@@ -29,7 +29,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddCalendarEvent" priority="5">
+	<command name="AddCalendarEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 
@@ -190,7 +190,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventCommentSOUser" priority="5">
+	<command name="AddCalendarEventCommentSOUser" priority="4">
 		<var name="eventComment" value="Calendar Event Comment" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -697,7 +697,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEvent" priority="5">
+	<command name="DeleteCalendarEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 
@@ -723,7 +723,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventCommentSOUser" priority="5">
+	<command name="DeleteCalendarEventCommentSOUser" priority="4">
 		<var name="eventComment" value="Calendar Event Comment" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -832,7 +832,7 @@
 		<execute function="AssertTextNotPresent" value1="${eventComment}" />
 	</command>
 
-	<command name="DeleteCalendarResource" priority="5">
+	<command name="DeleteCalendarResource" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 
 		<execute macro="Page#gotoPG">
@@ -863,7 +863,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEvent" priority="5">
+	<command name="EditCalendarEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventTitleEdit" value="Calendar Event Title Edit" />
 		<var name="eventType" value="Regular" />
@@ -987,7 +987,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventCommentSOUser" priority="5">
+	<command name="EditCalendarEventCommentSOUser" priority="4">
 		<var name="eventComment" value="Calendar Event Comment" />
 		<var name="eventCommentEdit" value="Calendar Event Comment Edit" />
 		<var name="eventTitle" value="Calendar Event Title" />
@@ -1176,7 +1176,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarResource" priority="5">
+	<command name="EditCalendarResource" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="calendarResourceNameEdit" value="Calendar Resource Name Edit" />
 
@@ -1458,7 +1458,7 @@
 		</execute>
 	</command>
 
-	<command name="InviteSOUserToCalendarEvent" priority="5">
+	<command name="InviteSOUserToCalendarEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -1598,7 +1598,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCalendarEventAsGuestAndSiteMember" priority="5">
+	<command name="ViewCalendarEventAsGuestAndSiteMember" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />

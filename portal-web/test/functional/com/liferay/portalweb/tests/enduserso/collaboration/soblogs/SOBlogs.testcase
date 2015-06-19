@@ -170,7 +170,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#NEXT_LINK" />
 	</command>
 
-	<command name="AddSOBlogsEntry" priority="5">
+	<command name="AddSOBlogsEntry" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -321,7 +321,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOBlogsEntryCommentSOUser" priority="5">
+	<command name="AddSOBlogsEntryCommentSOUser" priority="4">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -418,7 +418,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOBlogsEntryScheduled" priority="5">
+	<command name="AddSOBlogsEntryScheduled" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -442,7 +442,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOBlogsEntrySOUser" priority="5">
+	<command name="AddSOBlogsEntrySOUser" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ACTION_CHECKBOX" />
@@ -743,7 +743,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOBlogsEntryTitleNull" priority="5">
+	<command name="AddSOBlogsEntryTitleNull" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="" />
 
@@ -881,7 +881,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSOBlogsEntryCommentSOUser" priority="5">
+	<command name="DeleteSOBlogsEntryCommentSOUser" priority="4">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -961,7 +961,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSOBlogsEntry" priority="5">
+	<command name="EditSOBlogsEntry" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1005,7 +1005,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSOBlogsEntryCommentSOUser" priority="5">
+	<command name="EditSOBlogsEntryCommentSOUser" priority="4">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryCommentEdit" value="Blogs Entry Comment Edit" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -1091,7 +1091,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSOBlogsEntryInline" priority="5">
+	<command name="EditSOBlogsEntryInline" priority="4">
 		<property name="custom.properties" value="editor.inline.editing.enabled=true" />
 
 		<var name="entryContentOriginal">Integer in rhoncus nisl, et tempus dui. Phasellus et hendrerit dolor. Curabitur ornare erat vel purus vestibulum luctus. Donec condimentum placerat lectus in dignissim. Vivamus libero ipsum, sodales vel pellentesque sit amet, posuere a justo. Nulla quis dolor aliquet, hendrerit tellus ac, accumsan dui. Nullam quis mattis mauris. Integer laoreet sit amet lacus nec porttitor. Maecenas vestibulum in tortor in interdum. Vivamus blandit quis purus laoreet dictum. In lacinia magna eget imperdiet interdum. Etiam arcu augue, auctor eget mattis eu, consequat ac tellus. Aenean id neque vitae massa porta sollicitudin vel sed ante.</var>
@@ -1136,7 +1136,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="SOBlogs#SCREENSHOTS_BLOG_ENTRY_CONTENT_INLINE_EDIT_PNG" />
 	</command>
 
-	<command name="EditSOBlogsEntrySOUser" priority="5">
+	<command name="EditSOBlogsEntrySOUser" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1550,7 +1550,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveToRecycleBinSOBlogsEntry" priority="5">
+	<command name="MoveToRecycleBinSOBlogsEntry" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -1576,7 +1576,7 @@
 		<execute function="AssertElementNotPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_TITLE" />
 	</command>
 
-	<command name="MoveToRecycleBinSOBlogsEntrySOUser" priority="5">
+	<command name="MoveToRecycleBinSOBlogsEntrySOUser" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ACTION_CHECKBOX" />
@@ -1748,7 +1748,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT_1" />
 	</command>
 
-	<command name="PreviewSOBlogsEntry" priority="5">
+	<command name="PreviewSOBlogsEntry" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -1794,7 +1794,7 @@
 		<execute macro="BlogsEntry#viewRate4StarsPG" />
 	</command>
 
-	<command name="SaveSOBlogsEntryDraft" priority="5">
+	<command name="SaveSOBlogsEntryDraft" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -1819,7 +1819,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveSOBlogsEntryDraftAuto" priority="5">
+	<command name="SaveSOBlogsEntryDraftAuto" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -1884,7 +1884,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55802" name="SearchSOBlogsEntryComment" priority="5">
+	<command known-issues="LPS-55802" name="SearchSOBlogsEntryComment" priority="4">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1917,7 +1917,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSOBlogsEntryContent" priority="5">
+	<command name="SearchSOBlogsEntryContent" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -1979,7 +1979,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSOBlogsEntryContentQuotes" priority="5">
+	<command name="SearchSOBlogsEntryContentQuotes" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -2047,7 +2047,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSOBlogsEntryTitle" priority="5">
+	<command name="SearchSOBlogsEntryTitle" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -2109,7 +2109,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSOBlogsEntryTitleQuotes" priority="5">
+	<command name="SearchSOBlogsEntryTitleQuotes" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -2177,7 +2177,7 @@
 		</execute>
 	</command>
 
-	<command name="SubscribeToSOBlogsEntryAndViewEntryInGmail" priority="5">
+	<command name="SubscribeToSOBlogsEntryAndViewEntryInGmail" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="userEmailAddress" property-value="email.address.2" />
@@ -2937,7 +2937,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSOBlogsEntryRecentBlogs" priority="5">
+	<command name="ViewSOBlogsEntryRecentBlogs" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

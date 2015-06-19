@@ -9,7 +9,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="Smoke" priority="5">
+	<command name="Smoke" priority="4">
 		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />

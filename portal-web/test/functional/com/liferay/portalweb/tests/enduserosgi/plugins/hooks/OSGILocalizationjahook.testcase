@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="LocalizationJAHookSmoke" priority="5">
+	<command name="LocalizationJAHookSmoke" priority="4">
 		<property name="hook.plugins.includes" value="localization-ja-hook" />
 
 		<var name="appName" value="Japanese Localization" />

@@ -25,7 +25,7 @@
 		<execute macro="SOSite#tearDownCP" />
 	</tear-down>
 
-	<command name="DeleteMessage" priority="5">
+	<command name="DeleteMessage" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -77,7 +77,7 @@
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 	</command>
 
-	<command known-issues="SOS-2108" name="DeleteMessageBySOUser" priority="5">
+	<command known-issues="SOS-2108" name="DeleteMessageBySOUser" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -135,7 +135,7 @@
 		<execute function="AssertTextNotPresent" value1="${messageSubject}" />
 	</command>
 
-	<command name="DeleteMessageBySOUser2" priority="5">
+	<command name="DeleteMessageBySOUser2" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -261,7 +261,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2108" name="DeleteMessageDetails" priority="5">
+	<command known-issues="SOS-2108" name="DeleteMessageDetails" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -314,7 +314,7 @@
 		<execute function="AssertTextNotPresent" value1="${messageSubject}" />
 	</command>
 
-	<command name="DeleteMessagesAll" priority="5">
+	<command name="DeleteMessagesAll" priority="4">
 		<var name="messageBody1" value="Message1 Body" />
 		<var name="messageBody2" value="Message2 Body" />
 		<var name="messageBody3" value="Message3 Body" />
@@ -404,7 +404,7 @@
 		<execute function="AssertTextEquals" locator1="SOMessages#INFO_MESSAGE" value1="No messages found." />
 	</command>
 
-	<command name="MarkAsUnreadMessage" priority="5">
+	<command name="MarkAsUnreadMessage" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -462,7 +462,7 @@
 		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_UNREAD" />
 	</command>
 
-	<command known-issues="SOS-2108" name="MarkAsUnreadMessageDetails" priority="5">
+	<command known-issues="SOS-2108" name="MarkAsUnreadMessageDetails" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -530,7 +530,7 @@
 		<execute function="AssertElementPresent" locator1="SOMessages#MESSAGE_UNREAD" />
 	</command>
 
-	<command name="MarkAsUnreadMessagesAll" priority="5">
+	<command name="MarkAsUnreadMessagesAll" priority="4">
 		<var name="messageBody1" value="Message1 Body" />
 		<var name="messageBody2" value="Message2 Body" />
 		<var name="messageBody3" value="Message3 Body" />
@@ -750,7 +750,7 @@
 		<execute function="AssertNotChecked" locator1="SOMessages#MESSAGE_CHECKBOX" />
 	</command>
 
-	<command name="SendMessage" priority="5">
+	<command name="SendMessage" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
@@ -829,7 +829,7 @@
 		</execute>
 	</command>
 
-	<command name="SendMessageAttachment" priority="5">
+	<command name="SendMessageAttachment" priority="4">
 		<var name="messageAttachmentFile" value="Document_1.jpg" />
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
@@ -952,7 +952,7 @@
 		<execute function="AssertTextNotPresent" value1="${messageBody}" />
 	</command>
 
-	<command name="SendMessageAttachmentMultipleUsers" priority="5">
+	<command name="SendMessageAttachmentMultipleUsers" priority="4">
 		<var name="messageAttachmentFile1" value="Document_1.jpg" />
 		<var name="messageAttachmentFile2" value="Document_2.jpg" />
 		<var name="messageAttachmentFile3" value="Document_3.jpg" />
@@ -1219,7 +1219,7 @@
 		</execute>
 	</command>
 
-	<command name="SendMessageMultipleUsers" priority="5">
+	<command name="SendMessageMultipleUsers" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody1" value="Message Reply1 Body" />
 		<var name="messageReplyBody2" value="Message Reply2 Body" />
@@ -1483,7 +1483,7 @@
 		<execute function="AssertTextNotPresent" value1="${messageBody}" />
 	</command>
 
-	<command name="SendMessagePortal" priority="5">
+	<command name="SendMessagePortal" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Private Messaging Page" />
@@ -2118,7 +2118,7 @@
 		</execute>
 	</command>
 
-	<command name="SendReplyMessage" priority="5">
+	<command name="SendReplyMessage" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
 		<var name="messageSubject" value="Message Subject" />
@@ -2207,7 +2207,7 @@
 		</execute>
 	</command>
 
-	<command name="SendReplyMessageAttachment" priority="5">
+	<command name="SendReplyMessageAttachment" priority="4">
 		<var name="messageAttachmentFile" value="Document_1.jpg" />
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
@@ -2300,7 +2300,7 @@
 		</execute>
 	</command>
 
-	<command name="SendReplyMessageAttachmentPortal" priority="5">
+	<command name="SendReplyMessageAttachmentPortal" priority="4">
 		<var name="messageAttachmentFile1" value="Document_1.jpg" />
 		<var name="messageAttachmentFile2" value="Document_2.jpg" />
 		<var name="messageAttachmentFile3" value="Document_3.jpg" />
@@ -2907,7 +2907,7 @@
 		<execute function="AssertTextNotPresent" value1="${userScreenName4}" />
 	</command>
 
-	<command name="ViewAutocompleteMenuSearch" priority="5">
+	<command name="ViewAutocompleteMenuSearch" priority="4">
 		<var name="pageName" value="Messages" />
 		<var name="soPage" value="true" />
 		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
@@ -3247,7 +3247,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAutocompleteMenuUserAddressInformation" priority="5">
+	<command name="ViewAutocompleteMenuUserAddressInformation" priority="4">
 		<var name="pageName" value="Messages" />
 		<var name="soPage" value="true" />
 		<var name="userAddressCity" value="Fictional City" />

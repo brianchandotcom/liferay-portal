@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="WeatherPortletSmoke" priority="5">
+	<command name="WeatherPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="weather-portlet" />
 
 		<var name="appName" value="Weather" />

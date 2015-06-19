@@ -2,21 +2,21 @@
 	<property name="testcase.url" value="http://the-internet.herokuapp.com/status_codes" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="MacroElseClauseEvaluated" priority="5">
+	<command name="MacroElseClauseEvaluated" priority="4">
 		<execute macro="ElseIfLogger#switchConditional">
 			<var name="expected" value="Last clause" />
 			<var name="switch" value="5" />
 		</execute>
 	</command>
 
-	<command name="MacroElseIfClauseEvaluated" priority="5">
+	<command name="MacroElseIfClauseEvaluated" priority="4">
 		<execute macro="ElseIfLogger#switchConditional">
 			<var name="expected" value="3rd clause" />
 			<var name="switch" value="3" />
 		</execute>
 	</command>
 
-	<command name="TestCaseElseClauseEvaluated" priority="5">
+	<command name="TestCaseElseClauseEvaluated" priority="4">
 		<var name="switch" value="5" />
 
 		<if>
@@ -58,7 +58,7 @@
 		</if>
 	</command>
 
-	<command name="TestCaseElseIfClauseEvaluated" priority="5">
+	<command name="TestCaseElseIfClauseEvaluated" priority="4">
 		<var name="switch" value="4" />
 
 		<if>
@@ -100,7 +100,7 @@
 		</if>
 	</command>
 
-	<command name="TestCaseElseIfConditions" priority="5">
+	<command name="TestCaseElseIfConditions" priority="4">
 		<if>
 			<condition function="IsElementPresent" locator1="ElseIfLogger#FAKE_ELEMENT" />
 			<then>
@@ -124,7 +124,7 @@
 		</if>
 	</command>
 
-	<command name="TestCaseElseIfContains" priority="5">
+	<command name="TestCaseElseIfContains" priority="4">
 		<if>
 			<contains string="abcdefg" substring="abcdefghij" />
 			<then>
@@ -148,7 +148,7 @@
 		</if>
 	</command>
 
-	<command name="TestCaseElseIfIsset" priority="5">
+	<command name="TestCaseElseIfIsset" priority="4">
 		<var name="switch" value="4" />
 
 		<if>

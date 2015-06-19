@@ -21,7 +21,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddBlogsEntryComment" priority="5">
+	<command name="AddBlogsEntryComment" priority="4">
 		<var name="commentContent" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -124,7 +124,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryComments" priority="5">
+	<command name="AddBlogsEntryComments" priority="4">
 		<var name="commentContent1" value="Blogs Entry Comment1" />
 		<var name="commentContent2" value="Blogs Entry Comment2" />
 		<var name="commentContent3" value="Blogs Entry Comment3" />
@@ -535,7 +535,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryComment" priority="5">
+	<command name="DeleteBlogsEntryComment" priority="4">
 		<var name="commentContent" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -612,7 +612,7 @@
 		<execute function="AssertTextNotPresent" value1="${entryComment}" />
 	</command>
 
-	<command name="EditBlogsEntryComment" priority="5">
+	<command name="EditBlogsEntryComment" priority="4">
 		<var name="commentContent" value="Blogs Entry Comment" />
 		<var name="commentContentEdit" value="Blogs Entry Comment Edit" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -727,7 +727,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogEntriesActivities" priority="5">
+	<command name="ViewBlogEntriesActivities" priority="4">
 		<var name="entryContent1" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryContent3" value="Blogs Entry3 Content" />
@@ -889,7 +889,7 @@
 		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
 	</command>
 
-	<command known-issues="SOS-2269,SOS-2270" name="ViewScheduledBlogEntryActivities" priority="5">
+	<command known-issues="SOS-2269,SOS-2270" name="ViewScheduledBlogEntryActivities" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="siteDescription" value="Open Site Description" />

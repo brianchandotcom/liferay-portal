@@ -33,7 +33,7 @@
 		<execute macro="Organization#tearDownCP" />
 	</tear-down>
 
-	<command name="AcceptMemberRequestSOSitePrivateRestricted" priority="5">
+	<command name="AcceptMemberRequestSOSitePrivateRestricted" priority="4">
 		<var name="siteDescription" value="Private Restricted Site Description" />
 		<var name="siteName" value="Private Restricted Site Name" />
 		<var name="siteType" value="Private Restricted" />
@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command name="AcceptMemberRequestSOSitePublicRestricted" priority="5">
+	<command name="AcceptMemberRequestSOSitePublicRestricted" priority="4">
 		<var name="siteDescription" value="Public Restricted Site Description" />
 		<var name="siteName" value="Public Restricted Site Name" />
 		<var name="siteType" value="Public Restricted" />
@@ -1207,7 +1207,7 @@
 		</execute>
 	</command>
 
-	<command name="ConfirmInviteSOSitePrivate" priority="5">
+	<command name="ConfirmInviteSOSitePrivate" priority="4">
 		<var name="siteDescription" value="Private Site Description" />
 		<var name="siteName" value="Private Site Name" />
 		<var name="siteType" value="Private" />
@@ -1411,7 +1411,7 @@
 		<execute macro="SOMembersPortlet#viewMember" />
 	</command>
 
-	<command name="ConfirmMemberInviteSiteByEmail" priority="5">
+	<command name="ConfirmMemberInviteSiteByEmail" priority="4">
 		<var name="siteDescription" value="Social Office Site Description" />
 		<var name="siteName" value="Social Office Site Name" />
 		<var name="siteType" value="Open" />
@@ -1491,7 +1491,7 @@
 		<execute macro="SOMembersPortlet#viewMember" />
 	</command>
 
-	<command name="ConfirmMemberInviteSiteByEmailNonSOUser" priority="5">
+	<command name="ConfirmMemberInviteSiteByEmailNonSOUser" priority="4">
 		<var name="siteDescription" value="Regular Site Description" />
 		<var name="siteName" value="Regular Site Name" />
 		<var name="siteType" value="Open" />
@@ -1596,7 +1596,7 @@
 		<execute macro="SOMembersPortlet#viewMember" />
 	</command>
 
-	<command name="ConfirmMemberInviteSiteByEmailNonUser" priority="5">
+	<command name="ConfirmMemberInviteSiteByEmailNonUser" priority="4">
 		<var name="siteDescription" value="New Site Description" />
 		<var name="siteName" value="New Site Name" />
 		<var name="siteType" value="Open" />
@@ -1675,7 +1675,7 @@
 		<execute macro="SOMembersPortlet#viewMember" />
 	</command>
 
-	<command name="ConfirmMemberInviteSiteOpen" priority="5">
+	<command name="ConfirmMemberInviteSiteOpen" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -1740,7 +1740,7 @@
 		<execute macro="SOMembersPortlet#viewMember" />
 	</command>
 
-	<command name="DenyMemberRequestSOSitePrivateRestricted" priority="5">
+	<command name="DenyMemberRequestSOSitePrivateRestricted" priority="4">
 		<var name="siteDescription" value="Private Restricted Site Description" />
 		<var name="siteName" value="Private Restricted Site Name" />
 		<var name="siteType" value="Private Restricted" />
@@ -1809,7 +1809,7 @@
 		</execute>
 	</command>
 
-	<command name="DenyMemberRequestSOSitePublicRestricted" priority="5">
+	<command name="DenyMemberRequestSOSitePublicRestricted" priority="4">
 		<var name="siteDescription" value="Public Restricted Site Description" />
 		<var name="siteName" value="Public Restricted Site Name" />
 		<var name="siteType" value="Public Restricted" />
@@ -2071,7 +2071,7 @@
 		</execute>
 	</command>
 
-	<command name="IgnoreMemberInviteSiteOpen" priority="5">
+	<command name="IgnoreMemberInviteSiteOpen" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -2136,7 +2136,7 @@
 		<execute macro="SOMembersPortlet#viewNonMember" />
 	</command>
 
-	<command name="InviteConnectionSite" priority="5">
+	<command name="InviteConnectionSite" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -2441,7 +2441,7 @@
 		<execute macro="SOMembersPortlet#viewMember" />
 	</command>
 
-	<command name="InviteMembersSiteRolesSite" priority="5">
+	<command name="InviteMembersSiteRolesSite" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -2553,7 +2553,7 @@
 		</execute>
 	</command>
 
-	<command name="InviteMembersSiteViaNonSiteCreators" priority="5">
+	<command name="InviteMembersSiteViaNonSiteCreators" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -2837,7 +2837,7 @@
 		</execute>
 	</command>
 
-	<command name="JoinSOSite" priority="5">
+	<command name="JoinSOSite" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -2888,7 +2888,7 @@
 		</execute>
 	</command>
 
-	<command name="LeaveSOSite" priority="5">
+	<command name="LeaveSOSite" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -2943,7 +2943,7 @@
 		</execute>
 	</command>
 
-	<command name="LeaveSOSitePrivateRestricted" priority="5">
+	<command name="LeaveSOSitePrivateRestricted" priority="4">
 		<var name="siteDescription" value="Private Restricted Site Description" />
 		<var name="siteName" value="Private Restricted Site Name" />
 		<var name="siteType" value="Private Restricted" />
@@ -3016,7 +3016,7 @@
 		</execute>
 	</command>
 
-	<command name="LeaveSOSitePublicRestricted" priority="5">
+	<command name="LeaveSOSitePublicRestricted" priority="4">
 		<var name="siteDescription" value="Public Restricted Site Description" />
 		<var name="siteName" value="Public Restricted Site Name" />
 		<var name="siteType" value="Public Restricted" />
@@ -3413,7 +3413,7 @@
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#MEMBERS_LIST_EMAIL" value1="${userEmailAddress4}" />
 	</command>
 
-	<command name="ViewRolesDropdownLocalizationGerman" priority="5">
+	<command name="ViewRolesDropdownLocalizationGerman" priority="4">
 		<var name="language1" value="German (Germany)" />
 		<var name="language2" value="English (United States)" />
 		<var name="portletName" value="Language" />

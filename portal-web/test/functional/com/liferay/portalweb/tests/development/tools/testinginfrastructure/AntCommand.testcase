@@ -1,7 +1,7 @@
 <definition component-name="portal-tools">
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="StopAndStartAppServer" priority="5">
+	<command name="StopAndStartAppServer" priority="4">
 		<execute function="AntCommand" locator1="build-test.xml" value1="stop-app-server" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server" />

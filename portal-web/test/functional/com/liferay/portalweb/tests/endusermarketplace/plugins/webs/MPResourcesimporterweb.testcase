@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ResourcesImporterWebSmoke" priority="5">
+	<command name="ResourcesImporterWebSmoke" priority="4">
 		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Resources Importer" />

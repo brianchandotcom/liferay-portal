@@ -9,7 +9,7 @@
 		<execute macro="Tag#tearDownCP" />
 	</tear-down>
 
-	<command name="AddTag" priority="5">
+	<command name="AddTag" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -19,7 +19,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTags" priority="5">
+	<command name="AddTags" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -41,7 +41,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTagsAdmin" priority="5">
+	<command name="AddTagsAdmin" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -269,7 +269,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTagFromList" priority="5">
+	<command name="DeleteTagFromList" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -288,7 +288,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTagFromToolbar" priority="5">
+	<command name="DeleteTagFromToolbar" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -307,7 +307,7 @@
 		</execute>
 	</command>
 
-	<command name="EditTag" priority="5">
+	<command name="EditTag" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -321,7 +321,7 @@
 		</execute>
 	</command>
 
-	<command name="EditTagCancel" priority="5">
+	<command name="EditTagCancel" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -335,7 +335,7 @@
 		</execute>
 	</command>
 
-	<command name="MergeMultipleTags" priority="5">
+	<command name="MergeMultipleTags" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -362,7 +362,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55436" name="MergeSingleTagWarning" priority="5">
+	<command known-issues="LPS-55436" name="MergeSingleTagWarning" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -376,7 +376,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchTag" priority="5">
+	<command name="SearchTag" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>

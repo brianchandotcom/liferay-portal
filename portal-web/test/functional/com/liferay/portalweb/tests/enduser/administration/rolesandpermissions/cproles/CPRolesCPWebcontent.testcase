@@ -21,7 +21,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddFolderSiteRole" priority="5">
+	<command name="AddFolderSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
@@ -96,7 +96,7 @@
 		<execute function="AssertElementNotPresent" locator1="CPWebcontent#TOOLBAR_ADD" />
 	</command>
 
-	<command name="AddStructureSiteRole" priority="5">
+	<command name="AddStructureSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
@@ -183,7 +183,7 @@
 		<execute function="AssertElementNotPresent" locator1="CPWebcontent#TOOLBAR_MANAGE" />
 	</command>
 
-	<command name="AddTemplateSiteRole" priority="5">
+	<command name="AddTemplateSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
@@ -258,7 +258,7 @@
 		<execute function="AssertElementNotPresent" locator1="CPWebcontent#TOOLBAR_MANAGE" />
 	</command>
 
-	<command name="AddWebContentSiteRole" priority="5">
+	<command name="AddWebContentSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
@@ -341,7 +341,7 @@
 		<execute function="AssertElementNotPresent" locator1="CPWebcontent#TOOLBAR_ADD" />
 	</command>
 
-	<command name="ViewWebContentPortletRegRole" priority="5">
+	<command name="ViewWebContentPortletRegRole" priority="4">
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
 			<var name="portletName" value="Web Content" />
 			<var name="roleName" value="Regrole Name" />
@@ -390,7 +390,7 @@
 		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
 	</command>
 
-	<command name="ViewWebContentPortletSiteRole" priority="5">
+	<command name="ViewWebContentPortletSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />

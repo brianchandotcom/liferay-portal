@@ -25,7 +25,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddTaskAssignedToConnection" priority="5">
+	<command name="AddTaskAssignedToConnection" priority="4">
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -94,7 +94,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskAssignedToConnectionCommentBySOUser" priority="5">
+	<command name="AddTaskAssignedToConnectionCommentBySOUser" priority="4">
 		<var name="taskComment" value="Task Comment" />
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -164,7 +164,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskAssignedToFollower" priority="5">
+	<command name="AddTaskAssignedToFollower" priority="4">
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -206,7 +206,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="AddTaskAssignedToMe" priority="5">
+	<command name="AddTaskAssignedToMe" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -275,7 +275,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskAssignedToMeDueDate" priority="5">
+	<command name="AddTaskAssignedToMeDueDate" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -311,7 +311,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskAssignedToMeTag" priority="5">
+	<command name="AddTaskAssignedToMeTag" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -341,7 +341,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskAssignedToMeTagInvalidCharacters" priority="5">
+	<command name="AddTaskAssignedToMeTagInvalidCharacters" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -557,7 +557,7 @@
 		</execute>
 	</command>
 
-	<command name="CompleteTask100Percent" priority="5">
+	<command name="CompleteTask100Percent" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -599,7 +599,7 @@
 		</execute>
 	</command>
 
-	<command name="CompleteTask60Percent" priority="5">
+	<command name="CompleteTask60Percent" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -641,7 +641,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTaskAssignedToConnectionCommentBySOUser" priority="5">
+	<command name="DeleteTaskAssignedToConnectionCommentBySOUser" priority="4">
 		<var name="taskComment" value="Task Comment" />
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -709,7 +709,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTaskAssignedToMe" priority="5">
+	<command name="DeleteTaskAssignedToMe" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -860,7 +860,7 @@
 		</execute>
 	</command>
 
-	<command name="EditTaskAssignedToConnectionCommentBySOUser" priority="5">
+	<command name="EditTaskAssignedToConnectionCommentBySOUser" priority="4">
 		<var name="taskComment" value="Task Comment" />
 		<var name="taskCommentEdit" value="Task Comment Edit" />
 		<var name="taskDescription" value="Task Description" />
@@ -942,7 +942,7 @@
 		</execute>
 	</command>
 
-	<command name="EditTaskAssignedToMe" priority="5">
+	<command name="EditTaskAssignedToMe" priority="4">
 		<var name="taskDescription" value="Task Description" />
 		<var name="taskDescriptionEdit" value="Task Description Edit" />
 
@@ -1084,7 +1084,7 @@
 		</execute>
 	</command>
 
-	<command name="FilterTasksByPlace" priority="5">
+	<command name="FilterTasksByPlace" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -1137,7 +1137,7 @@
 		<execute function="AssertTextNotPresent" value1="${taskDescription}01" />
 	</command>
 
-	<command name="FilterTasksByTag" priority="5">
+	<command name="FilterTasksByTag" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">
@@ -1203,7 +1203,7 @@
 		<execute function="AssertTextNotPresent" value1="${taskDescription}02" />
 	</command>
 
-	<command name="ReassignTaskToConnection" priority="5">
+	<command name="ReassignTaskToConnection" priority="4">
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -1297,7 +1297,7 @@
 		</execute>
 	</command>
 
-	<command name="ResolveTaskAssignedToConnection" priority="5">
+	<command name="ResolveTaskAssignedToConnection" priority="4">
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -1385,7 +1385,7 @@
 		</execute>
 	</command>
 
-	<command name="ResolveTaskAssignedToMe" priority="5">
+	<command name="ResolveTaskAssignedToMe" priority="4">
 		<var name="taskDescription" value="Task Description" />
 
 		<execute macro="Page#gotoPG">

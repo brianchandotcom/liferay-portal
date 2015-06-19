@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="WYSIWYGPortletSmoke" priority="5">
+	<command name="WYSIWYGPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="wysiwyg-portlet" />
 
 		<var name="appName" value="WYSIWYG" />

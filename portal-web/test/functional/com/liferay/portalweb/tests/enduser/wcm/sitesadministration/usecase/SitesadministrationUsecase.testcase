@@ -19,7 +19,7 @@
 		<execute macro="UserGroup#tearDownCP" />
 	</tear-down>
 
-	<command name="AddOrganizationSitesAndDeactivate" priority="5">
+	<command name="AddOrganizationSitesAndDeactivate" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -204,7 +204,7 @@
 		</execute>
 	</command>
 
-	<command name="ApplicationAdapter" priority="5">
+	<command name="ApplicationAdapter" priority="4">
 		<property name="hook.plugins.includes" value="sample-application-adapter-hook" />
 
 		<execute macro="Page#gotoCP">
@@ -517,7 +517,7 @@
 		</execute>
 	</command>
 
-	<command name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="5">
+	<command name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>
@@ -952,7 +952,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51074" name="SitesDemoSiteManagement" priority="5">
+	<command known-issues="LPS-51074" name="SitesDemoSiteManagement" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1473,7 +1473,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteTeamsXSS" priority="5">
+	<command name="SiteTeamsXSS" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

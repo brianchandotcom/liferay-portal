@@ -95,53 +95,53 @@ public class TinyMCEEditorConfigContributor
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
-		JSONArray stylesJsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray styleFormatsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(locale, "normal"), "inline", "p", null));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.format(locale, "heading-x", "1"), "block", "h1",
 				null));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.format(locale, "heading-x", "2"), "block", "h2",
 				null));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.format(locale, "heading-x", "3"), "block", "h3",
 				null));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.format(locale, "heading-x", "4"), "block", "h4",
 				null));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(locale, "preformatted-text"), "block", "pre",
 				null));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(locale, "cited-work"), "inline", "cite",
 				null));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(locale, "computer-code"), "inline", "code",
 				null));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(locale, "info-message"), "block", "div",
 				"portlet-msg-info"));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(locale, "alert-message"), "block", "div",
 				"portlet-msg-alert"));
-		stylesJsonArray.put(
+		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
 				LanguageUtil.get(locale, "error-message"), "block", "div",
 				"portlet-msg-error"));
 
-		return stylesJsonArray;
+		return styleFormatsJSONArray;
 	}
 
 	protected JSONArray getToolbarJSONArray(

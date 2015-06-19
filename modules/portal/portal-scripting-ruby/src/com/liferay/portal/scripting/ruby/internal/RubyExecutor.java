@@ -14,6 +14,8 @@
 
 package com.liferay.portal.scripting.ruby.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
@@ -22,20 +24,22 @@ import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.scripting.ruby.configuration.RubyScriptingConfiguration;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,61 +55,24 @@ import org.jruby.embed.LocalContextScope;
 import org.jruby.embed.internal.LocalContextProvider;
 import org.jruby.exceptions.RaiseException;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alberto Montero
  * @author Raymond Augé
  */
+@Component(
+	configurationPid = "com.liferay.portal.scripting.ruby.configuration.JRubyScriptingConfiguration",
+	immediate = true,
+	property = {"scripting.language=" + RubyExecutor.LANGUAGE},
+	service = ScriptingExecutor.class
+)
 public class RubyExecutor extends BaseScriptingExecutor {
 
 	public static final String LANGUAGE = "ruby";
-
-	public RubyExecutor() {
-		initScriptingExecutorClassLoader();
-
-		org.jruby.embed.ScriptingContainer scriptingContainer =
-			new org.jruby.embed.ScriptingContainer(
-				LocalContextScope.THREADSAFE);
-
-		_scriptingContainer = new RubyScriptingContainer(scriptingContainer);
-
-		LocalContextProvider localContextProvider =
-			scriptingContainer.getProvider();
-
-		RubyInstanceConfig rubyInstanceConfig =
-			localContextProvider.getRubyInstanceConfig();
-
-		if (PropsValues.SCRIPTING_JRUBY_COMPILE_MODE.equals(
-				_COMPILE_MODE_FORCE)) {
-
-			rubyInstanceConfig.setCompileMode(CompileMode.FORCE);
-		}
-		else if (PropsValues.SCRIPTING_JRUBY_COMPILE_MODE.equals(
-					_COMPILE_MODE_JIT)) {
-
-			rubyInstanceConfig.setCompileMode(CompileMode.JIT);
-		}
-
-		rubyInstanceConfig.setJitThreshold(
-			PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD);
-		rubyInstanceConfig.setLoader(ClassLoaderUtil.getPortalClassLoader());
-
-		_basePath = PropsValues.LIFERAY_LIB_PORTAL_DIR;
-
-		_loadPaths = new ArrayList<>(
-			PropsValues.SCRIPTING_JRUBY_LOAD_PATHS.length);
-
-		for (String gemLibPath : PropsValues.SCRIPTING_JRUBY_LOAD_PATHS) {
-			_loadPaths.add(gemLibPath);
-		}
-
-		rubyInstanceConfig.setLoadPaths(_loadPaths);
-
-		scriptingContainer.setCurrentDirectory(_basePath);
-	}
-
-	public void destroy() {
-		_scriptingContainer.destroy();
-	}
 
 	@Override
 	public Map<String, Object> eval(
@@ -151,6 +118,19 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 	public void setExecuteInSeparateThread(boolean executeInSeparateThread) {
 		_executeInSeparateThread = executeInSeparateThread;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_rubyScriptingConfiguration = Configurable.createConfigurable(
+			RubyScriptingConfiguration.class, properties);
+
+		initialize();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_scriptingContainer.destroy();
 	}
 
 	protected Map<String, Object> doEval(
@@ -268,6 +248,51 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		}
 	}
 
+	protected void initialize() {
+		initScriptingExecutorClassLoader();
+
+		org.jruby.embed.ScriptingContainer scriptingContainer =
+			new org.jruby.embed.ScriptingContainer(
+				LocalContextScope.THREADSAFE);
+
+		_scriptingContainer = new RubyScriptingContainer(scriptingContainer);
+
+		LocalContextProvider localContextProvider =
+			scriptingContainer.getProvider();
+
+		RubyInstanceConfig rubyInstanceConfig =
+			localContextProvider.getRubyInstanceConfig();
+
+		if (_rubyScriptingConfiguration.compileMode().equals(
+				_COMPILE_MODE_FORCE)) {
+
+			rubyInstanceConfig.setCompileMode(CompileMode.FORCE);
+		}
+		else if (_rubyScriptingConfiguration.compileMode().equals(
+					_COMPILE_MODE_JIT)) {
+
+			rubyInstanceConfig.setCompileMode(CompileMode.JIT);
+		}
+
+		rubyInstanceConfig.setJitThreshold(
+			_rubyScriptingConfiguration.compileThreshold());
+		rubyInstanceConfig.setLoader(getScriptingExecutorClassLoader());
+
+		String[] loadPaths = StringUtil.split(
+			_rubyScriptingConfiguration.loadPaths(), StringPool.COMMA);
+
+		_loadPaths = new ArrayList<>(Arrays.asList(loadPaths));
+
+		rubyInstanceConfig.setLoadPaths(_loadPaths);
+
+		scriptingContainer.setCurrentDirectory(_basePath);
+	}
+
+	@Reference(unbind = "-")
+	protected void setProps(Props props) {
+		_basePath = props.get(PropsKeys.LIFERAY_LIB_PORTAL_DIR);
+	}
+
 	private static final String _COMPILE_MODE_FORCE = "force";
 
 	private static final String _COMPILE_MODE_JIT = "jit";
@@ -289,10 +314,11 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		}
 	}
 
-	private final String _basePath;
+	private String _basePath;
 	private boolean _executeInSeparateThread = true;
-	private final List<String> _loadPaths;
-	private final ScriptingContainer<org.jruby.embed.ScriptingContainer>
+	private List<String> _loadPaths;
+	private volatile RubyScriptingConfiguration _rubyScriptingConfiguration;
+	private ScriptingContainer<org.jruby.embed.ScriptingContainer>
 		_scriptingContainer;
 
 	private class EvalCallable implements Callable<Map<String, Object>> {

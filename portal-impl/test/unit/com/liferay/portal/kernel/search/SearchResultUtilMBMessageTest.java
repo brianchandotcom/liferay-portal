@@ -38,8 +38,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
-	ServiceTrackerCollections.class, CommentManagerUtil.class
+	AssetRendererFactoryRegistryUtil.class, CommentManagerUtil.class,
+	IndexerRegistryUtil.class, ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilMBMessageTest

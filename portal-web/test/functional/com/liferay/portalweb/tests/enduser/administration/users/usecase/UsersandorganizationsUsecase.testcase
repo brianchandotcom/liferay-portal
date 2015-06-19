@@ -992,7 +992,7 @@
 			]]>
 		</var>
 
-		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#REGULAR_EXPRESSION_FIELD" value1="${atLeastFourCharNoNumbers}" /> -->
+		<execute function="Type" locator1="CPPasswordpoliciesDefaultpasswordpolicy#REGULAR_EXPRESSION_FIELD" value1="${atLeastFourCharNoNumbers}" />
 
 		<execute function="AssertClick" locator1="CPPasswordpoliciesDefaultpasswordpolicy#SAVE_BUTTON" value1="Save" />
 

@@ -1209,7 +1209,7 @@
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
-			<var name="dmFolderDescription" value="${dmFolderDescription}" />>
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="documentsAction" value="Uploaded a new document in the ${dmFolderName} folder." />
 			<var name="entryContent" value="${entryContent}" />

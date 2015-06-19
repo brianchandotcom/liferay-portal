@@ -223,7 +223,7 @@
 		</execute>
 
 		<execute macro="User#firstLoginPG">
-+			<var name="password" value="test" />
+			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@www.able.com" />
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>

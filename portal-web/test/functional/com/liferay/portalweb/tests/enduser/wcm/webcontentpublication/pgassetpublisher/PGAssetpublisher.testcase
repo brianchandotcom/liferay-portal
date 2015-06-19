@@ -1057,7 +1057,7 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewSelectedPG">.
+		<execute macro="AssetPublisherPortlet#viewSelectedPG">
 			<var name="selectedAsset" value="Bookmarks Entry" />
 			<var name="selectedAssetConfiguration" value="Bookmarks Entry" />
 		</execute>

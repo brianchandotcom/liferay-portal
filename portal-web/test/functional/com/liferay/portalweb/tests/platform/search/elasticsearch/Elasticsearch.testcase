@@ -1,0 +1,143 @@
+<definition component-name="portal-search">
+	<property name="testray.main.component.name" value="Search" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="MessageboardsThread#tearDownCP" />
+
+		<execute macro="DMDocument#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command known-issues="LPS-56538" name="ElasticsearchSmokeTest" priority="5">
+		<description message="This test asserts Elasticsearch clustering to add/remove replicas as nodes are added/removed from the portal cluster. Also, we want to maintain no loss in search functionality as replicas are being added or removed." />
+
+		<property name="app.server.bundles.size" value="1" />
+		<property name="cluster.enabled" value="true" />
+
+		<!-- Verify the total number of Elasticsearch replicas is two as there are two nodes/bundles running -->
+
+		<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
+			<var name="numberOfNodes" value="2" />
+		</execute>
+
+		<execute macro="Elasticsearch#viewReplicaAddedInConsole" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Elasticsearch Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Elasticsearch Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="Orange" />
+			<var name="threadSubject" value="Apple" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="Orange" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Apple" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Elasticsearch Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle1" value="Apple" />
+			<var name="searchAssetTitle2" value="Apple" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Elasticsearch Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Orange" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle1" value="Apple" />
+			<var name="searchAssetTitle2" value="Apple" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="Portlet#shutdownSpecificServer">
+			<var name="nodePort" value="9" />
+		</execute>
+
+		<!-- Verify the total number of Elasticsearch replicas has decreased to one -->
+
+		<execute macro="Elasticsearch#viewReplicaRemovedInConsole" />
+
+		<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
+			<var name="numberOfNodes" value="1" />
+		</execute>
+
+		<!-- Verify search functionality after a replica has been removed -->
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Elasticsearch Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle1" value="Apple" />
+			<var name="searchAssetTitle2" value="Apple" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Elasticsearch Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Orange" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle1" value="Apple" />
+			<var name="searchAssetTitle2" value="Apple" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
+		</execute>
+	</command>
+</definition>

@@ -7,6 +7,7 @@
 	<property name="alloy-font-awesome.version" value="2.0" />
 	<property name="css.dir" value="../frontend-css-web/src/META-INF/resources/html/css" />
 	<property name="frontend.js.web.dir" value="../frontend-js-web" />
+	<property name="lexicon.version" value="0.1.0" />
 	<property name="themes.dir" value="src/META-INF/resources/html/themes" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
@@ -155,7 +156,33 @@
 		/>
 	</target>
 
-	<target name="build-themes" depends="build-alloy-bootstrap-theme,build-alloy-theme,build-alloy-font-awesome">
+	<target name="build-lexicon" depends="build-alloy-bootstrap-theme">
+		<path id="lexicon.zip.path">
+			<fileset dir="${third.party.dir}">
+				<include name="lexicon*.zip" />
+			</fileset>
+		</path>
+
+		<property name="lexicon.zip.path" refid="lexicon.zip.path" />
+
+		<basename file="${lexicon.zip.path}" property="lexicon.file" />
+
+		<if>
+			<not>
+				<uptodate
+					srcfile="${third.party.dir}/${lexicon.file}"
+					targetfile="${alloy.bootstrap.deploy.theme.dir}/lexicon"
+				/>
+			</not>
+			<then>
+				<delete dir="${alloy.bootstrap.deploy.theme.dir}/lexicon" />
+
+				<unzip src="${third.party.dir}/${lexicon.file}" dest="${alloy.bootstrap.deploy.theme.dir}/lexicon" />
+			</then>
+		</if>
+	</target>
+
+	<target name="build-themes" depends="build-alloy-bootstrap-theme,build-alloy-theme,build-alloy-font-awesome,build-lexicon">
 		<for param="module.name">
 			<path>
 				<dirset dir="${themes.dir}" excludes="_styled,_unstyled" includes="*" />

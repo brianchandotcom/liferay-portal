@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.configuration.configurator;
+package com.liferay.calendar.service.configuration.configurator;
 
 import com.liferay.calendar.upgrade.CalendarServiceUpgrade;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
@@ -57,7 +57,7 @@ public class CalendarServiceConfigurator {
 
 	@Reference(unbind = "-")
 	protected void setCalendarServiceUpgrade(
-		CalendarServiceUpgrade wikiServiceUpgrade) {
+		CalendarServiceUpgrade calendarServiceUpgrade) {
 	}
 
 	@Reference(unbind = "-")

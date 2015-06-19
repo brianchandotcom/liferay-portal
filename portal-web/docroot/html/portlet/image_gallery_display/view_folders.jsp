@@ -119,7 +119,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		<%
 		List subfolderIds = new ArrayList();
 
-		subfolderIds.add(new Long(curFolder.getFolderId()));
+		subfolderIds.add(Long.valueOf(curFolder.getFolderId()));
 
 		DLAppServiceUtil.getSubfolderIds(repositoryId, curFolder.getFolderId());
 

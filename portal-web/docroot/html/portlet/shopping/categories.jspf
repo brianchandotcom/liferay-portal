@@ -86,7 +86,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 			List subcategoryIds = new ArrayList();
 
-			subcategoryIds.add(new Long(curCategory.getCategoryId()));
+			subcategoryIds.add(Long.valueOf(curCategory.getCategoryId()));
 
 			ShoppingCategoryServiceUtil.getSubcategoryIds(subcategoryIds, scopeGroupId, curCategory.getCategoryId());
 

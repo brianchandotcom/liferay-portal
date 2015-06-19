@@ -76,7 +76,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			<%
 			List subcategoryIds = new ArrayList();
 
-			subcategoryIds.add(new Long(curCategory.getCategoryId()));
+			subcategoryIds.add(Long.valueOf(curCategory.getCategoryId()));
 
 			ShoppingCategoryServiceUtil.getSubcategoryIds(subcategoryIds, scopeGroupId, curCategory.getCategoryId());
 

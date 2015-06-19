@@ -50,7 +50,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (filterManageableUserGroups) {
-		userGroupParams.put("userGroupsUsers", new Long(user.getUserId()));
+		userGroupParams.put("userGroupsUsers", Long.valueOf(user.getUserId()));
 	}
 	%>
 

@@ -34,7 +34,7 @@ public class DefaultPKMapper extends ValueMapperWrapper {
 		if (oldValueString.equals("-1") || oldValueString.equals("0") ||
 			oldValueString.equals("")) {
 
-			return new Long(0);
+			return Long.valueOf(0);
 		}
 
 		try {
@@ -47,7 +47,7 @@ public class DefaultPKMapper extends ValueMapperWrapper {
 			return valueMapper.getNewValue(oldValue);
 		}
 		catch (StagnantRowException sre) {
-			return new Long(0);
+			return Long.valueOf(0);
 		}
 	}
 

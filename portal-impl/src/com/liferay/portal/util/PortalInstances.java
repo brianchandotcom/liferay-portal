@@ -210,7 +210,7 @@ public class PortalInstances {
 			_log.debug("Set company id " + companyId);
 		}
 
-		request.setAttribute(WebKeys.COMPANY_ID, new Long(companyId));
+		request.setAttribute(WebKeys.COMPANY_ID, Long.valueOf(companyId));
 
 		CompanyThreadLocal.setCompanyId(companyId);
 

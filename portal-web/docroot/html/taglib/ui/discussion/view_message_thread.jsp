@@ -24,7 +24,7 @@ int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:in
 
 index++;
 
-request.setAttribute("liferay-ui:discussion:index", new Integer(index));
+request.setAttribute("liferay-ui:discussion:index", Integer.valueOf(index));
 
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
 

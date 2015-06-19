@@ -113,7 +113,7 @@ public class ServletContextUtil {
 
 		if (cache) {
 			servletContext.setAttribute(
-				lastModifiedCacheKey, new Long(lastModified));
+				lastModifiedCacheKey, Long.valueOf(lastModified));
 		}
 
 		return lastModified;

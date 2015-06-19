@@ -132,8 +132,8 @@ public class TemplateProcessor implements ColumnProcessor {
 		for (int i = 0; i < portlets.size(); i++) {
 			Portlet portlet = portlets.get(i);
 
-			Integer columnCount = new Integer(portlets.size());
-			Integer columnPos = new Integer(i);
+			Integer columnCount = Integer.valueOf(portlets.size());
+			Integer columnPos = Integer.valueOf(i);
 
 			PortletRenderer portletRenderer = new PortletRenderer(
 				portlet, columnId, columnCount, columnPos);

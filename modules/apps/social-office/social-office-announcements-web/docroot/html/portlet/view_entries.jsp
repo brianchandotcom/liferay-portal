@@ -53,7 +53,7 @@ else {
 	scopes = AnnouncementsUtil.getAnnouncementScopes(user.getUserId());
 }
 
-scopes.put(new Long(0), new long[] {0});
+scopes.put(Long.valueOf(0), new long[] {0});
 
 int start = ParamUtil.getInteger(request, "start", 0);
 

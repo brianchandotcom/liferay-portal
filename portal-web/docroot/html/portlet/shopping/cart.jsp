@@ -191,7 +191,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		ShoppingItemPrice[] itemPrices = (ShoppingItemPrice[])ShoppingItemPriceLocalServiceUtil.getItemPrices(item.getItemId()).toArray(new ShoppingItemPrice[0]);
 
 		if (!SessionErrors.isEmpty(renderRequest)) {
-			count = new Integer(ParamUtil.getInteger(request, "item_" + item.getItemId() + "_" + itemsCount + "_count"));
+			count = Integer.valueOf(ParamUtil.getInteger(request, "item_" + item.getItemId() + "_" + itemsCount + "_count"));
 		}
 
 		ResultRow row = new ResultRow(item, item.getItemId(), itemsCount);
@@ -305,10 +305,10 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 				sb.append(": ");
 			}
 			else if (itemPrice.getMaxQuantity() != 0) {
-				sb.append(LanguageUtil.format(request, "price-for-x-to-x-items", new Object[] {"<strong>" + new Integer(itemPrice.getMinQuantity()) + "</strong>", "<strong>" + new Integer(itemPrice.getMaxQuantity()) + "</strong>"}, false));
+				sb.append(LanguageUtil.format(request, "price-for-x-to-x-items", new Object[] {"<strong>" + Integer.valueOf(itemPrice.getMinQuantity()) + "</strong>", "<strong>" + Integer.valueOf(itemPrice.getMaxQuantity()) + "</strong>"}, false));
 			}
 			else if (itemPrice.getMaxQuantity() == 0) {
-				sb.append(LanguageUtil.format(request, "price-for-x-items-and-above", "<strong>" + new Integer(itemPrice.getMinQuantity()) + "</strong>", false));
+				sb.append(LanguageUtil.format(request, "price-for-x-items-and-above", "<strong>" + Integer.valueOf(itemPrice.getMinQuantity()) + "</strong>", false));
 			}
 
 			if (itemPrice.getDiscount() <= 0) {

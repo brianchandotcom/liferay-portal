@@ -24,8 +24,8 @@ import java.sql.Types;
 public class CyrusUser implements Serializable {
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"userId", new Integer(Types.VARCHAR)},
-		{"password_", new Integer(Types.VARCHAR)}
+		{"userId", Integer.valueOf(Types.VARCHAR)},
+		{"password_", Integer.valueOf(Types.VARCHAR)}
 	};
 
 	public static final String TABLE_NAME = "CyrusUser";

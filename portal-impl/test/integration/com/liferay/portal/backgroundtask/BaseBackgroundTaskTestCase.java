@@ -87,12 +87,13 @@ public abstract class BaseBackgroundTaskTestCase {
 
 	protected void assertThreadLocalValues() {
 		Assert.assertEquals(
-			new Long(_companyId), CompanyThreadLocal.getCompanyId());
+			Long.valueOf(_companyId), CompanyThreadLocal.getCompanyId());
 		Assert.assertEquals(
 			_clusterInvokeEnabled, ClusterInvokeThreadLocal.isEnabled());
 		Assert.assertEquals(
 			_defaultLocale, LocaleThreadLocal.getDefaultLocale());
-		Assert.assertEquals(new Long(_groupId), GroupThreadLocal.getGroupId());
+		Assert.assertEquals(
+			Long.valueOf(_groupId), GroupThreadLocal.getGroupId());
 		Assert.assertEquals(_principalName, PrincipalThreadLocal.getName());
 		Assert.assertEquals(
 			_siteDefaultLocale, LocaleThreadLocal.getSiteDefaultLocale());

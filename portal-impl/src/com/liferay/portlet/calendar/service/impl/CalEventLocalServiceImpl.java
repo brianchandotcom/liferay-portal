@@ -1464,7 +1464,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			int[] byMonthDay = recurrence.getByMonthDay();
 
 			if (byMonthDay != null) {
-				Integer monthDay = new Integer(byMonthDay[0]);
+				Integer monthDay = Integer.valueOf(byMonthDay[0]);
 
 				recur.getMonthDayList().add(monthDay);
 			}
@@ -1475,7 +1475,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 				recur.getDayList().add(weekDay);
 
-				Integer position = new Integer(byDay[0].getDayPosition());
+				Integer position = Integer.valueOf(byDay[0].getDayPosition());
 
 				recur.getSetPosList().add(position);
 			}

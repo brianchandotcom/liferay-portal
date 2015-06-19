@@ -236,7 +236,7 @@ public class GroupFinderTest {
 		List<Object> rolePermissions = new ArrayList<>();
 
 		rolePermissions.add(name);
-		rolePermissions.add(new Integer(ResourceConstants.SCOPE_GROUP));
+		rolePermissions.add(Integer.valueOf(ResourceConstants.SCOPE_GROUP));
 		rolePermissions.add(actionId);
 		rolePermissions.add(roleId);
 

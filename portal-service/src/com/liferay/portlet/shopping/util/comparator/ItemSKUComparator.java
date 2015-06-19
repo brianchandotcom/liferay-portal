@@ -40,8 +40,8 @@ public class ItemSKUComparator extends OrderByComparator<ShoppingItem> {
 
 	@Override
 	public int compare(ShoppingItem item1, ShoppingItem item2) {
-		Long categoryId1 = new Long(item1.getCategoryId());
-		Long categoryId2 = new Long(item2.getCategoryId());
+		Long categoryId1 = Long.valueOf(item1.getCategoryId());
+		Long categoryId2 = Long.valueOf(item2.getCategoryId());
 
 		int value = categoryId1.compareTo(categoryId2);
 

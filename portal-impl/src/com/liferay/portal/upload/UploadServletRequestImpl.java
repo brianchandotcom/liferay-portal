@@ -491,7 +491,7 @@ public class UploadServletRequestImpl
 		if (ArrayUtil.isNotEmpty(liferayFileItems)) {
 			FileItem liferayFileItem = liferayFileItems[0];
 
-			return new Long(liferayFileItem.getSize());
+			return Long.valueOf(liferayFileItem.getSize());
 		}
 
 		return null;

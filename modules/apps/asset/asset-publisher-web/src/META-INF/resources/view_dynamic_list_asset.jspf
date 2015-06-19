@@ -43,7 +43,7 @@ for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex+
 
 	String title = assetRenderer.getTitle(locale);
 
-	request.setAttribute("view.jsp-assetEntryIndex", new Integer(assetEntryIndex));
+	request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(assetEntryIndex));
 
 	request.setAttribute("view.jsp-assetEntry", assetEntry);
 	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);

@@ -2170,7 +2170,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		params.put("usersGroups", new Long(groupId));
+		params.put("usersGroups", Long.valueOf(groupId));
 
 		return searchCount(group.getCompanyId(), null, status, params);
 	}
@@ -2255,7 +2255,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		params.put("usersOrgs", new Long(organizationId));
+		params.put("usersOrgs", Long.valueOf(organizationId));
 
 		return searchCount(organization.getCompanyId(), null, status, params);
 	}
@@ -2288,7 +2288,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		params.put("usersRoles", new Long(roleId));
+		params.put("usersRoles", Long.valueOf(roleId));
 
 		return searchCount(role.getCompanyId(), null, status, params);
 	}
@@ -2467,8 +2467,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		params.put(
 			"socialMutualRelationType",
-			new Long[] {userId1, new Long(socialRelationType), userId2,
-			new Long(socialRelationType)
+			new Long[] {userId1, Long.valueOf(socialRelationType), userId2,
+			Long.valueOf(socialRelationType)
 		});
 
 		return search(
@@ -2638,8 +2638,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		params.put(
 			"socialMutualRelationType",
-			new Long[] {userId1, new Long(socialRelationType), userId2,
-			new Long(socialRelationType)
+			new Long[] {userId1, Long.valueOf(socialRelationType), userId2,
+			Long.valueOf(socialRelationType)
 		});
 
 		return searchCount(
@@ -2834,7 +2834,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		params.put("usersUserGroups", new Long(userGroupId));
+		params.put("usersUserGroups", Long.valueOf(userGroupId));
 
 		return searchCount(userGroup.getCompanyId(), null, status, params);
 	}

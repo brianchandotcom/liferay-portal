@@ -35,7 +35,7 @@ public class PKUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 
 		super(name, oldColumnType);
 
-		_newColumnType = new Integer(Types.BIGINT);
+		_newColumnType = Integer.valueOf(Types.BIGINT);
 		_trackValues = trackValues;
 
 		if (_trackValues) {
@@ -53,7 +53,7 @@ public class PKUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 
 	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
-		Long newValue = new Long(increment());
+		Long newValue = Long.valueOf(increment());
 
 		if (_trackValues) {
 			_valueMapper.mapValue(oldValue, newValue);

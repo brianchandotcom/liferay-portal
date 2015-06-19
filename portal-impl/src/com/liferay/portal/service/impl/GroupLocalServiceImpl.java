@@ -1831,7 +1831,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-			groupParams.put("usersGroups", new Long(userId));
+			groupParams.put("usersGroups", Long.valueOf(userId));
 
 			return search(
 				user.getCompanyId(), null, null, groupParams, start, end);

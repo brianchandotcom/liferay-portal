@@ -76,11 +76,11 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 	if (tabs1.equals("summary") || tabs2.equals("current")) {
 		userParams.put("inherit", Boolean.TRUE);
-		userParams.put("usersGroups", new Long(group.getGroupId()));
+		userParams.put("usersGroups", Long.valueOf(group.getGroupId()));
 	}
 	else if (group.isLimitedToParentSiteMembers()) {
 		userParams.put("inherit", Boolean.TRUE);
-		userParams.put("usersGroups", new Long(group.getParentGroupId()));
+		userParams.put("usersGroups", Long.valueOf(group.getParentGroupId()));
 	}
 	%>
 

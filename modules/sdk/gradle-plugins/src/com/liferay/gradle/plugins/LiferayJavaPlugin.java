@@ -560,6 +560,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, TEST_INTEGRATION_TASK_NAME, Test.class);
 
 		test.dependsOn(SETUP_ARQUILLIAN_TASK_NAME);
+		test.mustRunAfter(JavaPlugin.TEST_TASK_NAME);
 
 		test.setDescription("Runs the integration tests.");
 		test.setGroup("verification");
@@ -605,6 +606,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		Task checkTask = GradleUtil.getTask(project, "check");
+
+		checkTask.dependsOn(test);
 
 		return test;
 	}

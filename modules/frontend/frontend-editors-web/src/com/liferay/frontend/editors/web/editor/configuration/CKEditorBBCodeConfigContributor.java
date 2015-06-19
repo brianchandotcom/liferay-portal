@@ -69,8 +69,8 @@ public class CKEditorBBCodeConfigContributor
 
 		JSONObject langJSONObject = JSONFactoryUtil.createJSONObject();
 		langJSONObject.put("code",
-			LanguageUtil.get(getContentsLocale(
-				inputEditorTaglibAttributes), "code"));
+			LanguageUtil.get(
+				getContentsLocale(inputEditorTaglibAttributes), "code"));
 		jsonObject.put("lang", langJSONObject);
 
 		jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);

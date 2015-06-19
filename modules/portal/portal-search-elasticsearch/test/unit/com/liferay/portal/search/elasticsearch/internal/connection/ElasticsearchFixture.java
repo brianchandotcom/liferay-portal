@@ -192,6 +192,9 @@ public class ElasticsearchFixture {
 
 		embeddedElasticsearchConnection.setProps(props);
 
+		embeddedElasticsearchConnection.activate(
+			_elasticsearchConfigurationProperties);
+
 		return embeddedElasticsearchConnection;
 	}
 

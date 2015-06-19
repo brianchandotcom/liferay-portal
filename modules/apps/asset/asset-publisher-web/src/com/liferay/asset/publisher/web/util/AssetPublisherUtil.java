@@ -499,7 +499,7 @@ public class AssetPublisherUtil {
 				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 
 			if (!assetRendererFactory.isActive(
-				permissionChecker.getCompanyId())) {
+					permissionChecker.getCompanyId())) {
 
 				if (deleteMissingAssetEntries) {
 					missingAssetEntryUuids.add(assetEntryUuid);

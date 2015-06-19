@@ -1,0 +1,40 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "latest.release"
+	}
+}
+
+apply plugin: "com.liferay.whip"
+apply plugin: "eclipse"
+apply plugin: "java"
+
+dependencies {
+	testCompile files("../../../../portal-service/portal-service.jar", "../../../../portal-test/portal-test.jar")
+	testCompile group: "junit", name: "junit", version: "4.12"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+test {
+	testLogging {
+		showStandardStreams = true
+	}
+
+	whip {
+		excludes = ['.*Test', '.*Test\\$.*', '.*\\$Proxy.*', 'com/liferay/whip/.*']
+		includes = ['com/example/.*']
+	}
+}
+
+group = "com.example"

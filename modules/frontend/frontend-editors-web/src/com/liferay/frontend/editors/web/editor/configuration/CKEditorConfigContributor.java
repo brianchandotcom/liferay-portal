@@ -29,6 +29,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -130,43 +131,52 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", locale);
+
 		JSONArray styleFormatsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "normal"), "p", null));
+				LanguageUtil.get(resourceBundle, "normal"), "p", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "1"), "h1", null));
+				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
+				null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "2"), "h2", null));
+				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
+				null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "3"), "h3", null));
+				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
+				null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "4"), "h4", null));
+				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
+				null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "preformatted-text"), "pre", null));
+				LanguageUtil.get(resourceBundle, "preformatted-text"), "pre",
+				null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "cited-work"), "cite", null));
+				LanguageUtil.get(resourceBundle, "cited-work"), "cite", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "computer-code"), "code", null));
+				LanguageUtil.get(resourceBundle, "computer-code"), "code",
+				null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "info-message"), "div",
+				LanguageUtil.get(resourceBundle, "info-message"), "div",
 				"portlet-msg-info"));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "alert-message"), "div",
+				LanguageUtil.get(resourceBundle, "alert-message"), "div",
 				"portlet-msg-alert"));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "error-message"), "div",
+				LanguageUtil.get(resourceBundle, "error-message"), "div",
 				"portlet-msg-error"));
 
 		return styleFormatsJSONArray;

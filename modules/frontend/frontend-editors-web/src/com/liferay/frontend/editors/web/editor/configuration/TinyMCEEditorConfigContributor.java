@@ -27,6 +27,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -95,51 +96,55 @@ public class TinyMCEEditorConfigContributor
 	}
 
 	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", locale);
+
 		JSONArray styleFormatsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "normal"), "inline", "p", null));
-		styleFormatsJSONArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "1"), "block", "h1",
+				LanguageUtil.get(resourceBundle, "normal"), "inline", "p",
 				null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "2"), "block", "h2",
-				null));
+				LanguageUtil.format(resourceBundle, "heading-x", "1"), "block",
+				"h1", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "3"), "block", "h3",
-				null));
+				LanguageUtil.format(resourceBundle, "heading-x", "2"), "block",
+				"h2", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.format(locale, "heading-x", "4"), "block", "h4",
-				null));
+				LanguageUtil.format(resourceBundle, "heading-x", "3"), "block",
+				"h3", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "preformatted-text"), "block", "pre",
-				null));
+				LanguageUtil.format(resourceBundle, "heading-x", "4"), "block",
+				"h4", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "cited-work"), "inline", "cite",
-				null));
+				LanguageUtil.get(resourceBundle, "preformatted-text"), "block",
+				"pre", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "computer-code"), "inline", "code",
-				null));
+				LanguageUtil.get(resourceBundle, "cited-work"), "inline",
+				"cite", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "info-message"), "block", "div",
-				"portlet-msg-info"));
+				LanguageUtil.get(resourceBundle, "computer-code"), "inline",
+				"code", null));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "alert-message"), "block", "div",
-				"portlet-msg-alert"));
+				LanguageUtil.get(resourceBundle, "info-message"), "block",
+				"div", "portlet-msg-info"));
 		styleFormatsJSONArray.put(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(locale, "error-message"), "block", "div",
-				"portlet-msg-error"));
+				LanguageUtil.get(resourceBundle, "alert-message"), "block",
+				"div", "portlet-msg-alert"));
+		styleFormatsJSONArray.put(
+			getStyleFormatJSONObject(
+				LanguageUtil.get(resourceBundle, "error-message"), "block",
+				"div", "portlet-msg-error"));
 
 		return styleFormatsJSONArray;
 	}

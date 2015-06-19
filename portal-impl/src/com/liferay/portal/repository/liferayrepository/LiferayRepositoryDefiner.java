@@ -41,19 +41,30 @@ import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayThumbnailCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
+import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.GroupServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
+import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.TrashEntryServiceAdapter;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 /**
  * @author Adolfo Pérez
@@ -76,16 +87,19 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerCapabilities(
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
-		capabilityRegistry.addExportedCapability(
-			TrashCapability.class, _trashCapability);
-
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
+		DLAppServiceAdapter dlAppServiceAdapter = null;
 		DLFileEntryServiceAdapter dlFileEntryServiceAdapter = null;
 		DLFolderServiceAdapter dlFolderServiceAdapter = null;
 		GroupServiceAdapter groupServiceAdapter = null;
+		RepositoryServiceAdapter repositoryServiceAdapter = null;
+		TrashEntryServiceAdapter trashEntryServiceAdapter = null;
 
 		if (documentRepository instanceof LocalRepository) {
+			dlAppServiceAdapter = new DLAppServiceAdapter(
+				DLAppLocalServiceUtil.getService());
+
 			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
 				DLFileEntryLocalServiceUtil.getService());
 
@@ -94,8 +108,18 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 			groupServiceAdapter = new GroupServiceAdapter(
 				GroupLocalServiceUtil.getService());
+
+			repositoryServiceAdapter = new RepositoryServiceAdapter(
+				RepositoryLocalServiceUtil.getService());
+
+			trashEntryServiceAdapter = new TrashEntryServiceAdapter(
+				TrashEntryLocalServiceUtil.getService());
 		}
 		else {
+			dlAppServiceAdapter = new DLAppServiceAdapter(
+				DLAppLocalServiceUtil.getService(),
+				DLAppServiceUtil.getService());
+
 			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
 				DLFileEntryLocalServiceUtil.getService(),
 				DLFileEntryServiceUtil.getService());
@@ -107,7 +131,24 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			groupServiceAdapter = new GroupServiceAdapter(
 				GroupLocalServiceUtil.getService(),
 				GroupServiceUtil.getService());
+
+			repositoryServiceAdapter = new RepositoryServiceAdapter(
+				RepositoryLocalServiceUtil.getService(),
+				RepositoryServiceUtil.getService());
+
+			trashEntryServiceAdapter = new TrashEntryServiceAdapter(
+				TrashEntryLocalServiceUtil.getService(),
+				TrashEntryServiceUtil.getService());
 		}
+
+		TrashCapability trashCapability = new LiferayTrashCapability(
+			dlAppServiceAdapter, DLAppHelperLocalServiceUtil.getService(),
+			dlFileEntryServiceAdapter, dlFolderServiceAdapter,
+			repositoryServiceAdapter, trashEntryServiceAdapter,
+			TrashVersionLocalServiceUtil.getService());
+
+		capabilityRegistry.addExportedCapability(
+			TrashCapability.class, trashCapability);
 
 		BulkOperationCapability bulkOperationCapability =
 			new LiferayBulkOperationCapability(
@@ -165,8 +206,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	private final ProcessorCapability _processorCapability =
 		new LiferayProcessorCapability();
 	private RepositoryFactory _repositoryFactory;
-	private final TrashCapability _trashCapability =
-		new LiferayTrashCapability();
 	private final WorkflowCapability _workflowCapability =
 		new LiferayWorkflowCapability();
 

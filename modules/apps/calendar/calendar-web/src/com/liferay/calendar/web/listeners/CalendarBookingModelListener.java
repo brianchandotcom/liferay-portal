@@ -16,12 +16,16 @@ package com.liferay.calendar.web.listeners;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adam Brandizzi
  */
+@Component(immediate = true, service = ModelListener.class)
 public class CalendarBookingModelListener
 	extends BaseModelListener<CalendarBooking> {
 

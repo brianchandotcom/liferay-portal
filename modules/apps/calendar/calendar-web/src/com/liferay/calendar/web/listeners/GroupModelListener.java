@@ -19,11 +19,15 @@ import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.util.PortalUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = ModelListener.class)
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override

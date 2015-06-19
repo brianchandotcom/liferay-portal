@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.web.action;
+package com.liferay.calendar.web.portlet.action;
 
 import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -25,10 +25,13 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -38,7 +41,12 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
 	service = ConfigurationAction.class
 )
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+public class CalendarConfigurationAction extends DefaultConfigurationAction {
+
+	@Override
+	public String getJspPath(RenderRequest renderRequest) {
+		return "/configuration.jsp";
+	}
 
 	@Override
 	public void processAction(
@@ -53,6 +61,15 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.calendar.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected void updateUserSettings(

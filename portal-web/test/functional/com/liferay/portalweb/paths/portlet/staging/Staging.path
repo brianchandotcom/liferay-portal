@@ -112,12 +112,12 @@
 </tr>
 <tr>
 	<td>MANAGE_VARIATIONS</td>
-	<td>//a[@id='_170_manageLayoutSetBranches']</td>
+	<td>//a[contains(@id,'manageLayoutSetBranches')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HISTORY_BUTTON</td>
-	<td>//a[@id='_170_viewHistoryLink']</td>
+	<td>//a[contains(@id,'viewHistoryLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -187,12 +187,12 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_HISTORY_BUTTON</td>
-	<td>//a[@id='_170_viewHistoryLink']/span/i</td>
+	<td>//a[contains(@id,'viewHistoryLink')]/span/i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON</td>
-	<td>//a[@id='_170_submitLink']/span[contains(.,'Mark as Ready for Publication')]</td>
+	<td>//a[contains(@id,'submitLink')]/span[contains(.,'Mark as Ready for Publication')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_SUBMIT_FOR_PUBLICATION</td>
-	<td>//a[@id='_170_submitLink']/span[contains(.,'Submit for Publication')]</td>
+	<td>//a[contains(@id,'submitLink')]/span[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -212,27 +212,27 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_MANAGE_PAGE_VARIATION</td>
-	<td>//a[@id='_170_manageLayoutRevisions']</td>
+	<td>//a[contains(@id,'manageLayoutRevisions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_REDO_BUTTON</td>
-	<td>//a[@id='_170_redoLink']</td>
+	<td>//a[contains(@id,'redoLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_UNDO_BUTTON</td>
-	<td>//a[@id='_170_undoLink']</td>
+	<td>//a[contains(@id,'undoLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_REVISION_DETAILS_MESSAGE</td>
-	<td>//div[@id='_170_layoutRevisionDetails']</td>
+	<td>//div[contains(@id,'layoutRevisionDetails')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_ENABLE_PAGE_BUTTON</td>
-	<td>//a[@id='_170_submitLink']</td>
+	<td>//a[contains(@id,'submitLink')]</td>
 	<td></td>
 </tr>
 <tr>

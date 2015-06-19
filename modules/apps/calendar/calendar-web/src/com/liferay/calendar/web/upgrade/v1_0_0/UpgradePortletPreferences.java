@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.web.upgrade;
+package com.liferay.calendar.web.upgrade.v1_0_0;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;

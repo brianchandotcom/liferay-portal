@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.service.permission;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,8 +55,8 @@ public class CalendarResourcePermission {
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, calendarResource.getGroupId(),
 			CalendarResource.class.getName(),
-			calendarResource.getCalendarResourceId(), PortletKeys.CALENDAR,
-			actionId);
+			calendarResource.getCalendarResourceId(),
+			CalendarPortletKeys.CALENDAR, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

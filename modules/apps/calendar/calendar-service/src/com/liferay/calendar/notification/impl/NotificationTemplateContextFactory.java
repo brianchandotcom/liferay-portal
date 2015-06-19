@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.notification.impl;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
@@ -124,7 +124,7 @@ public class NotificationTemplateContextFactory {
 			"portletName",
 			LanguageUtil.get(
 				resourceBundle,
-				"javax.portlet.title.".concat(PortletKeys.CALENDAR)));
+				"javax.portlet.title.".concat(CalendarPortletKeys.CALENDAR)));
 
 		String startTime =
 			dateFormatDateTime.format(calendarBooking.getStartTime()) +
@@ -169,11 +169,13 @@ public class NotificationTemplateContextFactory {
 
 		String url = portalURL + layoutActualURL;
 
-		String namespace = PortalUtil.getPortletNamespace(PortletKeys.CALENDAR);
+		String namespace = PortalUtil.getPortletNamespace(
+			CalendarPortletKeys.CALENDAR);
 
 		url = HttpUtil.addParameter(
 			url, namespace + "mvcPath", "/view_calendar_booking.jsp");
-		url = HttpUtil.addParameter(url, "p_p_id", PortletKeys.CALENDAR);
+		url = HttpUtil.addParameter(
+			url, "p_p_id", CalendarPortletKeys.CALENDAR);
 		url = HttpUtil.addParameter(url, "p_p_lifecycle", "0");
 		url = HttpUtil.addParameter(
 			url, "p_p_state", WindowState.MAXIMIZED.toString());

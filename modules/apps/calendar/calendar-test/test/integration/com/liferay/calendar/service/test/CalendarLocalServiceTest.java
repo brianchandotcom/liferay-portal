@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.calendar.service;
+package com.liferay.calendar.service.test;
+
+import com.liferay.calendar.service.CalendarLocalServiceUtil;
 
 import org.jboss.arquillian.junit.Arquillian;
 

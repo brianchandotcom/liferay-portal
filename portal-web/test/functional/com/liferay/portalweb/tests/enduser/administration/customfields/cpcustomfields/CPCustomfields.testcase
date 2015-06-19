@@ -163,7 +163,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCustomFieldUserBoolean" priority="4">
+	<command name="AddCustomFieldUserBoolean" priority="5">
 		<var name="customFieldName" value="Boolean" />
 		<var name="customFieldType" value="True/False" />
 		<var name="resourceName" value="User" />
@@ -212,7 +212,7 @@
 		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="False" />
 	</command>
 
-	<command name="EditCustomFieldUserBoolean" priority="4">
+	<command name="EditCustomFieldUserBoolean" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Custom Fields" />
 		</execute>

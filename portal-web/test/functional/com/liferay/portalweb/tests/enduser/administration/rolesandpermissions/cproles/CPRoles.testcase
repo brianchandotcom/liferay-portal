@@ -11,7 +11,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command name="AddOrganizationRole" priority="4">
+	<command name="AddOrganizationRole" priority="5">
 		<var name="roleName" value="Roles Orgrole Name" />
 		<var name="roleType" value="Organization" />
 
@@ -34,7 +34,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRegularRole" priority="4">
+	<command name="AddRegularRole" priority="5">
 		<var name="roleName" value="Roles Regrole Name" />
 		<var name="roleType" value="Regular" />
 
@@ -56,7 +56,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSiteRole" priority="4">
+	<command name="AddSiteRole" priority="5">
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
 
@@ -79,7 +79,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteRegularRole" priority="4">
+	<command name="DeleteRegularRole" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>

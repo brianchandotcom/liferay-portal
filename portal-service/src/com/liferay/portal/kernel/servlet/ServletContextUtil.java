@@ -175,10 +175,6 @@ public class ServletContextUtil {
 		return rootURI;
 	}
 
-	private static String _getClassName(String path) {
-		return _getClassName(null, path);
-	}
-
 	private static String _getClassName(String rootPath, String path) {
 		String className = path.substring(
 			0, path.length() - _EXT_CLASS.length());
@@ -232,7 +228,8 @@ public class ServletContextUtil {
 						String jarEntryName = jarEntry.getName();
 
 						if (jarEntryName.endsWith(_EXT_CLASS)) {
-							String className = _getClassName(jarEntryName);
+							String className = _getClassName(
+								null, jarEntryName);
 
 							classNames.add(className);
 						}

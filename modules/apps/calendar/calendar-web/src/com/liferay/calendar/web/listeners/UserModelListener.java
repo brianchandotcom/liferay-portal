@@ -19,14 +19,18 @@ import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Antonio Junior
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override

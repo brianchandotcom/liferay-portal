@@ -288,8 +288,7 @@
 		5: 18,
 		6: 24,
 		7: 32,
-		8: 48,
-		defaultSize: 14
+		8: 48
 	};
 
 	var MAP_HANDLERS = {

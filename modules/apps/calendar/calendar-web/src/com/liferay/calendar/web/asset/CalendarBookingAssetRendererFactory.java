@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.asset;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
@@ -104,7 +104,7 @@ public class CalendarBookingAssetRendererFactory
 		}
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			PortletKeys.CALENDAR);
+			CalendarPortletKeys.CALENDAR);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
 

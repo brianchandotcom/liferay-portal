@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="Smoke" priority="5">
+	<command name="Smoke" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page1" />
 		</execute>
@@ -39,7 +39,7 @@
 		<execute function="AssertTextEquals" locator1="CPBlogs#PORTLET_TITLE" value1="Blogs" />
 	</command>
 
-	<command name="ViewAnnouncementEntry" priority="5">
+	<command name="ViewAnnouncementEntry" priority="4">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -62,7 +62,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntry" priority="5">
+	<command name="ViewBlogsEntry" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -81,7 +81,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBookmark" priority="5">
+	<command name="ViewBookmark" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>
@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCustomFields" priority="5">
+	<command name="ViewCustomFields" priority="4">
 		<var name="customFieldName" value="Boolean" />
 
 		<execute macro="Page#gotoCP">
@@ -124,7 +124,7 @@
 		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="False" />
 	</command>
 
-	<command name="ViewDDLRecord" priority="5">
+	<command name="ViewDDLRecord" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
 			<var name="siteName" value="Dynamic Data Lists Display Site" />
@@ -138,7 +138,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDocumentPG" priority="5">
+	<command name="ViewDocumentPG" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="siteName" value="Documents and Media Site" />
@@ -155,7 +155,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMessageBoardsBannedUsers" priority="5">
+	<command name="ViewMessageBoardsBannedUsers" priority="4">
 		<var name="selectedAsset" value="Blogs Entry" />
 
 		<execute macro="Page#gotoPG">
@@ -179,7 +179,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPageTemplate" priority="5">
+	<command name="ViewPageTemplate" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Template" />
 		</execute>
@@ -189,7 +189,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPasswordPolicy" priority="5">
+	<command name="ViewPasswordPolicy" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Password Policies" />
 		</execute>

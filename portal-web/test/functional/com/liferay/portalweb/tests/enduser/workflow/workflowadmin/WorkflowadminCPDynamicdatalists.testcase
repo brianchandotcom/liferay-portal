@@ -14,7 +14,7 @@
 		<execute macro="DDLDataDefinition#tearDownCP" />
 	</tear-down>
 
-	<command name="ApproveDynamicdatalistCP" priority="5">
+	<command name="ApproveDynamicdatalistCP" priority="4">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />
@@ -127,7 +127,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectDynamicdatalistCP" priority="5">
+	<command name="RejectDynamicdatalistCP" priority="4">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />

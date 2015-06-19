@@ -23,7 +23,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWebContentPGViaAP" priority="5">
+	<command name="AddWebContentPGViaAP" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -43,7 +43,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveAsDraftWebContentPGViaAP" priority="5">
+	<command name="SaveAsDraftWebContentPGViaAP" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>

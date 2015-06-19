@@ -21,7 +21,7 @@
 		<execute macro="SOSite#tearDownCP" />
 	</tear-down>
 
-	<command name="DashboardDocumentsDemo" priority="5">
+	<command name="DashboardDocumentsDemo" priority="4">
 		<var name="dmDocumentDescription1" value="DM Folder Image1 Description" />
 		<var name="dmDocumentDescription2" value="DM Folder Image2 Description" />
 		<var name="dmDocumentDescription3" value="DM Folder Image3 Description" />

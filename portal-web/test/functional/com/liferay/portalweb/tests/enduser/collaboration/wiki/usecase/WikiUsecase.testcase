@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ConfigurePortletDisplaySettings" priority="5">
+	<command name="ConfigurePortletDisplaySettings" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -165,7 +165,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoWikiXSSviaAddPage" priority="5">
+	<command name="ViewNoWikiXSSviaAddPage" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>

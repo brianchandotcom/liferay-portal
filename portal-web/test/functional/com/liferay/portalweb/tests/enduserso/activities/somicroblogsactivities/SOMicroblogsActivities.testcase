@@ -17,7 +17,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddMicroblogsEntryComment" priority="5">
+	<command name="AddMicroblogsEntryComment" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
@@ -99,7 +99,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryComments" priority="5">
+	<command name="AddMicroblogsEntryComments" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
@@ -406,7 +406,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteMicroblogsEntryComment" priority="5">
+	<command name="DeleteMicroblogsEntryComment" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
@@ -468,7 +468,7 @@
 		<execute function="AssertTextNotPresent" value1="${microblogsEntryCommentContent}" />
 	</command>
 
-	<command name="EditMicroblogsEntryComment" priority="5">
+	<command name="EditMicroblogsEntryComment" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
@@ -559,7 +559,7 @@
 		</execute>
 	</command>
 
-	<command name="RepostMicroblogsEntry" priority="5">
+	<command name="RepostMicroblogsEntry" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
@@ -655,7 +655,7 @@
 		<execute function="AssertTextEquals" locator1="SOMicroblogs#MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 	</command>
 
-	<command name="ViewMicroblogsActivities" priority="5">
+	<command name="ViewMicroblogsActivities" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminListName" value="Test, Test" />
@@ -972,7 +972,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMicroblogsActivitiesProfiles" priority="5">
+	<command name="ViewMicroblogsActivitiesProfiles" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
@@ -1092,7 +1092,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMicroblogsEntry" priority="5">
+	<command name="ViewMicroblogsEntry" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
@@ -1154,7 +1154,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMicroblogsEntryMention" priority="5">
+	<command name="ViewMicroblogsEntryMention" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />
@@ -1213,7 +1213,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMicroblogsEntryTag" priority="5">
+	<command name="ViewMicroblogsEntryTag" priority="4">
 		<var name="adminEmailAddress" value="test@liferay.com" />
 		<var name="adminFirstName" value="Test" />
 		<var name="adminName" value="Test Test" />

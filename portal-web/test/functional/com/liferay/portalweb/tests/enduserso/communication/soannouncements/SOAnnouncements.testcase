@@ -31,7 +31,7 @@
 		<execute macro="Organization#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSOAnnouncementsEntry" priority="5">
+	<command name="AddSOAnnouncementsEntry" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -165,7 +165,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_FULL_PNG" />
 	</command>
 
-	<command name="AddSOAnnouncementsEntryBoldText" priority="5">
+	<command name="AddSOAnnouncementsEntryBoldText" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -312,7 +312,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryItalicText" priority="5">
+	<command name="AddSOAnnouncementsEntryItalicText" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -444,7 +444,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryScheduled" priority="5">
+	<command name="AddSOAnnouncementsEntryScheduled" priority="4">
 		<var name="announcementType" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -486,7 +486,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryScheduledViaDashboard" priority="5">
+	<command name="AddSOAnnouncementsEntryScheduledViaDashboard" priority="4">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -517,7 +517,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryScopeToOpenSite" priority="5">
+	<command name="AddSOAnnouncementsEntryScopeToOpenSite" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -675,7 +675,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryScopeToPrivateRestrictedSite" priority="5">
+	<command name="AddSOAnnouncementsEntryScopeToPrivateRestrictedSite" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -744,7 +744,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryScopeToPrivateSite" priority="5">
+	<command name="AddSOAnnouncementsEntryScopeToPrivateSite" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -813,7 +813,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryScopeToPublicRestrictedSite" priority="5">
+	<command name="AddSOAnnouncementsEntryScopeToPublicRestrictedSite" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -876,7 +876,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryScopeToUserRoleViaDashboard" priority="5">
+	<command name="AddSOAnnouncementsEntryScopeToUserRoleViaDashboard" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -978,7 +978,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntrySOUser" priority="5">
+	<command name="AddSOAnnouncementsEntrySOUser" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1037,7 +1037,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryStrikeThroughText" priority="5">
+	<command name="AddSOAnnouncementsEntryStrikeThroughText" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1109,7 +1109,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryUnderlineText" priority="5">
+	<command name="AddSOAnnouncementsEntryUnderlineText" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1149,7 +1149,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryViaDashboard" priority="5">
+	<command name="AddSOAnnouncementsEntryViaDashboard" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -1178,7 +1178,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryViaManageEntries" priority="5">
+	<command name="AddSOAnnouncementsEntryViaManageEntries" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1216,7 +1216,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOAnnouncementsEntryViaManageEntriesViaDashboard" priority="5">
+	<command name="AddSOAnnouncementsEntryViaManageEntriesViaDashboard" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -1243,7 +1243,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSOAnnouncementsEntry" priority="5">
+	<command name="DeleteSOAnnouncementsEntry" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1274,7 +1274,7 @@
 		<execute macro="SOAnnouncementsEntry#deletePG" />
 	</command>
 
-	<command name="DeleteSOAnnouncementsEntrySOUser" priority="5">
+	<command name="DeleteSOAnnouncementsEntrySOUser" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1327,7 +1327,7 @@
 		<execute macro="SOAnnouncementsEntry#deletePG" />
 	</command>
 
-	<command name="DeleteSOAnnouncementsEntryViaDashboard" priority="5">
+	<command name="DeleteSOAnnouncementsEntryViaDashboard" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -1408,7 +1408,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2512" name="EditAndDeleteSOAnnouncementBySOUserWithAddedPermissions" priority="5">
+	<command known-issues="SOS-2512" name="EditAndDeleteSOAnnouncementBySOUserWithAddedPermissions" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -1544,7 +1544,7 @@
 		<execute macro="SOAnnouncementsEntry#deletePG" />
 	</command>
 
-	<command name="EditSOAnnouncementsEntry" priority="5">
+	<command name="EditSOAnnouncementsEntry" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -1595,7 +1595,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSOAnnouncementsEntrySOUser" priority="5">
+	<command name="EditSOAnnouncementsEntrySOUser" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -1668,7 +1668,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSOAnnouncementsEntryViaDashboard" priority="5">
+	<command name="EditSOAnnouncementsEntryViaDashboard" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -1797,7 +1797,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsReadSOAnnouncementsEntry" priority="5">
+	<command name="MarkAsReadSOAnnouncementsEntry" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1834,7 +1834,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsReadSOAnnouncementsEntryAndViewMore" priority="5">
+	<command name="MarkAsReadSOAnnouncementsEntryAndViewMore" priority="4">
 		<var name="entryContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam iaculis lacus risus, a dignissim turpis volutpat lobortis. Etiam tincidunt quis nisl a mollis. Fusce eget ultricies ligula, vel pharetra mi. Vivamus ut congue eros. Integer sit amet diam libero. Sed at justo aliquam, sodales arcu id, ullamcorper metus. Vestibulum feugiat nisl eu lectus egestas, sit amet vestibulum diam volutpat. Vivamus et congue dui. Etiam ac viverra urna, a rhoncus metus. Maecenas lorem est, semper vitae tempor in, gravida in neque. Morbi lacinia varius laoreet. Aenean in ipsum vel mauris volutpat varius. Donec feugiat nunc at diam sagittis, eu tempus turpis porta. Praesent non interdum est. Curabitur tincidunt congue tempor. Mauris ac imperdiet augue, sed gravida ligula. Ut ac gravida est, vitae dignissim erat. Curabitur placerat vulputate fringilla. Nam commodo ante vitae tempor convallis. Donec at est at turpis scelerisque ornare. Donec tincidunt, ex quis ornare commodo, orci nibh ornare leo, vitae lobortis leo purus vitae felis. Pellentesque non libero et orci faucibus viverra. Vivamus dignissim ante ut mollis cursus. Pellentesque eu lorem mi. Fusce eu sem dictum, aliquet risus vel, molestie sapien. Maecenas dapibus nulla ante, vitae tristique nisi ultricies non. Proin egestas facilisis neque, ut accumsan leo finibus eu. Phasellus faucibus turpis sit amet nibh rhoncus pulvinar.</var>
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1887,7 +1887,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="SOAnnouncements#SCREENSHOTS_ANNOUNCEMENTS_ENTRY_CONTENT_LIPSUM_FULL_PNG" />
 	</command>
 
-	<command name="MarkAsReadSOAnnouncementsEntrySOUser" priority="5">
+	<command name="MarkAsReadSOAnnouncementsEntrySOUser" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1946,7 +1946,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsReadSOAnnouncementsEntryViaDashboard" priority="5">
+	<command name="MarkAsReadSOAnnouncementsEntryViaDashboard" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -1974,7 +1974,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsUnreadSOAnnouncementsEntry" priority="5">
+	<command name="MarkAsUnreadSOAnnouncementsEntry" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -2024,7 +2024,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsUnreadSOAnnouncementsEntrySOUser" priority="5">
+	<command name="MarkAsUnreadSOAnnouncementsEntrySOUser" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -2096,7 +2096,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsUnreadSOAnnouncementsEntryViaDashboard" priority="5">
+	<command name="MarkAsUnreadSOAnnouncementsEntryViaDashboard" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -2296,7 +2296,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAnnouncementEntryAddedViaDashboardInGmail" priority="5">
+	<command name="ViewAnnouncementEntryAddedViaDashboardInGmail" priority="4">
 		<property name="custom.properties" value="announcements.entry.check.interval=1" />
 
 		<var name="distributionScope" value="General" />
@@ -2381,7 +2381,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command name="ViewAnnouncementEntryInGmail" priority="5">
+	<command name="ViewAnnouncementEntryInGmail" priority="4">
 		<property name="custom.properties" value="announcements.entry.check.interval=1" />
 
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -2482,7 +2482,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command name="ViewAnnouncementTeamScopes" priority="5">
+	<command name="ViewAnnouncementTeamScopes" priority="4">
 		<var name="roleName" value="Site Publisher Role Name" />
 		<var name="roleType" value="Site" />
 		<var name="siteDescription1" value="Open Site1 Description" />
@@ -3830,7 +3830,7 @@
 		<execute function="AssertTextEquals" locator1="SOAnnouncements#ANNOUNCEMENTS_NAVIGATION_RESULTS" value1="Showing 1 - 10 of 21 results." />
 	</command>
 
-	<command name="ViewSOAnnouncementsEntryScopedToRolesViaDashboard" priority="5">
+	<command name="ViewSOAnnouncementsEntryScopedToRolesViaDashboard" priority="4">
 		<var name="entryContent1" value="Announcements Entry1 Content" />
 		<var name="entryContent2" value="Announcements Entry2 Content" />
 		<var name="entryContent3" value="Announcements Entry3 Content" />
@@ -4084,7 +4084,7 @@
 		<execute function="AssertTextNotPresent" value1="${entryContent3}" />
 	</command>
 
-	<command name="ViewSOAnnouncementsEntryScopedToSitesViaDashboard" priority="5">
+	<command name="ViewSOAnnouncementsEntryScopedToSitesViaDashboard" priority="4">
 		<var name="entryContent1" value="Announcements Entry1 Content" />
 		<var name="entryContent2" value="Announcements Entry2 Content" />
 		<var name="entryContent3" value="Announcements Entry3 Content" />

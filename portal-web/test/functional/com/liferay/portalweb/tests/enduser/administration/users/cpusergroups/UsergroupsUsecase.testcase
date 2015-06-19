@@ -71,7 +71,7 @@
 		</execute>
 	</command>
 
-	<command name="UserGroupPrivatePageInheritance" priority="5">
+	<command name="UserGroupPrivatePageInheritance" priority="4">
 		<property name="custom.properties" value="layout.user.private.layouts.auto.create=false${line.separator}user.groups.copy.layouts.to.user.personal.site=true" />
 
 		<var name="sitePageName" value="Test User Group Page 1" />
@@ -166,7 +166,7 @@
 		</execute>
 	</command>
 
-	<command name="UserGroupSiteOwnerPermissions" priority="5">
+	<command name="UserGroupSiteOwnerPermissions" priority="4">
 		<var name="roleType" value="Regular" />
 		<var name="siteName" value="Site Name" />
 
@@ -753,7 +753,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewUserGroupSiteRolePermissions" priority="5">
+	<command name="ViewUserGroupSiteRolePermissions" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>

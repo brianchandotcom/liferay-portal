@@ -9,7 +9,7 @@
 		<execute macro="User#tearDownCP" />
 	</tear-down>
 
-	<command name="ViewMyAccount" priority="5">
+	<command name="ViewMyAccount" priority="4">
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
 		</execute>
@@ -17,7 +17,7 @@
 		<execute macro="MyAccount#view" />
 	</command>
 
-	<command name="ViewMyAccountUser" priority="5">
+	<command name="ViewMyAccountUser" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -61,7 +61,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMyAccountViaSignInPortlet" priority="5">
+	<command name="ViewMyAccountViaSignInPortlet" priority="4">
 		<execute function="AssertClick" locator1="PGSignin#PORTLET_CONTENT_USER_NAME" value1="Test Test" />
 
 		<execute macro="MyAccount#view" />

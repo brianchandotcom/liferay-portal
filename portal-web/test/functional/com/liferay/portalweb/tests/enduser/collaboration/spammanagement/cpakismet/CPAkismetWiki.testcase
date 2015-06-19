@@ -18,7 +18,7 @@
 		<execute macro="AkismetPortlet#tearDownConfiguration" />
 	</tear-down>
 
-	<command name="MarkAsNotSpamWikiPage" priority="5">
+	<command name="MarkAsNotSpamWikiPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Akismet" />
 		</execute>
@@ -151,7 +151,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsSpamWikiPage" priority="5">
+	<command name="MarkAsSpamWikiPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Akismet" />
 		</execute>

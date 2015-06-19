@@ -2,7 +2,7 @@
 	<property name="testcase.url" value="http://the-internet.herokuapp.com/tinymce" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="CopyAndPaste" priority="5">
+	<command name="CopyAndPaste" priority="4">
 		<execute function="SelectFrame" locator1="CopyAndPaste#EDITOR_IFRAME" />
 
 		<execute function="AssertTextEquals" locator1="CopyAndPaste#PASTE_TEXT_AREA" value1="Your content goes here." />

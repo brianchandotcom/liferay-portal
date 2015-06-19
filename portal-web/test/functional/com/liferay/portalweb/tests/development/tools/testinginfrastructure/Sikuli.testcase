@@ -1,7 +1,7 @@
 <definition component-name="portal-tools">
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="Smoke" priority="5">
+	<command name="Smoke" priority="4">
 		<execute function="SikuliAssertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
 		<execute function="SikuliAssertElementNotPresent" locator1="PGLogin#AVERAGE_RATING_STAR_ICON_PNG" />
 		<execute function="SikuliType" locator1="PGLogin#EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />

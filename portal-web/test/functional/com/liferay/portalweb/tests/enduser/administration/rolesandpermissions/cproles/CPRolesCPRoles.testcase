@@ -18,7 +18,7 @@
 		<execute macro="PortalSettings#tearDownCP" />
 	</tear-down>
 
-	<command name="AddOrganizationRoleRegRole" priority="5">
+	<command name="AddOrganizationRoleRegRole" priority="4">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add Role" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
@@ -99,7 +99,7 @@
 		<execute function="AssertElementNotPresent" locator1="CPRoles#ADD" />
 	</command>
 
-	<command name="AddRegularRoleRegRole" priority="5">
+	<command name="AddRegularRoleRegRole" priority="4">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add Role" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
@@ -178,7 +178,7 @@
 		<execute function="AssertElementNotPresent" locator1="CPRoles#ADD" />
 	</command>
 
-	<command name="AddSiteRoleRegRole" priority="5">
+	<command name="AddSiteRoleRegRole" priority="4">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add Role" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />

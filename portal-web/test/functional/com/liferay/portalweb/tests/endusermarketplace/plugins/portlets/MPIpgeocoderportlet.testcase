@@ -13,7 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="IPGeocoderPortletSmoke" priority="5">
+	<command name="IPGeocoderPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="ip-geocoder-portlet" />
 
 		<var name="appName" value="IP Geocoder" />

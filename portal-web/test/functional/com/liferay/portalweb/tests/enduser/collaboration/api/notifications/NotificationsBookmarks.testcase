@@ -61,7 +61,7 @@
 		<execute macro="User#tearDownCP" />
 	</tear-down>
 
-	<command name="ViewWebsiteNotificationForNewBookmarkInFolder" priority="5">
+	<command name="ViewWebsiteNotificationForNewBookmarkInFolder" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -145,7 +145,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebsiteNotificationForUpdatedBookmarkInFolder" priority="5">
+	<command name="ViewWebsiteNotificationForUpdatedBookmarkInFolder" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

@@ -192,7 +192,7 @@
 		<execute function="AssertElementPresent" locator1="SOUserBar#GO_TO" />
 	</command>
 
-	<command name="MarkAllAsReadContactsCenterNotifications" priority="5">
+	<command name="MarkAllAsReadContactsCenterNotifications" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="soPage" value="true" />
@@ -470,7 +470,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAllAsReadMultipleNotifications" priority="5">
+	<command name="MarkAllAsReadMultipleNotifications" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="microblogsEntryCommentContent1" value="Microblogs Post Comment1" />
@@ -765,7 +765,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsReadMicroblogsEntryViewableByEveryoneCommentNotification" priority="5">
+	<command name="MarkAsReadMicroblogsEntryViewableByEveryoneCommentNotification" priority="4">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="pageName" value="Microblogs" />
@@ -819,7 +819,7 @@
 		<execute macro="SOUserBar#markNotificationsAsRead" />
 	</command>
 
-	<command name="MarkAsReadReplyMessageNotification" priority="5">
+	<command name="MarkAsReadReplyMessageNotification" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
 		<var name="messageSubject" value="Message Subject" />
@@ -884,7 +884,7 @@
 		<execute macro="SOUserBar#markNotificationsAsRead" />
 	</command>
 
-	<command name="MarkAsReadSOAnnouncementsEntryNotificationSOUser" priority="5">
+	<command name="MarkAsReadSOAnnouncementsEntryNotificationSOUser" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -931,7 +931,7 @@
 		<execute macro="SOUserBar#markNotificationsAsRead" />
 	</command>
 
-	<command name="MarkAsReadSOSiteAnnouncementsEntryNotificationSOUser" priority="5">
+	<command name="MarkAsReadSOSiteAnnouncementsEntryNotificationSOUser" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -1014,7 +1014,7 @@
 		<execute function="AssertElementNotPresent" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 
-	<command name="MarkAsReadTaskAssignedToConnectionNotification" priority="5">
+	<command name="MarkAsReadTaskAssignedToConnectionNotification" priority="4">
 		<var name="pageName" value="Tasks" />
 		<var name="soPage" value="true" />
 		<var name="taskDescription" value="Task Description" />
@@ -1082,7 +1082,7 @@
 		<execute macro="SOUserBar#markNotificationsAsRead" />
 	</command>
 
-	<command name="UnsubscribeFromAndResubscribeToMicroblogsEntryCommentNotifications" priority="5">
+	<command name="UnsubscribeFromAndResubscribeToMicroblogsEntryCommentNotifications" priority="4">
 		<var name="microblogsEntryCommentContent1" value="Microblogs Post Comment1" />
 		<var name="microblogsEntryCommentContent10" value="Microblogs Post Comment10" />
 		<var name="microblogsEntryCommentContent2" value="Microblogs Post Comment2" />
@@ -1389,7 +1389,7 @@
 		<execute function="AssertTextEquals" locator1="SONotifications#NOTIFICATIONS_NONE_MESSAGE" value1="You do not have any notifications." />
 	</command>
 
-	<command name="ViewBlogsEntryNotifications" priority="5">
+	<command name="ViewBlogsEntryNotifications" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1640,7 +1640,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="SONotifications#SCREENSHOTS_NOTIFICATIONS_LONG_FORUM_THREAD_SUBJECT_PNG" />
 	</command>
 
-	<command name="ViewCategoryThreadNotifications" priority="5">
+	<command name="ViewCategoryThreadNotifications" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="pageName" value="Forums" />
 		<var name="siteDescription" value="Open Site Description" />
@@ -1909,7 +1909,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewContactsCenterNotifications" priority="5">
+	<command name="ViewContactsCenterNotifications" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="soPage" value="true" />
@@ -2378,7 +2378,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-50589" name="ViewFolderDocumentNotifications" priority="5">
+	<command known-issues="LPS-50589" name="ViewFolderDocumentNotifications" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -2618,7 +2618,7 @@
 		<execute macro="SOMembersPortlet#viewNonMember" />
 	</command>
 
-	<command name="ViewMessageAttachmentNotificationsMultipleUsers" priority="5">
+	<command name="ViewMessageAttachmentNotificationsMultipleUsers" priority="4">
 		<var name="messageAttachmentFile1" value="Document_1.jpg" />
 		<var name="messageAttachmentFile2" value="Document_2.jpg" />
 		<var name="messageAttachmentFile3" value="Document_3.jpg" />
@@ -2774,7 +2774,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMessageNotificationsMultipleUsers" priority="5">
+	<command name="ViewMessageNotificationsMultipleUsers" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody1" value="Message Reply1 Body" />
 		<var name="messageReplyBody2" value="Message Reply2 Body" />
@@ -3213,7 +3213,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMicroblogsEntryViewableByConnectionsCommentNotification" priority="5">
+	<command name="ViewMicroblogsEntryViewableByConnectionsCommentNotification" priority="4">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="pageName" value="Microblogs" />
@@ -3553,7 +3553,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMultipleNotifications" priority="5">
+	<command name="ViewMultipleNotifications" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="microblogsEntryCommentContent1" value="Microblogs Post Comment1" />
@@ -5388,7 +5388,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewReplyMessageAttachmentNotification" priority="5">
+	<command name="ViewReplyMessageAttachmentNotification" priority="4">
 		<var name="messageAttachmentFile" value="Document_1.jpg" />
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
@@ -5449,7 +5449,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewReplyMessageAttachmentPortalNotification" priority="5">
+	<command name="ViewReplyMessageAttachmentPortalNotification" priority="4">
 		<var name="messageAttachmentFile1" value="Document_1.jpg" />
 		<var name="messageAttachmentFile2" value="Document_2.jpg" />
 		<var name="messageAttachmentFile3" value="Document_3.jpg" />
@@ -5564,7 +5564,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewReplyMessageNotification" priority="5">
+	<command name="ViewReplyMessageNotification" priority="4">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageReplyBody" value="Message Reply Body" />
 		<var name="messageSubject" value="Message Subject" />
@@ -5623,7 +5623,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewScheduledSOAnnouncementsEntryNotification" priority="5">
+	<command name="ViewScheduledSOAnnouncementsEntryNotification" priority="4">
 		<property name="custom.properties" value="announcements.entry.check.interval=1" />
 
 		<var name="distributionScope" value="General" />
@@ -5693,7 +5693,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewScheduledSOSiteAnnouncementsEntryNotification" priority="5">
+	<command name="ViewScheduledSOSiteAnnouncementsEntryNotification" priority="4">
 		<property name="custom.properties" value="announcements.entry.check.interval=1" />
 
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -5795,7 +5795,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSOAnnouncementsEntryNotification" priority="5">
+	<command name="ViewSOAnnouncementsEntryNotification" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -5821,7 +5821,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSOAnnouncementsEntryNotificationSOUser" priority="5">
+	<command name="ViewSOAnnouncementsEntryNotificationSOUser" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -5910,7 +5910,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSOSiteAnnouncementsEntryNotification" priority="5">
+	<command name="ViewSOSiteAnnouncementsEntryNotification" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -5947,7 +5947,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSOSiteAnnouncementsEntryNotificationSOUser" priority="5">
+	<command name="ViewSOSiteAnnouncementsEntryNotificationSOUser" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -6031,7 +6031,7 @@
 		<execute function="AssertElementNotPresent" locator1="SOUserBar#NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 
-	<command name="ViewSOSiteAnnouncementsEntrySOUserNotification" priority="5">
+	<command name="ViewSOSiteAnnouncementsEntrySOUserNotification" priority="4">
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.google.com" />
@@ -6090,7 +6090,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewTaskAssignedToConnectionNotification" priority="5">
+	<command name="ViewTaskAssignedToConnectionNotification" priority="4">
 		<var name="pageName" value="Tasks" />
 		<var name="soPage" value="true" />
 		<var name="taskDescription" value="Task Description" />
@@ -6164,7 +6164,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWikiPageNotifications" priority="5">
+	<command name="ViewWikiPageNotifications" priority="4">
 		<var name="pageName" value="Wiki" />
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />

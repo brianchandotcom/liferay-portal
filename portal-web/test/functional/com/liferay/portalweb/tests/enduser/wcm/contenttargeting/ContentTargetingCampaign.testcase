@@ -38,7 +38,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddBlankCP" priority="5">
+	<command name="AddBlankCP" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -82,7 +82,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCampaignContentCP" priority="5">
+	<command name="AddCampaignContentCP" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -147,7 +147,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCampaignFormCP" priority="5">
+	<command name="AddCampaignFormCP" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -198,7 +198,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCampaignLinkCP" priority="5">
+	<command name="AddCampaignLinkCP" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -249,7 +249,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCampaignPageCP" priority="5">
+	<command name="AddCampaignPageCP" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -299,7 +299,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCampaignYoutubeCP" priority="5">
+	<command name="AddCampaignYoutubeCP" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -350,7 +350,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCampaignCP" priority="5">
+	<command name="DeleteCampaignCP" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -391,7 +391,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCampaignCP" priority="5">
+	<command name="EditCampaignCP" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />

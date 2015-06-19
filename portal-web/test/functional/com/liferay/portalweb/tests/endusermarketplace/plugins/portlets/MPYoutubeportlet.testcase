@@ -13,7 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="YouTubePortletSmoke" priority="5">
+	<command name="YouTubePortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="youtube-portlet" />
 
 		<var name="appName" value="YouTube" />

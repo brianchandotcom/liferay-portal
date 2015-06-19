@@ -21,7 +21,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePageTemplate" priority="4">
+	<command name="AddSitePageTemplate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
@@ -103,7 +103,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51156" name="LocalizeDefaultPageTemplates" priority="5">
+	<command known-issues="LPS-51156" name="LocalizeDefaultPageTemplates" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

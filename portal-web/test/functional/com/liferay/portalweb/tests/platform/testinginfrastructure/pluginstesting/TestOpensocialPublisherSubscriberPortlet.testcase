@@ -10,7 +10,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewPublisherSubscriber" priority="5">
+	<command name="ViewPublisherSubscriber" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Publisher Subscriber Page" />
 		</execute>

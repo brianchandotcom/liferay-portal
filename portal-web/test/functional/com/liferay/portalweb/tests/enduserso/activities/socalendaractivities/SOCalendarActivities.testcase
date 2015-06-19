@@ -21,7 +21,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddCalendarEventComment" priority="5">
+	<command name="AddCalendarEventComment" priority="4">
 		<var name="commentContent" value="Calendar Event Comment" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -120,7 +120,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventComments" priority="5">
+	<command name="AddCalendarEventComments" priority="4">
 		<var name="commentContent1" value="Calendar Event Comment1" />
 		<var name="commentContent2" value="Calendar Event Comment2" />
 		<var name="commentContent3" value="Calendar Event Comment3" />
@@ -431,7 +431,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventComment" priority="5">
+	<command name="DeleteCalendarEventComment" priority="4">
 		<var name="commentContent" value="Calendar Event Comment" />
 		<var name="commentContentEdit" value="Calendar Event Comment Edit" />
 		<var name="eventTitle" value="Calendar Event Title" />
@@ -524,7 +524,7 @@
 		<execute function="AssertTextNotPresent" value1="${commentContent}" />
 	</command>
 
-	<command name="EditCalendarEventComment" priority="5">
+	<command name="EditCalendarEventComment" priority="4">
 		<var name="commentContent" value="Calendar Event Comment" />
 		<var name="commentContentEdit" value="Calendar Event Comment Edit" />
 		<var name="eventTitle" value="Calendar Event Title" />
@@ -635,7 +635,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCalendarEventsActivities" priority="5">
+	<command name="ViewCalendarEventsActivities" priority="4">
 		<var name="eventTitle1" value="Calendar Event1 Title" />
 		<var name="eventTitle2" value="Calendar Event2 Title" />
 		<var name="eventTitle3" value="Calendar Event3 Title" />

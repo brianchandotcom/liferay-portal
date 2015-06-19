@@ -1937,7 +1937,7 @@
 		</execute>
 	</command>
 
-	<command name="RolesXSS" priority="5">
+	<command name="RolesXSS" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -2340,7 +2340,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAutomaticAssignedRoles" priority="5">
+	<command name="ViewAutomaticAssignedRoles" priority="4">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Access in Control Panel" />
 		<var name="permissionDefinition2Key" value="SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
@@ -2388,7 +2388,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDocumentsAndMediaAddRepositoryPermissionSiteMemberRole" priority="5">
+	<command name="ViewDocumentsAndMediaAddRepositoryPermissionSiteMemberRole" priority="4">
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Repository" />
 		<var name="roleName" value="Site Member" />
@@ -2416,7 +2416,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPreferencesPanelPermissionSiteMemberRole" priority="5">
+	<command name="ViewPreferencesPanelPermissionSiteMemberRole" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -2492,7 +2492,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49842" name="ViewRegRolePermissionsDefaultView" priority="5">
+	<command known-issues="LPS-49842" name="ViewRegRolePermissionsDefaultView" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>

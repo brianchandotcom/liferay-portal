@@ -17,7 +17,7 @@
 		</execute>
 	</set-up>
 
-	<command name="ViewWCDNestedPortlets" priority="5">
+	<command name="ViewWCDNestedPortlets" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>

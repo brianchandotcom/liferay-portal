@@ -2543,7 +2543,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchContentSOSitePrivateNonMember" priority="5">
+	<command name="SearchContentSOSitePrivateNonMember" priority="4">
 		<var name="announcementEntryContent" value="Announcements Entry Content" />
 		<var name="announcementEntryTitle" value="Announcements Entry Title" />
 		<var name="announcementEntryURL" value="http://www.liferay.com" />
@@ -2939,7 +2939,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchContentSOSitePrivateRestrictedNonMember" priority="5">
+	<command name="SearchContentSOSitePrivateRestrictedNonMember" priority="4">
 		<var name="announcementEntryContent" value="Announcements Entry Content" />
 		<var name="announcementEntryTitle" value="Announcements Entry Title" />
 		<var name="announcementEntryURL" value="http://www.liferay.com" />

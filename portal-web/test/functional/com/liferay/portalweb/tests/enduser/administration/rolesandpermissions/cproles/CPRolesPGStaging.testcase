@@ -35,7 +35,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AccessStaging" priority="5">
+	<command name="AccessStaging" priority="4">
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -139,7 +139,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingBlogsRolesWorkflow" priority="5">
+	<command name="StagingBlogsRolesWorkflow" priority="4">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<var name="pageName" value="Blogs Test Page" />

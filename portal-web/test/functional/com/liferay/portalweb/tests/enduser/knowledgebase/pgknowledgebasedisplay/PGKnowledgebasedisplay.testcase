@@ -29,7 +29,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddChildArticle" priority="5">
+	<command name="AddChildArticle" priority="4">
 		<var name="kbArticleContent" value="Knowledge Base Article Content" />
 		<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		<var name="kbChildArticleContent" value="Child Article Content" />
@@ -64,7 +64,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleContentNull" priority="5">
+	<command name="AddKBArticleContentNull" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -84,7 +84,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleSuggestion" priority="5">
+	<command name="AddKBArticleSuggestion" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -125,7 +125,7 @@
 		</execute>
 	</command>
 
-	<command name="AddKBArticleTitleNull" priority="5">
+	<command name="AddKBArticleTitleNull" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -144,7 +144,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMultipleKBArticleSuggestions" priority="5">
+	<command name="AddMultipleKBArticleSuggestions" priority="4">
 		<var name="kbArticleCounterList" value="1,2" />
 		<var name="kbSuggestionCounterList" value="1,2,3" />
 
@@ -195,7 +195,7 @@
 		</for>
 	</command>
 
-	<command name="CancelKBArticleSuggestion" priority="5">
+	<command name="CancelKBArticleSuggestion" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -216,7 +216,7 @@
 		</execute>
 	</command>
 
-	<command name="CannotViewDuplicateBreadcrumbsWhenAddingParentArticle" priority="5" >
+	<command name="CannotViewDuplicateBreadcrumbsWhenAddingParentArticle" priority="4" >
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -252,7 +252,7 @@
 		<execute function="AssertElementNotPresent" locator1="//div[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
 	</command>
 
-	<command name="ChangeSocialBookmarkSitesForKBArticle" priority="5">
+	<command name="ChangeSocialBookmarkSitesForKBArticle" priority="4">
 		<property name="hook.plugins.includes" value="social-bookmark-hook" />
 
 		<execute macro="Page#gotoContentCP">
@@ -395,7 +395,7 @@
 		</execute>
 	</command>
 
-	<command name="EditKBArticle" priority="5">
+	<command name="EditKBArticle" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -434,7 +434,7 @@
 		</execute>
 	</command>
 
-	<command name="EditKBArticleDisplaySettingsViaKBDisplayConfiguration" priority="5">
+	<command name="EditKBArticleDisplaySettingsViaKBDisplayConfiguration" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -467,7 +467,7 @@
 		</execute>
 	</command>
 
-	<command name="RateKBArticleWithoutSuggestions" priority="5">
+	<command name="RateKBArticleWithoutSuggestions" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -488,7 +488,7 @@
 		</execute>
 	</command>
 
-	<command name="SelectParentArticleViaKBDisplay" priority="5">
+	<command name="SelectParentArticleViaKBDisplay" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -532,7 +532,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEditedKBArticleTitleHistory" priority="5">
+	<command name="ViewEditedKBArticleTitleHistory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -567,7 +567,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleByPriority" priority="5">
+	<command name="ViewKBArticleByPriority" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -604,7 +604,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleSuggestionsWorkflow" priority="5">
+	<command name="ViewKBArticleSuggestionsWorkflow" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -683,7 +683,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleViaDefaultFriendlyURL" priority="5">
+	<command name="ViewKBArticleViaDefaultFriendlyURL" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -716,7 +716,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleViaNavigationLinks" priority="5">
+	<command name="ViewKBArticleViaNavigationLinks" priority="4">
 		<var name="kbArticleCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoContentCP">
@@ -793,7 +793,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleViaUserDefinedFriendlyURL" priority="5">
+	<command name="ViewKBArticleViaUserDefinedFriendlyURL" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -827,7 +827,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54469" name="ViewKBArticleWithAllSocialBookmarkSites" priority="5">
+	<command known-issues="LPS-54469" name="ViewKBArticleWithAllSocialBookmarkSites" priority="4">
 		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
 
 		<var name="socialBookmarkSites" value="twitter,facebook,plusone,addthis,blinklist,delicious,digg,evernote,linkedin,newsvine,reddit,slashdot,stumbleupon,technorati,tuenti" />
@@ -865,7 +865,7 @@
 		</for>
 	</command>
 
-	<command name="ViewKBArticleWithBlogsEntryRelatedAsset" priority="5">
+	<command name="ViewKBArticleWithBlogsEntryRelatedAsset" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -908,7 +908,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithEditedStarRatings" priority="5">
+	<command name="ViewKBArticleWithEditedStarRatings" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -948,7 +948,7 @@
 		<execute macro="KBArticle#viewArticle5StarRatingPG" />
 	</command>
 
-	<command name="ViewKBArticleWithKBChildArticleHierarchyNavigation" priority="5">
+	<command name="ViewKBArticleWithKBChildArticleHierarchyNavigation" priority="4">
 		<var name="kbArticleCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoContentCP">
@@ -1028,7 +1028,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithoutConfiguration" priority="5">
+	<command name="ViewKBArticleWithoutConfiguration" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
@@ -1054,7 +1054,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithStarRatings" priority="5">
+	<command name="ViewKBArticleWithStarRatings" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -1103,7 +1103,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBArticleWithXSSCodeInjectedTitle" priority="5">
+	<command name="ViewKBArticleWithXSSCodeInjectedTitle" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -1135,7 +1135,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKBChildArticleViaReadMoreLink" priority="5">
+	<command name="ViewKBChildArticleViaReadMoreLink" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
@@ -1164,7 +1164,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoDuplicateKBSuggestionAfterRefresh" priority="5">
+	<command name="ViewNoDuplicateKBSuggestionAfterRefresh" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>

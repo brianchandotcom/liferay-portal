@@ -17,7 +17,7 @@
 		</execute>
 	</tear-down>
 
-	<command name="SalesDemo" priority="5">
+	<command name="SalesDemo" priority="4">
 		<var name="webContentContent" value="DHS Content" />
 		<var name="webContentTitle" value="DHS Title" />
 

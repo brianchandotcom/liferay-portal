@@ -2,13 +2,13 @@
 	<property name="mobile.device.enabled" value="true" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="BrowseGoogle" priority="5">
+	<command name="BrowseGoogle" priority="4">
 		<execute function="Open" locator1="www.google.com" />
 
 		<execute function="Pause" locator1="5000" />
 	</command>
 
-	<command name="Smoke" priority="5">
+	<command name="Smoke" priority="4">
 		<execute macro="User#firstLoginPG" />
 	</command>
 </definition>

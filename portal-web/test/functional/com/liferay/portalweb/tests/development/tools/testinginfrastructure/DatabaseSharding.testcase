@@ -3,7 +3,7 @@
 	<property name="databases.size" value="2" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="Smoke" priority="5">
+	<command name="Smoke" priority="4">
 		<execute macro="User#firstLoginPG" />
 	</command>
 </definition>

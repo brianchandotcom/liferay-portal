@@ -9,7 +9,7 @@
 		<execute macro="User#firstLoginPG" />
 	</tear-down>
 
-	<command name="SessionTimeout" priority="5">
+	<command name="SessionTimeout" priority="4">
 		<property name="web.xml.timeout" value="1" />
 
 		<execute macro="Page#openURL" />

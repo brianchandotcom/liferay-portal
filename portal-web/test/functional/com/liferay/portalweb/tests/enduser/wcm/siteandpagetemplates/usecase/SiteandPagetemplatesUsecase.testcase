@@ -331,7 +331,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesDynamicTemplates" priority="5">
+	<command name="SitesDynamicTemplates" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -928,7 +928,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51156" name="ViewNoAddPageTabViaPageTemplatesCP" priority="5">
+	<command known-issues="LPS-51156" name="ViewNoAddPageTabViaPageTemplatesCP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

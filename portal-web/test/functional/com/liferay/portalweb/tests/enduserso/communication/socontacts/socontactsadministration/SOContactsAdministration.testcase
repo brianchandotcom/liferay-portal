@@ -26,7 +26,7 @@
 		<execute macro="SOSite#tearDownCP" />
 	</tear-down>
 
-	<command name="AddConnection" priority="5">
+	<command name="AddConnection" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -549,7 +549,7 @@
 		</execute>
 	</command>
 
-	<command name="AddConnectionViaMembersPortlet" priority="5">
+	<command name="AddConnectionViaMembersPortlet" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -602,7 +602,7 @@
 		</execute>
 	</command>
 
-	<command name="AddConnectionViaProfile" priority="5">
+	<command name="AddConnectionViaProfile" priority="4">
 		<var name="adminListName" value="${adminListName}" />
 		<var name="adminScreenName" value="${adminScreenName}" />
 		<var name="filterTypeCount" value="1" />
@@ -718,7 +718,7 @@
 		</execute>
 	</command>
 
-	<command name="AddConnectionViaProfileBySOUser" priority="5">
+	<command name="AddConnectionViaProfileBySOUser" priority="4">
 		<var name="adminListName" value="${adminListName}" />
 		<var name="adminScreenName" value="${adminScreenName}" />
 		<var name="filterTypeCount" value="1" />
@@ -842,7 +842,7 @@
 		</execute>
 	</command>
 
-	<command name="AddContact" priority="5">
+	<command name="AddContact" priority="4">
 		<var name="contactEmailAddress" value="socialofficecontact01@liferay.com" />
 		<var name="contactName" value="Social01 Office01 Contact01" />
 
@@ -899,7 +899,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFollower" priority="5">
+	<command name="AddFollower" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -2805,7 +2805,7 @@
 		</execute>
 	</command>
 
-	<command name="FollowUserViaProfile" priority="5">
+	<command name="FollowUserViaProfile" priority="4">
 		<var name="adminListName" value="${adminListName}" />
 		<var name="adminScreenName" value="${adminScreenName}" />
 		<var name="filterTypeCount" value="1" />
@@ -2919,7 +2919,7 @@
 		</execute>
 	</command>
 
-	<command name="FollowUserViaProfileBySOUser" priority="5">
+	<command name="FollowUserViaProfileBySOUser" priority="4">
 		<var name="adminListName" value="${adminListName}" />
 		<var name="adminScreenName" value="${adminScreenName}" />
 		<var name="filterTypeCount" value="1" />
@@ -3039,7 +3039,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchConnection" priority="5">
+	<command name="SearchConnection" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -3130,7 +3130,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchConnectionViaProfile" priority="5">
+	<command name="SearchConnectionViaProfile" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -3275,7 +3275,7 @@
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOContactscenter#CONNECT_BUTTON" />
 	</command>
 
-	<command name="SearchFollowing" priority="5">
+	<command name="SearchFollowing" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -3345,7 +3345,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchUser" priority="5">
+	<command name="SearchUser" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -3377,7 +3377,7 @@
 		<execute function="AssertTextEquals" locator1="SOContactscenter#USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 	</command>
 
-	<command name="ViewConnectionAndFollowerViaProfile" priority="5">
+	<command name="ViewConnectionAndFollowerViaProfile" priority="4">
 		<var name="adminFirstName" value="Test" />
 		<var name="adminListName" value="Test, Test" />
 		<var name="adminName" value="Test Test" />
@@ -3585,7 +3585,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewUserDetails" priority="5">
+	<command name="ViewUserDetails" priority="4">
 		<var name="imageFileName" value="Document_4.jpg" />
 		<var name="userAdditionalEmailAddress" value="socialoffice02@liferay.com" />
 		<var name="userAddressCity" value="Ray of Light" />

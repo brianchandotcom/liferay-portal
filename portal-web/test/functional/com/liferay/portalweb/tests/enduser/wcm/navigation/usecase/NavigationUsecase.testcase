@@ -13,7 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddPageNameApostrophe" priority="5">
+	<command name="AddPageNameApostrophe" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tester&apos;s Page" />
 		</execute>
@@ -75,7 +75,7 @@
 		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_HEADER2_ENTRY" value1="Navigation Display Test Page" />
 	</command>
 
-	<command name="UserPersonalSiteUserGroupPrivatePage" priority="5">
+	<command name="UserPersonalSiteUserGroupPrivatePage" priority="4">
 		<property name="custom.properties" value="layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false" />
 
 		<execute macro="Page#gotoCP">
@@ -184,7 +184,7 @@
 		<execute function="AssertTextEquals" locator1="PGNavigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 	</command>
 
-	<command name="ViewNoAddPagePermissionsPG" priority="5">
+	<command name="ViewNoAddPagePermissionsPG" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Navigation Page" />
 		</execute>

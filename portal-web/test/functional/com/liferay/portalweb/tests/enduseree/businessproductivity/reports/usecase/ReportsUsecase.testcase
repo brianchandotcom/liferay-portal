@@ -16,7 +16,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddDefinitionNoTemplate" priority="5">
+	<command name="AddDefinitionNoTemplate" priority="4">
 		<description message="This is a use case for LPS-51226." />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -32,7 +32,7 @@
 		<execute function="AssertTextEquals" locator1="CPReportsadminAddreportdefinition#ERROR_MESSAGE_2" value1="Please enter a valid file." />
 	</command>
 
-	<command name="DownloadReportPG" priority="5">
+	<command name="DownloadReportPG" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -71,7 +71,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDefinitionsPagination" priority="5">
+	<command name="ViewDefinitionsPagination" priority="4">
 		<description message="This is a use case for LPS-50501." />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -109,7 +109,7 @@
 		<execute function="AssertElementNotPresent" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
 	</command>
 
-	<command known-issues="LRQA-13709" name="ViewReportEmailNewConfiguration" priority="5">
+	<command known-issues="LRQA-13709" name="ViewReportEmailNewConfiguration" priority="4">
 		<description message="This is a use case for LPS-51009." />
 
 		<var name="emailAddress1" property-value="email.address.1" />
@@ -239,7 +239,7 @@ Thanks,<br/>
 		<execute macro="ReportsAdmin#tearDownConfiguration" />
 	</command>
 
-	<command name="ViewReportPG" priority="5">
+	<command name="ViewReportPG" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>

@@ -107,7 +107,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDashboardEvent" priority="5">
+	<command name="ViewDashboardEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="pageName" value="Calendar Page" />
@@ -995,7 +995,7 @@
 		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle10}" />
 	</command>
 
-	<command name="ViewDashboardEventStartTimeEndTime" priority="5">
+	<command name="ViewDashboardEventStartTimeEndTime" priority="4">
 		<var name="endDateTime" value="11:59 PM" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -1691,7 +1691,7 @@
 		<execute function="AssertTextNotPresent" value1="${eventTitle6}" />
 	</command>
 
-	<command name="ViewSiteEventNonViewableBySiteMember" priority="5">
+	<command name="ViewSiteEventNonViewableBySiteMember" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="pageName" value="Calendar" />
@@ -1777,7 +1777,7 @@
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
-	<command name="ViewSiteEvents" priority="5">
+	<command name="ViewSiteEvents" priority="4">
 		<var name="eventTitle1" value="Calendar Event1 Title" />
 		<var name="eventTitle2" value="Calendar Event2 Title" />
 		<var name="eventTitle3" value="Calendar Event3 Title" />
@@ -2691,7 +2691,7 @@
 		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle10}" />
 	</command>
 
-	<command name="ViewSiteEventStartTimeEndTime" priority="5">
+	<command name="ViewSiteEventStartTimeEndTime" priority="4">
 		<var name="endDateTime" value="11:59 PM" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -2736,7 +2736,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteEventStartTimeEndTimeViaDashboard" priority="5">
+	<command name="ViewSiteEventStartTimeEndTimeViaDashboard" priority="4">
 		<var name="endDateTime" value="11:59 PM" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -2864,7 +2864,7 @@
 		<execute function="AssertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName}" />
 	</command>
 
-	<command name="ViewSiteEventViaDashboard" priority="5">
+	<command name="ViewSiteEventViaDashboard" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="pageName" value="Calendar" />

@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="LogosRefTaggerPortletSmoke" priority="5">
+	<command name="LogosRefTaggerPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="logos-reftagger-portlet" />
 
 		<var name="appName" value="Logos RefTagger" />

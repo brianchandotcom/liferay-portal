@@ -23,7 +23,7 @@
 		<execute macro="DMDocument#tearDownCP" />
 	</tear-down>
 
-	<command name="AddDMDocumentRegRole" priority="5">
+	<command name="AddDMDocumentRegRole" priority="4">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
@@ -85,7 +85,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
 	</command>
 
-	<command name="AddDMDocumentSiteMemberRoleInline" priority="5">
+	<command name="AddDMDocumentSiteMemberRoleInline" priority="4">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX" />
@@ -193,7 +193,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDMDocumentSiteRole" priority="5">
+	<command name="AddDMDocumentSiteRole" priority="4">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
@@ -287,7 +287,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 	</command>
 
-	<command name="DeleteDMFolderRegRoleInline" priority="5">
+	<command name="DeleteDMFolderRegRoleInline" priority="4">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 		<var name="pageName" value="Documents and Media Page" />
@@ -396,7 +396,7 @@
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGDocumentsandmedia#FOLDER_MENULIST_DELETE" value1="Delete" />
 	</command>
 
-	<command name="ViewDMFolderGuestInline" priority="5">
+	<command name="ViewDMFolderGuestInline" priority="4">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 		<var name="pageName" value="Documents and Media Page" />

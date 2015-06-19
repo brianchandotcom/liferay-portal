@@ -10,7 +10,7 @@
 		<var name="parentTearDownVar" value="parent test case tear-down var value" />
 	</tear-down>
 
-	<command name="ParentTestCaseCommand" priority="5">
+	<command name="ParentTestCaseCommand" priority="4">
 		<execute macro="TestUtils#pass" />
 	</command>
 </definition>

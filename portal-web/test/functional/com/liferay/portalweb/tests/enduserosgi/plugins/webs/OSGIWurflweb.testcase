@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="WurflWebSmoke" priority="5">
+	<command name="WurflWebSmoke" priority="4">
 		<property name="web.plugins.includes" value="wurfl-web" />
 
 		<var name="appName" value="Device Recognition Provider" />

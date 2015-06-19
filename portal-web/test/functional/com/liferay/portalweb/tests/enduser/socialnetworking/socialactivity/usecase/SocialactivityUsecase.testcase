@@ -90,7 +90,7 @@
 		</execute>
 	</command>
 
-	<command name="BlogsDemo" priority="5">
+	<command name="BlogsDemo" priority="4">
 		<var name="entryComment1" value="Blogs Entry Comment 1" />
 		<var name="entryComment2" value="Blogs Entry Comment 2" />
 		<var name="entryComment3" value="Guest Blogs Entry Comment" />
@@ -315,7 +315,7 @@
 		</execute>
 	</command>
 
-	<command name="Localization" priority="5">
+	<command name="Localization" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Social Activity Page" />
 		</execute>

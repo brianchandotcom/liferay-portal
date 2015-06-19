@@ -2,7 +2,7 @@
 	<property name="testcase.url" value="" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="Get" priority="5">
+	<command name="Get" priority="4">
 		<var method="TestPropsUtil#get('browser.type')" name="string" />
 
 		<execute macro="TestUtils#assertEquals">

@@ -47,7 +47,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddXSL" priority="5">
+	<command name="AddXSL" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
@@ -431,7 +431,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewXSLDefaultContent" priority="5">
+	<command name="ViewXSLDefaultContent" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />

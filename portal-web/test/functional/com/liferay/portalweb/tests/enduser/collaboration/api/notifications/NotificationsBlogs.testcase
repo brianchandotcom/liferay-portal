@@ -29,7 +29,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="MarkAllNotificationsAsRead" priority="5">
+	<command name="MarkAllNotificationsAsRead" priority="4">
 		<var name="blogsEntryCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
@@ -66,7 +66,7 @@
 		<execute macro="Notifications#viewDefaultContent" />
 	</command>
 
-	<command name="ViewNoWebsiteNotificationForNewBlogsEntry" priority="5">
+	<command name="ViewNoWebsiteNotificationForNewBlogsEntry" priority="4">
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
 		<execute macro="NotificationsPortlet#setUserDeliveries">
@@ -96,7 +96,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55992" name="ViewNoWebsiteNotificationForUpdatedBlogsEntry" priority="5">
+	<command known-issues="LPS-55992" name="ViewNoWebsiteNotificationForUpdatedBlogsEntry" priority="4">
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
 		<execute macro="NotificationsPortlet#setUserDeliveries">
@@ -137,7 +137,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebsiteNotificationForNewBlogsEntry" priority="5">
+	<command name="ViewWebsiteNotificationForNewBlogsEntry" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -179,7 +179,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebsiteNotificationForNewCommentViaBlogs" priority="5">
+	<command name="ViewWebsiteNotificationForNewCommentViaBlogs" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -252,7 +252,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55992" name="ViewWebsiteNotificationForUpdatedBlogsEntry" priority="5">
+	<command known-issues="LPS-55992" name="ViewWebsiteNotificationForUpdatedBlogsEntry" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -305,7 +305,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebsiteNotificationForUpdatedCommentViaBlogs" priority="5">
+	<command name="ViewWebsiteNotificationForUpdatedCommentViaBlogs" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="DefaultWebContentHookSmoke" priority="5">
+	<command name="DefaultWebContentHookSmoke" priority="4">
 		<property name="hook.plugins.includes" value="default-web-content-hook" />
 
 		<var name="appName" value="Default Web Content" />

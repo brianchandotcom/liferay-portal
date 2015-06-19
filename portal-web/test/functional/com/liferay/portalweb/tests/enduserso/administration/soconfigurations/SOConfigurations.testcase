@@ -29,7 +29,7 @@
 		<!--<execute macro="PortalSettings#tearDownCP" />-->
 	</tear-down>
 
-	<command name="AssignSORole" priority="5">
+	<command name="AssignSORole" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -289,7 +289,7 @@
 		</execute>
 	</command>
 
-	<command name="EnableAndDisableAddSOSite" priority="5">
+	<command name="EnableAndDisableAddSOSite" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -344,7 +344,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_PRESENT_PNG" />
 	</command>
 
-	<command name="EnableAndDisableSOSiteTypes" priority="5">
+	<command name="EnableAndDisableSOSiteTypes" priority="4">
 		<var name="siteType1" value="Open" />
 		<var name="siteType2" value="Private Restricted" />
 		<var name="siteType3" value="Private" />

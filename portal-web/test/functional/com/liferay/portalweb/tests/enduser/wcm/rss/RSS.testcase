@@ -149,7 +149,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRSSFeed" priority="5">
+	<command name="AddRSSFeed" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -189,7 +189,7 @@
 		</for>
 	</command>
 
-	<command name="AddRSSPortlet" priority="5">
+	<command name="AddRSSPortlet" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -211,7 +211,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeDefaultToNavigationDisplay" priority="5">
+	<command name="ChangeDefaultToNavigationDisplay" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -328,7 +328,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFeedFromRSS" priority="5">
+	<command name="DeleteFeedFromRSS" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Welcome" />
 		</execute>
@@ -387,7 +387,7 @@
 		</execute>
 	</command>
 
-	<command name="DisabledFeedTitle" priority="5">
+	<command name="DisabledFeedTitle" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -428,7 +428,7 @@
 		</execute>
 	</command>
 
-	<command name="EnableRSSFeedFromAssetpublisher" priority="5">
+	<command name="EnableRSSFeedFromAssetpublisher" priority="4">
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
 			<var name="siteScopeName" value="Site Name" />
@@ -525,7 +525,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveRSSPortlet" priority="5">
+	<command name="RemoveRSSPortlet" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Welcome" />
 		</execute>

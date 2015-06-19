@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="LocalizationZHHookSmoke" priority="5">
+	<command name="LocalizationZHHookSmoke" priority="4">
 		<property name="hook.plugins.includes" value="localization-zh-hook" />
 
 		<var name="appName" value="Chinese Localization" />

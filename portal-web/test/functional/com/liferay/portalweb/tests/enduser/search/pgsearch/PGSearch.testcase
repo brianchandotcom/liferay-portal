@@ -38,7 +38,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SearchBlogsEntry" priority="5">
+	<command name="SearchBlogsEntry" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -165,7 +165,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryCategory" priority="5">
+	<command name="SearchBlogsEntryCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -249,7 +249,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryCategoryQuotes" priority="5">
+	<command name="SearchBlogsEntryCategoryQuotes" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -341,7 +341,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryQuotes" priority="5">
+	<command name="SearchBlogsEntryQuotes" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -514,7 +514,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryTag" priority="5">
+	<command name="SearchBlogsEntryTag" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -584,7 +584,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryTagQuotes" priority="5">
+	<command name="SearchBlogsEntryTagQuotes" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -662,7 +662,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocumentsAndMediaDocument" priority="5">
+	<command name="SearchDocumentsAndMediaDocument" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -768,7 +768,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchMessageBoardsThread" priority="5">
+	<command name="SearchMessageBoardsThread" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
@@ -905,7 +905,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchUser" priority="5">
+	<command name="SearchUser" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -978,7 +978,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchUserWildcard" priority="5">
+	<command name="SearchUserWildcard" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -1013,7 +1013,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContent" priority="5">
+	<command name="SearchWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1127,7 +1127,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWikiPage" priority="5">
+	<command name="SearchWikiPage" priority="4">
 		<var name="pageName" value="Wiki Test Page" />
 		<var name="portletName" value="Wiki" />
 		<var name="wikiPageContent" value="Wiki Page Content" />

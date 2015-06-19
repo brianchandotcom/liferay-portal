@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="GoogleMapsPortletSmoke" priority="5">
+	<command name="GoogleMapsPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="google-maps-portlet" />
 
 		<var name="appName" value="Google Maps" />

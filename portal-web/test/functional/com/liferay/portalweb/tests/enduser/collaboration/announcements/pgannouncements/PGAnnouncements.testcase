@@ -22,7 +22,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddAnnouncementsEntry" priority="5">
+	<command name="AddAnnouncementsEntry" priority="4">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -53,7 +53,7 @@
 		</execute>
 	</command>
 
-	<command name="AddAnnouncementsEntryFutureDate" priority="5">
+	<command name="AddAnnouncementsEntryFutureDate" priority="4">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -133,7 +133,7 @@
 		</execute>
 	</command>
 
-	<command name="AddAnnouncementsEntryPastExpirationDate" priority="5">
+	<command name="AddAnnouncementsEntryPastExpirationDate" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -167,7 +167,7 @@
 		<execute function="AssertTextEquals" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TYPE" value1="${distributionScope}" />
 	</command>
 
-	<command name="AddAnnouncementsEntryPriorityImportant" priority="5">
+	<command name="AddAnnouncementsEntryPriorityImportant" priority="4">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -199,7 +199,7 @@
 		</execute>
 	</command>
 
-	<command name="AddAnnouncementsEntrySite" priority="5">
+	<command name="AddAnnouncementsEntrySite" priority="4">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -256,7 +256,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteAnnoucementsEntry" priority="5">
+	<command name="DeleteAnnoucementsEntry" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -289,7 +289,7 @@
 		</execute>
 	</command>
 
-	<command name="EditAnnouncementsEntry" priority="5">
+	<command name="EditAnnouncementsEntry" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -333,7 +333,7 @@
 		</execute>
 	</command>
 
-	<command name="HideAnnouncementsEntry" priority="5">
+	<command name="HideAnnouncementsEntry" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -371,7 +371,7 @@
 		</execute>
 	</command>
 
-	<command name="MarkAsReadAnnouncementsEntry" priority="5">
+	<command name="MarkAsReadAnnouncementsEntry" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -401,7 +401,7 @@
 		</execute>
 	</command>
 
-	<command name="ShowAnnouncementsEntry" priority="5">
+	<command name="ShowAnnouncementsEntry" priority="4">
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />

@@ -189,7 +189,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroups" priority="5">
+	<command name="AddUserGroups" priority="4">
 		<var name="userGroupName1" value="UG UserGroup1 Name" />
 		<var name="userGroupName2" value="UG UserGroup2 Name" />
 		<var name="userGroupName3" value="UG UserGroup3 Name" />

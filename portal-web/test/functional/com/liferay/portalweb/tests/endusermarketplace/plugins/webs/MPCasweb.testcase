@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="CasWebSmoke" priority="5">
+	<command name="CasWebSmoke" priority="4">
 		<property name="web.plugins.includes" value="cas-web" />
 
 		<var name="appName" value="Central Authentication Service" />

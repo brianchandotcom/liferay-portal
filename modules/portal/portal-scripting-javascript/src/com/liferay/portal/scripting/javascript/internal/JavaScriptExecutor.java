@@ -18,7 +18,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.scripting.BaseScriptingExecutor;
 import com.liferay.portal.scripting.javascript.configuration.JavaScriptExecutorConfiguration;
 
 import java.util.Arrays;

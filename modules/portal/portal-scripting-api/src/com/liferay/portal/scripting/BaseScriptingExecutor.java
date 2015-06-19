@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.scripting;
+package com.liferay.portal.scripting;
 
+import com.liferay.portal.kernel.scripting.ScriptingContainer;
+import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;

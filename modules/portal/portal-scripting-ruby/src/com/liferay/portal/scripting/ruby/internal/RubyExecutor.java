@@ -18,7 +18,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.scripting.ScriptingException;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.scripting.BaseScriptingExecutor;
 import com.liferay.portal.scripting.ruby.configuration.RubyScriptingConfiguration;
 
 import java.io.File;

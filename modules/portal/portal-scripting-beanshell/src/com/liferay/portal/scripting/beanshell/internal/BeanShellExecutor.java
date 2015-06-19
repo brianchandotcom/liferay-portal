@@ -16,11 +16,11 @@ package com.liferay.portal.scripting.beanshell.internal;
 
 import bsh.Interpreter;
 
-import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.scripting.BaseScriptingExecutor;
 
 import java.util.HashMap;
 import java.util.Map;

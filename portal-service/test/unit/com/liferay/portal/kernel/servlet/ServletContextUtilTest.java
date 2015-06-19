@@ -80,7 +80,7 @@ public class ServletContextUtilTest {
 	}
 
 	protected void getResourceURI(String resourceURL) throws Exception {
-		URL url = getURL(resourceURL);
+		URL url = new URL("file://" + resourceURL + "/dummy");
 
 		Assert.assertEquals(
 			getURI(url.getPath()), ServletContextUtil.getResourceURI(url));
@@ -122,19 +122,6 @@ public class ServletContextUtilTest {
 		}
 
 		return uri;
-	}
-
-	protected URL getURL(String path) {
-		URL url = null;
-
-		try {
-			url = new URL("file://" + path + "/dummy");
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return url;
 	}
 
 	private static final String _URI_WITH_INVALID_CHARACTERS = ":?#[]/@";

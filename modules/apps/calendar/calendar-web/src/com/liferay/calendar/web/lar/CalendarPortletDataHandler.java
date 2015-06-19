@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.lar;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
 	service = PortletDataHandler.class
 )
 public class CalendarPortletDataHandler extends BasePortletDataHandler {

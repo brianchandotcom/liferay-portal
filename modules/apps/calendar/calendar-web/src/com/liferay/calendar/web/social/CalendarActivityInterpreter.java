@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.social;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.permission.CalendarPermission;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
 	service = SocialActivityInterpreter.class
 )
 public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
@@ -55,10 +55,10 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 		throws Exception {
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			serviceContext.getScopeGroupId(), PortletKeys.CALENDAR);
+			serviceContext.getScopeGroupId(), CalendarPortletKeys.CALENDAR);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			serviceContext.getRequest(), PortletKeys.CALENDAR, plid,
+			serviceContext.getRequest(), CalendarPortletKeys.CALENDAR, plid,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_calendar_booking.jsp");

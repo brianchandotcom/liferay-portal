@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.search;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -96,19 +96,19 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 				Validator.isNotNull(orderByType)) {
 
 				preferences.setValue(
-					PortletKeys.CALENDAR, "users-resources-order-by-col",
-					orderByCol);
+					CalendarPortletKeys.CALENDAR,
+					"users-resources-order-by-col", orderByCol);
 				preferences.setValue(
-					PortletKeys.CALENDAR, "users-resources-order-by-type",
-					orderByType);
+					CalendarPortletKeys.CALENDAR,
+					"users-resources-order-by-type", orderByType);
 			}
 			else {
 				orderByCol = preferences.getValue(
-					PortletKeys.CALENDAR, "users-resources-order-by-col",
-					"last-name");
+					CalendarPortletKeys.CALENDAR,
+					"users-resources-order-by-col", "last-name");
 				orderByType = preferences.getValue(
-					PortletKeys.CALENDAR, "users-resources-order-by-type",
-					"asc");
+					CalendarPortletKeys.CALENDAR,
+					"users-resources-order-by-type", "asc");
 			}
 
 			OrderByComparator<CalendarResource> orderByComparator =

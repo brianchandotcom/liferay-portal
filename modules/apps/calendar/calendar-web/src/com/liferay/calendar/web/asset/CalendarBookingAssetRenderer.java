@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.asset;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.permission.CalendarPermission;
@@ -106,8 +106,8 @@ public class CalendarBookingAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.CALENDAR,
-			PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest),
+			CalendarPortletKeys.CALENDAR, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
 		portletURL.setParameter(
@@ -125,7 +125,7 @@ public class CalendarBookingAssetRenderer
 
 		try {
 			PortletURL portletURL = liferayPortletResponse.createRenderURL(
-				PortletKeys.CALENDAR);
+				CalendarPortletKeys.CALENDAR);
 
 			portletURL.setParameter("mvcPath", "/view_calendar_booking.jsp");
 			portletURL.setParameter(

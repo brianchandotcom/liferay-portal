@@ -14,14 +14,12 @@
 
 package com.liferay.calendar.web.messaging;
 
-import com.liferay.calendar.service.CalendarImporterLocalServiceUtil;
+import com.liferay.calendar.service.CalendarImporterLocalService;
 import com.liferay.calendar.web.configuration.CalendarWebConfigurationValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-
-import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -47,8 +45,8 @@ public class CalendarActivationListener {
 
 		stopWatch.start();
 
-		CalendarImporterLocalServiceUtil.importCalEvents();
-		CalendarImporterLocalServiceUtil.importRolePermissions();
+		_calendarImporterLocalService.importCalEvents();
+		_calendarImporterLocalService.importRolePermissions();
 
 		if (_log.isInfoEnabled()) {
 			StringBundler sb = new StringBundler(6);
@@ -64,11 +62,16 @@ public class CalendarActivationListener {
 		}
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference
+	protected void setCalendarImporterLocalService(
+		CalendarImporterLocalService calendarImporterLocalService) {
+
+		_calendarImporterLocalService = calendarImporterLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarActivationListener.class);
+
+	private CalendarImporterLocalService _calendarImporterLocalService;
 
 }

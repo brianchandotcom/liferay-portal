@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.messaging;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Lundgren
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
 	service = SchedulerEntry.class
 )
 public class CheckBookingsMessageListener

@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.portlet;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.exception.CalendarBookingDurationException;
 import com.liferay.calendar.exception.CalendarNameException;
 import com.liferay.calendar.exception.CalendarResourceCodeException;
@@ -152,7 +152,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletKeys.CALENDAR,
+		"javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
@@ -667,7 +667,7 @@ public class CalendarPortlet extends MVCPortlet {
 		String namespace = actionResponse.getNamespace();
 
 		editCalendarURL = HttpUtil.setParameter(
-			editCalendarURL, "p_p_id", PortletKeys.CALENDAR);
+			editCalendarURL, "p_p_id", CalendarPortletKeys.CALENDAR);
 		editCalendarURL = HttpUtil.setParameter(
 			editCalendarURL, namespace + "mvcPath",
 			templatePath + "edit_calendar.jsp");

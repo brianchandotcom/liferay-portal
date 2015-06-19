@@ -239,7 +239,7 @@ public class DDLRecordVersionsUpgradeProcess extends UpgradeProcess {
 				"ExpandoStorageAdapter");
 	}
 
-	protected String toXML(Map<String, String> expandoValuesMap) {
+	public String toXML(Map<String, String> expandoValuesMap) {
 		Document document = SAXReaderUtil.createDocument();
 
 		Element rootElement = document.addElement("root");

@@ -1526,6 +1526,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>error-principal</name>
+		<tag-class>com.liferay.taglib.ui.ErrorPrincipalTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<description>Creates a flag icon that lets users report inappropriate content.</description>
 		<name>flags</name>
 		<tag-class>com.liferay.taglib.ui.FlagsTag</tag-class>

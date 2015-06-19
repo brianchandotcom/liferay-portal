@@ -24,7 +24,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/social_activity/view");
 %>
 
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+<liferay-ui:error-principal />
 
 <portlet:actionURL var="saveActivitySettingsURL">
 	<portlet:param name="struts_action" value="/social_activity/view" />

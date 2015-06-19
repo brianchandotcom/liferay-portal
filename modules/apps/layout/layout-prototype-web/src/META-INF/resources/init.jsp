@@ -38,7 +38,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.LayoutPrototype" %><%@
 page import="com.liferay.portal.model.impl.LayoutPrototypeImpl" %><%@
-page import="com.liferay.portal.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.LayoutPrototypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutPrototypeServiceUtil" %><%@

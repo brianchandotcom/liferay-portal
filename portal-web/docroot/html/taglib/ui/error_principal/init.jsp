@@ -14,17 +14,4 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
-
-<portlet:renderURL var="portletURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-</portlet:renderURL>
-
-<liferay-ui:header
-	backURL="<%= portletURL.toString() %>"
-	title="error"
-/>
-
-<liferay-ui:error exception="<%= NoSuchPasswordPolicyException.class %>" message="the-password-policy-could-not-be-found" />
-
-<liferay-ui:error-principal />
+<%@ include file="/html/taglib/init.jsp" %>

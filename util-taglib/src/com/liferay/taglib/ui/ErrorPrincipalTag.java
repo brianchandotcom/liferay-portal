@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.taglib.ui;
 
-<portlet:renderURL var="portletURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-</portlet:renderURL>
+import com.liferay.taglib.util.IncludeTag;
 
-<liferay-ui:header
-	backURL="<%= portletURL.toString() %>"
-	title="error"
-/>
+/**
+ * @author Pei-Jung Lan
+ */
+public class ErrorPrincipalTag extends IncludeTag {
 
-<liferay-ui:error exception="<%= NoSuchPasswordPolicyException.class %>" message="the-password-policy-could-not-be-found" />
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
 
-<liferay-ui:error-principal />
+	private static final String _PAGE =
+		"/html/taglib/ui/error_principal/page.jsp";
+
+}

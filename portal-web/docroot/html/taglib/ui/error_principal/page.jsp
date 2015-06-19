@@ -14,17 +14,6 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/html/taglib/ui/error_principal/init.jsp" %>
 
-<portlet:renderURL var="portletURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-</portlet:renderURL>
-
-<liferay-ui:header
-	backURL="<%= portletURL.toString() %>"
-	title="error"
-/>
-
-<liferay-ui:error exception="<%= NoSuchPasswordPolicyException.class %>" message="the-password-policy-could-not-be-found" />
-
-<liferay-ui:error-principal />
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

@@ -1445,8 +1445,33 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 					configureTaskTestForkEvery(test);
 					configureTaskTestJvmArgs(test);
 					configureTaskTestLogging(test);
-					configureTaskTestSystemProperties(test);
 					configureTaskTestWhip(test);
+				}
+
+			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					TaskContainer taskContainer = project.getTasks();
+
+					final LiferayExtension liferayExtension =
+						GradleUtil.getExtension(
+							project, LiferayExtension.class);
+
+					taskContainer.withType(
+						Test.class,
+						new Action<Test>() {
+
+							@Override
+							public void execute(Test test) {
+								configureTaskTestSystemProperties(
+									test, liferayExtension);
+							}
+
+						});
 				}
 
 			});
@@ -1505,23 +1530,20 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		testLoggingContainer.setShowStandardStreams(true);
 	}
 
-	protected void configureTaskTestSystemProperties(final Test test) {
+	protected void configureTaskTestSystemProperties(
+		Test test, LiferayExtension liferayExtension) {
+
+		Map<String, Object> systemProperties = test.getSystemProperties();
+
+		if (systemProperties.containsKey("app.server.tomcat.dir")) {
+			return;
+		}
+
+		AppServer appServer = liferayExtension.getAppServer("tomcat");
+
 		test.systemProperty(
 			"app.server.tomcat.dir",
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						test.getProject(), LiferayExtension.class);
-
-					AppServer appServer = liferayExtension.getAppServer(
-						"tomcat");
-
-					return FileUtil.getAbsolutePath(appServer.getDir());
-				}
-
-			});
+			FileUtil.getAbsolutePath(appServer.getDir()));
 	}
 
 	protected void configureTaskTestWhip(Test test) {

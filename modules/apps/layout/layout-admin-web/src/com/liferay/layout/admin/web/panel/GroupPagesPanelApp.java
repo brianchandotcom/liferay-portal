@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.PAGES,
+		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_PAGES,
 		"service.ranking:Integer=200"
 	},
 	service = PanelApp.class

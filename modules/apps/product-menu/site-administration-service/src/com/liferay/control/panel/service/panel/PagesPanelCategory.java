@@ -43,7 +43,7 @@ public class PagesPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.PAGES;
+		return PanelCategoryKeys.SITE_ADMINISTRATION_PAGES;
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class ProductivityCenterPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.PRODUCTIVITY_CENTER;
+		return PanelCategoryKeys.MY_SPACE_PRODUCTIVITY_CENTER;
 	}
 
 	@Override

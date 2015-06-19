@@ -14,9 +14,14 @@
 
 package com.liferay.calendar.upgrade;
 
+import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendar;
+import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendarBooking;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -47,16 +52,17 @@ public class CalendarServiceUpgrade {
 		_releaseLocalService = releaseLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
 	@Activate
 	protected void upgrade() throws PortalException {
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
+
+		upgradeProcesses.add(new UpgradeCalendar());
+		upgradeProcesses.add(new UpgradeCalendarBooking());
+
+		_releaseLocalService.updateRelease(
+			"com.liferay.calendar.service", upgradeProcesses, 4, 4, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;
-	private SettingsFactory _settingsFactory;
 
 }

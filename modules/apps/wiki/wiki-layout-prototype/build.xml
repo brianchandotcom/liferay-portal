@@ -2,6 +2,7 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="import.shared" value="wiki-api" />
 	<property name="import.shared" value="wiki-web" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />

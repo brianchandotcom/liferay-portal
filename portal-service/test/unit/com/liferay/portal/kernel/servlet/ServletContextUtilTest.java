@@ -59,26 +59,26 @@ public class ServletContextUtilTest {
 
 	@Test
 	public void testGetRootURIWithEmptyPath() throws Exception {
-		getRootURI(StringPool.BLANK, getURI(StringPool.SLASH));
+		doTestGetRootURI(StringPool.BLANK, getURI(StringPool.SLASH));
 	}
 
 	@Test(expected = MalformedURLException.class)
 	public void testGetRootURIWithInvalidCharacters() throws Exception {
-		getRootURI(_URI_WITH_INVALID_CHARACTERS, null);
+		doTestGetRootURI(_URI_WITH_INVALID_CHARACTERS, null);
 	}
 
 	@Test
 	public void testGetRootURIWithReservedCharacters() throws Exception {
 		String path = _URI_WITH_RESERVED_CHARACTERS;
 
-		getRootURI(path, getURI(path));
+		doTestGetRootURI(path, getURI(path));
 	}
 
 	@Test
 	public void testGetRootURIWithUnreservedCharacters() throws Exception {
 		String path = _URI_WITH_UNRESERVED_CHARACTERS;
 
-		getRootURI(path, getURI(path));
+		doTestGetRootURI(path, getURI(path));
 	}
 
 	protected void doTestGetResourceURI(String resourceURL) throws Exception {
@@ -91,7 +91,7 @@ public class ServletContextUtilTest {
 		Assert.assertEquals(null, uri.getFragment());
 	}
 
-	protected void getRootURI(String path, URI uri) throws Exception {
+	protected void doTestGetRootURI(String path, URI uri) throws Exception {
 		ServletContext servletContext = getServletContext(path);
 
 		URI rootURI = ServletContextUtil.getRootURI(servletContext);

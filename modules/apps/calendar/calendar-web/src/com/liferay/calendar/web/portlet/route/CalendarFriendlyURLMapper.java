@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.portlet.route;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
-		"javax.portlet.name=" + PortletKeys.CALENDAR
+		"javax.portlet.name=" + CalendarPortletKeys.CALENDAR
 	},
 	service = FriendlyURLMapper.class
 )

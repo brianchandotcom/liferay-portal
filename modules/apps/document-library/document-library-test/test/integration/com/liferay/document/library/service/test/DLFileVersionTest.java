@@ -163,14 +163,14 @@ public class DLFileVersionTest {
 
 		ExpandoTableLocalServiceUtil.deleteTable(expandoTable);
 
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
-		PrincipalThreadLocal.setName(_originalName);
-
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, "com.liferay.portlet.documentlibrary",
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
+
+		PrincipalThreadLocal.setName(_originalName);
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
 

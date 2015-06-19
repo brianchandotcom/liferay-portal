@@ -43,7 +43,6 @@ page import="com.liferay.portal.model.OrganizationConstants" %><%@
 page import="com.liferay.portal.model.PasswordPolicy" %><%@
 page import="com.liferay.portal.model.PasswordPolicyRel" %><%@
 page import="com.liferay.portal.model.User" %><%@
-page import="com.liferay.portal.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.OrganizationLocalServiceUtil" %><%@

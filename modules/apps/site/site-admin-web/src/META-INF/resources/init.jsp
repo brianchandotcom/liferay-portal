@@ -89,7 +89,6 @@ page import="com.liferay.portal.model.Team" %><%@
 page import="com.liferay.portal.model.User" %><%@
 page import="com.liferay.portal.model.impl.TeamImpl" %><%@
 page import="com.liferay.portal.security.auth.AuthException" %><%@
-page import="com.liferay.portal.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.security.auth.RemoteAuthException" %><%@
 page import="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@

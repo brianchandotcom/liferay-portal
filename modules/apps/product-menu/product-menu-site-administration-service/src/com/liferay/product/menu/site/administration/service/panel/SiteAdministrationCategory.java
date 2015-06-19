@@ -12,41 +12,40 @@
  * details.
  */
 
-package com.liferay.control.panel.service.panel;
+package com.liferay.product.menu.site.administration.service.panel;
 
-import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.productivity.center.panel.BaseControlPanelEntryPanelApp;
-import com.liferay.productivity.center.panel.PanelApp;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.productivity.center.panel.BasePanelCategory;
+import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.panel.constants.PanelCategoryKeys;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
-	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION,
-		"service.ranking:Integer=600"
-	},
-	service = PanelApp.class
+	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
+	service = PanelCategory.class
 )
-public class MobileDeviceFamiliesPanelApp
-	extends BaseControlPanelEntryPanelApp {
+public class SiteAdministrationCategory extends BasePanelCategory {
 
 	@Override
-	public String getPortletId() {
-		return PortletKeys.MOBILE_DEVICE_SITE_ADMIN;
+	public String getIconCssClass() {
+		return StringPool.BLANK;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
+	@Override
+	public String getKey() {
+		return PanelCategoryKeys.SITE_ADMINISTRATION;
+	}
 
-		_portletLocalService = portletLocalService;
+	@Override
+	public String getLabel(Locale locale) {
+		return StringPool.BLANK;
 	}
 
 }

@@ -56,7 +56,7 @@ public class XMLFormatter {
 			xml = _stripComments(xml);
 		}
 
-		xml = com.liferay.util.xml.XMLFormatter.toString(xml);
+		xml = com.liferay.util.xml.Dom4jUtil.toString(xml);
 
 		Files.write(path, xml.getBytes(StringPool.UTF8));
 	}

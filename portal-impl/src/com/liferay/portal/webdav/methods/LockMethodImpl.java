@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.Dom4jUtil;
 
 import java.util.List;
 
@@ -82,7 +82,7 @@ public class LockMethodImpl implements Method {
 
 			if (Validator.isNotNull(xml)) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Request XML\n" + XMLFormatter.toString(xml));
+					_log.debug("Request XML\n" + Dom4jUtil.toString(xml));
 				}
 
 				Document document = SAXReaderUtil.read(xml);
@@ -223,7 +223,7 @@ public class LockMethodImpl implements Method {
 		sb.append("</D:lockdiscovery>");
 		sb.append("</D:prop>");
 
-		return XMLFormatter.toString(sb.toString());
+		return Dom4jUtil.toString(sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LockMethodImpl.class);

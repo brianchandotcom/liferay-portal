@@ -30,7 +30,6 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
 
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -41,8 +40,7 @@ import org.junit.Test;
  * @author Eduardo Garcia
  */
 @Sync
-public class MBCategoryTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenHasRecentBaseModelCount {
+public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -112,12 +110,6 @@ public class MBCategoryTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashMyBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashRecentBaseModel() throws Exception {
 	}
 
 	@Ignore

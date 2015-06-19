@@ -16,6 +16,7 @@ package com.liferay.portal.security.auto.login.basic.auth.header;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.basic.auth.header.constants.BasicAuthHeaderAutoLoginConstants;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.login.util.LoginUtil;
 
 import java.util.StringTokenizer;
 
@@ -135,7 +135,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 			decodedCredentials.substring(0, pos));
 		String password = decodedCredentials.substring(pos + 1);
 
-		long userId = LoginUtil.getAuthenticatedUserId(
+		long userId = AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
 			request, login, password, null);
 
 		String[] credentials = new String[3];

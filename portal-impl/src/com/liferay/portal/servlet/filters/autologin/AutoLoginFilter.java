@@ -16,6 +16,7 @@ package com.liferay.portal.servlet.filters.autologin;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -93,11 +93,12 @@ public class AutoLoginFilter extends BasePortalFilter {
 		}
 
 		if (!PropsValues.AUTH_SIMULTANEOUS_LOGINS) {
-			LoginUtil.signOutSimultaneousLogins(userId);
+			AuthenticatedSessionManagerUtil.signOutSimultaneousLogins(userId);
 		}
 
 		if (PropsValues.SESSION_ENABLE_PHISHING_PROTECTION) {
-			session = LoginUtil.renewSession(request, session);
+			session = AuthenticatedSessionManagerUtil.renewSession(
+				request, session);
 		}
 
 		session.setAttribute("j_username", jUsername);

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Comments Remote Comment Service
+Bundle-SymbolicName: com.liferay.comments.remote.comment.service
+Bundle-Version: 1.0.0
+Include-Resource: classes

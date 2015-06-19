@@ -64,9 +64,13 @@
 
 	var REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
 
+	var REGEX_LIST_CIRCLE = /circle/i;
+
 	var REGEX_LIST_LOWER_ALPHA = /lower-alpha/i;
 
 	var REGEX_LIST_LOWER_ROMAN = /lower-roman/i;
+
+	var REGEX_LIST_SQUARE = /square/i;
 
 	var REGEX_LIST_UPPER_ALPHA = /upper-alpha/i;
 
@@ -818,7 +822,19 @@
 		},
 
 		_handleUnorderedList: function(element, listTagsIn, listTagsOut) {
-			listTagsIn.push('[list]');
+			listTagsIn.push('[list=');
+
+			var listStyleType = element.style.listStyleType;
+
+			if (REGEX_LIST_CIRCLE.test(listStyleType)) {
+				listTagsIn.push('circle]');
+			}
+			else if (REGEX_LIST_SQUARE.test(listStyleType)) {
+				listTagsIn.push('square]');
+			}
+			else {
+				listTagsIn.push('disc]');
+			}
 
 			listTagsOut.push('[/list]');
 		},

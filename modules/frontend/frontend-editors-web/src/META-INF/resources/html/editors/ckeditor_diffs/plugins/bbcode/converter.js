@@ -63,6 +63,12 @@
 		'width': 1
 	};
 
+	var MAP_LIST_BULLETED_STYLES = {
+		circle: 'list-style-type: circle;',
+		disc: 'list-style-type: disc;',
+		square: 'list-style-type: square;'
+	};
+
 	var MAP_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
 		a: 'list-style-type: lower-alpha;',
@@ -380,7 +386,10 @@
 
 			var listAttribute = token.attribute;
 
-			if (listAttribute) {
+			if (MAP_LIST_BULLETED_STYLES[listAttribute]) {
+				styleAttr = MAP_LIST_BULLETED_STYLES[listAttribute];
+			}
+			else {
 				tag = 'ol';
 
 				styleAttr = MAP_LIST_STYLES[listAttribute];

@@ -521,31 +521,7 @@
 		<property name="service" ref="com.liferay.portlet.flags.service.FlagsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.flags.service.FlagsEntryService" />
 	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalArticleService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalArticleService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalArticleService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalArticleService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalArticleService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalArticleService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalFeedService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalFeedService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFeedService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalFeedService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalFeedService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFeedService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
-	</bean>
-	<bean name="/com_liferay_portlet_journal_service_spring_JournalFolderService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.journal.service.JournalFolderService" />
-		<property name="serviceInterface" value="com.liferay.portlet.journal.service.JournalFolderService" />
-	</bean>
-	<bean name="/com_liferay_portlet_messageboards_service_spring_MBBanService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<bean name="/com_liferay_portlet_messageboards_service_spring_MBBanService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBBanService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBBanService" />
 	</bean>

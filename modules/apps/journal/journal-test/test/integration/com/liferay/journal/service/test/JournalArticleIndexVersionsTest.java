@@ -15,7 +15,14 @@
 package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.configuration.JournalServiceConfigurationKeys;
+import com.liferay.journal.configuration.JournalServiceConfigurationUtil;
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -31,18 +38,11 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.util.JournalUtil;
 
 import java.util.List;
 
@@ -70,7 +70,8 @@ public class JournalArticleIndexVersionsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = false;
+		JournalServiceConfigurationValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS =
+			false;
 
 		_group = GroupTestUtil.addGroup();
 
@@ -83,8 +84,11 @@ public class JournalArticleIndexVersionsTest {
 
 	@After
 	public void tearDown() {
-		PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS));
+		JournalServiceConfigurationValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS =
+			GetterUtil.getBoolean(
+				JournalServiceConfigurationUtil.get(
+					JournalServiceConfigurationKeys.
+						JOURNAL_ARTICLE_INDEX_ALL_VERSIONS));
 
 		PortalRunMode.setTestMode(_testMode);
 	}

@@ -2,6 +2,10 @@ Bundle-Name: Liferay Frontend JS Web
 Bundle-SymbolicName: com.liferay.frontend.js.web
 Bundle-Version: 1.0.0
 Import-Package:\
+	com.liferay.journal,\
+	com.liferay.journal.model,\
+	com.liferay.journal.service,\
+	com.liferay.journal.util,\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.cal,\
@@ -61,10 +65,6 @@ Import-Package:\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.exportimport.lar,\
 	com.liferay.portlet.exportimport.staging,\
-	com.liferay.portlet.journal,\
-	com.liferay.portlet.journal.model,\
-	com.liferay.portlet.journal.service,\
-	com.liferay.portlet.journal.util,\
 	com.liferay.portlet.messageboards.model,\
 	com.liferay.portlet.messageboards.service,\
 	com.liferay.portlet.messageboards.util,\

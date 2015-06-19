@@ -44,7 +44,7 @@ if (folder != null) {
 	hasPermissionsPermission = JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
 }
 else {
-	modelResource= "com.liferay.portlet.journal";
+	modelResource= "com.liferay.journal";
 	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey= String.valueOf(scopeGroupId);
 

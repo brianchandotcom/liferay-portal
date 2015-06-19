@@ -14,6 +14,10 @@
 
 package com.liferay.journal.lar;
 
+import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFeed;
+import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,15 +30,15 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
@@ -42,17 +46,12 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
-import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
-import com.liferay.portlet.journal.lar.JournalCreationStrategy;
-import com.liferay.portlet.journal.lar.JournalCreationStrategyFactory;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFeed;
-import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -65,7 +64,7 @@ public class JournalFeedStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(JournalFeed feed) throws PortalException {
-		JournalFeedLocalServiceUtil.deleteFeed(feed);
+		_journalFeedLocalService.deleteFeed(feed);
 	}
 
 	@Override
@@ -84,7 +83,7 @@ public class JournalFeedStagedModelDataHandler
 	public JournalFeed fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return JournalFeedLocalServiceUtil.fetchJournalFeedByUuidAndGroupId(
+		return _journalFeedLocalService.fetchJournalFeedByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -92,7 +91,7 @@ public class JournalFeedStagedModelDataHandler
 	public List<JournalFeed> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return JournalFeedLocalServiceUtil.getJournalFeedsByUuidAndCompanyId(
+		return _journalFeedLocalService.getJournalFeedsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<JournalFeed>());
 	}
@@ -109,7 +108,7 @@ public class JournalFeedStagedModelDataHandler
 
 		Element feedElement = portletDataContext.getExportDataElement(feed);
 
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			feed.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class),
 			feed.getDDMStructureKey(), true);
 
@@ -126,7 +125,7 @@ public class JournalFeedStagedModelDataHandler
 			}
 		}
 
-		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			feed.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class),
 			feed.getDDMTemplateKey());
 
@@ -144,7 +143,7 @@ public class JournalFeedStagedModelDataHandler
 		}
 
 		DDMTemplate rendererDDMTemplate =
-			DDMTemplateLocalServiceUtil.fetchTemplate(
+			_ddmTemplateLocalService.fetchTemplate(
 				feed.getGroupId(),
 				PortalUtil.getClassNameId(DDMStructure.class),
 				feed.getDDMRendererTemplateKey());
@@ -166,7 +165,7 @@ public class JournalFeedStagedModelDataHandler
 			}
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
 
 		String newGroupFriendlyURL = group.getFriendlyURL().substring(1);
@@ -187,7 +186,7 @@ public class JournalFeedStagedModelDataHandler
 			feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		}
 
-		Group targetLayoutGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+		Group targetLayoutGroup = _groupLocalService.fetchFriendlyURLGroup(
 			portletDataContext.getCompanyId(),
 			StringPool.SLASH + oldGroupFriendlyURL);
 
@@ -201,7 +200,7 @@ public class JournalFeedStagedModelDataHandler
 
 		String targetLayoutFriendlyURL = StringPool.SLASH + friendlyURLParts[3];
 
-		Layout targetLayout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+		Layout targetLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			targetLayoutGroup.getGroupId(), privateLayout,
 			targetLayoutFriendlyURL);
 
@@ -230,7 +229,7 @@ public class JournalFeedStagedModelDataHandler
 			userId = authorId;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
 
 		String newGroupFriendlyURL = group.getFriendlyURL().substring(1);
@@ -255,7 +254,7 @@ public class JournalFeedStagedModelDataHandler
 		boolean autoFeedId = false;
 
 		if (Validator.isNumber(feedId) ||
-			(JournalFeedLocalServiceUtil.fetchFeed(
+			(_journalFeedLocalService.fetchFeed(
 				portletDataContext.getScopeGroupId(), feedId) != null)) {
 
 			autoFeedId = true;
@@ -303,7 +302,7 @@ public class JournalFeedStagedModelDataHandler
 				if (existingFeed == null) {
 					serviceContext.setUuid(feed.getUuid());
 
-					importedFeed = JournalFeedLocalServiceUtil.addFeed(
+					importedFeed = _journalFeedLocalService.addFeed(
 						userId, portletDataContext.getScopeGroupId(), feedId,
 						autoFeedId, feed.getName(), feed.getDescription(),
 						parentDDMStructureKey, parentDDMTemplateKey,
@@ -315,7 +314,7 @@ public class JournalFeedStagedModelDataHandler
 						serviceContext);
 				}
 				else {
-					importedFeed = JournalFeedLocalServiceUtil.updateFeed(
+					importedFeed = _journalFeedLocalService.updateFeed(
 						existingFeed.getGroupId(), existingFeed.getFeedId(),
 						feed.getName(), feed.getDescription(),
 						parentDDMStructureKey, parentDDMTemplateKey,
@@ -328,7 +327,7 @@ public class JournalFeedStagedModelDataHandler
 				}
 			}
 			else {
-				importedFeed = JournalFeedLocalServiceUtil.addFeed(
+				importedFeed = _journalFeedLocalService.addFeed(
 					userId, portletDataContext.getScopeGroupId(), feedId,
 					autoFeedId, feed.getName(), feed.getDescription(),
 					parentDDMStructureKey, parentDDMTemplateKey,
@@ -373,7 +372,46 @@ public class JournalFeedStagedModelDataHandler
 		}
 	}
 
+	@Reference
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference
+	protected void setJournalFeedLocalService(
+		JournalFeedLocalService journalFeedLocalService) {
+
+		_journalFeedLocalService = journalFeedLocalService;
+	}
+
+	@Reference
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFeedStagedModelDataHandler.class);
+
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private GroupLocalService _groupLocalService;
+	private JournalFeedLocalService _journalFeedLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

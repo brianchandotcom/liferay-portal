@@ -302,24 +302,6 @@
 	<bean id="com.liferay.portlet.exportimport.service.StagingLocalService" class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" />
 	<bean id="com.liferay.portlet.exportimport.service.StagingService" class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" />
 	<bean id="com.liferay.portlet.flags.service.FlagsEntryService" class="com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.JournalArticleLocalService" class="com.liferay.portlet.journal.service.impl.JournalArticleLocalServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.JournalArticleService" class="com.liferay.portlet.journal.service.impl.JournalArticleServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalArticlePersistence" class="com.liferay.portlet.journal.service.persistence.impl.JournalArticlePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder" class="com.liferay.portlet.journal.service.persistence.impl.JournalArticleFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.JournalArticleImageLocalService" class="com.liferay.portlet.journal.service.impl.JournalArticleImageLocalServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalArticleImagePersistence" class="com.liferay.portlet.journal.service.persistence.impl.JournalArticleImagePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.JournalArticleResourceLocalService" class="com.liferay.portlet.journal.service.impl.JournalArticleResourceLocalServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalArticleResourcePersistence" class="com.liferay.portlet.journal.service.persistence.impl.JournalArticleResourcePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.JournalContentSearchLocalService" class="com.liferay.portlet.journal.service.impl.JournalContentSearchLocalServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalContentSearchPersistence" class="com.liferay.portlet.journal.service.persistence.impl.JournalContentSearchPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.JournalFeedLocalService" class="com.liferay.portlet.journal.service.impl.JournalFeedLocalServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.JournalFeedService" class="com.liferay.portlet.journal.service.impl.JournalFeedServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalFeedPersistence" class="com.liferay.portlet.journal.service.persistence.impl.JournalFeedPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalFeedFinder" class="com.liferay.portlet.journal.service.persistence.impl.JournalFeedFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.JournalFolderLocalService" class="com.liferay.portlet.journal.service.impl.JournalFolderLocalServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.JournalFolderService" class="com.liferay.portlet.journal.service.impl.JournalFolderServiceImpl" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalFolderPersistence" class="com.liferay.portlet.journal.service.persistence.impl.JournalFolderPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder" class="com.liferay.portlet.journal.service.persistence.impl.JournalFolderFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.MBBanLocalService" class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.MBBanService" class="com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBBanPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBBanPersistenceImpl" parent="basePersistence" />

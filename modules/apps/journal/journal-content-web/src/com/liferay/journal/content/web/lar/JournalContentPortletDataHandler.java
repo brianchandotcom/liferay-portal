@@ -16,6 +16,10 @@ package com.liferay.journal.content.web.lar;
 
 import com.liferay.journal.content.web.configuration.JournalContentWebConfigurationValues;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.web.lar.JournalPortletDataHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,10 +40,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.util.Map;
 
@@ -75,9 +75,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Daniel Kocsis
  * @see    com.liferay.journal.web.lar.JournalPortletDataHandler
+ * @see    com.liferay.journal.lar.JournalCreationStrategy
  * @see    com.liferay.portlet.exportimport.lar.PortletDataHandler
- * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
- */
+*/
 @Component(
 	immediate = true,
 	property = {

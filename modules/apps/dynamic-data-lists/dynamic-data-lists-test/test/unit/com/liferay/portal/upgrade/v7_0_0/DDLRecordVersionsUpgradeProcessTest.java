@@ -57,7 +57,7 @@ import com.liferay.portal.xml.SAXReaderImpl;
  */
 @PowerMockIgnore("javax.xml.stream.*")
 @RunWith(PowerMockRunner.class)
-public class UpgradeDynamicDataListsTest extends PowerMockito {
+public class DDLRecordVersionsUpgradeProcessTest extends PowerMockito {
 
 	@Before
 	public void setUp() {

@@ -440,7 +440,9 @@ public final class CommandLoggerHandler {
 	}
 
 	private static boolean _isCommand(Element element) {
-		if (!Validator.equals(element.getName(), "execute")) {
+		if (!Validator.equals(element.getName(), "condition") &&
+			!Validator.equals(element.getName(), "execute")) {
+
 			return false;
 		}
 

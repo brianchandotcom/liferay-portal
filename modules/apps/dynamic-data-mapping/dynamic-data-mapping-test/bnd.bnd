@@ -5,4 +5,5 @@ Include-Resource:\
 	classes,\
 	test-classes/integration,\
 	../../../../portal-impl/test/test-portal-impl.properties,\
-	@../../../../.ivy/cache/org.skyscreamer/jsonassert/jars/jsonassert-1.2.3.jar
+	@lib/json.jar,\
+	@lib/jsonassert.jar

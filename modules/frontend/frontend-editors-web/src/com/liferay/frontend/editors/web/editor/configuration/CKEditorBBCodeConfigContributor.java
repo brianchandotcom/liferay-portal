@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -59,12 +60,20 @@ public class CKEditorBBCodeConfigContributor
 		jsonObject.put("filebrowserUploadUrl", "");
 		jsonObject.put(
 			"fontSize_sizes",
-			"10/10px;12/12px;16/16px;18/18px;24/24px;32/32px;48/48px");
+			"10/10px;12/12px;14/14px;16/16px;18/18px;24/24px;32/32px;48/48px");
+		jsonObject.put("fontSize_defaultLabel", "14");
 		jsonObject.put("format_tags", "p;pre");
 		jsonObject.put(
 			"imagesPath",
 			HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
 				"/message_boards/");
+
+		JSONObject langJSONObject = JSONFactoryUtil.createJSONObject();
+		langJSONObject.put("code",
+			LanguageUtil.get(
+				getContentsLocale(inputEditorTaglibAttributes), "code"));
+		jsonObject.put("lang", langJSONObject);
+
 		jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);
 		jsonObject.put(
 			"removePlugins",

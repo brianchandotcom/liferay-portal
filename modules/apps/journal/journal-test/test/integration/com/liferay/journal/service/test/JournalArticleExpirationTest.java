@@ -15,6 +15,10 @@
 package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -37,10 +41,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleConstants;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -133,23 +133,23 @@ public class JournalArticleExpirationTest {
 		Calendar expirationDateCalendar = getExpirationCalendar(Time.HOUR, 1);
 
 		return JournalArticleLocalServiceUtil.addArticle(
-			TestPropsValues.getUserId(), groupId,
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0, StringPool.BLANK,
-			true, JournalArticleConstants.VERSION_DEFAULT, titleMap,
-			descriptionMap, content, ddmStructure.getStructureKey(),
-			ddmTemplate.getTemplateKey(), null,
-			displayDateCalendar.get(Calendar.MONTH),
-			displayDateCalendar.get(Calendar.DAY_OF_MONTH),
-			displayDateCalendar.get(Calendar.YEAR),
-			displayDateCalendar.get(Calendar.HOUR_OF_DAY),
-			displayDateCalendar.get(Calendar.MINUTE),
-			expirationDateCalendar.get(Calendar.MONTH),
-			expirationDateCalendar.get(Calendar.DAY_OF_MONTH),
-			expirationDateCalendar.get(Calendar.YEAR),
-			expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
-			expirationDateCalendar.get(Calendar.MINUTE), false, 0, 0, 0, 0, 0,
-			true, true, false, null, null, null, null, serviceContext);
+				TestPropsValues.getUserId(), groupId,
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT, 0,
+				StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
+				titleMap, descriptionMap, content,
+				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
+				null, displayDateCalendar.get(Calendar.MONTH),
+				displayDateCalendar.get(Calendar.DAY_OF_MONTH),
+				displayDateCalendar.get(Calendar.YEAR),
+				displayDateCalendar.get(Calendar.HOUR_OF_DAY),
+				displayDateCalendar.get(Calendar.MINUTE),
+				expirationDateCalendar.get(Calendar.MONTH),
+				expirationDateCalendar.get(Calendar.DAY_OF_MONTH),
+				expirationDateCalendar.get(Calendar.YEAR),
+				expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
+				expirationDateCalendar.get(Calendar.MINUTE), false, 0, 0, 0, 0,
+				0, true, true, false, null, null, null, null, serviceContext);
 	}
 
 	protected Calendar getExpirationCalendar(long timeUnit, int timeValue)

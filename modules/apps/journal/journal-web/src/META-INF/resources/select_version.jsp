@@ -42,7 +42,7 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.journal.model.JournalArticle"
+			className="com.liferay.journal.model.JournalArticle"
 			modelVar="curArticle"
 		>
 			<liferay-ui:search-container-column-text

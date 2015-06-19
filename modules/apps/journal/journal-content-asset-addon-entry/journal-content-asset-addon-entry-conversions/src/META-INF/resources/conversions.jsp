@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
+<%@ page import="com.liferay.journal.model.JournalArticleDisplay" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.Constants" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
@@ -28,7 +29,6 @@
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
-<%@ page import="com.liferay.portlet.journal.model.JournalArticleDisplay" %>
 
 <%@ page import="java.util.ResourceBundle" %>
 

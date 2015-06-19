@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -187,7 +186,8 @@ public class UpgradeSocial extends UpgradeProcess {
 	}
 
 	protected void updateJournalActivities() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.journal.model.JournalArticle");
 
 		String[] tableNames = {"SocialActivity", "SocialActivityCounter"};
 

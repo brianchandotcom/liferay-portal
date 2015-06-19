@@ -15,6 +15,8 @@
 package com.liferay.journal.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
@@ -30,8 +32,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolder;
 
 import java.util.Date;
 import java.util.List;

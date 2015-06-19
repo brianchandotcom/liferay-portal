@@ -14,6 +14,13 @@
 
 package com.liferay.journal.web.asset;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.permission.JournalArticlePermission;
+import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -31,13 +38,6 @@ import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleResource;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
-import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
-import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.util.Locale;
 
@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"search.asset.type=com.liferay.portlet.journal.model.JournalArticle"
+		"search.asset.type=com.liferay.journal.model.JournalArticle"
 	},
 	service = AssetRendererFactory.class
 )

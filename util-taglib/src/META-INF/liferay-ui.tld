@@ -3167,57 +3167,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-ui:asset-display</code>]]>.</description>
-		<name>journal-article</name>
-		<tag-class>com.liferay.taglib.ui.JournalArticleTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>articleId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>articlePage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>articleResourcePrimKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>groupId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>languageId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>portletRequestModel</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>showAvailableLocales</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>showTitle</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>ddmTemplateKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>journal-content-search</name>
 		<tag-class>com.liferay.taglib.ui.JournalContentSearchTag</tag-class>
 		<body-content>JSP</body-content>

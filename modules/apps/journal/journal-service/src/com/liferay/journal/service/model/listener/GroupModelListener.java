@@ -14,12 +14,12 @@
 
 package com.liferay.journal.service.model.listener;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import org.osgi.service.component.annotations.Component;
 

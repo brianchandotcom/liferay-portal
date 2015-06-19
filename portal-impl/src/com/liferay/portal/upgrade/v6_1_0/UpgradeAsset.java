@@ -23,7 +23,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -80,7 +79,8 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetClassTypeId() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.journal.model.JournalArticle");
 
 		Connection con = null;
 		PreparedStatement ps = null;

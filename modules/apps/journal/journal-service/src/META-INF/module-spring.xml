@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.journal.service.JournalArticleLocalService" class="com.liferay.journal.service.impl.JournalArticleLocalServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalArticleLocalService" ref="com.liferay.journal.service.JournalArticleLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalArticle" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.JournalArticleService" class="com.liferay.journal.service.impl.JournalArticleServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalArticleService" ref="com.liferay.journal.service.JournalArticleService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalArticle" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.persistence.JournalArticlePersistence" class="com.liferay.journal.service.persistence.impl.JournalArticlePersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalArticlePersistence" ref="com.liferay.journal.service.persistence.JournalArticlePersistence" />
+	<bean id="com.liferay.journal.service.persistence.JournalArticleFinder" class="com.liferay.journal.service.persistence.impl.JournalArticleFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalArticleFinder" ref="com.liferay.journal.service.persistence.JournalArticleFinder" />
+	<bean id="com.liferay.journal.service.JournalArticleImageLocalService" class="com.liferay.journal.service.impl.JournalArticleImageLocalServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalArticleImageLocalService" ref="com.liferay.journal.service.JournalArticleImageLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalArticleImage" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.persistence.JournalArticleImagePersistence" class="com.liferay.journal.service.persistence.impl.JournalArticleImagePersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalArticleImagePersistence" ref="com.liferay.journal.service.persistence.JournalArticleImagePersistence" />
+	<bean id="com.liferay.journal.service.JournalArticleResourceLocalService" class="com.liferay.journal.service.impl.JournalArticleResourceLocalServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalArticleResourceLocalService" ref="com.liferay.journal.service.JournalArticleResourceLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalArticleResource" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.persistence.JournalArticleResourcePersistence" class="com.liferay.journal.service.persistence.impl.JournalArticleResourcePersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalArticleResourcePersistence" ref="com.liferay.journal.service.persistence.JournalArticleResourcePersistence" />
+	<bean id="com.liferay.journal.service.JournalContentSearchLocalService" class="com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalContentSearchLocalService" ref="com.liferay.journal.service.JournalContentSearchLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalContentSearch" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.persistence.JournalContentSearchPersistence" class="com.liferay.journal.service.persistence.impl.JournalContentSearchPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalContentSearchPersistence" ref="com.liferay.journal.service.persistence.JournalContentSearchPersistence" />
+	<bean id="com.liferay.journal.service.JournalFeedLocalService" class="com.liferay.journal.service.impl.JournalFeedLocalServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalFeedLocalService" ref="com.liferay.journal.service.JournalFeedLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalFeed" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.JournalFeedService" class="com.liferay.journal.service.impl.JournalFeedServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalFeedService" ref="com.liferay.journal.service.JournalFeedService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalFeed" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.persistence.JournalFeedPersistence" class="com.liferay.journal.service.persistence.impl.JournalFeedPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalFeedPersistence" ref="com.liferay.journal.service.persistence.JournalFeedPersistence" />
+	<bean id="com.liferay.journal.service.persistence.JournalFeedFinder" class="com.liferay.journal.service.persistence.impl.JournalFeedFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalFeedFinder" ref="com.liferay.journal.service.persistence.JournalFeedFinder" />
+	<bean id="com.liferay.journal.service.JournalFolderLocalService" class="com.liferay.journal.service.impl.JournalFolderLocalServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalFolderLocalService" ref="com.liferay.journal.service.JournalFolderLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalFolder" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.JournalFolderService" class="com.liferay.journal.service.impl.JournalFolderServiceImpl" />
+	<osgi:service interface="com.liferay.journal.service.JournalFolderService" ref="com.liferay.journal.service.JournalFolderService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="journal" />
+			<entry key="json.web.service.context.path" value="JournalFolder" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.journal.service.persistence.JournalFolderPersistence" class="com.liferay.journal.service.persistence.impl.JournalFolderPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalFolderPersistence" ref="com.liferay.journal.service.persistence.JournalFolderPersistence" />
+	<bean id="com.liferay.journal.service.persistence.JournalFolderFinder" class="com.liferay.journal.service.persistence.impl.JournalFolderFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.journal.service.persistence.JournalFolderFinder" ref="com.liferay.journal.service.persistence.JournalFolderFinder" />
+</beans>

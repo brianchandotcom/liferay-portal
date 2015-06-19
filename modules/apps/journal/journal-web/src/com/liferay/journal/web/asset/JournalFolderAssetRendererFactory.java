@@ -14,6 +14,9 @@
 
 package com.liferay.journal.web.asset;
 
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -23,9 +26,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalFolder",
-		"search.asset.type=com.liferay.portlet.journal.model.JournalFolder"
+		"model.class.name=com.liferay.journal.model.JournalFolder",
+		"search.asset.type=com.liferay.journal.model.JournalFolder"
 	},
 	service = AssetRendererFactory.class
 )

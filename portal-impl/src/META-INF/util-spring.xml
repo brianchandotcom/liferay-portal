@@ -772,9 +772,6 @@
 	<bean class="com.liferay.portal.verify.model.EmailAddressVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.GroupVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.GroupVerifiableResourcedModel" />
-	<bean class="com.liferay.portal.verify.model.JournalArticleResourceVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.JournalArticleVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.JournalFeedVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.LayoutFriendlyURLAuditedModel" />
 	<bean class="com.liferay.portal.verify.model.LayoutPrototypeVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.LayoutSetPrototypeVerifiableModel" />
@@ -1055,22 +1052,9 @@
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.journal.service.permission.JournalArticlePermission" class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
-	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
-	<bean id="com.liferay.portlet.journal.service.permission.JournalFolderPermission" class="com.liferay.portlet.journal.service.permission.JournalFolderPermission" />
-	<bean id="com.liferay.portlet.journal.service.permission.JournalPermission" class="com.liferay.portlet.journal.service.permission.JournalPermission" />
-	<bean id="com.liferay.portlet.journal.util.JournalContent" class="com.liferay.portlet.journal.util.JournalContentImpl" />
-	<bean id="com.liferay.portlet.journal.util.JournalContentUtil" class="com.liferay.portlet.journal.util.JournalContentUtil">
-		<property name="journalContent" ref="com.liferay.portlet.journal.util.JournalContent" />
-	</bean>
 	<bean id="com.liferay.portlet.journal.util.JournalConverter" class="com.liferay.portlet.journal.util.JournalConverterImpl" />
 	<bean id="com.liferay.portlet.journal.util.JournalConverterUtil" class="com.liferay.portlet.journal.util.JournalConverterUtil">
 		<property name="journalConverter" ref="com.liferay.portlet.journal.util.JournalConverter" />
-	</bean>
-	<bean id="com.liferay.portlet.journal.util.JournalValidatorUtil" class="com.liferay.portlet.journal.util.JournalValidatorUtil">
-		<property name="JournalValidator">
-			<bean class="com.liferay.portlet.journal.util.JournalValidatorImpl" />
-		</property>
 	</bean>
 	<bean id="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" />

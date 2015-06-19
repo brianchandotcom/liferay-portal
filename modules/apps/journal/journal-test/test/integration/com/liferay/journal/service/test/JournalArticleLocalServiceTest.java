@@ -15,6 +15,10 @@
 package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.exception.DuplicateArticleIdException;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -30,10 +34,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalServiceUtil;
-import com.liferay.portlet.journal.DuplicateArticleIdException;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
 import java.util.List;
 

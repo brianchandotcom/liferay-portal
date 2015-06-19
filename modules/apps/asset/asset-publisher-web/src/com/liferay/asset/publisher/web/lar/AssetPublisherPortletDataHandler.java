@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.lar;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
@@ -51,7 +52,6 @@ import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

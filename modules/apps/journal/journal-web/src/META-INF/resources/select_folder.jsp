@@ -82,7 +82,7 @@ if (folder != null) {
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.journal.model.JournalFolderModel"
+			className="com.liferay.journal.model.JournalFolderModel"
 			keyProperty="folderId"
 			modelVar="curFolder"
 			rowVar="row"

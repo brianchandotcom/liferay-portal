@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.webdav;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
@@ -27,7 +28,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.webdav.DDMWebDavUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -119,7 +119,6 @@
 		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(void com.liferay.portal.events.StartupHelper.upgradeProcess(int))" />
 		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(* com.liferay.portal.service.ReleaseLocalService.getBuildNumberOrCreate())" />
 		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(void com.liferay.portal.service.ServiceComponentLocalService.upgradeDB(..))" />
-		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardGloballyAdvice" pointcut="execution(void com.liferay.portlet.journal.service.JournalArticleLocalService.checkArticles())" />
 		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardIterativelyAdvice" pointcut="execution(void com.liferay.portal.events.StartupHelper.verifyProcess(boolean, boolean))" />
 		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardParameterAdvice" pointcut="execution(* com.liferay.portal.service.AccountLocalService.getAccount(long, long))" />
 		<aop:advisor advice-ref="com.liferay.portal.dao.shard.advice.ShardParameterAdvice" pointcut="execution(* com.liferay.portal.service.GroupLocalService.getCompanyGroup(long))" />

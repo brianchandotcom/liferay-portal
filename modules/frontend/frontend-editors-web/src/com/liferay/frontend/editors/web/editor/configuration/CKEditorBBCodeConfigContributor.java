@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -65,6 +66,13 @@ public class CKEditorBBCodeConfigContributor
 			"imagesPath",
 			HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
 				"/message_boards/");
+
+		JSONObject langJSONObject = JSONFactoryUtil.createJSONObject();
+		langJSONObject.put("code",
+			LanguageUtil.get(getContentsLocale(
+				inputEditorTaglibAttributes), "code"));
+		jsonObject.put("lang", langJSONObject);
+
 		jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);
 		jsonObject.put(
 			"removePlugins",

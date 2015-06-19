@@ -23,6 +23,17 @@ public interface PanelCategoryKeys {
 
 	public static final String CONTENT = "content";
 
+	public static final String CONTROL_PANEL = "control_panel";
+
+	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
+
+	public static final String CONTROL_PANEL_CONFIGURATION =
+		"control_panel.configuration";
+
+	public static final String CONTROL_PANEL_SITES = "control_panel.sites";
+
+	public static final String CONTROL_PANEL_USERS = "control_panel.users";
+
 	public static final String MY_SPACE = "my_space";
 
 	public static final String PAGES = "pages";

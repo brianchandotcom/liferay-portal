@@ -25,7 +25,7 @@ String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
 String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
-boolean inlineEdit = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-editor:inlineEdit"));
+boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
 String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:inlineEditSaveURL"));
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 

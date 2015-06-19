@@ -695,7 +695,7 @@
 		<display-name>Roles Admin</display-name>
 		<portlet-class>com.liferay.portlet.rolesadmin.RolesAdminPortlet</portlet-class>
 		<init-param>
-			<name>action.package.prefix</name>
+			<name>mvc.action.command.package.prefix</name>
 			<value>com.liferay.portlet.rolesadmin.action</value>
 		</init-param>
 		<init-param>

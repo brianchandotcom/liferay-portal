@@ -58,6 +58,14 @@ public abstract class BaseEditorConfigContributor
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
 
+		boolean inlineEdit = GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:inlineEdit"));
+
+		if (!inlineEdit) {
+			name = liferayPortletResponse.getNamespace() + name;
+		}
+
 		ItemSelector itemSelector = getItemSelector();
 
 		return itemSelector.getItemSelectorURL(

@@ -84,8 +84,8 @@ public class JniSassCompiler implements SassCompiler {
 
 			Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
 
-			_liferaysassLibrary.sass_option_set_image_path(
-				sassOptions, imgDirName);
+//			_liferaysassLibrary.sass_option_set_image_path(
+//				sassOptions, imgDirName);
 			_liferaysassLibrary.sass_option_set_include_path(
 				sassOptions, includeDirNames);
 			_liferaysassLibrary.sass_option_set_input_path(
@@ -157,8 +157,8 @@ public class JniSassCompiler implements SassCompiler {
 
 			Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
 
-			_liferaysassLibrary.sass_option_set_image_path(
-				sassOptions, imgDirName);
+//			_liferaysassLibrary.sass_option_set_image_path(
+//				sassOptions, imgDirName);
 			_liferaysassLibrary.sass_option_set_include_path(
 				sassOptions, includeDirName);
 			_liferaysassLibrary.sass_option_set_output_style(

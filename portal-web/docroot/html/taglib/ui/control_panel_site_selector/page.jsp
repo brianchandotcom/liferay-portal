@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/html/taglib/init.jsp" %>
+
 <%
 Collection<Portlet> siteAdministrationPortlets = PortalUtil.getControlPanelPortlets(themeDisplay.getCompanyId(), PortletCategoryKeys.SITE_ADMINISTRATION);
 

@@ -98,7 +98,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				<h1>
 					<c:choose>
 						<c:when test="<%= !group.isUserPersonalPanel() && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-							<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
+							<liferay-ui:control-panel-site-selector />
 
 							<span class="site-administration-title">
 								<liferay-ui:message key="site-administration" />

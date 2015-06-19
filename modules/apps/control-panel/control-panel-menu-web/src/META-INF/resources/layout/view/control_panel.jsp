@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portal/init.jsp" %>
+<%@ include file="/layout/view/init.jsp" %>
 
 <%
 String ppid = ParamUtil.getString(request, "p_p_id");
@@ -97,7 +97,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 		<div id="content-wrapper">
 			<div class="<%= panelCategory %>">
 				<c:if test="<%= showControlPanelMenu %>">
-					<%@ include file="/html/portal/layout/view/control_panel_nav_main.jspf" %>
+					<%@ include file="/layout/view/control_panel_nav_main.jspf" %>
 				</c:if>
 
 				<div class="<%= panelBodyCssClass %>">
@@ -106,7 +106,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 							<liferay-portlet:runtime portletName="<%= PropsValues.CONTROL_PANEL_HOME_PORTLET_ID %>" />
 						</c:when>
 						<c:when test="<%= ((portlet != null) && !portlet.getControlPanelEntryCategory().startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) %>">
-							<%@ include file="/html/portal/layout/view/panel_content.jspf" %>
+							<%@ include file="/layout/view/panel_content.jspf" %>
 						</c:when>
 						<c:otherwise>
 							<aui:container cssClass="<%= panelCategory %>">
@@ -114,7 +114,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 									<aui:row>
 										<div id="controlPanelSiteHeading">
 											<h1 class="site-title">
-												<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
+												<liferay-ui:control-panel-site-selector />
 											</h1>
 
 											<c:if test="<%= group.hasPrivateLayouts() || group.hasPublicLayouts() %>">
@@ -163,7 +163,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 									</c:if>
 
 									<aui:col cssClass="<%= panelBodyCssClass %>"  width="<%= singlePortlet ? 100 : 75 %>">
-										<%@ include file="/html/portal/layout/view/panel_content.jspf" %>
+										<%@ include file="/layout/view/panel_content.jspf" %>
 									</aui:col>
 								</aui:row>
 							</aui:container>
@@ -174,8 +174,8 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 		</div>
 	</c:when>
 	<c:otherwise>
-		<%@ include file="/html/portal/layout/view/panel_content.jspf" %>
+		<%@ include file="/layout/view/panel_content.jspf" %>
 	</c:otherwise>
 </c:choose>
 
-<%@ include file="/html/portal/layout/view/common.jspf" %>
+<liferay-ui:layout-common />

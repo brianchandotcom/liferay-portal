@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portal/init.jsp" %>
+package com.liferay.taglib.ui;
 
-<%@ include file="/html/portal/layout/view/embedded_js.jspf" %>
+import com.liferay.taglib.util.IncludeTag;
 
-<div id="iframe">
+/**
+ * @author Eudaldo Alonso
+ */
+public class ControlPanelSiteSelectorTag extends IncludeTag {
 
-	<%
-	UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
-	%>
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
 
-	<iframe frameborder="0" id="embeddedIframe" src="<%= HtmlUtil.escapeHREF(typeSettingsProperties.getProperty("url")) %>" width="100%"></iframe>
-</div>
+	private static final String _PAGE =
+		"/html/taglib/ui/control_panel_site_selector/page.jsp";
 
-<liferay-ui:layout-common />
+}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.layout;
+package com.liferay.control.panel.menu.web.layout;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.model.LayoutConstants;
@@ -32,14 +32,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + LayoutConstants.TYPE_USER_PERSONAL_PANEL},
+	property = {"layout.type=" + LayoutConstants.TYPE_CONTROL_PANEL},
 	service = LayoutTypeController.class
 )
-public class UserPersonalPanelLayoutController
+public class ControlPanelLayoutController
 	extends BasePanelLayoutControllerImpl {
 
 	@Override
@@ -56,7 +56,7 @@ public class UserPersonalPanelLayoutController
 
 	@Override
 	public boolean isParentable() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -115,17 +115,15 @@ public class UserPersonalPanelLayoutController
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.productivity.center.web)"
+		target = "(osgi.web.symbolicname=com.liferay.control.panel.menu.web)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
 
-	private static final String _EDIT_PAGE =
-		"/layout/edit/user_personal_panel.jsp";
+	private static final String _EDIT_PAGE = "/layout/edit/control_panel.jsp";
 
-	private static final String _VIEW_PAGE =
-		"/layout/view/user_personal_panel.jsp";
+	private static final String _VIEW_PAGE = "/layout/view/control_panel.jsp";
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;

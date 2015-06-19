@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.calendar.hook.upgrade.v1_0_1;
+package com.liferay.calendar.upgrade.test;
 
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
+import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendar;
 import com.liferay.calendar.util.CalendarResourceUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -32,7 +34,6 @@ import java.util.List;
 
 import org.jboss.arquillian.junit.Arquillian;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,21 +52,14 @@ public class UpgradeCalendarTest {
 		_user = UserTestUtil.addUser();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
-
-		UserLocalServiceUtil.deleteUser(_user);
-	}
-
 	@Test
 	public void testUpgradeCreatesCalendarTimeZoneId() throws Exception {
-		UpgradeCalendar upgradeCalendar = new UpgradeCalendar();
+		UpgradeProcess upgradeProcess = new UpgradeCalendar();
 
-		upgradeCalendar.doUpgrade();
+		upgradeProcess.upgrade();
 
 		Assert.assertTrue(
-			upgradeCalendar.tableHasColumn("Calendar", "timeZoneId"));
+			upgradeProcess.tableHasColumn("Calendar", "timeZoneId"));
 	}
 
 	@Test
@@ -74,9 +68,9 @@ public class UpgradeCalendarTest {
 			CalendarResourceUtil.getGroupCalendarResource(
 				_group.getGroupId(), new ServiceContext());
 
-		UpgradeCalendar upgradeCalendar = new UpgradeCalendar();
+		UpgradeProcess upgradeProcess = new UpgradeCalendar();
 
-		upgradeCalendar.doUpgrade();
+		upgradeProcess.upgrade();
 
 		List<Calendar> calendars =
 			CalendarLocalServiceUtil.getCalendarResourceCalendars(
@@ -103,9 +97,9 @@ public class UpgradeCalendarTest {
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
 
-		UpgradeCalendar upgradeCalendar = new UpgradeCalendar();
+		UpgradeProcess upgradeProcess = new UpgradeCalendar();
 
-		upgradeCalendar.doUpgrade();
+		upgradeProcess.upgrade();
 
 		List<Calendar> calendars =
 			CalendarLocalServiceUtil.getCalendarResourceCalendars(
@@ -116,7 +110,10 @@ public class UpgradeCalendarTest {
 		Assert.assertEquals("Asia/Shangai", calendar.getTimeZoneId());
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 }

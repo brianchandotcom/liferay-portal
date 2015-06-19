@@ -16,25 +16,27 @@ package com.liferay.calendar.web.messaging;
 
 import com.liferay.calendar.service.CalendarImporterLocalServiceUtil;
 import com.liferay.calendar.web.configuration.CalendarWebConfigurationValues;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.lang.time.StopWatch;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  */
-public class CalendarHotDeployMessageListener extends HotDeployMessageListener {
+@Component(immediate = true)
+public class CalendarActivationListener {
 
-	public CalendarHotDeployMessageListener(String... servletContextNames) {
-		super(servletContextNames);
-	}
-
-	@Override
-	protected void onDeploy(Message message) throws Exception {
+	@Activate
+	protected void activate() throws PortalException {
 		if (!CalendarWebConfigurationValues.
 				CALENDAR_SYNC_CALEVENTS_ON_STARTUP) {
 
@@ -62,7 +64,11 @@ public class CalendarHotDeployMessageListener extends HotDeployMessageListener {
 		}
 	}
 
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		CalendarHotDeployMessageListener.class);
+		CalendarActivationListener.class);
 
 }

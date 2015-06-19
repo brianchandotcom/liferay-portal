@@ -37,7 +37,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 		Matcher matcher = _extPluginPattern.matcher(fileName);
 
-		if (matcher.find() && !isJarFile(file)) {
+		if (matcher.find()) {
 			return true;
 		}
 
@@ -51,8 +51,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 		if (matcher.find() &&
 			isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
-			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml") &&
-			!isJarFile(file)) {
+			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml")) {
 
 			return true;
 		}
@@ -147,9 +146,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isThemePlugin(File file) throws AutoDeployException {
-		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml") &&
-			!isJarFile(file)) {
-
+		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml")) {
 			return true;
 		}
 
@@ -172,8 +169,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		Matcher matcher = _webPluginPattern.matcher(fileName);
 
 		if (matcher.find() &&
-			isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			!isJarFile(file)) {
+			isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties")) {
 
 			return true;
 		}

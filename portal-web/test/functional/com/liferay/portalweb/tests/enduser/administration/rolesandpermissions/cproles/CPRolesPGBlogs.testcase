@@ -43,7 +43,7 @@
 		<execute macro="BlogsEntry#addNoPermissionPG" />
 	</command>
 
-	<command name="AddBlogsEntryOrgRole" priority="4">
+	<command name="AddBlogsEntryOrgRole" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="orgName" value="Organization Name" />
@@ -233,7 +233,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryRegRole" priority="4">
+	<command name="AddBlogsEntryRegRole" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -390,7 +390,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntrySiteRole" priority="4">
+	<command name="AddBlogsEntrySiteRole" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -1960,7 +1960,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryPermissionsOwnerRoleInline" priority="4">
+	<command name="ViewBlogsEntryPermissionsOwnerRoleInline" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />

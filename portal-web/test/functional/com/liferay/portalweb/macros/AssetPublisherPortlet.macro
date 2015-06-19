@@ -703,7 +703,7 @@
 	<command name="viewCustomADTRichSummaryPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ASSET_RICH_SUMMARY_TITLE" value1="${assetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
 		<execute function="AssertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_READ_MORE" />
 		<execute function="AssertElementPresent" locator1="PGAssetpublisher#DISPLAY_ICON_PRINT" />
@@ -743,7 +743,6 @@
 		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 		<execute function="AssertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_EDIT" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${assetDescription}" />
-		<execute function="AssertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_READ_MORE" />
 	</command>
 
 	<command name="viewDynamicAssetSelectionConfigurationPG">

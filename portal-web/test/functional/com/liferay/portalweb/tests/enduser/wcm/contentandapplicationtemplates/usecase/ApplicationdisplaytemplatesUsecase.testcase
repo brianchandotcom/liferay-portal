@@ -181,9 +181,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPGViaAP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="WebContent#addPGViaAP">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -216,8 +216,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewDefaultWithAllDisplaySettingsCheckboxesPG">
-			<var name="assetDescription" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="assetDescription" value="WC Content" />
+			<var name="assetTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
@@ -232,8 +232,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewCustomADTRichSummaryPG">
-			<var name="assetDescription" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="assetDescription" value="WC Content" />
+			<var name="assetTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -247,8 +247,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewCustomADTRichSummaryPG">
-			<var name="assetDescription" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="assetDescription" value="WC Content" />
+			<var name="assetTitle" value="WC Title" />
 			<var name="pageStaging" value="true" />
 		</execute>
 	</command>

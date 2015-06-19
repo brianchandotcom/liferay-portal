@@ -110,9 +110,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							modal: true,
 							width: 600
 						},
-						id: '<portlet:namespace />selectRegularRole',
+
+						<%
+						String regularRoleEventName = liferayPortletResponse.getNamespace() + "selectRegularRole";
+						%>
+
+						id: '<%= regularRoleEventName %>',
 						title: '<liferay-ui:message arguments="regular-role" key="select-x" />',
-						uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_regular_role.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
+						uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_regular_role.jsp" /><portlet:param name="eventName" value='<%= regularRoleEventName %>' /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
 					},
 					function(event) {
 						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
@@ -275,7 +280,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							var roleId = item.attr('data-roleid');
 
 							for (var i = 0; i < <portlet:namespace />deleteGroupRolesGroupIds.length; i++) {
-								if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
+								if (<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId && <portlet:namespace />deleteGroupRolesRoleIds[i] == roleId) {
 									Util.toggleDisabled(item, false);
 
 									break;
@@ -310,9 +315,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						dialog: {
 							modal: true
 						},
-						id: '<portlet:namespace />selectOrganizationRole',
+
+						<%
+						String organizationRoleEventName = liferayPortletResponse.getNamespace() + "selectOrganizationRole";
+						%>
+
+						id: '<%= organizationRoleEventName %>',
 						title: '<liferay-ui:message arguments="organization-role" key="select-x" />',
-						uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_organization_role.jsp" /><portlet:param name="step" value="1" /><portlet:param name="organizationIds" value="<%= StringUtil.merge(organizationIds) %>" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
+						uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_organization_role.jsp" /><portlet:param name="eventName" value='<%= organizationRoleEventName %>' /><portlet:param name="step" value="1" /><portlet:param name="organizationIds" value="<%= StringUtil.merge(organizationIds) %>" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
 					},
 					function(event) {
 						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
@@ -438,7 +448,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 								var roleId = item.attr('data-roleid');
 
 								for (var i = 0; i < <portlet:namespace />deleteGroupRolesGroupIds.length; i++) {
-									if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
+									if (<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId && <portlet:namespace />deleteGroupRolesRoleIds[i] == roleId) {
 										Util.toggleDisabled(item, false);
 
 										break;
@@ -459,9 +469,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 									modal: true,
 									width: 600
 								},
-								id: '<portlet:namespace />selectSiteRole',
+
+								<%
+								String siteRoleEventName = liferayPortletResponse.getNamespace() + "selectSiteRole";
+								%>
+
+								id: '<%= siteRoleEventName %>',
 								title: '<liferay-ui:message arguments="site-role" key="select-x" />',
-								uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_site_role.jsp" /><portlet:param name="step" value="1" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
+								uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_site_role.jsp" /><portlet:param name="eventName" value='<%= siteRoleEventName %>' /><portlet:param name="step" value="1" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
 							},
 							function(event) {
 								<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
@@ -545,7 +560,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 		function <portlet:namespace />deleteGroupRole(roleId, groupId) {
 			for (var i = 0; i < <portlet:namespace />addGroupRolesRoleIds.length; i++) {
-				if ((<portlet:namespace />addGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />addGroupRolesRoleIds[i] == roleId)) {
+				if (<portlet:namespace />addGroupRolesGroupIds[i] == groupId && <portlet:namespace />addGroupRolesRoleIds[i] == roleId) {
 					<portlet:namespace />addGroupRolesGroupIds.splice(i, 1);
 					<portlet:namespace />addGroupRolesRoleIds.splice(i, 1);
 
@@ -584,7 +599,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 					rowColumns.push('<a class="modify-link" data-groupId="' + groupId + '" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
 					for (var i = 0; i < <portlet:namespace />deleteGroupRolesRoleIds.length; i++) {
-						if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
+						if (<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId && <portlet:namespace />deleteGroupRolesRoleIds[i] == roleId) {
 							<portlet:namespace />deleteGroupRolesGroupIds.splice(i, 1);
 							<portlet:namespace />deleteGroupRolesRoleIds.splice(i, 1);
 

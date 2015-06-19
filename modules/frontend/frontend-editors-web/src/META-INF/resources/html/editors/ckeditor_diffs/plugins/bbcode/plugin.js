@@ -30,9 +30,18 @@
 			);
 		},
 
-		refresh: function( editor, path ) {
+		refresh: function(editor, path) {
 			var firstBlock = path.block || path.blockLimit;
-			this.setState( editor.elementPath( firstBlock ).contains( 'pre', 1 ) ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
+
+			var buttonState = CKEDITOR.TRISTATE_OFF;
+
+			var element = editor.elementPath(firstBlock);
+
+			if (element.contains('pre', 1)) {
+				buttonState = CKEDITOR.TRISTATE_ON;
+			}
+
+			this.setState(buttonState);
 		},
 
 		context: 'pre'

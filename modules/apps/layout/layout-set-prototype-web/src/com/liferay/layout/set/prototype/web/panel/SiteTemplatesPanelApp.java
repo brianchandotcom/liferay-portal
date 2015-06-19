@@ -15,16 +15,10 @@
 package com.liferay.layout.set.prototype.web.panel;
 
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.productivity.center.panel.BaseControlPanelEntryPanelApp;
 import com.liferay.productivity.center.panel.PanelApp;
 import com.liferay.productivity.center.panel.constants.PanelCategoryKeys;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,26 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteTemplatesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getKey() {
-		return SiteTemplatesPanelApp.class.getName();
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			locale,
-			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-				getPortletId());
-	}
-
-	@Override
 	public String getPortletId() {
 		return LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE;
-	}
-
-	@Override
-	protected Portlet getPortlet() {
-		return _portletLocalService.getPortletById(getPortletId());
 	}
 
 	@Reference(unbind = "-")
@@ -71,7 +47,5 @@ public class SiteTemplatesPanelApp extends BaseControlPanelEntryPanelApp {
 
 		_portletLocalService = portletLocalService;
 	}
-
-	private PortletLocalService _portletLocalService;
 
 }

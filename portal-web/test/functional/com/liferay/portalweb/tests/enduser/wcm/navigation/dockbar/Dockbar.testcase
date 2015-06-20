@@ -33,7 +33,7 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Application Display Templates" />
+			<var name="portletName" value="Application Display Template" />
 		</execute>
 	</command>
 

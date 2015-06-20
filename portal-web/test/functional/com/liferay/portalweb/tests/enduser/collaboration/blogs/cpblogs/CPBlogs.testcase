@@ -242,7 +242,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntries" priority="5">
+	<command name="DeleteBlogsEntries" priority="4">
 		<var name="blogsEntryCounterList" value="1,2,3" />
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >

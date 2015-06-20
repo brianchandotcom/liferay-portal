@@ -12,30 +12,19 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.maven.plugin.builder.util;
+package com.liferay.gradle.plugins.tasks;
 
-import java.io.File;
+import com.liferay.gradle.plugins.extensions.AppServer;
+
+import org.gradle.api.Task;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Andrea Di Giorgi
  */
-public class OSDetector {
+public interface AppServerTask extends Task {
 
-	public static boolean isWindows() {
-		if (_windows != null) {
-			return _windows.booleanValue();
-		}
+	public String getAppServerType();
 
-		if (File.pathSeparator.equals(";")) {
-			_windows = Boolean.TRUE;
-		}
-		else {
-			_windows = Boolean.FALSE;
-		}
-
-		return _windows.booleanValue();
-	}
-
-	private static Boolean _windows;
+	public void merge(AppServer appServer);
 
 }

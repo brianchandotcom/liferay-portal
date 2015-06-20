@@ -16,13 +16,16 @@ package com.liferay.gradle.util;
 
 import groovy.lang.Closure;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.Collections;
@@ -43,6 +46,66 @@ public class FileUtil {
 		File file = project.file(fileName);
 
 		return file.exists();
+	}
+
+	public static void get(
+			Project project, final String url, final File destinationFile)
+		throws Exception {
+
+		get(project, url, destinationFile, false, true, false);
+	}
+
+	public static void get(
+			Project project, String url, File destinationFile,
+			boolean ignoreErrors, boolean tryLocalNetwork, boolean verbose)
+		throws Exception {
+
+		String mirrorsCacheArtifactSubdir = url.replaceFirst(
+			"https?:\\/\\/(.+\\/).+", "$1");
+
+		File mirrorsCacheArtifactDir = new File(
+			_getMirrorsCacheDir(), mirrorsCacheArtifactSubdir);
+
+		String fileName = url.replaceFirst(".+\\/(.+)", "$1");
+
+		File mirrorsCacheArtifactFile = new File(
+			mirrorsCacheArtifactDir, fileName);
+
+		if (!mirrorsCacheArtifactFile.exists()) {
+			mirrorsCacheArtifactDir.mkdirs();
+
+			String mirrorsUrl = url.replaceFirst(
+				"http:\\/\\/", "http://mirrors/");
+
+			if (tryLocalNetwork) {
+				try {
+					_get(
+						project, mirrorsUrl, mirrorsCacheArtifactFile,
+						ignoreErrors, verbose);
+				}
+				catch (Exception e) {
+					_get(
+						project, url, mirrorsCacheArtifactFile, ignoreErrors,
+						verbose);
+				}
+			}
+			else {
+				_get(
+					project, url, mirrorsCacheArtifactFile, ignoreErrors,
+					verbose);
+			}
+		}
+
+		Path destinationPath = destinationFile.toPath();
+
+		if (destinationFile.isDirectory()) {
+			Files.copy(
+				mirrorsCacheArtifactFile.toPath(),
+				destinationPath.resolve(fileName));
+		}
+		else {
+			Files.copy(mirrorsCacheArtifactFile.toPath(), destinationPath);
+		}
 	}
 
 	public static String getAbsolutePath(File file) {
@@ -82,6 +145,26 @@ public class FileUtil {
 		};
 
 		project.ant(closure);
+	}
+
+	public static String read(String resourceName) throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		ClassLoader classLoader = FileUtil.class.getClassLoader();
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(
+					classLoader.getResourceAsStream(resourceName)))) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				sb.append(line);
+				sb.append('\n');
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public static Properties readProperties(File file) throws Exception {
@@ -173,6 +256,35 @@ public class FileUtil {
 				}
 			}
 		}
+	}
+
+	private static void _get(
+		Project project, final String url, final File destinationFile,
+		final boolean ignoreErrors, final boolean verbose) {
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall(AntBuilder antBuilder) {
+				Map<String, Object> args = new HashMap<>();
+
+				args.put("dest", destinationFile);
+				args.put("ignoreerrors", ignoreErrors);
+				args.put("src", url);
+				args.put("verbose", verbose);
+
+				antBuilder.invokeMethod("get", args);
+			}
+
+		};
+
+		project.ant(closure);
+	}
+
+	private static File _getMirrorsCacheDir() {
+		String userHome = System.getProperty("user.home");
+
+		return new File(userHome, ".liferay/mirrors");
 	}
 
 	private static void _invokeAntMethod(

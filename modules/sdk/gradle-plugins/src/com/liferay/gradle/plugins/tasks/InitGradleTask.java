@@ -182,11 +182,21 @@ public class InitGradleTask extends DefaultTask {
 		FileUtil.write(buildGradleFile, contents);
 	}
 
+	public boolean isIgnoreMissingDependencies() {
+		return _ignoreMissingDependencies;
+	}
+
 	public void portalDependencyNotation(
 		String fileName, String group, String name, String version) {
 
 		_portalDependencyNotations.put(
 			fileName, new String[] {group, name, version});
+	}
+
+	public void setIgnoreMissingDependencies(
+		boolean ignoreMissingDependencies) {
+
+		_ignoreMissingDependencies = ignoreMissingDependencies;
 	}
 
 	protected void addContents(List<String> contents1, List<String> contents2) {
@@ -318,8 +328,17 @@ public class InitGradleTask extends DefaultTask {
 				String projectPath = projectNamePathMap.get(projectName);
 
 				if (Validator.isNull(projectPath)) {
-					throw new GradleException(
-						"Unable to find project dependency " + projectFileName);
+					String message =
+						"Unable to find project dependency " + projectFileName;
+
+					if (isIgnoreMissingDependencies()) {
+						System.out.println(message);
+
+						continue;
+					}
+					else {
+						throw new GradleException(message);
+					}
 				}
 
 				contents.add(
@@ -726,6 +745,7 @@ public class InitGradleTask extends DefaultTask {
 	}
 
 	private Node _buildXmlNode;
+	private boolean _ignoreMissingDependencies;
 	private Node _ivyXmlNode;
 	private LiferayExtension _liferayExtension;
 	private Properties _pluginPackageProperties;

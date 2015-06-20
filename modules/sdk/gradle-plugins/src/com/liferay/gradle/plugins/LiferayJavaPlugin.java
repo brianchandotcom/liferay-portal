@@ -16,16 +16,24 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
+import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.plugins.tasks.AppServerTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
+import com.liferay.gradle.plugins.tasks.SetupTestableTomcatTask;
+import com.liferay.gradle.plugins.tasks.StartAppServerTask;
+import com.liferay.gradle.plugins.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
+import com.liferay.gradle.plugins.whip.WhipPlugin;
+import com.liferay.gradle.plugins.whip.WhipTaskExtension;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
@@ -44,10 +52,13 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -56,6 +67,7 @@ import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -74,10 +86,12 @@ import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
@@ -104,8 +118,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
 
+	public static final String SETUP_ARQUILLIAN_TASK_NAME = "setupArquillian";
+
+	public static final String SETUP_TESTABLE_TOMCAT_TASK_NAME =
+		"setupTestableTomcat";
+
+	public static final String START_TESTABLE_TOMCAT_TASK_NAME =
+		"startTestableTomcat";
+
+	public static final String STOP_TESTABLE_TOMCAT_TASK_NAME =
+		"stopTestableTomcat";
+
 	public static final String TEST_INTEGRATION_SOURCE_SET_NAME =
 		"testIntegration";
+
+	public static final String TEST_INTEGRATION_TASK_NAME = "testIntegration";
 
 	@Override
 	public void apply(Project project) {
@@ -128,7 +155,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
-		configureTaskTest(project);
+		configureTasksTest(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -192,39 +219,37 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				project,
 				testIntegrationSourceSet.getCompileConfigurationName());
 
-		Configuration compileConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
 		Configuration testCompileConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
 
 		testIntegrationCompileConfiguration.extendsFrom(
-			compileConfiguration, testCompileConfiguration);
+			testCompileConfiguration);
 
 		Configuration testIntegrationRuntimeConfiguration =
 			GradleUtil.getConfiguration(
 				project,
 				testIntegrationSourceSet.getRuntimeConfigurationName());
 
-		Configuration runtimeConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
 		Configuration testRuntimeConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
 
 		testIntegrationRuntimeConfiguration.extendsFrom(
-			runtimeConfiguration, testRuntimeConfiguration,
-			testIntegrationCompileConfiguration);
+			testRuntimeConfiguration, testIntegrationCompileConfiguration);
 
 		SourceSet mainSourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
+		FileCollection compileClasspath =
+			testIntegrationSourceSet.getCompileClasspath();
+
 		testIntegrationSourceSet.setCompileClasspath(
-			project.files(
-				mainSourceSet.getOutput(),
-				testIntegrationCompileConfiguration));
+			compileClasspath.plus(mainSourceSet.getOutput()));
+
+		FileCollection runtimeClasspath =
+			testIntegrationSourceSet.getRuntimeClasspath();
+
 		testIntegrationSourceSet.setRuntimeClasspath(
-			project.files(
-				testIntegrationSourceSet.getOutput(), mainSourceSet.getOutput(),
-				testIntegrationRuntimeConfiguration));
+			runtimeClasspath.plus(mainSourceSet.getOutput()));
 
 		return testIntegrationSourceSet;
 	}
@@ -309,7 +334,284 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
+		addTaskSetupArquillian(project);
+		addTaskSetupTestableTomcat(project);
+		addTaskStartTestableTomcat(project);
+		addTaskStopTestableTomcat(project);
+		addTaskTestIntegration(project);
 		addTaskWar(project);
+	}
+
+	protected Task addTaskSetupArquillian(Project project) {
+		Task task = project.task(SETUP_ARQUILLIAN_TASK_NAME);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					try {
+						String xml = FileUtil.read(
+							"com/liferay/gradle/plugins/dependencies/" +
+								"arquillian.xml");
+
+						LiferayExtension liferayExtension =
+							GradleUtil.getExtension(
+								project, LiferayExtension.class);
+
+						TomcatAppServer tomcatAppServer =
+							(TomcatAppServer)liferayExtension.getAppServer(
+								"tomcat");
+
+						xml = xml.replace(
+							"${app.server.tomcat.manager.password}",
+							tomcatAppServer.getManagerPassword());
+						xml = xml.replace(
+							"${app.server.tomcat.manager.user}",
+							tomcatAppServer.getManagerUserName());
+						xml = xml.replace(
+							"${jmx.remote.port}",
+							String.valueOf(
+								liferayExtension.getJmxRemotePort()));
+
+						SourceSet sourceSet = GradleUtil.getSourceSet(
+							project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+						File testIntegrationDir = getSrcDir(
+							sourceSet.getResources());
+
+						File arquillianXmlFile = new File(
+							testIntegrationDir, "arquillian.xml");
+
+						Files.write(
+							arquillianXmlFile.toPath(),
+							xml.getBytes(StandardCharsets.UTF_8));
+					}
+					catch (Exception e) {
+						throw new GradleException(e.getMessage(), e);
+					}
+				}
+
+			});
+
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						task.getProject(), TEST_INTEGRATION_SOURCE_SET_NAME);
+
+					File testIntegrationDir = getSrcDir(
+						sourceSet.getResources());
+
+					File arquillianXmlFile = new File(
+						testIntegrationDir, "arquillian.xml");
+
+					if (arquillianXmlFile.exists()) {
+						return false;
+					}
+
+					SourceDirectorySet sourceDirectorySet =
+						sourceSet.getAllJava();
+
+					if (sourceDirectorySet.isEmpty()) {
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+
+		return task;
+	}
+
+	protected SetupTestableTomcatTask addTaskSetupTestableTomcat(
+		Project project) {
+
+		SetupTestableTomcatTask setupTestableTomcatTask = GradleUtil.addTask(
+			project, SETUP_TESTABLE_TOMCAT_TASK_NAME,
+			SetupTestableTomcatTask.class);
+
+		setupTestableTomcatTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					StartAppServerTask startTestableTomcatTask =
+						(StartAppServerTask)GradleUtil.getTask(
+							task.getProject(), START_TESTABLE_TOMCAT_TASK_NAME);
+
+					if (startTestableTomcatTask.isAppServerStarted()) {
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+
+		return setupTestableTomcatTask;
+	}
+
+	protected StartAppServerTask addTaskStartTestableTomcat(Project project) {
+		StartAppServerTask startTestableTomcatTask = GradleUtil.addTask(
+			project, START_TESTABLE_TOMCAT_TASK_NAME, StartAppServerTask.class);
+
+		startTestableTomcatTask.dependsOn(SETUP_TESTABLE_TOMCAT_TASK_NAME);
+
+		startTestableTomcatTask.setAppServerType("tomcat");
+
+		startTestableTomcatTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					File testablePortalStartedFile = new File(
+						project.getRootDir(),
+						_TESTABLE_PORTAL_STARTED_FILE_NAME);
+
+					try {
+						Files.createFile(testablePortalStartedFile.toPath());
+					}
+					catch (Exception e) {
+					}
+				}
+
+			});
+
+		startTestableTomcatTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					LiferayExtension liferayExtension = GradleUtil.getExtension(
+						project, LiferayExtension.class);
+
+					File liferayHome = liferayExtension.getLiferayHome();
+
+					project.delete(
+						new File(liferayHome, "data"),
+						new File(liferayHome, "logs"),
+						new File(liferayHome, "osgi/state"),
+						new File(
+							liferayHome, "portal-setup-wizard.properties"));
+				}
+
+			});
+
+		return startTestableTomcatTask;
+	}
+
+	protected StopAppServerTask addTaskStopTestableTomcat(Project project) {
+		StopAppServerTask stopTestableTomcatTask = GradleUtil.addTask(
+			project, STOP_TESTABLE_TOMCAT_TASK_NAME, StopAppServerTask.class);
+
+		stopTestableTomcatTask.setAppServerType("tomcat");
+
+		stopTestableTomcatTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					File testablePortalStartedFile = new File(
+						project.getRootDir(),
+						_TESTABLE_PORTAL_STARTED_FILE_NAME);
+
+					project.delete(testablePortalStartedFile);
+				}
+
+			});
+
+		stopTestableTomcatTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					File testablePortalStartedFile = new File(
+						project.getRootDir(),
+						_TESTABLE_PORTAL_STARTED_FILE_NAME);
+
+					if (testablePortalStartedFile.exists()) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		return stopTestableTomcatTask;
+	}
+
+	protected Test addTaskTestIntegration(Project project) {
+		Test test = GradleUtil.addTask(
+			project, TEST_INTEGRATION_TASK_NAME, Test.class);
+
+		test.dependsOn(SETUP_ARQUILLIAN_TASK_NAME);
+		test.mustRunAfter(JavaPlugin.TEST_TASK_NAME);
+
+		test.setDescription("Runs the integration tests.");
+		test.setGroup("verification");
+
+		ConventionMapping conventionMapping = test.getConventionMapping();
+
+		final SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		conventionMapping.map(
+			"classpath",
+			new Callable<FileCollection>() {
+
+				@Override
+				public FileCollection call() throws Exception {
+					return sourceSet.getRuntimeClasspath();
+				}
+
+			});
+
+		conventionMapping.map(
+			"testClassesDir",
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					return sourceSetOutput.getClassesDir();
+				}
+
+			});
+
+		conventionMapping.map(
+			"testSrcDirs",
+			new Callable<List<File>>() {
+
+				@Override
+				public List<File> call() throws Exception {
+					SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
+
+					return new ArrayList<>(sourceDirectorySet.getSrcDirs());
+				}
+
+			});
+
+		Task checkTask = GradleUtil.getTask(project, "check");
+
+		checkTask.dependsOn(test);
+
+		return test;
 	}
 
 	protected Task addTaskWar(Project project) {
@@ -344,6 +646,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
 	}
@@ -903,6 +1206,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
+	protected boolean configureTaskEnabledWithAppServer(
+		Task task, String appServerType) {
+
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
+			task.getProject(), LiferayExtension.class);
+
+		String curAppServerType = liferayExtension.getAppServerType();
+
+		if (!appServerType.equals(curAppServerType)) {
+			task.setEnabled(false);
+		}
+
+		return task.getEnabled();
+	}
+
 	protected void configureTaskFormatWSDL(Project project) {
 		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
 			project, FORMAT_WSDL_TASK_NAME);
@@ -945,6 +1263,25 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		formatXMLTask.include("**/*.xsd");
 	}
 
+	protected void configureTaskInitGradle(Project project) {
+		InitGradleTask initGradleTask = (InitGradleTask)GradleUtil.getTask(
+			project, INIT_GRADLE_TASK_NAME);
+
+		configureTaskInitGradleIgnoreMissingDependencies(initGradleTask);
+	}
+
+	protected void configureTaskInitGradleIgnoreMissingDependencies(
+		InitGradleTask initGradleTask) {
+
+		String value = GradleUtil.getTaskPrefixedProperty(
+			initGradleTask, "ignoreMissingDependencies");
+
+		if (Validator.isNotNull(value)) {
+			initGradleTask.setIgnoreMissingDependencies(
+				Boolean.parseBoolean(value));
+		}
+	}
+
 	protected void configureTaskJar(Project project) {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
@@ -979,8 +1316,40 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskDeploy(project, liferayExtension);
 		configureTaskFormatWSDL(project);
 		configureTaskFormatXSD(project);
+		configureTaskInitGradle(project);
 		configureTaskJar(project);
+		configureTaskSetupTestableTomcat(project, liferayExtension);
+		configureTaskStartTestableTomcat(project, liferayExtension);
+		configureTaskTestIntegration(project, liferayExtension);
+
+		configureTasksAppServer(project, liferayExtension);
 		configureTasksDirectDeploy(project);
+	}
+
+	protected void configureTasksAppServer(
+		Project project, final LiferayExtension liferayExtension) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			AppServerTask.class,
+			new Action<AppServerTask>() {
+
+				@Override
+				public void execute(AppServerTask appServerTask) {
+					String appServerType = appServerTask.getAppServerType();
+
+					if (Validator.isNull(appServerType)) {
+						return;
+					}
+
+					AppServer appServer = liferayExtension.getAppServer(
+						appServerType);
+
+					appServerTask.merge(appServer);
+				}
+
+			});
 	}
 
 	protected void configureTasksDirectDeploy(Project project) {
@@ -1006,13 +1375,109 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskTest(Project project) {
-		Test test = (Test)GradleUtil.getTask(
-			project, JavaPlugin.TEST_TASK_NAME);
+	protected void configureTaskSetupTestableTomcat(
+		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskTestDefaultCharacterEncoding(test);
-		configureTaskTestForkEvery(test);
-		configureTaskTestLogging(test);
+		SetupTestableTomcatTask setupTestableTomcatTask =
+			(SetupTestableTomcatTask)GradleUtil.getTask(
+				project, SETUP_TESTABLE_TOMCAT_TASK_NAME);
+
+		if (!configureTaskEnabledWithAppServer(
+				setupTestableTomcatTask, "tomcat")) {
+
+			return;
+		}
+
+		configureTaskSetupTestableTomcatJmx(
+			setupTestableTomcatTask, liferayExtension);
+		configureTaskSetupTestableTomcatModuleFrameworkBaseDir(
+			setupTestableTomcatTask, liferayExtension);
+	}
+
+	protected void configureTaskSetupTestableTomcatJmx(
+		SetupTestableTomcatTask setupTestableTomcatTask,
+		LiferayExtension liferayExtension) {
+
+		if (setupTestableTomcatTask.getJmxRemotePort() > 0) {
+			return;
+		}
+
+		setupTestableTomcatTask.setJmxRemotePort(
+			liferayExtension.getJmxRemotePort());
+	}
+
+	protected void configureTaskSetupTestableTomcatModuleFrameworkBaseDir(
+		SetupTestableTomcatTask setupTestableTomcatTask,
+		LiferayExtension liferayExtension) {
+
+		if (setupTestableTomcatTask.getModuleFrameworkBaseDir() != null) {
+			return;
+		}
+
+		File moduleFrameworkBaseDir = new File(
+			liferayExtension.getLiferayHome(), "osgi");
+
+		setupTestableTomcatTask.setModuleFrameworkBaseDir(
+			moduleFrameworkBaseDir);
+	}
+
+	protected void configureTaskStartTestableTomcat(
+		Project project, LiferayExtension liferayExtension) {
+
+		StartAppServerTask startTestableTomcatTask =
+			(StartAppServerTask)GradleUtil.getTask(
+				project, START_TESTABLE_TOMCAT_TASK_NAME);
+
+		if (!configureTaskEnabledWithAppServer(
+				startTestableTomcatTask, "tomcat")) {
+
+			return;
+		}
+	}
+
+	protected void configureTasksTest(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			Test.class,
+			new Action<Test>() {
+
+				@Override
+				public void execute(Test test) {
+					configureTaskTestDefaultCharacterEncoding(test);
+					configureTaskTestForkEvery(test);
+					configureTaskTestJvmArgs(test);
+					configureTaskTestLogging(test);
+					configureTaskTestWhip(test);
+				}
+
+			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					TaskContainer taskContainer = project.getTasks();
+
+					final LiferayExtension liferayExtension =
+						GradleUtil.getExtension(
+							project, LiferayExtension.class);
+
+					taskContainer.withType(
+						Test.class,
+						new Action<Test>() {
+
+							@Override
+							public void execute(Test test) {
+								configureTaskTestSystemProperties(
+									test, liferayExtension);
+							}
+
+						});
+				}
+
+			});
 	}
 
 	protected void configureTaskTestDefaultCharacterEncoding(Test test) {
@@ -1020,13 +1485,77 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskTestForkEvery(Test test) {
-		test.setForkEvery(1L);
+		String name = test.getName();
+
+		if (name.equals(JavaPlugin.TEST_TASK_NAME)) {
+			test.setForkEvery(1L);
+		}
+		else if (name.equals(TEST_INTEGRATION_TASK_NAME)) {
+			test.setForkEvery(null);
+		}
+	}
+
+	protected void configureTaskTestIntegration(
+		Project project, LiferayExtension liferayExtension) {
+
+		Test test = (Test)GradleUtil.getTask(
+			project, TEST_INTEGRATION_TASK_NAME);
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		File srcDir = getSrcDir(sourceSet.getResources());
+
+		File skipManagedAppServerFile = new File(
+			srcDir, _SKIP_MANAGED_APP_SERVER_FILE_NAME);
+
+		if (!skipManagedAppServerFile.exists()) {
+			configureTaskEnabledWithAppServer(test, "tomcat");
+
+			test.dependsOn(START_TESTABLE_TOMCAT_TASK_NAME);
+			test.finalizedBy(STOP_TESTABLE_TOMCAT_TASK_NAME);
+		}
+	}
+
+	protected void configureTaskTestJvmArgs(Test test) {
+		List<String> jvmArgs = new ArrayList<>();
+
+		jvmArgs.add("-Djava.net.preferIPv4Stack=true");
+		jvmArgs.add("-Dliferay.mode=test");
+		jvmArgs.add("-Duser.timezone=GMT");
+
+		test.jvmArgs(jvmArgs);
 	}
 
 	protected void configureTaskTestLogging(Test test) {
 		TestLoggingContainer testLoggingContainer = test.getTestLogging();
 
 		testLoggingContainer.setShowStandardStreams(true);
+	}
+
+	protected void configureTaskTestSystemProperties(
+		Test test, LiferayExtension liferayExtension) {
+
+		Map<String, Object> systemProperties = test.getSystemProperties();
+
+		if (systemProperties.containsKey("app.server.tomcat.dir")) {
+			return;
+		}
+
+		AppServer appServer = liferayExtension.getAppServer("tomcat");
+
+		test.systemProperty(
+			"app.server.tomcat.dir",
+			FileUtil.getAbsolutePath(appServer.getDir()));
+	}
+
+	protected void configureTaskTestWhip(Test test) {
+		WhipTaskExtension whipTaskExtension = GradleUtil.getExtension(
+			test, WhipTaskExtension.class);
+
+		whipTaskExtension.excludes(
+			".*Test", ".*Test\\$.*", ".*\\$Proxy.*", "com/liferay/whip/.*");
+		whipTaskExtension.includes("com/liferay/.*");
 	}
 
 	protected void configureTestResultsDir(Project project) {
@@ -1050,64 +1579,39 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
-
-		Set<File> srcDirs = javaSourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
+		return getSrcDir(sourceSet.getJava());
 	}
 
 	protected File getLibDir(Project project) {
 		return project.file("lib");
 	}
 
-	protected boolean getProperty(
-		Project project, String name, boolean defaultValue) {
-
-		if (!project.hasProperty(name)) {
-			return defaultValue;
-		}
-
-		Object value = project.property(name);
-
-		if (value instanceof Boolean) {
-			return (Boolean)value;
-		}
-
-		if (value instanceof String) {
-			return Boolean.parseBoolean((String)value);
-		}
-
-		return defaultValue;
-	}
-
 	protected File getResourcesDir(Project project) {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		SourceDirectorySet resourcesSourceDirectorySet =
-			sourceSet.getResources();
-
-		Set<File> srcDirs = resourcesSourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
+		return getSrcDir(sourceSet.getResources());
 	}
 
 	protected File getServiceBaseDir(Project project) {
 		return project.getProjectDir();
 	}
 
+	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		return iterator.next();
+	}
+
 	protected boolean isAddDefaultDependencies(Project project) {
-		return getProperty(
+		return GradleUtil.getProperty(
 			project, _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
 	}
 
 	protected boolean isAddTestDefaultDependencies(Project project) {
-		return getProperty(
+		return GradleUtil.getProperty(
 			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
 	}
 
@@ -1240,5 +1744,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	private static final String _REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+
+	private static final String _SKIP_MANAGED_APP_SERVER_FILE_NAME =
+		"skip.managed.app.server";
+
+	private static final String _TESTABLE_PORTAL_STARTED_FILE_NAME =
+		".testable.portal.started";
 
 }

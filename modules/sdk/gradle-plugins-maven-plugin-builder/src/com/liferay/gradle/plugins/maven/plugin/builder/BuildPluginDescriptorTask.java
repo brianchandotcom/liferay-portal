@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.maven.plugin.builder;
 
-import com.liferay.gradle.plugins.maven.plugin.builder.util.OSDetector;
 import com.liferay.gradle.plugins.maven.plugin.builder.util.XMLUtil;
+import com.liferay.gradle.util.OSDetector;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.BeanProperty;

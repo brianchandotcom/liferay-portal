@@ -50,6 +50,6 @@ Include-Resource:\
 	@../../../util-java/util-java.jar!/com/liferay/util/ant/AntUtil*,\
 	@../../../util-java/util-java.jar!/com/liferay/util/ant/DeleteTask.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/ant/Java2WsddTask.class,\
-	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLFormatter.class,\
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class
 Main-Class: com.liferay.portal.tools.wsdd.merger.WSDDBuilder

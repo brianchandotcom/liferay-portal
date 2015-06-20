@@ -660,7 +660,7 @@ public class PoshiRunnerContext {
 	}
 
 	private static final String _BASE_DIR =
-		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
+		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR);
 
 	private static final Map<String, String> _actionExtendClassName =
 		new HashMap<>();

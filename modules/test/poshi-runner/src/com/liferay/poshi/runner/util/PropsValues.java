@@ -136,8 +136,10 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get("test.assert.liferay.errors"));
 
-	public static final String TEST_BASE_DIR_NAME = PropsUtil.get(
-		"test.basedir");
+	public static final String TEST_BASE_DIR = PropsUtil.get("test.basedir");
+
+	public static final String TEST_DEPENDENCIES_DIR = PropsUtil.get(
+		"test.dependencies.dir");
 
 	public static final String TEST_CASE_AVAILABLE_PROPERTY_NAMES =
 		PropsUtil.get("test.case.available.property.names");

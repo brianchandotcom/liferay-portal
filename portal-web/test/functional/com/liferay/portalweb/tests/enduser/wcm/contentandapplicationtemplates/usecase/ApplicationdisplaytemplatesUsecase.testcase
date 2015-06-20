@@ -3,15 +3,6 @@
 
 	<var name="siteName" value="Test Site Name" />
 
-	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
-
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -33,6 +24,15 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
 
 	<command name="AddRSSADTViaPortletConfiguration" priority="5">
 		<execute macro="Page#gotoPG">

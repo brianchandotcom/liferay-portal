@@ -46,13 +46,11 @@ public abstract class BaseWebDriverImpl
 
 		System.setProperty("java.awt.headless", "false");
 
-		String dependenciesDirName =
-			"portal-web//test//functional//com//liferay//portalweb//" +
-				"dependencies//";
+		String dependenciesDirName = _TEST_DEPENDENCIES_DIR;
 
 		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
 
-		String sikuliImagesDirName = dependenciesDirName + "sikuli//linux//";
+		String sikuliImagesDirName = dependenciesDirName + "//sikuli//linux//";
 
 		if (OSDetector.isWindows()) {
 			dependenciesDirName = StringUtil.replace(
@@ -815,7 +813,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
-		uploadFile(location, _projectDirName + _dependenciesDirName + value);
+		uploadFile(location, _TEST_BASE_DIR + _dependenciesDirName + value);
 	}
 
 	@Override
@@ -944,6 +942,11 @@ public abstract class BaseWebDriverImpl
 		super.windowMaximize();
 		super.waitForPageToLoad("30000");
 	}
+
+	private static final String _TEST_BASE_DIR = PropsValues.TEST_BASE_DIR;
+
+	private static final String _TEST_DEPENDENCIES_DIR =
+		PropsValues.TEST_DEPENDENCIES_DIR;
 
 	private String _clipBoard = "";
 	private final String _dependenciesDirName;

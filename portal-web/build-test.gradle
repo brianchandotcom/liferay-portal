@@ -17,6 +17,8 @@ apply plugin: "com.liferay.poshi.runner"
 poshiRunner {
 	baseDir = file("test/functional")
 
+	poshiProperty "test.dependencies.dir", "com/liferay/portalweb/dependencies"
+
 	if (project.hasProperty("componentNames")) {
 		poshiProperty "component.names", project.properties["componentNames"]
 	}

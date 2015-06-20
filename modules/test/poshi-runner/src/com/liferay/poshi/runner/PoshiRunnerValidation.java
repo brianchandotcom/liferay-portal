@@ -1344,7 +1344,7 @@ public class PoshiRunnerValidation {
 	}
 
 	private static final String _BASE_DIR =
-		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
+		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR);
 
 	private static final Set<Exception> _exceptions = new HashSet<>();
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");

@@ -169,13 +169,13 @@ public class BaseJSONHandler extends BaseHandler {
 					"com.liferay.sync.SyncClientMinBuildException")) {
 
 			retryServerConnection(
-				SyncAccount.UI_EVENT_MIN_BUILD_REQUIREMENT_FAILED, -1);
+				SyncAccount.UI_EVENT_MIN_BUILD_REQUIREMENT_FAILED);
 		}
 		else if (exception.equals(
 					"com.liferay.sync.SyncServicesUnavailableException")) {
 
 			retryServerConnection(
-				SyncAccount.UI_EVENT_SYNC_SERVICES_NOT_ACTIVE, -1);
+				SyncAccount.UI_EVENT_SYNC_SERVICES_NOT_ACTIVE);
 		}
 		else if (exception.equals(
 					"com.liferay.sync.SyncSiteUnavailableException")) {
@@ -187,13 +187,13 @@ public class BaseJSONHandler extends BaseHandler {
 						"NoSuchJSONWebServiceException") ||
 				 exception.equals("java.lang.RuntimeException")) {
 
-			retryServerConnection(SyncAccount.UI_EVENT_SYNC_WEB_MISSING, -1);
+			retryServerConnection(SyncAccount.UI_EVENT_SYNC_WEB_MISSING);
 		}
 		else if (exception.equals("Authenticated access required") ||
 				 exception.equals("java.lang.SecurityException")) {
 
-			throw new HttpResponseException(
-				HttpStatus.SC_UNAUTHORIZED, "Authenticated access required");
+			retryServerConnection(
+				SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION);
 		}
 		else {
 			SyncFile syncFile = getLocalSyncFile();

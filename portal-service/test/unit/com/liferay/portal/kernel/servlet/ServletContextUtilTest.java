@@ -33,7 +33,6 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Laszlo Csontos
  */
-
 public class ServletContextUtilTest {
 
 	@Test
@@ -108,25 +107,21 @@ public class ServletContextUtilTest {
 			public URL getResource(String resourcePath)
 				throws MalformedURLException {
 
-				URL url = new URL("file:" + path + resourcePath);
-
-				return url;
+				return new URL("file:" + path + resourcePath);
 			}
 
 		};
 	}
 
 	protected URI getURI(String path) {
-		URI uri = null;
-
 		try {
-			uri = new URI("file", path, null);
+			return new URI("file", path, null);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 
-		return uri;
+		return null;
 	}
 
 	private static final String _URI_WITH_INVALID_CHARACTERS = ":?#[]/@";

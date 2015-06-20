@@ -15,6 +15,7 @@
 package com.liferay.util.log4j;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -26,17 +27,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
 
 import java.net.URL;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Appender;
@@ -108,27 +105,15 @@ public class Log4JUtil {
 
 		DOMConfigurator domConfigurator = new DOMConfigurator();
 
-		Reader urlReader = new StringReader(urlContent);
-
 		domConfigurator.doConfigure(
-			urlReader, LogManager.getLoggerRepository());
-
-		Set<String> currentLoggerNames = new HashSet<>();
-
-		Enumeration<Logger> enu = LogManager.getCurrentLoggers();
-
-		while (enu.hasMoreElements()) {
-			Logger logger = enu.nextElement();
-
-			currentLoggerNames.add(logger.getName());
-		}
+			new UnsyncStringReader(urlContent),
+			LogManager.getLoggerRepository());
 
 		try {
 			SAXReader saxReader = new SAXReader();
 
-			Reader reader = new StringReader(urlContent);
-
-			Document document = saxReader.read(reader, url.toExternalForm());
+			Document document = saxReader.read(
+				new UnsyncStringReader(urlContent), url.toExternalForm());
 
 			Element rootElement = document.getRootElement();
 
@@ -141,7 +126,10 @@ public class Log4JUtil {
 
 				String priority = priorityElement.attributeValue("value");
 
-				setLevel(name, priority, false);
+				java.util.logging.Logger jdkLogger =
+					java.util.logging.Logger.getLogger(name);
+
+				jdkLogger.setLevel(_getJdkLevel(priority));
 			}
 		}
 		catch (Exception e) {

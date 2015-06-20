@@ -14,17 +14,41 @@
 
 package com.liferay.productivity.center.panel.constants;
 
-import com.liferay.portal.util.PortletCategoryKeys;
-
 /**
  * @author Adolfo Pérez
  */
 public interface PanelCategoryKeys {
 
-	public static final String MY = PortletCategoryKeys.MY;
+	public static final String CONTROL_PANEL = "control_panel";
+
+	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
+
+	public static final String CONTROL_PANEL_CONFIGURATION =
+		"control_panel.configuration";
+
+	public static final String CONTROL_PANEL_SITES = "control_panel.sites";
+
+	public static final String CONTROL_PANEL_USERS = "control_panel.users";
+
+	public static final String MY_SPACE = "my_space";
+
+	public static final String MY_SPACE_PRODUCTIVITY_CENTER =
+		"my_space.productivity_center";
 
 	public static final String ROOT = "root";
 
-	public static final String USER_PERSONAL_PANEL = "user_personal_panel";
+	public static final String SITE_ADMINISTRATION = "site_administration";
+
+	public static final String SITE_ADMINISTRATION_CONFIGURATION =
+		"site_administration.configuration";
+
+	public static final String SITE_ADMINISTRATION_CONTENT =
+		"site_administration.content";
+
+	public static final String SITE_ADMINISTRATION_PAGES =
+		"site_administration.pages";
+
+	public static final String SITE_ADMINISTRATION_USERS =
+		"site_administration.users";
 
 }

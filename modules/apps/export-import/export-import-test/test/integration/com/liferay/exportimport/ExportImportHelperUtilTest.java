@@ -927,7 +927,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		@Override
 		public InputStream getEntryAsInputStream(String name) {
-			return null;
+			return new InputStream() {
+
+				@Override
+				public int read() {
+					return -1;
+				}
+
+			};
 		}
 
 		@Override

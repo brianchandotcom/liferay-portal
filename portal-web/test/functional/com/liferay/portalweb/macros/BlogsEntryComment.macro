@@ -35,6 +35,8 @@
 	</command>
 
 	<command name="delete">
+		<var name="key_entryComment" value="${entryComment}" />
+
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
 
 		<execute function="AssertClickNoError" locator1="Comments#DELETE_LINK" value1="Delete" />
@@ -60,6 +62,8 @@
 	</command>
 
 	<command name="edit">
+		<var name="key_entryComment" value="${entryComment}" />
+
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
 
 		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />
@@ -69,6 +73,8 @@
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryCommentEdit}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<var name="key_entryComment" value="${entryCommentEdit}" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryCommentEdit}" />
@@ -94,6 +100,8 @@
 	</command>
 
 	<command name="viewCP">
+		<var name="key_entryComment" value="${entryComment}" />
+		
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -109,6 +117,8 @@
 	</command>
 
 	<command name="viewPG">
+		<var name="key_entryComment" value="${entryComment}" />
+
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />

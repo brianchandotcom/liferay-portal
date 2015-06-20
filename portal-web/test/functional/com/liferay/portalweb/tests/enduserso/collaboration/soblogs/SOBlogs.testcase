@@ -1095,8 +1095,8 @@
 		</execute>
 
 		<execute macro="BlogsEntryComment#edit">
+			<var name="entryComment" value="${entryComment}" />
 			<var name="entryCommentEdit" value="${entryCommentEdit}" />
-			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

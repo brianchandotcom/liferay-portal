@@ -72,7 +72,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="EditExportTemplate" priority="4">
+	<command name="EditExportTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -657,7 +657,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="ExportImportValidation" priority="4">
+	<command name="ExportImportValidation" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

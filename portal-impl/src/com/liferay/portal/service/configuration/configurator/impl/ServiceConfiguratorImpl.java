@@ -33,7 +33,6 @@ import com.liferay.portal.service.configuration.configurator.ServiceConfigurator
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistrar;
-import com.liferay.util.log4j.Log4JUtil;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -68,8 +67,6 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 			ClassLoader classLoader)
 		throws Exception {
 
-		initLog4J(classLoader);
-
 		initServiceComponent(serviceComponentConfiguration, classLoader);
 
 		reconfigureCaches(classLoader);
@@ -103,11 +100,6 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		}
 
 		return classLoader.getResource(cacheConfigurationLocation);
-	}
-
-	protected void initLog4J(ClassLoader classLoader) {
-		Log4JUtil.configureLog4J(
-			classLoader.getResource("META-INF/portal-log4j.xml"));
 	}
 
 	protected void initServiceComponent(

@@ -68,11 +68,11 @@
 
 		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />
 
-		<execute function="AssertClick" locator1="Comments#COMMENT_FIELD" />
+		<execute function="Click#clickAt" locator1="Comments#EDIT_COMMENT_FIELD" />
 
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryCommentEdit}" />
+		<execute function="Type" locator1="Comments#EDIT_COMMENT_FIELD" value1="${entryCommentEdit}" />
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertClick" locator1="Comments#PUBLISH_COMMENT_BUTTON" value1="Publish" />
 
 		<var name="key_entryComment" value="${entryCommentEdit}" />
 

@@ -290,7 +290,7 @@
 </tr>
 <tr>
 	<td>REPLY_AS</td>
-	<td>//button[contains(.,'Reply As...')]</td>
+	<td>//button[contains(.,'Reply as...')]</td>
 	<td></td>
 </tr>
 <tr>

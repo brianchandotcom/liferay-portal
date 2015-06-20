@@ -1515,7 +1515,7 @@
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="PGBlogsEntry#COMMENTS_ADD" value1="Add Comment" />
+		<execute function="AssertElementPresent" locator1="Comments#COMMENT_FIELD" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="${password}" />
@@ -1552,7 +1552,7 @@
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGBlogsEntry#COMMENTS_ADD" value1="Add Comment" />
+		<execute function="AssertElementNotPresent" locator1="Comments#COMMENT_FIELD" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="${password}" />

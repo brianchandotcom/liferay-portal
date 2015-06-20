@@ -1654,6 +1654,12 @@
 		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
 	</command>
 
+	<command name="viewNoCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+	</command>
+
 	<command name="viewNoEditLinkPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -1688,7 +1694,9 @@
 	</command>
 
 	<command name="viewNoPG">
-		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewPermissionsNoPermission">

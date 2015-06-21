@@ -16,7 +16,9 @@ package com.liferay.blogs.item.selector.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 
 import java.util.Set;
 
@@ -31,8 +33,8 @@ public class BlogsItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	private static final Set<ItemSelectorReturnType>
 		_availableItemSelectorReturnTypes = getImmutableSet(
-			DefaultItemSelectorReturnType.BASE_64,
-			DefaultItemSelectorReturnType.FILE_ENTRY,
-			DefaultItemSelectorReturnType.URL);
+			new Base64ItemSelectorReturnType(),
+			new FileEntryItemSelectorReturnType(),
+			new URLItemSelectorReturnType());
 
 }

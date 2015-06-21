@@ -28,19 +28,17 @@ import java.util.Set;
  * @author Roberto Díaz
  */
 public abstract class BaseItemSelectorCriterionHandler
-	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
-		implements ItemSelectorCriterionHandler {
+	<T extends ItemSelectorCriterion> implements ItemSelectorCriterionHandler {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ItemSelectorView<T, S>>
+	public List<ItemSelectorView<T>>
 		getItemSelectorViews(ItemSelectorCriterion itemSelectorCriterion) {
 
-		List<ItemSelectorView<T, S>> filteredItemSelectedViews =
-			new ArrayList<>();
+		List<ItemSelectorView<T>> filteredItemSelectedViews = new ArrayList<>();
 
 		for (ItemSelectorView itemSelectorView : _itemSelectorViews) {
-			Set<S> supportedItemSelectorReturnTypes =
+			Set<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
 				itemSelectorView.getSupportedItemSelectorReturnTypes();
 
 			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =

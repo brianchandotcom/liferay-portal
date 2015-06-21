@@ -12,20 +12,18 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web;
+package com.liferay.item.selector.criteria;
 
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
-public interface DLItemSelectorView<T extends ItemSelectorCriterion>
-	extends ItemSelectorView<T> {
+public class URLItemSelectorReturnType implements ItemSelectorReturnType {
 
-	public static final String DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
-
-	public String[] getMimeTypes();
+	@Override
+	public String getName() {
+		return "URL";
+	}
 
 }

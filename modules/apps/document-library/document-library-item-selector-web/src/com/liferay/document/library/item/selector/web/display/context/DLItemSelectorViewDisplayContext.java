@@ -16,7 +16,6 @@ package com.liferay.document.library.item.selector.web.display.context;
 
 import com.liferay.document.library.item.selector.web.DLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -31,11 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Roberto Díaz
  */
-public class DLItemSelectorViewDisplayContext
-	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> {
+public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public DLItemSelectorViewDisplayContext(
-		T itemSelectorCriterion, DLItemSelectorView<T, S> dlItemSelectorView,
+		T itemSelectorCriterion, DLItemSelectorView<T> dlItemSelectorView,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		_itemSelectorCriterion = itemSelectorCriterion;
@@ -81,7 +79,7 @@ public class DLItemSelectorViewDisplayContext
 		return _dlItemSelectorView.getTitle(locale);
 	}
 
-	private final DLItemSelectorView<T, S> _dlItemSelectorView;
+	private final DLItemSelectorView<T> _dlItemSelectorView;
 	private final String _itemSelectedEventName;
 	private final T _itemSelectorCriterion;
 	private final PortletURL _portletURL;

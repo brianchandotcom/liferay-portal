@@ -17,15 +17,13 @@ package com.liferay.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
-public enum DefaultItemSelectorReturnType implements ItemSelectorReturnType {
-
-	BASE_64, FILE_ENTRY, URL, UUID;
+public class UUIDItemSelectorReturnType implements ItemSelectorReturnType {
 
 	@Override
 	public String getName() {
-		return name();
+		return "UUID";
 	}
 
 }

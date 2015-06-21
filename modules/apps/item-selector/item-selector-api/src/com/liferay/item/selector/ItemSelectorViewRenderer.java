@@ -26,8 +26,7 @@ public interface ItemSelectorViewRenderer {
 
 	public ItemSelectorCriterion getItemSelectorCriterion();
 
-	public ItemSelectorView<ItemSelectorCriterion, ItemSelectorReturnType>
-		getItemSelectorView();
+	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView();
 
 	public void renderHTML(PageContext pageContext)
 		throws IOException, ServletException;

@@ -92,21 +92,17 @@ public class ItemSelectorImpl implements ItemSelector {
 			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
 				itemSelectorCriterion.getClass();
 
-			ItemSelectorCriterionHandler
-				<ItemSelectorCriterion, ItemSelectorReturnType>
-					itemSelectorCriterionHandler =
-						_itemSelectionCriterionHandlers.get(
-							itemSelectorCriterionClass.getName());
+			ItemSelectorCriterionHandler<ItemSelectorCriterion>
+				itemSelectorCriterionHandler =
+					_itemSelectionCriterionHandlers.get(
+						itemSelectorCriterionClass.getName());
 
-			List
-				<ItemSelectorView
-					<ItemSelectorCriterion, ItemSelectorReturnType>>
-						itemSelectorViews =
-							itemSelectorCriterionHandler.getItemSelectorViews(
-								itemSelectorCriterion);
+			List<ItemSelectorView<ItemSelectorCriterion>> itemSelectorViews =
+				itemSelectorCriterionHandler.getItemSelectorViews(
+					itemSelectorCriterion);
 
-			for (ItemSelectorView<ItemSelectorCriterion, ItemSelectorReturnType>
-					itemSelectorView : itemSelectorViews) {
+			for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
+					itemSelectorViews) {
 
 				PortletURL portletURL = getItemSelectorURL(
 					portletResponse, itemSelectedEventName,
@@ -224,7 +220,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		for (String itemSelectorCriterionClassName :
 				itemSelectorCriterionClassNames) {
 
-			ItemSelectorCriterionHandler<?, ?> itemSelectorCriterionHandler =
+			ItemSelectorCriterionHandler<?> itemSelectorCriterionHandler =
 				_itemSelectionCriterionHandlers.get(
 					itemSelectorCriterionClassName);
 
@@ -317,8 +313,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	protected
 		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> void
 			setItemSelectionCriterionHandler(
-				ItemSelectorCriterionHandler
-					<T, S> itemSelectionCriterionHandler) {
+				ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
 
 		Class<T> itemSelectorCriterionClass =
 			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
@@ -338,8 +333,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	protected
 		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
 			void unsetItemSelectionCriterionHandler(
-				ItemSelectorCriterionHandler
-					<T, S> itemSelectionCriterionHandler) {
+				ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
 
 		Class<T> itemSelectorCriterionClass =
 			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
@@ -349,9 +343,8 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private final ConcurrentMap
-		<String, ItemSelectorCriterionHandler
-			 <ItemSelectorCriterion, ItemSelectorReturnType>>
-				_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
+		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
+			_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
 	private ItemSelectorCriterionSerializer _itemSelectionCriterionSerializer;
 
 }

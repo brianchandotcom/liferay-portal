@@ -26,11 +26,6 @@ public abstract class BaseItemSelectorCriterion
 	implements ItemSelectorCriterion {
 
 	@Override
-	public Set<ItemSelectorReturnType> getAvailableItemSelectorReturnTypes() {
-		return _availableItemSelectorReturnTypes;
-	}
-
-	@Override
 	public Set<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
 		return _desiredItemSelectorReturnTypes;
 	}
@@ -38,14 +33,6 @@ public abstract class BaseItemSelectorCriterion
 	@Override
 	public void setDesiredItemSelectorReturnTypes(
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
-
-		if (!_availableItemSelectorReturnTypes.containsAll(
-				desiredItemSelectorReturnTypes)) {
-
-			throw new IllegalArgumentException(
-				"Desired item selector return types must be a subset of " +
-					"available item selector return types");
-		}
 
 		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
 	}
@@ -57,15 +44,6 @@ public abstract class BaseItemSelectorCriterion
 			SetUtil.fromArray(itemSelectorReturnTypes));
 	}
 
-	protected BaseItemSelectorCriterion(
-		Set<ItemSelectorReturnType> availableItemSelectorReturnTypes) {
-
-		_availableItemSelectorReturnTypes = availableItemSelectorReturnTypes;
-
-		_desiredItemSelectorReturnTypes = _availableItemSelectorReturnTypes;
-	}
-
-	private final Set<ItemSelectorReturnType> _availableItemSelectorReturnTypes;
 	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 
 }

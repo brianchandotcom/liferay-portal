@@ -71,6 +71,15 @@ public class ItemSelectorImplTest extends PowerMockito {
 		_mediaItemSelectorCriterion.setFileExtension("jpg");
 		_mediaItemSelectorCriterion.setMaxSize(2048);
 
+		desiredItemSelectorReturnTypes = new HashSet<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new TestFileEntryItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(new TestURLItemSelectorReturnType());
+
+		_mediaItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());

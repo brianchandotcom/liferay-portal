@@ -16,6 +16,7 @@ package com.liferay.item.selector.web.util;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.web.FlickrItemSelectorCriterion;
+import com.liferay.item.selector.web.TestStringItemSelectorReturnType;
 import com.liferay.item.selector.web.TestURLItemSelectorReturnType;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,6 +39,16 @@ public class ItemSelectorCriterionSerializerTest {
 	@Before
 	public void setUp() {
 		_flickrItemSelectorCriterion = new FlickrItemSelectorCriterion();
+
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new HashSet<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new TestStringItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(new TestURLItemSelectorReturnType());
+
+		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 

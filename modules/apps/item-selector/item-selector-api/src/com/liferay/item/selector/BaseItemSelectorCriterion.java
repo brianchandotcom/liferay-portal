@@ -14,9 +14,6 @@
 
 package com.liferay.item.selector;
 
-import com.liferay.portal.kernel.util.SetUtil;
-
-import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -35,13 +32,6 @@ public abstract class BaseItemSelectorCriterion
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
-	}
-
-	protected static Set<ItemSelectorReturnType> getImmutableSet(
-		ItemSelectorReturnType... itemSelectorReturnTypes) {
-
-		return Collections.unmodifiableSet(
-			SetUtil.fromArray(itemSelectorReturnTypes));
 	}
 
 	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;

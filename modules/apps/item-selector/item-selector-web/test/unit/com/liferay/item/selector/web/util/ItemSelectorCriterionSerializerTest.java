@@ -39,10 +39,6 @@ public class ItemSelectorCriterionSerializerTest {
 	public void setUp() {
 		_flickrItemSelectorCriterion = new FlickrItemSelectorCriterion();
 
-		_itemSelectorCriterionSerializer =
-			new ItemSelectorCriterionSerializer<>(
-				_flickrItemSelectorCriterion, _PREFIX);
-
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
@@ -59,7 +55,8 @@ public class ItemSelectorCriterionSerializerTest {
 			desiredItemSelectorReturnTypes);
 
 		Map<String, String[]> properties =
-			_itemSelectorCriterionSerializer.getProperties();
+			_itemSelectorCriterionSerializer.getProperties(
+				_flickrItemSelectorCriterion, _PREFIX);
 
 		String json = properties.get(
 			_PREFIX + ItemSelectorCriterionSerializer.JSON)[0];
@@ -87,7 +84,8 @@ public class ItemSelectorCriterionSerializerTest {
 							"Joe Bloggs\"}"
 			});
 
-		_itemSelectorCriterionSerializer.setProperties(properties);
+		_itemSelectorCriterionSerializer.setProperties(
+			_flickrItemSelectorCriterion, _PREFIX, properties);
 
 		Assert.assertEquals(
 			"Joe Bloggs", _flickrItemSelectorCriterion.getUser());
@@ -115,7 +113,8 @@ public class ItemSelectorCriterionSerializerTest {
 	private static final String _PREFIX = "prefix_";
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
-	private ItemSelectorCriterionSerializer<FlickrItemSelectorCriterion>
-		_itemSelectorCriterionSerializer;
+	private final ItemSelectorCriterionSerializer<FlickrItemSelectorCriterion>
+		_itemSelectorCriterionSerializer =
+			new ItemSelectorCriterionSerializer();
 
 }

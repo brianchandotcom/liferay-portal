@@ -198,11 +198,8 @@ public class ItemSelectorImpl implements ItemSelector {
 
 			T itemSelectorCriterion = constructor.newInstance();
 
-			ItemSelectorCriterionSerializer<?> itemSelectorCriterionSerializer =
-				new ItemSelectorCriterionSerializer<>(
-					itemSelectorCriterion, prefix);
-
-			itemSelectorCriterionSerializer.setProperties(parameters);
+			_itemSelectionCriterionSerializer.setProperties(
+				itemSelectorCriterion, prefix, parameters);
 
 			return itemSelectorCriterion;
 		}
@@ -306,12 +303,9 @@ public class ItemSelectorImpl implements ItemSelector {
 			ItemSelectorCriterion itemSelectorCriterion =
 				itemSelectorCriteria[i];
 
-			ItemSelectorCriterionSerializer<ItemSelectorCriterion>
-				itemSelectorCriterionSerializer =
-					new ItemSelectorCriterionSerializer<>(
-						itemSelectorCriterion, i + "_");
-
-			parameters.putAll(itemSelectorCriterionSerializer.getProperties());
+			parameters.putAll(
+				_itemSelectionCriterionSerializer.getProperties(
+					itemSelectorCriterion, i + "_"));
 		}
 	}
 
@@ -334,6 +328,13 @@ public class ItemSelectorImpl implements ItemSelector {
 			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
 	}
 
+	@Reference(unbind = "-")
+	protected void setItemSelectorCriterionSerializer(
+		ItemSelectorCriterionSerializer itemSelectorCriterionSerializer) {
+
+		_itemSelectionCriterionSerializer = itemSelectorCriterionSerializer;
+	}
+
 	protected
 		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
 			void unsetItemSelectionCriterionHandler(
@@ -351,5 +352,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		<String, ItemSelectorCriterionHandler
 			 <ItemSelectorCriterion, ItemSelectorReturnType>>
 				_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
+	private ItemSelectorCriterionSerializer _itemSelectionCriterionSerializer;
 
 }

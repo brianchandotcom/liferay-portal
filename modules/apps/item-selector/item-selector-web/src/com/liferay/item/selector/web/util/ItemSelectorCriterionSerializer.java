@@ -36,51 +36,56 @@ import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Iván Zaera
  */
+@Component(immediate = true, service = ItemSelectorCriterionSerializer.class)
 public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 	public static final String JSON = "json";
 
-	public ItemSelectorCriterionSerializer(
-		T itemSelectorCriterion, String prefix) {
+	public Map<String, String[]> getProperties(
+		ItemSelectorCriterion itemSelectorCriterion, String prefix) {
 
-		_itemSelectorCriterion = itemSelectorCriterion;
-		_prefix = prefix;
-
-		_initExternalPropertyKeys();
-	}
-
-	public Map<String, String[]> getProperties() {
 		Map<String, String[]> properties = new HashMap<>();
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
+		String[] externalPropertyKeys = getExternalPropertyKeys(
+			itemSelectorCriterion);
+
 		String[] serializableFields = ArrayUtil.append(
-			_externalPropertyKeys, "desiredItemSelectorReturnTypes");
+			externalPropertyKeys, "desiredItemSelectorReturnTypes");
 
 		jsonSerializer.include(serializableFields);
 
 		properties.put(
-			_prefix + JSON,
-			new String[] {jsonSerializer.serialize(_itemSelectorCriterion)});
+			prefix + JSON,
+			new String[] {jsonSerializer.serialize(itemSelectorCriterion)});
 
 		return properties;
 	}
 
-	public void setProperties(Map<String, String[]> parameters) {
+	public void setProperties(
+		ItemSelectorCriterion itemSelectorCriterion, String prefix,
+		Map<String, String[]> parameters) {
+
 		try {
-			String json = parameters.get(_prefix + JSON)[0];
+			String json = parameters.get(prefix + JSON)[0];
 
 			JSONDeserializer<Map<String, ?>> jsonDeserializer =
 				JSONFactoryUtil.createJSONDeserializer();
 
 			Map<String, ?> map = jsonDeserializer.deserialize(json);
 
-			for (String externalPropertyKey : _externalPropertyKeys) {
+			String[] externalPropertyKeys = getExternalPropertyKeys(
+				itemSelectorCriterion);
+
+			for (String externalPropertyKey : externalPropertyKeys) {
 				Class<?> serializableFieldClass = PropertyUtils.getPropertyType(
-					_itemSelectorCriterion, externalPropertyKey);
+					itemSelectorCriterion, externalPropertyKey);
 
 				Object value = map.get(externalPropertyKey);
 
@@ -96,42 +101,16 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 				}
 
 				PropertyUtils.setProperty(
-					_itemSelectorCriterion, externalPropertyKey, value);
+					itemSelectorCriterion, externalPropertyKey, value);
 			}
 
-			_setDesiredItemSelectorReturnTypes(map);
+			_setDesiredItemSelectorReturnTypes(itemSelectorCriterion, map);
 		}
 		catch (IllegalAccessException | InvocationTargetException |
 			NoSuchMethodException e) {
 
 			throw new SystemException(e);
 		}
-	}
-
-	private void _initExternalPropertyKeys() {
-		List<String> list = new ArrayList<>();
-
-		try {
-			Map<String, Object> map = PropertyUtils.describe(
-				_itemSelectorCriterion);
-
-			for (Map.Entry<String, Object> entry : map.entrySet()) {
-				String key = entry.getKey();
-
-				if (_isInternalProperty(key)) {
-					continue;
-				}
-
-				list.add(key);
-			}
-		}
-		catch (IllegalAccessException | InvocationTargetException |
-			NoSuchMethodException e) {
-
-			throw new SystemException(e);
-		}
-
-		_externalPropertyKeys = list.toArray(new String[list.size()]);
 	}
 
 	private boolean _isInternalProperty(String name) {
@@ -145,7 +124,9 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		return false;
 	}
 
-	private void _setDesiredItemSelectorReturnTypes(Map<String, ?> map) {
+	private void _setDesiredItemSelectorReturnTypes(
+		ItemSelectorCriterion itemSelectorCriterion, Map<String, ?> map) {
+
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new LinkedHashSet<>();
 
@@ -156,7 +137,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 				desiredItemSelectorReturnTypeNames) {
 
 			Set<ItemSelectorReturnType> availableItemSelectorReturnTypes =
-				_itemSelectorCriterion.getAvailableItemSelectorReturnTypes();
+				itemSelectorCriterion.getAvailableItemSelectorReturnTypes();
 
 			for (ItemSelectorReturnType availableItemSelectorReturnType :
 					availableItemSelectorReturnTypes) {
@@ -181,15 +162,39 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			}
 		}
 
-		_itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
+	}
+
+	private String[] getExternalPropertyKeys(
+		ItemSelectorCriterion itemSelectorCriterion) {
+
+		List<String> list = new ArrayList<>();
+
+		try {
+			Map<String, Object> map = PropertyUtils.describe(
+				itemSelectorCriterion);
+
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+				String key = entry.getKey();
+
+				if (_isInternalProperty(key)) {
+					continue;
+				}
+
+				list.add(key);
+			}
+		}
+		catch (IllegalAccessException | InvocationTargetException |
+			NoSuchMethodException e) {
+
+			throw new SystemException(e);
+		}
+
+		return list.toArray(new String[list.size()]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ItemSelectorCriterionSerializer.class);
-
-	private String[] _externalPropertyKeys;
-	private final T _itemSelectorCriterion;
-	private final String _prefix;
 
 }

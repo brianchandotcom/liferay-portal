@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.item.selector.web.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -61,6 +62,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 			desiredItemSelectorReturnTypes);
 
 		_itemSelectorImpl = new ItemSelectorImpl();
+
+		_itemSelectorImpl.setItemSelectorCriterionSerializer(
+			new ItemSelectorCriterionSerializer());
 
 		_mediaItemSelectorCriterion = new MediaItemSelectorCriterion();
 

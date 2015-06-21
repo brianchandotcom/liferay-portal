@@ -925,10 +925,7 @@ AUI.add(
 						portletURL.setParameter('repositoryId', instance.get('doAsGroupId'));
 
 						var criterionJSON = {
-							desiredItemSelectorReturnTypes:
-								[
-									'FILE_ENTRY'
-								]
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 						};
 
 						portletURL.setParameter('0_json', JSON.stringify(criterionJSON));

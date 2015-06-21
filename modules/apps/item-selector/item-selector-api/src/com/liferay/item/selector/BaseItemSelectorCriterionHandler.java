@@ -47,10 +47,19 @@ public abstract class BaseItemSelectorCriterionHandler
 			for (ItemSelectorReturnType desiredItemSelectorReturnType :
 					desiredItemSelectorReturnTypes) {
 
-				if (supportedItemSelectorReturnTypes.contains(
-						desiredItemSelectorReturnType)) {
+				for (ItemSelectorReturnType supportedItemSelectorReturnType :
+						supportedItemSelectorReturnTypes) {
 
-					filteredItemSelectedViews.add(itemSelectorView);
+					Class<?> desiredItemSelectorReturnTypeClass =
+						desiredItemSelectorReturnType.getClass();
+					Class<?> supportedItemSelectorReturnTypeClass =
+						supportedItemSelectorReturnType.getClass();
+
+					if (desiredItemSelectorReturnTypeClass.getName().equals(
+							supportedItemSelectorReturnTypeClass.getName())) {
+
+						filteredItemSelectedViews.add(itemSelectorView);
+					}
 				}
 			}
 		}

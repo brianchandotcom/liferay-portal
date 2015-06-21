@@ -21,10 +21,4 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  */
 public class TestFileEntryItemSelectorReturnType
 	implements ItemSelectorReturnType {
-
-	@Override
-	public String getName() {
-		return "TEST_FILE_ENTRY";
-	}
-
 }

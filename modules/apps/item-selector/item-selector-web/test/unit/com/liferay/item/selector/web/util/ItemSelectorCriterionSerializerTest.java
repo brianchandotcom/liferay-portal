@@ -64,9 +64,13 @@ public class ItemSelectorCriterionSerializerTest {
 		String json = properties.get(
 			_PREFIX + ItemSelectorCriterionSerializer.JSON)[0];
 
+		Class<? extends ItemSelectorReturnType>
+			testURLItemSelectorReturnTypeClass =
+				testURLItemSelectorReturnType.getClass();
+
 		json = _assert(
 			"\"desiredItemSelectorReturnTypes\":[\"" +
-				testURLItemSelectorReturnType.getName() + "\"]",
+				testURLItemSelectorReturnTypeClass.getName() + "\"]",
 			json);
 		json = _assert("\"tags\":[\"me\",\"photo\",\"picture\"]", json);
 		json = _assert("\"user\":\"anonymous\"", json);
@@ -81,11 +85,15 @@ public class ItemSelectorCriterionSerializerTest {
 		ItemSelectorReturnType testURLItemSelectorReturnType =
 			new TestURLItemSelectorReturnType();
 
+		Class<? extends ItemSelectorReturnType>
+			testURLItemSelectorReturnTypeClass =
+				testURLItemSelectorReturnType.getClass();
+
 		properties.put(
 			_PREFIX + ItemSelectorCriterionSerializer.JSON,
 			new String[] {
 				"{\"desiredItemSelectorReturnTypes\":[\"" +
-					testURLItemSelectorReturnType.getName() + "\"],\"" +
+					testURLItemSelectorReturnTypeClass.getName() + "\"],\"" +
 						"tags\":[\"tag1\",\"tag2\",\"tag3\"],\"user\":\"" +
 							"Joe Bloggs\"}"
 			});

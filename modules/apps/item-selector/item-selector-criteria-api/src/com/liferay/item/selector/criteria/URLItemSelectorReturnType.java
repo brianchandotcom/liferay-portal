@@ -20,10 +20,4 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * @author Sergio González
  */
 public class URLItemSelectorReturnType implements ItemSelectorReturnType {
-
-	@Override
-	public String getName() {
-		return "URL";
-	}
-
 }

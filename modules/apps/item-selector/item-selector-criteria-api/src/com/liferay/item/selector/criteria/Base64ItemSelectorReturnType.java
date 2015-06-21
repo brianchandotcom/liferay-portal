@@ -20,10 +20,4 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * @author Roberto Díaz
  */
 public class Base64ItemSelectorReturnType implements ItemSelectorReturnType {
-
-	@Override
-	public String getName() {
-		return "BASE_64";
-	}
-
 }

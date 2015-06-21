@@ -69,8 +69,8 @@ public class MediaItemSelectorView
 	private static final Set<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
 			SetUtil.fromArray(
-				new TestItemSelectorReturnType[] {
-					TestItemSelectorReturnType.URL
+				new ItemSelectorReturnType[] {
+					new TestURLItemSelectorReturnType()
 				}));
 
 }

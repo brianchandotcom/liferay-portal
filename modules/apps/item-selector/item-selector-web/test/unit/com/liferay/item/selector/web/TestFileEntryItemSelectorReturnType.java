@@ -19,13 +19,12 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 /**
  * @author Roberto Díaz
  */
-public enum TestItemSelectorReturnType implements ItemSelectorReturnType {
-
-	FILE_ENTRY, STRING, URL;
+public class TestFileEntryItemSelectorReturnType
+	implements ItemSelectorReturnType {
 
 	@Override
 	public String getName() {
-		return name();
+		return "TEST_FILE_ENTRY";
 	}
 
 }

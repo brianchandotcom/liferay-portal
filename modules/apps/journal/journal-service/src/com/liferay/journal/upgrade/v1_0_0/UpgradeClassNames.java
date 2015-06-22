@@ -15,6 +15,8 @@
 package com.liferay.journal.upgrade.v1_0_0;
 
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleImage;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -34,8 +36,56 @@ public class UpgradeClassNames extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		List<ClassNameDependency> classNameDependencies =
 			Collections.singletonList(
-				(ClassNameDependency)
-					(new ResourcePermissionClassNameDependency()));
+				(ClassNameDependency)(
+					new ResourcePermissionClassNameDependency()));
+
+		upgradeJournalClassName(classNameDependencies);
+		upgradeJournalArticleClassName(classNameDependencies);
+		upgradeJournalArticleImageClassName(classNameDependencies);
+		upgradeJournalArticleResourceClassName(classNameDependencies);
+		upgradeJournalFeedClassName(classNameDependencies);
+		upgradeJournalFolderClassName(classNameDependencies);
+	}
+
+	protected void upgradeJournalArticleClassName(
+			List<ClassNameDependency> classNameDependencies)
+		throws Exception {
+
+		ClassNameDependencyUpgrader classNameDependencyUpgrader =
+			new ClassNameDependencyUpgrader(
+				"com.liferay.portlet.journal.model.JournalArticle",
+				JournalArticle.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+	}
+
+	protected void upgradeJournalArticleImageClassName(
+			List<ClassNameDependency> classNameDependencies)
+		throws Exception {
+
+		ClassNameDependencyUpgrader classNameDependencyUpgrader =
+			new ClassNameDependencyUpgrader(
+				"com.liferay.portlet.journal.model.JournalArticleImage",
+				JournalArticleImage.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+	}
+
+	protected void upgradeJournalArticleResourceClassName(
+			List<ClassNameDependency> classNameDependencies)
+		throws Exception {
+
+		ClassNameDependencyUpgrader classNameDependencyUpgrader =
+			new ClassNameDependencyUpgrader(
+				"com.liferay.portlet.journal.model.JournalArticleResource",
+				JournalArticleResource.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+	}
+
+	protected void upgradeJournalClassName(
+			List<ClassNameDependency> classNameDependencies)
+		throws Exception {
 
 		ClassNameDependencyUpgrader classNameDependencyUpgrader =
 			new ClassNameDependencyUpgrader(
@@ -43,22 +93,28 @@ public class UpgradeClassNames extends UpgradeProcess {
 				classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
+	}
 
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.journal.model.JournalArticle",
-			JournalArticle.class.getName(), classNameDependencies);
+	protected void upgradeJournalFeedClassName(
+			List<ClassNameDependency> classNameDependencies)
+		throws Exception {
+
+		ClassNameDependencyUpgrader classNameDependencyUpgrader =
+			new ClassNameDependencyUpgrader(
+				"com.liferay.portlet.journal.model.JournalFeed",
+				JournalFeed.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
+	}
 
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.journal.model.JournalFeed",
-			JournalFeed.class.getName(), classNameDependencies);
+	protected void upgradeJournalFolderClassName(
+			List<ClassNameDependency> classNameDependencies)
+		throws Exception {
 
-		classNameDependencyUpgrader.upgrade();
-
-		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.journal.model.JournalFolder",
-			JournalFolder.class.getName(), classNameDependencies);
+		ClassNameDependencyUpgrader classNameDependencyUpgrader =
+			new ClassNameDependencyUpgrader(
+				"com.liferay.portlet.journal.model.JournalFolder",
+				JournalFolder.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
 	}

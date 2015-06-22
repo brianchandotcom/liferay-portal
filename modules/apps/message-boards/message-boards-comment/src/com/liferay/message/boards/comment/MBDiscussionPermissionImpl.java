@@ -46,6 +46,16 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 	}
 
 	@Override
+	public boolean hasSubscribePermission(
+			long companyId, long groupId, String className, long classPK)
+		throws PortalException {
+
+		return MBDiscussionPermission.contains(
+			_permissionChecker, companyId, groupId, className, classPK,
+			ActionKeys.SUBSCRIBE);
+	}
+
+	@Override
 	public boolean hasUpdatePermission(long commentId) throws PortalException {
 		return MBDiscussionPermission.contains(
 			_permissionChecker, commentId, ActionKeys.UPDATE_DISCUSSION);

@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Application List Taglib
+Bundle-SymbolicName: com.liferay.application.list.taglib
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.application.list.taglib.constants,\
+	com.liferay.application.list.taglib.servlet.taglib.ui
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Provide-Capability:\
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/application-list/ui";version:Version="1.0.0"
+Web-ContextPath: /application-list-taglib

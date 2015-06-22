@@ -14,11 +14,32 @@
  */
 --%>
 
-<%@ include file="/portlet/init.jsp" %>
+<%@ include file="/taglib/ui/panel/init.jsp" %>
 
 <%
+PanelCategory panelCategory = (PanelCategory)request.getAttribute("application-list-ui:panel:panelCategory");
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
-PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.MY_SPACE);
 %>
 
-<application-list-ui:panel panelCategory="<%= panelCategory %>" />
+<div class="portal-add-content">
+	<div class="panel-group">
+		<liferay-ui:panel-container
+			accordion="<%= true %>"
+			extended="<%= true %>"
+			id="userPersonalPanelMenuAddContentPanelContainer"
+			persistState="<%= true %>"
+		>
+
+			<%
+			for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
+			%>
+
+				<application-list-ui:panel-category panelCategory="<%= childPanelCategory %>" />
+
+			<%
+			}
+			%>
+
+		</liferay-ui:panel-container>
+	</div>
+</div>

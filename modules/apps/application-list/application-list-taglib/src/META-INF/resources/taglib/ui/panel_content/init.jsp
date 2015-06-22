@@ -14,11 +14,11 @@
  */
 --%>
 
-<%@ include file="/portlet/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
-PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.MY_SPACE);
-%>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<application-list-ui:panel panelCategory="<%= panelCategory %>" />
+<%@ page import="com.liferay.application.list.taglib.servlet.taglib.display.context.logic.PanelAppContentHelper" %>
+
+<liferay-theme:defineObjects />

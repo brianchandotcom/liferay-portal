@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,13 +11,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/portlet/init.jsp" %>
+package com.liferay.application.list.taglib.constants;
 
-<%
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
-PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.MY_SPACE);
-%>
+/**
+ * @author Adolfo Pérez
+ */
+public class ProductivityCenterWebKeys {
 
-<application-list-ui:panel panelCategory="<%= panelCategory %>" />
+	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";
+
+	public static final String PANEL_CATEGORY_REGISTRY =
+		"PANEL_CATEGORY_REGISTRY";
+
+}

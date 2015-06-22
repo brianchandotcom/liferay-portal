@@ -14,11 +14,9 @@
  */
 --%>
 
-<%@ include file="/portlet/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/application-list/ui" prefix="application-list-ui" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
-PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.MY_SPACE);
-%>
-
-<application-list-ui:panel panelCategory="<%= panelCategory %>" />
+<%@ page import="com.liferay.application.list.PanelCategory" %><%@
+page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
+page import="com.liferay.application.list.taglib.constants.ProductivityCenterWebKeys" %>

@@ -17,11 +17,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://liferay.com/tld/application-list/ui" prefix="application-list-ui" %><%@
-taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.productivity.center.constants.ProductivityCenterPortletKeys" %>
+<%@ page import="com.liferay.application.list.PanelApp" %><%@
+page import="com.liferay.application.list.PanelAppRegistry" %><%@
+page import="com.liferay.application.list.PanelCategory" %><%@
+page import="com.liferay.application.list.taglib.constants.ProductivityCenterWebKeys" %><%@
+page import="com.liferay.application.list.taglib.servlet.taglib.display.context.logic.PanelCategoryHelper" %>
 
 <liferay-theme:defineObjects />

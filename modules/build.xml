@@ -6,6 +6,7 @@
 		<dirset dir="addons/portlet-configuration-icon" includes="*" />
 		<dirset dir="apps/amazon-rankings" includes="*" />
 		<dirset dir="apps/asset" includes="*" />
+		<dirset dir="apps/application-list" includes="*" />
 		<dirset dir="apps/blogs" includes="*" />
 		<dirset dir="apps/bookmarks" includes="*" />
 		<dirset dir="apps/comments" includes="*" />

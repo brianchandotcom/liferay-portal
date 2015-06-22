@@ -5,6 +5,7 @@
 	<path id="plugins.includes.path">
 		<dirset dir="amazon-rankings" includes="*" />
 		<dirset dir="asset" includes="*" />
+		<dirset dir="application-list" includes="*" />
 		<dirset dir="blogs" includes="*" />
 		<dirset dir="bookmarks" includes="*" />
 		<dirset dir="comments" includes="*" />

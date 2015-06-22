@@ -66,6 +66,8 @@ public class MapUtilTest {
 				Map<String, Object> map = MapUtil.toLinkedHashMap(
 					new String[] {"one:1:" + Object.class.getName()});
 
+				Assert.assertTrue(map.isEmpty());
+
 				List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 				Assert.assertEquals(1, logRecords.size());
@@ -80,8 +82,6 @@ public class MapUtilTest {
 
 				Assert.assertSame(
 					NoSuchMethodException.class, throwable.getClass());
-
-				Assert.assertEquals(0, map.size());
 			}
 		}
 

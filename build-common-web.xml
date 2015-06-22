@@ -93,7 +93,6 @@
 				<equals arg1="${app.server.type}" arg2="jboss" />
 				<or>
 					<equals arg1="${app.server.major.version}" arg2="6" />
-					<equals arg1="${app.server.major.version}" arg2="7" />
 					<equals arg1="${app.server.major.version}" arg2="8" />
 				</or>
 			</and>

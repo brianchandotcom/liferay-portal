@@ -14,12 +14,12 @@
 
 package com.liferay.control.panel.menu.web.layout;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.impl.BasePanelLayoutControllerImpl;
-import com.liferay.productivity.center.panel.PanelAppRegistry;
-import com.liferay.productivity.center.panel.PanelCategoryRegistry;
 import com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 

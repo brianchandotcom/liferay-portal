@@ -12,42 +12,40 @@
  * details.
  */
 
-package com.liferay.productivity.center.taglib.servlet.taglib.ui;
+package com.liferay.product.menu.my.space.service.application.list;
 
+import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.util.StringPool;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
  */
-public class PanelCategoryTag extends BasePanelTag {
+@Component(
+	immediate = true,
+	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
+	service = PanelCategory.class
+)
+public class MySpacePanelCategory extends BasePanelCategory {
 
-	public void setPanelCategory(PanelCategory panelCategory) {
-		_panelCategory = panelCategory;
+	@Override
+	public String getIconCssClass() {
+		return StringPool.BLANK;
 	}
 
 	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_panelCategory = null;
+	public String getKey() {
+		return PanelCategoryKeys.MY_SPACE;
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
+	public String getLabel(Locale locale) {
+		return StringPool.BLANK;
 	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"productivity-center-ui:panel-category:panelCategory",
-			_panelCategory);
-	}
-
-	private static final String _PAGE = "/taglib/ui/panel_category/page.jsp";
-
-	private PanelCategory _panelCategory;
 
 }

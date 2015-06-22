@@ -14,8 +14,8 @@
 
 package com.liferay.productivity.center.taglib.servlet.taglib.ui;
 
-import com.liferay.productivity.center.panel.PanelApp;
-import com.liferay.productivity.center.panel.PanelCategory;
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.PanelCategory;
 
 import javax.servlet.http.HttpServletRequest;
 

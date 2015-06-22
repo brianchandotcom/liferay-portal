@@ -17,6 +17,6 @@
 <%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.productivity.center.panel.PanelCategory" %><%@
-page import="com.liferay.productivity.center.panel.PanelCategoryRegistry" %><%@
+<%@ page import="com.liferay.application.list.PanelCategory" %><%@
+page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
 page import="com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys" %>

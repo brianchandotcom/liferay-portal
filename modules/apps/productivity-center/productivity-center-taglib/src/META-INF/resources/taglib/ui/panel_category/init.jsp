@@ -20,9 +20,9 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.productivity.center.panel.PanelApp" %><%@
-page import="com.liferay.productivity.center.panel.PanelAppRegistry" %><%@
-page import="com.liferay.productivity.center.panel.PanelCategory" %><%@
+<%@ page import="com.liferay.application.list.PanelApp" %><%@
+page import="com.liferay.application.list.PanelAppRegistry" %><%@
+page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys" %><%@
 page import="com.liferay.productivity.center.taglib.servlet.taglib.display.context.logic.PanelCategoryHelper" %>
 

@@ -15,6 +15,9 @@
 package com.liferay.journal.upgrade;
 
 import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleType;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -56,6 +59,9 @@ public class JournalServiceUpgrade {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradeClassNames());
+		upgradeProcesses.add(new UpgradeJournal());
+		upgradeProcesses.add(new UpgradeJournalDisplayPreferences());
+		upgradeProcesses.add(new UpgradeJournalArticleType());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.journal.service", upgradeProcesses, 1, 0, false);

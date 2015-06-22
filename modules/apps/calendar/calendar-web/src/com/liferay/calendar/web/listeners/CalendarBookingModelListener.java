@@ -18,9 +18,10 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.calendar.model.CalEvent;
-import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
+import com.liferay.portlet.calendar.service.CalEventLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -31,13 +32,21 @@ public class CalendarBookingModelListener
 
 	@Override
 	public void onAfterRemove(CalendarBooking calendarBooking) {
-		CalEvent calEvent =
-			CalEventLocalServiceUtil.fetchCalEventByUuidAndGroupId(
-				calendarBooking.getUuid(), calendarBooking.getGroupId());
+		CalEvent calEvent = _calEventLocalService.fetchCalEventByUuidAndGroupId(
+			calendarBooking.getUuid(), calendarBooking.getGroupId());
 
 		if (calEvent != null) {
-			CalEventLocalServiceUtil.deleteCalEvent(calEvent);
+			_calEventLocalService.deleteCalEvent(calEvent);
 		}
 	}
+
+	@Reference
+	protected void setCalEventLocalService(
+		CalEventLocalService calEventLocalService) {
+
+		this._calEventLocalService = calEventLocalService;
+	}
+
+	private CalEventLocalService _calEventLocalService;
 
 }

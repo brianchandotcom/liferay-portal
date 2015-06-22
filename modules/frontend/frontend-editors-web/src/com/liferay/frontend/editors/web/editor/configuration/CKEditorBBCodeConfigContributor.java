@@ -60,7 +60,8 @@ public class CKEditorBBCodeConfigContributor
 		jsonObject.put("filebrowserUploadUrl", "");
 		jsonObject.put(
 			"fontSize_sizes",
-			"10/10px;12/12px;16/16px;18/18px;24/24px;32/32px;48/48px");
+			"10/10px;12/12px;14/14px;16/16px;18/18px;24/24px;32/32px;48/48px");
+		jsonObject.put("fontSize_defaultLabel", "14");
 		jsonObject.put("format_tags", "p;pre");
 		jsonObject.put(
 			"imagesPath",

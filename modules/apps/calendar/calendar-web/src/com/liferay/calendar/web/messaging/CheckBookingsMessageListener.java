@@ -15,8 +15,9 @@
 package com.liferay.calendar.web.messaging;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
+import com.liferay.calendar.web.portlet.CalendarPortlet;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Fabio Pezzutto
@@ -48,7 +50,20 @@ public class CheckBookingsMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		CalendarBookingLocalServiceUtil.checkCalendarBookings();
+		_calendarBookingLocalService.checkCalendarBookings();
 	}
+
+	@Reference
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		this._calendarBookingLocalService = calendarBookingLocalService;
+	}
+
+	@Reference
+	protected void setCalendarPortlet(CalendarPortlet calendarPortlet) {
+	}
+
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

@@ -1935,7 +1935,7 @@
 		</for>
 	</command>
 
-	<command name="ViewEntryWithSocialBookmarksSites" priority="5">
+	<command name="ViewEntryWithSocialBookmarksSites" priority="3">
 		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
 
 		<execute macro="Page#gotoPG">

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.RoleConstants;
@@ -42,8 +41,9 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.XMLUtil;
+
+import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -475,14 +475,13 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		addDDMTemplateLinks();
 	}
 
-	protected String getContent(String fileName) {
-		return ContentUtil.get(
-			"com/liferay/portal/events/dependencies/" + fileName);
+	protected String getContent(String fileName) throws IOException {
+		return StringUtil.read(
+			getClass().getClassLoader(),
+			"com/liferay/journal/events/dependencies/" + fileName);
 	}
 
-	protected List<Element> getDDMStructures(Locale locale)
-		throws DocumentException {
-
+	protected List<Element> getDDMStructures(Locale locale) throws Exception {
 		String xml = getContent("basic-web-content-structure.xml");
 
 		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());

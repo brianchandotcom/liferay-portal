@@ -133,7 +133,7 @@ portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
 			<liferay-ui:search-container-column-text
 				name="reply-comments"
-				value="<%= HtmlUtil.escape(membershipRequestReplierUser.getFullName()) %>"
+				value="<%= HtmlUtil.escape(membershipRequest.getReplyComments()) %>"
 			/>
 		</c:if>
 

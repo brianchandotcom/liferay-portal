@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel.adapter;
+package com.liferay.application.list.adapter;
 
+import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.productivity.center.panel.PanelApp;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

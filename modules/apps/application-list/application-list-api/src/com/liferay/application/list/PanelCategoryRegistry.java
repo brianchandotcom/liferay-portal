@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel;
+package com.liferay.application.list;
 
+import com.liferay.application.list.util.PanelCategoryServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
-import com.liferay.productivity.center.panel.util.PanelCategoryServiceReferenceMapper;
 
 import java.util.Collections;
 import java.util.List;

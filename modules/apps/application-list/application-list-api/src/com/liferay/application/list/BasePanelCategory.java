@@ -12,38 +12,16 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel;
+package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
-
-import java.util.Locale;
 
 /**
  * @author Adolfo Pérez
  */
-public class RootPanelCategory implements PanelCategory {
-
-	public static PanelCategory getInstance() {
-		return _instance;
-	}
-
-	@Override
-	public String getIconCssClass() {
-		return StringPool.BLANK;
-	}
-
-	@Override
-	public String getKey() {
-		return _ROOT_PANEL_CATEGORY_KEY;
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return StringPool.BLANK;
-	}
+public abstract class BasePanelCategory implements PanelCategory {
 
 	@Override
 	public boolean hasAccessPermission(
@@ -52,12 +30,5 @@ public class RootPanelCategory implements PanelCategory {
 
 		return true;
 	}
-
-	private RootPanelCategory() {
-	}
-
-	private static final String _ROOT_PANEL_CATEGORY_KEY = "root";
-
-	private static final PanelCategory _instance = new RootPanelCategory();
 
 }

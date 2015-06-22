@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel.util;
+package com.liferay.application.list.util;
 
+import com.liferay.application.list.PanelEntry;
 import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.productivity.center.panel.PanelEntry;
 
 import org.osgi.framework.ServiceReference;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel;
+package com.liferay.application.list;
 
 /**
  * @author Adolfo Pérez

@@ -12,23 +12,25 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel;
+package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.Locale;
+
 /**
  * @author Adolfo Pérez
  */
-public abstract class BasePanelCategory implements PanelCategory {
+public interface PanelEntry {
 
-	@Override
+	public String getKey();
+
+	public String getLabel(Locale locale);
+
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		return true;
-	}
+		throws PortalException;
 
 }

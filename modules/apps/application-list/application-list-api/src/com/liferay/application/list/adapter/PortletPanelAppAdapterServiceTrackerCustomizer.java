@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel.adapter;
+package com.liferay.application.list.adapter;
 
+import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.productivity.center.panel.PanelApp;
 
 import java.util.Dictionary;
 import java.util.Map;

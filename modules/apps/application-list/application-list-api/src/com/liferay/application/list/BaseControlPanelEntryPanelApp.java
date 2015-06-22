@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.panel.adapter;
+package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -21,67 +21,27 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.portlet.PortletConfigFactoryUtil;
-import com.liferay.productivity.center.panel.PanelApp;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javax.portlet.PortletConfig;
 
 /**
  * @author Adolfo Pérez
  */
-public class PortletPanelAppAdapter implements PanelApp {
-
-	public PortletPanelAppAdapter(String portletId) {
-		_portletId = portletId;
-	}
+public abstract class BaseControlPanelEntryPanelApp implements PanelApp {
 
 	@Override
 	public String getKey() {
-		return "portlet-adapter-" + getPortletId();
+		return getClass().getName();
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		PortletConfig portletConfig = PortletConfigFactoryUtil.get(
-			getPortletId());
-
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
-
-		Portlet portlet = getPortlet();
-
-		String key =
+		return LanguageUtil.get(
+			locale,
 			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-				portlet.getPortletName();
-
-		String value = LanguageUtil.get(resourceBundle, key);
-
-		if (!key.equals(value)) {
-			return value;
-		}
-
-		value = LanguageUtil.get(locale, key);
-
-		if (!key.equals(value)) {
-			return value;
-		}
-
-		String displayName = portlet.getDisplayName();
-
-		if (!displayName.equals(portlet.getPortletName())) {
-			return displayName;
-		}
-
-		return key;
-	}
-
-	@Override
-	public String getPortletId() {
-		return _portletId;
+				getPortletId());
 	}
 
 	@Override
@@ -90,13 +50,14 @@ public class PortletPanelAppAdapter implements PanelApp {
 		throws PortalException {
 
 		try {
-			Portlet portlet = getPortlet();
+			ControlPanelEntry controlPanelEntry = getControlPanelEntry();
 
-			ControlPanelEntry controlPanelEntry =
-				portlet.getControlPanelEntryInstance();
+			if (controlPanelEntry == null) {
+				return false;
+			}
 
 			return controlPanelEntry.hasAccessPermission(
-				permissionChecker, group, portlet);
+				permissionChecker, group, getPortlet());
 		}
 		catch (PortalException | RuntimeException e) {
 			throw e;
@@ -106,10 +67,16 @@ public class PortletPanelAppAdapter implements PanelApp {
 		}
 	}
 
-	protected Portlet getPortlet() {
-		return PortletLocalServiceUtil.getPortletById(getPortletId());
+	protected ControlPanelEntry getControlPanelEntry() {
+		Portlet portlet = getPortlet();
+
+		return portlet.getControlPanelEntryInstance();
 	}
 
-	private final String _portletId;
+	protected Portlet getPortlet() {
+		return _portletLocalService.getPortletById(getPortletId());
+	}
+
+	protected PortletLocalService _portletLocalService;
 
 }

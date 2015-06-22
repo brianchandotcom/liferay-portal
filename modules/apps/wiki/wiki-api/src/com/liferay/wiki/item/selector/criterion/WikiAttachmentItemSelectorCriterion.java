@@ -22,6 +22,9 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 public class WikiAttachmentItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
+	public WikiAttachmentItemSelectorCriterion() {
+	}
+
 	public WikiAttachmentItemSelectorCriterion(long wikiPageResourceId) {
 		_wikiPageResourceId = wikiPageResourceId;
 	}

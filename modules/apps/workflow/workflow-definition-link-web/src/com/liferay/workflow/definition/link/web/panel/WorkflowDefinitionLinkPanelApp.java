@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.definition.link.web.portlet.panel;
+package com.liferay.workflow.definition.link.web.panel;
 
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.productivity.center.panel.BaseControlPanelEntryPanelApp;
@@ -29,19 +29,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION,
-		"service.ranking:Integer=500"
+		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION,
+		"service.ranking:Integer=600"
 	},
 	service = PanelApp.class
 )
-public class WorkflowConfigurationPanelApp
+public class WorkflowDefinitionLinkPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return
-			WorkflowDefinitionLinkPortletKeys.
-				WORKFLOW_DEFINITION_LINK_CONTROL_PANEL;
+		return WorkflowDefinitionLinkPortletKeys.
+			WORKFLOW_DEFINITION_LINK_CONTROL_PANEL;
 	}
 
 	@Reference(unbind = "-")

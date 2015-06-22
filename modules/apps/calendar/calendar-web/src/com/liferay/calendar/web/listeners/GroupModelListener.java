@@ -15,6 +15,7 @@
 package com.liferay.calendar.web.listeners;
 
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
@@ -23,6 +24,7 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.util.PortalUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -39,17 +41,17 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			long classNameId = PortalUtil.getClassNameId(Group.class);
 
 			CalendarResource calendarResource =
-				CalendarResourceLocalServiceUtil.fetchCalendarResource(
+				_calendarResourceLocalService.fetchCalendarResource(
 					classNameId, group.getGroupId());
 
 			if (calendarResource != null) {
-				CalendarResourceLocalServiceUtil.deleteCalendarResource(
+				_calendarResourceLocalService.deleteCalendarResource(
 					calendarResource);
 			}
 
 			// Local calendar resources
 
-			CalendarResourceLocalServiceUtil.deleteCalendarResources(
+			_calendarResourceLocalService.deleteCalendarResources(
 				group.getGroupId());
 		}
 		catch (Exception e) {
@@ -79,5 +81,14 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference
+	protected void setCalendarResourceLocalService(
+		CalendarResourceLocalService calendarResourceLocalService) {
+
+		this._calendarResourceLocalService = calendarResourceLocalService;
+	}
+
+	private CalendarResourceLocalService _calendarResourceLocalService;
 
 }

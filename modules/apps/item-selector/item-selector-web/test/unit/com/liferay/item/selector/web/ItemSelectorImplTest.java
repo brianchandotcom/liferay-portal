@@ -56,15 +56,22 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new HashSet<>();
 
-		desiredItemSelectorReturnTypes.add(new TestURLItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(_testURLItemSelectorReturnType);
 
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
 		_itemSelectorImpl = new ItemSelectorImpl();
 
+		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+			_testStringItemSelectorReturnType);
+		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+			_testURLItemSelectorReturnType);
+		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+			_testFileEntryItemSelectorReturnType);
+
 		_itemSelectorImpl.setItemSelectorCriterionSerializer(
-			new ItemSelectorCriterionSerializer());
+			_itemSelectorCriterionSerializer);
 
 		_mediaItemSelectorCriterion = new MediaItemSelectorCriterion();
 
@@ -75,7 +82,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		desiredItemSelectorReturnTypes.add(
 			new TestFileEntryItemSelectorReturnType());
-		desiredItemSelectorReturnTypes.add(new TestURLItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(_testURLItemSelectorReturnType);
 
 		_mediaItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
@@ -225,7 +232,16 @@ public class ItemSelectorImplTest extends PowerMockito {
 	}
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
+	private final ItemSelectorCriterionSerializer<FlickrItemSelectorCriterion>
+		_itemSelectorCriterionSerializer =
+			new ItemSelectorCriterionSerializer();
 	private ItemSelectorImpl _itemSelectorImpl;
 	private MediaItemSelectorCriterion _mediaItemSelectorCriterion;
+	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
+		new TestFileEntryItemSelectorReturnType();
+	private final ItemSelectorReturnType _testStringItemSelectorReturnType =
+		new TestStringItemSelectorReturnType();
+	private final ItemSelectorReturnType _testURLItemSelectorReturnType =
+		new TestURLItemSelectorReturnType();
 
 }

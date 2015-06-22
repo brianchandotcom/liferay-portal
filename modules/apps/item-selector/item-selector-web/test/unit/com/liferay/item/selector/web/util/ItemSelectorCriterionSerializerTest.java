@@ -16,6 +16,7 @@ package com.liferay.item.selector.web.util;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.web.FlickrItemSelectorCriterion;
+import com.liferay.item.selector.web.TestFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.web.TestStringItemSelectorReturnType;
 import com.liferay.item.selector.web.TestURLItemSelectorReturnType;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -43,8 +44,7 @@ public class ItemSelectorCriterionSerializerTest {
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new HashSet<>();
 
-		desiredItemSelectorReturnTypes.add(
-			new TestStringItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(_testStringItemSelectorReturnType);
 		desiredItemSelectorReturnTypes.add(_testURLItemSelectorReturnType);
 
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
@@ -55,7 +55,11 @@ public class ItemSelectorCriterionSerializerTest {
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
 		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+			_testStringItemSelectorReturnType);
+		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
 			_testURLItemSelectorReturnType);
+		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+			_testFileEntryItemSelectorReturnType);
 	}
 
 	@Test
@@ -138,6 +142,10 @@ public class ItemSelectorCriterionSerializerTest {
 	private final ItemSelectorCriterionSerializer<FlickrItemSelectorCriterion>
 		_itemSelectorCriterionSerializer =
 			new ItemSelectorCriterionSerializer();
+	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
+		new TestFileEntryItemSelectorReturnType();
+	private final ItemSelectorReturnType _testStringItemSelectorReturnType =
+		new TestStringItemSelectorReturnType();
 	private final ItemSelectorReturnType _testURLItemSelectorReturnType =
 		new TestURLItemSelectorReturnType();
 

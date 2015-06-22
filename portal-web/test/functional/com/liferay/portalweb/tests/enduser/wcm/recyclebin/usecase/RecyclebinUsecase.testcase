@@ -846,7 +846,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" /> 
+			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">

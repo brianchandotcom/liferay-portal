@@ -125,8 +125,8 @@
 
 		<execute macro="WikiPage#viewFrontPageCP">
 			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
-			<var name="wikiNodeName" value="Main" />
 			<var name="wikiFrontPageTitle" value="FrontPage" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 	</command>
 </definition>

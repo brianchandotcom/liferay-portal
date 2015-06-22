@@ -208,7 +208,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorViewDisplayContext.getLayoutItemSelectorCriterion();
 
 			for (ItemSelectorReturnType desiredItemSelectorReturnType : layoutItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
-				itemSelectorReturnTypeName = desiredItemSelectorReturnType.getName();
+				itemSelectorReturnTypeName = desiredItemSelectorReturnType.getClass().getName();
 
 				break;
 			}

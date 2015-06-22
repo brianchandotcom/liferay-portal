@@ -14,6 +14,11 @@
 
 package com.liferay.dynamic.data.lists.service.impl;
 
+import java.io.Serializable;
+import java.util.Locale;
+import java.util.Map;
+
+import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordServiceBaseImpl;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
@@ -23,11 +28,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-
-import java.io.Serializable;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
@@ -45,7 +45,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.ADD_RECORD);
+			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
 
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex,
@@ -59,7 +59,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.ADD_RECORD);
+			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
 
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex, fields,
@@ -73,7 +73,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.ADD_RECORD);
+			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
 
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex, fieldsMap,

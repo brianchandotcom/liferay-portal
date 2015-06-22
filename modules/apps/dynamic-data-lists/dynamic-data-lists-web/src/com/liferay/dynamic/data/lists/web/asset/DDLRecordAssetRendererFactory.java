@@ -14,6 +14,11 @@
 
 package com.liferay.dynamic.data.lists.web.asset;
 
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
+
+import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
@@ -23,7 +28,6 @@ import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -31,10 +35,6 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassTypeReader;
-
-import javax.portlet.PortletURL;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
@@ -132,7 +132,7 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 		}
 
 		return DDLRecordSetPermission.contains(
-			permissionChecker, classTypeId, ActionKeys.ADD_RECORD);
+			permissionChecker, classTypeId, DDLActionKeys.ADD_RECORD);
 	}
 
 	@Override

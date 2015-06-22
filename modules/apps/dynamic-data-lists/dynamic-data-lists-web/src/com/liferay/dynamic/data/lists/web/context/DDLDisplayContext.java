@@ -20,6 +20,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
@@ -175,7 +176,7 @@ public class DDLDisplayContext {
 
 		_hasAddRecordSetPermission = DDLPermission.contains(
 			getPermissionChecker(), getScopeGroupId(), getPortletId(),
-			ActionKeys.ADD_RECORD_SET);
+			DDLActionKeys.ADD_RECORD_SET);
 
 		return _hasAddRecordSetPermission;
 	}

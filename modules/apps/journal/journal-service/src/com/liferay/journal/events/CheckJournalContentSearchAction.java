@@ -27,11 +27,11 @@ import com.liferay.portal.service.CompanyLocalService;
 
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Eudaldo Alonso
@@ -79,6 +79,16 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 		}
 	}
 
+	@Reference(
+		target =
+			"(org.springframework.context.service.name=" +
+				"com.liferay.journal.service)",
+		unbind = "-"
+	)
+	protected void setApplicationContext(
+		ApplicationContext applicationContext) {
+	}
+
 	@Reference
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -91,10 +101,6 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 		JournalContentSearchLocalService journalContentSearchLocalService) {
 
 		_journalContentSearchLocalService = journalContentSearchLocalService;
-	}
-
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -111,6 +111,8 @@ public class WikiPageStagedModelDataHandler
 			PortletDataContext portletDataContext, WikiPage page)
 		throws Exception {
 
+		Element pageElement = portletDataContext.getExportDataElement(page);
+
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, page, page.getNode(),
 			PortletDataContext.REFERENCE_TYPE_PARENT);
@@ -129,8 +131,6 @@ public class WikiPageStagedModelDataHandler
 					PortletDataContext.REFERENCE_TYPE_WEAK);
 			}
 		}
-
-		Element pageElement = portletDataContext.getExportDataElement(page);
 
 		WikiPageResource pageResource =
 			WikiPageResourceLocalServiceUtil.getPageResource(

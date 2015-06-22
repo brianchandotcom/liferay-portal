@@ -15,7 +15,7 @@
 package com.liferay.calendar.web.listeners;
 
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModelListener;
@@ -26,6 +26,7 @@ import com.liferay.portal.util.PortalUtil;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Antonio Junior
@@ -39,7 +40,7 @@ public class UserModelListener extends BaseModelListener<User> {
 			long classNameId = PortalUtil.getClassNameId(User.class);
 
 			CalendarResource calendarResource =
-				CalendarResourceLocalServiceUtil.fetchCalendarResource(
+				_calendarResourceLocalService.fetchCalendarResource(
 					classNameId, user.getUserId());
 
 			if (calendarResource == null) {
@@ -50,12 +51,21 @@ public class UserModelListener extends BaseModelListener<User> {
 
 			calendarResource.setName(user.getFullName(), locale);
 
-			CalendarResourceLocalServiceUtil.updateCalendarResource(
+			_calendarResourceLocalService.updateCalendarResource(
 				calendarResource);
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference
+	protected void setCalendarResourceLocalService(
+		CalendarResourceLocalService calendarResourceLocalService) {
+
+		this._calendarResourceLocalService = calendarResourceLocalService;
+	}
+
+	private CalendarResourceLocalService _calendarResourceLocalService;
 
 }

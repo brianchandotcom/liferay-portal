@@ -109,17 +109,7 @@
 			<var name="portletName" value="Recycle Bin" />
 		</execute>
 
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="FrontPage" />
-			<var name="assetRestoreLocation" value="Main" />
-			<var name="assetType" value="Wiki Page" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewDefaultCP">
+		<execute macro="RecycleBin#restoreOverwriteCP">
 			<var name="assetName" value="FrontPage" />
 		</execute>
 

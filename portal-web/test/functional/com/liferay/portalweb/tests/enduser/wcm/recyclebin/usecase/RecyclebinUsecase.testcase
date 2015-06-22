@@ -724,18 +724,14 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Message Boards" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<execute function="Refresh" />
 
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Body" />
-			<var name="threadSubject" value="MB Thread Subject" />
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -746,7 +742,7 @@
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="siteName" value="Site Name" />
-			<var name="uncheckContent" value="Message Boards" />
+			<var name="uncheckContent" value="Web Content" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -760,27 +756,20 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="MessageboardsThread#deletePG">
-			<var name="assetType" value="Message Boards Thread" />
-			<var name="threadSubject" value="MB Thread Subject" />
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -810,8 +799,8 @@
 		<execute function="AssertClick" locator1="CPRecyclebin#LIVE_TOOLBAR" value1="Live" />
 
 		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="MB Thread Subject" />
-			<var name="assetType" value="Message Boards Thread" />
+			<var name="assetName" value="WC Title" />
+			<var name="assetType" value="Web Content Article" />
 			<var name="deleteUser" value="Test Test" />
 		</execute>
 	</command>

@@ -7,4 +7,5 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/PropertyComparator.class
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/PropertyComparator.class,\
+    @${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class

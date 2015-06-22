@@ -73,7 +73,7 @@
 		<execute macro="Blogs#subscribePG" />
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
-			<execute macro="BlogsEntry#addPG">
+			<execute macro="Blogs#addEntry">
 				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
 				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
 			</execute>
@@ -144,7 +144,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
@@ -155,7 +155,7 @@
 
 		<execute macro="Blogs#subscribePG" />
 
-		<execute macro="BlogsEntry#editPG">
+		<execute macro="Blogs#editEntryPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -226,7 +226,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
@@ -235,7 +235,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>

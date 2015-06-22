@@ -368,9 +368,15 @@ public class LocalizationImpl implements Localization {
 		PortletPreferences preferences, String preferenceName,
 		String propertyName) {
 
+		String defaultPropertyValue = null;
+
+		if (propertyName != null) {
+			defaultPropertyValue = PropsUtil.get(propertyName);
+		}
+
 		return getLocalizationMap(
-			preferences, preferenceName, propertyName,
-			PropsUtil.get(propertyName), getClass().getClassLoader());
+			preferences, preferenceName, propertyName, defaultPropertyValue,
+			getClass().getClassLoader());
 	}
 
 	@Override

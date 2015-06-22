@@ -27,13 +27,13 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
-	implements SocialActivityHandler<T> {
+public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
+	implements SocialActivityManager<T> {
 
-	public SocialActivityHandlerImpl(
-		SocialActivityHandler<T> defaultSocialActivityHandler) {
+	public SocialActivityManagerImpl(
+		SocialActivityManager<T> defaultSocialActivityManager) {
 
-		_defaultSocialActivityHandler = defaultSocialActivityHandler;
+		_defaultSocialActivityManager = defaultSocialActivityManager;
 	}
 
 	@Override
@@ -42,10 +42,10 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 			long receiverUserId)
 		throws PortalException {
 
-		SocialActivityHandler<T> socialActivityHandler =
+		SocialActivityManager<T> socialActivityManager =
 			getSocialActivityHandler(model.getModelClassName());
 
-		socialActivityHandler.addActivity(
+		socialActivityManager.addActivity(
 			userId, model, type, extraData, receiverUserId);
 	}
 
@@ -55,10 +55,10 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 			long receiverUserId)
 		throws PortalException {
 
-		SocialActivityHandler<T> socialActivityHandler =
+		SocialActivityManager<T> socialActivityManager =
 			getSocialActivityHandler(model.getModelClassName());
 
-		socialActivityHandler.addUniqueActivity(
+		socialActivityManager.addUniqueActivity(
 			userId, createDate, model, type, extraData, receiverUserId);
 	}
 
@@ -68,19 +68,19 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 			long receiverUserId)
 		throws PortalException {
 
-		SocialActivityHandler<T> socialActivityHandler =
+		SocialActivityManager<T> socialActivityManager =
 			getSocialActivityHandler(model.getModelClassName());
 
-		socialActivityHandler.addUniqueActivity(
+		socialActivityManager.addUniqueActivity(
 			userId, model, type, extraData, receiverUserId);
 	}
 
 	@Override
 	public void deleteActivities(T model) throws PortalException {
-		SocialActivityHandler<T> socialActivityHandler =
+		SocialActivityManager<T> socialActivityManager =
 			getSocialActivityHandler(model.getModelClassName());
 
-		socialActivityHandler.deleteActivities(model);
+		socialActivityManager.deleteActivities(model);
 	}
 
 	@Override
@@ -88,10 +88,10 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 			long userId, T model, int type, Date createDate)
 		throws PortalException {
 
-		SocialActivityHandler<T> socialActivityHandler =
+		SocialActivityManager<T> socialActivityManager =
 			getSocialActivityHandler(model.getModelClassName());
 
-		socialActivityHandler.updateLastSocialActivity(
+		socialActivityManager.updateLastSocialActivity(
 			userId, model, type, createDate);
 	}
 
@@ -100,30 +100,30 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 	}
 
 	@SuppressWarnings("unchecked")
-	protected SocialActivityHandler<T> getSocialActivityHandler(
+	protected SocialActivityManager<T> getSocialActivityHandler(
 		String className) {
 
-		SocialActivityHandler<T> socialActivityHandler =
+		SocialActivityManager<T> socialActivityManager =
 			_serviceTrackerMap.getService(className);
 
-		if (socialActivityHandler != null) {
-			return socialActivityHandler;
+		if (socialActivityManager != null) {
+			return socialActivityManager;
 		}
 
-		return _defaultSocialActivityHandler;
+		return _defaultSocialActivityManager;
 	}
 
-	private final SocialActivityHandler<T> _defaultSocialActivityHandler;
+	private final SocialActivityManager<T> _defaultSocialActivityManager;
 
 	@SuppressWarnings("rawtypes")
-	private final ServiceTrackerMap<String, SocialActivityHandler>
+	private final ServiceTrackerMap<String, SocialActivityManager>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			SocialActivityHandler.class, "(model.className=*)",
-			new ServiceReferenceMapper<String, SocialActivityHandler>() {
+			SocialActivityManager.class, "(model.className=*)",
+			new ServiceReferenceMapper<String, SocialActivityManager>() {
 
 				@Override
 				public void map(
-					ServiceReference<SocialActivityHandler> serviceReference,
+					ServiceReference<SocialActivityManager> serviceReference,
 					Emitter<String> emitter) {
 
 					String modelClassName =

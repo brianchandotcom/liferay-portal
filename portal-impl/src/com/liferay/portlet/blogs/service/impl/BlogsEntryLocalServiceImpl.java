@@ -86,7 +86,7 @@ import com.liferay.portlet.blogs.util.BlogsUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
+import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -1048,7 +1048,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		extraDataJSONObject.put("title", entry.getTitle());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, entry, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -1112,7 +1112,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		extraDataJSONObject.put("title", entry.getTitle());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, entry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -1521,12 +1521,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				(oldStatus != WorkflowConstants.STATUS_SCHEDULED)) {
 
 				if (serviceContext.isCommandUpdate()) {
-					SocialActivityHandlerUtil.addActivity(
+					SocialActivityManagerUtil.addActivity(
 						user.getUserId(), entry, BlogsActivityKeys.UPDATE_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {
-					SocialActivityHandlerUtil.addUniqueActivity(
+					SocialActivityManagerUtil.addUniqueActivity(
 						user.getUserId(), entry, BlogsActivityKeys.ADD_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
@@ -1572,12 +1572,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				(oldStatus != WorkflowConstants.STATUS_IN_TRASH)) {
 
 				if (serviceContext.isCommandUpdate()) {
-					SocialActivityHandlerUtil.addActivity(
+					SocialActivityManagerUtil.addActivity(
 						user.getUserId(), entry, BlogsActivityKeys.UPDATE_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {
-					SocialActivityHandlerUtil.addUniqueActivity(
+					SocialActivityManagerUtil.addUniqueActivity(
 						user.getUserId(), entry, BlogsActivityKeys.ADD_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}

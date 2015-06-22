@@ -24,14 +24,14 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public class SocialActivityHandlerUtil {
+public class SocialActivityManagerUtil {
 
 	public static <T extends ClassedModel & GroupedModel> void addActivity(
 			long userId, T classedModel, int type, String extraData,
 			long receiverUserId)
 		throws PortalException {
 
-		getSocialActivityHandler().addActivity(
+		getSocialActivityManager().addActivity(
 			userId, classedModel, type, extraData, receiverUserId);
 	}
 
@@ -41,7 +41,7 @@ public class SocialActivityHandlerUtil {
 			String extraData, long receiverUserId)
 		throws PortalException {
 
-		getSocialActivityHandler().addUniqueActivity(
+		getSocialActivityManager().addUniqueActivity(
 			userId, createDate, classedModel, type, extraData, receiverUserId);
 	}
 
@@ -51,7 +51,7 @@ public class SocialActivityHandlerUtil {
 			long receiverUserId)
 		throws PortalException {
 
-		getSocialActivityHandler().addUniqueActivity(
+		getSocialActivityManager().addUniqueActivity(
 			userId, classedModel, type, extraData, receiverUserId);
 	}
 
@@ -59,17 +59,17 @@ public class SocialActivityHandlerUtil {
 			T classedModel)
 		throws PortalException {
 
-		getSocialActivityHandler().deleteActivities(classedModel);
+		getSocialActivityManager().deleteActivities(classedModel);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <T extends ClassedModel & GroupedModel>
-		SocialActivityHandler<T> getSocialActivityHandler() {
+		SocialActivityManager<T> getSocialActivityManager() {
 
 		PortalRuntimePermission.checkGetBeanProperty(
-			SocialActivityHandlerUtil.class);
+			SocialActivityManagerUtil.class);
 
-		return _socialActivityHandler;
+		return _socialActivityManager;
 	}
 
 	public static <T extends ClassedModel & GroupedModel>
@@ -77,20 +77,20 @@ public class SocialActivityHandlerUtil {
 			long userId, T classedModel, int type, Date createDate)
 		throws PortalException {
 
-		getSocialActivityHandler().updateLastSocialActivity(
+		getSocialActivityManager().updateLastSocialActivity(
 			userId, classedModel, type, createDate);
 	}
 
 	public <T extends ClassedModel & GroupedModel>
-		void setSocialActivityHandler(
-			SocialActivityHandler<T> socialActivityHandler) {
+		void setSocialActivityManager(
+			SocialActivityManager<T> socialActivityManager) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_socialActivityHandler = socialActivityHandler;
+		_socialActivityManager = socialActivityManager;
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static SocialActivityHandler _socialActivityHandler;
+	private static SocialActivityManager _socialActivityManager;
 
 }

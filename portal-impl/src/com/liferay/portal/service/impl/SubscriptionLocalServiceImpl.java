@@ -23,7 +23,7 @@ import com.liferay.portal.model.SubscriptionConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
+import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.List;
@@ -149,7 +149,7 @@ public class SubscriptionLocalServiceImpl
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
-			SocialActivityHandlerUtil.addActivity(
+			SocialActivityManagerUtil.addActivity(
 				userId, assetEntry, SocialActivityConstants.TYPE_SUBSCRIBE,
 				extraDataJSONObject.toString(), 0);
 		}
@@ -226,7 +226,7 @@ public class SubscriptionLocalServiceImpl
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
-			SocialActivityHandlerUtil.addActivity(
+			SocialActivityManagerUtil.addActivity(
 				subscription.getUserId(), subscription,
 				SocialActivityConstants.TYPE_UNSUBSCRIBE,
 				extraDataJSONObject.toString(), 0);

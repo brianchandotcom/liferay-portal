@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
-import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
-import com.liferay.portlet.social.handler.SocialActivityHandler;
+import com.liferay.portlet.social.handler.BaseSocialActivityManager;
+import com.liferay.portlet.social.handler.SocialActivityManager;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**
@@ -27,10 +27,10 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
  */
 @OSGiBeanProperties(
 	property = "model.className=com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut",
-	service = SocialActivityHandler.class
+	service = SocialActivityManager.class
 )
-public class LiferayFileShortcutSocialActivityHandler
-	extends BaseSocialActivityHandler<FileShortcut> {
+public class LiferayFileShortcutSocialActivityManager
+	extends BaseSocialActivityManager<FileShortcut> {
 
 	@Override
 	protected String getClassName(FileShortcut fileShortcut) {

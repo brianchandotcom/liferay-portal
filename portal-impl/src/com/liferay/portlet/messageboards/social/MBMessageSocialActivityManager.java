@@ -27,8 +27,8 @@ import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
-import com.liferay.portlet.social.handler.SocialActivityHandler;
+import com.liferay.portlet.social.handler.BaseSocialActivityManager;
+import com.liferay.portlet.social.handler.SocialActivityManager;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
@@ -39,10 +39,10 @@ import java.util.List;
  */
 @OSGiBeanProperties(
 	property = "model.className=com.liferay.portlet.messageboards.model.MBMessage",
-	service = SocialActivityHandler.class
+	service = SocialActivityManager.class
 )
-public class MBMessageSocialActivityHandler
-	extends BaseSocialActivityHandler<MBMessage> {
+public class MBMessageSocialActivityManager
+	extends BaseSocialActivityManager<MBMessage> {
 
 	@Override
 	public void deleteActivities(MBMessage message) throws PortalException {

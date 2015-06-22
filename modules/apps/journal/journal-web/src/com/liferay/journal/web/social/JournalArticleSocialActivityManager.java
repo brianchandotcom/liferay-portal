@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.social;
+package com.liferay.journal.web.social;
 
-import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
-import com.liferay.portlet.social.handler.SocialActivityHandler;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.portlet.social.handler.BaseSocialActivityManager;
+import com.liferay.portlet.social.handler.SocialActivityManager;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
-import com.liferay.wiki.model.WikiPage;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,16 +26,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
-	property = "model.className=com.liferay.wiki.model.WikiPage",
-	service = SocialActivityHandler.class
+	property = "model.className=com.liferay.journal.model.JournalArticle",
+	service = SocialActivityManager.class
 )
-public class WikiPageSocialActivityHandler
-	extends BaseSocialActivityHandler<WikiPage> {
+public class JournalArticleSocialActivityManager
+	extends BaseSocialActivityManager<JournalArticle> {
 
 	@Override
-	protected long getPrimaryKey(WikiPage wikiPage) {
-		return wikiPage.getResourcePrimKey();
+	protected long getPrimaryKey(JournalArticle journalArticle) {
+		return journalArticle.getResourcePrimKey();
 	}
 
 	@Override

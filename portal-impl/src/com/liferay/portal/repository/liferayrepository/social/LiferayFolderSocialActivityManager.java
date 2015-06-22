@@ -12,26 +12,37 @@
  * details.
  */
 
-package com.liferay.portlet.social.handler;
+package com.liferay.portal.repository.liferayrepository.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.model.ClassedModel;
-import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.social.handler.BaseSocialActivityManager;
+import com.liferay.portlet.social.handler.SocialActivityManager;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultSocialActivityHandler
-		<T extends ClassedModel & GroupedModel>
-	extends BaseSocialActivityHandler<T> {
+@OSGiBeanProperties(
+	property = "model.className=com.liferay.portal.repository.liferayrepository.model.LiferayFolder",
+	service = SocialActivityManager.class
+)
+public class LiferayFolderSocialActivityManager
+	extends BaseSocialActivityManager<Folder> {
+
+	@Override
+	protected String getClassName(Folder folder) {
+		return DLFolderConstants.getClassName();
+	}
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return _socialActivityLocalService;
+		return socialActivityLocalService;
 	}
 
 	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService _socialActivityLocalService;
+	protected SocialActivityLocalService socialActivityLocalService;
 
 }

@@ -12,29 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.repository.liferayrepository.social;
+package com.liferay.portal.subscription.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
-import com.liferay.portlet.social.handler.SocialActivityHandler;
+import com.liferay.portal.model.Subscription;
+import com.liferay.portlet.social.handler.BaseSocialActivityManager;
+import com.liferay.portlet.social.handler.SocialActivityManager;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**
  * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
-	property = "model.className=com.liferay.portal.repository.liferayrepository.model.LiferayFolder",
-	service = SocialActivityHandler.class
+	property = "model.className=com.liferay.portal.model.Subscription",
+	service = SocialActivityManager.class
 )
-public class LiferayFolderSocialActivityHandler
-	extends BaseSocialActivityHandler<Folder> {
+public class SubscriptionSocialActivityManager
+	extends BaseSocialActivityManager<Subscription> {
 
 	@Override
-	protected String getClassName(Folder folder) {
-		return DLFolderConstants.getClassName();
+	protected String getClassName(Subscription subscription) {
+		return subscription.getClassName();
+	}
+
+	@Override
+	protected long getPrimaryKey(Subscription subscription) {
+		return subscription.getClassPK();
 	}
 
 	@Override

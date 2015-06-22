@@ -142,7 +142,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
-import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
+import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -3603,7 +3603,7 @@ public class JournalArticleLocalServiceImpl
 
 		extraDataJSONObject.put("title", article.getTitle());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, article, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -3800,7 +3800,7 @@ public class JournalArticleLocalServiceImpl
 
 		extraDataJSONObject.put("title", article.getTitle());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, article, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -5803,13 +5803,13 @@ public class JournalArticleLocalServiceImpl
 				extraDataJSONObject.put("title", article.getTitle());
 
 				if (serviceContext.isCommandUpdate()) {
-					SocialActivityHandlerUtil.addActivity(
+					SocialActivityManagerUtil.addActivity(
 						user.getUserId(), article,
 						JournalActivityKeys.UPDATE_ARTICLE,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {
-					SocialActivityHandlerUtil.addUniqueActivity(
+					SocialActivityManagerUtil.addUniqueActivity(
 						user.getUserId(), article,
 						JournalActivityKeys.ADD_ARTICLE,
 						extraDataJSONObject.toString(), 0);

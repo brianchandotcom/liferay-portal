@@ -23,8 +23,8 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
-import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
-import com.liferay.portlet.social.handler.SocialActivityHandler;
+import com.liferay.portlet.social.handler.BaseSocialActivityManager;
+import com.liferay.portlet.social.handler.SocialActivityManager;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
@@ -33,10 +33,10 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
  */
 @OSGiBeanProperties(
 	property = "model.className=com.liferay.portlet.messageboards.model.MBThread",
-	service = SocialActivityHandler.class
+	service = SocialActivityManager.class
 )
-public class MBThreadSocialActivityHandler
-	extends BaseSocialActivityHandler<MBThread> {
+public class MBThreadSocialActivityManager
+	extends BaseSocialActivityManager<MBThread> {
 
 	@Override
 	public void addActivity(

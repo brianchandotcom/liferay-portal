@@ -96,7 +96,7 @@ import com.liferay.portlet.messageboards.util.MailingListThreadLocal;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
-import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
+import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.SerializableUtil;
@@ -571,7 +571,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
-		SocialActivityHandlerUtil.deleteActivities(message);
+		SocialActivityManagerUtil.deleteActivities(message);
 
 		return mbMessageLocalService.deleteMessage(messageId);
 	}
@@ -603,7 +603,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (!messages.isEmpty()) {
 			MBMessage message = messages.get(0);
 
-			SocialActivityHandlerUtil.deleteActivities(message);
+			SocialActivityManagerUtil.deleteActivities(message);
 
 			mbThreadLocalService.deleteThread(message.getThreadId());
 		}
@@ -1220,7 +1220,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (message.isApproved() && !message.isDiscussion()) {
 			mbThreadLocalService.incrementViewCounter(thread.getThreadId(), 1);
 
-			SocialActivityHandlerUtil.addActivity(
+			SocialActivityManagerUtil.addActivity(
 				userId, thread, SocialActivityConstants.TYPE_VIEW,
 				StringPool.BLANK, 0);
 		}
@@ -1841,7 +1841,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								receiverUserId = parentMessage.getUserId();
 							}
 
-							SocialActivityHandlerUtil.addActivity(
+							SocialActivityManagerUtil.addActivity(
 								message.getUserId(), message,
 								MBActivityKeys.ADD_MESSAGE,
 								extraDataJSONObject.toString(), receiverUserId);
@@ -1849,7 +1849,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 							if ((parentMessage != null) &&
 								(receiverUserId != message.getUserId())) {
 
-								SocialActivityHandlerUtil.addActivity(
+								SocialActivityManagerUtil.addActivity(
 									message.getUserId(), parentMessage,
 									MBActivityKeys.REPLY_MESSAGE,
 									extraDataJSONObject.toString(), 0);
@@ -1874,7 +1874,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								extraDataJSONObject.put(
 									"messageId", message.getMessageId());
 
-								SocialActivityHandlerUtil.addActivity(
+								SocialActivityManagerUtil.addActivity(
 									message.getUserId(), assetEntry,
 									SocialActivityConstants.TYPE_ADD_COMMENT,
 									extraDataJSONObject.toString(),

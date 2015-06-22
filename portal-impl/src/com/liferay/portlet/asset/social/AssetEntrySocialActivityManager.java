@@ -12,29 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.repository.liferayrepository.social;
+package com.liferay.portlet.asset.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
-import com.liferay.portlet.social.handler.SocialActivityHandler;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.social.handler.BaseSocialActivityManager;
+import com.liferay.portlet.social.handler.SocialActivityManager;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**
  * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
-	property = "model.className=com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry",
-	service = SocialActivityHandler.class
+	property = "model.className=com.liferay.portlet.asset.model.AssetEntry",
+	service = SocialActivityManager.class
 )
-public class LiferayFileEntrySocialActivityHandler
-	extends BaseSocialActivityHandler<FileEntry> {
+public class AssetEntrySocialActivityManager
+	extends BaseSocialActivityManager<AssetEntry> {
 
 	@Override
-	protected String getClassName(FileEntry classedModel) {
-		return DLFileEntryConstants.getClassName();
+	protected String getClassName(AssetEntry assetEntry) {
+		return assetEntry.getClassName();
+	}
+
+	@Override
+	protected long getPrimaryKey(AssetEntry assetEntry) {
+		return assetEntry.getClassPK();
 	}
 
 	@Override

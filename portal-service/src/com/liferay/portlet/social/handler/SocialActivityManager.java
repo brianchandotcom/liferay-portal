@@ -23,7 +23,7 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public interface SocialActivityHandler<T extends ClassedModel & GroupedModel> {
+public interface SocialActivityManager<T extends ClassedModel & GroupedModel> {
 
 	public void addActivity(
 			long userId, T model, int type, String extraData,

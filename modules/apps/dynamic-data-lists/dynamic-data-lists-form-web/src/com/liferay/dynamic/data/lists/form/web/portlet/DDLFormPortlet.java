@@ -14,10 +14,21 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet;
 
+import java.io.IOException;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.lists.web.constants.DDLWebKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -35,16 +46,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-
-import java.io.IOException;
-
-import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -200,7 +201,7 @@ public class DDLFormPortlet extends MVCPortlet {
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
 		renderRequest.setAttribute(
-			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 
 		String ddmFormHTML = getDDMFormHTML(
 			renderRequest, renderResponse, recordSet.getDDMStructure());

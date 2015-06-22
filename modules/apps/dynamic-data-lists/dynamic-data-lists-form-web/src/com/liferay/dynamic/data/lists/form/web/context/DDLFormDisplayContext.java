@@ -14,9 +14,12 @@
 
 package com.liferay.dynamic.data.lists.form.web.context;
 
+import javax.portlet.RenderRequest;
+
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.web.constants.DDLWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -26,8 +29,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-
-import javax.portlet.RenderRequest;
 
 /**
  * @author Marcellus Tavares
@@ -59,7 +60,7 @@ public class DDLFormDisplayContext {
 		}
 
 		_recordSet = (DDLRecordSet)_renderRequest.getAttribute(
-			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 		if (_recordSet != null) {
 			return _recordSet;

@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.Map;
 import java.util.Set;
@@ -38,7 +41,7 @@ public class AccessControlUtil {
 	public static AccessControl getAccessControl() {
 		PortalRuntimePermission.checkGetBeanProperty(AccessControlUtil.class);
 
-		return _accessControl;
+		return _instance._serviceTracker.getService();
 	}
 
 	public static AccessControlContext getAccessControlContext() {
@@ -99,17 +102,22 @@ public class AccessControlUtil {
 		return getAccessControl().verifyRequest();
 	}
 
-	public void setAccessControl(AccessControl accessControl) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private AccessControlUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_accessControl = accessControl;
+		_serviceTracker = registry.trackServices(AccessControl.class);
+
+		_serviceTracker.open();
 	}
 
 	private static final String _SERVER_IP = "SERVER_IP";
 
-	private static AccessControl _accessControl;
+	private static final AccessControlUtil _instance = new AccessControlUtil();
+
 	private static final ThreadLocal<AccessControlContext>
 		_accessControlContext = new AutoResetThreadLocal<>(
 			AccessControlUtil.class + "._accessControlContext");
+
+	private final ServiceTracker<?, AccessControl> _serviceTracker;
 
 }

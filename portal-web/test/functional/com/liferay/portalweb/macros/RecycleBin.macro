@@ -87,9 +87,13 @@
 		<var name="key_assetName" value="${assetName}" />
 
 		<execute function="Click" locator1="CPRecyclebin#RECYCLE_BIN_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="CPRecyclebin#RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
+
 		<execute function="AssertTextEquals" locator1="CPRecyclebin#RECYCLE_BIN_WARNING_MESSAGE" value1="An entry with name ${assetName} already exists." />
+
 		<execute function="Click" locator1="CPRecyclebin#RECYCLE_BIN_WARNING_OVERWRITE_RADIO" />
+
 		<execute function="AssertClick" locator1="CPRecyclebin#RECYCLE_BIN_WARNING_SAVE_BUTTON" value1="Save" />
 	</command>
 

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.web.constants.DDLWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -146,7 +147,7 @@ public class DDLPortlet extends MVCPortlet {
 			record = _ddlRecordService.getRecord(recordId);
 		}
 
-		renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD, record);
+		renderRequest.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, record);
 	}
 
 	protected void setDDLRecordSetRequestAttribute(RenderRequest renderRequest)
@@ -161,7 +162,7 @@ public class DDLPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(
-			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+				DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLPortlet.class);

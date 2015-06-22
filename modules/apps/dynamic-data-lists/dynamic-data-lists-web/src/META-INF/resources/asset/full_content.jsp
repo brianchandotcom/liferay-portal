@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DDLRecordVersion recordVersion = (DDLRecordVersion)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION);
+DDLRecordVersion recordVersion = (DDLRecordVersion)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION);
 
-DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
+DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 DDLRecordSet recordSet = record.getRecordSet();
 

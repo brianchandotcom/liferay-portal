@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");

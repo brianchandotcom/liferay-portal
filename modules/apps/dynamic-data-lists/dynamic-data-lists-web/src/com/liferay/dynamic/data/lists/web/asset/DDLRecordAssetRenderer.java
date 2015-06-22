@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.web.constants.DDLWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -181,9 +182,9 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
 			portletRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_LISTS_RECORD, _record);
+				DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _record);
 			portletRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _recordVersion);
+				DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _recordVersion);
 
 			return "/asset/full_content.jsp";
 		}

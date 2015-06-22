@@ -17,3 +17,4 @@
 <%@ include file="/html/taglib/ui/error_principal/init.jsp" %>
 
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+<liferay-ui:error exception="<%= PrincipalException.MustHavePermission.class %>" message="you-do-not-have-the-required-permissions" />

@@ -33,7 +33,7 @@ searchContainer.setResults(wikiPage.getAttachmentsFileEntries(searchContainer.ge
 	displayStyle="<%= wikiAttachmentItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
 	displayStyleURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL() %>"
 	itemSelectedEventName="<%= wikiAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
-	returnType="<%= ReturnType.parseFirst(wikiAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
+	itemSelectorReturnType="<%= ItemSelectorBrowserReturnTypeUtil.getFirstAvailableItemSelectorReturnType(wikiAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
 	searchContainer="<%= searchContainer %>"
 	tabName="<%= wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

@@ -14,8 +14,9 @@
 
 package com.liferay.wiki.web.item.selector.view;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext;
@@ -43,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component
 public class WikiAttachmentItemSelectorView
-	implements ItemSelectorView
-		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
+	implements ItemSelectorView<WikiAttachmentItemSelectorCriterion> {
 
 	public static final String
 		WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
@@ -62,9 +62,7 @@ public class WikiAttachmentItemSelectorView
 	}
 
 	@Override
-	public Set<DefaultItemSelectorReturnType>
-		getSupportedItemSelectorReturnTypes() {
-
+	public Set<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -110,11 +108,11 @@ public class WikiAttachmentItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	private static final Set<DefaultItemSelectorReturnType>
+	private static final Set<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
 			SetUtil.fromArray(
-				new DefaultItemSelectorReturnType[] {
-					DefaultItemSelectorReturnType.URL
+				new ItemSelectorReturnType[] {
+					new URLItemSelectorReturnType()
 				}));
 
 	private ServletContext _servletContext;

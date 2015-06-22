@@ -41,7 +41,7 @@ searchContainer.setResults(results);
 	displayStyle="<%= blogsItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
 	displayStyleURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL() %>"
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
-	returnType="<%= ReturnType.parseFirst(blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
+	itemSelectorReturnType="<%= ItemSelectorBrowserReturnTypeUtil.getFirstAvailableItemSelectorReturnType(blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
 	searchContainer="<%= searchContainer %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

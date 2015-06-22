@@ -58,7 +58,7 @@ public class JournalServiceUpgrade {
 		upgradeProcesses.add(new UpgradeClassNames());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.journal.service", upgradeProcesses, 1, 0, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

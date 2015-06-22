@@ -234,7 +234,7 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<var name="key_siteName" value="Site Liferay" />
+		<var name="key_siteName" value="Liferay" />
 
 		<execute function="Type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Liferay" />
 		<execute function="AssertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />

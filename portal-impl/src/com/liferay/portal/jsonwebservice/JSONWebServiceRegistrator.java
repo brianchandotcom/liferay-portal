@@ -30,8 +30,11 @@ import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
@@ -147,6 +150,49 @@ public class JSONWebServiceRegistrator {
 		return service.getClass();
 	}
 
+	protected boolean isInterfaceMethod(Method method) {
+		Class<?> declaringClass = method.getDeclaringClass();
+
+		if (declaringClass.isInterface()) {
+			return true;
+		}
+
+		Queue<Class<?>> queue = new LinkedList<>(
+			Arrays.asList(declaringClass.getInterfaces()));
+
+		Class<?> superClass = declaringClass.getSuperclass();
+
+		if (superClass != null) {
+			queue.add(superClass);
+		}
+
+		Class<?> clazz = null;
+
+		while ((clazz = queue.poll()) != null) {
+			if (clazz.isInterface()) {
+				try {
+					clazz.getMethod(
+						method.getName(), method.getParameterTypes());
+
+					return true;
+				}
+				catch (ReflectiveOperationException roe) {
+				}
+			}
+			else {
+				queue.addAll(Arrays.asList(clazz.getInterfaces()));
+
+				superClass = clazz.getSuperclass();
+
+				if (superClass != null) {
+					queue.add(superClass);
+				}
+			}
+		}
+
+		return false;
+	}
+
 	protected Class<?> loadUtilClass(Class<?> implementationClass)
 		throws ClassNotFoundException {
 
@@ -191,7 +237,9 @@ public class JSONWebServiceRegistrator {
 		for (Method method : methods) {
 			Class<?> declaringClass = method.getDeclaringClass();
 
-			if (declaringClass != serviceBeanClass) {
+			if ((declaringClass != serviceBeanClass) ||
+				!isInterfaceMethod(method)) {
+
 				continue;
 			}
 

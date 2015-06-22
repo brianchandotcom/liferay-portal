@@ -23,8 +23,8 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
-import com.liferay.portlet.social.handler.BaseSocialActivityManager;
-import com.liferay.portlet.social.handler.SocialActivityManager;
+import com.liferay.portlet.social.manager.BaseSocialActivityManager;
+import com.liferay.portlet.social.manager.SocialActivityManager;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 

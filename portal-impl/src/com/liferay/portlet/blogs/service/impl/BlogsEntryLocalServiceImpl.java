@@ -86,7 +86,7 @@ import com.liferay.portlet.blogs.util.BlogsUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
+import com.liferay.portlet.social.manager.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 

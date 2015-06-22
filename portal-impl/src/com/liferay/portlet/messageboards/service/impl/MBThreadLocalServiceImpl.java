@@ -51,7 +51,7 @@ import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
-import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
+import com.liferay.portlet.social.manager.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;

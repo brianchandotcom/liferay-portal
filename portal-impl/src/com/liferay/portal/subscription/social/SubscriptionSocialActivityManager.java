@@ -17,8 +17,8 @@ package com.liferay.portal.subscription.social;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.Subscription;
-import com.liferay.portlet.social.handler.BaseSocialActivityManager;
-import com.liferay.portlet.social.handler.SocialActivityManager;
+import com.liferay.portlet.social.manager.BaseSocialActivityManager;
+import com.liferay.portlet.social.manager.SocialActivityManager;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**

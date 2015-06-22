@@ -71,7 +71,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
-import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
+import com.liferay.portlet.social.manager.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;

@@ -28,7 +28,7 @@ import com.liferay.portlet.ratings.EntryScoreException;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.base.RatingsEntryLocalServiceBaseImpl;
-import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
+import com.liferay.portlet.social.manager.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.List;

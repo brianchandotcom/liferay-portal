@@ -1108,11 +1108,11 @@
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
 	</bean>
 	<bean id="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" class="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" />
-	<bean id="com.liferay.portlet.social.handler.SocialActivityManagerUtil" class="com.liferay.portlet.social.handler.SocialActivityManagerUtil">
+	<bean id="com.liferay.portlet.social.manager.SocialActivityManagerUtil" class="com.liferay.portlet.social.manager.SocialActivityManagerUtil">
 		<property name="socialActivityManager">
-			<bean class="com.liferay.portlet.social.handler.SocialActivityManagerImpl" init-method="activate">
+			<bean class="com.liferay.portlet.social.manager.SocialActivityManagerImpl" init-method="activate">
 				<constructor-arg>
-					<bean class="com.liferay.portlet.social.handler.DefaultSocialActivityManager" />
+					<bean class="com.liferay.portlet.social.manager.DefaultSocialActivityManager" />
 				</constructor-arg>
 			</bean>
 		</property>

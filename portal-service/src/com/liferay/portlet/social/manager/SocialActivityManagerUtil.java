@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.social.handler;
+package com.liferay.portlet.social.manager;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;

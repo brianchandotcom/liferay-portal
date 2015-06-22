@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../productivity-center/productivity-center-api" />
+	<property name="import.shared" value="../application-list/application-list-api" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

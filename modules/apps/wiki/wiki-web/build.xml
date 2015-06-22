@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="wiki-service,../item-selector/item-selector-api,../item-selector/item-selector-criteria-api,../productivity-center/productivity-center-api" />
+	<property name="import.shared" value="wiki-service,../item-selector/item-selector-api,../item-selector/item-selector-criteria-api,../application-list/application-list-api" />
 	<property name="osgi.auto.update.xml" value="true" />
 	<property name="osgi.ide.dependencies" value="struts.jar" />
 

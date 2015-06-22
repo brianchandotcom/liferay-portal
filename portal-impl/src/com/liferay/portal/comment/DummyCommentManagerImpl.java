@@ -161,6 +161,12 @@ public class DummyCommentManagerImpl implements CommentManager {
 				return false;
 			}
 
+			public boolean hasSubscribePermission(
+				long companyId, long groupId, String className, long classPK) {
+
+				return false;
+			}
+
 			@Override
 			public boolean hasUpdatePermission(long commentId) {
 

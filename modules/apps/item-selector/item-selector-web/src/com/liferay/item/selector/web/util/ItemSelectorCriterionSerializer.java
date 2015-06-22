@@ -16,6 +16,7 @@ package com.liferay.item.selector.web.util;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,14 +30,24 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera
@@ -45,6 +56,22 @@ import org.osgi.service.component.annotations.Component;
 public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 	public static final String JSON = "json";
+
+	public void addItemSelectorReturnType(
+		ItemSelectorReturnType itemSelectorReturnType) {
+
+		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass =
+			itemSelectorReturnType.getClass();
+
+		_itemSelectorReturnTypes.putIfAbsent(
+			itemSelectorReturnTypeClass.getName(),
+			new CopyOnWriteArrayList<ItemSelectorReturnType>());
+
+		List<ItemSelectorReturnType> itemSelectorReturnTypes =
+			_itemSelectorReturnTypes.get(itemSelectorReturnTypeClass.getName());
+
+		itemSelectorReturnTypes.add(itemSelectorReturnType);
+	}
 
 	public Map<String, String[]> getProperties(
 		ItemSelectorCriterion itemSelectorCriterion, String prefix) {
@@ -113,6 +140,24 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_bundleContext = bundleContext;
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, ItemSelectorView.class,
+			new ItemSelectorReturnTypeServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
+	}
+
 	private boolean _isInternalProperty(String name) {
 		if (name.equals("availableItemSelectorReturnTypes") ||
 			name.equals("class") ||
@@ -136,23 +181,14 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		for (String desiredItemSelectorReturnTypeName :
 				desiredItemSelectorReturnTypeNames) {
 
-			Set<ItemSelectorReturnType> availableItemSelectorReturnTypes =
-				itemSelectorCriterion.getAvailableItemSelectorReturnTypes();
+			List<ItemSelectorReturnType> itemSelectorReturnTypes =
+				_itemSelectorReturnTypes.get(desiredItemSelectorReturnTypeName);
 
-			for (ItemSelectorReturnType availableItemSelectorReturnType :
-					availableItemSelectorReturnTypes) {
+			Iterator<ItemSelectorReturnType> iterator =
+				itemSelectorReturnTypes.iterator();
 
-				String availableItemSelectorReturnTypeName =
-					availableItemSelectorReturnType.getName();
-
-				if (availableItemSelectorReturnTypeName.equals(
-						desiredItemSelectorReturnTypeName)) {
-
-					desiredItemSelectorReturnTypes.add(
-						availableItemSelectorReturnType);
-
-					break;
-				}
+			if (iterator.hasNext()) {
+				desiredItemSelectorReturnTypes.add(iterator.next());
 			}
 		}
 
@@ -197,4 +233,80 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ItemSelectorCriterionSerializer.class);
 
+	private BundleContext _bundleContext;
+	private final ConcurrentHashMap<String, List<ItemSelectorReturnType>>
+		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
+	private ServiceTracker<ItemSelectorView, ItemSelectorView>
+		_serviceTracker;
+
+	private class ItemSelectorReturnTypeServiceTrackerCustomizer
+		implements
+			ServiceTrackerCustomizer<ItemSelectorView, ItemSelectorView> {
+
+		@Override
+		public ItemSelectorView addingService(
+			ServiceReference<ItemSelectorView> serviceReference) {
+
+			ItemSelectorView itemSelectorView = _bundleContext.getService(
+				serviceReference);
+
+			Set<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+				itemSelectorView.getSupportedItemSelectorReturnTypes();
+
+			for (ItemSelectorReturnType supportedItemSelectorReturnType :
+					supportedItemSelectorReturnTypes) {
+
+				Class<? extends ItemSelectorReturnType>
+					supportedItemSelectorReturnTypeClass =
+						supportedItemSelectorReturnType.getClass();
+
+				_itemSelectorReturnTypes.putIfAbsent(
+					supportedItemSelectorReturnTypeClass.getName(),
+					new CopyOnWriteArrayList<ItemSelectorReturnType>());
+
+				List<ItemSelectorReturnType> itemSelectorReturnTypes =
+					_itemSelectorReturnTypes.get(
+						supportedItemSelectorReturnTypeClass.getName());
+
+				itemSelectorReturnTypes.add(supportedItemSelectorReturnType);
+			}
+
+			return itemSelectorView;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ItemSelectorView> serviceReference,
+			ItemSelectorView ItemSelectorView) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ItemSelectorView> serviceReference,
+			ItemSelectorView itemSelectorView) {
+
+			try {
+				Set<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+					itemSelectorView.getSupportedItemSelectorReturnTypes();
+
+				for (ItemSelectorReturnType supportedItemSelectorReturnType :
+						supportedItemSelectorReturnTypes) {
+
+					Class<? extends ItemSelectorReturnType>
+						supportedItemSelectorReturnTypeClass =
+							supportedItemSelectorReturnType.getClass();
+
+					List<ItemSelectorReturnType> itemSelectorReturnTypes =
+						_itemSelectorReturnTypes.get(
+							supportedItemSelectorReturnTypeClass.getName());
+
+					itemSelectorReturnTypes.remove(0);
+				}
+			}
+			finally {
+				_bundleContext.ungetService(serviceReference);
+			}
+		}
+
+	}
 }

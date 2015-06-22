@@ -685,7 +685,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryComments" priority="5">
+	<command name="EditBlogsEntryComments" priority="4">
 		<var name="entryComment1" value="1st Blog Comment" />
 		<var name="entryComment2" value="2nd Blog Comment" />
 		<var name="entryComment3" value="3rd Blog Comment" />

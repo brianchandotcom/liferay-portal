@@ -213,9 +213,15 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+		String pathThemeImages = StringPool.BLANK;
+
+		if (themeDisplay != null) {
+			pathThemeImages = themeDisplay.getPathThemeImages();
+		}
+
 		DiscussionComment rootDiscussionComment = new MBDiscussionCommentImpl(
 			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats,
-			themeDisplay.getPathThemeImages());
+			pathThemeImages);
 
 		return new MBDiscussionImpl(
 			rootDiscussionComment, messageDisplay.isDiscussionMaxComments());

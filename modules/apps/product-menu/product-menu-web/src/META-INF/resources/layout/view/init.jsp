@@ -22,6 +22,6 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.productivity.center.constants.ProductivityCenterPortletKeys" %>
+<%@ page import="com.liferay.product.menu.web.constants.ProductivityCenterPortletKeys" %>
 
 <liferay-theme:defineObjects />

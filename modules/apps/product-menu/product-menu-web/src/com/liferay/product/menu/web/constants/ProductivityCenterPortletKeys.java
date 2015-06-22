@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.constants;
+package com.liferay.product.menu.web.constants;
 
 /**
  * @author Adolfo Pérez

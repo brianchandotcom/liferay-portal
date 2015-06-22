@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.layout;
+package com.liferay.product.menu.web.layout;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;

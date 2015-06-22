@@ -28,7 +28,9 @@ public class PortalPermissionImpl implements PortalPermission {
 		throws PrincipalException {
 
 		if (!contains(permissionChecker, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), PortletKeys.PORTAL,
+				PortletKeys.PORTAL, actionId);
 		}
 	}
 

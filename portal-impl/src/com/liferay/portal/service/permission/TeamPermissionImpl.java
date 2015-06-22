@@ -32,7 +32,9 @@ public class TeamPermissionImpl implements TeamPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, teamId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Team.class.getName(), teamId,
+				actionId);
 		}
 	}
 
@@ -42,7 +44,9 @@ public class TeamPermissionImpl implements TeamPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, team, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Team.class.getName(),
+				team.getTeamId(), actionId);
 		}
 	}
 

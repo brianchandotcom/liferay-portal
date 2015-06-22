@@ -265,7 +265,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		if (SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, ConfigurationException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include("/error.jsp", renderRequest, renderResponse);
 		}

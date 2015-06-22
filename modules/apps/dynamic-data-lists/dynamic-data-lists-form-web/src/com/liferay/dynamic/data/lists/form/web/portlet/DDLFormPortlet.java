@@ -138,7 +138,7 @@ public class DDLFormPortlet extends MVCPortlet {
 				renderRequest,
 				NoSuchStructureLayoutException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include(templatePath + "error.jsp", renderRequest, renderResponse);
 		}

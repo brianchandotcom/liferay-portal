@@ -29,7 +29,6 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
-import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 
 import org.junit.ClassRule;
@@ -44,8 +43,7 @@ import org.junit.Test;
 @Sync
 public class BlogsEntryTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
-	WhenIsIndexableBaseModel {
+	implements WhenIsAssetableBaseModel, WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -181,21 +179,7 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashGrandparentBaseModelAndRestoreParentModelIsVisibleParent()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashGrandparentBaseModelIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashGrandparentBaseModelIsNotVisibleParent()
-		throws Exception {
 	}
 
 	@Ignore

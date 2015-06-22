@@ -3,7 +3,7 @@
 
 <project>
 	<property name="osgi.ide.dependencies" value="slf4j-api.jar" />
-	<property name="osgi.runtime.dependencies" value="org.apache.felix.dependencymanager.jar,org.apache.felix.dependencymanager.shell.jar,org.apache.felix.scr.jar" />
+	<property name="osgi.runtime.dependencies" value="org.apache.felix.dependencymanager.jar,org.apache.felix.dependencymanager.shell.jar" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

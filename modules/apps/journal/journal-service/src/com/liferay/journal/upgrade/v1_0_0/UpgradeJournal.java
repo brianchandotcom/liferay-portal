@@ -477,6 +477,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 	protected String getContent(String fileName) {
 		return ContentUtil.get(
+			getClass().getClassLoader(),
 			"com/liferay/portal/events/dependencies/" + fileName);
 	}
 

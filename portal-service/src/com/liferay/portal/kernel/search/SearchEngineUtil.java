@@ -154,7 +154,7 @@ public class SearchEngineUtil {
 		throws SearchException {
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
-			for (long companyId : _companyIds) {
+			for (long companyId : _companyIds.keySet()) {
 				searchEngine.backup(companyId, backupName);
 			}
 		}
@@ -536,11 +536,11 @@ public class SearchEngineUtil {
 	}
 
 	public synchronized static void initialize(long companyId) {
-		if (_companyIds.contains(companyId)) {
+		if (_companyIds.containsKey(companyId)) {
 			return;
 		}
 
-		_companyIds.add(companyId);
+		_companyIds.put(companyId, companyId);
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
 			searchEngine.initialize(companyId);
@@ -625,14 +625,14 @@ public class SearchEngineUtil {
 		throws SearchException {
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
-			for (long companyId : _companyIds) {
+			for (long companyId : _companyIds.keySet()) {
 				searchEngine.removeBackup(companyId, backupName);
 			}
 		}
 	}
 
 	public synchronized static void removeCompany(long companyId) {
-		if (!_companyIds.contains(companyId)) {
+		if (!_companyIds.containsKey(companyId)) {
 			return;
 		}
 
@@ -661,7 +661,7 @@ public class SearchEngineUtil {
 		throws SearchException {
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
-			for (long companyId : _companyIds) {
+			for (long companyId : _companyIds.keySet()) {
 				searchEngine.restore(companyId, backupName);
 			}
 		}
@@ -768,7 +768,7 @@ public class SearchEngineUtil {
 
 		_searchEngines.put(searchEngineId, searchEngine);
 
-		for (Long companyId : _companyIds) {
+		for (Long companyId : _companyIds.keySet()) {
 			searchEngine.initialize(companyId);
 		}
 	}
@@ -966,7 +966,8 @@ public class SearchEngineUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineUtil.class);
 
-	private static final Set<Long> _companyIds = new HashSet<>();
+	private static final Map<Long, Long> _companyIds =
+		new ConcurrentHashMap<>();
 	private static String _defaultSearchEngineId;
 	private static final Set<String> _excludedEntryClassNames = new HashSet<>();
 	private static boolean _indexReadOnly = GetterUtil.getBoolean(

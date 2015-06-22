@@ -961,7 +961,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration" priority="4">
+	<command known-issues="LPS-56543" name="ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration" priority="4">
 		<var name="orgName1" value="Organization1 Name" />
 		<var name="orgName2" value="Organization2 Name" />
 		<var name="orgName3" value="Organization3 Name" />

@@ -16,6 +16,7 @@ package com.liferay.item.selector.taglib;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,9 +40,8 @@ public class ItemSelectorBrowserReturnTypeUtil
 		for (ItemSelectorReturnType desiredItemSelectorReturnType :
 				desiredItemSelectorReturnTypes) {
 
-			Class<? extends ItemSelectorReturnType>
-				desiredItemSelectorReturnTypeClass =
-					desiredItemSelectorReturnType.getClass();
+			Class<?> desiredItemSelectorReturnTypeClass =
+				desiredItemSelectorReturnType.getClass();
 
 			if (desiredItemSelectorReturnTypeClass.getName().equals(
 					_base64Clazz.getName()) ||
@@ -62,7 +62,7 @@ public class ItemSelectorBrowserReturnTypeUtil
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass =
+		Class<?> itemSelectorReturnTypeClass =
 			itemSelectorReturnType.getClass();
 
 		if (_base64Clazz.getName().equals(
@@ -110,7 +110,7 @@ public class ItemSelectorBrowserReturnTypeUtil
 	private static final Class<?> _base64Clazz =
 		Base64ItemSelectorReturnType.class;
 	private static final Class<?> _fileEntryClazz =
-		Base64ItemSelectorReturnType.class;
+		FileEntryItemSelectorReturnType.class;
 	private static final Class<?> _urlClazz = URLItemSelectorReturnType.class;
 
 }

@@ -36,8 +36,8 @@ public class JBossServerCapabilities implements ServerCapabilities {
 	protected void determineSupportsHotDeploy(ServletContext servletContext)
 		throws Exception {
 
-		DeepNamedValueScanner deepNamedValueScanner =
-			new DeepNamedValueScanner("scanEnabled", true);
+		DeepNamedValueScanner deepNamedValueScanner = new DeepNamedValueScanner(
+			"scanEnabled", true);
 
 		deepNamedValueScanner.setExcludedClassNames(
 			"ChainedInterceptorFactory", "TagAttributeInfo", ".jandex.",

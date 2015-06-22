@@ -234,12 +234,12 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<var name="key_siteName" value="Site Name" />
+		<var name="key_siteName" value="Site Liferay" />
 
 		<execute function="Type" locator1="CPSites#BASIC_SEARCH_FIELD" value1="Liferay" />
 		<execute function="AssertClick" locator1="CPSites#BASIC_SEARCH_BUTTON" value1="Search" />
 
-		<execute function="AssertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="Site Name" />
+		<execute function="AssertTextEquals" locator1="CPSites#SITE_TABLE_NAME" value1="Liferay" />
 		<execute function="AssertElementPresent" locator1="CPSites#SITE_TABLE_CHECKBOX_DISABLED" />
 		<execute function="Click" locator1="CPSites#SITE_TABLE_ACTIONS" />
 		<execute function="AssertElementNotPresent" locator1="CPSites#SITE_MENULIST_DELETE" value1="Delete" />
@@ -326,7 +326,7 @@
 		<execute macro="Site#addBlankCP">
 			<var name="parentSiteName" value="Site Name" />
 			<var name="siteLimitMembership" value="Yes" />
-			<var name="siteName" value="Child Sitename" />
+			<var name="siteName" value="Child SiteName" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -373,7 +373,7 @@
 
 		<execute macro="Site#addMemberCP">
 			<var name="siteName" value="Site Name" />
-			<var name="siteScopeName" value="Child Sitename" />
+			<var name="siteScopeName" value="Child SiteName" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
@@ -386,7 +386,7 @@
 
 		<execute macro="Site#viewMemberCP">
 			<var name="childSiteName" value="Site Name" />
-			<var name="siteScopeName" value="Child Sitename" />
+			<var name="siteScopeName" value="Child SiteName" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />

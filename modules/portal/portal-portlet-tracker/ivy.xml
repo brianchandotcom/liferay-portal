@@ -21,6 +21,5 @@
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency conf="default->master" name="javax.servlet" org="org.glassfish" rev="3.2-b06" />
-		<dependency conf="default->master" name="org.apache.felix.scr" org="org.apache.felix" rev="1.8.2" />
 	</dependencies>
 </ivy-module>

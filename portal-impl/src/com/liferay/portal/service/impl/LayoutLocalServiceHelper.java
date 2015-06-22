@@ -244,10 +244,12 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			}
 		}
 		else {
+			Layout layout = layoutPersistence.findByG_P_L(
+				groupId, privateLayout, layoutId);
 			Layout parentLayout = layoutPersistence.findByG_P_L(
 				groupId, privateLayout, parentLayoutId);
 
-			checkIfParentLayoutIsPrototype(parentLayout);
+			checkIfParentLayoutIsPrototype(layout, parentLayout);
 		}
 
 		if (firstLayout) {
@@ -487,7 +489,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 				LayoutParentLayoutIdException.NOT_PARENTABLE);
 		}
 
-		checkIfParentLayoutIsPrototype(parentLayout);
+		checkIfParentLayoutIsPrototype(layout, parentLayout);
 
 		// Layout cannot become descendant of itself
 
@@ -525,13 +527,16 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		}
 	}
 
-	protected void checkIfParentLayoutIsPrototype(Layout parentLayout)
+	protected void checkIfParentLayoutIsPrototype(
+			Layout layout, Layout parentLayout)
 		throws LayoutParentLayoutIdException {
 
 		// Layout cannot become a child of a layout that is not sortable because
 		// it is linked to a layout set prototype
 
-		if (!SitesUtil.isLayoutSortable(parentLayout)) {
+		if (Validator.isNull(layout.getSourcePrototypeLayoutUuid()) &&
+			!SitesUtil.isLayoutSortable(parentLayout)) {
+
 			throw new LayoutParentLayoutIdException(
 				LayoutParentLayoutIdException.NOT_SORTABLE);
 		}

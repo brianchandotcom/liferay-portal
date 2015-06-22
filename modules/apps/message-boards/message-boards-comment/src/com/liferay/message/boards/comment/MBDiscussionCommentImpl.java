@@ -128,7 +128,14 @@ public class MBDiscussionCommentImpl
 		int[] range = _treeWalker.getChildrenRange(getMessage());
 
 		return new MBDiscussionCommentIterator(
-			messages, from, range[1], _treeWalker);
+			messages, from + 1, range[1], _treeWalker);
+	}
+
+	@Override
+	public boolean isRoot() {
+		MBMessage message = getMessage();
+
+		return message.isRoot();
 	}
 
 	private final List<RatingsEntry> _ratingsEntries;

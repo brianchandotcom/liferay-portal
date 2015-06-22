@@ -54,7 +54,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 			</c:if>
 		</aui:nav-bar>
 	</c:if>
-
+	
 	<c:if test="<%= draggableFileReturnType != null %>">
 		<div class="drop-zone" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-value="<%= ItemSelectorBrowserReturnTypeUtil.getValue(draggableFileReturnType, null, null) %>">
 			<label class="btn btn-primary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>

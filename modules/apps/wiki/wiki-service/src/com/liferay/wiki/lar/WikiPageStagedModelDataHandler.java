@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -200,11 +201,16 @@ public class WikiPageStagedModelDataHandler
 				WikiPageResourceLocalServiceUtil.getPageResource(
 					importedPage.getResourcePrimKey());
 
-			pageResource.setUuid(
+			String pageResourceUuid = GetterUtil.getString(
 				pageElement.attributeValue("page-resource-uuid"));
 
-			WikiPageResourceLocalServiceUtil.updateWikiPageResource(
-				pageResource);
+			if (Validator.isNotNull(pageResourceUuid)) {
+				pageResource.setUuid(
+					pageElement.attributeValue("page-resource-uuid"));
+
+				WikiPageResourceLocalServiceUtil.updateWikiPageResource(
+					pageResource);
+			}
 		}
 		else {
 			existingPage = fetchStagedModelByUuidAndGroupId(

@@ -29,5 +29,6 @@
 		<dependency conf="default->master" name="org.apache.felix.gogo.runtime" org="org.apache.felix" rev="0.10.0" />
 		<dependency conf="default->master" name="org.apache.felix.gogo.shell" org="org.apache.felix" rev="0.10.0" />
 		<dependency conf="default->master" name="org.apache.felix.metatype" org="org.apache.felix" rev="1.0.8" />
+		<dependency conf="default->master" name="org.apache.felix.scr" org="org.apache.felix" rev="1.8.2" />
 	</dependencies>
 </ivy-module>

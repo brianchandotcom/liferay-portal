@@ -97,6 +97,7 @@
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${breadcrumbPortletLocalizedUpperCase}" />
 
 		<var method="StringUtil#upperCase('${messageBoardsPortletLocalized}')" name="messageBoardsPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${messageBoardsPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${messageBoardsPortletLocalizedUpperCase}" />
@@ -119,6 +120,7 @@
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${wikiPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${wikiPortletLocalized}')" name="wikiPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${wikiPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${wikiPortletLocalizedUpperCase}" />
@@ -128,7 +130,9 @@
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${membersPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${inviteMembersPortletLocalized}')" name="inviteMembersPortletLocalizedUpperCase" />
+
 		<var method="StringUtil#upperCase('${membersPortletLocalized}')" name="membersPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${inviteMembersPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${inviteMembersPortletLocalizedUpperCase}" />

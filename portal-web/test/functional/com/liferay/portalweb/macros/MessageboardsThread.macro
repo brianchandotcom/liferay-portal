@@ -1161,6 +1161,7 @@
 
 	<command name="viewTagPG">
 		<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 		<var name="key_tagName" value="tagName" />
 
 		<if>

@@ -251,6 +251,7 @@
 		<execute function="AssertTextEquals" locator1="SODashboard#NAVIGATION_PAGE" value1="${dashboardPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${microblogsStatusUpdatePortletLocalized}')" name="microblogsStatusUpdatePortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${microblogsStatusUpdatePortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalizedUpperCase}" />
@@ -285,6 +286,7 @@
 		<execute function="AssertClick" locator1="SODashboard#NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${microblogsPortletLocalized}')" name="microblogsPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${microblogsPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${microblogsPortletLocalizedUpperCase}" />
@@ -294,6 +296,7 @@
 		<execute function="AssertClick" locator1="SODashboard#NAVIGATION_PAGE" value1="${messagesPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${privateMessagingPortletLocalized}')" name="privateMessagingPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${privateMessagingPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${privateMessagingPortletLocalizedUpperCase}" />
@@ -312,6 +315,7 @@
 		<execute function="AssertClick" locator1="SODashboard#NAVIGATION_PAGE" value1="${tasksPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${tasksPortletLocalized}')" name="tasksPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${tasksPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${tasksPortletLocalizedUpperCase}" />

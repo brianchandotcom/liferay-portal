@@ -224,6 +224,7 @@
 		<description message="This will shutdown the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat." />
 
 		<var method="StringUtil#replace('${nodePort}', '080','')" name="leadingPortNumber" />
+
 		<var method="MathUtil#difference('${leadingPortNumber}', '8')" name="bundleIndex" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="stop-app-server -Dapp.server.bundle.index=${bundleIndex}" />
@@ -247,6 +248,7 @@
 		<description message="This will start the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat." />
 
 		<var method="StringUtil#replace('${nodePort}', '080','')" name="leadingPortNumber" />
+
 		<var method="MathUtil#difference('${leadingPortNumber}', '8')" name="bundleIndex" />
 
 		<if>

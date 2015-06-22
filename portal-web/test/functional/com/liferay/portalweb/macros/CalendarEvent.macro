@@ -387,6 +387,7 @@
 				<execute function="Type" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${setEndDateTime}" />
 
 				<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
+
 				<var name="endDate" value="${startDate}" />
 
 				<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
@@ -423,6 +424,7 @@
 					<execute function="Type" locator1="PGCalendarAddevent#END_DATE_TIME" value1="${setEndDateTime}" />
 
 					<var locator="PGCalendarAddevent#START_DATE" name="startDate" />
+
 					<var name="endDate" value="${startDate}" />
 
 					<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />

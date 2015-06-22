@@ -1876,6 +1876,7 @@
 			<then>
 				<for list="${tagNameList}" param="tagName">
 					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 					<var name="key_tagName" value="tagName" />
 
 					<execute function="AssertTextEquals" locator1="BlogsEntry#TAG" value1="${tagName}" />
@@ -1888,6 +1889,7 @@
 			</then>
 			<else>
 				<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 				<var name="key_tagName" value="tagName" />
 
 				<execute function="AssertTextEquals" locator1="BlogsEntry#TAG" value1="${tagName}" />
@@ -1908,6 +1910,7 @@
 			<then>
 				<for list="${tagNameList}" param="tagName">
 					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 					<var name="key_tagName" value="tagName" />
 
 					<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TAG" value1="${tagName}" />
@@ -1918,6 +1921,7 @@
 			</then>
 			<else>
 				<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 				<var name="key_tagName" value="tagName" />
 
 				<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TAG" value1="${tagName}" />

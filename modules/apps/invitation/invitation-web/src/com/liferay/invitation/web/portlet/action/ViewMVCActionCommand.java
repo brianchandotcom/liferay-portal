@@ -162,7 +162,8 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 
 			message.setMessageId(
 				PortalUtil.getMailId(
-					company.getMx(), "invitation", date.getTime()));
+					company.getMx(), InvitationUtil.MESSAGE_POP_PORTLET_PREFIX,
+					date.getTime()));
 
 			MailServiceUtil.sendEmail(message);
 		}

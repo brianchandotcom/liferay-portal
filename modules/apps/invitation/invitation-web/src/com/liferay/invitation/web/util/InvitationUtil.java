@@ -36,6 +36,8 @@ import javax.portlet.PortletRequest;
  */
 public class InvitationUtil {
 
+	public static final String MESSAGE_POP_PORTLET_PREFIX = "invitation";
+
 	public static Map<String, String> getEmailDefinitionTerms(
 			PortletRequest portletRequest)
 		throws PortalException {

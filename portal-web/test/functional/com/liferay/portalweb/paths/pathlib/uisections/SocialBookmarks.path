@@ -27,7 +27,7 @@
 <!--SOCIAL_BOOKMARKS-->
 <tr>
 	<td>SOCIAL_BOOKMARKS_SITE_LINK</td>
-	<td>//span[contains(@class,'social-bookmark')]//span[contains(.,'${key_socialBookmarkSite}')]</td>
+	<td>//a[contains(@class,'social-bookmark')]//span[contains(.,'${key_socialBookmarkSite}')]</td>
 	<td></td>
 </tr>
 </tbody>

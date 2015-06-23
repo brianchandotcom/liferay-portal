@@ -1,24 +1,6 @@
 <definition>
-	<command name="addCP">
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
+	<command name="add">
 		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
-
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
-
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
-	</command>
-
-	<command name="addPG">
-		<execute macro="BlogsNavigator#gotoCommentPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
 
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
@@ -45,34 +27,13 @@
 			<var name="userFirstName" value="${userFirstName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
-
 		<execute function="Pause" value1="1000" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 	</command>
 
-	<command name="deleteCP">
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
-
-		<execute function="AssertClickNoError" locator1="Comments#DELETE_LINK" value1="Delete" />
-
-		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
-		<execute function="AssertTextNotPresent" value1="${entryComment}" />
-	</command>
-
-	<command name="deletePG">
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+	<command name="delete">
+		<var name="key_entryComment" value="${entryComment}" />
 
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
 
@@ -98,41 +59,20 @@
 		<execute function="AssertTextNotPresent" value1="${entryComment}" />
 	</command>
 
-	<command name="editCP">
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+	<command name="edit">
+		<var name="key_entryComment" value="${entryComment}" />
 
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
 
-		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />
+		<execute function="Click#clickAt" locator1="Comments#EDIT_LINK" value1="Edit" />
 
-		<execute function="AssertClick" locator1="Comments#COMMENT_FIELD" />
+		<execute function="Click#clickAt" locator1="Comments#EDIT_COMMENT_FIELD" />
 
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryCommentEdit}" />
+		<execute function="Type" locator1="Comments#EDIT_COMMENT_FIELD" value1="${entryCommentEdit}" />
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertClick" locator1="Comments#PUBLISH_COMMENT_BUTTON" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryCommentEdit}" />
-	</command>
-
-	<command name="editPG">
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
-
-		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />
-
-		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
-
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryCommentEdit}" />
-
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<var name="key_entryComment" value="${entryCommentEdit}" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryCommentEdit}" />
@@ -158,6 +98,8 @@
 	</command>
 
 	<command name="viewCP">
+		<var name="key_entryComment" value="${entryComment}" />
+
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
@@ -167,27 +109,14 @@
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />
 	</command>
 
-	<command name="viewDefaultCP">
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Comments#ENTRY_COUNT_PANEL" value1="0 Comments" />
-		<execute function="AssertTextNotPresent" value1="${entryComment}" />
-	</command>
-
-	<command name="viewDefaultPG">
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
+	<command name="viewDefault">
 		<execute function="AssertTextEquals" locator1="Comments#ENTRY_COUNT_PANEL" value1="0 Comments" />
 		<execute function="AssertTextNotPresent" value1="${entryComment}" />
 	</command>
 
 	<command name="viewPG">
+		<var name="key_entryComment" value="${entryComment}" />
+
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />

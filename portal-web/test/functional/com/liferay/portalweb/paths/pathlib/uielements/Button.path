@@ -290,7 +290,7 @@
 </tr>
 <tr>
 	<td>REPLY_AS</td>
-	<td>//button[contains(.,'Reply As...')]</td>
+	<td>//button[contains(.,'Reply as...')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -366,6 +366,11 @@
 <tr>
 	<td>SEND</td>
 	<td>//button[contains(.,'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARE</td>
+	<td>//button[contains(.,'Share')]</td>
 	<td></td>
 </tr>
 <tr>

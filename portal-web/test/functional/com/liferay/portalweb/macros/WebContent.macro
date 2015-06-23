@@ -1112,11 +1112,11 @@
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute macro="WebContent#viewPGViaAP">
+			<var name="author" value="${author}" />
 			<var name="key_assetTitle" value="${webContentTitle}" />
-		<var name="webContentTitle" value="${webContentTitle}" />
-<var name="webContentContent" value="${webContentContent}" />
-<var name="author" value="${author}" />
-</execute>
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<for list="${documentTypes}" param="documentType">
 			<var method="StringUtil#upperCase('${documentType}')" name="documentTypeUppercase" />
@@ -1225,9 +1225,9 @@
 
 		<execute macro="Page#viewChildPG">
 			<var name="childPageName" value="${childPageName}" />
-		<var name="viewChildPageDropdown" value="${viewChildPageDropdown}" />
-<var name="javaScriptPage" value="${javaScriptPage}" />
-</execute>
+			<var name="javaScriptPage" value="${javaScriptPage}" />
+			<var name="viewChildPageDropdown" value="${viewChildPageDropdown}" />
+		</execute>
 	</command>
 
 	<command name="viewNestedField">
@@ -1252,11 +1252,11 @@
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute macro="WebContent#viewPGViaAP">
+			<var name="author" value="${author}" />
 			<var name="key_assetTitle" value="${webContentTitle}" />
-		<var name="webContentTitle" value="${webContentTitle}" />
-<var name="webContentContent" value="${webContentContent}" />
-<var name="author" value="${author}" />
-</execute>
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<for list="${documentTypes}" param="documentType">
 			<var method="StringUtil#upperCase('${documentType}')" name="documentTypeUppercase" />

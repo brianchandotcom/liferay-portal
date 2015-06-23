@@ -254,11 +254,11 @@
 
 		<execute macro="BlogsEntryComment#addPGAsGuest">
 			<var name="entryComment" value="${entryComment3}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userEmailAddress" value="guest@liferay.com" />
 			<var name="userFirstName" value="Guest" />
-		<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -451,10 +451,10 @@
 		</execute>
 
 		<execute macro="Polls#viewPollAsGuestPG">
+			<var name="pollsQuestion" value="${pollsQuestion}" />
 			<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceList}" />
 			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
-		<var name="pollsQuestion" value="${pollsQuestion}" />
-</execute>
+		</execute>
 
 		<execute function="AssertClick" locator1="PGPollsdisplay#INFO_MESSAGE_LINK" value1="Please sign in to vote." />
 

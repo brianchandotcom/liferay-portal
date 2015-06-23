@@ -1166,8 +1166,8 @@
 		</execute>
 
 		<execute macro="KBArticle#viewSourceURLCP">
-			<var name="kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="kbArticleSourceURL" value="${kbArticleSourceURL}" />
+			<var name="kbArticleSourceURL" value="${kbArticleSourceURL}" />
+		<var name="kbArticleTitle" value="${kbArticleTitle}" />
 </execute>
 
 		<execute macro="Page#gotoPG">

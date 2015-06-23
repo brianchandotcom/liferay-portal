@@ -93,10 +93,10 @@
 			<isset var="sitePageType" />
 			<then>
 				<execute macro="SitePage#selectSitePageTypeRadioCP">
+					<var name="pageTypeDescription" value="${pageTypeDescription}" />
+					<var name="pageTypeURL" value="${pageTypeURL}" />
 					<var name="sitePageType" value="${sitePageType}" />
-				<var name="pageTypeDescription" value="${pageTypeDescription}" />
-<var name="pageTypeURL" value="${pageTypeURL}" />
-</execute>
+				</execute>
 			</then>
 		</if>
 
@@ -467,12 +467,12 @@
 		<var name="i" value="0" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${sitePageName}" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<if>
 			<equals arg1="${childPageCount}" arg2="1" />
@@ -516,17 +516,17 @@
 
 	<command name="viewDefaultSiteTemplatePagesPG">
 		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageAccessURL" value="${pageAccessURL}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="pageStagingURL" value="${pageStagingURL}" />
 			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="true" />
-		<var name="pageAccess" value="${pageAccess}" />
-<var name="siteNameURL" value="${siteNameURL}" />
-<var name="friendlyURL" value="${friendlyURL}" />
-<var name="pageStaging" value="${pageStaging}" />
-<var name="virtualHostsURL" value="${virtualHostsURL}" />
-<var name="specificURL" value="${specificURL}" />
-<var name="pageAccessURL" value="${pageAccessURL}" />
-<var name="pageStagingURL" value="${pageStagingURL}" />
-</execute>
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
 
@@ -702,12 +702,12 @@
 
 	<command name="viewPG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${sitePageName}" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />

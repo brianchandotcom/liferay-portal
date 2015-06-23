@@ -437,9 +437,9 @@
 		<execute function="AssertClick" locator1="PGStaging#STAGING_MENU_ENABLE_PAGE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 
 		<execute macro="Page#viewPG">
+			<var name="liferaySite" value="${liferaySite}" />
 			<var name="pageName" value="${pageName}" />
-		<var name="liferaySite" value="${liferaySite}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="gotoPublishToLive">
@@ -624,15 +624,15 @@
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
+			<var name="contentName" value="${contentName}" />
+			<var name="editActivateStaging" value="${editActivateStaging}" />
 			<var name="pageVersioningEnabled" value="${pageVersioningEnabled}" />
+			<var name="remotePort" value="${remotePort}" />
 			<var name="remoteStaging" value="true" />
 			<var name="siteID" value="${siteID}" />
 			<var name="siteName" value="${siteName}" />
-		<var name="remotePort" value="${remotePort}" />
-<var name="contentName" value="${contentName}" />
-<var name="uncheckContent" value="${uncheckContent}" />
-<var name="editActivateStaging" value="${editActivateStaging}" />
-</execute>
+			<var name="uncheckContent" value="${uncheckContent}" />
+		</execute>
 	</command>
 
 	<command name="savePublishTemplate">

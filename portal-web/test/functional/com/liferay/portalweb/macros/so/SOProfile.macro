@@ -79,11 +79,11 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
+			<var name="numberOfConnections" value="${numberOfConnections}" />
+			<var name="numberOfNotifications" value="${numberOfNotifications}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userName" value="${userName}" />
-		<var name="numberOfNotifications" value="${numberOfNotifications}" />
-<var name="numberOfConnections" value="${numberOfConnections}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="addInstantMessenger">
@@ -891,11 +891,11 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<execute macro="SOMessages#viewMessageList" />
 	</command>

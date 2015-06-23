@@ -198,8 +198,8 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute macro="KaleoDesigner#viewConnectorNotPresent">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-		<var name="connectorLabel" value="${connectorLabel}" />
+			<var name="connectorLabel" value="${connectorLabel}" />
+		<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
 </execute>
 	</command>
 

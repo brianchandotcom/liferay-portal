@@ -136,9 +136,9 @@
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		<var name="field" value="${field}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="ConfigureEditableListPG" priority="4">
@@ -484,9 +484,9 @@
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${recordFieldDataEdit}" />
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		<var name="field" value="${field}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="EditListRecordViaRecordView" priority="4">
@@ -560,9 +560,9 @@
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${recordFieldDataEdit}" />
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		<var name="field" value="${field}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="SelectList" priority="4">
@@ -859,11 +859,10 @@
 
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldDataFormatted}" />
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		<var name="field" value="${field}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="ViewDecimalFieldPredefinedValue" priority="4">
@@ -1051,10 +1050,10 @@
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="userRole" value="${userRole}" />
-		<var name="field" value="${field}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="ViewIntegerFieldPredefinedValue" priority="4">

@@ -52,8 +52,8 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
 
@@ -66,8 +66,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 	</command>
 
 	<command name="JoinSitePrivateNo" priority="5">
@@ -113,8 +113,8 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
 
@@ -128,8 +128,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 	</command>
 
 	<command name="JoinSiteRestricted" priority="5">
@@ -175,8 +175,8 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
 
@@ -190,8 +190,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Memberships" />
@@ -199,19 +199,19 @@
 		</execute>
 
 		<execute macro="Site#approveJoinSiteRestrictedViaMySitesPG">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="usersn" />
-		<var name="userFirstName" value="${userFirstName}" />
-<var name="userLastName" value="${userLastName}" />
-<var name="userEmailAddress" value="${userEmailAddress}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG" >
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
 
@@ -224,8 +224,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 	</command>
 
 	<command name="LeaveSite" priority="5">
@@ -269,8 +269,8 @@
 		<execute macro="User#loginPG" >
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
 
@@ -289,7 +289,7 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="${password}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 	</command>
 </definition>

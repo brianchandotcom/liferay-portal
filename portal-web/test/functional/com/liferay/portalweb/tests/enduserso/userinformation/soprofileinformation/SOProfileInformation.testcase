@@ -288,8 +288,8 @@
 
 		<execute macro="SOProfile#addProfilePicture">
 			<var name="imageFileName" value="${imageFileName}" />
-		<var name="userName" value="${userName}" />
-</execute>
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -301,8 +301,8 @@
 
 		<execute macro="SOProfile#addProfilePicture">
 			<var name="imageFileName" value="${imageFileNameEdit}" />
-		<var name="userName" value="${userName}" />
-</execute>
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -427,9 +427,9 @@
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
+			<var name="userName" value="${userName}" />
 			<var name="userTag" value="${userTag}" />
-		<var name="userName" value="${userName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -440,16 +440,16 @@
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
+			<var name="userName" value="${userName}" />
 			<var name="userTag" value="${userTag}" />
-		<var name="userName" value="${userName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
+			<var name="userName" value="${userName}" />
 			<var name="userTag" value="${userTagEdit}" />
-		<var name="userName" value="${userName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 

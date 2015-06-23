@@ -217,8 +217,8 @@
 		<execute macro="PermissionsInline#gotoSiteTeamsCP">
 			<var name="portletName" value="Site Teams" />
 			<var name="siteScopeName" value="Site Name" />
-		<var name="teamName" value="${teamName}" />
-</execute>
+			<var name="teamName" value="${teamName}" />
+		</execute>
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX" />
@@ -273,9 +273,9 @@
 
 		<execute macro="Team#editCP">
 			<var name="teamDescriptionEdit" value="Site Team Description Edit" />
+			<var name="teamName" value="${teamName}" />
 			<var name="teamNameEdit" value="Site Team Name Edit" />
-		<var name="teamName" value="${teamName}" />
-</execute>
+		</execute>
 
 		<execute macro="Team#assignMembersCP">
 			<var name="teamName" value="Site Team Name Edit" />

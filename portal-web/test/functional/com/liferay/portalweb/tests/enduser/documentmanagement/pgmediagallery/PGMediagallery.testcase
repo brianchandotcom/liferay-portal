@@ -300,10 +300,10 @@
 
 		<execute macro="DMFolder#editPGViaMG">
 			<var name="mgFolderDescription" value="${mgFolderDescriptionEdit}" />
+			<var name="mgFolderDescriptionEdit" value="${mgFolderDescriptionEdit}" />
 			<var name="mgFolderName" value="${mgFolderNameEdit}" />
-		<var name="mgFolderNameEdit" value="${mgFolderNameEdit}" />
-<var name="mgFolderDescriptionEdit" value="${mgFolderDescriptionEdit}" />
-</execute>
+			<var name="mgFolderNameEdit" value="${mgFolderNameEdit}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -347,11 +347,11 @@
 		</execute>
 
 		<execute macro="DMDocument#editPGViaMG">
+			<var name="mgDocumentDescription" value="${mgDocumentDescription}" />
 			<var name="mgDocumentDescriptionEdit" value="${mgDocumentDescriptionEdit}" />
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
 			<var name="mgDocumentTitleEdit" value="${mgDocumentTitleEdit}" />
-		<var name="mgDocumentDescription" value="${mgDocumentDescription}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="SearchFolderDocument" priority="4">

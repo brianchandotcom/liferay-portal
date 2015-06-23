@@ -64,8 +64,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -74,10 +77,7 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="pageName" value="${pageName}" />
-<var name="portletName" value="${portletName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -149,8 +149,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -159,10 +162,7 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="pageName" value="${pageName}" />
-<var name="portletName" value="${portletName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -744,8 +744,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -754,10 +757,7 @@
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="pageName" value="${pageName}" />
-<var name="portletName" value="${portletName}" />
-</execute>
+		</execute>
 
 		<execute macro="Permissions#addBlogsEntryLoginUserPG">
 			<var name="entryContent" value="${entryContent}" />
@@ -854,8 +854,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -864,10 +867,7 @@
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="pageName" value="${pageName}" />
-<var name="portletName" value="${portletName}" />
-</execute>
+		</execute>
 
 		<execute macro="Permissions#addBlogsEntryLoginUserPG">
 			<var name="entryContent" value="${entryContent}" />
@@ -1704,9 +1704,9 @@
 		</execute>
 
 		<execute macro="BlogsEntry#editNoPermissionPG">
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-		<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

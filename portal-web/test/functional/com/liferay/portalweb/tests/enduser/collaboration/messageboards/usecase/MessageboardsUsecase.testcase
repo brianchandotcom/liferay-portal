@@ -161,25 +161,25 @@
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
+			<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
-		<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
+			<var name="pageName" value="${pageName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
+			<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
-		<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
-<var name="pageName" value="${pageName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="ViewCategoriesAndThreadsOnTwoScopes" priority="3">
@@ -1071,9 +1071,9 @@
 		<execute macro="MessageboardsThread#editPG">
 			<var name="saveAsDraft" value="true" />
 			<var name="threadBodyEdit" value="${threadBodyEdit}" />
+			<var name="threadSubject" value="${threadSubject}" />
 			<var name="threadSubjectEdit" value="${threadSubjectEdit}" />
-		<var name="threadSubject" value="${threadSubject}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1313,14 +1313,14 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
+			<var name="pageName" value="${pageName}" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadReplyBody" value="MB Thread Split Reply Body" />
 			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
 			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
 			<var name="threadSplitSubject" value="MB Thread Split Subject" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-		<var name="pageName" value="${pageName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

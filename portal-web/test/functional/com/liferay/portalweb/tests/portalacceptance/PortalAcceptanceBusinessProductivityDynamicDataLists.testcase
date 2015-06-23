@@ -134,14 +134,14 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-</execute>
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
-		<var name="field" value="${field}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -286,8 +286,8 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-</execute>
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute macro="DynamicDataMapping#editField">
 			<var name="field" value="${field}" />
@@ -305,14 +305,14 @@
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
-		<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-</execute>
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
 			<var name="fieldName" value="${fieldNameEdit}" />
-		<var name="field" value="${field}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -545,15 +545,15 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-</execute>
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
 			<var name="fieldOptionsValues" value="${fieldOptionsValues}" />
-		<var name="field" value="${field}" />
-</execute>
+		</execute>
 	</command>
 </definition>

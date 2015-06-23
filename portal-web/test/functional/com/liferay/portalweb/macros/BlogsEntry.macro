@@ -15,9 +15,9 @@
 			<isset var="smallImageURL" />
 			<then>
 				<execute macro="BlogsEntry#addAbstractSmallImagePG">
+					<var name="smallImageFile" value="${smallImageFile}" />
 					<var name="smallImageURL" value="${smallImageURL}" />
-				<var name="smallImageFile" value="${smallImageFile}" />
-</execute>
+				</execute>
 			</then>
 		</if>
 
@@ -324,8 +324,8 @@
 				<execute macro="BlogsEntry#addTagPG">
 					<var name="entryTitle" value="${entryTitle}" />
 					<var name="tagName" value="${tagName}" />
-				<var name="tagNameList" value="${tagNameList}" />
-</execute>
+					<var name="tagNameList" value="${tagNameList}" />
+				</execute>
 			</then>
 		</if>
 
@@ -405,8 +405,8 @@
 				<execute macro="BlogsEntry#viewTagPG">
 					<var name="entryTitle" value="${entryTitle}" />
 					<var name="tagName" value="${tagName}" />
-				<var name="tagNameList" value="${tagNameList}" />
-</execute>
+					<var name="tagNameList" value="${tagNameList}" />
+				</execute>
 			</then>
 		</if>
 
@@ -416,8 +416,8 @@
 				<execute macro="BlogsEntry#viewRelatedAssetPG">
 					<var name="assetTitle" value="${assetTitle}" />
 					<var name="assetType" value="${assetType}" />
-				<var name="entryTitle" value="${entryTitle}" />
-</execute>
+					<var name="entryTitle" value="${entryTitle}" />
+				</execute>
 			</then>
 		</if>
 	</command>
@@ -623,12 +623,12 @@
 
 	<command name="addWithTrackbackURLPG">
 		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
-		<var name="entryContent" value="${entryContent}" />
-<var name="entryTitleSpecialCharacter" value="${entryTitleSpecialCharacter}" />
-<var name="viewSpecificEntry" value="${viewSpecificEntry}" />
-<var name="entrySubtitle" value="${entrySubtitle}" />
-</execute>
+			<var name="entryTitleSpecialCharacter" value="${entryTitleSpecialCharacter}" />
+			<var name="viewSpecificEntry" value="${viewSpecificEntry}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
@@ -639,22 +639,22 @@
 			<equals arg1="virtualHosts" arg2="true" />
 			<then>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 					<var name="virtualHostsURL" value="${virtualHost1}" />
-				<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+				</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
-				<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
+				</execute>
 			</else>
 		</if>
 
@@ -817,10 +817,10 @@
 			<isset var="entrySubtitleEdit" />
 			<then>
 				<execute macro="BlogsEntry#editSubtitle">
+					<var name="entryEditSubtitle" value="${entryEditSubtitle}" />
 					<var name="entrySubtitle" value="${entrySubtitle}" />
 					<var name="entrySubtitleEdit" value="${entrySubtitleEdit}" />
-				<var name="entryEditSubtitle" value="${entryEditSubtitle}" />
-</execute>
+				</execute>
 			</then>
 		</if>
 

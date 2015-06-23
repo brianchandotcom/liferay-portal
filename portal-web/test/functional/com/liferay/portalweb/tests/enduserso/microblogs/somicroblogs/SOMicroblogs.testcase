@@ -54,6 +54,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
@@ -62,8 +63,7 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -72,6 +72,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
@@ -80,8 +81,7 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -90,6 +90,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress3}" />
 			<var name="userFirstName" value="${userFirstName3}" />
@@ -98,8 +99,7 @@
 			<var name="userMiddleName" value="${userMiddleName3}" />
 			<var name="userName" value="${userName3}" />
 			<var name="userScreenName" value="${userScreenName3}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -376,6 +376,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
@@ -384,8 +385,7 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -394,6 +394,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
@@ -402,8 +403,7 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -412,6 +412,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress3}" />
 			<var name="userFirstName" value="${userFirstName3}" />
@@ -420,8 +421,7 @@
 			<var name="userMiddleName" value="${userMiddleName3}" />
 			<var name="userName" value="${userName3}" />
 			<var name="userScreenName" value="${userScreenName3}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -430,6 +430,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress4}" />
 			<var name="userFirstName" value="${userFirstName4}" />
@@ -438,8 +439,7 @@
 			<var name="userMiddleName" value="${userMiddleName4}" />
 			<var name="userName" value="${userName4}" />
 			<var name="userScreenName" value="${userScreenName4}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -639,6 +639,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -647,8 +648,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -704,6 +704,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -712,8 +713,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -797,6 +797,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
@@ -805,8 +806,7 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -815,6 +815,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
@@ -823,8 +824,7 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -833,6 +833,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress3}" />
 			<var name="userFirstName" value="${userFirstName3}" />
@@ -841,8 +842,7 @@
 			<var name="userMiddleName" value="${userMiddleName3}" />
 			<var name="userName" value="${userName3}" />
 			<var name="userScreenName" value="${userScreenName3}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -952,6 +952,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
@@ -960,8 +961,7 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -970,6 +970,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
@@ -978,8 +979,7 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -988,6 +988,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress3}" />
 			<var name="userFirstName" value="${userFirstName3}" />
@@ -996,8 +997,7 @@
 			<var name="userMiddleName" value="${userMiddleName3}" />
 			<var name="userName" value="${userName3}" />
 			<var name="userScreenName" value="${userScreenName3}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1151,6 +1151,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
@@ -1159,8 +1160,7 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1169,6 +1169,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
@@ -1177,8 +1178,7 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1187,6 +1187,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress3}" />
 			<var name="userFirstName" value="${userFirstName3}" />
@@ -1195,8 +1196,7 @@
 			<var name="userMiddleName" value="${userMiddleName3}" />
 			<var name="userName" value="${userName3}" />
 			<var name="userScreenName" value="${userScreenName3}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -1422,9 +1422,9 @@
 		</execute>
 
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="microblogsEntryViewableBy" value="Connections" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -1440,10 +1440,10 @@
 		<execute macro="SOMicroblogs#viewMicroblogsEntryNone" />
 
 		<execute macro="User#logoutAndLoginPG">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#requestToConnect">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1493,6 +1493,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -1501,8 +1502,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1589,6 +1589,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -1597,8 +1598,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1774,8 +1774,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1823,6 +1823,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -1831,8 +1832,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1865,8 +1865,8 @@
 			<var name="mentionUserName" value="${adminName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1893,8 +1893,8 @@
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
 
 		<var name="key_mentionUserName" value="${adminName}" />
 		<var name="key_microblogsEntryContent" value="${microblogsEntryCommentContent} ${adminName}" />
@@ -2080,11 +2080,11 @@
 		<execute macro="SOMicroblogs#viewMicroblogsEntryNone" />
 
 		<execute macro="SOContactsCenter#followUser">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userListName" value="${adminListName}" />
 			<var name="userName" value="${adminName}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -2241,6 +2241,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -2249,8 +2250,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2450,8 +2450,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
 
 		<execute function="Open" locator1="SOProfile#PROFILE_URL" />
 
@@ -2465,10 +2465,10 @@
 		<execute macro="SOMicroblogs#viewMicroblogsEntryNone" />
 
 		<execute macro="User#logoutAndLoginPG">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
@@ -2573,6 +2573,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
@@ -2581,8 +2582,7 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2591,6 +2591,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
@@ -2599,8 +2600,7 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2801,10 +2801,10 @@
 		<execute macro="SOMicroblogs#viewMicroblogsEntryNone" />
 
 		<execute macro="User#logoutAndLoginPG">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#requestToConnect">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -3009,11 +3009,11 @@
 		<execute macro="SOMicroblogs#viewMicroblogsEntryNone" />
 
 		<execute macro="SOContactsCenter#followUser">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userListName" value="${adminListName}" />
 			<var name="userName" value="${adminName}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -3126,9 +3126,9 @@
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 			<var name="microblogsEntryRepostAuthorName" value="${userName}" />
-		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-</execute>
+		</execute>
 
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
@@ -3163,6 +3163,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
@@ -3171,8 +3172,7 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -3498,6 +3498,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -3506,8 +3507,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -3568,6 +3568,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -3576,8 +3577,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />

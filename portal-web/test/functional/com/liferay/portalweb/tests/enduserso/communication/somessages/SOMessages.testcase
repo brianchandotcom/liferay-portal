@@ -1974,8 +1974,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1996,8 +1996,8 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Messages" />
@@ -2238,12 +2238,12 @@
 		</execute>
 
 		<execute macro="SOMessages#sendMessage">
+			<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-		<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -2257,11 +2257,11 @@
 
 		<execute macro="SOMessages#viewMessage">
 			<var name="connectionName" value="${adminName}" />
+			<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-		<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
-</execute>
+		</execute>
 
 		<execute macro="SOMessages#sendReplyMessage">
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
@@ -2275,14 +2275,14 @@
 
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${adminName}" />
+			<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
 			<var name="senderName" value="${adminName}" />
-		<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2296,14 +2296,14 @@
 
 		<execute macro="SOMessages#viewReplyMessage">
 			<var name="connectionName" value="${userName}" />
+			<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
 			<var name="messageReplyBody" value="${messageReplyBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
 			<var name="senderName" value="${adminName}" />
-		<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="SendReplyMessageAttachmentPortal" priority="4">

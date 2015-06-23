@@ -100,8 +100,8 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
-		<var name="webContentTitle" value="${webContentTitle}" />
-</execute>
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 	</command>
 
 	<command known-issues="LPS-56092" name="RejectWebContentViaWebContentDisplayPG" priority="4">

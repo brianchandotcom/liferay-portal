@@ -75,8 +75,8 @@
 	<command name="addEventToday">
 		<execute macro="CalendarNavigator#gotoAddEventToday">
 			<var name="viewType" value="${viewType}" />
-		<var name="viewTypeUppercase" value="${viewTypeUppercase}" />
-</execute>
+			<var name="viewTypeUppercase" value="${viewTypeUppercase}" />
+		</execute>
 
 		<execute macro="CalendarScheduler#editTitle">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -111,8 +111,8 @@
 
 		<execute macro="CalendarScheduler#selectEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
 	</command>
@@ -124,8 +124,8 @@
 
 		<execute macro="CalendarScheduler#selectEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute function="Type" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitleEdit}" />
 
@@ -154,8 +154,8 @@
 
 		<execute macro="CalendarScheduler#selectEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
@@ -265,12 +265,12 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
 			<var name="eventTitle" value="${eventTitle}" />

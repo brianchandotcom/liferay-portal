@@ -96,8 +96,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Friends Request Page" />
@@ -114,8 +114,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Friends Request Page" />

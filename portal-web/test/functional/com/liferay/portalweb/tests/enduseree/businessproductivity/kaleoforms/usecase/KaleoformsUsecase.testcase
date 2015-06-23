@@ -2106,16 +2106,16 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
-		<var name="kfProcessName" value="${kfProcessName}" />
-</execute>
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="create" />
-		<var name="kfProcessName" value="${kfProcessName}" />
-</execute>
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="Created Task Form" />
@@ -4547,9 +4547,9 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="create" />
-		<var name="kfProcessName" value="${kfProcessName}" />
-</execute>
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="Edited Create Task Form" />
@@ -4649,9 +4649,9 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
-		<var name="kfProcessName" value="${kfProcessName}" />
-</execute>
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="Review Task Form" />
@@ -4735,9 +4735,9 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
-		<var name="kfProcessName" value="${kfProcessName}" />
-</execute>
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="New Review Task Form" />
@@ -4752,9 +4752,9 @@
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="Page#gotoPG">
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="pageName" value="Kaleo Forms Page" />
-		<var name="kfProcessName" value="${kfProcessName}" />
-</execute>
+		</execute>
 
 		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -5330,8 +5330,8 @@
 
 		<execute macro="KaleoFormsAdmin#addFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		<var name="kfProcessName" value="${kfProcessName}" />
-</execute>
+			<var name="kfProcessName" value="${kfProcessName}" />
+		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />

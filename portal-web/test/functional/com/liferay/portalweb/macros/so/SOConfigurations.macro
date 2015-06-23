@@ -132,9 +132,9 @@
 		<execute macro="SOConfigurations#enableAddSOSiteCP" />
 
 		<execute macro="SOConfigurations#enableSOSiteTypeCP">
+			<var name="siteType" value="${siteType}" />
 			<var name="siteTypeList" value="Open,Private Restricted,Private,Private Restricted" />
-		<var name="siteType" value="${siteType}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="unassignOrganizationRoleCP">

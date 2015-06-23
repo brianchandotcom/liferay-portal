@@ -271,10 +271,10 @@
 		</execute>
 
 		<execute macro="Role#removePermissionPG" >
+			<var name="key_roleName" value="${key_roleName}" />
 			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="roleName" value="Guest" />
-		<var name="key_roleName" value="${key_roleName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="WCD Page" />
@@ -1143,10 +1143,10 @@
 		</execute>
 
 		<execute macro="WebContent#editNullCP">
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentContentEdit" value="WC WebContent Content" />
-		<var name="webContentTitle" value="${webContentTitle}" />
-<var name="webContentContent" value="${webContentContent}" />
-</execute>
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

@@ -1,9 +1,9 @@
 <definition>
 	<command name="configureDisplayFilter">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
-		<var name="portletNameBorderless" value="${portletNameBorderless}" />
-</execute>
+		</execute>
 
 		<execute function="SelectFrame" locator1="PGUsersegmentcontentlist#USER_SEGMENT_CONTENT_LIST_CONFIGURATION_IFRAME" />
 

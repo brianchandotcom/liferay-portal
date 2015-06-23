@@ -97,9 +97,9 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameVariation" value="Asterik" />
-		<var name="userGroupName" value="${userGroupName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="AddUserGroupNameComma" priority="4">
@@ -119,9 +119,9 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameVariation" value="Comma" />
-		<var name="userGroupName" value="${userGroupName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="AddUserGroupNameDuplicate" priority="4">
@@ -166,9 +166,9 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameVariation" value="Null" />
-		<var name="userGroupName" value="${userGroupName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="AddUserGroupNameNumber" priority="4">
@@ -188,9 +188,9 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameVariation" value="Number" />
-		<var name="userGroupName" value="${userGroupName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="AddUserGroups" priority="4">
@@ -318,9 +318,9 @@
 		</execute>
 
 		<execute macro="UserGroup#editCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
-		<var name="userGroupName" value="${userGroupName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="RemoveMember" priority="4">

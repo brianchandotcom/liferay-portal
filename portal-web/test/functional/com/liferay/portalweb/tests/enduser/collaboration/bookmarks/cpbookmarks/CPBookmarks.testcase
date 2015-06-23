@@ -412,9 +412,9 @@
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
-		<var name="folderName" value="${folderName}" />
-<var name="subfolderName" value="${subfolderName}" />
-</execute>
+			<var name="folderName" value="${folderName}" />
+			<var name="subfolderName" value="${subfolderName}" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Bookmarks" />
@@ -461,9 +461,9 @@
 			<var name="bookmarkDescription" value="This is a test bookmark!" />
 			<var name="bookmarkName" value="Test Bookmark" />
 			<var name="bookmarkURL" value="http://www.liferay.com" />
-		<var name="folderName" value="${folderName}" />
-<var name="subfolderName" value="${subfolderName}" />
-</execute>
+			<var name="folderName" value="${folderName}" />
+			<var name="subfolderName" value="${subfolderName}" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Bookmarks" />

@@ -712,10 +712,10 @@
 		</execute>
 
 		<execute macro="User#signInPG">
+			<var name="emailPassword" value="${emailPassword}" />
+			<var name="emailVerification" value="${emailVerification}" />
 			<var name="userEmailAddress" property-value="email.address.2" />
-		<var name="emailPassword" value="${emailPassword}" />
-<var name="emailVerification" value="${emailVerification}" />
-</execute>
+		</execute>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -1414,8 +1414,8 @@
 
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="Blog Page Template" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
@@ -1424,8 +1424,8 @@
 
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="Blog Page Template" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<for list="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount" >
 
@@ -1437,8 +1437,8 @@
 
 		<execute macro="PermissionsInline#gotoPagePG">
 			<var name="pageName" value="Blog Page Template" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<for list="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" param="permissionsInLineCheckListsCount" >
 

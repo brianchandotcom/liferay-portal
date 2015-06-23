@@ -3,9 +3,9 @@
 		<var name="portletTypeKey" value="PORTLET" />
 
 		<execute macro="MobilePortlet#addPGCmd">
+			<var name="portletLocator" value="${portletLocator}" />
 			<var name="portletName" value="${portletName}" />
-		<var name="portletLocator" value="${portletLocator}" />
-</execute>
+		</execute>
 
 		<var name="i" value="1" />
 		<var name="key_portletName" value="${portletName}" />
@@ -25,9 +25,9 @@
 				<execute function="Refresh" />
 
 				<execute macro="MobilePortlet#addPGCmd">
+					<var name="portletLocator" value="${portletLocator}" />
 					<var name="portletName" value="${portletName}" />
-				<var name="portletLocator" value="${portletLocator}" />
-</execute>
+				</execute>
 			</then>
 		</while>
 

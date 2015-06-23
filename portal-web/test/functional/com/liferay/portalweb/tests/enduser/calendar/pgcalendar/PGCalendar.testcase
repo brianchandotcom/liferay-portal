@@ -89,11 +89,11 @@
 		</execute>
 
 		<execute macro="Calendar#enableComments">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="calendarType" value="${calendarType}" />
 			<var name="site" value="${site}" />
-		<var name="user" value="${user}" />
-<var name="calendarName" value="${calendarName}" />
-</execute>
+			<var name="user" value="${user}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -207,8 +207,8 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="Liferay" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsTags">
 			<var name="tagText" value="tag1" />
@@ -507,8 +507,8 @@
 			<var name="calendarName" value="${calendarName}" />
 			<var name="calendarType" value="${calendarType}" />
 			<var name="site" value="${site}" />
-		<var name="user" value="${user}" />
-</execute>
+			<var name="user" value="${user}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -517,14 +517,14 @@
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventCommentEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="site" value="${site}" />
 			<var name="user" value="${user}" />
-		<var name="calendarName" value="${calendarName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -557,8 +557,8 @@
 			<var name="calendarName" value="${calendarName}" />
 			<var name="calendarType" value="${calendarType}" />
 			<var name="site" value="${site}" />
-		<var name="user" value="${user}" />
-</execute>
+			<var name="user" value="${user}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -567,14 +567,14 @@
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventCommentEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="site" value="${site}" />
 			<var name="user" value="Test Test" />
-		<var name="calendarName" value="${calendarName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -681,8 +681,8 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="Liferay" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsTags">
 			<var name="tagText" value="tag1" />
@@ -834,8 +834,8 @@
 			<var name="calendarName" value="${calendarName}" />
 			<var name="calendarType" value="${calendarType}" />
 			<var name="site" value="${site}" />
-		<var name="user" value="${user}" />
-</execute>
+			<var name="user" value="${user}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -844,6 +844,7 @@
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
+			<var name="calendarName" value="${calendarName}" />
 			<var name="eventComment" value="${eventComment}" />
 			<var name="eventCommentEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
@@ -852,8 +853,7 @@
 			<var name="numberOfOccurrences" value="1" />
 			<var name="site" value="${site}" />
 			<var name="user" value="${user}" />
-		<var name="calendarName" value="${calendarName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1041,8 +1041,8 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="Liferay" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsTags">
 			<var name="tagText" value="tag1" />
@@ -1340,8 +1340,8 @@
 			<var name="calendarName" value="${calendarName}" />
 			<var name="calendarType" value="My Calendars" />
 			<var name="resourceNameList" value="${resourceNameList}" />
-		<var name="user" value="${user}" />
-</execute>
+			<var name="user" value="${user}" />
+		</execute>
 	</command>
 
 	<command name="AddEventAsPowerUserWhenSiteMemberNoViewPermissions" priority="4">
@@ -1553,8 +1553,8 @@
 			<var name="calendarDefaultName" value="Liferay" />
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 	</command>
 
 	<command name="ChangeCalendarTypeForRepeatingEvent" priority="4">
@@ -1582,8 +1582,8 @@
 			<var name="calendarDefaultName" value="Liferay" />
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 	</command>
 
 	<command name="ChangeColorCalendarSiteCalendarsEventRegular" priority="4">
@@ -1625,9 +1625,9 @@
 		</execute>
 
 		<execute macro="Calendar#viewColor">
+			<var name="calendarType" value="${calendarType}" />
 			<var name="myCalendarColor" value="${siteCalendarColor}" />
-		<var name="calendarType" value="${calendarType}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventColor">
 			<var name="eventBackgroundColorRGB" value="${eventBackgroundColorRGB}" />
@@ -1674,9 +1674,9 @@
 		</execute>
 
 		<execute macro="Calendar#viewColor">
+			<var name="calendarType" value="${calendarType}" />
 			<var name="myCalendarColor" value="${siteCalendarColor}" />
-		<var name="calendarType" value="${calendarType}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventColor">
 			<var name="eventBackgroundColorRGB" value="${eventBackgroundColorRGB}" />
@@ -1934,8 +1934,8 @@
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="pageName" value="${pageName}" />
-</execute>
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="DeleteCalendarEventRepeatingAllEventsInTheSeries" priority="4">
@@ -1961,14 +1961,14 @@
 
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
 			<var name="deleteOptionSet" value="All Events in the Series" />
+			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-		<var name="eventTitle" value="${eventTitle}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="pageName" value="${pageName}" />
-</execute>
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="DeleteCalendarEventRepeatingAllFollowing" priority="5">
@@ -1994,9 +1994,9 @@
 
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
 			<var name="deleteOptionSet" value="All Following" />
+			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-		<var name="eventTitle" value="${eventTitle}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -2101,10 +2101,10 @@
 
 		<execute macro="Calendar#delete">
 			<var name="calendarName" value="${calendarName}" />
+			<var name="calendarType" value="${calendarType}" />
 			<var name="resourceNameList" value="${resourceNameList}" />
-		<var name="calendarType" value="${calendarType}" />
-<var name="user" value="${user}" />
-</execute>
+			<var name="user" value="${user}" />
+		</execute>
 
 		<execute macro="Calendar#viewDefault" />
 	</command>
@@ -2301,8 +2301,8 @@
 		<execute macro="CalendarEvent#edit">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2340,12 +2340,12 @@
 			<var name="duration2" value="Minutes" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
 			<var name="optionSet" value="true" />
 			<var name="reminders" value="true" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2384,9 +2384,9 @@
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="inviteResource" value="true" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2416,8 +2416,8 @@
 		<execute macro="CalendarEvent#edit">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2455,12 +2455,12 @@
 			<var name="duration2" value="Minutes" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
 			<var name="optionSet" value="true" />
 			<var name="reminders" value="true" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2499,9 +2499,9 @@
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="inviteResource" value="true" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2533,8 +2533,8 @@
 		<execute macro="CalendarEvent#edit">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2574,12 +2574,12 @@
 			<var name="duration2" value="Minutes" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
 			<var name="optionSet" value="true" />
 			<var name="reminders" value="true" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2620,9 +2620,9 @@
 			<var name="calendarName" value="Test Test" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="inviteResource" value="true" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+		</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitleEdit}" />
@@ -2664,8 +2664,8 @@
 			<var name="calendarName" value="${calendarNameEdit}" />
 			<var name="calendarType" value="My Calendars" />
 			<var name="resourceNameList" value="${resourceNameList}" />
-		<var name="user" value="${user}" />
-</execute>
+			<var name="user" value="${user}" />
+		</execute>
 	</command>
 
 	<command name="EditCalendarResource" priority="4">
@@ -3494,8 +3494,8 @@
 			<var name="calendarDefaultName" value="Liferay" />
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="eventTitle" value="User Calendar Event 1" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3516,8 +3516,8 @@
 			<var name="calendarDefaultName" value="Liferay" />
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="eventTitle" value="User Calendar Event 2" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -4183,8 +4183,8 @@
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="Calendar Event" />
-		<var name="pageName" value="${pageName}" />
-</execute>
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -4221,8 +4221,8 @@
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="Calendar Event" />
-		<var name="pageName" value="${pageName}" />
-</execute>
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />

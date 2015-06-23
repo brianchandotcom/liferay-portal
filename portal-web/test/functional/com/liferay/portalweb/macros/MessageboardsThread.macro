@@ -750,12 +750,12 @@
 
 	<command name="tearDownPG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<while>
 			<condition function="IsElementPresent" locator1="PGMessageboards#THREAD_TABLE_ACTIONS_GENERIC" />
@@ -1076,12 +1076,12 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadSplitReplyBody}" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<var name="key_threadSubject" value="${threadSplitSubject}" />
 
@@ -1131,10 +1131,10 @@
 			</then>
 			<else>
 				<execute macro="MessageboardsThread#viewStatisticsTopPoster">
+					<var name="userMessageboardsRank" value="${userMessageboardsRank}" />
+					<var name="userName" value="${userName}" />
 					<var name="userPostNumber" value="${threadPostNumber}" />
-				<var name="userName" value="${userName}" />
-<var name="userMessageboardsRank" value="${userMessageboardsRank}" />
-</execute>
+				</execute>
 			</else>
 		</if>
 	</command>

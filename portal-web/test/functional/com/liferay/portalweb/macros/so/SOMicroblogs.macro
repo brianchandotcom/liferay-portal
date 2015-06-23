@@ -11,9 +11,9 @@
 		<execute function="SelectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="${editInDashboard}" />
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
-		<var name="editInDashboard" value="${editInDashboard}" />
-</execute>
+		</execute>
 
 		<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" />
 		<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContent}" />
@@ -54,12 +54,12 @@
 				<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryCommentContent}" />
 
 				<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+					<var name="characterCountdown" value="${characterCountdown}" />
 					<var name="commentInDashboard" value="true" />
-				<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
-<var name="textFieldContentLength" value="${textFieldContentLength}" />
-<var name="characterCountdown" value="${characterCountdown}" />
-<var name="editInDashboard" value="${editInDashboard}" />
-</execute>
+					<var name="editInDashboard" value="${editInDashboard}" />
+					<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+					<var name="textFieldContentLength" value="${textFieldContentLength}" />
+				</execute>
 
 				<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_COMMENT_POST_BUTTON" />
 
@@ -106,12 +106,12 @@
 				<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryCommentContent} @${mentionUserFirstName}" />
 
 				<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+					<var name="characterCountdown" value="${characterCountdown}" />
 					<var name="commentInDashboard" value="true" />
-				<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
-<var name="textFieldContentLength" value="${textFieldContentLength}" />
-<var name="characterCountdown" value="${characterCountdown}" />
-<var name="editInDashboard" value="${editInDashboard}" />
-</execute>
+					<var name="editInDashboard" value="${editInDashboard}" />
+					<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+					<var name="textFieldContentLength" value="${textFieldContentLength}" />
+				</execute>
 
 				<execute function="AssertTextEquals" locator1="SOMicroblogs#MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
 				<execute function="AssertTextEquals" locator1="SOMicroblogs#MICROBLOGS_CONTENT_AUTOCOMPLETE_EMAIL" value1="${mentionUserEmailAddress}" />
@@ -143,12 +143,12 @@
 
 	<command name="addMicroblogsEntryCommentViaProfile">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${microblogsEntryAuthorScreenName}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${microblogsEntryAuthorLastName}, ${microblogsEntryAuthorFirstName}" />
@@ -195,12 +195,12 @@
 		<execute function="Pause" value1="1000" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${microblogsEntryContent}" />
 	</command>
@@ -217,9 +217,9 @@
 		<execute function="SelectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="${editInDashboard}" />
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
-		<var name="editInDashboard" value="${editInDashboard}" />
-</execute>
+		</execute>
 
 		<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" />
 
@@ -249,9 +249,9 @@
 		<execute function="SelectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="${editInDashboard}" />
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
-		<var name="editInDashboard" value="${editInDashboard}" />
-</execute>
+		</execute>
 
 		<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" />
 		<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContent} " />
@@ -283,11 +283,11 @@
 		<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContentEdit}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+			<var name="characterCountdown" value="${characterCountdown}" />
 			<var name="editInDashboard" value="true" />
-		<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
-<var name="textFieldContentLength" value="${textFieldContentLength}" />
-<var name="characterCountdown" value="${characterCountdown}" />
-</execute>
+			<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+			<var name="textFieldContentLength" value="${textFieldContentLength}" />
+		</execute>
 
 		<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON" />
 
@@ -314,11 +314,11 @@
 		<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContentEdit} @${mentionUserFirstName}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+			<var name="characterCountdown" value="${characterCountdown}" />
 			<var name="editInDashboard" value="true" />
-		<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
-<var name="textFieldContentLength" value="${textFieldContentLength}" />
-<var name="characterCountdown" value="${characterCountdown}" />
-</execute>
+			<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+			<var name="textFieldContentLength" value="${textFieldContentLength}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="SOMicroblogs#MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
 		<execute function="AssertTextEquals" locator1="SOMicroblogs#MICROBLOGS_CONTENT_AUTOCOMPLETE_EMAIL" value1="${mentionUserEmailAddress}" />
@@ -447,11 +447,11 @@
 		<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1=" Edit" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+			<var name="characterCountdown" value="${characterCountdown}" />
 			<var name="editInDashboard" value="true" />
-		<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
-<var name="textFieldContentLength" value="${textFieldContentLength}" />
-<var name="characterCountdown" value="${characterCountdown}" />
-</execute>
+			<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+			<var name="textFieldContentLength" value="${textFieldContentLength}" />
+		</execute>
 
 		<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON" />
 
@@ -474,9 +474,9 @@
 		<execute function="SelectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="${editInDashboard}" />
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
-		<var name="editInDashboard" value="${editInDashboard}" />
-</execute>
+		</execute>
 
 		<execute function="Click" locator1="SOMicroblogsProfile#MICROBLOGS_ENTRY_CONTENT_EDIT_INPUT_FIELD" />
 		<execute function="Type#sendKeys" locator1="SOMicroblogsProfile#MICROBLOGS_ENTRY_CONTENT_EDIT_INPUT_FIELD" value1=" Edit" />
@@ -539,12 +539,12 @@
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<while>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="SOMicroblogs#MICROBLOGS_ENTRY_DELETE_LINK" value1="Delete" />
@@ -1128,12 +1128,12 @@
 		</if>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<execute function="Type#typePause" locator1="SOContactscenter#CONTACTS_LIST_SEARCH" value1="${microblogsEntryAuthorScreenName}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="SOContactscenter#CONTACTS_LIST_NAME" value1="${microblogsEntryAuthorLastName}, ${microblogsEntryAuthorFirstName}" />
@@ -1228,12 +1228,12 @@
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
 

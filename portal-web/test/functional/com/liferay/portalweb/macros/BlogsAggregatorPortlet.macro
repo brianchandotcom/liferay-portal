@@ -2,9 +2,9 @@
 	<command name="configureSelectionMethod">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Blogs Aggregator" />
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
-		<var name="portletNameBorderless" value="${portletNameBorderless}" />
-</execute>
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
@@ -59,9 +59,9 @@
 
 	<command name="viewParentOrganizationPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
-		<var name="portletNameBorderless" value="${portletNameBorderless}" />
-</execute>
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
@@ -81,9 +81,9 @@
 
 	<command name="viewSelectOrganizationNoPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
-		<var name="portletNameBorderless" value="${portletNameBorderless}" />
-</execute>
+		</execute>
 
 		<execute function="AssertTextPresent" locator1="Portlet#TITLE" value1="Blogs Aggregator" />
 
@@ -100,9 +100,9 @@
 
 	<command name="viewSubOrganizationPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
-		<var name="portletNameBorderless" value="${portletNameBorderless}" />
-</execute>
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 

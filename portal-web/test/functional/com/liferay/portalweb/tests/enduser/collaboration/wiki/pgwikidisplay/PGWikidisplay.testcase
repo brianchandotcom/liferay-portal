@@ -361,8 +361,8 @@
 
 		<execute macro="WikiPage#viewDefaultPGViaWD">
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageName" value="${wikiPageTitle}" />
-		<var name="wikiPageContent" value="${wikiPageContent}" />
 </execute>
 	</command>
 

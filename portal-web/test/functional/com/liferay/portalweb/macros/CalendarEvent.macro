@@ -121,12 +121,12 @@
 				<execute macro="CalendarEvent#save" />
 
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
-				<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
+				</execute>
 
 				<execute macro="CalendarScheduler#_viewRegularEventTitleViaMonthView">
 					<var name="endDate" value="${endDate}" />
@@ -163,12 +163,12 @@
 					<execute macro="CalendarEvent#save" />
 
 					<execute macro="Page#gotoPG">
+						<var name="defaultURL" value="${defaultURL}" />
+						<var name="nodePort" value="${nodePort}" />
 						<var name="pageName" value="${pageName}" />
-					<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+						<var name="soDashboard" value="${soDashboard}" />
+						<var name="soPage" value="${soPage}" />
+					</execute>
 
 					<var name="key_endDate" value="${endDate}" />
 					<var name="key_endDateTime" value="${endDateTime}" />
@@ -198,11 +198,11 @@
 
 					<execute macro="CalendarEvent#setRepeating">
 						<var name="frequency" value="${frequency}" />
-					<var name="position" value="${position}" />
-<var name="weekday" value="${weekday}" />
-<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
-<var name="month" value="${month}" />
-</execute>
+						<var name="month" value="${month}" />
+						<var name="numberOfOccurrences" value="${numberOfOccurrences}" />
+						<var name="position" value="${position}" />
+						<var name="weekday" value="${weekday}" />
+					</execute>
 
 					<execute macro="CalendarEvent#selectCalendar">
 						<var name="calendarName" value="${calendarName}" />
@@ -218,12 +218,12 @@
 					<execute macro="CalendarEvent#save" />
 
 					<execute macro="Page#gotoPG">
+						<var name="defaultURL" value="${defaultURL}" />
+						<var name="nodePort" value="${nodePort}" />
 						<var name="pageName" value="${pageName}" />
-					<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+						<var name="soDashboard" value="${soDashboard}" />
+						<var name="soPage" value="${soPage}" />
+					</execute>
 
 					<var name="key_endDate" value="${endDate}" />
 					<var name="key_endDateTime" value="${endDateTime}" />
@@ -244,13 +244,13 @@
 					<var name="endDate" value="${endDate}" />
 					<var name="endDateTime" value="${endDateTime}" />
 					<var name="eventComment" value="${eventComment}" />
+					<var name="eventCommentList" value="${eventCommentList}" />
 					<var name="eventTitle" value="${eventTitle}" />
 					<var name="eventType" value="${eventType}" />
 					<var name="startDate" value="${startDate}" />
 					<var name="startDateTime" value="${startDateTime}" />
 					<var name="user" value="${user}" />
-				<var name="eventCommentList" value="${eventCommentList}" />
-</execute>
+				</execute>
 			</then>
 		</if>
 
@@ -275,8 +275,8 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${calendarName}" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="PGCalendarVieweventdetails#COMMENTS_BE_THE_FIRST" value1="Be the first." />
 
@@ -424,12 +424,12 @@
 				<execute macro="CalendarEvent#save" />
 
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
-				<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
+				</execute>
 
 				<execute macro="CalendarScheduler#_viewRegularEventTitleViaMonthView">
 					<var name="endDate" value="${endDate}" />
@@ -470,12 +470,12 @@
 					<execute function="SelectFrame" value1="relative=top" />
 
 					<execute macro="Page#gotoPG">
+						<var name="defaultURL" value="${defaultURL}" />
+						<var name="nodePort" value="${nodePort}" />
 						<var name="pageName" value="${pageName}" />
-					<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+						<var name="soDashboard" value="${soDashboard}" />
+						<var name="soPage" value="${soPage}" />
+					</execute>
 
 					<var name="key_endDate" value="${endDate}" />
 					<var name="key_endDateTime" value="${setEndDateTime}" />
@@ -496,13 +496,13 @@
 					<var name="endDate" value="${endDate}" />
 					<var name="endDateTime" value="${setEndDateTime}" />
 					<var name="eventComment" value="${eventComment}" />
+					<var name="eventCommentList" value="${eventCommentList}" />
 					<var name="eventTitle" value="${eventTitle}" />
 					<var name="eventType" value="${eventType}" />
 					<var name="startDate" value="${startDate}" />
 					<var name="startDateTime" value="${setStartDateTime}" />
 					<var name="user" value="${user}" />
-				<var name="eventCommentList" value="${eventCommentList}" />
-</execute>
+				</execute>
 			</then>
 		</if>
 	</command>
@@ -597,8 +597,8 @@
 
 		<execute macro="CalendarScheduler#selectEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -693,8 +693,8 @@
 
 		<execute macro="CalendarScheduler#selectEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -756,8 +756,8 @@
 
 		<execute macro="CalendarScheduler#selectEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -873,12 +873,12 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<var name="key_eventTitle" value="${eventTitleEdit}" />
 
@@ -892,8 +892,8 @@
 
 		<execute macro="CalendarScheduler#selectEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -976,12 +976,12 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
 
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
@@ -1014,8 +1014,8 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${calendarName}" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute function="Click" locator1="PGCalendarVieweventdetails#YOUR_RATING_STAR_CLICK_4" />
 
@@ -1187,26 +1187,26 @@
 			<equals arg1="${marketplace}" arg2="true" />
 			<then>
 				<execute macro="Page#addPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Marketplace Calendar Testing" />
-				<var name="pageTemplateName" value="${pageTemplateName}" />
-<var name="pageType" value="${pageType}" />
-<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+					<var name="pageTemplateName" value="${pageTemplateName}" />
+					<var name="pageType" value="${pageType}" />
+				</execute>
 
 				<execute macro="Portlet#addPG">
+					<var name="i" value="${i}" />
 					<var name="pageName" value="Marketplace Calendar Testing" />
 					<var name="portletName" value="Calendar" />
-				<var name="i" value="${i}" />
-</execute>
+				</execute>
 
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Marketplace Calendar Testing" />
-				<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
+				</execute>
 			</then>
 		</if>
 
@@ -1246,8 +1246,8 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${calendarName}" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<if>
 			<isset var="eventCommentList" />
@@ -1293,8 +1293,8 @@
 
 		<execute macro="CalendarScheduler#_viewCalendarViaDialogBox">
 			<var name="calendarName" value="${calendarName}" />
-		<var name="schedulerEventDialogBox" value="${schedulerEventDialogBox}" />
-</execute>
+			<var name="schedulerEventDialogBox" value="${schedulerEventDialogBox}" />
+		</execute>
 
 		<execute macro="CalendarEvent#viewTitleViaDetails">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -1305,8 +1305,8 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${calendarName}" />
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<if>
 			<equals arg1="${yourRating}" arg2="false" />
@@ -1452,16 +1452,16 @@
 
 		<execute macro="CalendarScheduler#selectEvent">
 			<var name="eventTitle" value="${eventTitle}" />
-		<var name="eventType" value="${eventType}" />
-</execute>
+			<var name="eventType" value="${eventType}" />
+		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTitleViaDialogBox">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventUsersViaDialogBox">
+			<var name="user" value="${user}" />
 			<var name="usersList" value="${usersList}" />
-		<var name="user" value="${user}" />
-</execute>
+		</execute>
 	</command>
 </definition>

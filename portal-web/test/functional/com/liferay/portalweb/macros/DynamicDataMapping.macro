@@ -236,17 +236,16 @@
 
 		<execute macro="DynamicDataMapping#viewFieldOptionsCmd">
 			<var name="field" value="${field}" />
+			<var name="fieldEditable" value="${fieldEditable}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldOptionsName" value="${fieldOptionsName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
-			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
-		<var name="fieldOptionsName" value="${fieldOptionsName}" />
-<var name="fieldEditable" value="${fieldEditable}" />
-<var name="i" value="${i}" />
-<var name="fieldOptionsValues" value="${fieldOptionsValues}" />
-<var name="j" value="${j}" />
-<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
-</execute>
+			<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
+			<var name="fieldOptionsValues" value="${fieldOptionsValues}" />
+			<var name="i" value="${i}" />
+			<var name="j" value="${j}" />
+		</execute>
 
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
@@ -531,17 +530,16 @@
 			<then>
 				<execute macro="DynamicDataMapping#viewFieldOptionsCmd">
 					<var name="field" value="${field}" />
+					<var name="fieldEditable" value="${fieldEditable}" />
 					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 					<var name="fieldName" value="${fieldName}" />
+					<var name="fieldOptionsName" value="${fieldOptionsName}" />
 					<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
-					<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
-				<var name="fieldOptionsName" value="${fieldOptionsName}" />
-<var name="fieldEditable" value="${fieldEditable}" />
-<var name="i" value="${i}" />
-<var name="fieldOptionsValues" value="${fieldOptionsValues}" />
-<var name="j" value="${j}" />
-<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
-</execute>
+					<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
+					<var name="fieldOptionsValues" value="${fieldOptionsValues}" />
+					<var name="i" value="${i}" />
+					<var name="j" value="${j}" />
+				</execute>
 			</then>
 		</if>
 

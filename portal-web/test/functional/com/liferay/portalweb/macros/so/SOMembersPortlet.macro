@@ -1,22 +1,22 @@
 <definition>
 	<command name="addConnection">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<execute macro="SOMembersPortlet#inviteMember">
+			<var name="siteRoleInvite" value="${siteRoleInvite}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
-		<var name="siteRoleInvite" value="${siteRoleInvite}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -25,8 +25,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -34,12 +34,12 @@
 		</execute>
 
 		<execute macro="SOMembersPortlet#requestToConnect">
+			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -48,20 +48,20 @@
 
 		<execute macro="SOMembersPortlet#confirmRequestToConnect">
 			<var name="senderName" value="${adminName}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="blockMember">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -88,26 +88,26 @@
 		<execute function="AssertTextEquals" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="0" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
 	</command>
 
 	<command name="disconnectFromConnection">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -123,13 +123,13 @@
 
 	<command name="followMember">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -198,13 +198,13 @@
 
 	<command name="requestToConnect">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -248,13 +248,13 @@
 
 	<command name="unblockMember">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -271,13 +271,13 @@
 
 	<command name="unfollowMember">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Members" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-</execute>
+		</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 

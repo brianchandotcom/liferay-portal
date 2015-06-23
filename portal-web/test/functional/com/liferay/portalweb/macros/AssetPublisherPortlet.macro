@@ -81,14 +81,14 @@
 				<execute function="AssertElementPresent" locator1="PGAssetpublisherConfigurationSites#SITES_TABLE_CHOOSE_BUTTON_DISABLED" />
 
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${sitePageName}" />
 					<var name="siteName" value="${siteName}" />
 					<var name="siteURL" value="true" />
-				<var name="nodePort" value="${nodePort}" />
-<var name="defaultURL" value="${defaultURL}" />
-<var name="soPage" value="${soPage}" />
-<var name="soDashboard" value="${soDashboard}" />
-</execute>
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
+				</execute>
 
 				<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 			</else>
@@ -322,9 +322,9 @@
 	<command name="configureManualAssetSelectionPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
-		<var name="portletNameBorderless" value="${portletNameBorderless}" />
-</execute>
+		</execute>
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 		<execute function="Click" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_MANUAL" />
@@ -752,9 +752,9 @@
 
 	<command name="viewDynamicAssetSelectionConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
-		<var name="portletNameBorderless" value="${portletNameBorderless}" />
-</execute>
+		</execute>
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 		<execute function="Click" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_DYNAMIC" />
@@ -802,9 +802,9 @@
 
 	<command name="viewManualAssetSelectionConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
-		<var name="portletNameBorderless" value="${portletNameBorderless}" />
-</execute>
+		</execute>
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 		<execute function="Click" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_MANUAL" />

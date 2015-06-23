@@ -37,6 +37,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -45,8 +46,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -109,10 +109,10 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#requestToConnectSelectedUsersList">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
 			<var name="userListNameList" value="${userListName},${userListName2},${userListName3}" />
-		<var name="userListName" value="${userListName}" />
-<var name="userEmailAddress" value="${userEmailAddress}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -207,10 +207,10 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#disconnectFromConnectionSelectedUsersList">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
 			<var name="userListNameList" value="${userListName},${userListName2},${userListName3}" />
-		<var name="userListName" value="${userListName}" />
-<var name="userEmailAddress" value="${userEmailAddress}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewNonConnection">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -584,7 +584,9 @@
 
 		<execute macro="SOMembersPortlet#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -592,9 +594,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -602,12 +602,12 @@
 		</execute>
 
 		<execute macro="SOMembersPortlet#disconnectFromConnection">
+			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="AddConnectionViaProfile" priority="4">
@@ -634,13 +634,13 @@
 		</execute>
 
 		<execute macro="SOProfile#addConnection">
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
-		<var name="userEmailAddress" value="${userEmailAddress}" />
-<var name="userListName" value="${userListName}" />
-<var name="userName" value="${userName}" />
-<var name="userScreenName" value="${userScreenName}" />
-<var name="adminName" value="${adminName}" />
-</execute>
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -952,6 +952,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -960,8 +961,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1369,10 +1369,10 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#blockUserSelectedUsersList">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
 			<var name="userListNameList" value="${userListName},${userListName2},${userListName3}" />
-		<var name="userListName" value="${userListName}" />
-<var name="userEmailAddress" value="${userEmailAddress}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewBlockedUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1449,10 +1449,10 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#unblockUserSelectedUsersList">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
 			<var name="userListNameList" value="${userListName},${userListName2},${userListName3}" />
-		<var name="userListName" value="${userListName}" />
-<var name="userEmailAddress" value="${userEmailAddress}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1573,8 +1573,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1582,12 +1582,12 @@
 		</execute>
 
 		<execute macro="SOMembersPortlet#blockMember">
+			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewBlockedUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1618,12 +1618,12 @@
 		</execute>
 
 		<execute macro="SOMembersPortlet#unblockMember">
+			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1884,6 +1884,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -1892,8 +1893,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2029,10 +2029,10 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#requestToConnectSelectedUsersList">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
 			<var name="userListNameList" value="${userListName},${userListName2}" />
-		<var name="userListName" value="${userListName}" />
-<var name="userEmailAddress" value="${userEmailAddress}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -2101,8 +2101,8 @@
 
 		<execute macro="SOProfile#addProfilePicture">
 			<var name="imageFileName" value="Document_4.jpg" />
-		<var name="userName" value="${userName}" />
-</execute>
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -2215,8 +2215,8 @@
 
 		<execute macro="SOProfile#addProfilePicture">
 			<var name="imageFileName" value="Document_4.jpg" />
-		<var name="userName" value="${userName}" />
-</execute>
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2555,10 +2555,10 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#followUserSelectedUsersList">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
 			<var name="userListNameList" value="${userListName},${userListName2},${userListName3}" />
-		<var name="userListName" value="${userListName}" />
-<var name="userEmailAddress" value="${userEmailAddress}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewFollowing">
 			<var name="numberOfUsersFollowing" value="3" />
@@ -2638,10 +2638,10 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#unfollowUserSelectedUsersList">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
 			<var name="userListNameList" value="${userListName},${userListName2},${userListName3}" />
-		<var name="userListName" value="${userListName}" />
-<var name="userEmailAddress" value="${userEmailAddress}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewNonFollowing">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -2762,8 +2762,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2771,12 +2771,12 @@
 		</execute>
 
 		<execute macro="SOMembersPortlet#followMember">
+			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewFollowing">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -2807,12 +2807,12 @@
 		</execute>
 
 		<execute macro="SOMembersPortlet#unfollowMember">
+			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<execute macro="SOContactsCenter#viewNonFollowing">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -3432,6 +3432,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
@@ -3440,8 +3441,7 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		<var name="adminName" value="${adminName}" />
-</execute>
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -3601,8 +3601,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -3727,8 +3727,8 @@
 
 		<execute macro="SOProfile#addProfilePicture">
 			<var name="imageFileName" value="${imageFileName}" />
-		<var name="userName" value="${userName}" />
-</execute>
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -4423,13 +4423,13 @@
 
 		<execute macro="SOProfile#addProfilePicture">
 			<var name="imageFileName" value="${imageFileName}" />
-		<var name="userName" value="${userName}" />
-</execute>
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute macro="SOProfile#addProfilePicture">
 			<var name="imageFileName" value="${imageFileNameEdit}" />
-		<var name="userName" value="${userName}" />
-</execute>
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />

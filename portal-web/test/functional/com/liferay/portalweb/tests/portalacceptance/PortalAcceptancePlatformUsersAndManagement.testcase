@@ -32,8 +32,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -42,10 +45,7 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="pageName" value="${pageName}" />
-<var name="portletName" value="${portletName}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -673,8 +673,8 @@
 
 		<execute macro="User#deactivateCP">
 			<var name="userFirstName" value="${userFirstName}" />
-		<var name="userScreenName" value="${userScreenName}" />
-</execute>
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -791,9 +791,9 @@
 		</execute>
 
 		<execute macro="UserGroup#editCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
-		<var name="userGroupName" value="${userGroupName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="EditUserSite" priority="4">

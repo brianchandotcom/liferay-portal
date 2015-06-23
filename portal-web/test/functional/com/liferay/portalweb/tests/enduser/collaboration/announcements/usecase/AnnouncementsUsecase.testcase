@@ -45,11 +45,11 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
 			<var name="distributionScope" value="General" />
 			<var name="entryContent" value="Announcements Entry Content" />
 			<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="announcementType" value="${announcementType}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -81,11 +81,11 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
 			<var name="distributionScope" value="General" />
 			<var name="entryContent" value="Announcements Entry Content" />
 			<var name="entryTitle" value="Announcements Entry Title" />
-		<var name="announcementType" value="${announcementType}" />
-</execute>
+		</execute>
 
 		<execute macro="AnnouncementsEntry#addPG">
 			<var name="distributionScope" value="Liferay" />
@@ -101,11 +101,11 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
 			<var name="distributionScope" value="Liferay" />
 			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-		<var name="announcementType" value="${announcementType}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -113,11 +113,11 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
 			<var name="distributionScope" value="Liferay" />
 			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-		<var name="announcementType" value="${announcementType}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

@@ -65,11 +65,11 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="1" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent}" />
@@ -81,12 +81,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="1" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent}" />
@@ -125,10 +125,10 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${commentContent}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userFullName" value="${userFullName}" />
-		<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="AddBlogsEntryComments" priority="4">
@@ -278,12 +278,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="numberOfOtherCommenters" value="2" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName3}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent1}" />
@@ -309,12 +309,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent1}" />
@@ -353,12 +353,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="numberOfOtherCommenters" value="2" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName3}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent1}" />
@@ -384,12 +384,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent1}" />
@@ -428,12 +428,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="numberOfOtherCommenters" value="2" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userFirstName3}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent1}" />
@@ -459,12 +459,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent1}" />
@@ -503,12 +503,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="numberOfOtherCommenters" value="2" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName3}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent1}" />
@@ -534,12 +534,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContent1}" />
@@ -619,11 +619,11 @@
 
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute function="AssertTextNotPresent" value1="1 Comment" />
 
@@ -702,11 +702,11 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="1" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContentEdit}" />
@@ -718,12 +718,12 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="1" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-<var name="entryTitle" value="${entryTitle}" />
-<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewActivityEntryComment">
 			<var name="commentContent" value="${commentContentEdit}" />
@@ -762,10 +762,10 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${commentContentEdit}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userFullName" value="${userFullName}" />
-		<var name="entryContent" value="${entryContent}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="ViewBlogEntriesActivities" priority="4">
@@ -830,27 +830,27 @@
 			<var name="entryContent" value="${entryContent3}" />
 			<var name="entryTitle" value="${entryTitle3}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="entryContent" value="${entryContent2}" />
 			<var name="entryTitle" value="${entryTitle2}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="entryContent" value="${entryContent1}" />
 			<var name="entryTitle" value="${entryTitle1}" />
 			<var name="row" value="03" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 	</command>
 
 	<command name="ViewRemoveBlogsEntryViewPermissionsActivities" priority="4">
@@ -926,9 +926,9 @@
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="entryContent" value="${entryContent1}" />
 			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${entryContent2}" />
 		<execute function="AssertTextNotPresent" value1="${entryTitle2}" />
@@ -978,9 +978,9 @@
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
-		<var name="siteName" value="${siteName}" />
-</execute>
+		</execute>
 
 		<var name="key_row" value="1" />
 

@@ -1233,6 +1233,7 @@ ${tomcat-gc-log}
 			<var name="test.app.server.deploy.dir" unset="true" />
 			<var name="test.app.server.dir" unset="true" />
 			<var name="test.app.server.leading.port.number" unset="true" />
+			<var name="test.app.server.liferay.home" unset="true" />
 			<var name="test.app.server.parent.dir" unset="true" />
 
 			<math
@@ -1250,6 +1251,7 @@ ${tomcat-gc-log}
 					<var name="test.app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
 					<var name="test.app.server.deploy.dir" value="${app.server.deploy.dir}" />
 					<var name="test.app.server.dir" value="${app.server.dir}" />
+					<var name="test.app.server.liferay.home" value="${liferay.home}" />
 					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}" />
 				 </then>
 				 <else>
@@ -1266,6 +1268,10 @@ ${tomcat-gc-log}
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.dir" string="${app.server.dir}">
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+					</antelope:stringutil>
+
+					<antelope:stringutil property="test.app.server.liferay.home" string="${liferay.home}">
 						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 
@@ -2480,11 +2486,20 @@ go]]></replacevalue>
 				<equals arg1="${delete.liferay.home}" arg2="false" />
 			</not>
 			<then>
-				<delete dir="${liferay.home}/data" />
-				<delete dir="${liferay.home}/logs" />
-				<delete dir="${liferay.home}/osgi/state" />
+				<if>
+					<not>
+						<isset property="test.app.server.liferay.home" />
+					</not>
+					<then>
+						<set-app-server-properties />
+					</then>
+				</if>
 
-				<delete file="${liferay.home}/portal-setup-wizard.properties" />
+				<delete dir="${test.app.server.liferay.home}/data" />
+				<delete dir="${test.app.server.liferay.home}/logs" />
+				<delete dir="${test.app.server.liferay.home}/osgi/state" />
+
+				<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
 			</then>
 		</if>
 	</target>

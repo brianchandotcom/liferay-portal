@@ -43,9 +43,9 @@ public class AuthenticatedAccessControlPolicy extends BaseAccessControlPolicy {
 		ServiceAccessControlProfile defaultServiceAccessControlProfile = null;
 
 		if (ServiceAccessControlProfileManagerUtil.
-			getServiceAccessControlProfileManager() != null) {
+				getServiceAccessControlProfileManager() != null) {
 
-			defaultServiceAccessControlProfile= 
+			defaultServiceAccessControlProfile =
 				ServiceAccessControlProfileManagerUtil.
 					getDefaultServiceAccessControlProfile(
 						permissionChecker.getCompanyId());

@@ -25,6 +25,12 @@ import java.util.Map;
  * editor. Editor options can be set using {@link EditorOptionsContributor}.
  *
  * <p>
+ * In general, implementations of this interface will be specific to a
+ * particular editor, since the configuration JSON object updated here is
+ * different based on the editor.
+ * </p>
+ *
+ * <p>
  * Implementations of this class must be OSGi components that are registered in
  * the OSGi Registry.
  * </p>

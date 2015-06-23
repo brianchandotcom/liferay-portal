@@ -30,6 +30,11 @@
 			);
 		},
 
+		refresh: function( editor, path ) {
+			var firstBlock = path.block || path.blockLimit;
+			this.setState( editor.elementPath( firstBlock ).contains( 'pre', 1 ) ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
+		},
+
 		context: 'pre'
 	};
 

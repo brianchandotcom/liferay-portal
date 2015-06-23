@@ -1247,7 +1247,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String replacePrimitiveWrapperInstantiation(String line) {
-
 		return StringUtil.replace(
 			line,
 			new String[] {

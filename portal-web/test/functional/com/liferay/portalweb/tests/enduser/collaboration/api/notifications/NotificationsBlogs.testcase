@@ -182,7 +182,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content Edit" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
@@ -220,7 +220,7 @@
 			<var name="contentBody" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>

@@ -149,9 +149,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 			return true;
 		}
 
-		String fileName = file.getName();
-
-		Matcher matcher = _themePluginPattern.matcher(fileName);
+		Matcher matcher = _themePluginPattern.matcher(file.getName());
 
 		if (matcher.find() &&
 			isMatchingFile(

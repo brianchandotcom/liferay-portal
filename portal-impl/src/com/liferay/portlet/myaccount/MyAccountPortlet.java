@@ -14,55 +14,39 @@
 
 package com.liferay.portlet.myaccount;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.pwd.PwdAuthenticator;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.usersadmin.UsersAdminPortlet;
+
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pei-Jung Lan
  */
-public class MyAccountPortlet extends MVCPortlet {
+public class MyAccountPortlet extends UsersAdminPortlet {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void editUser(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		if (redirectToLogin(actionRequest, actionResponse)) {
 			return;
 		}
-
-		super.processAction(
-			actionMapping, actionForm, portletConfig, actionRequest,
-			actionResponse);
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		User user = PortalUtil.getUser(renderRequest);
-
-		RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
-
-		DynamicServletRequest dynamicRequest =
-			(DynamicServletRequest)renderRequestImpl.getHttpServletRequest();
-
-		dynamicRequest.setParameter(
-			"p_u_i_d", String.valueOf(user.getUserId()));
-
-		return super.render(
-			actionMapping, actionForm, portletConfig, renderRequest,
-			renderResponse);
-	}
-
-	@Override
-	protected Object[] updateUser(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
 
 		String currentPassword = actionRequest.getParameter("password0");
 		String newPassword = actionRequest.getParameter("password1");
@@ -102,7 +86,28 @@ public class MyAccountPortlet extends MVCPortlet {
 			throw new UserPasswordException.MustNotBeNull(user.getUserId());
 		}
 
-		return super.updateUser(actionRequest, actionResponse);
+		super.editUser(actionRequest, actionResponse);
+	}
+
+	protected boolean redirectToLogin(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
+		if (actionRequest.getRemoteUser() == null) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			SessionErrors.add(request, PrincipalException.class.getName());
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			actionResponse.sendRedirect(themeDisplay.getURLSignIn());
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

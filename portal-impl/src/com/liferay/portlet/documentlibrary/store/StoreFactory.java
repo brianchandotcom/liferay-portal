@@ -57,7 +57,7 @@ public class StoreFactory {
 
 		boolean found = false;
 
-		for (String key : _serviceTrackerMap.keySet()) {
+		for (String key : _storeServiceTrackerMap.keySet()) {
 			Store storeEntry = getStoreInstance(key);
 
 			String className = storeEntry.getClass().getName();
@@ -99,7 +99,9 @@ public class StoreFactory {
 	}
 
 	public void destroy() {
-		_serviceTrackerMap.close();
+		_storeServiceTrackerMap.close();
+
+		_storeWrapperServiceTrackerMap.close();
 	}
 
 	public Store getStoreInstance() {
@@ -110,15 +112,25 @@ public class StoreFactory {
 		if (_store == null) {
 			throw new IllegalStateException("Store is not ready.");
 		}
+
 		return _store;
 	}
 
-	public static Store getStoreInstance(String key) {
-		return _serviceTrackerMap.getService(key);
+	public Store getStoreInstance(String key) {
+		Store store = _storeServiceTrackerMap.getService(key);
+
+		StoreWrapper storeWrapper = _storeWrapperServiceTrackerMap.getService(
+			key);
+
+		if (storeWrapper != null) {
+			return storeWrapper.wrap(store);
+		}
+
+		return store;
 	}
 
 	public String[] getStoreTypes() {
-		Set<String> keySet = _serviceTrackerMap.keySet();
+		Set<String> keySet = _storeServiceTrackerMap.keySet();
 
 		return keySet.toArray(new String[keySet.size()]);
 	}
@@ -132,17 +144,22 @@ public class StoreFactory {
 	}
 
 	private StoreFactory() {
-		_serviceTrackerMap.open();
-	}
+		_storeServiceTrackerMap.open();
 
-	private volatile Store _store = null;
+		_storeWrapperServiceTrackerMap.open();
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static StoreFactory _instance;
 	private static boolean _warned;
 
-	private final ServiceTrackerMap<String, Store> _serviceTrackerMap =
+	private final ServiceTrackerMap<String, StoreWrapper>
+		_storeWrapperServiceTrackerMap =
+			ServiceTrackerCollections.singleValueMap(
+				StoreWrapper.class, "store.type");
+	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap =
 		ServiceTrackerCollections.singleValueMap(Store.class, "store.type");
+	private volatile Store _store = null;
 
 }

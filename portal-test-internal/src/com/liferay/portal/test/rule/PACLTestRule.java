@@ -79,10 +79,14 @@ public class PACLTestRule implements TestRule {
 
 			@Override
 			public void evaluate() throws Throwable {
+				PortletContextLoaderListener portletContextLoaderListener =
+					new PortletContextLoaderListener();
+
 				HotDeployEvent hotDeployEvent = null;
 
 				if (description.getMethodName() != null) {
-					hotDeployEvent = beforeClass(description);
+					hotDeployEvent = beforeClass(
+						description, portletContextLoaderListener);
 				}
 
 				try {
@@ -90,7 +94,9 @@ public class PACLTestRule implements TestRule {
 				}
 				finally {
 					if (hotDeployEvent != null) {
-						afterClass(description, hotDeployEvent);
+						afterClass(
+							description, hotDeployEvent,
+							portletContextLoaderListener);
 					}
 				}
 			}
@@ -99,12 +105,10 @@ public class PACLTestRule implements TestRule {
 	}
 
 	protected void afterClass(
-		Description description, HotDeployEvent hotDeployEvent) {
+		Description description, HotDeployEvent hotDeployEvent,
+		PortletContextLoaderListener portletContextLoaderListener) {
 
 		HotDeployUtil.fireUndeployEvent(hotDeployEvent);
-
-		PortletContextLoaderListener portletContextLoaderListener =
-			new PortletContextLoaderListener();
 
 		ClassLoaderPool.register(
 			hotDeployEvent.getServletContextName(),
@@ -122,7 +126,9 @@ public class PACLTestRule implements TestRule {
 		}
 	}
 
-	protected HotDeployEvent beforeClass(Description description)
+	protected HotDeployEvent beforeClass(
+			Description description,
+			PortletContextLoaderListener portletContextLoaderListener)
 		throws ReflectiveOperationException {
 
 		_testClass = _loadTestClass(description.getTestClass());
@@ -160,9 +166,6 @@ public class PACLTestRule implements TestRule {
 			mockServletContext, classLoader);
 
 		HotDeployUtil.fireDeployEvent(hotDeployEvent);
-
-		PortletContextLoaderListener portletContextLoaderListener =
-			new PortletContextLoaderListener();
 
 		ClassLoaderPool.register(
 			hotDeployEvent.getServletContextName(),

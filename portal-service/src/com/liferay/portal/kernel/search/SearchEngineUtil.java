@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.search.queue.QueuingSearchEngine;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,6 +32,7 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -154,7 +156,7 @@ public class SearchEngineUtil {
 		throws SearchException {
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
-			for (long companyId : _companyIds) {
+			for (long companyId : _companyIds.keySet()) {
 				searchEngine.backup(companyId, backupName);
 			}
 		}
@@ -266,6 +268,30 @@ public class SearchEngineUtil {
 		deleteEntityDocuments(searchEngineId, companyId, portletId, false);
 	}
 
+	public static void flushQueuedSearchEngine() {
+		synchronized (_queuingSearchEngines) {
+			for (QueuingSearchEngine queuingSearchEngine :
+					_queuingSearchEngines.values()) {
+
+				queuingSearchEngine.flush();
+			}
+
+			_queuingSearchEngines.clear();
+		}
+	}
+
+	public static void flushQueuedSearchEngine(String searchEngineId) {
+		QueuingSearchEngine queuingSearchEngine = null;
+
+		synchronized (_queuingSearchEngines) {
+			queuingSearchEngine = _queuingSearchEngines.remove(searchEngineId);
+		}
+
+		if (queuingSearchEngine != null) {
+			queuingSearchEngine.flush();
+		}
+	}
+
 	public static String getDefaultSearchEngineId() {
 		if (_defaultSearchEngineId == null) {
 			return SYSTEM_ENGINE_ID;
@@ -314,34 +340,24 @@ public class SearchEngineUtil {
 
 		SearchEngine searchEngine = _searchEngines.get(searchEngineId);
 
-		if (searchEngine == null) {
-			if (SYSTEM_ENGINE_ID.equals(searchEngineId)) {
-				waitForSystemSearchEngine();
-
-				searchEngine = _searchEngines.get(SYSTEM_ENGINE_ID);
-
-				if (searchEngine == null) {
-					throw new IllegalStateException(
-						"Unable to find search engine " + SYSTEM_ENGINE_ID);
-				}
-
-				return searchEngine;
-			}
-
-			if (getDefaultSearchEngineId().equals(searchEngineId)) {
-				throw new IllegalStateException(
-					"There is no default search engine configured with ID " +
-						getDefaultSearchEngineId());
-			}
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"There is no search engine configured with ID " +
-						searchEngineId);
-			}
+		if (searchEngine != null) {
+			return searchEngine;
 		}
 
-		return searchEngine;
+		synchronized (_queuingSearchEngines) {
+			searchEngine = _queuingSearchEngines.get(searchEngineId);
+
+			if (searchEngine == null) {
+				QueuingSearchEngine queuingSearchEngine =
+					new QueuingSearchEngine(_queueCapacity);
+
+				_queuingSearchEngines.put(searchEngineId, queuingSearchEngine);
+
+				searchEngine = queuingSearchEngine;
+			}
+
+			return searchEngine;
+		}
 	}
 
 	public static String getSearchEngineId(Collection<Document> documents) {
@@ -536,13 +552,11 @@ public class SearchEngineUtil {
 	}
 
 	public synchronized static void initialize(long companyId) {
-		if (_companyIds.contains(companyId)) {
+		if (_companyIds.containsKey(companyId)) {
 			return;
 		}
 
-		waitForSystemSearchEngine();
-
-		_companyIds.add(companyId);
+		_companyIds.put(companyId, companyId);
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
 			searchEngine.initialize(companyId);
@@ -627,14 +641,14 @@ public class SearchEngineUtil {
 		throws SearchException {
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
-			for (long companyId : _companyIds) {
+			for (long companyId : _companyIds.keySet()) {
 				searchEngine.removeBackup(companyId, backupName);
 			}
 		}
 	}
 
 	public synchronized static void removeCompany(long companyId) {
-		if (!_companyIds.contains(companyId)) {
+		if (!_companyIds.containsKey(companyId)) {
 			return;
 		}
 
@@ -663,7 +677,7 @@ public class SearchEngineUtil {
 		throws SearchException {
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
-			for (long companyId : _companyIds) {
+			for (long companyId : _companyIds.keySet()) {
 				searchEngine.restore(companyId, backupName);
 			}
 		}
@@ -770,8 +784,28 @@ public class SearchEngineUtil {
 
 		_searchEngines.put(searchEngineId, searchEngine);
 
-		for (Long companyId : _companyIds) {
+		for (Long companyId : _companyIds.keySet()) {
 			searchEngine.initialize(companyId);
+		}
+
+		synchronized (_queuingSearchEngines) {
+			QueuingSearchEngine queuingSearchEngine = _queuingSearchEngines.get(
+				searchEngineId);
+
+			if (queuingSearchEngine != null) {
+				try {
+					queuingSearchEngine.invokeQueued(
+						searchEngine.getIndexWriter());
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to execute pending write events for " +
+								"engine: " + searchEngineId,
+							e);
+					}
+				}
+			}
 		}
 	}
 
@@ -927,6 +961,10 @@ public class SearchEngineUtil {
 		_excludedEntryClassNames.addAll(excludedEntryClassNames);
 	}
 
+	public void setQueueCapacity(int queueCapacity) {
+		_queueCapacity = queueCapacity;
+	}
+
 	public void setSearchPermissionChecker(
 		SearchPermissionChecker searchPermissionChecker) {
 
@@ -934,25 +972,6 @@ public class SearchEngineUtil {
 			getClass(), "searchPermissionChecker");
 
 		_searchPermissionChecker = searchPermissionChecker;
-	}
-
-	private static void waitForSystemSearchEngine() {
-		try {
-			int count = 1000;
-
-			while (!_searchEngines.containsKey(SYSTEM_ENGINE_ID) &&
-				   (--count > 0)) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Waiting for search engine " + SYSTEM_ENGINE_ID);
-				}
-
-				Thread.sleep(500);
-			}
-		}
-		catch (InterruptedException ie) {
-			_log.error(ie, ie);
-		}
 	}
 
 	private SearchEngineUtil() {
@@ -968,11 +987,15 @@ public class SearchEngineUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineUtil.class);
 
-	private static final Set<Long> _companyIds = new HashSet<>();
+	private static final Map<Long, Long> _companyIds =
+		new ConcurrentHashMap<>();
 	private static String _defaultSearchEngineId;
 	private static final Set<String> _excludedEntryClassNames = new HashSet<>();
 	private static boolean _indexReadOnly = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.INDEX_READ_ONLY));
+	private static int _queueCapacity = 200;
+	private static final Map<String, QueuingSearchEngine>
+		_queuingSearchEngines = new HashMap<>();
 	private static final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
 	private static SearchPermissionChecker _searchPermissionChecker;

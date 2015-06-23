@@ -45,7 +45,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -59,7 +60,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.docx" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -73,7 +75,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.jpeg" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -87,7 +90,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -101,7 +105,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_2.mp3" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -115,7 +120,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.odt" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -129,7 +135,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.pdf" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -143,7 +150,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.png" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -157,7 +165,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.xls" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -171,7 +180,8 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentFile" value="Document_1.xlsx" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 	</command>
 
 	<command name="AddDocuments" priority="4">
@@ -520,7 +530,8 @@
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentTitle" value="DM Image 1 Title" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -532,7 +543,8 @@
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentTitle" value="DM Image 2 Title" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -544,7 +556,8 @@
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentTitle" value="DM Image 3 Title" />
-		</execute>
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+</execute>
 	</command>
 
 	<command name="AddFolderNameSymbol" priority="4">

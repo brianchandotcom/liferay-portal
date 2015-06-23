@@ -440,7 +440,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
@@ -464,7 +465,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="dmFolderName" value="${dmFolderName}" />

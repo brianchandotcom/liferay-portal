@@ -81,7 +81,8 @@
 			<var name="siteOwner" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -150,7 +151,8 @@
 			<var name="siteOwner" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -1257,7 +1259,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOSite#viewSOSiteMembership">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -1324,14 +1327,22 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+<var name="userEmailAddress" value="${userEmailAddress}" />
+<var name="userLastName" value="${userLastName}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userName" value="${userName}" />
+<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageAccess" value="Private" />
@@ -1393,14 +1404,22 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+<var name="userEmailAddress" value="${userEmailAddress}" />
+<var name="userLastName" value="${userLastName}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userName" value="${userName}" />
+<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Members" />
@@ -1481,7 +1500,14 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+<var name="userEmailAddress" value="${userEmailAddress}" />
+<var name="userLastName" value="${userLastName}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userName" value="${userName}" />
+<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1631,7 +1657,8 @@
 
 		<execute macro="SOMembersPortlet#inviteMemberByEmail">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
+		<var name="userName" value="${userName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#confirmMemberNonUserInviteByEmail">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -1723,14 +1750,22 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+<var name="userEmailAddress" value="${userEmailAddress}" />
+<var name="userLastName" value="${userLastName}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userName" value="${userName}" />
+<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1788,7 +1823,8 @@
 			<var name="siteOwner" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -1857,7 +1893,8 @@
 			<var name="siteOwner" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -1928,7 +1965,8 @@
 
 		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOSite#viewSOSiteNonMembership">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -1992,7 +2030,8 @@
 
 		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOSite#viewSOSiteNonMembership">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -2055,7 +2094,8 @@
 
 		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOSite#viewSOSiteNonMembership">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -2119,14 +2159,17 @@
 
 		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewIgnoreMemberInvite" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2206,7 +2249,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2283,7 +2327,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2405,7 +2450,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -2414,7 +2460,9 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
@@ -2521,7 +2569,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="siteRoleInvite" value="Site Owner" />
@@ -2531,7 +2580,9 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -2540,7 +2591,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="siteRoleInvite" value="Site Administrator" />
@@ -2550,7 +2602,9 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+</execute>
 	</command>
 
 	<command name="InviteMembersSiteViaNonSiteCreators" priority="4">
@@ -2659,7 +2713,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2681,7 +2736,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2703,7 +2759,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${userName1}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="numberOfMembers" value="4" />
@@ -2713,7 +2770,9 @@
 			<var name="userMiddleName" value="${userMiddleName3}" />
 			<var name="userName" value="${userName3}" />
 			<var name="userScreenName" value="${userScreenName3}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
@@ -2722,7 +2781,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${userName2}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="SOMembersAdministration#viewConfirmMemberInvite">
 			<var name="numberOfMembers" value="5" />
@@ -2732,7 +2792,9 @@
 			<var name="userMiddleName" value="${userMiddleName4}" />
 			<var name="userName" value="${userName4}" />
 			<var name="userScreenName" value="${userScreenName4}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="siteDescription" value="${siteDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2927,7 +2989,8 @@
 
 		<execute macro="SOUserBar#leaveSOSite">
 			<var name="siteName" value="${siteName}" />
-		</execute>
+		<var name="siteType" value="${siteType}" />
+</execute>
 
 		<execute macro="SOSite#viewSOSiteNonMembership">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -2991,7 +3054,8 @@
 			<var name="siteOwner" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -3000,7 +3064,8 @@
 
 		<execute macro="SOUserBar#leaveSOSite">
 			<var name="siteName" value="${siteName}" />
-		</execute>
+		<var name="siteType" value="${siteType}" />
+</execute>
 
 		<execute macro="SOSite#viewSOSiteNonMembership">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -3064,7 +3129,8 @@
 			<var name="siteOwner" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -3073,7 +3139,8 @@
 
 		<execute macro="SOUserBar#leaveSOSite">
 			<var name="siteName" value="${siteName}" />
-		</execute>
+		<var name="siteType" value="${siteType}" />
+</execute>
 
 		<execute macro="SOSite#viewSOSiteNonMembership">
 			<var name="siteDescription" value="${siteDescription}" />
@@ -3259,7 +3326,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -3268,7 +3336,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
@@ -3277,7 +3346,8 @@
 
 		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
@@ -3286,7 +3356,8 @@
 
 		<execute macro="SOMembersAdministration#ignoreMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -3377,7 +3448,8 @@
 
 		<execute macro="SOUserBar#leaveSOSite">
 			<var name="siteName" value="${siteName}" />
-		</execute>
+		<var name="siteType" value="${siteType}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
@@ -3386,7 +3458,8 @@
 
 		<execute macro="SOUserBar#leaveSOSite">
 			<var name="siteName" value="${siteName}" />
-		</execute>
+		<var name="siteType" value="${siteType}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />

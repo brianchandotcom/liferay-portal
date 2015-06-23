@@ -78,7 +78,8 @@
 			<var name="threadCount" value="1" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -117,7 +118,8 @@
 			<var name="threadCount" value="1" />
 			<var name="threadSubject" value="${threadSubject2}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -156,7 +158,8 @@
 			<var name="threadCount" value="1" />
 			<var name="threadSubject" value="${threadSubject3}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryNullName" priority="3">
@@ -171,7 +174,8 @@
 
 		<execute macro="MessageboardsCategory#addNullPG">
 			<var name="categoryNullName" value="${categoryNullName}" />
-		</execute>
+		<var name="categoryDescription" value="${categoryDescription}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -268,7 +272,8 @@
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="subCategoryEnabled" value="false" />
-		</execute>
+		<var name="subCategoryName" value="${subCategoryName}" />
+</execute>
 
 		<execute macro="SOForumsCategoryThread#viewSubcategoryPG">
 			<var name="pageName" value="${pageName}" />
@@ -278,7 +283,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThread" priority="4">
@@ -321,7 +327,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -335,7 +342,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -349,7 +357,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadAnonymous" priority="4">
@@ -394,7 +403,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="Anonymous" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -409,7 +419,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="Anonymous" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -424,7 +435,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="Anonymous" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadAttachment" priority="4">
@@ -475,7 +487,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -491,7 +504,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -507,7 +521,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadCode" priority="4">
@@ -613,7 +628,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="threadReplyBody" value="${threadReplyBody}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadQuickReply" priority="4">
@@ -674,7 +690,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -689,7 +706,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -704,7 +722,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -808,7 +827,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -823,7 +843,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -901,7 +922,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -916,7 +938,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1012,7 +1035,10 @@
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+<var name="threadCount" value="${threadCount}" />
+<var name="postCount" value="${postCount}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1026,7 +1052,10 @@
 			<var name="threadBody" value="${threadBody2}" />
 			<var name="threadSubject" value="${threadSubject2}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+<var name="threadCount" value="${threadCount}" />
+<var name="postCount" value="${postCount}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1040,7 +1069,10 @@
 			<var name="threadBody" value="${threadBody3}" />
 			<var name="threadSubject" value="${threadSubject3}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+<var name="threadCount" value="${threadCount}" />
+<var name="postCount" value="${postCount}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadSOUser" priority="4">
@@ -1112,7 +1144,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1126,7 +1159,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1140,7 +1174,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command known-issues="LPS-49497" name="AddMBCategoryThreadSticky" priority="3">
@@ -1187,7 +1222,8 @@
 			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1203,7 +1239,8 @@
 			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1219,7 +1256,8 @@
 			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadTag" priority="4">
@@ -1267,7 +1305,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command known-issues="LPS-49497" name="AddMBCategoryThreadUrgent" priority="3">
@@ -1314,7 +1353,8 @@
 			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1330,7 +1370,8 @@
 			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1346,7 +1387,8 @@
 			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadUTF8" priority="4">
@@ -1491,7 +1533,8 @@
 			<var name="threadCount" value="1" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1529,7 +1572,8 @@
 			<var name="threadCount" value="2" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1546,7 +1590,8 @@
 			<var name="threadCount" value="2" />
 			<var name="threadSubject" value="${threadSubject2}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadVote" priority="4">
@@ -1695,7 +1740,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="MessageboardsThread#banUser">
 			<var name="threadSubject" value="${threadSubject}" />
@@ -1755,7 +1801,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="DeleteMBCategory" priority="4">
@@ -1849,7 +1896,8 @@
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="subCategoryEnabled" value="false" />
-		</execute>
+		<var name="subCategoryName" value="${subCategoryName}" />
+</execute>
 
 		<var name="key_subCategoryName" value="${subCategoryName}" />
 
@@ -1988,7 +2036,8 @@
 
 		<execute macro="MessageboardsThread#editPG">
 			<var name="threadBodyEdit" value="${threadBodyEdit}" />
-		</execute>
+		<var name="threadSubject" value="${threadSubject}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -1998,7 +2047,8 @@
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="subCategoryEnabled" value="false" />
-		</execute>
+		<var name="subCategoryName" value="${subCategoryName}" />
+</execute>
 
 		<execute macro="SOForumsCategoryThread#viewSubcategoryPG">
 			<var name="pageName" value="${pageName}" />
@@ -2008,7 +2058,8 @@
 			<var name="threadBody" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubjectEdit}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="EditMBCategoryThread" priority="4">
@@ -2060,7 +2111,8 @@
 
 		<execute macro="MessageboardsThread#editPG">
 			<var name="threadBodyEdit" value="${threadBodyEdit}" />
-		</execute>
+		<var name="threadSubject" value="${threadSubject}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2074,7 +2126,8 @@
 			<var name="threadBody" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubjectEdit}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="ImportLarSOForums" priority="4">
@@ -2249,7 +2302,8 @@
 			<var name="threadCount" value="1" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2268,7 +2322,8 @@
 			<var name="threadCount" value="1" />
 			<var name="threadSubject" value="${threadSubject2}" />
 			<var name="userName" value="Test Test" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="MessageboardsThread#viewTagPG">
 			<var name="tagName" value="${tagName1} ${tagName2}" />
@@ -2295,7 +2350,8 @@
 			<var name="threadCount" value="1" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2314,7 +2370,8 @@
 			<var name="threadCount" value="1" />
 			<var name="threadSubject" value="${threadSubject2}" />
 			<var name="userName" value="Test Test" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="MessageboardsThread#viewTagPG">
 			<var name="tagName" value="${tagName1} ${tagName2}" />
@@ -2374,7 +2431,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2387,7 +2445,8 @@
 
 		<execute macro="MessageboardsThread#viewLockedPG">
 			<var name="threadBody" value="${threadBody}" />
-		</execute>
+		<var name="threadSubject" value="${threadSubject}" />
+</execute>
 	</command>
 
 	<command name="MoveCategory1ThreadToCategory2" priority="4">
@@ -2457,7 +2516,9 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+<var name="threadCount" value="${threadCount}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2589,7 +2650,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="PreviewMBCategoryThreadEdit" priority="4">
@@ -2664,7 +2726,8 @@
 			<var name="threadBody" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="RepliesMBCategoryThread" priority="4">
@@ -2759,7 +2822,9 @@
 			<var name="threadReplyBody" value="${threadReplyBody1}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="postCount" value="${postCount}" />
+<var name="categoryPostCount" value="${categoryPostCount}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2775,7 +2840,9 @@
 			<var name="threadReplyBody" value="${threadReplyBody2}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="postCount" value="${postCount}" />
+<var name="categoryPostCount" value="${categoryPostCount}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -2791,7 +2858,9 @@
 			<var name="threadReplyBody" value="${threadReplyBody3}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="postCount" value="${postCount}" />
+<var name="categoryPostCount" value="${categoryPostCount}" />
+</execute>
 	</command>
 
 	<command name="ReplyMBCategoryThread" priority="4">
@@ -2910,7 +2979,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="SaveAsDraftMBCategoryThreadEdit" priority="4">
@@ -2985,7 +3055,8 @@
 			<var name="threadBody" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="SearchMBCategoryThread" priority="4">
@@ -3230,7 +3301,8 @@
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
+		<var name="userName" value="${userName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -3258,7 +3330,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="MessageboardsThread#flagPG">
 			<var name="flagReason" value="Spam" />
@@ -3390,7 +3463,10 @@
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+<var name="threadCount" value="${threadCount}" />
+<var name="postCount" value="${postCount}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -3493,7 +3569,10 @@
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+<var name="threadCount" value="${threadCount}" />
+<var name="postCount" value="${postCount}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -3675,7 +3754,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -3690,7 +3770,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
@@ -3705,7 +3786,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userFullName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 	</command>
 
 	<command name="ViewMessageBoardsParticipantsStatistics" priority="3">

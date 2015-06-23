@@ -163,7 +163,8 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 	</command>
 
 	<command name="UserGroupSiteOwnerPermissions" priority="4">

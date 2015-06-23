@@ -74,7 +74,10 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="pageName" value="${pageName}" />
+<var name="portletName" value="${portletName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -156,7 +159,10 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="pageName" value="${pageName}" />
+<var name="portletName" value="${portletName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -748,7 +754,10 @@
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="pageName" value="${pageName}" />
+<var name="portletName" value="${portletName}" />
+</execute>
 
 		<execute macro="Permissions#addBlogsEntryLoginUserPG">
 			<var name="entryContent" value="${entryContent}" />
@@ -855,7 +864,10 @@
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="pageName" value="${pageName}" />
+<var name="portletName" value="${portletName}" />
+</execute>
 
 		<execute macro="Permissions#addBlogsEntryLoginUserPG">
 			<var name="entryContent" value="${entryContent}" />
@@ -1693,7 +1705,8 @@
 
 		<execute macro="BlogsEntry#editNoPermissionPG">
 			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<var name="entryContent" value="${entryContent}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

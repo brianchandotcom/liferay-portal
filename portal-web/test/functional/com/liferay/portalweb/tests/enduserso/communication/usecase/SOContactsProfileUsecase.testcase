@@ -78,7 +78,8 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -297,7 +298,8 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -314,7 +316,8 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -331,7 +334,8 @@
 			<var name="userMiddleName" value="${userMiddleName3}" />
 			<var name="userName" value="${userName3}" />
 			<var name="userScreenName" value="${userScreenName3}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -348,7 +352,8 @@
 			<var name="userMiddleName" value="${userMiddleName4}" />
 			<var name="userName" value="${userName4}" />
 			<var name="userScreenName" value="${userScreenName4}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -365,7 +370,8 @@
 			<var name="userMiddleName" value="${userMiddleName5}" />
 			<var name="userName" value="${userName5}" />
 			<var name="userScreenName" value="${userScreenName5}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -382,7 +388,8 @@
 			<var name="userMiddleName" value="${userMiddleName6}" />
 			<var name="userName" value="${userName6}" />
 			<var name="userScreenName" value="${userScreenName6}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -399,7 +406,8 @@
 			<var name="userMiddleName" value="${userMiddleName7}" />
 			<var name="userName" value="${userName7}" />
 			<var name="userScreenName" value="${userScreenName7}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -416,7 +424,8 @@
 			<var name="userMiddleName" value="${userMiddleName8}" />
 			<var name="userName" value="${userName8}" />
 			<var name="userScreenName" value="${userScreenName8}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -433,7 +442,8 @@
 			<var name="userMiddleName" value="${userMiddleName9}" />
 			<var name="userName" value="${userName9}" />
 			<var name="userScreenName" value="${userScreenName9}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -450,7 +460,8 @@
 			<var name="userMiddleName" value="${userMiddleName10}" />
 			<var name="userName" value="${userName10}" />
 			<var name="userScreenName" value="${userScreenName10}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -467,7 +478,8 @@
 			<var name="userMiddleName" value="${userMiddleName11}" />
 			<var name="userName" value="${userName11}" />
 			<var name="userScreenName" value="${userScreenName11}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -484,7 +496,8 @@
 			<var name="userMiddleName" value="${userMiddleName12}" />
 			<var name="userName" value="${userName12}" />
 			<var name="userScreenName" value="${userScreenName12}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />

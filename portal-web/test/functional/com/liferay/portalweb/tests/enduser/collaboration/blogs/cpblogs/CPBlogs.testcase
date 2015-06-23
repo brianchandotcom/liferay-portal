@@ -146,7 +146,8 @@
 			<var name="commentCount" value="1" />
 			<var name="entryComment" value="${entryComment}" />
 			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<var name="entryContent" value="${entryContent}" />
+</execute>
 	</command>
 
 	<command name="AddBlogsEntryContentNull" priority="4">
@@ -403,7 +404,8 @@
 			<var name="commentCount" value="1" />
 			<var name="entryComment" value="${entryCommentEdit}" />
 			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<var name="entryContent" value="${entryContent}" />
+</execute>
 	</command>
 
 	<command name="EditBlogsEntryContent" priority="4">

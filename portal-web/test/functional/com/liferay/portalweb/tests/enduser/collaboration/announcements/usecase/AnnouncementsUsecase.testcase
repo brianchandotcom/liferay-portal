@@ -48,7 +48,8 @@
 			<var name="distributionScope" value="General" />
 			<var name="entryContent" value="Announcements Entry Content" />
 			<var name="entryTitle" value="Announcements Entry Title" />
-		</execute>
+		<var name="announcementType" value="${announcementType}" />
+</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -83,7 +84,8 @@
 			<var name="distributionScope" value="General" />
 			<var name="entryContent" value="Announcements Entry Content" />
 			<var name="entryTitle" value="Announcements Entry Title" />
-		</execute>
+		<var name="announcementType" value="${announcementType}" />
+</execute>
 
 		<execute macro="AnnouncementsEntry#addPG">
 			<var name="distributionScope" value="Liferay" />
@@ -102,7 +104,8 @@
 			<var name="distributionScope" value="Liferay" />
 			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-		</execute>
+		<var name="announcementType" value="${announcementType}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -113,7 +116,8 @@
 			<var name="distributionScope" value="Liferay" />
 			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
-		</execute>
+		<var name="announcementType" value="${announcementType}" />
+</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

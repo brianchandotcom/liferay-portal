@@ -1974,7 +1974,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1995,7 +1996,8 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Messages" />
@@ -2240,7 +2242,8 @@
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="recipientName" value="${userName}" />
 			<var name="recipientScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -2257,7 +2260,8 @@
 			<var name="messageBody" value="${messageBody}" />
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
+</execute>
 
 		<execute macro="SOMessages#sendReplyMessage">
 			<var name="messageReplyAttachmentFile" value="${messageAttachmentFile}" />
@@ -2277,7 +2281,8 @@
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2297,7 +2302,8 @@
 			<var name="messageSubject" value="${messageSubject}" />
 			<var name="replySenderName" value="${userName}" />
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="messageAttachmentFile" value="${messageAttachmentFile}" />
+</execute>
 	</command>
 
 	<command name="SendReplyMessageAttachmentPortal" priority="4">

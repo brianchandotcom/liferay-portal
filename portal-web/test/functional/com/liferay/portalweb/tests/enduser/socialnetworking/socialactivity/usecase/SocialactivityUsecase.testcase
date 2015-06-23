@@ -257,7 +257,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userEmailAddress" value="guest@liferay.com" />
 			<var name="userFirstName" value="Guest" />
-		</execute>
+		<var name="entryContent" value="${entryContent}" />
+</execute>
 
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -452,7 +453,8 @@
 		<execute macro="Polls#viewPollAsGuestPG">
 			<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceList}" />
 			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
-		</execute>
+		<var name="pollsQuestion" value="${pollsQuestion}" />
+</execute>
 
 		<execute function="AssertClick" locator1="PGPollsdisplay#INFO_MESSAGE_LINK" value1="Please sign in to vote." />
 

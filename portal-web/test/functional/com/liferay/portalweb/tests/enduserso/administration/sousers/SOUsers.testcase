@@ -225,7 +225,8 @@
 			<var name="roleName" value="Site Administrator" />
 			<var name="roleType" value="Site" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="userMiddleName" value="${userMiddleName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -296,7 +297,8 @@
 			<var name="roleName" value="Site Owner" />
 			<var name="roleType" value="Site" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="userMiddleName" value="${userMiddleName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -444,7 +446,8 @@
 		<execute macro="Team#assignMembersCP">
 			<var name="siteName" value="${teamName}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		</execute>
+		<var name="teamName" value="${teamName}" />
+</execute>
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName1}" />

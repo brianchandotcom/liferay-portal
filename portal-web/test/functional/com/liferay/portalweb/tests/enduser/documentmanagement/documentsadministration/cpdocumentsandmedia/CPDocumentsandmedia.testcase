@@ -36,7 +36,8 @@
 
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		</execute>
+		<var name="dmDocumentSize" value="${dmDocumentSize}" />
+</execute>
 	</command>
 
 	<command name="AddFolder" priority="4">
@@ -82,7 +83,8 @@
 
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		</execute>
+		<var name="dmDocumentSize" value="${dmDocumentSize}" />
+</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
@@ -160,7 +162,8 @@
 
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		</execute>
+		<var name="dmDocumentSize" value="${dmDocumentSize}" />
+</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
@@ -214,7 +217,9 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="dmFolderName" value="${dmFolderName1}" />
 			<var name="dmFolderName" value="${dmFolderName2}" />
-		</execute>
+		<var name="dmFolderName1" value="${dmFolderName1}" />
+<var name="dmFolderName2" value="${dmFolderName2}" />
+</execute>
 	</command>
 
 	<command name="MoveToRecycleBinDocument" priority="4">

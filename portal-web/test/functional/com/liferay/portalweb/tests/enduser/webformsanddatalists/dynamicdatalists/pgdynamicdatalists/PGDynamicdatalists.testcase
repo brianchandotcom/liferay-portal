@@ -137,7 +137,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		</execute>
+		<var name="field" value="${field}" />
+</execute>
 	</command>
 
 	<command name="ConfigureEditableListPG" priority="4">
@@ -484,7 +485,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${recordFieldDataEdit}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		</execute>
+		<var name="field" value="${field}" />
+</execute>
 	</command>
 
 	<command name="EditListRecordViaRecordView" priority="4">
@@ -559,7 +561,8 @@
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${recordFieldDataEdit}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		</execute>
+		<var name="field" value="${field}" />
+</execute>
 	</command>
 
 	<command name="SelectList" priority="4">
@@ -859,7 +862,8 @@
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldDataFormatted}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		</execute>
+		<var name="field" value="${field}" />
+</execute>
 	</command>
 
 	<command name="ViewDecimalFieldPredefinedValue" priority="4">
@@ -1049,7 +1053,8 @@
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="userRole" value="${userRole}" />
-		</execute>
+		<var name="field" value="${field}" />
+</execute>
 	</command>
 
 	<command name="ViewIntegerFieldPredefinedValue" priority="4">

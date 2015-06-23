@@ -61,7 +61,8 @@
 		<execute macro="KBArticle#viewChildArticlePG">
 			<var name="kbChildArticleContent" value="${kbChildArticleContent}" />
 			<var name="kbChildArticleTitle" value="${kbChildArticleTitle}" />
-		</execute>
+		<var name="kbArticleTitle" value="${kbArticleTitle}" />
+</execute>
 	</command>
 
 	<command name="AddKBArticleContentNull" priority="4">

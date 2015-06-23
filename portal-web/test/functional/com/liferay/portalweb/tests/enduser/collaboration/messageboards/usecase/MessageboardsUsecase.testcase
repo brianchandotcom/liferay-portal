@@ -163,7 +163,8 @@
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
+		<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -176,7 +177,9 @@
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
+		<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
+<var name="pageName" value="${pageName}" />
+</execute>
 	</command>
 
 	<command name="ViewCategoriesAndThreadsOnTwoScopes" priority="3">
@@ -1069,7 +1072,8 @@
 			<var name="saveAsDraft" value="true" />
 			<var name="threadBodyEdit" value="${threadBodyEdit}" />
 			<var name="threadSubjectEdit" value="${threadSubjectEdit}" />
-		</execute>
+		<var name="threadSubject" value="${threadSubject}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1315,7 +1319,8 @@
 			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
 			<var name="threadSplitSubject" value="MB Thread Split Subject" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
-		</execute>
+		<var name="pageName" value="${pageName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

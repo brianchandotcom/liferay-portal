@@ -70,7 +70,8 @@
 		<execute macro="WebContent#viewStatus">
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
+		<var name="webContentContent" value="${webContentContent}" />
+</execute>
 	</command>
 
 	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByDetails" priority="4">
@@ -121,7 +122,8 @@
 		<execute macro="WebContent#viewStatus">
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
+		<var name="webContentContent" value="${webContentContent}" />
+</execute>
 	</command>
 
 	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByActions" priority="4">
@@ -160,7 +162,8 @@
 		<execute macro="WebContent#viewStatus">
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
+		<var name="webContentContent" value="${webContentContent}" />
+</execute>
 	</command>
 
 	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByDetails" priority="4">
@@ -200,7 +203,8 @@
 		<execute macro="WebContent#viewStatus">
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
+		<var name="webContentContent" value="${webContentContent}" />
+</execute>
 	</command>
 
 	<command known-issues="LPS-51687" name="WithdrawTaskCompletedNoByActions" priority="4">

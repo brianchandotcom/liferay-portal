@@ -82,7 +82,11 @@
 
 		<execute macro="User#viewUserInfomationOrganizationSitesCP">
 			<var name="orgName" value="${orgName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userLastName" value="${userLastName}" />
+<var name="siteName" value="${siteName}" />
+</execute>
 	</command>
 
 	<command name="EditDefaultUserAssociationsRoles" priority="4">
@@ -133,7 +137,10 @@
 
 		<execute macro="User#viewUserInfomationRolesCP">
 			<var name="roleName" value="${roleName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userLastName" value="${userLastName}" />
+</execute>
 	</command>
 
 	<command name="EditDefaultUserAssociationsSites" priority="4">
@@ -184,7 +191,10 @@
 
 		<execute macro="User#viewUserInfomationSitesCP">
 			<var name="siteName" value="${siteName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userLastName" value="${userLastName}" />
+</execute>
 	</command>
 
 	<command name="EditDefaultUserAssociationsUserGroups" priority="4">
@@ -235,7 +245,10 @@
 
 		<execute macro="User#viewUserInfomationUserGroupsCP">
 			<var name="userGroupName" value="${userGroupName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userLastName" value="${userLastName}" />
+</execute>
 	</command>
 
 	<command name="EnterReservedEmailAddress" priority="4">
@@ -475,7 +488,9 @@
 
 		<execute macro="BlogsEntry#addPGViaAP">
 			<var name="siteScope" value="${parentSite}" />
-		</execute>
+		<var name="entryTitle" value="${entryTitle}" />
+<var name="entryContent" value="${entryContent}" />
+</execute>
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="Child SiteName" />
@@ -589,7 +604,9 @@
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
+		<var name="entryTitle" value="${entryTitle}" />
+<var name="entryContent" value="${entryContent}" />
+</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />

@@ -158,7 +158,8 @@
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="${eventTitle}" />
-		</execute>
+		<var name="pageName" value="${pageName}" />
+</execute>
 	</command>
 
 	<command name="DeleteCalendarEventRepeatingAllFollowing" priority="5">
@@ -185,7 +186,8 @@
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
 			<var name="deleteOptionSet" value="All Following" />
 			<var name="eventType" value="${eventType}" />
-		</execute>
+		<var name="eventTitle" value="${eventTitle}" />
+</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -253,7 +255,8 @@
 			<var name="calendarDefaultName" value="Liferay" />
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="eventTitle" value="User Calendar Event 1" />
-		</execute>
+		<var name="eventType" value="${eventType}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -274,7 +277,8 @@
 			<var name="calendarDefaultName" value="Liferay" />
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="eventTitle" value="User Calendar Event 2" />
-		</execute>
+		<var name="eventType" value="${eventType}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

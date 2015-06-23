@@ -34,7 +34,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -140,7 +141,8 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -157,7 +159,8 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -174,7 +177,8 @@
 			<var name="userMiddleName" value="${userMiddleName3}" />
 			<var name="userName" value="${userName3}" />
 			<var name="userScreenName" value="${userScreenName3}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -190,7 +194,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -424,7 +429,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -486,7 +492,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -591,7 +598,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -648,7 +656,8 @@
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryRepostAuthorName" value="${userName}" />
-		</execute>
+		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+</execute>
 
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
@@ -689,7 +698,8 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -712,7 +722,8 @@
 			<var name="mentionUserScreenName" value="${userScreenName1}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Microblogs" />
@@ -723,7 +734,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
@@ -806,7 +818,8 @@
 			<var name="userMiddleName" value="${userMiddleName2}" />
 			<var name="userName" value="${userName2}" />
 			<var name="userScreenName" value="${userScreenName2}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -879,7 +892,8 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -902,7 +916,8 @@
 			<var name="mentionUserScreenName" value="${userScreenName}" />
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Microblogs" />
@@ -913,7 +928,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -994,7 +1010,15 @@
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="userEmailAddress" value="${userEmailAddress}" />
+<var name="userFirstName" value="${userFirstName}" />
+<var name="userLastName" value="${userLastName}" />
+<var name="userMiddleName" value="${userMiddleName}" />
+<var name="userScreenName" value="${userScreenName}" />
+<var name="userListName" value="${userListName}" />
+<var name="userName" value="${userName}" />
+<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1010,7 +1034,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent1}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Microblogs" />
@@ -1021,7 +1046,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent2}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -1041,7 +1067,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent3}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Microblogs" />
@@ -1052,7 +1079,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent4}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -1124,7 +1152,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -1180,7 +1209,8 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -1200,7 +1230,8 @@
 			<var name="mentionUserName" value="${userName}" />
 			<var name="mentionUserScreenName" value="${userScreenName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1231,7 +1262,8 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
-		</execute>
+		<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
+</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 

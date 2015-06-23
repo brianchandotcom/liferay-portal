@@ -39,7 +39,8 @@
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${statusUpdateEntryAuthorName}" />
 			<var name="microblogsEntryContent" value="${statusUpdateEntryContent}" />
-		</execute>
+		<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
+</execute>
 	</command>
 
 	<command name="AddStatusUpdateEntry151Characters" priority="4">
@@ -86,7 +87,8 @@
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${statusUpdateEntryAuthorName}" />
 			<var name="microblogsEntryContent" value="${statusUpdateEntryContent}" />
-		</execute>
+		<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -164,7 +166,8 @@
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${statusUpdateEntryAuthorName}" />
 			<var name="microblogsEntryContent" value="${statusUpdateEntryContent}" />
-		</execute>
+		<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
+</execute>
 
 		<execute macro="Page#gotoMyProfile" />
 
@@ -214,7 +217,8 @@
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${statusUpdateEntryAuthorName}" />
 			<var name="microblogsEntryContent" value="${statusUpdateEntryContent}" />
-		</execute>
+		<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -271,7 +275,8 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -337,7 +342,8 @@
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
-		</execute>
+		<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+</execute>
 
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 

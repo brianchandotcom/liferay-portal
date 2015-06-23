@@ -42,7 +42,10 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+<var name="pageName" value="${pageName}" />
+<var name="portletName" value="${portletName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -670,7 +673,8 @@
 
 		<execute macro="User#deactivateCP">
 			<var name="userFirstName" value="${userFirstName}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -788,7 +792,8 @@
 
 		<execute macro="UserGroup#editCP">
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
-		</execute>
+		<var name="userGroupName" value="${userGroupName}" />
+</execute>
 	</command>
 
 	<command name="EditUserSite" priority="4">

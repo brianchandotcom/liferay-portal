@@ -194,7 +194,8 @@
 			<var name="entryContent2" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 			<var name="entryTitle2" value="Blogs Entry2 Title" />
-		</execute>
+		<var name="pageName" value="${pageName}" />
+</execute>
 
 		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="Blogs Entry1 Content" />
@@ -264,7 +265,8 @@
 			<var name="entryTitle2" value="Blogs Entry4 Title" />
 			<var name="virtualHosts" value="true" />
 			<var name="virtualHostsURL" value="www.able.com:8080" />
-		</execute>
+		<var name="pageName" value="${pageName}" />
+</execute>
 
 		<var name="key_entryTitle" value="Blogs Entry4 Title" />
 
@@ -321,7 +323,8 @@
 			<var name="entryTitle2" value="Blogs Entry6 Title" />
 			<var name="virtualHosts" value="true" />
 			<var name="virtualHostsURL" value="http://${ipAddress}:8080" />
-		</execute>
+		<var name="pageName" value="${pageName}" />
+</execute>
 
 		<var name="key_entryTitle" value="Blogs Entry6 Title" />
 
@@ -738,7 +741,8 @@
 		<execute macro="BlogsEntry#viewFriendlyURLPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<var name="pageName" value="${pageName}" />
+</execute>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Recent Bloggers Page" />
@@ -756,7 +760,8 @@
 			<var name="entryAuthor" value="Test Test" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<var name="pageName" value="${pageName}" />
+</execute>
 	</command>
 
 	<command name="ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope" priority="4">
@@ -822,7 +827,8 @@
 		<execute macro="BlogsEntry#viewCP">
 			<var name="entryAuthor" value="${entryAuthor}" />
 			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<var name="entryContent" value="${entryContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1024,7 +1030,9 @@
 		<execute macro="Organization#viewParentOrganizationCP">
 			<var name="orgName" value="${orgName2}" />
 			<var name="parentOrgExist" value="false" />
-		</execute>
+		<var name="subOrgName" value="${subOrgName}" />
+<var name="parentOrgName" value="${parentOrgName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

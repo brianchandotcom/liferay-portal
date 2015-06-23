@@ -529,7 +529,8 @@
 
 		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
 			<var name="${bookingNumber}" value="${bookingNumber}" />
-		</execute>
+		<var name="bookingNumber" value="${bookingNumber}" />
+</execute>
 
 		<execute macro="LAR#exportPortlet">
 			<var name="larFileName" value="SampleLARPortlet.lar" />
@@ -577,7 +578,8 @@
 
 		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
 			<var name="${bookingNumber}" value="${bookingNumber}" />
-		</execute>
+		<var name="bookingNumber" value="${bookingNumber}" />
+</execute>
 	</command>
 
 	<command name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">

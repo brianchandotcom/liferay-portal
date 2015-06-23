@@ -52,7 +52,8 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
+		<var name="wikiPageTitle" value="${wikiPageTitle}" />
+</execute>
 
 		<execute macro="WikiPage#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -185,7 +186,8 @@
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
+		<var name="wikiPageTitle" value="${wikiPageTitle}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -198,7 +200,8 @@
 		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
 			<var name="wikiChildPageInvalidTitle" value="true" />
 			<var name="wikiChildPageTitle" value="${invalidTitleBackslash}" />
-		</execute>
+		<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -211,7 +214,8 @@
 		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
 			<var name="wikiChildPageInvalidTitle" value="true" />
 			<var name="wikiChildPageTitle" value="${invalidTitleRightBracket}" />
-		</execute>
+		<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -224,7 +228,8 @@
 		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
 			<var name="wikiChildPageInvalidTitle" value="true" />
 			<var name="wikiChildPageTitle" value="${invalidTitleLeftBracket}" />
-		</execute>
+		<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -237,7 +242,8 @@
 		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
 			<var name="wikiChildPageInvalidTitle" value="true" />
 			<var name="wikiChildPageTitle" value="${invalidTitleSemicolon}" />
-		</execute>
+		<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -250,7 +256,8 @@
 		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
 			<var name="wikiChildPageInvalidTitle" value="true" />
 			<var name="wikiChildPageTitle" value="${invalidTitleColon}" />
-		</execute>
+		<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -263,7 +270,8 @@
 		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
 			<var name="wikiChildPageInvalidTitle" value="true" />
 			<var name="wikiChildPageTitle" value="${invalidTitleVerticalbar}" />
-		</execute>
+		<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -276,7 +284,8 @@
 		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
 			<var name="wikiChildPageInvalidTitle" value="true" />
 			<var name="wikiChildPageTitle" value="${invalidTitleLessthan}" />
-		</execute>
+		<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -289,7 +298,8 @@
 		<execute macro="WikiPage#addFrontPageChildPageInvalidTitle">
 			<var name="wikiChildPageInvalidTitle" value="true" />
 			<var name="wikiChildPageTitle" value="${invalidTitleGreaterthan}" />
-		</execute>
+		<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -317,7 +327,8 @@
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageUsername" value="${wikiPageUsername}" />
-		</execute>
+		<var name="wikiPageRevision" value="${wikiPageRevision}" />
+</execute>
 	</command>
 
 	<command name="AddWikiFrontPageContentJavascript" priority="4">
@@ -578,7 +589,8 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
+		<var name="wikiPageTitle" value="${wikiPageTitle}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -631,7 +643,8 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
+		<var name="wikiPageTitle" value="${wikiPageTitle}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -693,7 +706,8 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
+		<var name="wikiPageTitle" value="${wikiPageTitle}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -930,7 +944,8 @@
 			<var name="wikiPage1Title" value="${wikiPage1Title}" />
 			<var name="wikiPage2Title" value="${wikiPage2Title}" />
 			<var name="wikiPageContent" value="${wikiPage2Content}" />
-		</execute>
+		<var name="wikiPage2Content" value="${wikiPage2Content}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -997,7 +1012,8 @@
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
+		<var name="wikiPageTitle" value="${wikiPageTitle}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

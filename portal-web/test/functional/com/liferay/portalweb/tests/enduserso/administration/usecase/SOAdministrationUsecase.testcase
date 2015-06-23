@@ -161,7 +161,8 @@
 			<var name="userMiddleName" value="${userMiddleName1}" />
 			<var name="userName" value="${userName1}" />
 			<var name="userScreenName" value="${userScreenName1}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="SOContactsCenter#viewConnection">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
@@ -865,7 +866,8 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		</execute>
+		<var name="categoryName" value="${categoryName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents" />
@@ -929,7 +931,8 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
+		<var name="adminName" value="${adminName}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs" />
@@ -941,7 +944,8 @@
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<var name="categoryName" value="${categoryName}" />
+</execute>
 
 		<execute macro="BlogsEntry#gotoPG">
 			<var name="entryContent" value="${entryContent}" />

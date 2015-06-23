@@ -2107,13 +2107,15 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
-		</execute>
+		<var name="kfProcessName" value="${kfProcessName}" />
+</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="workflowTask" value="create" />
-		</execute>
+		<var name="kfProcessName" value="${kfProcessName}" />
+</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="Created Task Form" />
@@ -4546,7 +4548,8 @@
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="workflowTask" value="create" />
-		</execute>
+		<var name="kfProcessName" value="${kfProcessName}" />
+</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="Edited Create Task Form" />
@@ -4647,7 +4650,8 @@
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="workflowTask" value="review" />
-		</execute>
+		<var name="kfProcessName" value="${kfProcessName}" />
+</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="Review Task Form" />
@@ -4732,7 +4736,8 @@
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="workflowTask" value="review" />
-		</execute>
+		<var name="kfProcessName" value="${kfProcessName}" />
+</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="New Review Task Form" />
@@ -4748,7 +4753,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Kaleo Forms Page" />
-		</execute>
+		<var name="kfProcessName" value="${kfProcessName}" />
+</execute>
 
 		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -5324,7 +5330,8 @@
 
 		<execute macro="KaleoFormsAdmin#addFieldSet">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-		</execute>
+		<var name="kfProcessName" value="${kfProcessName}" />
+</execute>
 
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />

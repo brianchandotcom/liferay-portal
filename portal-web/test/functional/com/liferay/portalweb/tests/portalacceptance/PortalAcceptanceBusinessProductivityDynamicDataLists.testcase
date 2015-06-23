@@ -134,12 +134,14 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
+		<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
-		</execute>
+		<var name="field" value="${field}" />
+</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -284,7 +286,8 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
+		<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+</execute>
 
 		<execute macro="DynamicDataMapping#editField">
 			<var name="field" value="${field}" />
@@ -302,12 +305,14 @@
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
-		</execute>
+		<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
 			<var name="fieldName" value="${fieldNameEdit}" />
-		</execute>
+		<var name="field" value="${field}" />
+</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -540,13 +545,15 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
+		<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
 			<var name="fieldOptionsValues" value="${fieldOptionsValues}" />
-		</execute>
+		<var name="field" value="${field}" />
+</execute>
 	</command>
 </definition>

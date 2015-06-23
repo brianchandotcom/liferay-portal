@@ -231,7 +231,8 @@
 		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />

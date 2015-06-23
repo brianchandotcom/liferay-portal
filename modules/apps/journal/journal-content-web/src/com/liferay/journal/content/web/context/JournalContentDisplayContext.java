@@ -115,9 +115,20 @@ public class JournalContentDisplayContext {
 			return _article;
 		}
 
-		_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-			getArticleGroupId(), getArticleId(), WorkflowConstants.STATUS_ANY);
+		
+		long articleResourcePrimKey = ParamUtil.getLong(
+		_request, "articleResourcePrimKey");
 
+		if (articleResourcePrimKey > 0) {
+			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true); 
+		}
+		else {
+			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				getArticleGroupId(), getArticleId(),
+				WorkflowConstants.STATUS_ANY);
+		}
+		
 		return _article;
 	}
 
@@ -230,7 +241,7 @@ public class JournalContentDisplayContext {
 		_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 			articleDisplay.getGroupId(),
 			PortalUtil.getClassNameId(DDMStructure.class),
-			articleDisplay.getDDMTemplateKey(), true);
+			getDDMTemplateKey(), true);
 
 		return _ddmTemplate;
 	}

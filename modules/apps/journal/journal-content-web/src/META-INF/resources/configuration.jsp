@@ -110,13 +110,16 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 			<%
 			PortletURL selectWebContentURL = PortletProviderUtil.getPortletURL(request, JournalArticle.class.getName(), PortletProvider.Action.BROWSE);
-
 			selectWebContentURL.setParameter("groupId", String.valueOf(scopeGroupId));
 			selectWebContentURL.setParameter("selectedGroupIds", StringUtil.merge(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId())));
 			selectWebContentURL.setParameter("typeSelection", JournalArticle.class.getName());
 			selectWebContentURL.setParameter("eventName", "selectContent");
+			selectWebContentURL.setParameter("refererAssetEntryId", "[$ARTICLE_REFERER_ASSET_ENTRY_ID$]");
 			selectWebContentURL.setWindowState(LiferayWindowState.POP_UP);
+			String selectWebContentURI = HttpUtil.addParameter(selectWebContentURL.toString(), "doAsGroupId", scopeGroupId);
 			%>
+
+			var baseSelectWebContentURI = '<%= selectWebContentURI %>';
 
 			Liferay.Util.selectEntity(
 				{
@@ -128,20 +131,25 @@ String redirect = ParamUtil.getString(request, "redirect");
 					eventName: 'selectContent',
 					id: 'selectContent',
 					title: '<liferay-ui:message key="select-web-content" />',
-					uri: '<%= HttpUtil.addParameter(selectWebContentURL.toString(), "doAsGroupId", scopeGroupId) %>'
+					uri: baseSelectWebContentURI.replace(escape('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), form.fm('assetEntryId').val())
 				},
 				function(event) {
-					form.fm('assetEntryId').val(event.assetentryid);
-					form.fm('ddmTemplateKey').val('');
+					<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" var="journalArticleResource">
+						<portlet:param name="mvcPath" value="/journal_article_resources.jsp" />
+						<portlet:param name="articleResourcePrimKey" value="[$ARTICLE_RESOURCE_PRIMKEY$]" />
+					</liferay-portlet:resourceURL>
 
-					$('.displaying-article-id-holder').removeClass('hide');
-					$('.displaying-help-message-holder').addClass('hide');
-
-					var displayArticleId = $('.displaying-article-id');
-
-					displayArticleId.html(event.assettitle + ' (<liferay-ui:message key="modified" />)');
-
-					displayArticleId.addClass('modified');
+					var baseJournalArticleResourceUrl = '<%= journalArticleResource.toString() %>';
+					
+					$.ajax(
+						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
+						{
+							success: function(responseData) {
+								$('.article-preview .article-preview-content').replaceWith(responseData);
+								form.fm('assetEntryId').val(event.assetentryid);
+							}
+						}
+					);
 				}
 			);
 		}

@@ -17,39 +17,66 @@ package com.liferay.portlet.usersadmin;
 import com.liferay.portal.AddressCityException;
 import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
+import com.liferay.portal.CompanyMaxUsersException;
+import com.liferay.portal.ContactBirthdayException;
+import com.liferay.portal.ContactNameException;
 import com.liferay.portal.DuplicateOrganizationException;
 import com.liferay.portal.EmailAddressException;
+import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.NoSuchCountryException;
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchOrgLaborException;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchRegionException;
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.OrganizationNameException;
 import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.RequiredOrganizationException;
+import com.liferay.portal.RequiredUserException;
+import com.liferay.portal.UserEmailAddressException;
+import com.liferay.portal.UserFieldException;
+import com.liferay.portal.UserIdException;
+import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.UserReminderQueryException;
+import com.liferay.portal.UserScreenNameException;
+import com.liferay.portal.UserSmsException;
 import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Address;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ListType;
+import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Phone;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.service.OrgLaborServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.OrganizationServiceUtil;
@@ -59,27 +86,51 @@ import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.InvokerPortletImpl;
+import com.liferay.portlet.admin.util.AdminUtil;
+import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
+import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
+import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
+import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts.Globals;
 
 /**
  * @author Pei-Jung Lan
  */
 public class UsersAdminPortlet extends MVCPortlet {
 
-	public User addUser(ActionRequest actionRequest) throws Exception {
+	public void addUser(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -111,8 +162,10 @@ public class UsersAdminPortlet extends MVCPortlet {
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		long prefixId = ParamUtil.getInteger(actionRequest, "prefixId");
-		long suffixId = ParamUtil.getInteger(actionRequest, "suffixId");
+		long prefixId = getListTypeId(
+			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
+		long suffixId = getListTypeId(
+			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
 		boolean male = ParamUtil.getBoolean(actionRequest, "male", true);
 		int birthdayMonth = ParamUtil.getInteger(
 			actionRequest, "birthdayMonth");
@@ -190,8 +243,6 @@ public class UsersAdminPortlet extends MVCPortlet {
 			user.getGroup(), publicLayoutSetPrototypeId,
 			privateLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled,
 			privateLayoutSetPrototypeLinkEnabled);
-
-		return user;
 	}
 
 	public void deactivateUsers(
@@ -230,7 +281,10 @@ public class UsersAdminPortlet extends MVCPortlet {
 		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
 	}
 
-	public void deleteRole(ActionRequest actionRequest) throws Exception {
+	public void deleteRole(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		User user = PortalUtil.getSelectedUser(actionRequest);
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
@@ -250,229 +304,6 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
-			actionRequest);
-
-		long prefixId = getListTypeId(
-			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
-
-		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
-
-		long suffixId = getListTypeId(
-			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
-
-		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));
-
-		actionRequest = dynamicActionRequest;
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			User user = null;
-			String oldScreenName = StringPool.BLANK;
-			boolean updateLanguageId = false;
-
-			if (cmd.equals(Constants.ADD)) {
-				user = addUser(actionRequest);
-			}
-			else if (cmd.equals(Constants.DEACTIVATE) ||
-					 cmd.equals(Constants.DELETE) ||
-					 cmd.equals(Constants.RESTORE)) {
-
-				deleteUsers(actionRequest);
-			}
-			else if (cmd.equals("deleteRole")) {
-				deleteRole(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				Object[] returnValue = updateUser(
-					actionRequest, actionResponse);
-
-				user = (User)returnValue[0];
-				oldScreenName = ((String)returnValue[1]);
-				updateLanguageId = ((Boolean)returnValue[2]);
-			}
-			else if (cmd.equals("unlock")) {
-				user = updateLockout(actionRequest);
-			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			if (user != null) {
-				if (Validator.isNotNull(oldScreenName)) {
-
-					// This will fix the redirect if the user is on his personal
-					// my account page and changes his screen name. A redirect
-					// that references the old screen name no longer points to a
-					// valid screen name and therefore needs to be updated.
-
-					Group group = user.getGroup();
-
-					if (group.getGroupId() == themeDisplay.getScopeGroupId()) {
-						Layout layout = themeDisplay.getLayout();
-
-						String friendlyURLPath = group.getPathFriendlyURL(
-							layout.isPrivateLayout(), themeDisplay);
-
-						String oldPath =
-							friendlyURLPath + StringPool.SLASH + oldScreenName;
-						String newPath =
-							friendlyURLPath + StringPool.SLASH +
-								user.getScreenName();
-
-						redirect = StringUtil.replace(
-							redirect, oldPath, newPath);
-
-						redirect = StringUtil.replace(
-							redirect, HttpUtil.encodeURL(oldPath),
-							HttpUtil.encodeURL(newPath));
-					}
-				}
-
-				if (updateLanguageId && themeDisplay.isI18n()) {
-					String i18nLanguageId = user.getLanguageId();
-					int pos = i18nLanguageId.indexOf(CharPool.UNDERLINE);
-
-					if (pos != -1) {
-						i18nLanguageId = i18nLanguageId.substring(0, pos);
-					}
-
-					String i18nPath = StringPool.SLASH + i18nLanguageId;
-
-					redirect = StringUtil.replace(
-						redirect, themeDisplay.getI18nPath(), i18nPath);
-				}
-
-				redirect = HttpUtil.setParameter(
-					redirect, actionResponse.getNamespace() + "p_u_i_d",
-					user.getUserId());
-			}
-
-			Group scopeGroup = themeDisplay.getScopeGroup();
-
-			if (scopeGroup.isUser() &&
-				(UserLocalServiceUtil.fetchUserById(
-					scopeGroup.getClassPK()) == null)) {
-
-				redirect = HttpUtil.setParameter(redirect, "doAsGroupId", 0);
-				redirect = HttpUtil.setParameter(redirect, "refererPlid", 0);
-			}
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchUserException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.users_admin.error");
-			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AddressStreetException ||
-					 e instanceof AddressZipException ||
-					 e instanceof CompanyMaxUsersException ||
-					 e instanceof ContactBirthdayException ||
-					 e instanceof ContactNameException ||
-					 e instanceof EmailAddressException ||
-					 e instanceof GroupFriendlyURLException ||
-					 e instanceof MembershipPolicyException ||
-					 e instanceof NoSuchCountryException ||
-					 e instanceof NoSuchListTypeException ||
-					 e instanceof NoSuchRegionException ||
-					 e instanceof PhoneNumberException ||
-					 e instanceof RequiredUserException ||
-					 e instanceof UserEmailAddressException ||
-					 e instanceof UserFieldException ||
-					 e instanceof UserIdException ||
-					 e instanceof UserPasswordException ||
-					 e instanceof UserReminderQueryException ||
-					 e instanceof UserScreenNameException ||
-					 e instanceof UserSmsException ||
-					 e instanceof WebsiteURLException) {
-
-				if (e instanceof NoSuchListTypeException) {
-					NoSuchListTypeException nslte = (NoSuchListTypeException)e;
-
-					SessionErrors.add(
-						actionRequest,
-						e.getClass().getName() + nslte.getType());
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass(), e);
-				}
-
-				String password1 = actionRequest.getParameter("password1");
-				String password2 = actionRequest.getParameter("password2");
-
-				boolean submittedPassword = false;
-
-				if (!Validator.isBlank(password1) ||
-					!Validator.isBlank(password2)) {
-
-					submittedPassword = true;
-				}
-
-				if (e instanceof CompanyMaxUsersException ||
-					e instanceof RequiredUserException || submittedPassword) {
-
-					String redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
-
-					if (submittedPassword) {
-						User user = PortalUtil.getSelectedUser(actionRequest);
-
-						redirect = HttpUtil.setParameter(
-							redirect, actionResponse.getNamespace() + "p_u_i_d",
-							user.getUserId());
-					}
-
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
-					}
-				}
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			PortalUtil.getSelectedUser(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.users_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.users_admin.edit_user"));
-	}
-
 	public void restoreUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -488,12 +319,13 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public User updateLockout(ActionRequest actionRequest) throws Exception {
+	public void updateLockout(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		User user = PortalUtil.getSelectedUser(actionRequest);
 
 		UserServiceUtil.updateLockoutById(user.getUserId(), false);
-
-		return user;
 	}
 
 	public void updateOrganization(
@@ -707,7 +539,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public Object[] updateUser(
+	public void updateUser(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -768,10 +600,10 @@ public class UsersAdminPortlet extends MVCPortlet {
 			user, actionRequest, "middleName");
 		String lastName = BeanParamUtil.getString(
 			user, actionRequest, "lastName");
-		long prefixId = BeanParamUtil.getInteger(
-			contact, actionRequest, "prefixId");
-		long suffixId = BeanParamUtil.getInteger(
-			contact, actionRequest, "suffixId");
+		long prefixId = getListTypeId(
+			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
+		long suffixId = getListTypeId(
+			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
 		boolean male = BeanParamUtil.getBoolean(
 			user, actionRequest, "male", true);
 
@@ -924,8 +756,6 @@ public class UsersAdminPortlet extends MVCPortlet {
 
 			SessionMessages.add(actionRequest, "verificationEmailSent");
 		}
-
-		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
 
 	@Override
@@ -937,6 +767,8 @@ public class UsersAdminPortlet extends MVCPortlet {
 				renderRequest, NoSuchOrganizationException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, NoSuchOrgLaborException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, NoSuchUserException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, PrincipalException.class.getName())) {
 
@@ -1007,8 +839,12 @@ public class UsersAdminPortlet extends MVCPortlet {
 		if (cause instanceof AddressCityException ||
 			cause instanceof AddressStreetException ||
 			cause instanceof AddressZipException ||
+			cause instanceof CompanyMaxUsersException ||
+			cause instanceof ContactBirthdayException ||
+			cause instanceof ContactNameException ||
 			cause instanceof DuplicateOrganizationException ||
 			cause instanceof EmailAddressException ||
+			cause instanceof GroupFriendlyURLException ||
 			cause instanceof MembershipPolicyException ||
 			cause instanceof NoSuchCountryException ||
 			cause instanceof NoSuchListTypeException ||
@@ -1019,6 +855,14 @@ public class UsersAdminPortlet extends MVCPortlet {
 			cause instanceof OrganizationParentException ||
 			cause instanceof PhoneNumberException ||
 			cause instanceof RequiredOrganizationException ||
+			cause instanceof RequiredUserException ||
+			cause instanceof UserEmailAddressException ||
+			cause instanceof UserFieldException ||
+			cause instanceof UserIdException ||
+			cause instanceof UserPasswordException ||
+			cause instanceof UserReminderQueryException ||
+			cause instanceof UserScreenNameException ||
+			cause instanceof UserSmsException ||
 			cause instanceof WebsiteURLException) {
 
 			return true;

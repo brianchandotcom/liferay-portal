@@ -1,0 +1,50 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "latest.release"
+		classpath group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "latest.release"
+	}
+}
+
+apply plugin: "java"
+apply plugin: "optional-base"
+apply plugin: "provided-base"
+
+apply plugin: "com.liferay.patcher"
+
+dependencies {
+	compile group: "com.google.protobuf", name: "protobuf-java", version: "2.4.1"
+	compile group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.1"
+	compile group: "org.antlr", name: "antlr", version: "3.3"
+	compile group: "org.antlr", name: "antlr-runtime", version: "3.3"
+	compile group: "org.drools", name: "drools-core", optional, version: "5.4.0.Final"
+	compile group: "org.drools", name: "knowledge-api", version: "5.4.0.Final"
+	compile group: "org.drools", name: "knowledge-internal-api", version: "5.4.0.Final"
+	compile group: "org.mvel", name: "mvel2", version: "2.1.0.drools16"
+	provided group: "com.liferay.portal", name: "portal-service", version: "7.0.0-SNAPSHOT"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+task patch(type: PatchTask) {
+	originalLibModuleName = "drools-core"
+	fileNames "org/drools/base/ClassFieldAccessorCache.java"
+}
+
+group = "com.liferay"
+version = "5.4.0.Final.LIFERAY-PATCHED-1"

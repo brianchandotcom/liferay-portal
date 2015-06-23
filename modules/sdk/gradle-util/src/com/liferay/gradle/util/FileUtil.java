@@ -48,14 +48,14 @@ public class FileUtil {
 		return file.exists();
 	}
 
-	public static void get(
+	public static File get(
 			Project project, final String url, final File destinationFile)
 		throws Exception {
 
-		get(project, url, destinationFile, false, true, false);
+		return get(project, url, destinationFile, false, true, false);
 	}
 
-	public static void get(
+	public static File get(
 			Project project, String url, File destinationFile,
 			boolean ignoreErrors, boolean tryLocalNetwork, boolean verbose)
 		throws Exception {
@@ -96,16 +96,19 @@ public class FileUtil {
 			}
 		}
 
+		if (destinationFile == null) {
+			return mirrorsCacheArtifactFile;
+		}
+
 		Path destinationPath = destinationFile.toPath();
 
 		if (destinationFile.isDirectory()) {
-			Files.copy(
-				mirrorsCacheArtifactFile.toPath(),
-				destinationPath.resolve(fileName));
+			destinationPath = destinationPath.resolve(fileName);
 		}
-		else {
-			Files.copy(mirrorsCacheArtifactFile.toPath(), destinationPath);
-		}
+
+		Files.copy(mirrorsCacheArtifactFile.toPath(), destinationPath);
+
+		return destinationPath.toFile();
 	}
 
 	public static String getAbsolutePath(File file) {

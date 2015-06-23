@@ -11,6 +11,7 @@ buildscript {
 		classpath group: "com.liferay", name: "com.liferay.ant.bnd", version: "latest.release"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.0-SNAPSHOT"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "latest.release"
 	}
 }
 

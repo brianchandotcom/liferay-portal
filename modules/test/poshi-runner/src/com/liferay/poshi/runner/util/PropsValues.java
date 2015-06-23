@@ -19,17 +19,14 @@ package com.liferay.poshi.runner.util;
  */
 public class PropsValues {
 
-	public static final String BROWSER_COMMANDS_DIR_NAME =
-		PropsUtil.get("browser.commands.dir.name");
+	public static final String BROWSER_COMMANDS_DIR_NAME = PropsUtil.get(
+		"browser.commands.dir.name");
 
-	public static final String BROWSER_TYPE = PropsUtil.get(
-		"browser.type");
+	public static final String BROWSER_TYPE = PropsUtil.get("browser.type");
 
-	public static final String CLUSTER_NODE_1 = PropsUtil.get(
-		"cluster.node1");
+	public static final String CLUSTER_NODE_1 = PropsUtil.get("cluster.node1");
 
-	public static final String CLUSTER_NODE_2 = PropsUtil.get(
-		"cluster.node2");
+	public static final String CLUSTER_NODE_2 = PropsUtil.get("cluster.node2");
 
 	public static final String COMPONENT_NAMES = PropsUtil.get(
 		"component.names");
@@ -67,11 +64,10 @@ public class PropsValues {
 	public static final String[] FIXED_ISSUES = StringUtil.split(
 		PropsUtil.get("fixed.issues"));
 
-	public static final String IGNORE_ERRORS = PropsUtil.get(
-		"ignore.errors");
+	public static final String IGNORE_ERRORS = PropsUtil.get("ignore.errors");
 
-	public static final String IGNORE_ERRORS_DELIMITER =
-		PropsUtil.get("ignore.errors.delimiter");
+	public static final String IGNORE_ERRORS_DELIMITER = PropsUtil.get(
+		"ignore.errors.delimiter");
 
 	public static final String LIFERAY_HOME = PropsUtil.get("liferay.home");
 
@@ -93,8 +89,7 @@ public class PropsValues {
 	public static final String OUTPUT_DIR_NAME = PropsUtil.get(
 		"output.dir.name");
 
-	public static final String PORTAL_URL = PropsUtil.get(
-		"portal.url");
+	public static final String PORTAL_URL = PropsUtil.get("portal.url");
 
 	public static final String PRODUCT_NAMES = PropsUtil.get("product.names");
 
@@ -107,11 +102,10 @@ public class PropsValues {
 	public static final String SELENIUM_EXECUTABLE_DIR_NAME =
 		PropsUtil.get("selenium.executable.dir.name");
 
-	public static final String SELENIUM_HOST = PropsUtil.get(
-		"selenium.host");
+	public static final String SELENIUM_HOST = PropsUtil.get("selenium.host");
 
-	public static final String SELENIUM_IMPLEMENTATION =
-		PropsUtil.get("selenium.implementation");
+	public static final String SELENIUM_IMPLEMENTATION = PropsUtil.get(
+		"selenium.implementation");
 
 	public static final boolean SELENIUM_LOGGER_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get("selenium.logger.enabled"));
@@ -129,12 +123,10 @@ public class PropsValues {
 		PropsUtil.get("tear.down.before.test"));
 
 	public static final boolean TEST_ASSERT_JAVASCRIPT_ERRORS =
-		GetterUtil.getBoolean(
-			PropsUtil.get("test.assert.javascript.errors"));
+		GetterUtil.getBoolean(PropsUtil.get("test.assert.javascript.errors"));
 
 	public static final boolean TEST_ASSERT_LIFERAY_ERRORS =
-		GetterUtil.getBoolean(
-			PropsUtil.get("test.assert.liferay.errors"));
+		GetterUtil.getBoolean(PropsUtil.get("test.assert.liferay.errors"));
 
 	public static final String TEST_BASE_DIR_NAME = PropsUtil.get(
 		"test.base.dir.name");

@@ -23,6 +23,7 @@ Include-Resource:\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
 	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/FiniteUniqueStack.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/FiniteStack.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\

@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.DateUtil;
 import com.liferay.poshi.runner.util.EmailCommands;
@@ -24,7 +25,6 @@ import com.liferay.poshi.runner.util.LocaleUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RuntimeVariables;
-import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -615,8 +615,8 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		File file = new File(
-			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
-				image);
+			_TEST_BASE_DIR_NAME + "/" +
+				liferaySelenium.getSikuliImagesDirName() + image);
 
 		return new ImageTarget(file);
 	}
@@ -627,14 +627,6 @@ public class LiferaySeleniumHelper {
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
-	}
-
-	public static String getPortalRootDirName() throws Exception {
-		File file = new File("../../../" + StringPool.PERIOD);
-
-		String absolutePath = file.getAbsolutePath();
-
-		return absolutePath.substring(0, absolutePath.length() - 1);
 	}
 
 	public static boolean isConfirmation(
@@ -1343,8 +1335,7 @@ public class LiferaySeleniumHelper {
 
 		sikuliType(
 			liferaySelenium, image,
-			getPortalRootDirName() + liferaySelenium.getDependenciesDirName() +
-				value);
+			_TEST_BASE_DIR_NAME + "/" + _TEST_DEPENDENCIES_DIR_NAME + value);
 
 		keyboard.type(Key.ENTER);
 	}
@@ -1794,6 +1785,12 @@ public class LiferaySeleniumHelper {
 			Thread.sleep(1000);
 		}
 	}
+
+	private static final String _TEST_BASE_DIR_NAME =
+		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
+
+	private static final String _TEST_DEPENDENCIES_DIR_NAME =
+		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
 
 	private static final Pattern _aceEditorPattern = Pattern.compile(
 		"\\(|\\$\\{line\\.separator\\}");

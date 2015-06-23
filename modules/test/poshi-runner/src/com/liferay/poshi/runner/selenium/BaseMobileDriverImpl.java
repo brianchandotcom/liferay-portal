@@ -286,11 +286,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public String getDependenciesDirName() {
-		return _DEPENDENCIES_DIR_NAME;
-	}
-
-	@Override
 	public String getEmailBody(String index) throws Exception {
 		return LiferaySeleniumHelper.getEmailBody(index);
 	}
@@ -338,6 +333,11 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public String getSikuliImagesDirName() {
 		return _SIKULI_IMAGES_DIR_NAME;
+	}
+
+	@Override
+	public String getTestDependenciesDirName() {
+		return _TEST_DEPENDENCIES_DIR_NAME;
 	}
 
 	@Override
@@ -789,13 +789,13 @@ public abstract class BaseMobileDriverImpl
 		throw new UnsupportedOperationException();
 	}
 
-	private static final String _DEPENDENCIES_DIR_NAME =
-		"portal-web//test//functional//com//liferay//portalweb//dependencies//";
-
 	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
 
 	private static final String _SIKULI_IMAGES_DIR_NAME =
-		_DEPENDENCIES_DIR_NAME + "sikuli//linux//";
+		PropsValues.TEST_DEPENDENCIES_DIR_NAME + "//sikuli//linux//";
+
+	private static final String _TEST_DEPENDENCIES_DIR_NAME =
+		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
 
 	private String _primaryTestSuiteName;
 	private final String _projectDirName;

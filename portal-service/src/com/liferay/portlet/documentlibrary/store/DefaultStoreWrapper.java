@@ -23,9 +23,9 @@ import java.io.InputStream;
  * @author Brian Wing Shun Chan
  * @author Edward Han
  */
-public class StoreWrapper implements Store {
+public class DefaultStoreWrapper implements Store {
 
-	public StoreWrapper(Store store) {
+	public DefaultStoreWrapper(Store store) {
 		_store = store;
 	}
 

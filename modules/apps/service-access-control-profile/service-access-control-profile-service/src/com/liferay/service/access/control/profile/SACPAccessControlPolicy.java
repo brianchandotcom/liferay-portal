@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.service.access.control.profile.configuration.SACPConfiguration;
 import com.liferay.service.access.control.profile.constants.SACPConstants;
 import com.liferay.service.access.control.profile.model.SACPEntry;
@@ -56,6 +58,21 @@ public class SACPAccessControlPolicy extends BaseAccessControlPolicy {
 		List<String> serviceAccessControlProfileNames =
 			ServiceAccessControlProfileThreadLocal.
 				getActiveServiceAccessControlProfileNames();
+
+		if (serviceAccessControlProfileNames == null) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			boolean authenticated = false;
+
+			if ((permissionChecker != null) && permissionChecker.isSignedIn()) {
+				authenticated = true;
+			}
+
+			if (authenticated) {
+				return;
+			}
+		}
 
 		SACPConfiguration sacpConfiguration;
 

@@ -21,21 +21,20 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
- * Provides an interface to allow the portlet to process a particular action
- * request. This interface can only be used when the portlet is based on
- * {@link MVCPortlet}.
+ * Provides an interface to handle the render phase of the portlet. This
+ * interface can only be used when the portlet is based on {@link MVCPortlet}.
  *
  * <p>
- * The action command that will be invoked is determined based on two different
- * factors:
+ * The render command that will be invoked is determined based on two
+ * different factors:
  * </p>
  *
  * <ul>
  * <li>
- * The portlet name that the action url is referring to.
+ * The portlet name that the render url is referring to.
  * </li>
  * <li>
- * The parameter value <code>ActionRequest.ACTION_NAME</code> of the action url.
+ * The parameter value <code>mvcRenderCommandName</code> of the render url.
  * </li>
  *
  * <p>
@@ -45,42 +44,26 @@ import javax.portlet.RenderResponse;
  *
  * <ul>
  * <li>
- * <code>javax.portlet.name</code>: The portlet name associated to this action
+ * <code>javax.portlet.name</code>: The portlet name associated to this render
  * command.
  * </li>
  * <li>
- * <code>mvc.command.name</code>: the command name that will match the parameter
- * value <code>ActionRequest.ACTION_NAME</code>. This name cannot contain any
- * comma (<code>,</code>).
+ * <code>mvc.command.name</code>: the command name that will match the
+ * parameter value <code>mvcRenderCommandName</code>. This name cannot contain
+ * any comma (<code>,</code>).
  * </li>
  *
  * <p>
- * The method <code>processAction</code> in {@link MVCPortlet}
- * will search in the OSGi Registry the action command that will match both the
- * portlet name and the parameter value <code>ActionRequest.ACTION_NAME</code>
- * with the properties <code>javax.portlet.name</code> and
- * <code>mvc.command.name</code>.
+ * The method <code>render</code> in {@link MVCPortlet} will search in the OSGi
+ * Registry the render command that will match both the portlet name and the
+ * parameter value <code>mvc.command.name</code> with the properties
+ * <code>javax.portlet.name</code> and <code>mvc.command.name</code>.
  * </p>
  *
  * <p>
- * In general, only one action command will be executed per portlet action url.
- * However, if the parameter value <code>ActionRequest.ACTION_NAME</code> is a
- * comma separated list of multiple names, {@link MVCPortlet} will find the
- * action commands that matches and they will all be invoked sequentially based
- * on the order they were specified in the parameter value
- * <code>ActionRequest.ACTION_NAME</code>.
- * </p>
- *
- * <p>
- * Every time there is more than one action command registered for the same
- * portlet name and with the same command name, only the one with the they
- * highest service ranking will be used.
- * </p>
- *
- * <p>
- * {@link BaseMVCActionCommand} is an abstract class that implements this
- * interface and can be used by extending it by third party developers to
- * simplify the use of action commands.
+ * If there is more than one render command registered for the same portlet name
+ * and with the same command name, only the one with the they highest service
+ * ranking will be used.
  * </p>
  *
  * @author Sergio González
@@ -98,6 +81,13 @@ public interface MVCRenderCommand extends MVCCommand {
 
 	};
 
+	/**
+	 * Invoked by {@link MVCPortlet} to handle the render phase of the portlet.
+	 *
+	 * @param renderRequest the render request
+	 * @param renderResponse the render response
+	 * @return the path that should be dispatched.
+	 */
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException;

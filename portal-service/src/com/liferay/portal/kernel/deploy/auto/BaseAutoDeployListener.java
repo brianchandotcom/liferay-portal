@@ -42,8 +42,8 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		Matcher matcher = _hookPluginPattern.matcher(file.getName());
 
 		if (matcher.find() &&
-			isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
-			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml")) {
+			isMatchingFile(file, "WEB-INF/liferay-hook.xml", false) &&
+			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml", false)) {
 
 			return true;
 		}
@@ -76,7 +76,14 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	public boolean isMatchingFile(File file, String checkXmlFile)
 		throws AutoDeployException {
 
-		if (!isMatchingFileExtension(file)) {
+		return isMatchingFile(file, checkXmlFile, true);
+	}
+
+	public boolean isMatchingFile(
+			File file, String checkXmlFile, boolean checkFileExtension)
+		throws AutoDeployException {
+
+		if (checkFileExtension && !isMatchingFileExtension(file)) {
 			return false;
 		}
 
@@ -147,7 +154,8 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		Matcher matcher = _themePluginPattern.matcher(fileName);
 
 		if (matcher.find() &&
-			isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties")) {
+			isMatchingFile(
+				file, "WEB-INF/liferay-plugin-package.properties", false)) {
 
 			return true;
 		}
@@ -159,7 +167,8 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		Matcher matcher = _webPluginPattern.matcher(file.getName());
 
 		if (matcher.find() &&
-			isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties")) {
+			isMatchingFile(
+				file, "WEB-INF/liferay-plugin-package.properties", false)) {
 
 			return true;
 		}

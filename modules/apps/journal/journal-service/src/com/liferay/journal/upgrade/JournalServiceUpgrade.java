@@ -58,10 +58,13 @@ public class JournalServiceUpgrade {
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeJournal());
 		upgradeProcesses.add(new UpgradeJournalDisplayPreferences());
 		upgradeProcesses.add(new UpgradeJournalArticleType());
+
+		// ClassNames must be updated in the last place
+
+		upgradeProcesses.add(new UpgradeClassNames());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);

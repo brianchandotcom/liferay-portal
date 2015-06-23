@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -74,6 +75,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ListType;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.OrgLabor;
@@ -265,6 +267,14 @@ public class UsersAdminPortlet extends MVCPortlet {
 			user.getGroup(), publicLayoutSetPrototypeId,
 			privateLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled,
 			privateLayoutSetPrototypeLinkEnabled);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		redirect = HttpUtil.setParameter(
+			redirect, actionResponse.getNamespace() + "p_u_i_d",
+			user.getUserId());
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void deactivateUsers(
@@ -333,6 +343,14 @@ public class UsersAdminPortlet extends MVCPortlet {
 		User user = PortalUtil.getSelectedUser(actionRequest);
 
 		UserServiceUtil.updateLockoutById(user.getUserId(), false);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		redirect = HttpUtil.setParameter(
+			redirect, actionResponse.getNamespace() + "p_u_i_d",
+			user.getUserId());
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void editOrganization(
@@ -763,6 +781,56 @@ public class UsersAdminPortlet extends MVCPortlet {
 
 			SessionMessages.add(actionRequest, "verificationEmailSent");
 		}
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(oldScreenName)) {
+
+			// This will fix the redirect if the user is on his personal
+			// my account page and changes his screen name. A redirect
+			// that references the old screen name no longer points to a
+			// valid screen name and therefore needs to be updated.
+
+			Group group = user.getGroup();
+
+			if (group.getGroupId() == themeDisplay.getScopeGroupId()) {
+				Layout layout = themeDisplay.getLayout();
+
+				String friendlyURLPath = group.getPathFriendlyURL(
+					layout.isPrivateLayout(), themeDisplay);
+
+				String oldPath =
+					friendlyURLPath + StringPool.SLASH + oldScreenName;
+				String newPath =
+					friendlyURLPath + StringPool.SLASH + user.getScreenName();
+
+				redirect = StringUtil.replace(redirect, oldPath, newPath);
+
+				redirect = StringUtil.replace(
+					redirect, HttpUtil.encodeURL(oldPath),
+					HttpUtil.encodeURL(newPath));
+			}
+		}
+
+		if (updateLanguageId && themeDisplay.isI18n()) {
+			String i18nLanguageId = user.getLanguageId();
+			int pos = i18nLanguageId.indexOf(CharPool.UNDERLINE);
+
+			if (pos != -1) {
+				i18nLanguageId = i18nLanguageId.substring(0, pos);
+			}
+
+			String i18nPath = StringPool.SLASH + i18nLanguageId;
+
+			redirect = StringUtil.replace(
+				redirect, themeDisplay.getI18nPath(), i18nPath);
+		}
+
+		redirect = HttpUtil.setParameter(
+			redirect, actionResponse.getNamespace() + "p_u_i_d",
+			user.getUserId());
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void exportUsers(

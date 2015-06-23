@@ -17,6 +17,7 @@ package com.liferay.journal.configuration;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.util.ContentUtil;
 
 /**
  * @author Eduardo Garcia
@@ -33,6 +34,11 @@ public class JournalServiceConfigurationUtil {
 
 	public static String[] getArray(String key) {
 		return _configuration.getArray(key);
+	}
+
+	public static String getContent(String location) {
+		return ContentUtil.get(
+			JournalServiceConfigurationUtil.class.getClassLoader(), location);
 	}
 
 	private static final Configuration _configuration =

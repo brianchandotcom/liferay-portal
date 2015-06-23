@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tools.ant.filters.FixCrLfFilter;
+
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
@@ -254,6 +256,12 @@ public class PatchTask extends DefaultTask {
 
 						});
 				}
+
+				Map<String, Object> args = new HashMap<>();
+
+				args.put("eol", FixCrLfFilter.CrLf.newInstance("lf"));
+
+				copySpec.filter(args, FixCrLfFilter.class);
 
 				copySpec.from(_project.zipTree(getOriginalLibSrcFile()));
 				copySpec.include(getFileNames());

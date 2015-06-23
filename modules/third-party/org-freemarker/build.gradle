@@ -1,0 +1,10 @@
+dependencies {
+	compile group: "org.freemarker", name: "freemarker", optional, version: "2.3.17"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"

@@ -1,0 +1,3 @@
+dependencies {
+	compile group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.0"
+}

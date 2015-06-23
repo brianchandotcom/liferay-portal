@@ -33,21 +33,13 @@ import java.util.zip.ZipFile;
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 	public boolean isExtPlugin(File file) {
-		String fileName = file.getName();
+		Matcher matcher = _extPluginPattern.matcher(file.getName());
 
-		Matcher matcher = _extPluginPattern.matcher(fileName);
-
-		if (matcher.find()) {
-			return true;
-		}
-
-		return false;
+		return matcher.find();
 	}
 
 	public boolean isHookPlugin(File file) throws AutoDeployException {
-		String fileName = file.getName();
-
-		Matcher matcher = _hookPluginPattern.matcher(fileName);
+		Matcher matcher = _hookPluginPattern.matcher(file.getName());
 
 		if (matcher.find() &&
 			isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
@@ -164,9 +156,7 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isWebPlugin(File file) throws AutoDeployException {
-		String fileName = file.getName();
-
-		Matcher matcher = _webPluginPattern.matcher(fileName);
+		Matcher matcher = _webPluginPattern.matcher(file.getName());
 
 		if (matcher.find() &&
 			isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties")) {
@@ -185,12 +175,12 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 		BaseAutoDeployListener.class);
 
 	private static final Pattern _extPluginPattern = Pattern.compile(
-		"-(ext|Ext)[-0-9.]*\\+?[.](war|zip)$");
+		"-(E|e)xt[-0-9.]*\\+?\\.(war|zip)$");
 	private static final Pattern _hookPluginPattern = Pattern.compile(
-		"-(hook|Hook)[-0-9.]*\\+?[.](war|zip)$");
+		"-(H|h)ook[-0-9.]*\\+?\\.(war|zip)$");
 	private static final Pattern _themePluginPattern = Pattern.compile(
-		"-(theme|Theme)[-0-9.]*\\+?[.](war|zip)$");
+		"-(T|t)heme[-0-9.]*\\+?\\.(war|zip)$");
 	private static final Pattern _webPluginPattern = Pattern.compile(
-		"-(web|Web)[-0-9.]*\\+?[.](war|zip)$");
+		"-(W|w)eb[-0-9.]*\\+?\\.(war|zip)$");
 
 }

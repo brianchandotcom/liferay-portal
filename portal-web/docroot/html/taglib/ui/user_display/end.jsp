@@ -16,7 +16,16 @@
 
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-	<c:if test="<%= showUserDetails %>">
+<c:choose>
+	<c:when test="<%= displayStyle != 4 %>">
+			<c:if test="<%= showUserDetails %>">
+				</div>
+			</c:if>
 		</div>
-	</c:if>
-</div>
+	</c:when>
+	<c:otherwise>
+				</div>
+			</div>
+		</div>
+	</c:otherwise>
+</c:choose>

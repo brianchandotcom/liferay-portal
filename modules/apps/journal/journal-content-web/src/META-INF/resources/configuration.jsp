@@ -20,7 +20,6 @@
 JournalArticle article = journalContentDisplayContext.getArticle();
 JournalArticleDisplay articleDisplay = journalContentDisplayContext.getArticleDisplay();
 
-String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 %>
 
 <liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-web-content-could-not-be-found" />
@@ -68,56 +67,27 @@ long webContentUserId = articleDisplay.getUserId();
 <c:if test="<%= article != null %>">
 
 	<%
-	List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
+	DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
+	String templateTitle = ddmTemplate.getName(locale);
+	String templateDescription = ddmTemplate.getDescription();
+	String templateImgUrl = ddmTemplate.getTemplateImageURL(themeDisplay);
 	%>
 
-	<c:if test="<%= !ddmTemplates.isEmpty() %>">
-		<aui:fieldset>
-			<liferay-ui:message key="override-default-template" />
-
-			<liferay-ui:table-iterator
-				list="<%= ddmTemplates %>"
-				listType="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
-				rowLength="3"
-				rowPadding="30"
-			>
-
-				<%
-				boolean templateChecked = false;
-
-				if (ddmTemplateKey.equals(tableIteratorObj.getTemplateKey())) {
-					templateChecked = true;
-				}
-
-				if ((tableIteratorPos.intValue() == 0) && Validator.isNull(ddmTemplateKey)) {
-					templateChecked = true;
-				}
-				%>
-
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL">
-					<portlet:param name="mvcPath" value="/edit_template.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="refererPortletName" value="<%= PortletProviderUtil.getPortletId(JournalArticle.class.getName(), PortletProvider.Action.EDIT) %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(tableIteratorObj.getGroupId()) %>" />
-					<portlet:param name="templateId" value="<%= String.valueOf(tableIteratorObj.getTemplateId()) %>" />
-				</liferay-portlet:renderURL>
-
-				<liferay-util:buffer var="linkContent">
-					<aui:a href="<%= editTemplateURL %>" id="tableIteratorObjName"><%= HtmlUtil.escape(tableIteratorObj.getName(locale)) %></aui:a>
-				</liferay-util:buffer>
-
-				<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "ddmTemplateKey.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
-
-				<c:if test="<%= tableIteratorObj.isSmallImage() %>">
-					<br />
-
-					<img alt="" hspace="0" src="<%= HtmlUtil.escapeAttribute(tableIteratorObj.getTemplateImageURL(themeDisplay)) %>" vspace="0" />
-				</c:if>
-			</liferay-ui:table-iterator>
-
-			<br />
-		</aui:fieldset>
-	</c:if>
+	<div class="row row-spacing template-preview">
+		<div class="col-md-12">
+			<p class="text-muted"><liferay-ui:message key="template" /></p>
+			<div class="media template-preview-content">
+				<img alt="<%= templateTitle %>" class="media-object pull-left template-image" src="<%= templateImgUrl %>">
+				<div class="media-body">
+					<h2 class="heading4 template-title"><%= templateTitle %></h2>
+					<p class="template-description"><%= templateDescription %></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<aui:button name="templateSelector" value="change" />
+		</div>
+	</div>
 </c:if>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -125,6 +95,7 @@ long webContentUserId = articleDisplay.getUserId();
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
 <%
+String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 

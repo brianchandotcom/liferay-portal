@@ -48,6 +48,16 @@
 		width: 100%;
 	}
 
+	.template-preview {
+		.media {
+			margin-bottom: 20px;
+	
+			img {
+				height: 48px;
+			}
+		}
+	}
+
 	.row-spacing {
 		margin-bottom: 40px;
 	}

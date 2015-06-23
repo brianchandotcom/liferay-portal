@@ -20,8 +20,12 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -290,13 +294,23 @@ public class DDMStructureStagedModelDataHandler
 					structure.getDDMFormLayout(), structure.getStorageType(),
 					structure.getType(), serviceContext);
 			}
-			else {
+			else if (isModifiedStructure(existingStructure, structure)) {
 				importedStructure =
 					DDMStructureLocalServiceUtil.updateStructure(
 						userId, existingStructure.getStructureId(),
 						parentStructureId, structure.getNameMap(),
 						structure.getDescriptionMap(), structure.getDDMForm(),
 						structure.getDDMFormLayout(), serviceContext);
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Not importing DDM structure with key " +
+							structure.getStructureKey() +
+								" since it was not modified");
+				}
+
+				importedStructure = existingStructure;
 			}
 		}
 		else {
@@ -330,5 +344,53 @@ public class DDMStructureStagedModelDataHandler
 
 		return existingStructure;
 	}
+
+	protected boolean isModifiedStructure(
+		DDMStructure existingStructure, DDMStructure structure) {
+
+		if (DateUtil.compareTo(
+				structure.getModifiedDate(),
+				existingStructure.getModifiedDate()) > 0) {
+
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getNameMap(), existingStructure.getNameMap())) {
+
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getDescriptionMap(),
+				existingStructure.getDescriptionMap())) {
+
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getDefinition(), existingStructure.getDefinition())) {
+
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getStorageType(),
+				existingStructure.getStorageType())) {
+
+			return true;
+		}
+
+		if (!Validator.equals(
+				structure.getType(), existingStructure.getType())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMStructureStagedModelDataHandler.class);
 
 }

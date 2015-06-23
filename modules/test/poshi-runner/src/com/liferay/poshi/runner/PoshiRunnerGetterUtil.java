@@ -164,7 +164,7 @@ public class PoshiRunnerGetterUtil {
 		return className + "." + fileExtension;
 	}
 
-	public static String getProjectDir() {
+	public static String getProjectDirName() {
 		File file = new File(StringPool.PERIOD);
 
 		String absolutePath = file.getAbsolutePath();

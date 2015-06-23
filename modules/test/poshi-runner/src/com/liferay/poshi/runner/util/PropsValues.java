@@ -20,7 +20,7 @@ package com.liferay.poshi.runner.util;
 public class PropsValues {
 
 	public static final String BROWSER_COMMANDS_DIR_NAME =
-		PropsUtil.get("browser.commands.dir");
+		PropsUtil.get("browser.commands.dir.name");
 
 	public static final String BROWSER_TYPE = PropsUtil.get(
 		"browser.type");
@@ -91,7 +91,7 @@ public class PropsValues {
 		"mobile.device.type");
 
 	public static final String OUTPUT_DIR_NAME = PropsUtil.get(
-		"output.dir");
+		"output.dir.name");
 
 	public static final String PORTAL_URL = PropsUtil.get(
 		"portal.url");
@@ -105,7 +105,7 @@ public class PropsValues {
 		PropsUtil.get("save.source"));
 
 	public static final String SELENIUM_EXECUTABLE_DIR_NAME =
-		PropsUtil.get("selenium.executable.dir");
+		PropsUtil.get("selenium.executable.dir.name");
 
 	public static final String SELENIUM_HOST = PropsUtil.get(
 		"selenium.host");
@@ -137,7 +137,7 @@ public class PropsValues {
 			PropsUtil.get("test.assert.liferay.errors"));
 
 	public static final String TEST_BASE_DIR_NAME = PropsUtil.get(
-		"test.basedir");
+		"test.base.dir.name");
 
 	public static final String TEST_CASE_AVAILABLE_PROPERTY_NAMES =
 		PropsUtil.get("test.case.available.property.names");

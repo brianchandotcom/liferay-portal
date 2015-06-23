@@ -165,7 +165,7 @@
 				portal,\
 				social-office
 
-			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
+			test.base.dir.name=../../../portal-web/test/functional/com/liferay/portalweb/
 
 			test.case.available.property.names=\
 				app.server.bundles.size,\

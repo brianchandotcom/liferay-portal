@@ -215,7 +215,8 @@
 	<command name="configureKBArticleDisplayPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#SELECT_BUTTON" value1="Select" />
@@ -266,7 +267,8 @@
 	<command name="configureKBDisplaySettingsPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#DISPLAY_SETTINGS" value1="Display Settings" />
@@ -320,7 +322,8 @@
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#SELECT_BUTTON" value1="Select" />
@@ -338,7 +341,8 @@
 	<command name="configureKBRatingTypePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#DISPLAY_SETTINGS" value1="Display Settings" />
@@ -364,7 +368,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Knowledge Base Section" />
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasesectionConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertChecked" locator1="PGKnowledgebasesectionConfiguration#SHOW_SECTIONS_TITLE_CHECKBOX" />
@@ -376,7 +381,8 @@
 	<command name="configureKBSocialBookmarkSites">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasedisplayConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayConfiguration#DISPLAY_SETTINGS" value1="Display Settings" />
@@ -388,7 +394,8 @@
 			<then>
 				<execute macro="KBArticle#enableSocialBookmarkSites">
 					<var name="enableSocialBookmarkSites" value="${enableSocialBookmarkSites}" />
-				</execute>
+				<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
+</execute>
 			</then>
 		</if>
 
@@ -397,7 +404,8 @@
 			<then>
 				<execute macro="KBArticle#disableSocialBookmarkSites">
 					<var name="disableSocialBookmarkSites" value="${disableSocialBookmarkSites}" />
-				</execute>
+				<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
+</execute>
 			</then>
 		</if>
 
@@ -843,7 +851,8 @@
 	<command name="selectSectionPGViaKBSection">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGKnowledgebasesectionConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertChecked" locator1="PGKnowledgebasesectionConfiguration#SHOW_SECTIONS_TITLE_CHECKBOX" />

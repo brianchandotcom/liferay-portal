@@ -11,7 +11,8 @@
 	<command name="viewConfigurationDefaultLayoutTemplate">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="NestedportletsConfiguration#CONFIGURATION_IFRAME" />
 

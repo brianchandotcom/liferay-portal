@@ -17,7 +17,8 @@
 			<then>
 				<execute macro="Page#selectPageTypeRadioPG">
 					<var name="pageType" value="${pageType}" />
-				</execute>
+				<var name="portletNameList" value="${portletNameList}" />
+</execute>
 			</then>
 		</if>
 

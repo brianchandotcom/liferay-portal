@@ -540,7 +540,12 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="currentUser" value="${currentUser}" />
+<var name="adminName" value="${adminName}" />
+<var name="categoryCount" value="${categoryCount}" />
+<var name="threadCount" value="${threadCount}" />
+<var name="postCount" value="${postCount}" />
+</execute>
 
 		<if>
 			<isset var="replyNumber" />

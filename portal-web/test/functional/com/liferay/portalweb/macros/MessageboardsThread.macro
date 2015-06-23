@@ -751,7 +751,11 @@
 	<command name="tearDownPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 
 		<while>
 			<condition function="IsElementPresent" locator1="PGMessageboards#THREAD_TABLE_ACTIONS_GENERIC" />
@@ -1073,7 +1077,11 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 
 		<var name="key_threadSubject" value="${threadSplitSubject}" />
 
@@ -1124,7 +1132,9 @@
 			<else>
 				<execute macro="MessageboardsThread#viewStatisticsTopPoster">
 					<var name="userPostNumber" value="${threadPostNumber}" />
-				</execute>
+				<var name="userName" value="${userName}" />
+<var name="userMessageboardsRank" value="${userMessageboardsRank}" />
+</execute>
 			</else>
 		</if>
 	</command>

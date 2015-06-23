@@ -218,7 +218,8 @@
 				<execute macro="WikiPage#addTagPGCmd">
 					<var name="tagName" value="${tagName}" />
 					<var name="wikiPageTitle" value="${wikiPageTitle}" />
-				</execute>
+				<var name="tagNameList" value="${tagNameList}" />
+</execute>
 
 				<execute macro="WikiPage#viewTagViaAddPG">
 					<var name="tagName" value="${tagName}" />
@@ -411,7 +412,8 @@
 				<execute macro="WikiPage#addTagPGCmd">
 					<var name="tagName" value="${tagName}" />
 					<var name="wikiPageTitle" value="${wikiPageTitle}" />
-				</execute>
+				<var name="tagNameList" value="${tagNameList}" />
+</execute>
 
 				<execute macro="WikiPage#viewTagViaAddPG">
 					<var name="tagName" value="${tagName}" />

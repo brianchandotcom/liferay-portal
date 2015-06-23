@@ -576,7 +576,9 @@
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="kfProcessName" value="${kfProcessName}" />
+<var name="kfPendingForm" value="${kfPendingForm}" />
+</execute>
 
 		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessSelectform#INFO_MESSAGE" value1="There are no results." />
 	</command>

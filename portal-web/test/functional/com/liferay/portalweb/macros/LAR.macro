@@ -262,7 +262,8 @@
 
 		<execute macro="LAR#exportCmd">
 			<var name="larFileName" value="${larFileName}" />
-		</execute>
+		<var name="exportPermissions" value="${exportPermissions}" />
+</execute>
 	</command>
 
 	<command name="exportExportTemplateCP">
@@ -287,7 +288,8 @@
 
 		<execute macro="LAR#exportCmd">
 			<var name="larFileName" value="${larFileName}" />
-		</execute>
+		<var name="exportPermissions" value="${exportPermissions}" />
+</execute>
 	</command>
 
 	<command name="exportSiteCmd">
@@ -314,7 +316,8 @@
 
 		<execute macro="LAR#exportSiteCmd">
 			<var name="larFileName" value="${larFileName}" />
-		</execute>
+		<var name="valueName" value="${valueName}" />
+</execute>
 	</command>
 
 	<command name="exportUserGroups">
@@ -322,13 +325,15 @@
 
 		<execute macro="LAR#exportCmd">
 			<var name="larFileName" value="${larFileName}" />
-		</execute>
+		<var name="exportPermissions" value="${exportPermissions}" />
+</execute>
 	</command>
 
 	<command name="gotoExportImportCmd">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Export / Import" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 	</command>
 
 	<command name="gotoExportSite">
@@ -375,7 +380,10 @@
 
 		<execute macro="LAR#selectImportFileCmd">
 			<var name="larFileName" value="${larFileName}" />
-		</execute>
+		<var name="uploadFrom" value="${uploadFrom}" />
+<var name="importPermissions" value="${importPermissions}" />
+<var name="cannotImport" value="${cannotImport}" />
+</execute>
 
 		<execute macro="LAR#importSiteCmd" />
 	</command>
@@ -388,7 +396,10 @@
 
 		<execute macro="LAR#selectImportFileCmd">
 			<var name="larFileName" value="${larFileName}" />
-		</execute>
+		<var name="uploadFrom" value="${uploadFrom}" />
+<var name="importPermissions" value="${importPermissions}" />
+<var name="cannotImport" value="${cannotImport}" />
+</execute>
 	</command>
 
 	<command name="importSiteCmd">
@@ -451,7 +462,11 @@
 			<then>
 				<execute macro="LAR#importSiteCmd">
 					<var name="larFileName" value="${larFileName}" />
-				</execute>
+				<var name="importPermissions" value="${importPermissions}" />
+<var name="checkContentNameList" value="${checkContentNameList}" />
+<var name="contentName" value="${contentName}" />
+<var name="contentDeletion" value="${contentDeletion}" />
+</execute>
 			</then>
 		</if>
 	</command>
@@ -596,7 +611,9 @@
 			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
-		</execute>
+		<var name="userSegmentSelect" value="${userSegmentSelect}" />
+<var name="campaignInactive" value="${campaignInactive}" />
+</execute>
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
 
@@ -612,7 +629,8 @@
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
+		<var name="userSegmentDetailTitle" value="${userSegmentDetailTitle}" />
+</execute>
 
 		<if>
 			<equals arg1="${stagingSetup}" arg2="true" />
@@ -622,26 +640,36 @@
 					<var name="pageStaging" value="true" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
-				</execute>
+				<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
 					<var name="pageName" value="Test Page Name" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
-				</execute>
+				<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 			</else>
 		</if>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content Display" />
-		</execute>
+		<var name="i" value="${i}" />
+</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
@@ -650,7 +678,11 @@
 			<var name="rowNumber" value="1" />
 			<var name="toAll" value="true" />
 			<var name="userSegmentName" value="User Segment Name" />
-		</execute>
+		<var name="rowIndexNumber" value="${rowIndexNumber}" />
+<var name="doesNotBelong" value="${doesNotBelong}" />
+<var name="toAny" value="${toAny}" />
+<var name="siteScope" value="${siteScope}" />
+</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
 
@@ -662,26 +694,36 @@
 					<var name="pageStaging" value="true" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
-				</execute>
+				<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
 					<var name="pageName" value="Test Page Name" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
-				</execute>
+				<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 			</else>
 		</if>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Campaign Content Display" />
-		</execute>
+		<var name="i" value="${i}" />
+</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
 			<var name="campaignName" value="Campaign Name" />
@@ -700,20 +742,29 @@
 					<var name="pageStaging" value="true" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
-				</execute>
+				<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
 					<var name="pageName" value="Test Page Name" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
-				</execute>
+				<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 			</else>
 		</if>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content List" />
-		</execute>
+		<var name="i" value="${i}" />
+</execute>
 
 		<execute function="Refresh" />
 	</command>

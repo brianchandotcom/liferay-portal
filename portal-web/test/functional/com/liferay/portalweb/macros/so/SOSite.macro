@@ -3,7 +3,15 @@
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-		</execute>
+		<var name="pageAccess" value="${pageAccess}" />
+<var name="siteNameURL" value="${siteNameURL}" />
+<var name="friendlyURL" value="${friendlyURL}" />
+<var name="pageStaging" value="${pageStaging}" />
+<var name="virtualHostsURL" value="${virtualHostsURL}" />
+<var name="specificURL" value="${specificURL}" />
+<var name="pageAccessURL" value="${pageAccessURL}" />
+<var name="pageStagingURL" value="${pageStagingURL}" />
+</execute>
 
 		<var name="key_pageName" value="${pageName}" />
 
@@ -32,7 +40,15 @@
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
-		</execute>
+		<var name="pageAccess" value="${pageAccess}" />
+<var name="siteNameURL" value="${siteNameURL}" />
+<var name="friendlyURL" value="${friendlyURL}" />
+<var name="pageStaging" value="${pageStaging}" />
+<var name="virtualHostsURL" value="${virtualHostsURL}" />
+<var name="specificURL" value="${specificURL}" />
+<var name="pageAccessURL" value="${pageAccessURL}" />
+<var name="pageStagingURL" value="${pageStagingURL}" />
+</execute>
 
 		<execute macro="SOUserBar#showEditControls" />
 

@@ -3,7 +3,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Related Assets" />
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 

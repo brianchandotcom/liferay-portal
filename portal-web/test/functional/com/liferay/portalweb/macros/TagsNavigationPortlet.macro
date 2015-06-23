@@ -16,7 +16,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Tags Navigation" />
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGTagsNavigationPortletConfiguration#TAGS_NAVIGATION_IFRAME" />
 
@@ -35,7 +36,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Tags Navigation" />
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGTagsNavigationPortletConfiguration#TAGS_NAVIGATION_IFRAME" />
 
@@ -82,7 +84,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Tag Cloud" />
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGTagsNavigationPortletConfiguration#TAG_CLOUD_IFRAME" />
 

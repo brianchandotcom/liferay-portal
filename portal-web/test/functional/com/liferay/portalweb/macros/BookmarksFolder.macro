@@ -176,7 +176,11 @@
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="${siteURL}" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 
 		<while>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGBookmarks#BACK_ICON" />

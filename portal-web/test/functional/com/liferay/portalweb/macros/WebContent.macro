@@ -1113,7 +1113,10 @@
 
 		<execute macro="WebContent#viewPGViaAP">
 			<var name="key_assetTitle" value="${webContentTitle}" />
-		</execute>
+		<var name="webContentTitle" value="${webContentTitle}" />
+<var name="webContentContent" value="${webContentContent}" />
+<var name="author" value="${author}" />
+</execute>
 
 		<for list="${documentTypes}" param="documentType">
 			<var method="StringUtil#upperCase('${documentType}')" name="documentTypeUppercase" />
@@ -1222,7 +1225,9 @@
 
 		<execute macro="Page#viewChildPG">
 			<var name="childPageName" value="${childPageName}" />
-		</execute>
+		<var name="viewChildPageDropdown" value="${viewChildPageDropdown}" />
+<var name="javaScriptPage" value="${javaScriptPage}" />
+</execute>
 	</command>
 
 	<command name="viewNestedField">
@@ -1248,7 +1253,10 @@
 
 		<execute macro="WebContent#viewPGViaAP">
 			<var name="key_assetTitle" value="${webContentTitle}" />
-		</execute>
+		<var name="webContentTitle" value="${webContentTitle}" />
+<var name="webContentContent" value="${webContentContent}" />
+<var name="author" value="${author}" />
+</execute>
 
 		<for list="${documentTypes}" param="documentType">
 			<var method="StringUtil#upperCase('${documentType}')" name="documentTypeUppercase" />

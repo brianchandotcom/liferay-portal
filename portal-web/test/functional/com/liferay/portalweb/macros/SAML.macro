@@ -32,7 +32,11 @@
 			<var name="rememberMeChecked" value="false" />
 			<var name="specificURL" value="http://www.able.com:9080" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="authenticationMethod" value="${authenticationMethod}" />
+<var name="userScreenName" value="${userScreenName}" />
+<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
+</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="SAML Admin" />
@@ -64,7 +68,8 @@
 
 		<execute macro="User#logoutPG">
 			<var name="specificURL" value="http://www.able.com:9080" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+</execute>
 
 		<!-- Add the configured SP connection to the IdP -->
 
@@ -90,7 +95,11 @@
 			<var name="password" value="${password}" />
 			<var name="specificURL" value="${idpInitiatedSSOURL}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="authenticationMethod" value="${authenticationMethod}" />
+<var name="userScreenName" value="${userScreenName}" />
+<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
+</execute>
 
 		<execute function="Pause" locator1="5000" />
 		<execute function="AssertLocation" value1="${spURL}" />
@@ -104,7 +113,11 @@
 			<var name="password" value="${password}" />
 			<var name="rememberMeChecked" value="${rememberMeChecked}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="authenticationMethod" value="${authenticationMethod}" />
+<var name="userScreenName" value="${userScreenName}" />
+<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
+</execute>
 
 		<execute function="Pause" locator1="5000" />
 		<execute function="AssertLocation" value1="${spURL}" />

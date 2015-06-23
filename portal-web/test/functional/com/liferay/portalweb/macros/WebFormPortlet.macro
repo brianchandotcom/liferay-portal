@@ -7,13 +7,17 @@
 		<execute macro="WebFormPortlet#editField">
 			<var name="wfFieldName" value="New Item" />
 			<var name="wfNewFieldName" value="${wfNewFieldName}" />
-		</execute>
+		<var name="wfFieldType" value="${wfFieldType}" />
+<var name="optionsList" value="${optionsList}" />
+<var name="optional" value="${optional}" />
+</execute>
 	</command>
 
 	<command name="configureSetupFormFieldsPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGWebformConfiguration#CONFIGURATION_IFRAME" />
 

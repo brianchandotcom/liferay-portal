@@ -13,13 +13,25 @@
 	<command name="addBlankCP">
 		<execute macro="Site#addCP">
 			<var name="siteType" value="Blank" />
-		</execute>
+		<var name="siteTemplateName" value="${siteTemplateName}" />
+<var name="siteName" value="${siteName}" />
+<var name="uncheckPropagation" value="${uncheckPropagation}" />
+<var name="membershipType" value="${membershipType}" />
+<var name="parentSiteName" value="${parentSiteName}" />
+<var name="siteLimitMembership" value="${siteLimitMembership}" />
+</execute>
 	</command>
 
 	<command name="addCommunityCP">
 		<execute macro="Site#addCP">
 			<var name="siteType" value="Community" />
-		</execute>
+		<var name="siteTemplateName" value="${siteTemplateName}" />
+<var name="siteName" value="${siteName}" />
+<var name="uncheckPropagation" value="${uncheckPropagation}" />
+<var name="membershipType" value="${membershipType}" />
+<var name="parentSiteName" value="${parentSiteName}" />
+<var name="siteLimitMembership" value="${siteLimitMembership}" />
+</execute>
 	</command>
 
 	<command name="addCP">
@@ -132,7 +144,13 @@
 	<command name="addIntranetCP">
 		<execute macro="Site#addCP">
 			<var name="siteType" value="Intranet" />
-		</execute>
+		<var name="siteTemplateName" value="${siteTemplateName}" />
+<var name="siteName" value="${siteName}" />
+<var name="uncheckPropagation" value="${uncheckPropagation}" />
+<var name="membershipType" value="${membershipType}" />
+<var name="parentSiteName" value="${parentSiteName}" />
+<var name="siteLimitMembership" value="${siteLimitMembership}" />
+</execute>
 	</command>
 
 	<command name="addMemberCP">
@@ -189,7 +207,13 @@
 	<command name="addSiteTemplateCP">
 		<execute macro="Site#addCP">
 			<var name="siteType" value="Site Template" />
-		</execute>
+		<var name="siteTemplateName" value="${siteTemplateName}" />
+<var name="siteName" value="${siteName}" />
+<var name="uncheckPropagation" value="${uncheckPropagation}" />
+<var name="membershipType" value="${membershipType}" />
+<var name="parentSiteName" value="${parentSiteName}" />
+<var name="siteLimitMembership" value="${siteLimitMembership}" />
+</execute>
 	</command>
 
 	<command name="addVirtualHostsURLCP">
@@ -1081,7 +1105,11 @@
 	<command name="viewSitePG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${childSiteName}" />

@@ -438,7 +438,8 @@
 
 		<execute macro="Page#viewPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
+		<var name="liferaySite" value="${liferaySite}" />
+</execute>
 	</command>
 
 	<command name="gotoPublishToLive">
@@ -627,7 +628,11 @@
 			<var name="remoteStaging" value="true" />
 			<var name="siteID" value="${siteID}" />
 			<var name="siteName" value="${siteName}" />
-		</execute>
+		<var name="remotePort" value="${remotePort}" />
+<var name="contentName" value="${contentName}" />
+<var name="uncheckContent" value="${uncheckContent}" />
+<var name="editActivateStaging" value="${editActivateStaging}" />
+</execute>
 	</command>
 
 	<command name="savePublishTemplate">

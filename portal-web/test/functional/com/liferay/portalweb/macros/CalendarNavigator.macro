@@ -86,7 +86,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Calendar" />
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME" />
 	</command>

@@ -5,7 +5,9 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+</execute>
 
 		<execute macro="SOMembersPortlet#inviteMember">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -13,7 +15,8 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="siteRoleInvite" value="${siteRoleInvite}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -22,7 +25,8 @@
 
 		<execute macro="SOMembersAdministration#confirmMemberInvite">
 			<var name="senderName" value="${adminName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -34,7 +38,8 @@
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -44,7 +49,8 @@
 		<execute macro="SOMembersPortlet#confirmRequestToConnect">
 			<var name="senderName" value="${adminName}" />
 			<var name="userName" value="${userName}" />
-		</execute>
+		<var name="siteName" value="${siteName}" />
+</execute>
 	</command>
 
 	<command name="blockMember">
@@ -53,7 +59,9 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -84,7 +92,9 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+</execute>
 
 		<execute function="AssertTextEquals" locator1="SOMembersPortlet#MEMBERS_LINK_CONNECTIONS" value1="You have 1 connections in this site." />
 	</command>
@@ -95,7 +105,9 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -115,7 +127,9 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -188,7 +202,9 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -236,7 +252,9 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 
@@ -257,7 +275,9 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="soPage" value="true" />
-		</execute>
+		<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+</execute>
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
 

@@ -9,7 +9,8 @@
 	<command name="configureSetupPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGSitesdirectoryConfiguration#SITES_DIRECTORY_IFRAME" />
 
@@ -34,7 +35,8 @@
 	<command name="viewDefaultConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGSitesdirectoryConfiguration#SITES_DIRECTORY_IFRAME" />
 		<execute function="AssertTextEquals" locator1="PGSitesdirectoryConfiguration#SETUP_SITES_SELECT" value1="Top Level Parent Level Siblings Children" />

@@ -13,7 +13,11 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="userBirthday" value="${userBirthday}" />
+<var name="userGender" value="${userGender}" />
+<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
+<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
+</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -22,7 +26,9 @@
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<var name="newPassword" value="${newPassword}" />
+<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
+</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
@@ -74,7 +80,11 @@
 				<execute macro="User#loginPG">
 					<var name="password" value="test" />
 					<var name="userEmailAddress" value="test@liferay.com" />
-				</execute>
+				<var name="nodePort" value="${nodePort}" />
+<var name="authenticationMethod" value="${authenticationMethod}" />
+<var name="userScreenName" value="${userScreenName}" />
+<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
+</execute>
 			</else>
 		</if>
 

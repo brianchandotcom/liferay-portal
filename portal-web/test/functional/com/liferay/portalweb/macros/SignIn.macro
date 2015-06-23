@@ -75,7 +75,8 @@
 			<var name="rememberMe" value="${rememberMe}" />
 			<var name="userEmailAddress" value="${userScreenName}" />
 			<var name="userPassword" value="${userPassword}" />
-		</execute>
+		<var name="userScreenName" value="${userScreenName}" />
+</execute>
 	</command>
 
 	<command name="signInFirstTime" summary="Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}' for the first time">
@@ -93,7 +94,8 @@
 
 		<execute macro="SignIn#setPasswordReminder">
 			<var name="userReminderQueryAnswer" value="${userReminderQueryAnswer}" />
-		</execute>
+		<var name="userPasswordReminderAnswer" value="${userPasswordReminderAnswer}" />
+</execute>
 	</command>
 
 	<command name="signInSite">

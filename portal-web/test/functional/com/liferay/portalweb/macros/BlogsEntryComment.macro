@@ -25,7 +25,8 @@
 		<execute macro="User#fastLoginGuestPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
-		</execute>
+		<var name="userLastName" value="${userLastName}" />
+</execute>
 
 		<execute function="Pause" value1="1000" />
 

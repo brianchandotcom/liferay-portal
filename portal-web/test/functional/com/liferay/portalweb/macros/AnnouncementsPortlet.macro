@@ -3,7 +3,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Announcements" />
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Select" locator1="PGAnnouncementsConfiguration#SETUP_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="5" />

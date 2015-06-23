@@ -4,7 +4,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -40,7 +41,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute function="Pause" locator1="1000" />
 
@@ -59,7 +61,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="${workflowAssetContent}" />
@@ -78,7 +81,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 	</command>
 
 	<command name="approveTaskByNotifications">
@@ -97,7 +101,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Workflow#gotoTaskAssignedToMyRolesActionsCmd">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -119,7 +124,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<if>
 			<isset var="workflowActivityComment" />
@@ -136,7 +142,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
@@ -165,7 +172,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 	</command>
 
 	<command name="assignToMeTaskByNotifications">
@@ -296,7 +304,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -313,7 +322,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 	</command>
 
 	<command name="rejectTaskByDetails">
@@ -321,7 +331,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="${workflowAssetContent}" />
@@ -342,7 +353,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 	</command>
 
 	<command name="resubmitTaskByActions">
@@ -350,7 +362,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -365,7 +378,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 	</command>
 
 	<command name="resubmitTaskByDetails">
@@ -373,7 +387,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="${workflowAssetContent}" />
@@ -392,7 +407,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 	</command>
 
 	<command name="tearDownPortalWorkflow">
@@ -498,7 +514,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute macro="Workflow#gotoTaskAssignedToMyRolesActionsCmd">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -520,7 +537,8 @@
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
+		<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+</execute>
 
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" value1="${workflowDueDateFormatted} ${workflowDueDateTime}" />
 	</command>

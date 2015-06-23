@@ -50,7 +50,8 @@
 
 		<execute macro="Portlet#startServer">
 			<var name="deleteLiferayHome" value="false" />
-		</execute>
+		<var name="base_branch" value="${base_branch}" />
+</execute>
 
 		<execute macro="User#firstLoginPG" />
 	</command>
@@ -85,7 +86,8 @@
 
 		<execute macro="Portlet#startServer">
 			<var name="deleteLiferayHome" value="false" />
-		</execute>
+		<var name="base_branch" value="${base_branch}" />
+</execute>
 
 		<execute macro="SetupWizard#viewConfiguredDatabaseInConsole">
 			<var name="databaseType" value="${databaseType}" />

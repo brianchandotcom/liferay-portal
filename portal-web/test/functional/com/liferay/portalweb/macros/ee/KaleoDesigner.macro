@@ -199,7 +199,8 @@
 
 		<execute macro="KaleoDesigner#viewConnectorNotPresent">
 			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-		</execute>
+		<var name="connectorLabel" value="${connectorLabel}" />
+</execute>
 	</command>
 
 	<command name="deleteNode">

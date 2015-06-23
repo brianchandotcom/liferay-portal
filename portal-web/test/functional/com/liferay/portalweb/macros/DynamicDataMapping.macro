@@ -240,7 +240,13 @@
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
 			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
-		</execute>
+		<var name="fieldOptionsName" value="${fieldOptionsName}" />
+<var name="fieldEditable" value="${fieldEditable}" />
+<var name="i" value="${i}" />
+<var name="fieldOptionsValues" value="${fieldOptionsValues}" />
+<var name="j" value="${j}" />
+<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
+</execute>
 
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
@@ -529,7 +535,13 @@
 					<var name="fieldName" value="${fieldName}" />
 					<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
 					<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
-				</execute>
+				<var name="fieldOptionsName" value="${fieldOptionsName}" />
+<var name="fieldEditable" value="${fieldEditable}" />
+<var name="i" value="${i}" />
+<var name="fieldOptionsValues" value="${fieldOptionsValues}" />
+<var name="j" value="${j}" />
+<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
+</execute>
 			</then>
 		</if>
 

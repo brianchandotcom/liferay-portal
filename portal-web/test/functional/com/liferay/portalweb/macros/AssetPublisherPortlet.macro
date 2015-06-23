@@ -84,7 +84,11 @@
 					<var name="pageName" value="${sitePageName}" />
 					<var name="siteName" value="${siteName}" />
 					<var name="siteURL" value="true" />
-				</execute>
+				<var name="nodePort" value="${nodePort}" />
+<var name="defaultURL" value="${defaultURL}" />
+<var name="soPage" value="${soPage}" />
+<var name="soDashboard" value="${soDashboard}" />
+</execute>
 
 				<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 			</else>
@@ -319,7 +323,8 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 		<execute function="Click" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_MANUAL" />
@@ -748,7 +753,8 @@
 	<command name="viewDynamicAssetSelectionConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 		<execute function="Click" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_DYNAMIC" />
@@ -797,7 +803,8 @@
 	<command name="viewManualAssetSelectionConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherConfiguration#ASSET_PUBLISHER_IFRAME" />
 		<execute function="Click" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_MANUAL" />

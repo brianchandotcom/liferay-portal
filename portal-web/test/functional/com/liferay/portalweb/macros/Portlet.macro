@@ -140,7 +140,8 @@
 	<command name="flagAllDisplaySettingsCheckboxes">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		<var name="portletNameBorderless" value="${portletNameBorderless}" />
+</execute>
 
 		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
 
@@ -272,7 +273,8 @@
 			<then>
 				<execute macro="Portlet#deletePG">
 					<var name="portletName" value="${portletName}" />
-				</execute>
+				<var name="portletLocator" value="${portletLocator}" />
+</execute>
 			</then>
 		</while>
 	</command>

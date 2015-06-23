@@ -96,6 +96,10 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+%>
+
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
@@ -126,8 +130,9 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 		<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 	</aui:fieldset>
 
-	<aui:button-row>
-		<aui:button name="saveButton" type="submit" />
+	<aui:button-row cssClass="dialog-footer">
+		<aui:button name="saveButton" type="submit" value="done" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
@@ -193,6 +194,21 @@ public class UsersAdminPortlet extends MVCPortlet {
 		return user;
 	}
 
+	public void deactivateUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] deleteUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "deleteUserIds"), 0L);
+
+		for (long deleteUserId : deleteUserIds) {
+			int status = WorkflowConstants.STATUS_INACTIVE;
+
+			UserServiceUtil.updateStatus(
+				deleteUserId, status, new ServiceContext());
+		}
+	}
+
 	public void deleteOrganizations(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -222,28 +238,15 @@ public class UsersAdminPortlet extends MVCPortlet {
 		UserServiceUtil.deleteRoleUser(roleId, user.getUserId());
 	}
 
-	public void deleteUsers(ActionRequest actionRequest) throws Exception {
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+	public void deleteUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
 		long[] deleteUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteUserIds"), 0L);
 
 		for (long deleteUserId : deleteUserIds) {
-			if (cmd.equals(Constants.DEACTIVATE) ||
-				cmd.equals(Constants.RESTORE)) {
-
-				int status = WorkflowConstants.STATUS_APPROVED;
-
-				if (cmd.equals(Constants.DEACTIVATE)) {
-					status = WorkflowConstants.STATUS_INACTIVE;
-				}
-
-				UserServiceUtil.updateStatus(
-					deleteUserId, status, new ServiceContext());
-			}
-			else {
-				UserServiceUtil.deleteUser(deleteUserId);
-			}
+			UserServiceUtil.deleteUser(deleteUserId);
 		}
 	}
 
@@ -468,6 +471,21 @@ public class UsersAdminPortlet extends MVCPortlet {
 
 		return actionMapping.findForward(
 			getForward(renderRequest, "portlet.users_admin.edit_user"));
+	}
+
+	public void restoreUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] deleteUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "deleteUserIds"), 0L);
+
+		for (long deleteUserId : deleteUserIds) {
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			UserServiceUtil.updateStatus(
+				deleteUserId, status, new ServiceContext());
+		}
 	}
 
 	public User updateLockout(ActionRequest actionRequest) throws Exception {

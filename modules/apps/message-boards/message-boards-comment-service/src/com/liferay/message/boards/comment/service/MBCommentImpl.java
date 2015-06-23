@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.comment.impl;
+package com.liferay.message.boards.comment.service;
 
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.model.User;

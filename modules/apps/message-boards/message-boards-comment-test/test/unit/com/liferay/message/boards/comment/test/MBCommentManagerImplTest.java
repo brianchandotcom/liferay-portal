@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.comment.test;
 
-import com.liferay.message.boards.comment.impl.MBCommentManagerImpl;
+import com.liferay.message.boards.comment.service.MBCommentManagerImpl;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Function;

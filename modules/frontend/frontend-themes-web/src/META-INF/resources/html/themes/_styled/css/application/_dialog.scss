@@ -6,3 +6,8 @@
 	border: 1px solid #C8C9CA;
 	padding: 5px;
 }
+
+.dialog-with-footer .portlet-layout {
+	height: calc(100% - 49px - 20px);
+	overflow-y: auto;
+}

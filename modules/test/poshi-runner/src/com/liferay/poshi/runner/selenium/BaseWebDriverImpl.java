@@ -46,17 +46,12 @@ public abstract class BaseWebDriverImpl
 
 		System.setProperty("java.awt.headless", "false");
 
-		String dependenciesDirName =
-			"portal-web//test//functional//com//liferay//portalweb//" +
-				"dependencies//";
-
-		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
-
-		String sikuliImagesDirName = dependenciesDirName + "sikuli//linux//";
+		String outputDirName = _OUTPUT_DIR_NAME;
+		String sikuliImagesDirName =
+			_TEST_DEPENDENCIES_DIR_NAME + "//sikuli//linux//";
+		String testDependenciesDirName = _TEST_DEPENDENCIES_DIR_NAME;
 
 		if (OSDetector.isWindows()) {
-			dependenciesDirName = StringUtil.replace(
-				dependenciesDirName, "//", "\\");
 			outputDirName = StringUtil.replace(outputDirName, "//", "\\");
 			projectDirName = StringUtil.replace(projectDirName, "//", "\\");
 
@@ -64,12 +59,15 @@ public abstract class BaseWebDriverImpl
 				sikuliImagesDirName, "//", "\\");
 			sikuliImagesDirName = StringUtil.replace(
 				sikuliImagesDirName, "linux", "windows");
+
+			testDependenciesDirName = StringUtil.replace(
+				testDependenciesDirName, "//", "\\");
 		}
 
-		_dependenciesDirName = dependenciesDirName;
 		_outputDirName = outputDirName;
 		_projectDirName = projectDirName;
 		_sikuliImagesDirName = sikuliImagesDirName;
+		_testDependenciesDirName = testDependenciesDirName;
 
 		WebDriver.Options options = webDriver.manage();
 
@@ -336,11 +334,6 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public String getDependenciesDirName() {
-		return _dependenciesDirName;
-	}
-
-	@Override
 	public String getEmailBody(String index) throws Exception {
 		return LiferaySeleniumHelper.getEmailBody(index);
 	}
@@ -418,6 +411,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public String getSikuliImagesDirName() {
 		return _sikuliImagesDirName;
+	}
+
+	@Override
+	public String getTestDependenciesDirName() {
+		return _testDependenciesDirName;
 	}
 
 	@Override
@@ -815,7 +813,8 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
-		uploadFile(location, _projectDirName + _dependenciesDirName + value);
+		uploadFile(
+			location, _TEST_BASE_DIR_NAME + _testDependenciesDirName + value);
 	}
 
 	@Override
@@ -945,11 +944,19 @@ public abstract class BaseWebDriverImpl
 		super.waitForPageToLoad("30000");
 	}
 
+	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
+
+	private static final String _TEST_BASE_DIR_NAME =
+		PropsValues.TEST_BASE_DIR_NAME;
+
+	private static final String _TEST_DEPENDENCIES_DIR_NAME =
+		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
+
 	private String _clipBoard = "";
-	private final String _dependenciesDirName;
 	private final String _outputDirName;
 	private String _primaryTestSuiteName;
 	private final String _projectDirName;
 	private final String _sikuliImagesDirName;
+	private final String _testDependenciesDirName;
 
 }

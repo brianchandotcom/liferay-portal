@@ -91,10 +91,10 @@ public class PoshiRunnerContextTest extends TestCase {
 		String actualFilePath = PoshiRunnerContext.getFilePathFromFileName(
 			"Action2.action");
 
-		String baseDir = PoshiRunnerGetterUtil.getCanonicalPath(
+		String baseDirName = PoshiRunnerGetterUtil.getCanonicalPath(
 			"test/unit/com/liferay/poshi/runner/");
 
-		File file = new File(baseDir + "/dependencies/Action2.action");
+		File file = new File(baseDirName + "/dependencies/Action2.action");
 
 		String expectedFilePath = file.getCanonicalPath();
 

@@ -45,7 +45,7 @@ public class PoshiRunnerValidation {
 		String[] filePathsArray = PoshiRunnerContext.getFilePathsArray();
 
 		for (String filePath : filePathsArray) {
-			filePath = _BASE_DIR + "/" + filePath;
+			filePath = _TEST_BASE_DIR_NAME + "/" + filePath;
 
 			if (OSDetector.isWindows()) {
 				filePath = filePath.replace("/", "\\");
@@ -1343,7 +1343,7 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	private static final String _BASE_DIR =
+	private static final String _TEST_BASE_DIR_NAME =
 		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
 
 	private static final Set<Exception> _exceptions = new HashSet<>();

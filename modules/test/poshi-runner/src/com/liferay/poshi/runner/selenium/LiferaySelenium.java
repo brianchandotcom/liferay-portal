@@ -119,8 +119,6 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getCurrentYear();
 
-	public String getDependenciesDirName();
-
 	public String getEmailBody(String index) throws Exception;
 
 	public String getEmailSubject(String index) throws Exception;
@@ -140,6 +138,8 @@ public interface LiferaySelenium extends Selenium {
 	public String getProjectDirName();
 
 	public String getSikuliImagesDirName();
+
+	public String getTestDependenciesDirName();
 
 	public void goBackAndWait();
 

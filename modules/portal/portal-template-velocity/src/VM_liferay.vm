@@ -43,6 +43,10 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	$menu_tag.runTag()
 #end
 
+#macro (product_menu)
+	$theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", $portletProviderAction.VIEW)
+#end
+
 #macro (quick_access $content_id)
 	#set ($quick_access_tag = $theme.getQuickAccessTag())
 

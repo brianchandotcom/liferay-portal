@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.store;
+package com.liferay.portal.store.safefilenamewrapper;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.documentlibrary.store.Store;
+import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.File;
 import java.io.InputStream;

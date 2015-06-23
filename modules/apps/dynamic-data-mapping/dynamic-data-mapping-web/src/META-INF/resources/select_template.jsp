@@ -108,6 +108,8 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 					data.put("ddmtemplateid", template.getTemplateId());
 					data.put("ddmtemplatekey", template.getTemplateKey());
 					data.put("name", template.getName(locale));
+					data.put("description", template.getDescription(locale));
+					data.put("imageurl", template.getTemplateImageURL(themeDisplay));
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

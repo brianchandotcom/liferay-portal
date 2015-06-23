@@ -135,7 +135,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				},
 				function(event) {
 					<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" var="journalArticleResource">
-						<portlet:param name="mvcPath" value="/journal_article_resources.jsp" />
+						<portlet:param name="mvcPath" value="/journal_resources.jsp" />
 						<portlet:param name="articleResourcePrimKey" value="[$ARTICLE_RESOURCE_PRIMKEY$]" />
 					</liferay-portlet:resourceURL>
 
@@ -145,11 +145,55 @@ String redirect = ParamUtil.getString(request, "redirect");
 						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
 						{
 							success: function(responseData) {
-								$('.article-preview .article-preview-content').replaceWith(responseData);
+								$('.article-preview .article-preview-content').replaceWith($('.article-preview-content', $(responseData)));
+								$('.template-preview .template-preview-content').replaceWith($('.template-preview-content', $(responseData)));
 								form.fm('assetEntryId').val(event.assetentryid);
+								form.fm('ddmTemplateKey').val($('.template-preview .template-preview-content').attr('data-template-key'));
 							}
 						}
 					);
+				}
+			);
+		}
+	);
+
+	$('#<portlet:namespace />templateSelector').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			<%
+			DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
+			%>
+
+			Liferay.Util.openDDMPortlet(
+				{
+					basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE) %>',
+					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+					classPK: $('.template-preview-content').attr('data-structure-key'),
+					dialog: {
+						destroyOnHide: true
+					},
+					eventName: 'selectTemplate',
+					groupId: $('.template-preview-content').attr('data-group-id'),
+					mvcPath: '/select_template.jsp',
+					refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
+					resourceClassNameId: $('.template-preview-content').attr('data-structure-id'),
+					showAncestorScopes: true,
+					templateId: $('.template-preview-content').attr('data-template-id'),
+					title: '<liferay-ui:message key="templates" />'
+				},
+				function(event) {
+					$('.template-preview-content').attr('data-template-id', event.ddmtemplateid);
+					$('.template-preview-content .template-title').html(event.name);
+					$('.template-preview-content .template-description').html(event.description);
+
+					var templateImage = $('.template-preview-content .template-image');
+
+					templateImage.attr('src', event.imageurl);
+					templateImage.attr('alt', event.name);
+
+					form.fm('ddmTemplateKey').val(event.ddmtemplatekey);
 				}
 			);
 		}

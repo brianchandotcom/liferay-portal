@@ -19,13 +19,21 @@
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
 
+String groupId = article != null ? String.valueOf(article.getGroupId()) : String.valueOf(scopeGroupId);
+
+DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
+String ddmStructureId = ddmStructure != null ? String.valueOf(ddmStructure.getClassNameId()) : "0";
+String ddmStructureKey = ddmStructure != null ? String.valueOf(ddmStructure.getPrimaryKey()) : "0";
+
 DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
+String ddmTemplateId = ddmTemplate != null ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK;
+String ddmTemplateKey = ddmTemplate.getTemplateKey();
 String templateTitle = ddmTemplate.getName(locale);
 String templateDescription = ddmTemplate.getDescription();
 String templateImgUrl = ddmTemplate.getTemplateImageURL(themeDisplay);
 %>
 
-<div class="media template-preview-content">
+<div class="media template-preview-content" data-group-id="<%= groupId %>" data-structure-id="<%= ddmStructureId %>" data-structure-key="<%= ddmStructureKey %>" data-template-id="<%= ddmTemplateId %>" data-template-key="<%= ddmTemplateKey %>">
 	<img alt="<%= templateTitle %>" class="media-object pull-left template-image" src="<%= templateImgUrl %>">
 	<div class="media-body">
 		<h2 class="heading4 template-title"><%= templateTitle %></h2>

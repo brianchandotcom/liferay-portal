@@ -21,8 +21,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import java.util.Map;
 
 /**
- * Provides an interface responsible for setting the configuration and options
- * of the editor.
+ * Provides an interface responsible for setting the configuration of the
+ * editor. Editor options can be set using {@link EditorOptionsContributor}.
  *
  * <p>
  * Implementations of this class must be OSGi components that are registered in
@@ -30,29 +30,29 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * The configuration and options can be targeted for specific editors, based on
- * three different criteria: portlet name, editor config key, and editor name.
+ * The configuration can be targeted for specific editors, based on three
+ * different criteria: portlet name, editor config key, and editor name.
  * These criteria can be defined as OSGi properties with the following names:
  * </p>
  *
  * <ul>
  * <li>
  * <code>javax.portlet.name</code>: The portlet name. If specified, the
- * configuration and options populated in the JSON object are applied to every
- * editor used in that portlet.
+ * configuration populated in the JSON object is applied to every editor used
+ * in that portlet.
  * </li>
  * <li>
  * <code>editor.config.key</code>: The key used to identify the editor (the
  * <code>input-editor</code> taglib tag's <code>configKey</code> attribute
- * value). If specified, the configuration and options populated in the JSON
- * object are applied to every editor with the specified <code>configKey</code>.
+ * value). If specified, the configuration populated in the JSON object is
+ * applied to every editor with the specified <code>configKey</code>.
  * </li>
  * <li>
  * <code>editor.name</code>: The name of the editor (the
  * <code>input-editor</code> taglib tag's <code>editorName</code> attribute
  * value: <code>ckeditor</code>, <code>ckeditor_bbcode</code>,
- * <code>alloyeditor</code>, etc.). If specified, the configuration and options
- * populated in the JSON object are applied to every editor with that name.
+ * <code>alloyeditor</code>, etc.). If specified, the configuration populated in
+ * the JSON object is applied to every editor with that name.
  * </li>
  * </ul>
  *
@@ -83,6 +83,9 @@ import java.util.Map;
  * </li>
  * <li>
  * editor name
+ * </li>
+ * <li>
+ * empty
  * </li>
  * </ol>
  *

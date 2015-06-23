@@ -253,14 +253,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		return doGetPermissionFilter_6(
 			companyId, groupIds, userId, className, booleanFilter, groups,
-			roles, userGroupRoles, groupIdsToRoles);
+			roles, userGroupRoles, groupIdsToRoles, advancedPermissionChecker);
 	}
 
 	protected BooleanFilter doGetPermissionFilter_6(
 			long companyId, long[] groupIds, long userId, String className,
 			BooleanFilter booleanFilter, Set<Group> groups, Set<Role> roles,
 			Set<UserGroupRole> userGroupRoles,
-			Map<Long, List<Role>> groupIdsToRoles)
+			Map<Long, List<Role>> groupIdsToRoles,
+			AdvancedPermissionChecker advancedPermissionChecker)
 		throws Exception {
 
 		BooleanFilter permissionBooleanFilter = new BooleanFilter();
@@ -300,7 +301,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 
 			for (Group group : groups) {
-				if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				if (advancedPermissionChecker.isGroupAdmin(
+						group.getGroupId()) ||
+					ResourcePermissionLocalServiceUtil.hasResourcePermission(
 						companyId, className, ResourceConstants.SCOPE_GROUP,
 						String.valueOf(group.getGroupId()), role.getRoleId(),
 						ActionKeys.VIEW)) {

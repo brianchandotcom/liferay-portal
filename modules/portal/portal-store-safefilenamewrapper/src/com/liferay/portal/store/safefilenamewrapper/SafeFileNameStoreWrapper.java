@@ -23,10 +23,20 @@ import com.liferay.portlet.documentlibrary.store.StoreWrapper;
 import java.io.File;
 import java.io.InputStream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Edward Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"store.type=com.liferay.portal.store.filesystem.FileSystemStore",
+		"store.type=com.liferay.portal.store.filesystem.AdvancedFileSystemStore"
+	},
+	service = StoreWrapper.class
+)
 public class SafeFileNameStoreWrapper implements StoreWrapper {
 
 	public Store wrap(Store store) {

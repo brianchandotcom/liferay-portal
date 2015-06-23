@@ -655,6 +655,7 @@
 			var instance = this;
 
 			var tag = 'ul';
+
 			var styleAttr;
 
 			var listAttribute = token.attribute;

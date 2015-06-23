@@ -15,10 +15,6 @@
 package com.liferay.wiki.item.selector.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
-
-import java.util.Set;
 
 /**
  * @author Iván Zaera
@@ -27,12 +23,9 @@ public class WikiAttachmentItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
 	public WikiAttachmentItemSelectorCriterion() {
-		super(_availableItemSelectorReturnTypes);
 	}
 
 	public WikiAttachmentItemSelectorCriterion(long wikiPageResourceId) {
-		super(_availableItemSelectorReturnTypes);
-
 		_wikiPageResourceId = wikiPageResourceId;
 	}
 
@@ -43,10 +36,6 @@ public class WikiAttachmentItemSelectorCriterion
 	public void setWikiPageResourceId(long wikiPageResourceId) {
 		_wikiPageResourceId = wikiPageResourceId;
 	}
-
-	private static final Set<ItemSelectorReturnType>
-		_availableItemSelectorReturnTypes = getImmutableSet(
-			DefaultItemSelectorReturnType.URL);
 
 	private long _wikiPageResourceId;
 

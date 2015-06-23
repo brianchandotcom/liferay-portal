@@ -16,8 +16,10 @@ package com.liferay.blogs.item.selector.web;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.display.context.BlogsItemSelectorViewDisplayContext;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
@@ -43,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component
 public class BlogsItemSelectorView
-	implements ItemSelectorView
-		<BlogsItemSelectorCriterion, DefaultItemSelectorReturnType> {
+	implements ItemSelectorView<BlogsItemSelectorCriterion> {
 
 	public static final String BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
 		"BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
@@ -59,9 +60,7 @@ public class BlogsItemSelectorView
 	}
 
 	@Override
-	public Set<DefaultItemSelectorReturnType>
-		getSupportedItemSelectorReturnTypes() {
-
+	public Set<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -106,12 +105,12 @@ public class BlogsItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	private static final Set<DefaultItemSelectorReturnType>
+	private static final Set<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
 			SetUtil.fromArray(
-				new DefaultItemSelectorReturnType[] {
-					DefaultItemSelectorReturnType.FILE_ENTRY,
-					DefaultItemSelectorReturnType.URL
+				new ItemSelectorReturnType[] {
+					new FileEntryItemSelectorReturnType(),
+					new URLItemSelectorReturnType()
 				}));
 
 	private ServletContext _servletContext;

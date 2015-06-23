@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.item.selector.web.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -55,17 +56,36 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new HashSet<>();
 
-		desiredItemSelectorReturnTypes.add(TestItemSelectorReturnType.URL);
+		desiredItemSelectorReturnTypes.add(_testURLItemSelectorReturnType);
 
 		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
 		_itemSelectorImpl = new ItemSelectorImpl();
 
+		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+			_testStringItemSelectorReturnType);
+		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+			_testURLItemSelectorReturnType);
+		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+			_testFileEntryItemSelectorReturnType);
+
+		_itemSelectorImpl.setItemSelectorCriterionSerializer(
+			_itemSelectorCriterionSerializer);
+
 		_mediaItemSelectorCriterion = new MediaItemSelectorCriterion();
 
 		_mediaItemSelectorCriterion.setFileExtension("jpg");
 		_mediaItemSelectorCriterion.setMaxSize(2048);
+
+		desiredItemSelectorReturnTypes = new HashSet<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new TestFileEntryItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(_testURLItemSelectorReturnType);
+
+		_mediaItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -143,7 +163,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			_mediaItemSelectorCriterion.getMaxSize(),
 			mediaItemSelectorCriterion.getMaxSize());
 		Assert.assertTrue(
-			(ItemSelectorView<?, ?>)
+			(ItemSelectorView<?>)
 				mediaItemSelectorViewRenderer.getItemSelectorView()
 					instanceof MediaItemSelectorView);
 
@@ -158,7 +178,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			_flickrItemSelectorCriterion.getUser(),
 			flickrItemSelectorCriterion.getUser());
 		Assert.assertTrue(
-			(ItemSelectorView<?, ?>)
+			(ItemSelectorView<?>)
 				flickrItemSelectorViewRenderer.getItemSelectorView()
 					instanceof FlickrItemSelectorView);
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
@@ -212,7 +232,16 @@ public class ItemSelectorImplTest extends PowerMockito {
 	}
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
+	private final ItemSelectorCriterionSerializer<FlickrItemSelectorCriterion>
+		_itemSelectorCriterionSerializer =
+			new ItemSelectorCriterionSerializer();
 	private ItemSelectorImpl _itemSelectorImpl;
 	private MediaItemSelectorCriterion _mediaItemSelectorCriterion;
+	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
+		new TestFileEntryItemSelectorReturnType();
+	private final ItemSelectorReturnType _testStringItemSelectorReturnType =
+		new TestStringItemSelectorReturnType();
+	private final ItemSelectorReturnType _testURLItemSelectorReturnType =
+		new TestURLItemSelectorReturnType();
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -37,8 +36,7 @@ import javax.servlet.jsp.PageContext;
 public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 	public ItemSelectorViewRendererImpl(
-		ItemSelectorView<ItemSelectorCriterion, ItemSelectorReturnType>
-			itemSelectorView,
+		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
 		ItemSelectorCriterion itemSelectorCriterion, PortletURL portletURL,
 		String itemSelectedEventName) {
 
@@ -54,9 +52,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	}
 
 	@Override
-	public ItemSelectorView<ItemSelectorCriterion, ItemSelectorReturnType>
-		getItemSelectorView() {
-
+	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView() {
 		return _itemSelectorView;
 	}
 
@@ -85,8 +81,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 	private final String _itemSelectedEventName;
 	private final ItemSelectorCriterion _itemSelectorCriterion;
-	private final ItemSelectorView
-		<ItemSelectorCriterion, ItemSelectorReturnType> _itemSelectorView;
+	private final ItemSelectorView<ItemSelectorCriterion> _itemSelectorView;
 	private final PortletURL _portletURL;
 
 }

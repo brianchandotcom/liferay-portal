@@ -21,8 +21,6 @@ import java.util.Set;
  */
 public interface ItemSelectorCriterion {
 
-	public Set<ItemSelectorReturnType> getAvailableItemSelectorReturnTypes();
-
 	public Set<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes();
 
 	public void setDesiredItemSelectorReturnTypes(

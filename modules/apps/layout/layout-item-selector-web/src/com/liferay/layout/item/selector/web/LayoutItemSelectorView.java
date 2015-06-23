@@ -14,8 +14,10 @@
 
 package com.liferay.layout.item.selector.web;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.layout.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.item.selector.web.display.context.LayoutItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -43,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ItemSelectorView.class)
 public class LayoutItemSelectorView
-	implements ItemSelectorView
-		<LayoutItemSelectorCriterion, DefaultItemSelectorReturnType> {
+	implements ItemSelectorView<LayoutItemSelectorCriterion> {
 
 	public static final String LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
 		"LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
@@ -59,9 +60,7 @@ public class LayoutItemSelectorView
 	}
 
 	@Override
-	public Set<DefaultItemSelectorReturnType>
-		getSupportedItemSelectorReturnTypes() {
-
+	public Set<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -105,12 +104,12 @@ public class LayoutItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	private static final Set<DefaultItemSelectorReturnType>
+	private static final Set<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
 			SetUtil.fromArray(
-				new DefaultItemSelectorReturnType[] {
-					DefaultItemSelectorReturnType.URL,
-					DefaultItemSelectorReturnType.UUID
+				new ItemSelectorReturnType[] {
+					new URLItemSelectorReturnType(),
+					new UUIDItemSelectorReturnType()
 				}));
 
 	private ServletContext _servletContext;

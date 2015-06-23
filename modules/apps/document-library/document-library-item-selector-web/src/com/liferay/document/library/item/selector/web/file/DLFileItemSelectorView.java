@@ -15,8 +15,10 @@
 package com.liferay.document.library.item.selector.web.file;
 
 import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -35,8 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ItemSelectorView.class)
 public class DLFileItemSelectorView
-	extends BaseDLItemSelectorView
-		<FileItemSelectorCriterion, DefaultItemSelectorReturnType> {
+	extends BaseDLItemSelectorView<FileItemSelectorCriterion> {
 
 	@Override
 	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -44,9 +45,7 @@ public class DLFileItemSelectorView
 	}
 
 	@Override
-	public Set<DefaultItemSelectorReturnType>
-		getSupportedItemSelectorReturnTypes() {
-
+	public Set<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -67,12 +66,12 @@ public class DLFileItemSelectorView
 		super.setServletContext(servletContext);
 	}
 
-	private static final Set<DefaultItemSelectorReturnType>
+	private static final Set<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
 			SetUtil.fromArray(
-				new DefaultItemSelectorReturnType[] {
-					DefaultItemSelectorReturnType.FILE_ENTRY,
-					DefaultItemSelectorReturnType.URL
+				new ItemSelectorReturnType[] {
+					new FileEntryItemSelectorReturnType(),
+					new URLItemSelectorReturnType()
 				}));
 
 }

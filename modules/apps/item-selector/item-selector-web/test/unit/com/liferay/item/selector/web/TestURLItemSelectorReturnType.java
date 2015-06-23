@@ -12,20 +12,12 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria;
+package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
  * @author Roberto Díaz
  */
-public enum DefaultItemSelectorReturnType implements ItemSelectorReturnType {
-
-	BASE_64, FILE_ENTRY, URL, UUID;
-
-	@Override
-	public String getName() {
-		return name();
-	}
-
+public class TestURLItemSelectorReturnType implements ItemSelectorReturnType {
 }

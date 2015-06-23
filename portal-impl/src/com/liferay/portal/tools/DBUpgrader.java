@@ -183,16 +183,6 @@ public class DBUpgrader {
 
 		ResourceActionLocalServiceUtil.checkResourceActions();
 
-		// Delete temporary images
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Delete temporary images");
-		}
-
-		// Temporarily disabled due to LPS-56383
-
-		// _deleteTempImages();
-
 		// Clear the caches only if the upgrade process was run
 
 		if (_log.isDebugEnabled()) {
@@ -338,13 +328,6 @@ public class DBUpgrader {
 		throw new IllegalStateException(sb.toString());
 	}
 
-	private static void _deleteTempImages() throws Exception {
-		DB db = DBFactoryUtil.getDB();
-
-		db.runSQL(_DELETE_TEMP_IMAGES_1);
-		db.runSQL(_DELETE_TEMP_IMAGES_2);
-	}
-
 	private static void _disableTransactions() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Disable transactions");
@@ -479,13 +462,6 @@ public class DBUpgrader {
 			DataAccess.cleanUp(con, ps);
 		}
 	}
-
-	private static final String _DELETE_TEMP_IMAGES_1 =
-		"delete from Image where imageId IN (SELECT articleImageId FROM " +
-			"JournalArticleImage where tempImage = TRUE)";
-
-	private static final String _DELETE_TEMP_IMAGES_2 =
-		"delete from JournalArticleImage where tempImage = TRUE";
 
 	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
 

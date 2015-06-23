@@ -37,6 +37,20 @@
 			}
 		}
 	}
+
+	.square-thumbnail {
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		overflow: hidden;
+		padding-bottom: 100%;
+		position: relative;
+		width: 100%;
+	}
+
+	.row-spacing {
+		margin-bottom: 40px;
+	}
 }
 
 .portlet-configuration {

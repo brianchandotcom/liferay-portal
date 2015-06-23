@@ -25,15 +25,45 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 <liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-web-content-could-not-be-found" />
 
-<div class="alert alert-info">
-	<span class="displaying-help-message-holder <%= article == null ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:message key="please-select-a-web-content-from-the-list-below" />
-	</span>
+<%
+String webContentTitle = HtmlUtil.escapeAttribute(articleDisplay.getTitle());
+String webContentSummary = HtmlUtil.escape(articleDisplay.getDescription());
+webContentSummary = HtmlUtil.replaceNewLine(webContentSummary);
+if (Validator.isNull(webContentSummary)) {
+	webContentSummary = HtmlUtil.stripHtml(articleDisplay.getContent());
+}
+webContentSummary = StringUtil.shorten(webContentSummary, 70);
+String webContentImgURL = HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay));
+long webContentUserId = articleDisplay.getUserId();
+%>
 
-	<span class="displaying-article-id-holder <%= article == null ? "hide" : StringPool.BLANK %>">
-		<liferay-ui:message key="displaying-content" />: <span class="displaying-article-id"><%= article != null ? article.getTitle(locale) : StringPool.BLANK %></span>
-	</span>
-</div>
+<div class="article-preview row row-spacing">
+	<div class="col-md-4 col-xs-12">
+		<p class="text-muted"><liferay-ui:message key="selected-web-content" /></p>
+		<c:if test="<%= article != null %>">
+			<div class="article-preview-content">
+				<div class="card-horizontal">
+					<div class="card-row">
+						<div class="card-col-5">
+							<div class="square-thumbnail" style="background-image: url('<%= webContentImgURL %>');"></div>
+						</div>
+						<div class="card-col-7 card-col-gutters">
+							<h2 class="lead"><%= webContentTitle %></h2>
+							<p><%= webContentSummary %></p>
+							<liferay-ui:user-display
+								displayStyle="4"
+								userId="<%= webContentUserId %>"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+	</div>
+	<div class="col-md-12">
+		<aui:button name="webContentSelector" value="change" />
+	</div>
+</div>	
 
 <c:if test="<%= article != null %>">
 
@@ -89,8 +119,6 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 		</aui:fieldset>
 	</c:if>
 </c:if>
-
-<aui:button name="webContentSelector" value="select-web-content" />
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 

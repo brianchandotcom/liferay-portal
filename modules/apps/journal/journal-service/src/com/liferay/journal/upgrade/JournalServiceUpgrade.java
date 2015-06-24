@@ -15,6 +15,9 @@
 package com.liferay.journal.upgrade;
 
 import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleType;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -22,17 +25,27 @@ import com.liferay.portal.service.ReleaseLocalService;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = JournalServiceUpgrade.class)
 public class JournalServiceUpgrade {
+
+	@Reference(
+		target =
+			"(org.springframework.context.service.name=" +
+				"com.liferay.journal.service)",
+		unbind = "-"
+	)
+	protected void setApplicationContext(
+		ApplicationContext applicationContext) {
+	}
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
@@ -41,18 +54,20 @@ public class JournalServiceUpgrade {
 		_releaseLocalService = releaseLocalService;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
-	}
-
 	@Activate
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
+		upgradeProcesses.add(new UpgradeJournal());
+		upgradeProcesses.add(new UpgradeJournalDisplayPreferences());
+		upgradeProcesses.add(new UpgradeJournalArticleType());
+
+		// ClassNames must be updated in the last place
+
 		upgradeProcesses.add(new UpgradeClassNames());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.journal.service", upgradeProcesses, 1, 0, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

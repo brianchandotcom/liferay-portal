@@ -1522,7 +1522,7 @@ public class ServicePreAction extends Action {
 
 		final LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-		groupParams.put("usersGroups", new Long(user.getUserId()));
+		groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
 
 		int count = GroupLocalServiceUtil.searchCount(
 			user.getCompanyId(), null, null, groupParams);
@@ -2153,15 +2153,15 @@ public class ServicePreAction extends Action {
 			WebKeys.VISITED_GROUP_ID_PREVIOUS);
 
 		if (recentGroupId == null) {
-			recentGroupId = new Long(currentGroupId);
+			recentGroupId = Long.valueOf(currentGroupId);
 
 			session.setAttribute(
 				WebKeys.VISITED_GROUP_ID_RECENT, recentGroupId);
 		}
 		else if (recentGroupId.longValue() != currentGroupId) {
-			previousGroupId = new Long(recentGroupId.longValue());
+			previousGroupId = Long.valueOf(recentGroupId.longValue());
 
-			recentGroupId = new Long(currentGroupId);
+			recentGroupId = Long.valueOf(currentGroupId);
 
 			session.setAttribute(
 				WebKeys.VISITED_GROUP_ID_RECENT, recentGroupId);

@@ -292,7 +292,7 @@ public class CreateAccountAction extends PortletAction {
 
 		if (openIdPending) {
 			session.setAttribute(
-				WebKeys.OPEN_ID_LOGIN, new Long(user.getUserId()));
+				WebKeys.OPEN_ID_LOGIN, Long.valueOf(user.getUserId()));
 
 			session.removeAttribute(WebKeys.OPEN_ID_LOGIN_PENDING);
 		}

@@ -57,10 +57,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
-	userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
+	userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
 
 	if (tabs2.equals("current")) {
-		userGroupParams.put("userGroupsTeams", new Long(team.getTeamId()));
+		userGroupParams.put("userGroupsTeams", Long.valueOf(team.getTeamId()));
 	}
 	%>
 

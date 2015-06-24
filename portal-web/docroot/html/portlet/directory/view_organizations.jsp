@@ -55,7 +55,7 @@ if (parentOrganizationId > 0) {
 		organizationParams.put("organizationsGroups", SitesUtil.filterGroups(groups, PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES));
 	}
 	else if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY)) {
-		organizationParams.put("organizationsGroups", new Long(themeDisplay.getScopeGroupId()));
+		organizationParams.put("organizationsGroups", Long.valueOf(themeDisplay.getScopeGroupId()));
 	}
 
 	if (Validator.isNotNull(searchTerms.getKeywords()) || searchTerms.isAdvancedSearch()) {

@@ -106,7 +106,7 @@ public class LongType implements CompositeUserType, Serializable {
 			// with a blank entry into a BIGINT
 
 			try {
-				value = new Long(
+				value = Long.valueOf(
 					GetterUtil.getLong(
 						StandardBasicTypes.STRING.nullSafeGet(
 							rs, names[0], session)));

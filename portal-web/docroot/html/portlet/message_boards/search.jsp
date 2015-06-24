@@ -28,7 +28,7 @@ long[] categoryIdsArray = null;
 
 List categoryIds = new ArrayList();
 
-categoryIds.add(new Long(searchCategoryId));
+categoryIds.add(Long.valueOf(searchCategoryId));
 
 MBCategoryServiceUtil.getSubcategoryIds(categoryIds, scopeGroupId, searchCategoryId);
 

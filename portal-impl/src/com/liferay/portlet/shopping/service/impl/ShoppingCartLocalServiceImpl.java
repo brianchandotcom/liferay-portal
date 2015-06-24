@@ -97,10 +97,10 @@ public class ShoppingCartLocalServiceImpl
 					Integer count = items.get(cartItem);
 
 					if (count == null) {
-						count = new Integer(1);
+						count = Integer.valueOf(1);
 					}
 					else {
-						count = new Integer(count.intValue() + 1);
+						count = Integer.valueOf(count.intValue() + 1);
 					}
 
 					items.put(cartItem, count);

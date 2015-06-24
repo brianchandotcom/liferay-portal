@@ -58,12 +58,12 @@ public class DefineObjectsTag extends TagSupport {
 		pageContext.setAttribute("locale", themeDisplay.getLocale());
 		pageContext.setAttribute(
 			"permissionChecker", themeDisplay.getPermissionChecker());
-		pageContext.setAttribute("plid", new Long(themeDisplay.getPlid()));
+		pageContext.setAttribute("plid", Long.valueOf(themeDisplay.getPlid()));
 		pageContext.setAttribute(
 			"portletDisplay", themeDisplay.getPortletDisplay());
 		pageContext.setAttribute("realUser", themeDisplay.getRealUser());
 		pageContext.setAttribute(
-			"scopeGroupId", new Long(themeDisplay.getScopeGroupId()));
+			"scopeGroupId", Long.valueOf(themeDisplay.getScopeGroupId()));
 		pageContext.setAttribute("theme", themeDisplay.getTheme());
 		pageContext.setAttribute("themeDisplay", themeDisplay);
 		pageContext.setAttribute("timeZone", themeDisplay.getTimeZone());

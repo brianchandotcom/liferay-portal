@@ -1501,8 +1501,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						line, "createSQLQuery", "createSynchronizedSQLQuery");
 				}
 
-				line = replacePrimitiveWrapperInstantiation(
-					fileName, line, lineCount);
+				line = replacePrimitiveWrapperInstantiation(line);
 
 				String trimmedLine = StringUtil.trimLeading(line);
 

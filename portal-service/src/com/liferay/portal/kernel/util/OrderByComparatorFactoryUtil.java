@@ -185,13 +185,13 @@ public class OrderByComparatorFactoryUtil {
 
 		static {
 			_primitiveObjects.put(boolean.class, Boolean.TRUE);
-			_primitiveObjects.put(byte.class, new Byte("0"));
-			_primitiveObjects.put(char.class, new Character('0'));
-			_primitiveObjects.put(double.class, new Double(0));
-			_primitiveObjects.put(float.class, new Float(0));
-			_primitiveObjects.put(int.class, new Integer(0));
-			_primitiveObjects.put(long.class, new Long(0));
-			_primitiveObjects.put(short.class, new Short("0"));
+			_primitiveObjects.put(byte.class, Byte.valueOf("0"));
+			_primitiveObjects.put(char.class, Character.valueOf('0'));
+			_primitiveObjects.put(double.class, Double.valueOf(0));
+			_primitiveObjects.put(float.class, Float.valueOf(0));
+			_primitiveObjects.put(int.class, Integer.valueOf(0));
+			_primitiveObjects.put(long.class, Long.valueOf(0));
+			_primitiveObjects.put(short.class, Short.valueOf("0"));
 		}
 
 		private final Object[] _columns;

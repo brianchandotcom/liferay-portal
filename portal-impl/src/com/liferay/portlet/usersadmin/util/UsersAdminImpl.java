@@ -644,7 +644,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		for (int i = 0; i < organizations.size(); i++) {
 			Organization organization = organizations.get(i);
 
-			organizationIds[i] = new Long(organization.getOrganizationId());
+			organizationIds[i] = Long.valueOf(organization.getOrganizationId());
 		}
 
 		return organizationIds;

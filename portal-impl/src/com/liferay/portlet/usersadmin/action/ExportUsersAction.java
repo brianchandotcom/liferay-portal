@@ -176,7 +176,7 @@ public class ExportUsersAction extends PortletAction {
 		long organizationId = searchTerms.getOrganizationId();
 
 		if (organizationId > 0) {
-			params.put("usersOrgs", new Long(organizationId));
+			params.put("usersOrgs", Long.valueOf(organizationId));
 		}
 		else if (!exportAllUsers) {
 			User user = themeDisplay.getUser();
@@ -192,13 +192,13 @@ public class ExportUsersAction extends PortletAction {
 		long roleId = searchTerms.getRoleId();
 
 		if (roleId > 0) {
-			params.put("usersRoles", new Long(roleId));
+			params.put("usersRoles", Long.valueOf(roleId));
 		}
 
 		long userGroupId = searchTerms.getUserGroupId();
 
 		if (userGroupId > 0) {
-			params.put("usersUserGroups", new Long(userGroupId));
+			params.put("usersUserGroups", Long.valueOf(userGroupId));
 		}
 
 		if (PropsValues.USERS_INDEXER_ENABLED &&

@@ -73,8 +73,8 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 	if (tabs1.equals("summary") || tabs2.equals("current")) {
-		organizationParams.put("groupOrganization", new Long(group.getGroupId()));
-		organizationParams.put("organizationsGroups", new Long(group.getGroupId()));
+		organizationParams.put("groupOrganization", Long.valueOf(group.getGroupId()));
+		organizationParams.put("organizationsGroups", Long.valueOf(group.getGroupId()));
 	}
 	%>
 

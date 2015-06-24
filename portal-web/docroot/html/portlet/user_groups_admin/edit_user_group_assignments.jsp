@@ -77,7 +77,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 		}
 
 		if (tabs2.equals("current")) {
-			userParams.put("usersUserGroups", new Long(userGroup.getUserGroupId()));
+			userParams.put("usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
 		}
 		%>
 

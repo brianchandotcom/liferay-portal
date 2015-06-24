@@ -85,15 +85,15 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	if (organizationId > 0) {
-		userParams.put("usersOrgs", new Long(organizationId));
+		userParams.put("usersOrgs", Long.valueOf(organizationId));
 	}
 
 	if (userGroupId > 0) {
-		userParams.put("usersUserGroups", new Long(userGroupId));
+		userParams.put("usersUserGroups", Long.valueOf(userGroupId));
 	}
 
 	if (portletName.equals(PortletKeys.FRIENDS_DIRECTORY)) {
-		userParams.put("socialRelationType", new Long[] {themeDisplay.getUserId(), new Long(SocialRelationConstants.TYPE_BI_FRIEND)});
+		userParams.put("socialRelationType", new Long[] {themeDisplay.getUserId(), Long.valueOf(SocialRelationConstants.TYPE_BI_FRIEND)});
 	}
 	else if (portletName.equals(PortletKeys.MY_SITES_DIRECTORY) && (organizationId == 0) && (userGroupId == 0)) {
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
@@ -110,7 +110,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	}
 	else if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY) && (organizationId == 0) && (userGroupId == 0)) {
 		userParams.put("inherit", Boolean.TRUE);
-		userParams.put("usersGroups", new Long(themeDisplay.getScopeGroupId()));
+		userParams.put("usersGroups", Long.valueOf(themeDisplay.getScopeGroupId()));
 	}
 	%>
 

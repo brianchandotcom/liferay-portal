@@ -115,7 +115,7 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE,
 			treeWalker.getRoot());
 		portletRequest.setAttribute(
-			WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
+			WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
 		portletRequest.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.FALSE);
 		portletRequest.setAttribute(

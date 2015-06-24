@@ -24,8 +24,8 @@ import java.sql.Types;
 public class CyrusVirtual implements Serializable {
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"emailAddress", new Integer(Types.VARCHAR)},
-		{"userId", new Integer(Types.VARCHAR)}
+		{"emailAddress", Integer.valueOf(Types.VARCHAR)},
+		{"userId", Integer.valueOf(Types.VARCHAR)}
 	};
 
 	public static final String TABLE_NAME = "CyrusVirtual";

@@ -24,10 +24,10 @@ LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 userParams.put("inherit", Boolean.TRUE);
 
 if (organization != null) {
-	userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
+	userParams.put("usersOrgs", Long.valueOf(organization.getOrganizationId()));
 }
 else {
-	userParams.put("usersGroups", new Long(group.getGroupId()));
+	userParams.put("usersGroups", Long.valueOf(group.getGroupId()));
 }
 
 int total = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);

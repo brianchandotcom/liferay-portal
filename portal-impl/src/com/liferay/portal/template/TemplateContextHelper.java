@@ -290,7 +290,7 @@ public class TemplateContextHelper {
 			contextObjects.put(
 				"layoutTypePortlet", themeDisplay.getLayoutTypePortlet());
 			contextObjects.put(
-				"scopeGroupId", new Long(themeDisplay.getScopeGroupId()));
+				"scopeGroupId", Long.valueOf(themeDisplay.getScopeGroupId()));
 			contextObjects.put(
 				"permissionChecker", themeDisplay.getPermissionChecker());
 			contextObjects.put("locale", themeDisplay.getLocale());
@@ -311,7 +311,7 @@ public class TemplateContextHelper {
 			// Deprecated
 
 			contextObjects.put(
-				"portletGroupId", new Long(themeDisplay.getScopeGroupId()));
+				"portletGroupId", Long.valueOf(themeDisplay.getScopeGroupId()));
 		}
 
 		// Theme

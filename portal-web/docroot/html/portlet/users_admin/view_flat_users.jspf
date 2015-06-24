@@ -205,7 +205,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	if (userOrganizationId > 0) {
-		userParams.put("usersOrgs", new Long(userOrganizationId));
+		userParams.put("usersOrgs", Long.valueOf(userOrganizationId));
 	}
 	else if (usersListView.equals(UserConstants.LIST_VIEW_TREE) && Validator.isNull(searchTerms.getKeywords())) {
 		userParams.put("noOrganizations", Boolean.TRUE);
@@ -218,11 +218,11 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	}
 
 	if (roleId > 0) {
-		userParams.put("usersRoles", new Long(roleId));
+		userParams.put("usersRoles", Long.valueOf(roleId));
 	}
 
 	if (userGroupId > 0) {
-		userParams.put("usersUserGroups", new Long(userGroupId));
+		userParams.put("usersUserGroups", Long.valueOf(userGroupId));
 	}
 	%>
 

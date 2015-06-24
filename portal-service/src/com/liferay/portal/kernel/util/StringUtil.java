@@ -348,7 +348,7 @@ public class StringUtil {
 	 *         character, ignoring case; <code>false</code> otherwise
 	 */
 	public static boolean endsWith(String s, char end) {
-		return endsWith(s, (new Character(end)).toString());
+		return endsWith(s, (Character.valueOf(end)).toString());
 	}
 
 	/**
@@ -3651,7 +3651,7 @@ public class StringUtil {
 	 *         specified character; <code>false</code> otherwise
 	 */
 	public static boolean startsWith(String s, char begin) {
-		return startsWith(s, (new Character(begin)).toString());
+		return startsWith(s, (Character.valueOf(begin)).toString());
 	}
 
 	/**

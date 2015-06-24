@@ -144,9 +144,9 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 	<%
 	request.setAttribute("site.group", group);
 	request.setAttribute("site.liveGroup", liveGroup);
-	request.setAttribute("site.liveGroupId", new Long(liveGroupId));
+	request.setAttribute("site.liveGroupId", Long.valueOf(liveGroupId));
 	request.setAttribute("site.stagingGroup", stagingGroup);
-	request.setAttribute("site.stagingGroupId", new Long(stagingGroupId));
+	request.setAttribute("site.stagingGroupId", Long.valueOf(stagingGroupId));
 	request.setAttribute("site.liveGroupTypeSettings", liveGroupTypeSettings);
 	request.setAttribute("site.layoutSetPrototype", layoutSetPrototype);
 	request.setAttribute("site.showPrototypes", String.valueOf(showPrototypes));

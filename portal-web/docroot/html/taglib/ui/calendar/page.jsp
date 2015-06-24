@@ -141,7 +141,7 @@ int weekNumber = 1;
 			tempCal.set(Calendar.DATE, i);
 			tempCal.set(Calendar.YEAR, selYear);
 
-			boolean hasData = (data != null) && data.contains(new Integer(i));
+			boolean hasData = (data != null) && data.contains(Integer.valueOf(i));
 
 			String cssClass = "";
 

@@ -58,7 +58,7 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 			return null;
 		}
 		else {
-			return new Double(version);
+			return Double.valueOf(version);
 		}
 	}
 

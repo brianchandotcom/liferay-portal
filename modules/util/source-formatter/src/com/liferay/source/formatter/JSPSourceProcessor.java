@@ -874,8 +874,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				line = replacePrimitiveWrapperInstantiation(
-					fileName, line, lineCount);
+				line = replacePrimitiveWrapperInstantiation(line);
 
 				previousLine = line;
 

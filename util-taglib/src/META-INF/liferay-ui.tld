@@ -2848,7 +2848,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component allowing users to make an event repeat over any given interval.</description>
+		<description>Creates a component allowing users to make an event repeat over a given interval.</description>
 		<name>input-repeat</name>
 		<tag-class>com.liferay.taglib.ui.InputRepeatTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2877,7 +2877,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A title passed in as the input's <![CDATA[<code>title</code>]]> attribute.</description>
+			<description>A title for the input.</description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3809,7 +3809,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The height of the image in pixels. A possible value would be <![CDATA[<code>16</code>]]>. <![CDATA[<code>px</code>]]> is then appended to the end of the value.</description>
+			<description>The width of the image in pixels. A possible value would be <![CDATA[<code>16</code>]]>. <![CDATA[<code>px</code>]]> is then appended to the end of the value.</description>
 			<name>width</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4929,7 +4929,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The value to be used in the social-bookmark link <![CDATA[<code>target</code>]]> attribute. Options include any valid value for the anchor tag <![CDATA[<code>target</code>]]> attribute such as <![CDATA[<code>_blank</code>]]>.</description>
+			<description>A target window in which to open the social bookmark's URL. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5422,7 +5422,7 @@
 		<tag-class>com.liferay.taglib.ui.UploadProgressTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The height of the component in px. The default value is <![CDATA[<code>25px</code>]]>.</description>
+			<description>The height of the component in pixels. The default value is <![CDATA[<code>25px</code>]]>.</description>
 			<name>height</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -568,8 +568,8 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		whenLanguageGetLanguageId(LocaleUtil.US, "en_US");
 		whenLanguageGetLanguageId(LocaleUtil.BRAZIL, "pt_BR");
 
-		whenLanguageIsAvailableLocale("en_US", true);
-		whenLanguageIsAvailableLocale("pt_BR", true);
+		whenLanguageIsAvailableLocale("en_US");
+		whenLanguageIsAvailableLocale("pt_BR");
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
@@ -703,13 +703,11 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
-	protected void whenLanguageIsAvailableLocale(
-		String languageId, boolean returnValue) {
-
+	protected void whenLanguageIsAvailableLocale(String languageId) {
 		when(
 			_language.isAvailableLocale(Matchers.eq(languageId))
 		).thenReturn(
-			returnValue
+			true
 		);
 	}
 

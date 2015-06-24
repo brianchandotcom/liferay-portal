@@ -94,10 +94,10 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
-		return getFileNames(new String[0], new String[] {"**\\sql\\*.sql"});
+	protected List<String> doGetFileNames() throws Exception {
+		return getFileNames(new String[0], new String[] {"**/sql/*.sql"});
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**\\*.sql"};
+	private static final String[] _INCLUDES = new String[] {"**/*.sql"};
 
 }

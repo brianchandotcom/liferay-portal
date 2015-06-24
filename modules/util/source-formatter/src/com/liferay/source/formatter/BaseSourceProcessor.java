@@ -47,7 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 /**
@@ -91,7 +90,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return errorMessages;
 	}
 
-	public final List<String> getFileNames() {
+	public final List<String> getFileNames() throws Exception {
 		List<String> fileNames = sourceFormatterArgs.getFileNames();
 
 		if (fileNames != null) {
@@ -464,10 +463,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception;
 
-	protected abstract List<String> doGetFileNames();
+	protected abstract List<String> doGetFileNames() throws Exception;
 
 	protected String fixCompatClassImports(String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
 		if (portalSource || !_usePortalCompatImport ||
 			absolutePath.contains("/ext-") ||
@@ -724,7 +723,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		File file = new File(sourceFormatterArgs.getBaseDirName() + fileName);
+		File file = new File(fileName);
 
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -807,7 +806,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _annotationsExclusions;
 	}
 
-	protected Map<String, String> getCompatClassNamesMap() throws IOException {
+	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;
 		}
@@ -815,7 +814,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Map<String, String> compatClassNamesMap = new HashMap<>();
 
 		String[] includes = new String[] {
-			"**\\portal-compat-shared\\src\\com\\liferay\\compat\\**\\*.java"
+			"**/portal-compat-shared/src/com/liferay/compat/**/*.java"
 		};
 
 		String basedir = sourceFormatterArgs.getBaseDirName();
@@ -833,7 +832,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		for (String fileName : fileNames) {
-			if (!fileName.startsWith("shared")) {
+			if (!fileName.startsWith(
+					sourceFormatterArgs.getBaseDirName() + "shared")) {
+
 				break;
 			}
 
@@ -919,24 +920,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected List<String> getFileNames(
-		String basedir, String[] excludes, String[] includes) {
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
+			String basedir, String[] excludes, String[] includes)
+		throws Exception {
 
 		if (_excludes != null) {
 			excludes = ArrayUtil.append(excludes, _excludes);
 		}
 
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(includes);
-
-		return _sourceFormatterHelper.scanForFiles(directoryScanner);
+		return _sourceFormatterHelper.scanForFiles(basedir, excludes, includes);
 	}
 
-	protected List<String> getFileNames(String[] excludes, String[] includes) {
+	protected List<String> getFileNames(String[] excludes, String[] includes)
+		throws Exception {
+
 		return getFileNames(
 			sourceFormatterArgs.getBaseDirName(), excludes, includes);
 	}
@@ -1030,11 +1026,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected Properties getLanguageProperties(String fileName) {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
 		int pos = fileName.indexOf("/docroot/");
-
-		sb.append(sourceFormatterArgs.getBaseDirName());
 
 		if (pos != -1) {
 			sb.append(fileName.substring(0, pos + 9));
@@ -1575,16 +1569,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				System.getProperty("source.formatter.excludes")));
 
 		excludesList.addAll(getPropertyList("source.formatter.excludes"));
-
-		String[] includes = new String[] {"**\\source_formatter.ignore"};
-
-		List<String> ignoreFileNames = getFileNames(new String[0], includes);
-
-		for (String ignoreFileName : ignoreFileNames) {
-			excludesList.add(
-				ignoreFileName.substring(0, ignoreFileName.length() - 23) +
-					"**");
-		}
 
 		return excludesList.toArray(new String[excludesList.size()]);
 	}

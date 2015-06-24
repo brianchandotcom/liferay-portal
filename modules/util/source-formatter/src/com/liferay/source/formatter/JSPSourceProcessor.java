@@ -479,13 +479,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
 			getProperty("move.frequently.used.imports.to.common.init"));
 		_unusedVariablesExclusionFiles = getPropertyList(
 			"jsp.unused.variables.excludes.files");
 
-		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
+		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
 
 		List<String> fileNames = getFileNames(excludes, getIncludes());
 
@@ -494,8 +494,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
 			for (String fileName : fileNames) {
-				File file = new File(
-					sourceFormatterArgs.getBaseDirName() + fileName);
+				File file = new File(fileName);
 
 				fileName = StringUtil.replace(
 					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -1553,7 +1552,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = new String[] {
-		"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
+		"**/*.jsp", "**/*.jspf", "**/*.vm"
 	};
 
 	private static final String[] _TAG_LIBRARIES = new String[] {

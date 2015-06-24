@@ -45,15 +45,15 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	public String[] getIncludes() {
 		if (portalSource) {
 			return new String[] {
-				"**\\portal.properties", "**\\portal-ext.properties",
-				"**\\portal-legacy-*.properties", "**\\portlet.properties",
-				"**\\source-formatter.properties"
+				"**/portal.properties", "**/portal-ext.properties",
+				"**/portal-legacy-*.properties", "**/portlet.properties",
+				"**/source-formatter.properties"
 			};
 		}
 
 		return new String[] {
-			"**\\portal.properties", "**\\portal-ext.properties",
-			"**\\portlet.properties", "**\\source-formatter.properties"
+			"**/portal.properties", "**/portal-ext.properties",
+			"**/portlet.properties", "**/source-formatter.properties"
 		};
 	}
 
@@ -81,7 +81,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
 	}
 
@@ -238,8 +238,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		Properties properties = new Properties();
 
-		InputStream inputStream = new FileInputStream(
-			sourceFormatterArgs.getBaseDirName() + fileName);
+		InputStream inputStream = new FileInputStream(fileName);
 
 		properties.load(inputStream);
 
@@ -269,9 +268,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 					propertyFileName = propertyFileName.substring(0, pos);
 				}
 
-				File file = new File(
-					sourceFormatterArgs.getBaseDirName() + path +
-						propertyFileName);
+				File file = new File(path + propertyFileName);
 
 				if (!file.exists()) {
 					processErrorMessage(

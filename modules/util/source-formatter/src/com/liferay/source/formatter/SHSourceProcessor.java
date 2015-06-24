@@ -37,10 +37,10 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**\\*.sh"};
+	private static final String[] _INCLUDES = new String[] {"**/*.sh"};
 
 }

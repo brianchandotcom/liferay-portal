@@ -72,6 +72,21 @@
 
 		<execute macro="Blogs#subscribePG" />
 
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<for list="${blogsEntryCounterList}" param="entryCount" >
 			<execute macro="Blogs#addEntry">
 				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
@@ -79,8 +94,15 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#gotoDockbar" />
@@ -101,7 +123,9 @@
 	</command>
 
 	<command name="ViewNoWebsiteNotificationForNewBlogsEntry" priority="4">
-		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
 
 		<execute macro="NotificationsPortlet#setUserDeliveries">
 			<var name="actionType" value="add" />
@@ -116,13 +140,35 @@
 
 		<execute macro="Blogs#subscribePG" />
 
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewCount">
@@ -161,6 +207,7 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
 		</execute>
 
 		<execute macro="Notifications#viewCount">
@@ -184,7 +231,7 @@
 
 		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
 		</execute>
 	</command>
 
@@ -195,13 +242,35 @@
 
 		<execute macro="Blogs#subscribePG" />
 
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewCountAlert">
@@ -211,9 +280,9 @@
 		<execute macro="Notifications#gotoDockbar" />
 
 		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="Blogs Entry" />
+			<var name="assetType" value="blogs entry" />
 			<var name="contentBody" value="Blogs Entry Title" />
-			<var name="user" value="Test Test" />
+			<var name="user" value="userfn userln" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
@@ -231,25 +300,13 @@
 	</command>
 
 	<command name="ViewWebsiteNotificationForNewCommentViaBlogs" priority="4">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
@@ -260,6 +317,17 @@
 		<execute macro="BlogsEntryComment#subscribePG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -275,8 +343,15 @@
 			<var name="entryComment" value="Blogs Entry Comment" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewCountAlert">
@@ -286,10 +361,10 @@
 		<execute macro="Notifications#gotoDockbar" />
 
 		<execute macro="Notifications#viewNewComment">
-			<var name="assetType" value="Comment" />
+			<var name="assetType" value="comment" />
 			<var name="content" value="Blogs Entry Title" />
 			<var name="contentBody" value="Blogs Entry Comment" />
-			<var name="user" value="Test Test" />
+			<var name="user" value="userfn userln" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
@@ -299,7 +374,7 @@
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="Blogs Entry Comment" />
 			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="userFullName" value="Test Test" />
+			<var name="userFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Notifications#viewCount">

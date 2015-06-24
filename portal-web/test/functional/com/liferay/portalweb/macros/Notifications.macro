@@ -62,7 +62,7 @@
 		<var name="key_contentBody" value="${contentBody}" />
 
 		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType} to ${content}." />
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewNewContent">

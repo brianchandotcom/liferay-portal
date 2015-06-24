@@ -29,7 +29,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>itemSelectorReturnType</name>
+			<name>desiredItemSelectorReturnTypes</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

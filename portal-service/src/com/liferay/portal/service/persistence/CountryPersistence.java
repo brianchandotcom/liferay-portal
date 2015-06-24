@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.Country;
+import com.liferay.portal.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the country service.

@@ -15,16 +15,22 @@
 package com.liferay.portlet.blogsaggregator.lar;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
-import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -59,6 +65,58 @@ public class BlogsAggregatorPortletDataHandler
 			portletDataContext, portletId, portletPreferences);
 	}
 
+	@Override
+	protected String getExportPortletPreferencesUuid(
+			PortletDataContext portletDataContext, Portlet portlet,
+			String className, long primaryKeyLong)
+		throws Exception {
+
+		String uuid = null;
+
+		Element rootElement = portletDataContext.getExportDataRootElement();
+
+		if (className.equals(Organization.class.getName())) {
+			Organization organization =
+				OrganizationLocalServiceUtil.fetchOrganization(primaryKeyLong);
+
+			if (organization != null) {
+				uuid = organization.getUuid();
+
+				portletDataContext.addReferenceElement(
+					portlet, rootElement, organization,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			}
+		}
+
+		return uuid;
+	}
+
+	@Override
+	protected Long getImportPortletPreferencesNewPrimaryKey(
+			PortletDataContext portletDataContext, Class<?> clazz,
+			long companyGroupId, Map<Long, Long> primaryKeys, String uuid)
+		throws Exception {
+
+		if (Validator.isNumber(uuid)) {
+			long oldPrimaryKey = GetterUtil.getLong(uuid);
+
+			return MapUtil.getLong(primaryKeys, oldPrimaryKey, oldPrimaryKey);
+		}
+
+		String className = clazz.getName();
+
+		if (className.equals(Organization.class.getName())) {
+			Organization organization = OrganizationUtil.fetchByUuid_C_First(
+				uuid, portletDataContext.getCompanyId(), null);
+
+			if (organization != null) {
+				return organization.getOrganizationId();
+			}
+		}
+
+		return null;
+	}
+
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -71,7 +129,7 @@ public class BlogsAggregatorPortletDataHandler
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
-			ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
+			updateExportPortletPreferencesClassPKs(
 				portletDataContext, portlet, portletPreferences,
 				"organizationId", Organization.class.getName());
 		}
@@ -93,7 +151,7 @@ public class BlogsAggregatorPortletDataHandler
 
 			Group companyGroup = company.getGroup();
 
-			ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
+			updateImportPortletPreferencesClassPKs(
 				portletDataContext, portletPreferences, "organizationId",
 				Organization.class, companyGroup.getGroupId());
 		}

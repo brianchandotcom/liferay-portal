@@ -24,17 +24,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -43,12 +47,17 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
+import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
-import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -56,6 +65,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -138,6 +148,175 @@ public class AssetPublisherPortletDataHandler
 		}
 
 		return 0;
+	}
+
+	@Override
+	protected String getExportPortletPreferencesUuid(
+			PortletDataContext portletDataContext, Portlet portlet,
+			String className, long primaryKeyLong)
+		throws Exception {
+
+		String uuid = null;
+
+		Element rootElement = portletDataContext.getExportDataRootElement();
+
+		if (className.equals(AssetCategory.class.getName())) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchCategory(primaryKeyLong);
+
+			if (assetCategory != null) {
+				uuid = assetCategory.getUuid();
+
+				portletDataContext.addReferenceElement(
+					portlet, rootElement, assetCategory,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			}
+		}
+		else if (className.equals(AssetVocabulary.class.getName())) {
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+					primaryKeyLong);
+
+			if (assetVocabulary != null) {
+				uuid = assetVocabulary.getUuid();
+
+				portletDataContext.addReferenceElement(
+					portlet, rootElement, assetVocabulary,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			}
+		}
+		else if (className.equals(DDMStructure.class.getName())) {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchStructure(primaryKeyLong);
+
+			if (ddmStructure != null) {
+				uuid = ddmStructure.getUuid();
+
+				portletDataContext.addReferenceElement(
+					portlet, rootElement, ddmStructure,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			}
+		}
+		else if (className.equals(DLFileEntryType.class.getName())) {
+			DLFileEntryType dlFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
+					primaryKeyLong);
+
+			if (dlFileEntryType != null) {
+				uuid = dlFileEntryType.getUuid();
+
+				portletDataContext.addReferenceElement(
+					portlet, rootElement, dlFileEntryType,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			}
+		}
+		else if (className.equals(Organization.class.getName())) {
+			Organization organization =
+				OrganizationLocalServiceUtil.fetchOrganization(primaryKeyLong);
+
+			if (organization != null) {
+				uuid = organization.getUuid();
+
+				portletDataContext.addReferenceElement(
+					portlet, rootElement, organization,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			}
+		}
+
+		return uuid;
+	}
+
+	@Override
+	protected Long getImportPortletPreferencesNewPrimaryKey(
+			PortletDataContext portletDataContext, Class<?> clazz,
+			long companyGroupId, Map<Long, Long> primaryKeys, String uuid)
+		throws Exception {
+
+		if (Validator.isNumber(uuid)) {
+			long oldPrimaryKey = GetterUtil.getLong(uuid);
+
+			return MapUtil.getLong(primaryKeys, oldPrimaryKey, oldPrimaryKey);
+		}
+
+		String className = clazz.getName();
+
+		if (className.equals(AssetCategory.class.getName())) {
+			AssetCategory assetCategory = AssetCategoryUtil.fetchByUUID_G(
+				uuid, portletDataContext.getScopeGroupId());
+
+			if (assetCategory == null) {
+				assetCategory = AssetCategoryUtil.fetchByUUID_G(
+					uuid, companyGroupId);
+			}
+
+			if (assetCategory != null) {
+				return assetCategory.getCategoryId();
+			}
+		}
+		else if (className.equals(AssetVocabulary.class.getName())) {
+			AssetVocabulary assetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
+				uuid, portletDataContext.getScopeGroupId());
+
+			if (assetVocabulary == null) {
+				assetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
+					uuid, companyGroupId);
+			}
+
+			if (assetVocabulary != null) {
+				return assetVocabulary.getVocabularyId();
+			}
+		}
+		else if (className.equals(DDMStructure.class.getName())) {
+			DDMStructure ddmStructure = DDMStructureUtil.fetchByUUID_G(
+				uuid, portletDataContext.getScopeGroupId());
+
+			if (ddmStructure == null) {
+				ddmStructure = DDMStructureUtil.fetchByUUID_G(
+					uuid, companyGroupId);
+			}
+
+			if (ddmStructure != null) {
+				return ddmStructure.getStructureId();
+			}
+		}
+		else if (className.equals(DLFileEntryType.class.getName())) {
+			DLFileEntryType dlFileEntryType = DLFileEntryTypeUtil.fetchByUUID_G(
+				uuid, portletDataContext.getScopeGroupId());
+
+			if (dlFileEntryType == null) {
+				dlFileEntryType = DLFileEntryTypeUtil.fetchByUUID_G(
+					uuid, companyGroupId);
+			}
+
+			if (dlFileEntryType == null) {
+				Element rootElement =
+					portletDataContext.getImportDataRootElement();
+
+				Element element = portletDataContext.getReferenceElement(
+					rootElement, clazz, companyGroupId, uuid,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+
+				if (element != null) {
+					String fileEntryTypeKey = element.attributeValue(
+						"file-entry-type-key");
+
+					boolean preloaded = GetterUtil.getBoolean(
+						element.attributeValue("preloaded"));
+
+					if (preloaded) {
+						dlFileEntryType =
+							DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
+								companyGroupId, fileEntryTypeKey);
+					}
+				}
+			}
+
+			if (dlFileEntryType != null) {
+				return dlFileEntryType.getFileEntryTypeId();
+			}
+		}
+
+		return null;
 	}
 
 	protected void restorePortletPreference(
@@ -236,7 +415,7 @@ public class AssetPublisherPortletDataHandler
 					 name.equals(
 						 "classTypeIdsDLFileEntryAssetRendererFactory")) {
 
-				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
+				updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
 					DLFileEntryType.class.getName());
 			}
@@ -248,7 +427,7 @@ public class AssetPublisherPortletDataHandler
 					 name.equals(
 						 "classTypeIdsJournalArticleAssetRendererFactory")) {
 
-				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
+				updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
 					DDMStructure.class.getName());
 			}
@@ -264,7 +443,7 @@ public class AssetPublisherPortletDataHandler
 						portletDataContext, portletId, assetVocabulary);
 				}
 
-				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
+				updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
 					AssetVocabulary.class.getName());
 			}
@@ -285,7 +464,7 @@ public class AssetPublisherPortletDataHandler
 						portletDataContext, portletId, assetCategory);
 				}
 
-				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
+				updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences,
 					"queryValues" + index, AssetCategory.class.getName());
 			}
@@ -430,7 +609,7 @@ public class AssetPublisherPortletDataHandler
 					 name.equals(
 						 "classTypeIdsDLFileEntryAssetRendererFactory")) {
 
-				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
+				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					DLFileEntryType.class, companyGroup.getGroupId());
 			}
@@ -442,12 +621,12 @@ public class AssetPublisherPortletDataHandler
 					 name.equals(
 						 "classTypeIdsJournalArticleAssetRendererFactory")) {
 
-				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
+				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					DDMStructure.class, companyGroup.getGroupId());
 			}
 			else if (name.equals("assetVocabularyId")) {
-				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
+				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
 			}
@@ -456,7 +635,7 @@ public class AssetPublisherPortletDataHandler
 
 				String index = name.substring(9, name.length());
 
-				ExportImportHelperUtil.updateImportPortletPreferencesClassPKs(
+				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences,
 					"queryValues" + index, AssetCategory.class,
 					companyGroup.getGroupId());

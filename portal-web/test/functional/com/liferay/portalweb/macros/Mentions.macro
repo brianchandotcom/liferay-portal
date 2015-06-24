@@ -1,0 +1,158 @@
+<definition>
+	<command name="addMentionViaBlogsEntry">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
+
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+
+		<execute macro="BlogsEntry#addTitle" />
+
+		<execute function="Type#sendKeys" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent} @${mentionsUserScreenName}" />
+
+		<execute function="AssertClick" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" value1="${mentionsUserFullName}@${mentionsUserScreenName}" />
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="addMentionViaComments">
+		<var name="key_entryComment" value="${entryComment}" />
+		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
+
+		<execute function="Type#sendKeys" locator1="Comments#COMMENT_FIELD"  value1="${entryComment} @${mentionsUserScreenName}" />
+
+		<execute function="AssertClick" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" value1="${mentionsUserFullName}@${mentionsUserScreenName}" />
+
+		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+	</command>
+
+	<command name="addMentionViaMessageBoards">
+		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
+
+		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+
+		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
+
+		<execute function="SikuliType" locator1="CKEditor#CKEDITOR_PNG" value1="${entryContent} @${mentionsUserScreenName}" />
+
+		<execute function="AssertClick" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" value1="${mentionsUserFullName} (@${mentionsUserScreenName})" />
+
+		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="disableMentionsViaPortalSettings">
+		<execute macro="Mentions#gotoMentionsViaPortalSettings" />
+
+		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
+
+		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
+	</command>
+
+	<command name="disableMentionsViaSiteSettings">
+		<execute macro="Mentions#gotoMentionsViaSiteSettings" />
+
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
+		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
+
+		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
+	</command>
+
+	<command name="enableMentionsViaPortalSettings">
+		<execute macro="Mentions#gotoMentionsViaPortalSettings" />
+
+		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
+
+		<execute function="Check" locator1="Checkbox#MENTIONS" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
+	</command>
+
+	<command name="enableMentionsViaSiteSettings">
+		<execute macro="Mentions#gotoMentionsViaSiteSettings" />
+
+		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
+
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
+		<execute function="Check" locator1="Checkbox#MENTIONS" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
+	</command>
+
+	<command name="gotoMentionsViaPortalSettings">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavListItem#MENTIONS" value1="Mentions" />
+
+		<execute function="AssertTextEquals" locator1="Mentions#MENTIONS_HEADER" value1="Mentions" />
+	</command>
+
+	<command name="gotoMentionsViaSiteSettings">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavListItem#MENTIONS" value1="Mentions" />
+
+		<execute function="AssertTextEquals" locator1="Mentions#MENTIONS_HEADER" value1="Mentions" />
+	</command>
+
+	<command name="viewDisabledViaPortalSettings">
+		<execute macro="Mentions#gotoMentionsViaPortalSettings" />
+
+		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
+
+		<execute macro="Mentions#gotoMentionsViaSiteSettings" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
+		<execute function="AssertElementPresent" locator1="Checkbox#MENTIONS_CHECKBOX_DISABLED" />
+	</command>
+
+	<command name="viewDisabledViaSiteSettings">
+		<execute macro="Mentions#gotoMentionsViaSiteSettings" />
+
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
+		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
+
+		<execute macro="Mentions#gotoMentionsViaPortalSettings" />
+
+		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
+	</command>
+
+	<command name="viewMentionTagLink">
+		<var name="key_mentionsUserFullName" value="${mentionsUserFullName}" />
+		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
+
+		<execute function="AssertElementPresent" locator1="Mentions#MENTIONS_TAG_LINK" />
+
+		<execute function="AssertClick" locator1="Mentions#MENTIONS_TAG_LINK" value1="@${mentionsUserScreenName}" />
+
+		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${mentionsUserFullName}" />
+	</command>
+
+	<command name="viewNoMention">
+		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
+
+		<execute function="AssertElementNotPresent" locator1="Mentions#MENTIONS_TAG_LINK" value1="${mentionsUserScreenName}" />
+	</command>
+</definition>

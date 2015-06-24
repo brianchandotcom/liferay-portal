@@ -221,8 +221,6 @@
 
 		<action path="/blogs/small_image_selector" type="com.liferay.portlet.blogs.action.SmallImageSelectorAction" />
 
-		<action path="/blogs/trackback" type="com.liferay.portlet.blogs.action.TrackbackAction" />
-
 		<action path="/blogs/upload_editor_image" type="com.liferay.portlet.blogs.action.UploadEditorImageAction" />
 
 		<!-- Blogs Admin -->

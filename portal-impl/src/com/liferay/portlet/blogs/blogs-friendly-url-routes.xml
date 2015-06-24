@@ -40,13 +40,13 @@
 		<pattern>/trackback/{entryId:\d+}</pattern>
 		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
 		<implicit-parameter name="p_p_state">exclusive</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
+		<implicit-parameter name="javax.portlet.action">/blogs/trackback</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/trackback/{urlTitle}</pattern>
 		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
 		<implicit-parameter name="p_p_state">exclusive</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
+		<implicit-parameter name="javax.portlet.action">/blogs/trackback</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/rss/{p_p_state}</pattern>
@@ -70,11 +70,11 @@
 	<route>
 		<pattern>/trackback/{entryId:\d+}/{p_p_state}</pattern>
 		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
+		<implicit-parameter name="javax.portlet.action">/blogs/trackback</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/trackback/{urlTitle}/{p_p_state}</pattern>
 		<implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/trackback</implicit-parameter>
+		<implicit-parameter name="javax.portlet.action">/blogs/trackback</implicit-parameter>
 	</route>
 </routes>

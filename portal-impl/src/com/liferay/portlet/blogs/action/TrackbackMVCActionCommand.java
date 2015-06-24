@@ -14,9 +14,12 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -24,13 +27,15 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContextFunction;
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.TrackbackValidationException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -39,47 +44,29 @@ import com.liferay.portlet.blogs.trackback.TrackbackImpl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Alexander Chow
  */
-public class TrackbackAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.BLOGS,
+		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN,
+		"javax.portlet.name=" + PortletKeys.BLOGS_AGGREGATOR,
+		"mvc.command.name=/blogs/trackback"
+	}
+)
+public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 
-	public TrackbackAction() {
+	public TrackbackMVCActionCommand() {
 		_trackback = new TrackbackImpl();
 	}
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		try {
-			addTrackback(actionRequest, actionResponse);
-		}
-		catch (NoSuchEntryException nsee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsee, nsee);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		setForward(actionRequest, ActionConstants.COMMON_NULL);
-	}
-
-	protected TrackbackAction(Trackback trackback) {
+	protected TrackbackMVCActionCommand(Trackback trackback) {
 		_trackback = trackback;
 	}
 
@@ -121,6 +108,24 @@ public class TrackbackAction extends PortletAction {
 		sendSuccess(actionRequest, actionResponse);
 	}
 
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		try {
+			addTrackback(actionRequest, actionResponse);
+		}
+		catch (NoSuchEntryException nsee) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsee, nsee);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
 	protected BlogsEntry getBlogsEntry(ActionRequest actionRequest)
 		throws Exception {
 
@@ -136,9 +141,36 @@ public class TrackbackAction extends PortletAction {
 		return (BlogsEntry)actionRequest.getAttribute(WebKeys.BLOGS_ENTRY);
 	}
 
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	protected PortletPreferences getStrictPortletSetup(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
+	}
+
+	protected PortletPreferences getStrictPortletSetup(
+			Layout layout, String portletId)
+		throws PortalException {
+
+		if (Validator.isNull(portletId)) {
+			return null;
+		}
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, portletId);
+
+		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+			throw new PrincipalException();
+		}
+
+		return portletPreferences;
 	}
 
 	protected boolean isCommentsEnabled(ActionRequest actionRequest)
@@ -235,7 +267,7 @@ public class TrackbackAction extends PortletAction {
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TrackbackAction.class);
+		TrackbackMVCActionCommand.class);
 
 	private final Trackback _trackback;
 

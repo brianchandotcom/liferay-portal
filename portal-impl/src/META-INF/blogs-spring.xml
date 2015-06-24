@@ -9,6 +9,7 @@
 >
 	<bean id="com.liferay.portlet.blogs.action.EditEntryMVCActionCommand" class="com.liferay.portlet.blogs.action.EditEntryMVCActionCommand" />
 	<bean id="com.liferay.portlet.blogs.action.EditEntryMVCRenderCommand" class="com.liferay.portlet.blogs.action.EditEntryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.blogs.action.TrackbackMVCActionCommand" class="com.liferay.portlet.blogs.action.TrackbackMVCActionCommand" />
 	<bean id="com.liferay.portlet.blogs.action.ViewEntryMVCRenderCommand" class="com.liferay.portlet.blogs.action.ViewEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.blogs.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogs.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.blogsadmin.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogsadmin.action.ViewMVCRenderCommand" />

@@ -25,6 +25,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.upgrade.JournalServiceUpgrade;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -70,6 +71,7 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -77,13 +79,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Shinn Lok
  */
-@Component(service = JournalServiceVerifyProcess.class)
+@Component(immediate = true, service = JournalServiceVerifyProcess.class)
 public class JournalServiceVerifyProcess extends VerifyProcess {
 
 	public static final long DEFAULT_GROUP_ID = 14;
 
 	public static final int NUM_OF_ARTICLES = 5;
 
+	@Activate
 	@Override
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();
@@ -110,6 +113,11 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 
 		_journalArticleResourceLocalService =
 			journalArticleResourceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalServiceUpgrade(
+		JournalServiceUpgrade journalServiceUpgrade) {
 	}
 
 	protected void updateContentSearch(long groupId, String portletId)

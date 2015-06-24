@@ -85,7 +85,6 @@ if (organizationId > 0) {
 
 				Liferay.Util.toggleSelectBox('<portlet:namespace />selectionMethod', 'users', '<portlet:namespace />UsersSelectionOptions');
 			</aui:script>
-
 		</c:if>
 
 		<aui:select name="preferences--displayStyle--">

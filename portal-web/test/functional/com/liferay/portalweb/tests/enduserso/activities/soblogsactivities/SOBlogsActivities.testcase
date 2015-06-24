@@ -65,6 +65,9 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="1" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -78,7 +81,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="1" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -119,6 +125,7 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${commentContent}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userFullName" value="${userFullName}" />
 		</execute>
@@ -271,7 +278,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="numberOfOtherCommenters" value="2" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName3}" />
 		</execute>
 
@@ -299,7 +309,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -340,7 +353,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="numberOfOtherCommenters" value="2" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName3}" />
 		</execute>
 
@@ -368,7 +384,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -409,7 +428,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="numberOfOtherCommenters" value="2" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userFirstName3}" />
 		</execute>
 
@@ -437,7 +459,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -478,7 +503,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="numberOfOtherCommenters" value="2" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName3}" />
 		</execute>
 
@@ -506,7 +534,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="3" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -588,6 +619,9 @@
 
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -668,6 +702,9 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Commented on a blog entry." />
 			<var name="commentCount" value="1" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -681,7 +718,10 @@
 		<execute macro="SOActivities#viewBlogsActivityEntry">
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="commentCount" value="1" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -722,6 +762,7 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${commentContentEdit}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userFullName" value="${userFullName}" />
 		</execute>
@@ -789,6 +830,7 @@
 			<var name="entryContent" value="${entryContent3}" />
 			<var name="entryTitle" value="${entryTitle3}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -797,6 +839,7 @@
 			<var name="entryContent" value="${entryContent2}" />
 			<var name="entryTitle" value="${entryTitle2}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -805,6 +848,7 @@
 			<var name="entryContent" value="${entryContent1}" />
 			<var name="entryTitle" value="${entryTitle1}" />
 			<var name="row" value="03" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 	</command>
@@ -882,6 +926,7 @@
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="entryContent" value="${entryContent1}" />
 			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -933,6 +978,7 @@
 			<var name="action" value="Wrote a new blog entry." />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 

@@ -73,6 +73,7 @@
 
 		<execute macro="SOMembersPortlet#inviteMemberByEmail">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMembersAdministration#createAccountViaSiteInviteEmail">
@@ -93,6 +94,7 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

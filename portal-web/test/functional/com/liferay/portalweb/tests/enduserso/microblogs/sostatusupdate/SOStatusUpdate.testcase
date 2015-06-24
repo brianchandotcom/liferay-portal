@@ -39,6 +39,7 @@
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${statusUpdateEntryAuthorName}" />
 			<var name="microblogsEntryContent" value="${statusUpdateEntryContent}" />
+			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 	</command>
 
@@ -86,6 +87,7 @@
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${statusUpdateEntryAuthorName}" />
 			<var name="microblogsEntryContent" value="${statusUpdateEntryContent}" />
+			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -164,6 +166,7 @@
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${statusUpdateEntryAuthorName}" />
 			<var name="microblogsEntryContent" value="${statusUpdateEntryContent}" />
+			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 
 		<execute macro="Page#gotoMyProfile" />
@@ -214,6 +217,7 @@
 		<execute macro="SOMicroblogs#viewOwnMicroblogsEntry">
 			<var name="microblogsEntryAuthorName" value="${statusUpdateEntryAuthorName}" />
 			<var name="microblogsEntryContent" value="${statusUpdateEntryContent}" />
+			<var name="statusUpdateEntryContent" value="${statusUpdateEntryContent}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -263,6 +267,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -337,6 +342,7 @@
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor">
 			<var name="microblogsEntryAuthorName" value="${userName}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />

@@ -15,6 +15,7 @@
 			<isset var="smallImageURL" />
 			<then>
 				<execute macro="BlogsEntry#addAbstractSmallImagePG">
+					<var name="smallImageFile" value="${smallImageFile}" />
 					<var name="smallImageURL" value="${smallImageURL}" />
 				</execute>
 			</then>
@@ -323,6 +324,7 @@
 				<execute macro="BlogsEntry#addTagPG">
 					<var name="entryTitle" value="${entryTitle}" />
 					<var name="tagName" value="${tagName}" />
+					<var name="tagNameList" value="${tagNameList}" />
 				</execute>
 			</then>
 		</if>
@@ -403,6 +405,7 @@
 				<execute macro="BlogsEntry#viewTagPG">
 					<var name="entryTitle" value="${entryTitle}" />
 					<var name="tagName" value="${tagName}" />
+					<var name="tagNameList" value="${tagNameList}" />
 				</execute>
 			</then>
 		</if>
@@ -413,6 +416,7 @@
 				<execute macro="BlogsEntry#viewRelatedAssetPG">
 					<var name="assetTitle" value="${assetTitle}" />
 					<var name="assetType" value="${assetType}" />
+					<var name="entryTitle" value="${entryTitle}" />
 				</execute>
 			</then>
 		</if>
@@ -619,7 +623,11 @@
 
 	<command name="addWithTrackbackURLPG">
 		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleSpecialCharacter" value="${entryTitleSpecialCharacter}" />
+			<var name="viewSpecificEntry" value="${viewSpecificEntry}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="PGBlogsEntry#ENTRY_TITLE" value1="${entryTitle}" />
@@ -631,13 +639,21 @@
 			<equals arg1="virtualHosts" arg2="true" />
 			<then>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 					<var name="virtualHostsURL" value="${virtualHost1}" />
 				</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 				</execute>
 			</else>
 		</if>
@@ -801,6 +817,7 @@
 			<isset var="entrySubtitleEdit" />
 			<then>
 				<execute macro="BlogsEntry#editSubtitle">
+					<var name="entryEditSubtitle" value="${entryEditSubtitle}" />
 					<var name="entrySubtitle" value="${entrySubtitle}" />
 					<var name="entrySubtitleEdit" value="${entrySubtitleEdit}" />
 				</execute>
@@ -1876,6 +1893,7 @@
 			<then>
 				<for list="${tagNameList}" param="tagName">
 					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 					<var name="key_tagName" value="tagName" />
 
 					<execute function="AssertTextEquals" locator1="BlogsEntry#TAG" value1="${tagName}" />
@@ -1888,6 +1906,7 @@
 			</then>
 			<else>
 				<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 				<var name="key_tagName" value="tagName" />
 
 				<execute function="AssertTextEquals" locator1="BlogsEntry#TAG" value1="${tagName}" />
@@ -1908,6 +1927,7 @@
 			<then>
 				<for list="${tagNameList}" param="tagName">
 					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 					<var name="key_tagName" value="tagName" />
 
 					<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TAG" value1="${tagName}" />
@@ -1918,6 +1938,7 @@
 			</then>
 			<else>
 				<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 				<var name="key_tagName" value="tagName" />
 
 				<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TAG" value1="${tagName}" />

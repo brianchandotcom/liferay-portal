@@ -575,6 +575,8 @@
 		<execute function="AssertElementPresent" locator1="CPKaleoformsadminNewprocess#SAVE_BUTTON_INACTIVE" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="kfPendingForm" value="${kfPendingForm}" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 

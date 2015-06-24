@@ -300,7 +300,9 @@
 
 		<execute macro="DMFolder#editPGViaMG">
 			<var name="mgFolderDescription" value="${mgFolderDescriptionEdit}" />
+			<var name="mgFolderDescriptionEdit" value="${mgFolderDescriptionEdit}" />
 			<var name="mgFolderName" value="${mgFolderNameEdit}" />
+			<var name="mgFolderNameEdit" value="${mgFolderNameEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -345,6 +347,7 @@
 		</execute>
 
 		<execute macro="DMDocument#editPGViaMG">
+			<var name="mgDocumentDescription" value="${mgDocumentDescription}" />
 			<var name="mgDocumentDescriptionEdit" value="${mgDocumentDescriptionEdit}" />
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
 			<var name="mgDocumentTitleEdit" value="${mgDocumentTitleEdit}" />

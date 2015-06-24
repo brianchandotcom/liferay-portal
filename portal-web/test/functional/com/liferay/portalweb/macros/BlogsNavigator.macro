@@ -27,6 +27,7 @@
 			</then>
 			<else>
 				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletNameBorderless" value="${portletNameBorderless}" />
 					<var name="portletOption" value="Configuration" />
 				</execute>
 			</else>

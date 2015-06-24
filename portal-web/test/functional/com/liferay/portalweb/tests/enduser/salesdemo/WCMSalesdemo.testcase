@@ -64,6 +64,7 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="Page#openURL" />
@@ -106,6 +107,7 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
+			<var name="webContentContent" value="${webContentContent}" />
 		</execute>
 
 		<execute macro="Page#addPG">

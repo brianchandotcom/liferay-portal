@@ -68,6 +68,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewStatus">
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -119,6 +120,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewStatus">
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -158,6 +160,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewStatus">
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -198,6 +201,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewStatus">
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>

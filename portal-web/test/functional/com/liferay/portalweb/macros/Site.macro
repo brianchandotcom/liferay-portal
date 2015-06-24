@@ -12,13 +12,25 @@
 
 	<command name="addBlankCP">
 		<execute macro="Site#addCP">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="parentSiteName" value="${parentSiteName}" />
+			<var name="siteLimitMembership" value="${siteLimitMembership}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Blank" />
+			<var name="uncheckPropagation" value="${uncheckPropagation}" />
 		</execute>
 	</command>
 
 	<command name="addCommunityCP">
 		<execute macro="Site#addCP">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="parentSiteName" value="${parentSiteName}" />
+			<var name="siteLimitMembership" value="${siteLimitMembership}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Community" />
+			<var name="uncheckPropagation" value="${uncheckPropagation}" />
 		</execute>
 	</command>
 
@@ -131,7 +143,13 @@
 
 	<command name="addIntranetCP">
 		<execute macro="Site#addCP">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="parentSiteName" value="${parentSiteName}" />
+			<var name="siteLimitMembership" value="${siteLimitMembership}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Intranet" />
+			<var name="uncheckPropagation" value="${uncheckPropagation}" />
 		</execute>
 	</command>
 
@@ -188,7 +206,13 @@
 
 	<command name="addSiteTemplateCP">
 		<execute macro="Site#addCP">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="parentSiteName" value="${parentSiteName}" />
+			<var name="siteLimitMembership" value="${siteLimitMembership}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Site Template" />
+			<var name="uncheckPropagation" value="${uncheckPropagation}" />
 		</execute>
 	</command>
 
@@ -1080,7 +1104,11 @@
 
 	<command name="viewSitePG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${sitePageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />

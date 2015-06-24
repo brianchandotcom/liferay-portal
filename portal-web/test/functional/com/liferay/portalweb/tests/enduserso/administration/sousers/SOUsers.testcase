@@ -224,6 +224,7 @@
 		<execute macro="Site#assignRoleCP">
 			<var name="roleName" value="Site Administrator" />
 			<var name="roleType" value="Site" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -295,6 +296,7 @@
 		<execute macro="Site#assignRoleCP">
 			<var name="roleName" value="Site Owner" />
 			<var name="roleType" value="Site" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -443,6 +445,7 @@
 
 		<execute macro="Team#assignMembersCP">
 			<var name="siteName" value="${teamName}" />
+			<var name="teamName" value="${teamName}" />
 			<var name="userScreenName" value="${userScreenName1}" />
 		</execute>
 

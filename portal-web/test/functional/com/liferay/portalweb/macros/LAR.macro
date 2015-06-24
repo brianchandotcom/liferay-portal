@@ -261,6 +261,7 @@
 		<execute macro="LAR#gotoExportImportCmd" />
 
 		<execute macro="LAR#exportCmd">
+			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
 	</command>
@@ -286,6 +287,7 @@
 		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 
 		<execute macro="LAR#exportCmd">
+			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
 	</command>
@@ -314,6 +316,7 @@
 
 		<execute macro="LAR#exportSiteCmd">
 			<var name="larFileName" value="${larFileName}" />
+			<var name="valueName" value="${valueName}" />
 		</execute>
 	</command>
 
@@ -321,12 +324,14 @@
 		<execute macro="LAR#gotoExportImportCmd" />
 
 		<execute macro="LAR#exportCmd">
+			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
 	</command>
 
 	<command name="gotoExportImportCmd">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Export / Import" />
 		</execute>
 	</command>
@@ -374,7 +379,10 @@
 		<execute macro="LAR#gotoExportImportCmd" />
 
 		<execute macro="LAR#selectImportFileCmd">
+			<var name="cannotImport" value="${cannotImport}" />
+			<var name="importPermissions" value="${importPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
+			<var name="uploadFrom" value="${uploadFrom}" />
 		</execute>
 
 		<execute macro="LAR#importSiteCmd" />
@@ -387,7 +395,10 @@
 		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 
 		<execute macro="LAR#selectImportFileCmd">
+			<var name="cannotImport" value="${cannotImport}" />
+			<var name="importPermissions" value="${importPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
+			<var name="uploadFrom" value="${uploadFrom}" />
 		</execute>
 	</command>
 
@@ -450,6 +461,10 @@
 			</not>
 			<then>
 				<execute macro="LAR#importSiteCmd">
+					<var name="checkContentNameList" value="${checkContentNameList}" />
+					<var name="contentDeletion" value="${contentDeletion}" />
+					<var name="contentName" value="${contentName}" />
+					<var name="importPermissions" value="${importPermissions}" />
 					<var name="larFileName" value="${larFileName}" />
 				</execute>
 			</then>
@@ -592,10 +607,12 @@
 			<var name="campaignDescription" value="Campaign Description" />
 			<var name="campaignEndDate" value="1/1/2099" />
 			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignInactive" value="${campaignInactive}" />
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriorityField" value="3" />
 			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="${userSegmentSelect}" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
@@ -609,6 +626,7 @@
 
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="User Segment Name" />
+			<var name="userSegmentDetailTitle" value="${userSegmentDetailTitle}" />
 			<var name="vocabularyName" value="User Segment" />
 			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
@@ -618,28 +636,38 @@
 			<equals arg1="${stagingSetup}" arg2="true" />
 			<then>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Test Page Name" />
 					<var name="pageStaging" value="true" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 				</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Test Page Name" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 				</execute>
 			</else>
 		</if>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -647,8 +675,12 @@
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title" />
 			<var name="contentType" value="Web Content Article" />
+			<var name="doesNotBelong" value="${doesNotBelong}" />
+			<var name="rowIndexNumber" value="${rowIndexNumber}" />
 			<var name="rowNumber" value="1" />
+			<var name="siteScope" value="${siteScope}" />
 			<var name="toAll" value="true" />
+			<var name="toAny" value="${toAny}" />
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
 
@@ -658,28 +690,38 @@
 			<equals arg1="${stagingSetup}" arg2="true" />
 			<then>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Test Page Name" />
 					<var name="pageStaging" value="true" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 				</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Test Page Name" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 				</execute>
 			</else>
 		</if>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -696,22 +738,31 @@
 			<equals arg1="${stagingSetup}" arg2="true" />
 			<then>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Test Page Name" />
 					<var name="pageStaging" value="true" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 				</execute>
 			</then>
 			<else>
 				<execute macro="Page#gotoPG">
+					<var name="defaultURL" value="${defaultURL}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="Test Page Name" />
 					<var name="siteName" value="Site Name" />
 					<var name="siteURL" value="true" />
+					<var name="soDashboard" value="${soDashboard}" />
+					<var name="soPage" value="${soPage}" />
 				</execute>
 			</else>
 		</if>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="portletName" value="User Segment Content List" />
 		</execute>
 

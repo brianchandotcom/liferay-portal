@@ -161,6 +161,7 @@
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
+			<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -170,10 +171,12 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
+			<var name="pageName" value="${pageName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
+			<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -1068,6 +1071,7 @@
 		<execute macro="MessageboardsThread#editPG">
 			<var name="saveAsDraft" value="true" />
 			<var name="threadBodyEdit" value="${threadBodyEdit}" />
+			<var name="threadSubject" value="${threadSubject}" />
 			<var name="threadSubjectEdit" value="${threadSubjectEdit}" />
 		</execute>
 
@@ -1309,6 +1313,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
+			<var name="pageName" value="${pageName}" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadReplyBody" value="MB Thread Split Reply Body" />
 			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />

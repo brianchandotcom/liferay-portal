@@ -1379,6 +1379,7 @@
 
 		<execute macro="SOAnnouncementsEntry#deleteViaManageEntriesPG">
 			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
@@ -1404,6 +1405,7 @@
 
 		<execute macro="SOAnnouncementsEntry#deleteViaManageEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
@@ -1518,7 +1520,9 @@
 
 		<execute macro="SOAnnouncementsEntry#editPG">
 			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -1576,7 +1580,9 @@
 
 		<execute macro="SOAnnouncementsEntry#editPG">
 			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -1649,7 +1655,9 @@
 
 		<execute macro="SOAnnouncementsEntry#editPG">
 			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -1690,7 +1698,9 @@
 
 		<execute macro="SOAnnouncementsEntry#editPG">
 			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -1739,7 +1749,9 @@
 		<execute macro="SOAnnouncementsEntry#editViaManageEntriesPG">
 			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -1781,7 +1793,9 @@
 		<execute macro="SOAnnouncementsEntry#editViaManageEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -1940,7 +1954,9 @@
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
 			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${userName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -1968,7 +1984,9 @@
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -2077,7 +2095,9 @@
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
 			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${userName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
@@ -2118,7 +2138,9 @@
 		<execute macro="SOAnnouncementsEntry#markAsReadPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>

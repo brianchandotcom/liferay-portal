@@ -5,13 +5,17 @@
 		<execute function="Click" locator1="PGWebformConfiguration#SETUP_FORM_FIELDS_ADD_ROW_BUTTON" />
 
 		<execute macro="WebFormPortlet#editField">
+			<var name="optional" value="${optional}" />
+			<var name="optionsList" value="${optionsList}" />
 			<var name="wfFieldName" value="New Item" />
+			<var name="wfFieldType" value="${wfFieldType}" />
 			<var name="wfNewFieldName" value="${wfNewFieldName}" />
 		</execute>
 	</command>
 
 	<command name="configureSetupFormFieldsPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

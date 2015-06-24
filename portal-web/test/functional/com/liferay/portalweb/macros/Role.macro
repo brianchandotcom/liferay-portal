@@ -43,7 +43,9 @@
 		<var name="roleName" value="Staging Admin" />
 
 		<execute macro="Role#addCP">
+			<var name="roleDescription" value="${roleDescription}" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -144,7 +146,15 @@
 		<execute macro="Role#editPermissionCmdCP">
 			<var name="define" value="true" />
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionKeyChange" value="${permissionDefinitionKeyChange}" />
+			<var name="permissionDefinitionKeys" value="${permissionDefinitionKeys}" />
+			<var name="permissionDefinitionKeySiteScope" value="${permissionDefinitionKeySiteScope}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="remove" value="${remove}" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleUser" value="${roleUser}" />
+			<var name="siteNameScope" value="${siteNameScope}" />
 		</execute>
 	</command>
 
@@ -155,8 +165,10 @@
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="remove" value="${remove}" />
 		</execute>
 	</command>
 
@@ -629,11 +641,19 @@
 	<command name="removePermissionCP">
 		<execute macro="Role#editPermissionCmdCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionKeyChange" value="${permissionDefinitionKeyChange}" />
+			<var name="permissionDefinitionKeys" value="${permissionDefinitionKeys}" />
+			<var name="permissionDefinitionKeySiteScope" value="${permissionDefinitionKeySiteScope}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="remove" value="true" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleUser" value="${roleUser}" />
+			<var name="siteNameScope" value="${siteNameScope}" />
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="remove" value="true" />
@@ -652,9 +672,15 @@
 
 	<command name="removePermissionsCP">
 		<execute macro="Role#editPermissionCmdCP">
+			<var name="permissionDefinitionKeyChange" value="${permissionDefinitionKeyChange}" />
 			<var name="permissionDefinitionKeys" value="${permissionDefinitionKeys}" />
+			<var name="permissionDefinitionKeySiteScope" value="${permissionDefinitionKeySiteScope}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
 			<var name="remove" value="true" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleUser" value="${roleUser}" />
+			<var name="siteNameScope" value="${siteNameScope}" />
 		</execute>
 	</command>
 

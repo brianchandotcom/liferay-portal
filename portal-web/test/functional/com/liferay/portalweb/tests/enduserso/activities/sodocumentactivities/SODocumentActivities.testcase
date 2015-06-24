@@ -68,6 +68,10 @@
 		<execute macro="SOActivities#viewDocumentsActivityEntry">
 			<var name="action" value="Uploaded a new document." />
 			<var name="commentCount" value="1" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -241,6 +245,10 @@
 		<execute macro="SOActivities#viewDocumentsActivityEntry">
 			<var name="action" value="Uploaded a new document." />
 			<var name="commentCount" value="3" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -278,6 +286,10 @@
 		<execute macro="SOActivities#viewDocumentsActivityEntry">
 			<var name="action" value="Uploaded a new document." />
 			<var name="commentCount" value="3" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -315,6 +327,10 @@
 		<execute macro="SOActivities#viewDocumentsActivityEntry">
 			<var name="action" value="Uploaded a new document." />
 			<var name="commentCount" value="3" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -352,6 +368,10 @@
 		<execute macro="SOActivities#viewDocumentsActivityEntry">
 			<var name="action" value="Uploaded a new document." />
 			<var name="commentCount" value="3" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -484,6 +504,8 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription3},${dmDocumentDescription2},${dmDocumentDescription1}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle3},${dmDocumentTitle2},${dmDocumentTitle1}" />
 			<var name="documentsAction" value="Uploaded 3 new documents." />
+			<var name="key_documentTitleRow" value="${key_documentTitleRow}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -610,6 +632,10 @@
 
 		<execute macro="SOActivities#viewDocumentsActivityEntry">
 			<var name="action" value="Uploaded a new document." />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -689,6 +715,10 @@
 		<execute macro="SOActivities#viewDocumentsActivityEntry">
 			<var name="action" value="Uploaded a new document." />
 			<var name="commentCount" value="1" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -832,6 +862,8 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription3},${dmDocumentDescription2},${dmDocumentDescription1}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle3},${dmDocumentTitle2},${dmDocumentTitle1}" />
 			<var name="documentsAction" value="Uploaded 3 new documents." />
+			<var name="key_documentTitleRow" value="${key_documentTitleRow}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -961,6 +993,7 @@
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentUploader" value="${adminName}" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
@@ -980,6 +1013,7 @@
 		<execute macro="SODocuments#viewPGDocumentDetailView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentUploader" value="${adminName}" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
@@ -1082,6 +1116,8 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription3},${dmDocumentDescription2},${dmDocumentDescription1}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle3},${dmDocumentTitle2},${dmDocumentTitle1}" />
 			<var name="documentsAction" value="Uploaded 3 new documents." />
+			<var name="key_documentTitleRow" value="${key_documentTitleRow}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -1156,6 +1192,8 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription3},${dmDocumentDescription1}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle3},${dmDocumentTitle1}" />
 			<var name="documentsAction" value="Uploaded 2 new documents." />
+			<var name="key_documentTitleRow" value="${key_documentTitleRow}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -1219,6 +1257,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
 			<var name="dmDocumentUploader" value="${adminName}" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -1384,6 +1423,7 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription3},${dmDocumentDescription2},${dmDocumentDescription1}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle3},${dmDocumentTitle2},${dmDocumentTitle1}" />
 			<var name="documentsAction" value="Uploaded 3 new documents." />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -1516,6 +1556,8 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription6},${dmDocumentDescription5},${dmDocumentDescription4}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle6},${dmDocumentTitle5},${dmDocumentTitle4}" />
 			<var name="documentsAction" value="Uploaded 6 new documents." />
+			<var name="key_documentTitleRow" value="${key_documentTitleRow}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -1527,6 +1569,8 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription6},${dmDocumentDescription5},${dmDocumentDescription4},${dmDocumentDescription3},${dmDocumentDescription2},${dmDocumentDescription1}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle6},${dmDocumentTitle5},${dmDocumentTitle4},${dmDocumentTitle3},${dmDocumentTitle2},${dmDocumentTitle1}" />
 			<var name="documentsAction" value="Uploaded 6 new documents." />
+			<var name="key_documentTitleRow" value="${key_documentTitleRow}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -1536,6 +1580,8 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription6},${dmDocumentDescription5},${dmDocumentDescription4}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle6},${dmDocumentTitle5},${dmDocumentTitle4}" />
 			<var name="documentsAction" value="Uploaded 6 new documents." />
+			<var name="key_documentTitleRow" value="${key_documentTitleRow}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -1691,6 +1737,8 @@
 			<var name="dmDocumentDescriptionList" value="${dmDocumentDescription3},${dmDocumentDescription2},${dmDocumentDescription1}" />
 			<var name="dmDocumentTitleList" value="${dmDocumentTitle3},${dmDocumentTitle2},${dmDocumentTitle1}" />
 			<var name="documentsAction" value="Uploaded 3 new documents." />
+			<var name="key_documentTitleRow" value="${key_documentTitleRow}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 	</command>
@@ -1760,6 +1808,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentUploader" value="${adminName}" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 	</command>
@@ -1822,6 +1871,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentUploader" value="${adminName}" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 	</command>
@@ -1935,6 +1985,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 			<var name="dmDocumentUploader" value="${adminName}" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 
@@ -2061,6 +2112,7 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
 			<var name="dmDocumentUploader" value="${adminName}" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="Test" />
 		</execute>
 

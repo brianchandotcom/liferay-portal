@@ -155,6 +155,7 @@
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Replied to Anonymous's forum post in ${categoryName}." />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadReplyBody2}" />
 			<var name="threadSubject" value="RE: ${threadSubject}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -163,6 +164,7 @@
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -226,6 +228,7 @@
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Replied to Anonymous's forum post in ${categoryName}." />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadReplyBody2}" />
 			<var name="threadSubject" value="RE: ${threadSubject}" />
 			<var name="userName" value="${adminName}" />
@@ -234,6 +237,7 @@
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
@@ -325,6 +329,7 @@
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="${forumsAction} ${categoryName2}." />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody2}" />
 			<var name="threadSubject" value="${threadSubject2}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -335,6 +340,7 @@
 		<execute function="AssertClick" locator1="SOActivities#ACTIVITIES_ACTION_LINK" value1="${categoryName2}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG">
+			<var name="adminName" value="${adminName}" />
 			<var name="categoryName" value="${categoryName2}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
@@ -351,6 +357,7 @@
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="${forumsAction} ${categoryName1}." />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -361,6 +368,7 @@
 		<execute function="AssertClick" locator1="SOActivities#ACTIVITIES_ACTION_LINK" value1="${categoryName1}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG">
+			<var name="adminName" value="${adminName}" />
 			<var name="categoryName" value="${categoryName1}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
@@ -439,6 +447,7 @@
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post in ${categoryName2}." />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -491,6 +500,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#moveToHomePG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="categoryName1" value="${categoryName}" />
 			<var name="roleName" value="Guest" />
 			<var name="threadSubject" value="${threadSubject}" />
@@ -503,6 +513,7 @@
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post." />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -610,6 +621,7 @@
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post in ${categoryName1}." />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -715,6 +727,7 @@
 
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${adminFirstName}" />

@@ -4,15 +4,27 @@
 
 	<command name="runSmoke" summary-ignore="true">
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page1" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page2" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page3" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<var name="pageName" value="Test Page1" />
@@ -25,6 +37,7 @@
 			</execute>
 
 			<execute macro="Portlet#addPG">
+				<var name="i" value="${i}" />
 				<var name="portletName" value="${portletName}" />
 			</execute>
 

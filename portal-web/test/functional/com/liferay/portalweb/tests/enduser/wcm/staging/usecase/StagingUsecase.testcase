@@ -1323,6 +1323,7 @@
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="User#addCP">

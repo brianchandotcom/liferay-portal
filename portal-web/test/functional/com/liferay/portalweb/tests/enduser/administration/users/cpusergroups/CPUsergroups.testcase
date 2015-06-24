@@ -97,6 +97,7 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameVariation" value="Asterik" />
 		</execute>
 	</command>
@@ -118,6 +119,7 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameVariation" value="Comma" />
 		</execute>
 	</command>
@@ -164,6 +166,7 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameVariation" value="Null" />
 		</execute>
 	</command>
@@ -185,6 +188,7 @@
 		</execute>
 
 		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameVariation" value="Number" />
 		</execute>
 	</command>
@@ -314,6 +318,7 @@
 		</execute>
 
 		<execute macro="UserGroup#editCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
 		</execute>
 	</command>

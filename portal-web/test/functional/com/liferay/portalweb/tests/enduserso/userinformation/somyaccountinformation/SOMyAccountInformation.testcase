@@ -365,6 +365,7 @@
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="User#addProfilePictureViaMyAccount">
@@ -379,6 +380,7 @@
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="User#deleteProfilePictureViaMyAccount" />
@@ -564,6 +566,7 @@
 
 		<execute macro="SOProfile#viewTag">
 			<var name="key_userTag" value="${userTag}" />
+			<var name="userName" value="${userName}" />
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
@@ -579,6 +582,7 @@
 
 		<execute macro="SOProfile#viewTag">
 			<var name="key_userTag" value="${userTag}" />
+			<var name="userName" value="${userName}" />
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
@@ -586,6 +590,7 @@
 
 		<execute macro="SOProfile#viewTag">
 			<var name="key_userTag" value="${userTagEdit}" />
+			<var name="userName" value="${userName}" />
 			<var name="userTag" value="${userTagEdit}" />
 		</execute>
 
@@ -594,6 +599,7 @@
 		</execute>
 
 		<execute macro="User#deleteTagViaMyAccount">
+			<var name="userTag" value="${userTag}" />
 			<var name="userTagList" value="${userTag},${userTagEdit}" />
 		</execute>
 

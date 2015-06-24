@@ -150,6 +150,7 @@
 
 		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
 			<var name="${bookingNumber}" value="${bookingNumber}" />
+			<var name="bookingNumber" value="${bookingNumber}" />
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
@@ -198,6 +199,7 @@
 
 		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
 			<var name="${bookingNumber}" value="${bookingNumber}" />
+			<var name="bookingNumber" value="${bookingNumber}" />
 		</execute>
 	</command>
 

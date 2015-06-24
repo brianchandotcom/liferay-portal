@@ -28,10 +28,14 @@
 		<!-- Configure SP (Service Provider) on http://www.able.com:9080 with database lportal1 and saml deployed -->
 
 		<execute macro="User#loginPG">
+			<var name="authenticationMethod" value="${authenticationMethod}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="false" />
 			<var name="specificURL" value="http://www.able.com:9080" />
+			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -63,6 +67,7 @@
 		</execute>
 
 		<execute macro="User#logoutPG">
+			<var name="nodePort" value="${nodePort}" />
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
@@ -87,9 +92,13 @@
 		<description message="Sign into portal by executing a IdP initiated SSO login. The IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions." />
 
 		<execute macro="User#loginPG">
+			<var name="authenticationMethod" value="${authenticationMethod}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="${password}" />
 			<var name="specificURL" value="${idpInitiatedSSOURL}" />
+			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute function="Pause" locator1="5000" />
@@ -100,10 +109,14 @@
 		<description message="Sign into portal by executing a SP initiated SSO login. In the SP, click on the Sign In button to." />
 
 		<execute macro="User#loginPG">
+			<var name="authenticationMethod" value="${authenticationMethod}" />
 			<var name="loginViaDockbar" value="${loginViaDockbar}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="${password}" />
 			<var name="rememberMeChecked" value="${rememberMeChecked}" />
+			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute function="Pause" locator1="5000" />

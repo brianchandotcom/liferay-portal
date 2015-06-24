@@ -1,8 +1,16 @@
 <definition>
 	<command name="gotoPG">
 		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageAccessURL" value="${pageAccessURL}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="pageStagingURL" value="${pageStagingURL}" />
 			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="true" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
 		<var name="key_pageName" value="${pageName}" />
@@ -30,8 +38,16 @@
 
 	<command name="viewLocalizedPG">
 		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageAccessURL" value="${pageAccessURL}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="pageStagingURL" value="${pageStagingURL}" />
 			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="true" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
 		<execute macro="SOUserBar#showEditControls" />
@@ -97,6 +113,7 @@
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${breadcrumbPortletLocalizedUpperCase}" />
 
 		<var method="StringUtil#upperCase('${messageBoardsPortletLocalized}')" name="messageBoardsPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${messageBoardsPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${messageBoardsPortletLocalizedUpperCase}" />
@@ -119,6 +136,7 @@
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${wikiPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${wikiPortletLocalized}')" name="wikiPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${wikiPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${wikiPortletLocalizedUpperCase}" />
@@ -128,7 +146,9 @@
 		<execute function="AssertClick" locator1="SOSite#NAVIGATION_PAGE" value1="${membersPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${inviteMembersPortletLocalized}')" name="inviteMembersPortletLocalizedUpperCase" />
+
 		<var method="StringUtil#upperCase('${membersPortletLocalized}')" name="membersPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${inviteMembersPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${inviteMembersPortletLocalizedUpperCase}" />

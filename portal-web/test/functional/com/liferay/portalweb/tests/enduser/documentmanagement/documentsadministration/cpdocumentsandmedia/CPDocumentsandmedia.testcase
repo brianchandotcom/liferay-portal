@@ -35,6 +35,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentSize" value="${dmDocumentSize}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 	</command>
@@ -81,6 +82,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentSize" value="${dmDocumentSize}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
@@ -159,6 +161,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentSize" value="${dmDocumentSize}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
@@ -214,6 +217,8 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="dmFolderName" value="${dmFolderName1}" />
 			<var name="dmFolderName" value="${dmFolderName2}" />
+			<var name="dmFolderName1" value="${dmFolderName1}" />
+			<var name="dmFolderName2" value="${dmFolderName2}" />
 		</execute>
 	</command>
 

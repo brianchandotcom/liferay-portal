@@ -42,6 +42,7 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -122,6 +123,7 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -163,6 +165,7 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -255,6 +258,7 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -416,6 +420,7 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -514,6 +519,7 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1012,6 +1018,7 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1020,12 +1027,14 @@
 		</execute>
 
 		<execute macro="CalendarEvent#addSetTime">
+			<var name="endDateTime" value="${endDateTime}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="setEndDateTime" value="${endDateTime}" />
 			<var name="setStartDateTime" value="${startDateTime}" />
 			<var name="soDashboard" value="true" />
+			<var name="startDateTime" value="${startDateTime}" />
 		</execute>
 
 		<execute macro="SOEvents#viewTodaysEventDashboardEvent">
@@ -1055,6 +1064,7 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1423,6 +1433,7 @@
 			<var name="endDateTimeEdit" value="${endDateTimeEdit}" />
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventTitleEdit" value="${eventTitle3Edit}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="startDateTimeEdit" value="${startDateTimeEdit}" />
@@ -2715,12 +2726,15 @@
 		</execute>
 
 		<execute macro="CalendarEvent#addSetTime">
+			<var name="endDateTime" value="${endDateTime}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="setEndDateTime" value="${endDateTime}" />
 			<var name="setStartDateTime" value="${startDateTime}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
+			<var name="startDateTime" value="${startDateTime}" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -2760,12 +2774,15 @@
 		</execute>
 
 		<execute macro="CalendarEvent#addSetTime">
+			<var name="endDateTime" value="${endDateTime}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="setEndDateTime" value="${endDateTime}" />
 			<var name="setStartDateTime" value="${startDateTime}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
+			<var name="startDateTime" value="${startDateTime}" />
 		</execute>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />

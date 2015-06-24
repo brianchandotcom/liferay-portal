@@ -32,8 +32,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -670,6 +673,7 @@
 
 		<execute macro="User#deactivateCP">
 			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -787,6 +791,7 @@
 		</execute>
 
 		<execute macro="UserGroup#editCP">
+			<var name="userGroupName" value="${userGroupName}" />
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
 		</execute>
 	</command>

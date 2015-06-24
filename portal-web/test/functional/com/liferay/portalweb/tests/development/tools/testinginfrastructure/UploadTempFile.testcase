@@ -48,6 +48,7 @@
 		<execute macro="DMDocument#downloadCP">
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

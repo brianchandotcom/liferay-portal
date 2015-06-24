@@ -59,6 +59,7 @@
 		</execute>
 
 		<execute macro="KBArticle#viewChildArticlePG">
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 			<var name="kbChildArticleContent" value="${kbChildArticleContent}" />
 			<var name="kbChildArticleTitle" value="${kbChildArticleTitle}" />
 		</execute>

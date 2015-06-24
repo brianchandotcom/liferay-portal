@@ -206,6 +206,7 @@
 			<isset var="tagNameList" />
 			<then>
 				<execute macro="BlogsEntry#addTagList">
+					<var name="tagName" value="${tagName}" />
 					<var name="tagNameList" value="${tagNameList}" />
 				</execute>
 			</then>
@@ -245,17 +246,23 @@
 
 	<command name="disableSocialBookmarkSites">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Blogs Page" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
 			<var name="portletNameBorderless" value="Blogs" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsConfiguration#checkSocialBookmarks" />
 
 		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
 			<execute macro="BlogsConfiguration#disableSocialBookmarkSites">
+				<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
 				<var name="socialBookmarkSites" value="${socialBookmarkSite}" />
 			</execute>
 		</for>
@@ -304,17 +311,23 @@
 
 	<command name="enableSocialBookmarkSites">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Blogs Page" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
 			<var name="portletNameBorderless" value="Blogs" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsConfiguration#checkSocialBookmarks" />
 
 		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
 			<execute macro="BlogsConfiguration#enableSocialBookmarkSites">
+				<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
 				<var name="socialBookmarkSites" value="${socialBookmarkSite}" />
 			</execute>
 		</for>
@@ -344,7 +357,11 @@
 
 	<command name="tearDownConfigurationDisplaySettingsPG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
@@ -360,7 +377,11 @@
 
 	<command name="tearDownConfigurationScopePG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
@@ -400,7 +421,11 @@
 
 	<command name="tearDownSubscribePG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="PGBlogs#UNSUBSCRIBE_LINK" value1="Unsubscribe" />
@@ -430,7 +455,11 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleSpecialCharacter" value="${entryTitleSpecialCharacter}" />
+			<var name="viewSpecificEntry" value="${viewSpecificEntry}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryAuthorPG">

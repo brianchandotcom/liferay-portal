@@ -66,6 +66,7 @@
 						<for list="${templateFieldNames}" param="templateFieldName">
 							<execute macro="WebContentTemplates#addField">
 								<var name="fieldName" value="${templateFieldName}" />
+								<var name="fieldNameLabel" value="${fieldNameLabel}" />
 							</execute>
 						</for>
 					</then>
@@ -118,7 +119,9 @@
 
 				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 					<var name="addOrRemoveViewPermission" value="Add" />
+					<var name="key_roleName" value="${key_roleName}" />
 					<var name="roleList" value="${addRoleViewPermissions}" />
+					<var name="roleName" value="${roleName}" />
 				</execute>
 			</then>
 		</if>

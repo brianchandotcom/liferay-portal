@@ -142,32 +142,61 @@
 		<var name="wikiPageTitle" value="FrontPage" />
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName1}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="pageName" value="${pageName1}" />
 			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName1}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="assetType" value="${assetType}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="entryAddCategory" value="${entryAddCategory}" />
+			<var name="entryAddPermissions" value="${entryAddPermissions}" />
+			<var name="entryAddRelatedAsset" value="${entryAddRelatedAsset}" />
+			<var name="entryAddTag" value="${entryAddTag}" />
 			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryInvalidContent" value="${entryInvalidContent}" />
+			<var name="entryInvalidTitle" value="${entryInvalidTitle}" />
+			<var name="entryInvalidTitleLength" value="${entryInvalidTitleLength}" />
 			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="viewableBy" value="${viewableBy}" />
+			<var name="viewableBySelection" value="${viewableBySelection}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryAuthorFirstName" value="${entryAuthorFirstName}" />
 			<var name="entryAuthorLastName" value="${entryAuthorLastName}" />
 			<var name="entryContent" value="${entryContent1}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle1}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName1}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
@@ -180,23 +209,47 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName1}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="assetType" value="${assetType}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="entryAddCategory" value="${entryAddCategory}" />
+			<var name="entryAddPermissions" value="${entryAddPermissions}" />
+			<var name="entryAddRelatedAsset" value="${entryAddRelatedAsset}" />
+			<var name="entryAddTag" value="${entryAddTag}" />
 			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryInvalidContent" value="${entryInvalidContent}" />
+			<var name="entryInvalidTitle" value="${entryInvalidTitle}" />
+			<var name="entryInvalidTitleLength" value="${entryInvalidTitleLength}" />
 			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="viewableBy" value="${viewableBy}" />
+			<var name="viewableBySelection" value="${viewableBySelection}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryAuthorFirstName" value="${entryAuthorFirstName}" />
 			<var name="entryAuthorLastName" value="${entryAuthorLastName}" />
 			<var name="entryContent" value="${entryContent2}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName1}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
@@ -209,23 +262,47 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName1}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="assetType" value="${assetType}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="entryAddCategory" value="${entryAddCategory}" />
+			<var name="entryAddPermissions" value="${entryAddPermissions}" />
+			<var name="entryAddRelatedAsset" value="${entryAddRelatedAsset}" />
+			<var name="entryAddTag" value="${entryAddTag}" />
 			<var name="entryContent" value="${entryContent3}" />
+			<var name="entryInvalidContent" value="${entryInvalidContent}" />
+			<var name="entryInvalidTitle" value="${entryInvalidTitle}" />
+			<var name="entryInvalidTitleLength" value="${entryInvalidTitleLength}" />
 			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="viewableBy" value="${viewableBy}" />
+			<var name="viewableBySelection" value="${viewableBySelection}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryAuthorFirstName" value="${entryAuthorFirstName}" />
 			<var name="entryAuthorLastName" value="${entryAuthorLastName}" />
 			<var name="entryContent" value="${entryContent3}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle3}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName1}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
@@ -238,32 +315,55 @@
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName2}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="pageName" value="${pageName2}" />
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName2}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="assetType" value="${assetType}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocument" value="${dmDocument}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile1}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize1}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+			<var name="stagingActivated" value="${stagingActivated}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName2}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="DMFolder#addPG">
+			<var name="dmFolder" value="${dmFolder}" />
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="viewableBy" value="${viewableBy}" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
@@ -271,18 +371,33 @@
 		</execute>
 
 		<execute macro="DMDocument#addPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="assetType" value="${assetType}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocument" value="${dmDocument}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile2}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+			<var name="stagingActivated" value="${stagingActivated}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName2}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
@@ -290,18 +405,33 @@
 		</execute>
 
 		<execute macro="DMDocument#addPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="assetType" value="${assetType}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocument" value="${dmDocument}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile3}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+			<var name="stagingActivated" value="${stagingActivated}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName2}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
@@ -309,81 +439,155 @@
 		</execute>
 
 		<execute macro="DMDocument#addPG">
+			<var name="assetTitle" value="${assetTitle}" />
+			<var name="assetType" value="${assetType}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="dmDocument" value="${dmDocument}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription4}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile4}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle4}" />
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+			<var name="stagingActivated" value="${stagingActivated}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription4}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle4}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName3}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="pageName" value="${pageName3}" />
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName3}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryDescription" value="${categoryDescription}" />
+			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
 			<var name="categoryName" value="${mbCategoryName}" />
+			<var name="displayStyle" value="${displayStyle}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewPG">
+			<var name="categoryDescription" value="${categoryDescription}" />
 			<var name="categoryName" value="${mbCategoryName}" />
+			<var name="threadPostCount" value="${threadPostCount}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName3}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryDescription" value="${categoryDescription}" />
+			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
 			<var name="categoryName" value="${mbCategoryName}" />
+			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
+			<var name="subCategoryName" value="${subCategoryName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
+			<var name="anonymous" value="${anonymous}" />
+			<var name="fontSize" value="${fontSize}" />
+			<var name="key_fontSize" value="${key_fontSize}" />
 			<var name="markAsQuestion" value="false" />
+			<var name="mbThreadAttachment" value="${mbThreadAttachment}" />
+			<var name="preview" value="${preview}" />
+			<var name="priority" value="${priority}" />
+			<var name="saveAsDraft" value="${saveAsDraft}" />
+			<var name="source" value="${source}" />
+			<var name="threadAddTag" value="${threadAddTag}" />
 			<var name="threadBody" value="${mbThreadBody}" />
+			<var name="threadPriority" value="${threadPriority}" />
 			<var name="threadSubject" value="${mbThreadSubject}" />
+			<var name="userName" value="${userName}" />
+			<var name="viewableBy" value="${viewableBy}" />
+			<var name="viewableBySelection" value="${viewableBySelection}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName3}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryDescription" value="${categoryDescription}" />
+			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
 			<var name="categoryName" value="${mbCategoryName}" />
+			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
+			<var name="subCategoryName" value="${subCategoryName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
+			<var name="fontSize" value="${fontSize}" />
 			<var name="markAsQuestion" value="false" />
 			<var name="postCount" value="1" />
 			<var name="threadBody" value="${mbThreadBody}" />
+			<var name="threadBody2" value="${threadBody2}" />
 			<var name="threadSubject" value="${mbThreadSubject}" />
+			<var name="threadSubject2" value="${threadSubject2}" />
+			<var name="userName" value="${userName}" />
+			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName4}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="pageName" value="${pageName4}" />
 			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">
+			<var name="creoleSource" value="${creoleSource}" />
+			<var name="htmlSource" value="${htmlSource}" />
+			<var name="pageAddTag" value="${pageAddTag}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName4}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="WikiPage#addChildPagePG">
@@ -394,7 +598,11 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName4}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="WikiPage#addChildPagePG">
@@ -405,7 +613,11 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName4}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="WikiPage#addChildPagePG">
@@ -416,26 +628,52 @@
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="pageName" value="${pageName5}" />
 			<var name="portletName" value="Calendar" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="CalendarEvent#add">
+			<var name="addRSVPEnabled" value="${addRSVPEnabled}" />
+			<var name="calendarName" value="${calendarName}" />
+			<var name="endDate" value="${endDate}" />
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="eventComment" value="${eventComment}" />
+			<var name="eventCommentEnabled" value="${eventCommentEnabled}" />
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType1}" />
+			<var name="frequency" value="${frequency}" />
+			<var name="optionSet" value="${optionSet}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="reminders" value="${reminders}" />
+			<var name="rsvp" value="${rsvp}" />
+			<var name="startDate" value="${startDate}" />
+			<var name="startDateTime" value="${startDateTime}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -443,17 +681,38 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="CalendarEvent#add">
+			<var name="addRSVPEnabled" value="${addRSVPEnabled}" />
+			<var name="calendarName" value="${calendarName}" />
+			<var name="endDate" value="${endDate}" />
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="eventComment" value="${eventComment}" />
+			<var name="eventCommentEnabled" value="${eventCommentEnabled}" />
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType2}" />
+			<var name="frequency" value="${frequency}" />
+			<var name="optionSet" value="${optionSet}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="reminders" value="${reminders}" />
+			<var name="rsvp" value="${rsvp}" />
+			<var name="startDate" value="${startDate}" />
+			<var name="startDateTime" value="${startDateTime}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -461,17 +720,38 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="CalendarEvent#add">
+			<var name="addRSVPEnabled" value="${addRSVPEnabled}" />
+			<var name="calendarName" value="${calendarName}" />
+			<var name="endDate" value="${endDate}" />
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="eventComment" value="${eventComment}" />
+			<var name="eventCommentEnabled" value="${eventCommentEnabled}" />
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventType" value="${eventType3}" />
+			<var name="frequency" value="${frequency}" />
+			<var name="optionSet" value="${optionSet}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="reminders" value="${reminders}" />
+			<var name="rsvp" value="${rsvp}" />
+			<var name="startDate" value="${startDate}" />
+			<var name="startDateTime" value="${startDateTime}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName5}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -479,16 +759,25 @@
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName6}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
+			<var name="i" value="${i}" />
 			<var name="pageName" value="${pageName6}" />
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName6}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#addPG">
@@ -497,7 +786,11 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName6}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
@@ -508,10 +801,15 @@
 			<var name="bookmarkDescription" value="${bookmarkDescription1}" />
 			<var name="bookmarkName" value="${bookmarkName1}" />
 			<var name="bookmarkURL" value="${bookmarkURL1}" />
+			<var name="bookmarkViewableBy" value="${bookmarkViewableBy}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName6}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
@@ -524,7 +822,11 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName6}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
@@ -535,10 +837,15 @@
 			<var name="bookmarkDescription" value="${bookmarkDescription2}" />
 			<var name="bookmarkName" value="${bookmarkName2}" />
 			<var name="bookmarkURL" value="${bookmarkURL2}" />
+			<var name="bookmarkViewableBy" value="${bookmarkViewableBy}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName6}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
@@ -551,7 +858,11 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName6}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
@@ -562,10 +873,15 @@
 			<var name="bookmarkDescription" value="${bookmarkDescription3}" />
 			<var name="bookmarkName" value="${bookmarkName3}" />
 			<var name="bookmarkURL" value="${bookmarkURL3}" />
+			<var name="bookmarkViewableBy" value="${bookmarkViewableBy}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName6}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">

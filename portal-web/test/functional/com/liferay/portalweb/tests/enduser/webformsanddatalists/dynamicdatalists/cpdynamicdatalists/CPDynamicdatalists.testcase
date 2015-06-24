@@ -753,9 +753,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -837,9 +839,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -920,9 +924,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1004,9 +1010,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1088,9 +1096,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1172,9 +1182,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1254,9 +1266,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1337,9 +1351,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1424,9 +1440,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1507,9 +1525,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1590,9 +1610,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1673,9 +1695,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1756,9 +1780,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -1839,9 +1865,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -2337,6 +2365,7 @@
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlTemplateName" value="${ddlDisplayTemplateName}" />
 		</execute>
 	</command>
@@ -2374,6 +2403,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlDisplayTemplateLanguage" value="${ddlDisplayTemplateLanguage}" />
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
+			<var name="ddlDisplayTemplateTextFieldScript" value="${ddlDisplayTemplateTextFieldScript}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -2382,6 +2412,7 @@
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlTemplateName" value="${ddlDisplayTemplateName}" />
 		</execute>
 	</command>
@@ -2573,6 +2604,7 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editField">
@@ -2591,9 +2623,11 @@
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabelEdit}" />
 			<var name="fieldName" value="${fieldNameEdit}" />
 		</execute>
@@ -2676,6 +2710,7 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editField">
@@ -2692,9 +2727,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldNameEdit}" />
 		</execute>
@@ -2783,9 +2820,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldShowLabel" value="${fieldShowLabel}" />
@@ -2836,6 +2875,7 @@
 			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldShowLabel" value="${fieldShowLabel}" />
 		</execute>
 	</command>
 
@@ -2874,9 +2914,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldTip" value="${fieldTip}" />
@@ -3431,9 +3473,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
@@ -3480,9 +3524,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
@@ -3529,9 +3575,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
@@ -3578,9 +3626,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
@@ -3657,6 +3707,7 @@
 		<execute macro="DDLDataDefinition#tearDownCP" />
 
 		<execute macro="Page#gotoContentCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
@@ -3670,9 +3721,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
@@ -3738,9 +3791,11 @@
 
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
@@ -4106,11 +4161,13 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#viewCP">
-			<var name="ddldataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
-			<var name="ddldataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="${field}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>

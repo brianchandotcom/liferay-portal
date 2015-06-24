@@ -750,7 +750,11 @@
 
 	<command name="tearDownPG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<while>
@@ -1072,7 +1076,11 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadSplitReplyBody}" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<var name="key_threadSubject" value="${threadSplitSubject}" />
@@ -1123,6 +1131,8 @@
 			</then>
 			<else>
 				<execute macro="MessageboardsThread#viewStatisticsTopPoster">
+					<var name="userMessageboardsRank" value="${userMessageboardsRank}" />
+					<var name="userName" value="${userName}" />
 					<var name="userPostNumber" value="${threadPostNumber}" />
 				</execute>
 			</else>
@@ -1161,6 +1171,7 @@
 
 	<command name="viewTagPG">
 		<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
 		<var name="key_tagName" value="tagName" />
 
 		<if>

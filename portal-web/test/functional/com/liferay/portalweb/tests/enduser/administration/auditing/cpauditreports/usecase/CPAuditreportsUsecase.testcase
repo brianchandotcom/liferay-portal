@@ -36,6 +36,7 @@
 		<execute macro="Audit#searchCP">
 			<var name="searchTerm" value="10201" />
 			<var name="userId" value="10201" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -54,6 +55,7 @@
 		<execute macro="Audit#searchCP">
 			<var name="resourceId" value="10201" />
 			<var name="searchTerm" value="10201" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -63,6 +65,7 @@
 		<execute macro="Audit#searchCP">
 			<var name="resourceName" value="${resourceName2}" />
 			<var name="searchTerm" value="${resourceName2}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -72,6 +75,7 @@
 		<execute macro="Audit#searchCP">
 			<var name="resourceAction" value="${resourceAction1}" />
 			<var name="searchTerm" value="${resourceAction1}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

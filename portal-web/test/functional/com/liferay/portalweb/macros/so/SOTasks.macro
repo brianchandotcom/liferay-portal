@@ -333,6 +333,8 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -543,6 +545,8 @@
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Tasks" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />

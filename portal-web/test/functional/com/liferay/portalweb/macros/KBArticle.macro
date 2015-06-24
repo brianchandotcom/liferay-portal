@@ -214,6 +214,7 @@
 
 	<command name="configureKBArticleDisplayPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -265,6 +266,7 @@
 
 	<command name="configureKBDisplaySettingsPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -319,6 +321,7 @@
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -337,6 +340,7 @@
 
 	<command name="configureKBRatingTypePG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -363,6 +367,7 @@
 	<command name="configureKBSectionPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Knowledge Base Section" />
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -375,6 +380,7 @@
 
 	<command name="configureKBSocialBookmarkSites">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -388,6 +394,7 @@
 			<then>
 				<execute macro="KBArticle#enableSocialBookmarkSites">
 					<var name="enableSocialBookmarkSites" value="${enableSocialBookmarkSites}" />
+					<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
 				</execute>
 			</then>
 		</if>
@@ -397,6 +404,7 @@
 			<then>
 				<execute macro="KBArticle#disableSocialBookmarkSites">
 					<var name="disableSocialBookmarkSites" value="${disableSocialBookmarkSites}" />
+					<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
 				</execute>
 			</then>
 		</if>
@@ -842,6 +850,7 @@
 
 	<command name="selectSectionPGViaKBSection">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

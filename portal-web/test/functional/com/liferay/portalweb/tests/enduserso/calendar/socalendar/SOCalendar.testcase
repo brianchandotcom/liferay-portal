@@ -79,6 +79,7 @@
 		<execute macro="CalendarEvent#addSetTime">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="setEndDateTime" value="${setEndDateTime}" />
 			<var name="setStartDateTime" value="${setStartDateTime}" />
 			<var name="siteName" value="${siteName}" />
@@ -147,6 +148,7 @@
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -221,6 +223,7 @@
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -233,6 +236,7 @@
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Site Member" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -242,6 +246,7 @@
 
 		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -535,6 +540,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsTags">
@@ -588,6 +594,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 	</command>
 
@@ -687,6 +694,7 @@
 		</execute>
 
 		<execute macro="Calendar#viewColor">
+			<var name="calendarType" value="${calendarType}" />
 			<var name="myCalendarColor" value="${siteCalendarColor}" />
 		</execute>
 
@@ -776,6 +784,7 @@
 
 		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
@@ -889,6 +898,7 @@
 			<var name="endDateTimeEdit" value="11:59 PM" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="startDateTimeEdit" value="11:00 PM" />
@@ -958,6 +968,7 @@
 			<var name="calendarDefaultName" value="${siteName}" />
 			<var name="calendarName" value="${siteName2}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -1021,6 +1032,7 @@
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1033,6 +1045,7 @@
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Site Member" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1042,6 +1055,7 @@
 
 		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
@@ -1173,6 +1187,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 	</command>
 
@@ -1310,6 +1325,7 @@
 			<var name="endDateTimeEdit" value="11:59 PM" />
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventTitleEdit" value="${eventTitle1Edit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="startDateTimeEdit" value="11:00 PM" />
@@ -1429,6 +1445,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsTags">
@@ -1447,12 +1464,14 @@
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="${eventTitle1Edit}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="${eventTitle2}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>

@@ -372,6 +372,7 @@
 		<var method="MathUtil#sum('${expirationDateMonth}', '1')" name="expirationDateMonth" />
 
 		<var locator="SOAnnouncementsAdd#DISPLAY_DATE_DATE_YEAR" name="expirationDateYear" />
+
 		<var name="expirationDate" value="${expirationDateMonth}/${expirationDateDay}/${expirationDateYear}" />
 
 		<execute function="Type" locator1="SOAnnouncementsAdd#EXPIRATION_DATE_DATE_INPUT" value1="${expirationDate}" />

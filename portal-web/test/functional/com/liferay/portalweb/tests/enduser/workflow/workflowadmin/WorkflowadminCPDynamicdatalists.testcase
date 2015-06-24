@@ -229,6 +229,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewRejectedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>

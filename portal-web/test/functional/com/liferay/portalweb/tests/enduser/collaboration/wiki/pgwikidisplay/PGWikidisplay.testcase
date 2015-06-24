@@ -361,8 +361,9 @@
 
 		<execute macro="WikiPage#viewDefaultPGViaWD">
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageName" value="${wikiPageTitle}" />
-		</execute>
+</execute>
 	</command>
 
 	<command name="ViewConfigurationSetupPageFrontPage" priority="4">

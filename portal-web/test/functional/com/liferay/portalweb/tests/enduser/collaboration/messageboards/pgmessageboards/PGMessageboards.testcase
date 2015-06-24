@@ -407,6 +407,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#replyPG">
+			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -736,8 +737,9 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#movePG">
-			<var name="categoryName" value="${categoryName1}" />
 			<var name="categoryName" value="${categoryName2}" />
+			<var name="categoryName1" value="${categoryName1}" />
+			<var name="categoryName2" value="${categoryName2}" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
@@ -807,6 +809,8 @@
 
 		<execute macro="MessageboardsThread#movePG">
 			<var name="categoryName" value="${categoryName2}" />
+			<var name="categoryName1" value="${categoryName1}" />
+			<var name="categoryName2" value="${categoryName2}" />
 			<var name="explanationBody" value="${explanationBody}" />
 			<var name="explanationPost" value="true" />
 			<var name="explanationSubject" value="${explanationSubject}" />

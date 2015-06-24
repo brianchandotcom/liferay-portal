@@ -11,6 +11,7 @@
 		<execute function="SelectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="${editInDashboard}" />
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
 		</execute>
 
@@ -53,7 +54,11 @@
 				<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryCommentContent}" />
 
 				<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+					<var name="characterCountdown" value="${characterCountdown}" />
 					<var name="commentInDashboard" value="true" />
+					<var name="editInDashboard" value="${editInDashboard}" />
+					<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+					<var name="textFieldContentLength" value="${textFieldContentLength}" />
 				</execute>
 
 				<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_COMMENT_POST_BUTTON" />
@@ -101,7 +106,11 @@
 				<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryCommentContent} @${mentionUserFirstName}" />
 
 				<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+					<var name="characterCountdown" value="${characterCountdown}" />
 					<var name="commentInDashboard" value="true" />
+					<var name="editInDashboard" value="${editInDashboard}" />
+					<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+					<var name="textFieldContentLength" value="${textFieldContentLength}" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="SOMicroblogs#MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
@@ -134,6 +143,8 @@
 
 	<command name="addMicroblogsEntryCommentViaProfile">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -184,6 +195,8 @@
 		<execute function="Pause" value1="1000" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -204,6 +217,7 @@
 		<execute function="SelectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="${editInDashboard}" />
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
 		</execute>
 
@@ -235,6 +249,7 @@
 		<execute function="SelectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="${editInDashboard}" />
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
 		</execute>
 
@@ -268,7 +283,10 @@
 		<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContentEdit}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+			<var name="characterCountdown" value="${characterCountdown}" />
 			<var name="editInDashboard" value="true" />
+			<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+			<var name="textFieldContentLength" value="${textFieldContentLength}" />
 		</execute>
 
 		<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON" />
@@ -296,7 +314,10 @@
 		<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1="${microblogsEntryContentEdit} @${mentionUserFirstName}" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+			<var name="characterCountdown" value="${characterCountdown}" />
 			<var name="editInDashboard" value="true" />
+			<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+			<var name="textFieldContentLength" value="${textFieldContentLength}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SOMicroblogs#MICROBLOGS_CONTENT_AUTOCOMPLETE_USERNAME" value1="${mentionUserName}" />
@@ -426,7 +447,10 @@
 		<execute function="Type#sendKeys" locator1="SOMicroblogs#MICROBLOGS_CONTENT_INPUT_FIELD" value1=" Edit" />
 
 		<execute macro="SOMicroblogs#viewCharacterCountdownCmd">
+			<var name="characterCountdown" value="${characterCountdown}" />
 			<var name="editInDashboard" value="true" />
+			<var name="textFieldContent?length()" value="${textFieldContent?length()}" />
+			<var name="textFieldContentLength" value="${textFieldContentLength}" />
 		</execute>
 
 		<execute function="Click" locator1="SOMicroblogs#MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON" />
@@ -450,6 +474,7 @@
 		<execute function="SelectFrameTop" />
 
 		<execute macro="SOMicroblogs#selectViewableByCmd">
+			<var name="editInDashboard" value="${editInDashboard}" />
 			<var name="microblogsEntryViewableBy" value="${microblogsEntryViewableBy}" />
 		</execute>
 
@@ -514,6 +539,8 @@
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1101,6 +1128,8 @@
 		</if>
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Contacts Center" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
@@ -1199,6 +1228,8 @@
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Microblogs" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />

@@ -1359,6 +1359,7 @@
 			<var name="action" value="Wrote a new forum post." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${userName3}" />
@@ -1390,6 +1391,7 @@
 			<var name="action" value="Wrote a new forum post." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${userName3}" />
@@ -1604,6 +1606,7 @@
 			<var name="action" value="Wrote a new forum post." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${userName3}" />
@@ -1635,6 +1638,7 @@
 			<var name="action" value="Wrote a new forum post." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody1}" />
 			<var name="threadSubject" value="${threadSubject1}" />
 			<var name="userName" value="${userName3}" />
@@ -1936,6 +1940,7 @@
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderDescriptionEdit" value="${dmFolderDescriptionEdit}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="dmFolderNameEdit" value="${dmFolderNameEdit}" />
@@ -2098,6 +2103,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -2213,6 +2219,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -2316,6 +2323,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -2363,6 +2371,7 @@
 		<execute macro="MessageboardsThread#addPG" >
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2372,6 +2381,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -2395,6 +2405,7 @@
 		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
 			<var name="microblogsEntryAuthorName" value="${adminName}" />
 			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2438,6 +2449,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userFirstName}" />
 		</execute>
 
@@ -2453,6 +2465,7 @@
 			<var name="action" value="Replied to ${adminName}'s forum post in ${categoryName}." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="RE: ${threadSubject}" />
 			<var name="userName" value="${userFirstName}" />
@@ -2476,6 +2489,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="04" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -2491,6 +2505,7 @@
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="05" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
@@ -2514,6 +2529,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userFirstName}" />
 		</execute>
 
@@ -2529,6 +2545,7 @@
 			<var name="action" value="Replied to ${adminName}'s forum post in ${categoryName}." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="RE: ${threadSubject}" />
 			<var name="userName" value="${userFirstName}" />
@@ -2556,6 +2573,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userFirstName}" />
 		</execute>
 
@@ -2570,6 +2588,7 @@
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Replied to ${adminName}'s forum post in ${categoryName}." />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="RE: ${threadSubject}" />
 			<var name="userName" value="${userFirstName}" />
@@ -2581,6 +2600,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="03" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -2595,6 +2615,7 @@
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
 			<var name="row" value="04" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminName}" />
@@ -2609,6 +2630,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="profileView" value="true" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userFirstName}" />
 		</execute>
 
@@ -2624,6 +2646,7 @@
 			<var name="action" value="Replied to ${adminName}'s forum post in ${categoryName}." />
 			<var name="profileView" value="true" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="RE: ${threadSubject}" />
 			<var name="userName" value="${userFirstName}" />
@@ -2654,6 +2677,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName}" />
 		</execute>
 
@@ -2669,6 +2693,7 @@
 			<var name="action" value="Replied to ${adminFirstName}'s forum post in ${categoryName}." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="RE: ${threadSubject}" />
 			<var name="userName" value="${userName}" />
@@ -2692,6 +2717,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="04" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -2707,6 +2733,7 @@
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="05" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -2729,6 +2756,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -2744,6 +2772,7 @@
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
 			<var name="dashboardView" value="true" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -2768,6 +2797,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${userName}" />
 		</execute>
 
@@ -2782,6 +2812,7 @@
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Replied to ${adminFirstName}'s forum post in ${categoryName}." />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="RE: ${threadSubject}" />
 			<var name="userName" value="${userName}" />
@@ -2793,6 +2824,7 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="row" value="03" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -2807,6 +2839,7 @@
 		<execute macro="SOActivities#viewForumsActivityEntry">
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
 			<var name="row" value="04" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -2821,6 +2854,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="profileView" value="true" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -2836,6 +2870,7 @@
 			<var name="action" value="Wrote a new forum post in ${categoryName}." />
 			<var name="profileView" value="true" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${adminFirstName}" />
@@ -2969,6 +3004,7 @@
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -3139,6 +3175,7 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -3154,6 +3191,7 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -3174,7 +3212,7 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}01" />
 			<var name="threadSubject" value="${threadSubject}01" />
-			<var name="wikiPageContent" value="${wikiPageContent}01" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageContentEdit" value="${wikiPageContentEdit1}" />
 		</execute>
 
@@ -3205,6 +3243,7 @@
 			<var name="threadBody" value="${threadBody}02" />
 			<var name="threadSubject" value="${threadSubject}02" />
 			<var name="wikiEditOnly" value="true" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageContentEdit" value="${wikiPageContentEdit2}" />
 		</execute>
 

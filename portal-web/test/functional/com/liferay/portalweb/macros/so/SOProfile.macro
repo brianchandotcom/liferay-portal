@@ -79,6 +79,8 @@
 		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
+			<var name="numberOfConnections" value="${numberOfConnections}" />
+			<var name="numberOfNotifications" value="${numberOfNotifications}" />
 			<var name="senderName" value="${adminName}" />
 			<var name="userName" value="${userName}" />
 		</execute>
@@ -889,6 +891,8 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Messages" />
 			<var name="soDashboard" value="true" />
 		</execute>
@@ -1064,11 +1068,13 @@
 		<execute function="AssertTextEquals" locator1="SOSite#NAVIGATION_PAGE" value1="${profilePageLocalized}" />
 
 		<var method="StringUtil#upperCase('${profilePortletLocalized}')" name="profilePortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${profilePortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${profilePortletLocalizedUpperCase}" />
 
 		<var method="StringUtil#upperCase('${microblogsStatusUpdatePortletLocalized}')" name="microblogsStatusUpdatePortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${microblogsStatusUpdatePortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalizedUpperCase}" />
@@ -1078,6 +1084,7 @@
 		<execute function="AssertClick" locator1="SOProfile#NAVIGATION_PAGE" value1="${contactsPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${profilePortletLocalized}')" name="profilePortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${profilePortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${profilePortletLocalizedUpperCase}" />
@@ -1092,11 +1099,13 @@
 		<execute function="AssertClick" locator1="SOProfile#NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
 
 		<var method="StringUtil#upperCase('${profilePortletLocalized}')" name="profilePortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${profilePortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${profilePortletLocalizedUpperCase}" />
 
 		<var method="StringUtil#upperCase('${microblogsPortletLocalized}')" name="microblogsPortletLocalizedUpperCase" />
+
 		<var name="key_portletName" value="${microblogsPortletLocalized}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PORTLET_BORDERLESS" value1="${microblogsPortletLocalizedUpperCase}" />

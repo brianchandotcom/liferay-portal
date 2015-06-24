@@ -148,15 +148,21 @@
 
 	<command name="addTagsCP">
 		<execute macro="Tag#addCP">
+			<var name="tagEntry" value="${tagEntry}" />
 			<var name="tagName" value="${tagName1}" />
+			<var name="tagNameVariation" value="${tagNameVariation}" />
 		</execute>
 
 		<execute macro="Tag#addCP">
+			<var name="tagEntry" value="${tagEntry}" />
 			<var name="tagName" value="${tagName2}" />
+			<var name="tagNameVariation" value="${tagNameVariation}" />
 		</execute>
 
 		<execute macro="Tag#addCP">
+			<var name="tagEntry" value="${tagEntry}" />
 			<var name="tagName" value="${tagName3}" />
+			<var name="tagNameVariation" value="${tagNameVariation}" />
 		</execute>
 	</command>
 

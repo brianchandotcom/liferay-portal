@@ -234,8 +234,12 @@
 			<var name="field" value="Radio" />
 			<var name="fieldFieldLabel" value="Department" />
 			<var name="fieldName" value="Department" />
+			<var name="fieldOptionsName" value="${fieldOptionsName}" />
 			<var name="fieldOptionsNames" value="Core Engineer,QA Engineer,Support Engineer" />
-			<var name="fieldOptionsValues" value="1,2,3" />
+			<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
+			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
+			<var name="i" value="${i}" />
+			<var name="j" value="${j}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -248,8 +252,12 @@
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Years Worked" />
 			<var name="fieldName" value="Years_Worked" />
+			<var name="fieldOptionsName" value="${fieldOptionsName}" />
 			<var name="fieldOptionsNames" value="1-2,3-5,5+" />
-			<var name="fieldOptionsValues" value="1,2,3" />
+			<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
+			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
+			<var name="i" value="${i}" />
+			<var name="j" value="${j}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">

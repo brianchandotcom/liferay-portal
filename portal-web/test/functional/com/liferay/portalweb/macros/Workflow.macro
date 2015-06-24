@@ -1,6 +1,7 @@
 <definition>
 	<command name="approveTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -37,6 +38,7 @@
 		<execute function="Pause" locator1="1000" />
 
 		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -56,6 +58,7 @@
 
 	<command name="approveTaskByDetails">
 		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -75,6 +78,7 @@
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="CPMyworkflowtasksTask#BACK" value1="Back" />
 
 		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -94,6 +98,7 @@
 
 	<command name="assignToMeTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -116,6 +121,7 @@
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 
 		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -133,6 +139,7 @@
 
 	<command name="assignToMeTaskByDetails">
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -162,6 +169,7 @@
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="CPMyworkflowtasksTask#BACK" value1="Back" />
 
 		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -293,6 +301,7 @@
 
 	<command name="rejectTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -310,6 +319,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -318,6 +328,7 @@
 
 	<command name="rejectTaskByDetails">
 		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -339,6 +350,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -347,6 +359,7 @@
 
 	<command name="resubmitTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -362,6 +375,7 @@
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 
 		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -370,6 +384,7 @@
 
 	<command name="resubmitTaskByDetails">
 		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -389,6 +404,7 @@
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="CPMyworkflowtasksTask#BACK" value1="Back" />
 
 		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -495,6 +511,7 @@
 
 	<command name="updateDueDateTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -517,6 +534,7 @@
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />

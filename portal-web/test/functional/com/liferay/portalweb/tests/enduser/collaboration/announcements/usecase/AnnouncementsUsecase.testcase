@@ -45,6 +45,7 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
 			<var name="distributionScope" value="General" />
 			<var name="entryContent" value="Announcements Entry Content" />
 			<var name="entryTitle" value="Announcements Entry Title" />
@@ -80,6 +81,7 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
 			<var name="distributionScope" value="General" />
 			<var name="entryContent" value="Announcements Entry Content" />
 			<var name="entryTitle" value="Announcements Entry Title" />
@@ -99,6 +101,7 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
 			<var name="distributionScope" value="Liferay" />
 			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
@@ -110,6 +113,7 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="announcementType" value="${announcementType}" />
 			<var name="distributionScope" value="Liferay" />
 			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />

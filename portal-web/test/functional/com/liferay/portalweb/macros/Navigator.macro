@@ -20,6 +20,7 @@
 	<command name="gotoSitePage">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 		</execute>
 
 		<execute macro="Navigator#_gotoPage">

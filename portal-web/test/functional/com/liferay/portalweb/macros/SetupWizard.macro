@@ -49,6 +49,7 @@
 		<execute macro="Portlet#shutdownServer" />
 
 		<execute macro="Portlet#startServer">
+			<var name="base_branch" value="${base_branch}" />
 			<var name="deleteLiferayHome" value="false" />
 		</execute>
 
@@ -84,6 +85,7 @@
 		<execute macro="Portlet#shutdownServer" />
 
 		<execute macro="Portlet#startServer">
+			<var name="base_branch" value="${base_branch}" />
 			<var name="deleteLiferayHome" value="false" />
 		</execute>
 

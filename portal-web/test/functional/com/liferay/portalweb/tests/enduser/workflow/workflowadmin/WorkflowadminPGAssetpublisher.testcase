@@ -269,6 +269,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewWithWorkflowPGViaAP">
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="webContentTitle" value="${entryTitle}" />
 		</execute>
 	</command>

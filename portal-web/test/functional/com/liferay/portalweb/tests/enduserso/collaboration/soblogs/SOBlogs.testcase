@@ -320,6 +320,7 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${entryComment}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userFullName" value="${userFullName}" />
 		</execute>
@@ -396,6 +397,7 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${entryComment}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userFullName" value="${userName}" />
 		</execute>
@@ -446,6 +448,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewScheduledPG">
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
@@ -580,6 +583,7 @@
 
 		<execute macro="Site#assignRoleCP">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -958,6 +962,7 @@
 
 		<execute macro="BlogsEntryComment#deleteSOPG">
 			<var name="entryComment" value="${entryComment}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="soPage" value="${soPage}" />
 		</execute>
@@ -1111,6 +1116,7 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${entryCommentEdit}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="userFullName" value="${userName}" />
 		</execute>
@@ -1293,6 +1299,7 @@
 
 		<execute macro="Site#assignRoleCP">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -1384,10 +1391,12 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="entryAddTag" value="true" />
 			<var name="entryContent" value="${entryContent1}" />
 			<var name="entryTitle" value="${entryTitle1}" />
 			<var name="tagNameList" value="${tagName1},${tagName2}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1735,6 +1744,7 @@
 
 		<execute macro="Site#assignRoleCP">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
@@ -1973,42 +1983,49 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Blogs" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Entry" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Content" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Blogs1" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Entry1" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Content1" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 	</command>
 
@@ -2035,48 +2052,56 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Blogs Entry Content"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Blogs"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Entry"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Content"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Blogs1"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Entry1"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Content1"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Blogs Entry Content1"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 	</command>
 
@@ -2103,42 +2128,49 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="${entryTitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Blogs" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Entry" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Title" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Blogs1" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Entry1" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm" value="Title1" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 	</command>
 
@@ -2165,48 +2197,56 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Blogs Entry Title"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Blogs"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Entry"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Title"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Blogs1"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Entry1"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Title1"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entrySearchTerm">"Blogs Entry Title1"</var>
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 	</command>
 

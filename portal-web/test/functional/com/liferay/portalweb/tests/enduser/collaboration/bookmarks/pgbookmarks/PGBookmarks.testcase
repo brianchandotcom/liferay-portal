@@ -154,6 +154,7 @@
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURLInvalid" value="${bookmarkURLInvalid}" />
+			<var name="folderName" value="${folderName}" />
 		</execute>
 	</command>
 

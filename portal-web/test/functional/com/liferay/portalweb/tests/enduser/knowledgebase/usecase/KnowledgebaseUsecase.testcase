@@ -1166,8 +1166,9 @@
 		</execute>
 
 		<execute macro="KBArticle#viewSourceURLCP">
-			<var name="kbArticleTitle" value="${kbArticleTitle}" />
-		</execute>
+			<var name="kbArticleSourceURL" value="${kbArticleSourceURL}" />
+		<var name="kbArticleTitle" value="${kbArticleTitle}" />
+</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Welcome" />
@@ -1792,7 +1793,8 @@
 
 		<execute macro="PortalInstances#editCP">
 			<var name="mailDomain" value="gmail.com" />
-		</execute>
+		<var name="virtualHost" value="${virtualHost}" />
+</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

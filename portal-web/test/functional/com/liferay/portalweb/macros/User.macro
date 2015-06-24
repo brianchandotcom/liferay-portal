@@ -216,10 +216,15 @@
 			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="userName" />
 
 			<execute macro="User#addCP">
+				<var name="userBirthday" value="${userBirthday}" />
 				<var name="userEmailAddress" value="${userEmailAddress}" />
+				<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
 				<var name="userFirstName" value="${userName}" />
+				<var name="userGender" value="${userGender}" />
 				<var name="userLastName" value="${userName}" />
+				<var name="userMiddleName" value="${userMiddleName}" />
 				<var name="userScreenName" value="${userName}" />
+				<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 			</execute>
 		</for>
 	</command>
@@ -884,8 +889,12 @@
 				<execute macro="User#logoutUserPG" />
 
 				<execute macro="User#loginPG">
+					<var name="authenticationMethod" value="${authenticationMethod}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="password" value="test" />
+					<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 					<var name="userEmailAddress" value="test@liferay.com" />
+					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
 			</then>
 			<else>
@@ -907,8 +916,12 @@
 				<execute macro="User#logoutUserPG" />
 
 				<execute macro="User#loginPG">
+					<var name="authenticationMethod" value="${authenticationMethod}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="password" value="test" />
+					<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 					<var name="userEmailAddress" value="test@liferay.com" />
+					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
 			</else>
 		</if>
@@ -1108,16 +1121,22 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
+			<var name="authenticationMethod" value="${authenticationMethod}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="${newPassword}" />
 			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
+			<var name="authenticationMethod" value="${authenticationMethod}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 	</command>
 
@@ -1511,7 +1530,10 @@
 			<then>
 				<execute macro="User#logoutPG" />
 				<execute macro="User#loginPG">
+					<var name="authenticationMethod" value="${authenticationMethod}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="userEmailAddress" value="${userLoginEmailAddress}" />
+					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
 			</then>
 		</if>

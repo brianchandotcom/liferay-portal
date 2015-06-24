@@ -28,7 +28,7 @@ Discussion discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.
 
 DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
-DiscussionCommentIterator discussionCommentIterator = rootDiscussionComment.getThreadDiscussionCommentIterator(rootIndexPage);
+DiscussionCommentIterator discussionCommentIterator = rootDiscussionComment.getThreadDiscussionCommentIterator(rootIndexPage - 1);
 
 while (discussionCommentIterator.hasNext()) {
 	rootIndexPage = discussionCommentIterator.getIndexPage();

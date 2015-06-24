@@ -42,7 +42,6 @@ import com.liferay.sync.engine.util.FileLockRetryUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.OSDetector;
-import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.io.IOException;
@@ -240,7 +239,7 @@ public class SyncEngine {
 
 		LoggerUtil.init();
 
-		_logger.info("Starting {}", PropsValues.SYNC_PRODUCT_NAME);
+		_logger.info("Starting Sync Engine");
 
 		UpgradeUtil.upgrade();
 
@@ -258,7 +257,7 @@ public class SyncEngine {
 		SyncEngineUtil.fireSyncEngineStateChanged(
 			SyncEngineUtil.SYNC_ENGINE_STATE_STOPPING);
 
-		_logger.info("Stopping {}", PropsValues.SYNC_PRODUCT_NAME);
+		_logger.info("Stopping Sync Engine");
 
 		for (long syncAccountId : _syncAccountTasks.keySet()) {
 			cancelSyncAccountTasks(syncAccountId);

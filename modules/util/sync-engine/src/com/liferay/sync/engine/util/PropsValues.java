@@ -86,7 +86,4 @@ public class PropsValues {
 	public static final String SYNC_OAUTH_WEBSITE_URL = PropsUtil.get(
 		PropsKeys.SYNC_OAUTH_WEBSITE_URL);
 
-	public static final String SYNC_PRODUCT_NAME = PropsUtil.get(
-		PropsKeys.SYNC_PRODUCT_NAME);
-
 }

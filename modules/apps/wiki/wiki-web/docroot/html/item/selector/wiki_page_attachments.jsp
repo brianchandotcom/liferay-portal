@@ -21,7 +21,7 @@ WikiAttachmentItemSelectorViewDisplayContext wikiAttachmentItemSelectorViewDispl
 
 WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = wikiAttachmentItemSelectorViewDisplayContext.getWikiAttachmentItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), null, null);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), null, LanguageUtil.get(request, "there-are-no-wiki-attachments"));
 
 WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 

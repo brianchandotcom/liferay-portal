@@ -21,7 +21,9 @@ BlogsItemSelectorViewDisplayContext blogsItemSelectorViewDisplayContext = (Blogs
 
 BlogsItemSelectorCriterion blogsItemSelectorCriterion = blogsItemSelectorViewDisplayContext.getBlogsItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(), null, null);
+ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale);
+
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(), null, LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments"));
 
 Folder folder = blogsItemSelectorViewDisplayContext.fetchAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 

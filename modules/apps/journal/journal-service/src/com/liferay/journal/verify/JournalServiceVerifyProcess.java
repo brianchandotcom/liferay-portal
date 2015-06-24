@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -91,6 +92,7 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();
 		verifyArticleContents();
+		verifyArticleLayouts();
 		verifyArticleStructures();
 		verifyContentSearch();
 		verifyFolderAssets();
@@ -585,6 +587,20 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	protected void verifyArticleLayouts() throws Exception {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("update JournalArticle set layoutUuid = (select distinct ");
+		sb.append("sourcePrototypeLayoutUuid from Layout where ");
+		sb.append("Layout.uuid_ = JournalArticle.layoutUuid) where exists ");
+		sb.append("(select 1 from Layout where Layout.uuid_ = ");
+		sb.append("JournalArticle.layoutUuid and Layout.uuid_ != ");
+		sb.append("Layout.sourcePrototypeLayoutUuid and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid != '')");
+
+		runSQL(sb.toString());
 	}
 
 	protected void verifyArticleStructures() throws PortalException {

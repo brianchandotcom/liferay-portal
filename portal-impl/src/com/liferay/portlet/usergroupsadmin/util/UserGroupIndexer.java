@@ -33,12 +33,8 @@ import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -47,7 +43,7 @@ import javax.portlet.PortletResponse;
  * @author Hugo Huijser
  */
 @OSGiBeanProperties
-public class UserGroupIndexer extends BaseIndexer {
+public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 
 	public static final String CLASS_NAME = UserGroup.class.getName();
 
@@ -87,16 +83,12 @@ public class UserGroupIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		UserGroup userGroup = (UserGroup)obj;
-
+	protected void doDelete(UserGroup userGroup) throws Exception {
 		deleteDocument(userGroup.getCompanyId(), userGroup.getUserGroupId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		UserGroup userGroup = (UserGroup)obj;
-
+	protected Document doGetDocument(UserGroup userGroup) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, userGroup);
 
 		document.addKeyword(Field.COMPANY_ID, userGroup.getCompanyId());
@@ -133,66 +125,6 @@ public class UserGroupIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		if (obj instanceof Long) {
-			long userGroupId = (Long)obj;
-
-			UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
-				userGroupId);
-
-			doReindex(userGroup);
-		}
-		else if (obj instanceof long[]) {
-			long[] userGroupIds = (long[])obj;
-
-			Map<Long, Collection<Document>> documentsMap = new HashMap<>();
-
-			for (long userGroupId : userGroupIds) {
-				UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
-					userGroupId);
-
-				if (userGroup == null) {
-					continue;
-				}
-
-				Document document = getDocument(userGroup);
-
-				long companyId = userGroup.getCompanyId();
-
-				Collection<Document> documents = documentsMap.get(companyId);
-
-				if (documents == null) {
-					documents = new ArrayList<>();
-
-					documentsMap.put(companyId, documents);
-				}
-
-				documents.add(document);
-			}
-
-			for (Map.Entry<Long, Collection<Document>> entry :
-					documentsMap.entrySet()) {
-
-				long companyId = entry.getKey();
-				Collection<Document> documents = entry.getValue();
-
-				SearchEngineUtil.updateDocuments(
-					getSearchEngineId(), companyId, documents,
-					isCommitImmediately());
-			}
-		}
-		else if (obj instanceof UserGroup) {
-			UserGroup userGroup = (UserGroup)obj;
-
-			Document document = getDocument(userGroup);
-
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), userGroup.getCompanyId(), document,
-				isCommitImmediately());
-		}
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(classPK);
 
@@ -204,6 +136,15 @@ public class UserGroupIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexUserGroups(companyId);
+	}
+
+	@Override
+	protected void doReindex(UserGroup userGroup) throws Exception {
+		Document document = getDocument(userGroup);
+
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), userGroup.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	protected void reindexUserGroups(long companyId) throws PortalException {

@@ -46,9 +46,6 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -64,7 +61,7 @@ import javax.portlet.PortletResponse;
  * @author Hugo Huijser
  */
 @OSGiBeanProperties
-public class UserIndexer extends BaseIndexer {
+public class UserIndexer extends BaseIndexer<User> {
 
 	public static final String CLASS_NAME = User.class.getName();
 
@@ -237,12 +234,11 @@ public class UserIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		User user = (User)obj;
-
+	protected void doDelete(User user) throws Exception {
 		deleteDocument(user.getCompanyId(), user.getUserId());
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Contact.class);
+		Indexer<Contact> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Contact.class);
 
 		Contact contact = new ContactImpl();
 
@@ -253,9 +249,7 @@ public class UserIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		User user = (User)obj;
-
+	protected Document doGetDocument(User user) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, user);
 
 		long[] organizationIds = user.getOrganizationIds();
@@ -334,83 +328,6 @@ public class UserIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		if (obj instanceof Long) {
-			long userId = (Long)obj;
-
-			User user = UserLocalServiceUtil.getUserById(userId);
-
-			doReindex(user);
-		}
-		else if (obj instanceof long[]) {
-			long[] userIds = (long[])obj;
-
-			Map<Long, Collection<Document>> documentsMap = new HashMap<>();
-
-			for (long userId : userIds) {
-				User user = UserLocalServiceUtil.getUserById(userId);
-
-				if (user.isDefaultUser()) {
-					continue;
-				}
-
-				Document document = getDocument(user);
-
-				long companyId = user.getCompanyId();
-
-				Collection<Document> documents = documentsMap.get(companyId);
-
-				if (documents == null) {
-					documents = new ArrayList<>();
-
-					documentsMap.put(companyId, documents);
-				}
-
-				documents.add(document);
-			}
-
-			for (Map.Entry<Long, Collection<Document>> entry :
-					documentsMap.entrySet()) {
-
-				long companyId = entry.getKey();
-				Collection<Document> documents = entry.getValue();
-
-				SearchEngineUtil.updateDocuments(
-					getSearchEngineId(), companyId, documents,
-					isCommitImmediately());
-			}
-		}
-		else if (obj instanceof User) {
-			User user = (User)obj;
-
-			if (user.isDefaultUser()) {
-				return;
-			}
-
-			Document document = getDocument(user);
-
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), user.getCompanyId(), document,
-				isCommitImmediately());
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				Contact.class);
-
-			try {
-				indexer.reindex(user.getContact());
-			}
-			catch (NoSuchContactException nsce) {
-
-				// This is a temporary workaround for LPS-46825
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(nsce, nsce);
-				}
-			}
-		}
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		User user = UserLocalServiceUtil.getUserById(classPK);
 
@@ -422,6 +339,34 @@ public class UserIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexUsers(companyId);
+	}
+
+	@Override
+	protected void doReindex(User user) throws Exception {
+		if (user.isDefaultUser()) {
+			return;
+		}
+
+		Document document = getDocument(user);
+
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), user.getCompanyId(), document,
+			isCommitImmediately());
+
+		Indexer<Contact> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Contact.class);
+
+		try {
+			indexer.reindex(user.getContact());
+		}
+		catch (NoSuchContactException nsce) {
+
+			// This is a temporary workaround for LPS-46825
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsce, nsce);
+			}
+		}
 	}
 
 	protected long[] getAncestorOrganizationIds(long[] organizationIds)

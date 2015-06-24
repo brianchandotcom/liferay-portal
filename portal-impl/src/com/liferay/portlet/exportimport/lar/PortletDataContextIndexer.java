@@ -32,7 +32,7 @@ import javax.portlet.PortletResponse;
  * @author Mate Thurzo
  */
 @OSGiBeanProperties
-public class PortletDataContextIndexer extends BaseIndexer {
+public class PortletDataContextIndexer extends BaseIndexer<PortletDataContext> {
 
 	public static final String CLASS_NAME = PortletDataContext.class.getName();
 
@@ -42,11 +42,14 @@ public class PortletDataContextIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
+	protected void doDelete(PortletDataContext portletDataContext)
+		throws Exception {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
+	protected Document doGetDocument(PortletDataContext portletDataContext)
+		throws Exception {
+
 		return null;
 	}
 
@@ -60,8 +63,8 @@ public class PortletDataContextIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		PortletDataContext portletDataContext = (PortletDataContext)obj;
+	protected void doReindex(PortletDataContext portletDataContext)
+		throws Exception {
 
 		Map<String, Map<?, ?>> newPrimaryKeysMaps =
 			portletDataContext.getNewPrimaryKeysMaps();

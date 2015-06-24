@@ -34,7 +34,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 />
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/blogs_admin/search" />
+	<portlet:param name="mvcPath" value="/html/portlet/blogs/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL.toString() %>" method="get" name="fm">

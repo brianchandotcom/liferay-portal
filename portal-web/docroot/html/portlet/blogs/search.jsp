@@ -23,7 +23,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/blogs/search" />
+	<portlet:param name="mvcPath" value="/html/portlet/blogs/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm">
@@ -46,7 +46,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/blogs/search");
+	portletURL.setParameter("mvcPath", "/html/portlet/blogs/search.jsp");
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("keywords", keywords);
 	%>

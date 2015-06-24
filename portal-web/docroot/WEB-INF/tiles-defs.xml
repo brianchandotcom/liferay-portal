@@ -160,10 +160,6 @@
 		<put name="portlet_content" value="/portlet/blogs/error.jsp" />
 	</definition>
 
-	<definition name="portlet.blogs.search" extends="portlet.blogs">
-		<put name="portlet_content" value="/portlet/blogs/search.jsp" />
-	</definition>
-
 	<definition name="portlet.blogs.view" extends="portlet.blogs">
 		<put name="portlet_content" value="/portlet/blogs/view.jsp" />
 	</definition>

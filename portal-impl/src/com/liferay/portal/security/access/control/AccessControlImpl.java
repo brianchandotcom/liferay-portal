@@ -17,7 +17,9 @@ package com.liferay.portal.security.access.control;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
+import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
@@ -37,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Raymond Augé
  */
+@DoPrivileged
 public class AccessControlImpl implements AccessControl {
 
 	@Override

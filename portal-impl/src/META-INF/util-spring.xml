@@ -529,11 +529,7 @@
 	</bean>
 	<bean id="com.liferay.portal.sanitizer.DummySanitizerImpl" class="com.liferay.portal.sanitizer.DummySanitizerImpl" />
 	<bean id="com.liferay.portal.scripting.ruby.RubyExecutor" class="com.liferay.portal.scripting.ruby.RubyExecutor" depends-on="com.liferay.portal.kernel.util.FileUtil" />
-	<bean id="com.liferay.portal.security.access.control.AccessControlUtil" class="com.liferay.portal.security.access.control.AccessControlUtil">
-		<property name="accessControl">
-			<bean class="com.liferay.portal.security.access.control.AccessControlImpl" />
-		</property>
-	</bean>
+	<bean id="com.liferay.portal.security.access.control.AccessControl" class="com.liferay.portal.security.access.control.AccessControlImpl" />
 	<bean id="com.liferay.portal.security.access.control.AllowedHostsAccessControlPolicy" class="com.liferay.portal.security.access.control.AllowedHostsAccessControlPolicy" />
 	<bean id="com.liferay.portal.security.access.control.AuthenticatedAccessControlPolicy" class="com.liferay.portal.security.access.control.AuthenticatedAccessControlPolicy" />
 	<bean id="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil" class="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil">

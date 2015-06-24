@@ -462,10 +462,15 @@ urlConfigurationJSSB.append(portletDisplay.getNamespace());
 urlConfigurationJSSB.append("', '");
 urlConfigurationJSSB.append(UnicodeLanguageUtil.get(request, "configuration"));
 urlConfigurationJSSB.append("', '");
-urlConfigurationJSSB.append(PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ? portletDisplay.getId() : StringPool.BLANK);
+
+if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
+	urlConfigurationJSSB.append(portletDisplay.getId());
+}
+
 urlConfigurationJSSB.append("'); return false;");
 
 portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
+
 // URL edit
 
 PortletURLImpl urlEdit = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);

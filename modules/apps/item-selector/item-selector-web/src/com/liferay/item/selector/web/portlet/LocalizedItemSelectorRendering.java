@@ -52,7 +52,7 @@ public class LocalizedItemSelectorRendering {
 	}
 
 	public void add(ItemSelectorViewRenderer itemSelectorViewRenderer) {
-		ItemSelectorView<?, ?> itemSelectorView =
+		ItemSelectorView<?> itemSelectorView =
 			itemSelectorViewRenderer.getItemSelectorView();
 
 		String title = itemSelectorView.getTitle(_locale);

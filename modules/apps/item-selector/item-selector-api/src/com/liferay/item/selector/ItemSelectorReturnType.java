@@ -18,7 +18,4 @@ package com.liferay.item.selector;
  * @author Roberto Díaz
  */
 public interface ItemSelectorReturnType {
-
-	public String getName();
-
 }

@@ -17,7 +17,6 @@ package com.liferay.blogs.item.selector.handler;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorCriterionHandler.class)
 public class BlogsItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler
-		<BlogsItemSelectorCriterion, DefaultItemSelectorReturnType> {
+	extends BaseItemSelectorCriterionHandler<BlogsItemSelectorCriterion> {
 
 	@Override
 	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {

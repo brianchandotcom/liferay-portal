@@ -14,7 +14,7 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib.ui;
 
-import com.liferay.item.selector.taglib.ReturnType;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -43,15 +43,17 @@ public class BrowserTag extends IncludeTag {
 		_itemSelectedEventName = itemSelectedEventName;
 	}
 
+	public void setItemSelectorReturnType(
+		ItemSelectorReturnType itemSelectorReturnType) {
+
+		_itemSelectorReturnType = itemSelectorReturnType;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
 		servletContext = ServletContextUtil.getServletContext();
-	}
-
-	public void setReturnType(ReturnType returnType) {
-		_returnType = returnType;
 	}
 
 	public void setSearchContainer(SearchContainer<?> searchContainer) {
@@ -73,7 +75,7 @@ public class BrowserTag extends IncludeTag {
 		_displayStyle = null;
 		_displayStyleURL = null;
 		_itemSelectedEventName = null;
-		_returnType = null;
+		_itemSelectorReturnType = null;
 		_searchContainer = null;
 		_tabName = null;
 		_uploadMessage = null;
@@ -114,7 +116,8 @@ public class BrowserTag extends IncludeTag {
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:returnType", _returnType);
+			"liferay-ui:item-selector-browser:itemSelectorReturnType",
+			_itemSelectorReturnType);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchContainer",
 			_searchContainer);
@@ -132,7 +135,7 @@ public class BrowserTag extends IncludeTag {
 	private String _displayStyle;
 	private PortletURL _displayStyleURL;
 	private String _itemSelectedEventName;
-	private ReturnType _returnType;
+	private ItemSelectorReturnType _itemSelectorReturnType;
 	private SearchContainer<?> _searchContainer;
 	private String _tabName;
 	private String _uploadMessage;

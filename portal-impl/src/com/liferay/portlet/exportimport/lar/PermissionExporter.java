@@ -74,12 +74,12 @@ public class PermissionExporter {
 
 			Element roleElement = permissionsElement.addElement("role");
 
+			roleElement.addAttribute("uuid", role.getUuid());
 			roleElement.addAttribute("name", role.getName());
 			roleElement.addAttribute("title", role.getTitle());
 			roleElement.addAttribute("description", role.getDescription());
 			roleElement.addAttribute("type", String.valueOf(role.getType()));
 			roleElement.addAttribute("subtype", role.getSubtype());
-			roleElement.addAttribute("uuid", role.getUuid());
 
 			Set<String> availableActionIds = entry.getValue();
 

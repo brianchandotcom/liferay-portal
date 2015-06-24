@@ -257,12 +257,7 @@ public class PatchTask extends DefaultTask {
 						});
 				}
 
-				Map<String, Object> args = new HashMap<>();
-
-				args.put("eol", FixCrLfFilter.CrLf.newInstance("lf"));
-
-				copySpec.filter(args, FixCrLfFilter.class);
-
+				copySpec.filter(FixCrLfFilter.class);
 				copySpec.from(_project.zipTree(getOriginalLibSrcFile()));
 				copySpec.include(getFileNames());
 				copySpec.into(temporaryDir);
@@ -282,6 +277,7 @@ public class PatchTask extends DefaultTask {
 						execSpec.setExecutable("patch");
 						execSpec.setWorkingDir(temporaryDir);
 
+						execSpec.args("--binary");
 						execSpec.args(
 							"--input=" +
 								FileUtil.relativize(patchFile, temporaryDir));

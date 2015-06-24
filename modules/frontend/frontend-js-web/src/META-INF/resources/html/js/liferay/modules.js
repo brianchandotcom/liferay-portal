@@ -520,6 +520,13 @@
 							'aui-component'
 						]
 					},
+					'liferay-item-selector-url': {
+						path: 'item_selector_url.js',
+						requires: [
+							'liferay-item-viewer',
+							'liferay-portlet-base'
+						]
+					},
 					'liferay-item-viewer': {
 						path: 'item_viewer.js',
 						requires: [

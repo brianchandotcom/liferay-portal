@@ -79,6 +79,7 @@ public class PermissionExporter {
 			roleElement.addAttribute("description", role.getDescription());
 			roleElement.addAttribute("type", String.valueOf(role.getType()));
 			roleElement.addAttribute("subtype", role.getSubtype());
+			roleElement.addAttribute("uuid", role.getUuid());
 
 			Set<String> availableActionIds = entry.getValue();
 

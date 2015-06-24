@@ -64,6 +64,8 @@ public class PermissionImporter {
 
 		String name = roleElement.attributeValue("name");
 
+		String uuid = roleElement.attributeValue("uuid");
+
 		Role role = null;
 
 		if (name.startsWith(PermissionExporter.ROLE_TEAM_PREFIX)) {
@@ -85,7 +87,11 @@ public class PermissionImporter {
 				companyId, team.getTeamId());
 		}
 		else {
-			role = layoutCache.getRole(companyId, name);
+			role = layoutCache.getRoleByCompanyIdAndUuid(companyId, uuid);
+
+			if (role == null) {
+				role = layoutCache.getRoleByCompanyIdAndName(companyId, name);
+			}
 		}
 
 		if (role == null) {
@@ -106,6 +112,8 @@ public class PermissionImporter {
 			role = RoleLocalServiceUtil.addRole(
 				userId, null, 0, name, titleMap, descriptionMap, type, subtype,
 				null);
+
+			role.setUuid(uuid);
 		}
 
 		return role;

@@ -63,24 +63,6 @@ public class DLFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testAddBaseModelWithDraftStatus() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashAndDeleteWithDraftStatus() throws Exception {
 	}
 

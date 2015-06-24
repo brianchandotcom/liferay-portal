@@ -59,7 +59,8 @@ public class PrintUserToolAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.print)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.print)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

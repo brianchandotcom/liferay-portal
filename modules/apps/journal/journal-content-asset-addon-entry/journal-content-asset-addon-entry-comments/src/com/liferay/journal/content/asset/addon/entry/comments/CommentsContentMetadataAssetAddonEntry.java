@@ -114,7 +114,8 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.comments)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.comments)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

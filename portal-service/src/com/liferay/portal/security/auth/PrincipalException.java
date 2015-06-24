@@ -17,6 +17,7 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,14 +45,20 @@ public class PrincipalException extends PortalException {
 
 	public static class MustHavePermission extends PrincipalException {
 
-		public MustHavePermission(long userId, String ... actionId) {
+		public MustHavePermission(
+			PermissionChecker permissionChecker, String... actionIds) {
+			
+			this(permissionChecker.getUserId(), actionIds);
+		}
+
+		public MustHavePermission(long userId, String... actionIds) {
 			super(
 				String.format(
 					"User %s must have permission to perform action %s",
 					Validator.isNull(userId) ? "" : userId,
-					StringUtil.merge(actionId, ",")));
+					StringUtil.merge(actionIds, ",")));
 
-			this.actionId = actionId;
+			this.actionId = actionIds;
 			this.resourceId = 0;
 			this.resourceName = null;
 			this.userId = userId;
@@ -59,16 +66,16 @@ public class PrincipalException extends PortalException {
 
 		public MustHavePermission(
 			long userId, String resourceName, long resourceId,
-			String ... actionId) {
+			String... actionIds) {
 
 			super(
 				String.format(
 					"User %s must have %s permission for %s %s",
 					Validator.isNull(userId) ? "" : userId,
-					StringUtil.merge(actionId, ","), resourceName,
+					StringUtil.merge(actionIds, ","), resourceName,
 					Validator.isNull(resourceId) ? "" : resourceId));
 
-			this.actionId = actionId;
+			this.actionId = actionIds;
 			this.resourceName = resourceName;
 			this.resourceId = resourceId;
 			this.userId = userId;

@@ -17,6 +17,7 @@ package com.liferay.portlet.announcements.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
@@ -34,14 +35,15 @@ public class AnnouncementsDeliveryServiceImpl
 			boolean website)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		if (!PortalPermissionUtil.contains(
-				getPermissionChecker(), ActionKeys.ADD_USER) &&
+				permissionChecker, ActionKeys.ADD_USER) &&
 			!UserPermissionUtil.contains(
-				getPermissionChecker(), userId, ActionKeys.UPDATE)) {
+				permissionChecker, userId, ActionKeys.UPDATE)) {
 
 			throw new PrincipalException.MustHavePermission(
-				getPermissionChecker().getUserId(), ActionKeys.ADD_USER,
-				ActionKeys.UPDATE);
+				permissionChecker, ActionKeys.ADD_USER, ActionKeys.UPDATE);
 		}
 
 		return announcementsDeliveryLocalService.updateDelivery(

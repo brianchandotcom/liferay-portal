@@ -154,6 +154,11 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _ddmStructure.getLastPublishDate();
+	}
+
+	@Override
 	public Class<?> getModelClass() {
 		return _ddmStructure.getModelClass();
 	}
@@ -276,6 +281,11 @@ public class DDMStructureImpl implements DDMStructure {
 	@Override
 	public void setGroupId(long groupId) {
 		_ddmStructure.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddmStructure.setLastPublishDate(lastPublishDate);
 	}
 
 	@Override

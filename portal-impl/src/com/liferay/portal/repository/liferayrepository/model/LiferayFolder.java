@@ -146,6 +146,11 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _dlFolder.getLastPublishDate();
+	}
+
+	@Override
 	public Object getModel() {
 		return _dlFolder;
 	}
@@ -345,6 +350,10 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	@Override
 	public void setGroupId(long groupId) {
 		_dlFolder.setGroupId(groupId);
+	}
+
+	public void setLastPublishDate(Date date) {
+		_dlFolder.setLastPublishDate(date);
 	}
 
 	@Override

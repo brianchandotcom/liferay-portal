@@ -182,6 +182,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _dlFileVersion.getLastPublishDate();
+	}
+
+	@Override
 	public String getMimeType() {
 		return _dlFileVersion.getMimeType();
 	}
@@ -339,6 +344,11 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	@Override
 	public void setGroupId(long groupId) {
 		_dlFileVersion.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_dlFileVersion.setLastPublishDate(date);
 	}
 
 	@Override

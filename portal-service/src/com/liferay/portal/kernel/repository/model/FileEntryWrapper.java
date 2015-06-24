@@ -174,6 +174,11 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _fileEntry.getLastPublishDate();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion() throws PortalException {
 		return _fileEntry.getLatestFileVersion();
 	}
@@ -382,6 +387,11 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	@Override
 	public void setGroupId(long groupId) {
 		_fileEntry.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_fileEntry.setLastPublishDate(date);
 	}
 
 	@Override

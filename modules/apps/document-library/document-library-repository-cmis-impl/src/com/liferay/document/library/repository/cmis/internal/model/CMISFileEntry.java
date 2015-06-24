@@ -294,6 +294,11 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return null;
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion() throws PortalException {
 		if (_latestFileVersion != null) {
 			return _latestFileVersion;
@@ -673,6 +678,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	@Override
 	public void setGroupId(long groupId) {
 		_cmisRepository.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.upgrade.JournalServiceUpgrade;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -70,6 +72,7 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -77,17 +80,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Shinn Lok
  */
-@Component(service = JournalServiceVerifyProcess.class)
+@Component(immediate = true, service = JournalServiceVerifyProcess.class)
 public class JournalServiceVerifyProcess extends VerifyProcess {
 
 	public static final long DEFAULT_GROUP_ID = 14;
 
 	public static final int NUM_OF_ARTICLES = 5;
 
+	@Activate
 	@Override
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();
 		verifyArticleContents();
+		verifyArticleLayouts();
 		verifyArticleStructures();
 		verifyContentSearch();
 		verifyFolderAssets();
@@ -110,6 +115,11 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 
 		_journalArticleResourceLocalService =
 			journalArticleResourceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalServiceUpgrade(
+		JournalServiceUpgrade journalServiceUpgrade) {
 	}
 
 	protected void updateContentSearch(long groupId, String portletId)
@@ -577,6 +587,20 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	protected void verifyArticleLayouts() throws Exception {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("update JournalArticle set layoutUuid = (select distinct ");
+		sb.append("sourcePrototypeLayoutUuid from Layout where ");
+		sb.append("Layout.uuid_ = JournalArticle.layoutUuid) where exists ");
+		sb.append("(select 1 from Layout where Layout.uuid_ = ");
+		sb.append("JournalArticle.layoutUuid and Layout.uuid_ != ");
+		sb.append("Layout.sourcePrototypeLayoutUuid and ");
+		sb.append("Layout.sourcePrototypeLayoutUuid != '')");
+
+		runSQL(sb.toString());
 	}
 
 	protected void verifyArticleStructures() throws PortalException {

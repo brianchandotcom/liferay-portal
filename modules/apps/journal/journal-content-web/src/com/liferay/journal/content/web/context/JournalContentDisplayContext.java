@@ -48,6 +48,9 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -213,6 +216,25 @@ public class JournalContentDisplayContext {
 			JournalArticle.class.getName(), classPK);
 
 		return assetEntry.getEntryId();
+	}
+
+	public AssetRenderer getAssetRenderer() throws PortalException {
+		JournalArticle article = getArticle();
+
+		if (article == null) {
+		return null;
+		}
+
+		AssetRendererFactory assetRendererFactory = 
+		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+		JournalArticle.class.getName());
+
+		if (assetRendererFactory == null) {
+		return null;
+		}
+
+		return assetRendererFactory.getAssetRenderer(
+		JournalArticleAssetRenderer.getClassPK(article));
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {

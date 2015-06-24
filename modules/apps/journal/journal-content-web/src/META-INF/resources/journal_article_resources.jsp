@@ -19,6 +19,7 @@
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
 JournalArticleDisplay articleDisplay = journalContentDisplayContext.getArticleDisplay();
+AssetRenderer articleAssetRenderer = journalContentDisplayContext.getAssetRenderer();
 
 String webContentTitle = HtmlUtil.escapeAttribute(articleDisplay.getTitle());
 
@@ -31,10 +32,11 @@ if (Validator.isNull(webContentSummary)) {
 
 webContentSummary = StringUtil.shorten(webContentSummary, 70);
 
-String webContentImgURL = HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay));
+String webContentImgURL = HtmlUtil.escapeAttribute(articleAssetRenderer.getThumbnailPath(liferayPortletRequest));
 
 long webContentUserId = articleDisplay.getUserId();
 %>
+
 <div class="article-preview-content">
 	<div class="card-horizontal">
 		<div class="card-row">

@@ -4,6 +4,7 @@ Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.portal.lar.test,\
 	com.liferay.portal.search.test,\
+	com.liferay.portal.security.permission.test,\
 	com.liferay.portal.service.permission.test,\
 	com.liferay.portal.service.test,\
 	com.liferay.portal.test.log,\

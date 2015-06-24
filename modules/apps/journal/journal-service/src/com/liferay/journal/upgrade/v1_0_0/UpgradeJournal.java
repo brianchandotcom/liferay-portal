@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.journal.upgrade.v1_0_0;
 
+import com.liferay.journal.upgrade.v1_0_0.util.JournalArticleTable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.upgrade.v7_0_0.util.JournalArticleTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
@@ -477,6 +477,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 	protected String getContent(String fileName) {
 		return ContentUtil.get(
+			getClass().getClassLoader(),
 			"com/liferay/portal/events/dependencies/" + fileName);
 	}
 

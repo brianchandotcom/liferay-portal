@@ -38,6 +38,10 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -595,6 +599,22 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 				ClusterRequest clusterRequest) {
 
 				return null;
+			}
+
+			@Override
+			public InetAddress getBindInetAddress() {
+				return InetAddress.getLoopbackAddress();
+			}
+
+			@Override
+			public NetworkInterface getBindNetworkInterface() {
+				try {
+					return NetworkInterface.getByInetAddress(
+						InetAddress.getLoopbackAddress());
+				}
+				catch (SocketException e) {
+					throw new IllegalStateException(e);
+				}
 			}
 
 			@Override

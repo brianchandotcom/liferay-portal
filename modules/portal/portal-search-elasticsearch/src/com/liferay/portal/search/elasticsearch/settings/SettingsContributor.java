@@ -19,7 +19,9 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 /**
  * @author André de Oliveira
  */
-public interface SettingsContributor {
+public interface SettingsContributor extends Comparable<SettingsContributor> {
+
+	public int getPriority();
 
 	public void populate(ImmutableSettings.Builder builder);
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 
 import java.util.List;
 
@@ -46,6 +47,16 @@ public class ClusterExecutorClusterSettingsContext
 		}
 
 		return hosts;
+	}
+
+	@Override
+	public InetAddress getLocalBindInetAddress() {
+		return _clusterExecutor.getBindInetAddress();
+	}
+
+	@Override
+	public NetworkInterface getLocalBindNetworkInterface() {
+		return _clusterExecutor.getBindNetworkInterface();
 	}
 
 	@Override

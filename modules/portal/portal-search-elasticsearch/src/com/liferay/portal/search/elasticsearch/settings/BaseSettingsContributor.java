@@ -12,23 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
-
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+package com.liferay.portal.search.elasticsearch.settings;
 
 /**
  * @author Michael C. Han
  */
-public interface ElasticsearchConnection {
+public abstract class BaseSettingsContributor implements SettingsContributor {
 
-	public boolean close();
+	public BaseSettingsContributor(int priority) {
+		_priority = priority;
+	}
 
-	public Client getClient();
+	@Override
+	public int compareTo(SettingsContributor settingsContributor) {
+		if (_priority > settingsContributor.getPriority()) {
+			return 1;
+		}
+		else if (_priority == settingsContributor.getPriority()) {
+			return 0;
+		}
 
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
+		return -1;
+	}
 
-	public OperationMode getOperationMode();
+	@Override
+	public int getPriority() {
+		return _priority;
+	}
+
+	protected int _priority;
 
 }

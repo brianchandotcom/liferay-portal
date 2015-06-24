@@ -14,12 +14,19 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+
 /**
  * @author André de Oliveira
  */
 public interface ClusterSettingsContext {
 
 	public String[] getHosts();
+
+	public InetAddress getLocalBindInetAddress();
+
+	public NetworkInterface getLocalBindNetworkInterface();
 
 	public boolean isClusterEnabled();
 

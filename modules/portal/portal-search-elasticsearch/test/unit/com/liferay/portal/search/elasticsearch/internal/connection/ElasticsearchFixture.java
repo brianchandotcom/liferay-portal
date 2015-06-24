@@ -24,7 +24,10 @@ import com.liferay.portal.search.elasticsearch.internal.cluster.UnicastSettingsC
 
 import java.io.File;
 
+import java.lang.reflect.Method;
+
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
@@ -149,7 +152,7 @@ public class ElasticsearchFixture {
 
 	}
 
-	protected void addUnicast(
+	protected void addUnicastSettingsContributor(
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection) {
 
 		if (_clusterSettingsContext == null) {
@@ -159,11 +162,15 @@ public class ElasticsearchFixture {
 		UnicastSettingsContributor unicastSettingsContributor =
 			new UnicastSettingsContributor();
 
-		unicastSettingsContributor.setClusterSettingsContext(
-			_clusterSettingsContext);
+		execute(
+			UnicastSettingsContributor.class, "setClusterSettingsContext",
+			new Class<?>[] {ClusterSettingsContext.class},
+			unicastSettingsContributor, new Object[] {_clusterSettingsContext});
 
-		unicastSettingsContributor.activate(
-			_elasticsearchConfigurationProperties);
+		execute(
+			UnicastSettingsContributor.class, "activate",
+			new Class<?>[] {Map.class}, unicastSettingsContributor,
+			new Object[] {_elasticsearchConfigurationProperties});
 
 		embeddedElasticsearchConnection.addSettingsContributor(
 			unicastSettingsContributor);
@@ -173,7 +180,7 @@ public class ElasticsearchFixture {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			new EmbeddedElasticsearchConnection();
 
-		addUnicast(embeddedElasticsearchConnection);
+		addUnicastSettingsContributor(embeddedElasticsearchConnection);
 
 		Props props = Mockito.mock(Props.class);
 
@@ -183,6 +190,8 @@ public class ElasticsearchFixture {
 			_tmpDirName
 		);
 
+		embeddedElasticsearchConnection.setClusterSettingsContext(
+			_clusterSettingsContext);
 		embeddedElasticsearchConnection.setProps(props);
 
 		embeddedElasticsearchConnection.activate(
@@ -195,8 +204,25 @@ public class ElasticsearchFixture {
 		FileUtils.deleteDirectory(new File(_tmpDirName));
 	}
 
+	protected void execute(
+		Class<?> clazz, String methodName, Class<?>[] parameterTypes,
+		Object instance, Object[] parameters) {
+
+		try {
+			Method activateMethod = clazz.getDeclaredMethod(
+				methodName, parameterTypes);
+
+			activateMethod.setAccessible(true);
+
+			activateMethod.invoke(instance, parameters);
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
 	private ClusterSettingsContext _clusterSettingsContext;
-	private final HashMap<String, Object> _elasticsearchConfigurationProperties;
+	private final Map<String, Object> _elasticsearchConfigurationProperties;
 	private ElasticsearchConnection _elasticsearchConnection;
 	private final String _tmpDirName;
 

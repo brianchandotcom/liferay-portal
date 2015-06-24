@@ -25,6 +25,7 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
+import java.util.Set;
 
 /**
  * @author Roberto Díaz
@@ -43,10 +44,10 @@ public class BrowserTag extends IncludeTag {
 		_itemSelectedEventName = itemSelectedEventName;
 	}
 
-	public void setItemSelectorReturnType(
-		ItemSelectorReturnType itemSelectorReturnType) {
+	public void setDesiredItemSelectorReturnTypes(
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
-		_itemSelectorReturnType = itemSelectorReturnType;
+		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class BrowserTag extends IncludeTag {
 		_displayStyle = null;
 		_displayStyleURL = null;
 		_itemSelectedEventName = null;
-		_itemSelectorReturnType = null;
+		_desiredItemSelectorReturnTypes = null;
 		_searchContainer = null;
 		_tabName = null;
 		_uploadMessage = null;
@@ -117,7 +118,7 @@ public class BrowserTag extends IncludeTag {
 			_itemSelectedEventName);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:itemSelectorReturnType",
-			_itemSelectorReturnType);
+			_desiredItemSelectorReturnTypes);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchContainer",
 			_searchContainer);
@@ -132,10 +133,10 @@ public class BrowserTag extends IncludeTag {
 
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
+	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
 	private PortletURL _displayStyleURL;
 	private String _itemSelectedEventName;
-	private ItemSelectorReturnType _itemSelectorReturnType;
 	private SearchContainer<?> _searchContainer;
 	private String _tabName;
 	private String _uploadMessage;

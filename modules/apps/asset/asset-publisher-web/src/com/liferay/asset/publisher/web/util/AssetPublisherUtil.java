@@ -52,7 +52,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -905,7 +905,8 @@ public class AssetPublisherUtil {
 			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
 
 			if (!childGroup.hasAncestor(siteGroupId)) {
-				throw new PrincipalException();
+				throw new ConfigurationException.MustHaveAncestor(
+					childGroupId, siteGroupId);
 			}
 
 			return childGroupId;
@@ -923,7 +924,8 @@ public class AssetPublisherUtil {
 			Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
 			if (scopeGroup == null) {
-				throw new PrincipalException();
+				throw new ConfigurationException.MustHaveValidScopeGroupId(
+					scopeGroupId);
 			}
 
 			return scopeGroupId;
@@ -984,13 +986,15 @@ public class AssetPublisherUtil {
 			Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
 
 			if (!SitesUtil.isContentSharingWithChildrenEnabled(parentGroup)) {
-				throw new PrincipalException();
+				throw new ConfigurationException.MustHaveContentSharingWithChildrenEnabled(
+					parentGroupId);
 			}
 
 			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
 
 			if (!group.hasAncestor(parentGroupId)) {
-				throw new PrincipalException();
+				throw new ConfigurationException.MustHaveAncestor(
+					siteGroupId, parentGroupId);
 			}
 
 			return parentGroupId;

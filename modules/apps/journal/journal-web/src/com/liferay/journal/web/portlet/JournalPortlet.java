@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.TrashedModel;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -1050,6 +1051,8 @@ public class JournalPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		if (SessionErrors.contains(
+				renderRequest, ConfigurationException.class.getName()) ||
+			SessionErrors.contains(
 				renderRequest, NoSuchArticleException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, NoSuchFeedException.class.getName()) ||

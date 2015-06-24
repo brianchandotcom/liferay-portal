@@ -674,7 +674,7 @@
 	Liferay.provide(
 		Portlet,
 		'openWindow',
-		function(portlet, portletId, url, namespacedId, windowTitle) {
+		function(portlet, portletId, url, namespacedId, windowTitle, windowSubtitle) {
 			var instance = this;
 
 			portlet = A.one(portlet);
@@ -689,8 +689,12 @@
 						titleHtml = title.one('.portlet-title-text').outerHTML() + ' - ' + titleHtml;
 					}
 					else {
-						titleHtml = title.html() + ' - ' + titleHtml;
+						titleHtml = title.text() + ' - ' + titleHtml;
 					}
+				}
+
+				if (windowSubtitle) {
+					titleHtml += '<div class="portlet-configuration-subtitle small"><span class="portlet-configuration-subtitle-text">' + windowSubtitle + '</span></div>';
 				}
 
 				Liferay.Util.openWindow(
@@ -703,6 +707,14 @@
 						id: namespacedId + 'configurationIframeDialog',
 						title: titleHtml,
 						uri: url
+					},
+					function(dialog) {
+						dialog.once(
+							'drag:init',
+							function() {
+								dialog.dd.addInvalid('.portlet-configuration-subtitle-text');
+							}
+						);
 					}
 				);
 			}

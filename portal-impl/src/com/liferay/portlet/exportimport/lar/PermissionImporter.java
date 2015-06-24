@@ -87,10 +87,10 @@ public class PermissionImporter {
 				companyId, team.getTeamId());
 		}
 		else {
-			role = layoutCache.getRoleByCompanyIdAndUuid(companyId, uuid);
+			role = layoutCache.getRoleByUuid(companyId, uuid);
 
 			if (role == null) {
-				role = layoutCache.getRoleByCompanyIdAndName(companyId, name);
+				role = layoutCache.getRoleByName(companyId, name);
 			}
 		}
 

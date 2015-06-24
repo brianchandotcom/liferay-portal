@@ -81,16 +81,16 @@ public class LayoutCache {
 		return users;
 	}
 
-	protected Role getRoleByCompanyIdAndName(long companyId, String roleName)
+	protected Role getRoleByName(long companyId, String roleName)
 		throws PortalException {
 
-		Role role = roleNameMap.get(roleName);
+		Role role = nameRolesMap.get(roleName);
 
 		if (role == null) {
 			try {
 				role = RoleLocalServiceUtil.getRole(companyId, roleName);
 
-				roleNameMap.put(roleName, role);
+				nameRolesMap.put(roleName, role);
 			}
 			catch (NoSuchRoleException nsre) {
 			}
@@ -99,17 +99,17 @@ public class LayoutCache {
 		return role;
 	}
 
-	protected Role getRoleByCompanyIdAndUuid(long companyId, String uuid)
+	protected Role getRoleByUuid(long companyId, String uuid)
 		throws PortalException {
 
-		Role role = roleUuidMap.get(uuid);
+		Role role = uuidRolesMap.get(uuid);
 
 		if (role == null) {
 			try {
 				role = RoleLocalServiceUtil.getRoleByUuidAndCompanyId(
 					uuid, companyId);
 
-				roleUuidMap.put(uuid, role);
+				uuidRolesMap.put(uuid, role);
 			}
 			catch (NoSuchRoleException nsre) {
 			}
@@ -132,8 +132,8 @@ public class LayoutCache {
 
 	protected Map<Long, List<Role>> groupRolesMap = new HashMap<>();
 	protected Map<Long, List<User>> groupUsersMap = new HashMap<>();
-	protected Map<String, Role> roleNameMap = new HashMap<>();
-	protected Map<String, Role> roleUuidMap = new HashMap<>();
+	protected Map<String, Role> nameRolesMap = new HashMap<>();
 	protected Map<Long, List<Role>> userRolesMap = new HashMap<>();
+	protected Map<String, Role> uuidRolesMap = new HashMap<>();
 
 }

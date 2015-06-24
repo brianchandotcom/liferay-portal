@@ -14,6 +14,8 @@
 
 package com.liferay.journal.transformer;
 
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -50,7 +52,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.xsl.XSLTemplateResource;
 import com.liferay.portal.xsl.XSLURIResolver;
 
@@ -81,11 +82,16 @@ public class JournalTransformer {
 	public JournalTransformer(
 		String errorTemplatePropertyKey, boolean restricted) {
 
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
+			classLoader, "portlet");
+
 		Set<String> langTypes = TemplateManagerUtil.getSupportedLanguageTypes(
 			errorTemplatePropertyKey);
 
 		for (String langType : langTypes) {
-			String errorTemplateId = PropsUtil.get(
+			String errorTemplateId = configuration.get(
 				errorTemplatePropertyKey, new Filter(langType));
 
 			if (Validator.isNotNull(errorTemplateId)) {
@@ -104,8 +110,11 @@ public class JournalTransformer {
 
 		ClassLoader classLoader = getClass().getClassLoader();
 
+		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
+			classLoader, "portlet");
+
 		Set<String> transformerListenerClassNames = SetUtil.fromArray(
-			PropsUtil.getArray(transformerListenerPropertyKey));
+			configuration.getArray(transformerListenerPropertyKey));
 
 		for (String transformerListenerClassName :
 				transformerListenerClassNames) {

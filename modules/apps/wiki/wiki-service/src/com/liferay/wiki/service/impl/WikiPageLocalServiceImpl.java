@@ -167,7 +167,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		validate(title, nodeId, content, format);
 
 		long resourcePrimKey =
-			wikiPageResourceLocalService.getPageResourcePrimKey(nodeId, title);
+			wikiPageResourceLocalService.getPageResourcePrimKey(
+				node.getGroupId(), nodeId, title);
 
 		WikiPage page = wikiPagePersistence.create(pageId);
 
@@ -701,15 +702,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		if (pageResource != null) {
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put("version", page.getVersion());
-
 			systemEventLocalService.addSystemEvent(
 				0, page.getGroupId(), page.getModelClassName(),
 				page.getPrimaryKey(), pageResource.getUuid(), null,
-				SystemEventConstants.TYPE_DELETE,
-				extraDataJSONObject.toString());
+				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 	}
 
@@ -3262,7 +3258,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		long resourcePrimKey =
 			wikiPageResourceLocalService.getPageResourcePrimKey(
-				oldPage.getNodeId(), oldPage.getTitle());
+				oldPage.getGroupId(), oldPage.getNodeId(), oldPage.getTitle());
 
 		Date now = new Date();
 

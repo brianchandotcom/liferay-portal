@@ -66,6 +66,7 @@
 	<model name="com.liferay.wiki.model.WikiPageResource">
 		<field name="uuid" type="String" />
 		<field name="resourcePrimKey" type="long" />
+		<field name="groupId" type="long" />
 		<field name="nodeId" type="long" />
 		<field name="title" type="String">
 			<hint name="max-length">255</hint>

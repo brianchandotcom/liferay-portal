@@ -22,6 +22,7 @@ import com.liferay.wiki.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletSettings;
+import com.liferay.wiki.upgrade.v1_0_0.UpgradeWikiPageResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,7 @@ public class WikiServiceUpgrade {
 
 		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
+		upgradeProcesses.add(new UpgradeWikiPageResource());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.wiki.service", upgradeProcesses, 1, 1, false);

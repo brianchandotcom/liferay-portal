@@ -43,6 +43,16 @@ public class WikiPageResourceLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.wiki.model.WikiPageResource addPageResource(
+		long groupId, long nodeId, java.lang.String title) {
+		return getService().addPageResource(groupId, nodeId, title);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addPageResource(long, long,
+	String)}
+	*/
+	@Deprecated
+	public static com.liferay.wiki.model.WikiPageResource addPageResource(
 		long nodeId, java.lang.String title) {
 		return getService().addPageResource(nodeId, title);
 	}
@@ -200,6 +210,18 @@ public class WikiPageResourceLocalServiceUtil {
 		return getService().fetchWikiPageResource(resourcePrimKey);
 	}
 
+	/**
+	* Returns the wiki page resource matching the UUID and group.
+	*
+	* @param uuid the wiki page resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	*/
+	public static com.liferay.wiki.model.WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchWikiPageResourceByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -225,6 +247,16 @@ public class WikiPageResourceLocalServiceUtil {
 		return getService().getPageResource(pageResourcePrimKey);
 	}
 
+	public static long getPageResourcePrimKey(long groupId, long nodeId,
+		java.lang.String title) {
+		return getService().getPageResourcePrimKey(groupId, nodeId, title);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getPageResourcePrimKey(long,
+	long, String)}
+	*/
+	@Deprecated
 	public static long getPageResourcePrimKey(long nodeId,
 		java.lang.String title) {
 		return getService().getPageResourcePrimKey(nodeId, title);
@@ -247,6 +279,20 @@ public class WikiPageResourceLocalServiceUtil {
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWikiPageResource(resourcePrimKey);
+	}
+
+	/**
+	* Returns the wiki page resource matching the UUID and group.
+	*
+	* @param uuid the wiki page resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page resource
+	* @throws PortalException if a matching wiki page resource could not be found
+	*/
+	public static com.liferay.wiki.model.WikiPageResource getWikiPageResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getWikiPageResourceByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**

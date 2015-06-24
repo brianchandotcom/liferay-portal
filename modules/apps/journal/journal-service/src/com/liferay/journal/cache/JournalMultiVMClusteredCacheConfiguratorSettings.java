@@ -17,7 +17,10 @@ package com.liferay.journal.cache;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -36,6 +39,10 @@ public class JournalMultiVMClusteredCacheConfiguratorSettings
 			JournalMultiVMClusteredCacheConfiguratorSettings.
 				class.getClassLoader(),
 			"META-INF/module-multi-vm-clustered.xml");
+	}
+
+	@Reference(target = "(original.bean=true)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

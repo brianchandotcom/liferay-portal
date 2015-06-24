@@ -23,7 +23,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
-page import="com.liferay.item.selector.criteria.Base64ItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

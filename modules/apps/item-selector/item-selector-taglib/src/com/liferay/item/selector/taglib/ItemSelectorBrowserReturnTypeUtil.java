@@ -18,48 +18,47 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
+import java.util.Iterator;
 import java.util.Set;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class ItemSelectorBrowserReturnTypeUtil
 	implements ItemSelectorReturnType {
 
 	public static ItemSelectorReturnType
-		getFirstAvailableItemSelectorReturnType(
+		getExistingFileEntryReturnType(
 			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
-		for (ItemSelectorReturnType desiredItemSelectorReturnType :
-				desiredItemSelectorReturnTypes) {
+		return getFirstAvailableItemSelectorReturnType(
+			desiredItemSelectorReturnTypes, _existingFileEntryReturnTypeNames);
+	}
 
-			String className = ClassUtil.getClassName(
-				desiredItemSelectorReturnType);
+	public static ItemSelectorReturnType
+		getFirstAvailableDraggableFileReturnType(
+			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
-			if (className.equals(
-					Base64ItemSelectorReturnType.class.getName()) ||
-				className.equals(
-					FileEntryItemSelectorReturnType.class.getName()) ||
-				className.equals(URLItemSelectorReturnType.class.getName())) {
-
-				return desiredItemSelectorReturnType;
-			}
-		}
-
-		return null;
+		return getFirstAvailableItemSelectorReturnType(
+			desiredItemSelectorReturnTypes, _draggableFileReturnTypeNames);
 	}
 
 	public static String getValue(
 			ItemSelectorReturnType itemSelectorReturnType, FileEntry fileEntry,
-			ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay, PortletURL uploadURL)
 		throws Exception {
 
 		String className = ClassUtil.getClassName(itemSelectorReturnType);
@@ -71,6 +70,9 @@ public class ItemSelectorBrowserReturnTypeUtil
 					FileEntryItemSelectorReturnType.class.getName())) {
 
 			return getFileEntryValue(fileEntry, themeDisplay);
+		}
+		else if (className.equals(UploadableFileReturnType.class.getName())) {
+			return getUploadableFileValue(uploadURL);
 		}
 		else if (className.equals(URLItemSelectorReturnType.class.getName())) {
 			return getURLValue(fileEntry, themeDisplay);
@@ -95,11 +97,52 @@ public class ItemSelectorBrowserReturnTypeUtil
 		return fileEntryJSONObject.toString();
 	}
 
+	protected static ItemSelectorReturnType
+		getFirstAvailableItemSelectorReturnType(
+			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes,
+			Set<String> itemSelectorReturnTypeTypes) {
+
+		Iterator<ItemSelectorReturnType> iterator =
+			desiredItemSelectorReturnTypes.iterator();
+
+		ItemSelectorReturnType itemSelectorReturnType = iterator.next();
+
+		String className = ClassUtil.getClassName(itemSelectorReturnType);
+
+		if (itemSelectorReturnTypeTypes.contains(className)) {
+			return itemSelectorReturnType;
+		}
+
+		return null;
+	}
+
 	protected static String getURLValue(
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 	}
+
+	private static String getUploadableFileValue(PortletURL uploadURL) {
+		JSONObject base64JSONObject = JSONFactoryUtil.createJSONObject();
+
+		base64JSONObject.put("file", StringPool.BLANK);
+		base64JSONObject.put("uploadURL", uploadURL);
+
+		return base64JSONObject.toString();
+	}
+
+	private static final Set<String> _draggableFileReturnTypeNames =
+		SetUtil.fromArray(
+			new String[] {
+				ClassUtil.getClassName(new Base64ItemSelectorReturnType()),
+				ClassUtil.getClassName(new UploadableFileReturnType())
+			});
+	private static final Set<String> _existingFileEntryReturnTypeNames =
+		SetUtil.fromArray(
+			new String[] {
+				ClassUtil.getClassName(new FileEntryItemSelectorReturnType()),
+				ClassUtil.getClassName(new URLItemSelectorReturnType())
+			});
 
 }

@@ -34,7 +34,9 @@ public class AssetCategoryPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, category, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), AssetCategory.class.getName(),
+				category.getCategoryId(), actionId);
 		}
 	}
 
@@ -44,7 +46,9 @@ public class AssetCategoryPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, categoryId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), AssetCategory.class.getName(),
+				categoryId, actionId);
 		}
 	}
 
@@ -54,7 +58,9 @@ public class AssetCategoryPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, categoryId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), AssetCategory.class.getName(),
+				categoryId, actionId);
 		}
 	}
 

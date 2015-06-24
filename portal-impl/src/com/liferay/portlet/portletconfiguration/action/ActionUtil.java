@@ -131,7 +131,9 @@ public class ActionUtil {
 				permissionChecker, themeDisplay.getScopeGroupId(), layout,
 				portletId, ActionKeys.CONFIGURATION)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Portlet.class.getName(),
+				portletId, ActionKeys.CONFIGURATION);
 		}
 
 		return PortletLocalServiceUtil.getPortletById(

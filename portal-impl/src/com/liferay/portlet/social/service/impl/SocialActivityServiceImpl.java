@@ -261,7 +261,8 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 				StringPool.BLANK);
 
 		if (!hasPermission(activity, activityInterpreters)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				0, SocialActivity.class.getName(), activityId);
 		}
 
 		return activity;
@@ -402,7 +403,8 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 				StringPool.BLANK);
 
 		if (!hasPermission(activity, activityInterpreters)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				0, SocialActivity.class.getName(), mirrorActivityId);
 		}
 
 		return activity;

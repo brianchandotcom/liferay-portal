@@ -44,9 +44,13 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, resourcePrimKey, actionId)) {
-			throw new PrincipalException();
+		WikiPage page = WikiPageLocalServiceUtil.fetchPage(resourcePrimKey);
+
+		if (page == null) {
+			page = WikiPageLocalServiceUtil.getPageByPageId(resourcePrimKey);
 		}
+
+		check(permissionChecker, page, actionId);
 	}
 
 	public static void check(
@@ -55,7 +59,9 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, nodeId, title, version, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), WikiNode.class.getName(), nodeId,
+				actionId);
 		}
 	}
 
@@ -65,7 +71,9 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, nodeId, title, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), WikiNode.class.getName(), nodeId,
+				actionId);
 		}
 	}
 
@@ -74,7 +82,9 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, page, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), WikiPage.class.getName(),
+				page.getPageId(), actionId);
 		}
 	}
 

@@ -29,7 +29,8 @@ public class DDMPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, name, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), name, groupId, actionId);
 		}
 	}
 

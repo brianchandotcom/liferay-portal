@@ -33,7 +33,9 @@ public class DDMStructurePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, structure, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDMStructure.class.getName(),
+				structure.getStructureId(), actionId);
 		}
 	}
 
@@ -42,12 +44,10 @@ public class DDMStructurePermission {
 			String structureKey, String actionId)
 		throws PortalException {
 
-		if (!contains(
-				permissionChecker, groupId, classNameId, structureKey,
-				actionId)) {
+		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			groupId, classNameId, structureKey, true);
 
-			throw new PrincipalException();
-		}
+		check(permissionChecker, structure, actionId);
 	}
 
 	public static void check(
@@ -56,7 +56,9 @@ public class DDMStructurePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, structureId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDMStructure.class.getName(),
+				structureId, actionId);
 		}
 	}
 

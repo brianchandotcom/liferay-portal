@@ -31,7 +31,9 @@ public class CalEventPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, event, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), CalEvent.class.getName(),
+				event.getEventId(), actionId);
 		}
 	}
 
@@ -40,7 +42,9 @@ public class CalEventPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, eventId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), CalEvent.class.getName(),
+				eventId, actionId);
 		}
 	}
 

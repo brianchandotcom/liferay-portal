@@ -272,7 +272,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest, NoSuchRoleException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include("/error.jsp", renderRequest, renderResponse);
 		}

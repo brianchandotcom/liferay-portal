@@ -71,7 +71,8 @@ public class CommonPermissionImpl implements CommonPermission {
 				_log.warn("Invalid class name " + className);
 			}
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), className, classPK, actionId);
 		}
 	}
 

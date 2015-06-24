@@ -57,6 +57,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutURLUtil;
@@ -245,7 +246,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (mbGroupServiceSettings != null) {
 			if (!mbGroupServiceSettings.isAllowAnonymousPosting()) {
 				if (anonymous || user.isDefaultUser()) {
-					throw new PrincipalException();
+					throw new PrincipalException.MustHavePermission(
+						userId, ActionKeys.ADD_MESSAGE);
 				}
 			}
 		}

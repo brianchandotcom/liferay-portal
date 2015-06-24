@@ -6390,6 +6390,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<antcall target="rebuild-database" inheritAll="false" />
 
+		<antcall target="delete-liferay-home" />
+
 		<ant dir="modules" target="test-class-group" inheritAll="false" />
 
 		<ant dir="portal-service" target="test-class" inheritAll="false">

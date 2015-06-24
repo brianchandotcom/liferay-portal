@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENTIONS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Mentions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAIL_HOST_NAMES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Mail Host Names')]</td>
 	<td></td>

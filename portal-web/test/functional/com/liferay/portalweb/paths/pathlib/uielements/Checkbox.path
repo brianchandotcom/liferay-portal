@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENTIONS_CHECKBOX_DISABLED</td>
+	<td>//input[contains(@id,'mentionsEnabled') and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE_WITH_PARENT_FOLDER</td>
 	<td>//input[contains(@id,'mergeWithParentFolder')]</td>
 	<td></td>

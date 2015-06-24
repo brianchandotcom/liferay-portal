@@ -351,11 +351,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (!fileName.startsWith("build") && !fileName.contains("/build")) {
+		if (!fileName.startsWith(
+				sourceFormatterArgs.getBaseDirName() + "build") &&
+			!fileName.contains("/build")) {
+
 			newContent = trimContent(newContent, false);
 		}
 
-		if (fileName.startsWith("build") ||
+		if (fileName.startsWith(
+				sourceFormatterArgs.getBaseDirName() + "build") ||
 			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
 
 			newContent = formatAntXML(fileName, newContent);
@@ -420,38 +424,40 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixAntXMLProjectName(String fileName, String content) {
-		int x = 0;
+		String baseDirName = sourceFormatterArgs.getBaseDirName();
+
+		int x = baseDirName.length();
 
 		if (fileName.endsWith("-ext/build.xml")) {
-			if (fileName.startsWith("ext/")) {
-				x = 4;
+			if (fileName.startsWith(baseDirName + "ext/")) {
+				x += 4;
 			}
 		}
 		else if (fileName.endsWith("-hook/build.xml")) {
-			if (fileName.startsWith("hooks/")) {
-				x = 6;
+			if (fileName.startsWith(baseDirName + "hooks/")) {
+				x += 6;
 			}
 		}
 		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			if (fileName.startsWith("layouttpl/")) {
-				x = 10;
+			if (fileName.startsWith(baseDirName + "layouttpl/")) {
+				x += 10;
 			}
 		}
 		else if (fileName.endsWith("-portlet/build.xml")) {
-			if (fileName.startsWith("portlets/")) {
-				x = 9;
+			if (fileName.startsWith(baseDirName + "portlets/")) {
+				x += 9;
 			}
 		}
 		else if (fileName.endsWith("-theme/build.xml")) {
-			if (fileName.startsWith("themes/")) {
-				x = 7;
+			if (fileName.startsWith(baseDirName + "themes/")) {
+				x += 7;
 			}
 		}
 		else if (fileName.endsWith("-web/build.xml") &&
 				 !fileName.endsWith("/ext-web/build.xml")) {
 
-			if (fileName.startsWith("webs/")) {
-				x = 5;
+			if (fileName.startsWith(baseDirName + "webs/")) {
+				x += 5;
 			}
 		}
 		else {

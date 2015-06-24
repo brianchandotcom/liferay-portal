@@ -725,7 +725,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		File file = new File(sourceFormatterArgs.getBaseDirName() + fileName);
+		File file = new File(fileName);
 
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
@@ -834,7 +834,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		for (String fileName : fileNames) {
-			if (!fileName.startsWith("shared")) {
+			if (!fileName.startsWith(
+					sourceFormatterArgs.getBaseDirName() + "shared")) {
+
 				break;
 			}
 
@@ -1026,11 +1028,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected Properties getLanguageProperties(String fileName) {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
 		int pos = fileName.indexOf("/docroot/");
-
-		sb.append(sourceFormatterArgs.getBaseDirName());
 
 		if (pos != -1) {
 			sb.append(fileName.substring(0, pos + 9));

@@ -494,8 +494,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
 			for (String fileName : fileNames) {
-				File file = new File(
-					sourceFormatterArgs.getBaseDirName() + fileName);
+				File file = new File(fileName);
 
 				fileName = StringUtil.replace(
 					fileName, StringPool.BACK_SLASH, StringPool.SLASH);

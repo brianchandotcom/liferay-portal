@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
-	public void addComment(
+	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
@@ -86,10 +86,12 @@ public class MBCommentManagerImpl implements CommentManager {
 		ServiceContext serviceContext = serviceContextFunction.apply(
 			MBMessage.class.getName());
 
-		_mbMessageLocalService.addDiscussionMessage(
+		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
 			userId, StringPool.BLANK, groupId, className, classPK,
 			thread.getThreadId(), thread.getRootMessageId(), StringPool.BLANK,
 			body, serviceContext);
+
+		return mbMessage.getMessageId();
 	}
 
 	@Override

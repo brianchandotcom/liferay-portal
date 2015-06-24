@@ -6,10 +6,10 @@
 	var entities = A.merge(
 		Liferay.Util.MAP_HTML_CHARS_ESCAPED,
 		{
-			'[': '&#91;',
-			']': '&#93;',
 			'(': '&#40;',
-			')': '&#41;'
+			')': '&#41;',
+			'[': '&#91;',
+			']': '&#93;'
 		}
 	);
 
@@ -45,7 +45,7 @@
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	var isString = function(val) {
-		return (typeof val == 'string');
+		return typeof val == 'string';
 	};
 
 	var ELEMENTS_BLOCK = {
@@ -80,6 +80,8 @@
 		'u': 1,
 		'url': 1
 	};
+
+	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	var STR_TAG_CODE = 'code';
 
@@ -123,7 +125,7 @@
 
 			var token;
 
-			while ((token = lexer.getNextToken())) {
+			while (token = lexer.getNextToken()) {
 				instance._handleData(token, data);
 
 				if (token[1]) {
@@ -166,9 +168,13 @@
 			var lastIndex = length;
 
 			if (token) {
-				length = token.index;
+				var tokenItem = token[1] || token[3];
 
-				lastIndex = instance._lexer.getLastIndex();
+				if (instance._isValidTag(tokenItem)) {
+					length = token.index;
+
+					lastIndex = instance._lexer.getLastIndex();
+				}
 			}
 
 			if (length > instance._dataPointer) {
@@ -190,9 +196,9 @@
 
 			var stack = instance._stack;
 
-			if (token) {
-				var tagName;
+			var tagName;
 
+			if (token) {
 				if (isString(token)) {
 					tagName = token;
 				}
@@ -209,7 +215,7 @@
 				}
 			}
 
-			if (pos >= 0) {
+			if (pos >= 0 && instance._isValidTag(tagName)) {
 				var tokenTagEnd = Parser.TOKEN_TAG_END;
 
 				for (var i = stack.length - 1; i >= pos; i--) {
@@ -230,29 +236,41 @@
 
 			var tagName = token[1].toLowerCase();
 
-			var stack = instance._stack;
+			if (instance._isValidTag(tagName)) {
+				var stack = instance._stack;
 
-			if (hasOwnProperty.call(ELEMENTS_BLOCK, tagName)) {
-				var lastTag;
+				if (hasOwnProperty.call(ELEMENTS_BLOCK, tagName)) {
+					var lastTag;
 
-				while ((lastTag = stack.last()) && hasOwnProperty.call(ELEMENTS_INLINE, lastTag)) {
-					instance._handleTagEnd(lastTag);
+					while ((lastTag = stack.last()) && hasOwnProperty.call(ELEMENTS_INLINE, lastTag)) {
+						instance._handleTagEnd(lastTag);
+					}
 				}
+
+				if (hasOwnProperty.call(ELEMENTS_CLOSE_SELF, tagName) && stack.last() == tagName) {
+					instance._handleTagEnd(tagName);
+				}
+
+				stack.push(tagName);
+
+				instance._result.push(
+					{
+						attribute: token[2],
+						type: Parser.TOKEN_TAG_START,
+						value: tagName
+					}
+				);
+			}
+		},
+
+		_isValidTag: function(tagName) {
+			var valid = false;
+
+			if (tagName && tagName.length) {
+				valid = REGEX_TAG_NAME.test(tagName);
 			}
 
-			if (hasOwnProperty.call(ELEMENTS_CLOSE_SELF, tagName) && stack.last() == tagName) {
-				instance._handleTagEnd(tagName);
-			}
-
-			stack.push(tagName);
-
-			instance._result.push(
-				{
-					attribute: token[2],
-					type: Parser.TOKEN_TAG_START,
-					value: tagName
-				}
-			);
+			return valid;
 		},
 
 		_reset: function() {
@@ -374,8 +392,6 @@
 	var REGEX_NUMBER = /^[\\.0-9]{1,8}$/;
 
 	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
-
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,2048}$|\${\S+}/i;
 
@@ -811,12 +827,10 @@
 
 			var tagName = token.value;
 
-			if (instance._isValidTag(tagName)) {
-				instance._result.push(instance._stack.pop());
+			instance._result.push(instance._stack.pop());
 
-				if (tagName == STR_CODE) {
-					instance._noParse = false;
-				}
+			if (tagName == STR_CODE) {
+				instance._noParse = false;
 			}
 		},
 
@@ -825,11 +839,9 @@
 
 			var tagName = token.value;
 
-			if (instance._isValidTag(tagName)) {
-				var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
+			var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
 
-				instance[handlerName](token);
-			}
+			instance[handlerName](token);
 		},
 
 		_handleTextAlign: function(token) {
@@ -854,16 +866,6 @@
 			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);
 
 			instance._stack.push(STR_TAG_A_CLOSE);
-		},
-
-		_isValidTag: function(tagName) {
-			var valid = false;
-
-			if (tagName && tagName.length) {
-				valid = REGEX_TAG_NAME.test(tagName);
-			}
-
-			return valid;
 		},
 
 		_reset: function() {

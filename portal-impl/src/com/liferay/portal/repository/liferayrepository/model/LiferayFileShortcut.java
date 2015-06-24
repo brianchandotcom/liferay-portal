@@ -138,6 +138,11 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _dlFileShortcut.getLastPublishDate();
+	}
+
+	@Override
 	public Object getModel() {
 		return _dlFileShortcut;
 	}
@@ -225,6 +230,11 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	@Override
 	public void setGroupId(long groupId) {
 		_dlFileShortcut.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_dlFileShortcut.setLastPublishDate(date);
 	}
 
 	@Override

@@ -178,6 +178,11 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _fileEntry.getLastPublishDate();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion() throws PortalException {
 		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 
@@ -430,6 +435,11 @@ public class FileEntryProxyBean
 	@Override
 	public void setGroupId(long groupId) {
 		_fileEntry.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_fileEntry.setLastPublishDate(date);
 	}
 
 	@Override

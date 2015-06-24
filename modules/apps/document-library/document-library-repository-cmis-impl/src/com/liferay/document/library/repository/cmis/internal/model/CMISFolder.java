@@ -182,6 +182,11 @@ public class CMISFolder extends CMISModel implements Folder {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return null;
+	}
+
+	@Override
 	public Object getModel() {
 		return _cmisFolder;
 	}
@@ -432,6 +437,10 @@ public class CMISFolder extends CMISModel implements Folder {
 	@Override
 	public void setGroupId(long groupId) {
 		_cmisRepository.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
 	}
 
 	@Override

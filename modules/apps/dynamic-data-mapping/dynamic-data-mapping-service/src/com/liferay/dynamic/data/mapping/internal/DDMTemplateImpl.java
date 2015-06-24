@@ -95,6 +95,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _ddmTemplate.getLastPublishDate();
+	}
+
+	@Override
 	public String getMode() {
 		return _ddmTemplate.getMode();
 	}
@@ -237,6 +242,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public void setGroupId(long groupId) {
 		_ddmTemplate.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddmTemplate.setLastPublishDate(lastPublishDate);
 	}
 
 	@Override

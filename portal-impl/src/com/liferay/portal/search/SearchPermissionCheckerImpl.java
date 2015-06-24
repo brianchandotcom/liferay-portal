@@ -252,16 +252,16 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			groupIdsToRoles);
 
 		return doGetPermissionFilter_6(
-			companyId, groupIds, userId, className, booleanFilter, groups,
-			roles, userGroupRoles, groupIdsToRoles, advancedPermissionChecker);
+			companyId, groupIds, userId, advancedPermissionChecker, className,
+			booleanFilter, groups, roles, userGroupRoles, groupIdsToRoles);
 	}
 
 	protected BooleanFilter doGetPermissionFilter_6(
-			long companyId, long[] groupIds, long userId, String className,
-			BooleanFilter booleanFilter, Set<Group> groups, Set<Role> roles,
-			Set<UserGroupRole> userGroupRoles,
-			Map<Long, List<Role>> groupIdsToRoles,
-			AdvancedPermissionChecker advancedPermissionChecker)
+			long companyId, long[] groupIds, long userId,
+			AdvancedPermissionChecker advancedPermissionChecker,
+			String className, BooleanFilter booleanFilter, Set<Group> groups,
+			Set<Role> roles, Set<UserGroupRole> userGroupRoles,
+			Map<Long, List<Role>> groupIdsToRoles)
 		throws Exception {
 
 		BooleanFilter permissionBooleanFilter = new BooleanFilter();

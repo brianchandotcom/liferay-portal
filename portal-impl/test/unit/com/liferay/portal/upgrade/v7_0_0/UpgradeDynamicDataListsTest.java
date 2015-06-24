@@ -70,7 +70,7 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 	}
 
 	@Test
-	public void testToXMLWihoutLocalizedData() throws Exception {
+	public void testToXMLWithoutLocalizedData() throws Exception {
 		Map<String, String> expandoValuesMap = new HashMap<>();
 
 		expandoValuesMap.put(

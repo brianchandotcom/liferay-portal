@@ -42,11 +42,11 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() {
-		String[] excludes = new String[] {"**\\WEB-INF\\tld\\**"};
+		String[] excludes = new String[] {"**/WEB-INF/tld/**"};
 
 		return getFileNames(excludes, getIncludes());
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**\\*.tld"};
+	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
 
 }

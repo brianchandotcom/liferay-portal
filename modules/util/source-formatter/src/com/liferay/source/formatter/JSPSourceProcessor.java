@@ -485,7 +485,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_unusedVariablesExclusionFiles = getPropertyList(
 			"jsp.unused.variables.excludes.files");
 
-		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
+		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
 
 		List<String> fileNames = getFileNames(excludes, getIncludes());
 
@@ -1553,7 +1553,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = new String[] {
-		"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
+		"**/*.jsp", "**/*.jspf", "**/*.vm"
 	};
 
 	private static final String[] _TAG_LIBRARIES = new String[] {

@@ -406,11 +406,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() {
 		String[] excludes = new String[] {
-			"**\\.bnd\\**", "**\\.idea\\**", "**\\.ivy\\**", "bin\\**",
-			"logs\\**", "portal-impl\\**\\*.action",
-			"portal-impl\\**\\*.function", "portal-impl\\**\\*.macro",
-			"portal-impl\\**\\*.testcase", "test-classes\\unit\\**",
-			"test-results\\**", "test\\unit\\**"
+			"**/.bnd/**", "**/.idea/**", "**/.ivy/**", "bin/**", "logs/**",
+			"portal-impl/**/*.action", "portal-impl/**/*.function",
+			"portal-impl/**/*.macro", "portal-impl/**/*.testcase",
+			"test-classes/unit/**", "test-results/**", "test/unit/**"
 		};
 
 		_numericalPortletNameElementExclusionFiles = getPropertyList(
@@ -1238,8 +1237,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = new String[] {
-		"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.testcase",
-		"**\\*.xml"
+		"**/*.action", "**/*.function", "**/*.macro", "**/*.testcase",
+		"**/*.xml"
 	};
 
 	private static final Pattern _commentPattern1 = Pattern.compile(

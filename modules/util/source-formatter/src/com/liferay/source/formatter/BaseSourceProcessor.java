@@ -815,7 +815,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Map<String, String> compatClassNamesMap = new HashMap<>();
 
 		String[] includes = new String[] {
-			"**\\portal-compat-shared\\src\\com\\liferay\\compat\\**\\*.java"
+			"**/portal-compat-shared/src/com/liferay/compat/**/*.java"
 		};
 
 		String basedir = sourceFormatterArgs.getBaseDirName();

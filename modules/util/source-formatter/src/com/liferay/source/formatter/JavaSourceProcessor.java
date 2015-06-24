@@ -2898,25 +2898,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = new TreeSet<>();
 
 		String[] excludes = new String[] {
-			"**\\model\\*Clp.java", "**\\model\\impl\\*BaseImpl.java",
-			"**\\model\\impl\\*Model.java", "**\\model\\impl\\*ModelImpl.java",
-			"**\\service\\**\\service\\*Service.java",
-			"**\\service\\**\\service\\*ServiceClp.java",
-			"**\\service\\**\\service\\*ServiceFactory.java",
-			"**\\service\\**\\service\\*ServiceUtil.java",
-			"**\\service\\**\\service\\*ServiceWrapper.java",
-			"**\\service\\**\\service\\ClpSerializer.java",
-			"**\\service\\**\\service\\messaging\\*ClpMessageListener.java",
-			"**\\service\\**\\service\\persistence\\*Finder.java",
-			"**\\service\\**\\service\\persistence\\*Util.java",
-			"**\\service\\base\\*ServiceBaseImpl.java",
-			"**\\service\\base\\*ServiceClpInvoker.java",
-			"**\\service\\http\\*JSONSerializer.java",
-			"**\\service\\http\\*ServiceHttp.java",
-			"**\\service\\http\\*ServiceJSON.java",
-			"**\\service\\http\\*ServiceSoap.java"
+			"**/model/*Clp.java", "**/model/impl/*BaseImpl.java",
+			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
+			"**/service/**/service/*Service.java",
+			"**/service/**/service/*ServiceClp.java",
+			"**/service/**/service/*ServiceFactory.java",
+			"**/service/**/service/*ServiceUtil.java",
+			"**/service/**/service/*ServiceWrapper.java",
+			"**/service/**/service/ClpSerializer.java",
+			"**/service/**/service/messaging/*ClpMessageListener.java",
+			"**/service/**/service/persistence/*Finder.java",
+			"**/service/**/service/persistence/*Util.java",
+			"**/service/base/*ServiceBaseImpl.java",
+			"**/service/base/*ServiceClpInvoker.java",
+			"**/service/http/*JSONSerializer.java",
+			"**/service/http/*ServiceHttp.java",
+			"**/service/http/*ServiceJSON.java",
+			"**/service/http/*ServiceSoap.java"
 		};
-		String[] includes = new String[] {"**\\*.java"};
+		String[] includes = new String[] {"**/*.java"};
 
 		fileNames.addAll(getFileNames(excludes, includes));
 
@@ -2927,39 +2927,37 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = new TreeSet<>();
 
 		String[] excludes = new String[] {
-			"**\\*_IW.java", "**\\PropsValues.java", "**\\counter\\service\\**",
-			"**\\jsp\\*", "**\\model\\impl\\*BaseImpl.java",
-			"**\\model\\impl\\*Model.java", "**\\model\\impl\\*ModelImpl.java",
-			"**\\portal\\service\\**", "**\\portal-client\\**",
-			"**\\portal-web\\test\\**\\*Test.java",
-			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
-			"**\\source\\formatter\\**"
+			"**/*_IW.java", "**/PropsValues.java", "**/counter/service/**",
+			"**/jsp/*", "**/model/impl/*BaseImpl.java",
+			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
+			"**/portal/service/**", "**/portal-client/**",
+			"**/portal-web/test/**/*Test.java", "**/portlet/**/service/**",
+			"**/test/*-generated/**", "**/source/formatter/**"
 		};
 		String[] includes = getIncludes();
 
 		fileNames.addAll(getFileNames(excludes, includes));
 
 		excludes = new String[] {
-			"**\\portal-client\\**", "**\\tools\\ext_tmpl\\**", "**\\*_IW.java",
-			"**\\test\\**\\*PersistenceTest.java", "**\\source\\formatter\\**"
+			"**/portal-client/**", "**/tools/ext_tmpl/**", "**/*_IW.java",
+			"**/test/**/*PersistenceTest.java", "**/source/formatter/**"
 		};
 		includes = new String[] {
-			"**\\com\\liferay\\portal\\service\\ServiceContext*.java",
-			"**\\model\\BaseModel.java", "**\\model\\impl\\BaseModelImpl.java",
-			"**\\portal-test\\**\\portal\\service\\**\\*.java",
-			"**\\service\\Base*.java",
-			"**\\service\\PersistedModelLocalService*.java",
-			"**\\service\\base\\PrincipalBean.java",
-			"**\\service\\http\\*HttpTest.java",
-			"**\\service\\http\\*SoapTest.java",
-			"**\\service\\http\\TunnelUtil.java", "**\\service\\impl\\*.java",
-			"**\\service\\jms\\*.java", "**\\service\\permission\\*.java",
-			"**\\service\\persistence\\BasePersistence.java",
-			"**\\service\\persistence\\BatchSession*.java",
-			"**\\service\\persistence\\*FinderImpl.java",
-			"**\\service\\persistence\\*Query.java",
-			"**\\service\\persistence\\impl\\*.java",
-			"**\\portal-impl\\test\\**\\*.java", "**\\util-bridges\\**\\*.java"
+			"**/com/liferay/portal/service/ServiceContext*.java",
+			"**/model/BaseModel.java", "**/model/impl/BaseModelImpl.java",
+			"**/portal-test/**/portal/service/**/*.java",
+			"**/service/Base*.java",
+			"**/service/PersistedModelLocalService*.java",
+			"**/service/base/PrincipalBean.java",
+			"**/service/http/*HttpTest.java", "**/service/http/*SoapTest.java",
+			"**/service/http/TunnelUtil.java", "**/service/impl/*.java",
+			"**/service/jms/*.java", "**/service/permission/*.java",
+			"**/service/persistence/BasePersistence.java",
+			"**/service/persistence/BatchSession*.java",
+			"**/service/persistence/*FinderImpl.java",
+			"**/service/persistence/*Query.java",
+			"**/service/persistence/impl/*.java",
+			"**/portal-impl/test/**/*.java", "**/util-bridges/**/*.java"
 		};
 
 		fileNames.addAll(getFileNames(excludes, includes));
@@ -3273,7 +3271,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return line;
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**\\*.java"};
+	private static final String[] _INCLUDES = new String[] {"**/*.java"};
 
 	private static final int _MAX_LINE_LENGTH = 80;
 

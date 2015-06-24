@@ -45,15 +45,15 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	public String[] getIncludes() {
 		if (portalSource) {
 			return new String[] {
-				"**\\portal.properties", "**\\portal-ext.properties",
-				"**\\portal-legacy-*.properties", "**\\portlet.properties",
-				"**\\source-formatter.properties"
+				"**/portal.properties", "**/portal-ext.properties",
+				"**/portal-legacy-*.properties", "**/portlet.properties",
+				"**/source-formatter.properties"
 			};
 		}
 
 		return new String[] {
-			"**\\portal.properties", "**\\portal-ext.properties",
-			"**\\portlet.properties", "**\\source-formatter.properties"
+			"**/portal.properties", "**/portal-ext.properties",
+			"**/portlet.properties", "**/source-formatter.properties"
 		};
 	}
 

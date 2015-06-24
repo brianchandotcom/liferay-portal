@@ -50,9 +50,9 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() {
 		String[] excludes = {
-			"**\\.ivy\\**", "**\\.sass-cache\\**", "**\\__MACOSX\\**",
-			"**\\aui_deprecated.css", "**\\expected\\**", "**\\js\\aui\\**",
-			"**\\js\\editor\\**", "**\\js\\misc\\**", "**\\VAADIN\\**"
+			"**/.ivy/**", "**/.sass-cache/**", "**/__MACOSX/**",
+			"**/aui_deprecated.css", "**/expected/**", "**/js/aui/**",
+			"**/js/editor/**", "**/js/misc/**", "**/VAADIN/**"
 		};
 
 		return getFileNames(excludes, getIncludes());
@@ -106,7 +106,7 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	private static final String[] _INCLUDES = {"**\\*.css"};
+	private static final String[] _INCLUDES = {"**/*.css"};
 
 	private final Pattern _commentPattern =
 		Pattern.compile("/\\* -+(.+)-+ \\*/");

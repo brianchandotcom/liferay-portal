@@ -39,13 +39,13 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() {
 		String[] excludes = new String[] {
-			"**\\journal\\dependencies\\template.ftl",
-			"**\\service\\builder\\dependencies\\props.ftl"
+			"**/journal/dependencies/template.ftl",
+			"**/service/builder/dependencies/props.ftl"
 		};
 
 		return getFileNames(excludes, getIncludes());
 	}
 
-	private static final String[] _INCLUDES = new String[] {"**\\*.ftl"};
+	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
 
 }

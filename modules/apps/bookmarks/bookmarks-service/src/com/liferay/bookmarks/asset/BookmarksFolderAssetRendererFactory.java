@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"search.asset.type=com.liferay.bookmarks.model.BookmarksFolder"
 	},
 	service = AssetRendererFactory.class
@@ -51,6 +52,8 @@ public class BookmarksFolderAssetRendererFactory
 
 	public BookmarksFolderAssetRendererFactory() {
 		setCategorizable(false);
+		setClassName(BookmarksFolder.class.getName());
+		setPortletId(BookmarksPortletKeys.BOOKMARKS);
 	}
 
 	@Override

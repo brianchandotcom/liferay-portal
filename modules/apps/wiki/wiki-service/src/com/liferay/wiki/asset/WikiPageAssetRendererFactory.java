@@ -45,7 +45,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"search.asset.type=com.liferay.wiki.model.WikiPage"},
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"search.asset.type=com.liferay.wiki.model.WikiPage"
+	},
 	service = AssetRendererFactory.class
 )
 public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
@@ -53,7 +56,9 @@ public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 	public static final String TYPE = "wiki";
 
 	public WikiPageAssetRendererFactory() {
+		setClassName(WikiPage.class.getName());
 		setLinkable(true);
+		setPortletId(WikiPortletKeys.WIKI);
 	}
 
 	@Override

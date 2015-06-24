@@ -300,21 +300,9 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		return _wikiPageService.getPagesCount(groupId, userId, nodeId, status);
 	}
 
-	@Override
-	public java.lang.String getPagesRSS(long companyId, long nodeId,
-		java.lang.String title, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
-		java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageService.getPagesRSS(companyId, nodeId, title, max,
-			type, version, displayStyle, feedURL, entryURL,
-			attachmentURLPrefix, locale);
-	}
-
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, long,
-	String, int, String, double, String, String, String, String,
+	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
+	int, String, double, String, String, String, String,
 	java.util.Locale)}
 	*/
 	@Deprecated
@@ -326,6 +314,17 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.getPagesRSS(companyId, nodeId, title, max,
 			type, version, displayStyle, feedURL, entryURL, locale);
+	}
+
+	@Override
+	public java.lang.String getPagesRSS(long nodeId, java.lang.String title,
+		int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
+		java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageService.getPagesRSS(nodeId, title, max, type, version,
+			displayStyle, feedURL, entryURL, attachmentURLPrefix, locale);
 	}
 
 	@Override

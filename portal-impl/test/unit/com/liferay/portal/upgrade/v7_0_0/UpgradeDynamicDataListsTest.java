@@ -229,8 +229,8 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 		whenLanguageGetAvailableLocalesThen(
 			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}));
 
-		whenLanguageIsAvailableLocale(LocaleUtil.US, true);
-		whenLanguageIsAvailableLocale(LocaleUtil.BRAZIL, true);
+		whenLanguageIsAvailableLocale(LocaleUtil.US);
+		whenLanguageIsAvailableLocale(LocaleUtil.BRAZIL);
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
@@ -319,13 +319,11 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 		);
 	}
 
-	protected void whenLanguageIsAvailableLocale(
-		Locale locale, boolean returnvalue) {
-
+	protected void whenLanguageIsAvailableLocale(Locale locale) {
 		when(
 			_language.isAvailableLocale(Matchers.eq(locale))
 		).thenReturn(
-			returnvalue
+			true
 		);
 	}
 

@@ -41,7 +41,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = new String[] {"**/WEB-INF/tld/**"};
 
 		return getFileNames(excludes, getIncludes());

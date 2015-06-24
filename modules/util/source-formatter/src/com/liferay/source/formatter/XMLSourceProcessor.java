@@ -404,7 +404,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = new String[] {
 			"**/.bnd/**", "**/.idea/**", "**/.ivy/**", "bin/**", "logs/**",
 			"portal-impl/**/*.action", "portal-impl/**/*.function",

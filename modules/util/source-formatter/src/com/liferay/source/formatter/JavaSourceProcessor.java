@@ -944,7 +944,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		Collection<String> fileNames = null;
 
 		if (portalSource) {
@@ -2894,7 +2894,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content.substring(nextLineStartPos, nextLineEndPos);
 	}
 
-	protected Collection<String> getPluginJavaFiles() {
+	protected Collection<String> getPluginJavaFiles() throws Exception {
 		Collection<String> fileNames = new TreeSet<>();
 
 		String[] excludes = new String[] {
@@ -2923,7 +2923,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return fileNames;
 	}
 
-	protected Collection<String> getPortalJavaFiles() {
+	protected Collection<String> getPortalJavaFiles() throws Exception {
 		Collection<String> fileNames = new TreeSet<>();
 
 		String[] excludes = new String[] {

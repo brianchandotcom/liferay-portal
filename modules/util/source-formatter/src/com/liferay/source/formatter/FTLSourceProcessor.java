@@ -37,7 +37,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = new String[] {
 			"**/journal/dependencies/template.ftl",
 			"**/service/builder/dependencies/props.ftl"

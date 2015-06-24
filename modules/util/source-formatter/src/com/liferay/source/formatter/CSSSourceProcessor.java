@@ -48,7 +48,7 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = {
 			"**/.ivy/**", "**/.sass-cache/**", "**/__MACOSX/**",
 			"**/aui_deprecated.css", "**/expected/**", "**/js/aui/**",

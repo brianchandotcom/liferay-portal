@@ -36,6 +36,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.Path;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -47,7 +49,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 /**
@@ -91,7 +92,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return errorMessages;
 	}
 
-	public final List<String> getFileNames() {
+	public final List<String> getFileNames() throws Exception {
 		List<String> fileNames = sourceFormatterArgs.getFileNames();
 
 		if (fileNames != null) {
@@ -464,10 +465,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception;
 
-	protected abstract List<String> doGetFileNames();
+	protected abstract List<String> doGetFileNames() throws Exception;
 
 	protected String fixCompatClassImports(String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
 		if (portalSource || !_usePortalCompatImport ||
 			absolutePath.contains("/ext-") ||
@@ -807,7 +808,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _annotationsExclusions;
 	}
 
-	protected Map<String, String> getCompatClassNamesMap() throws IOException {
+	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;
 		}
@@ -919,24 +920,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected List<String> getFileNames(
-		String basedir, String[] excludes, String[] includes) {
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
+			String basedir, String[] excludes, String[] includes)
+		throws Exception {
 
 		if (_excludes != null) {
 			excludes = ArrayUtil.append(excludes, _excludes);
 		}
 
-		directoryScanner.setExcludes(excludes);
-
-		directoryScanner.setIncludes(includes);
-
-		return _sourceFormatterHelper.scanForFiles(directoryScanner);
+		return _sourceFormatterHelper.scanForFiles(basedir, excludes, includes);
 	}
 
-	protected List<String> getFileNames(String[] excludes, String[] includes) {
+	protected List<String> getFileNames(String[] excludes, String[] includes)
+		throws Exception {
+
 		return getFileNames(
 			sourceFormatterArgs.getBaseDirName(), excludes, includes);
 	}
@@ -1575,16 +1571,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				System.getProperty("source.formatter.excludes")));
 
 		excludesList.addAll(getPropertyList("source.formatter.excludes"));
-
-		String[] includes = new String[] {"**\\source_formatter.ignore"};
-
-		List<String> ignoreFileNames = getFileNames(new String[0], includes);
-
-		for (String ignoreFileName : ignoreFileNames) {
-			excludesList.add(
-				ignoreFileName.substring(0, ignoreFileName.length() - 23) +
-					"**");
-		}
 
 		return excludesList.toArray(new String[excludesList.size()]);
 	}

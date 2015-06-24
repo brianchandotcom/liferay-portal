@@ -479,7 +479,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
 			getProperty("move.frequently.used.imports.to.common.init"));
 		_unusedVariablesExclusionFiles = getPropertyList(

@@ -304,6 +304,47 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	@Override
+	public void processAction(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		try {
+			String keywords = ParamUtil.getString(actionRequest, "keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				DynamicActionRequest dynamicActionRequest =
+					new DynamicActionRequest(actionRequest);
+
+				dynamicActionRequest.setParameter("keywords", StringPool.BLANK);
+
+				actionRequest = dynamicActionRequest;
+			}
+
+			String csv = getUsersCSV(actionRequest, actionResponse);
+
+			String fileName = "users.csv";
+			byte[] bytes = csv.getBytes();
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				actionResponse);
+
+			ServletResponseUtil.sendFile(
+				request, response, fileName, bytes, ContentTypes.TEXT_CSV_UTF8);
+
+			setForward(actionRequest, ActionConstants.COMMON_NULL);
+		}
+		catch (Exception e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			setForward(actionRequest, "portlet.users_admin.error");
+		}
+	}
+
 	public void restoreUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -832,6 +873,161 @@ public class UsersAdminPortlet extends MVCPortlet {
 			parameterValue, type);
 
 		return listType.getListTypeId();
+	}
+
+	protected String getUserCSV(User user) {
+		StringBundler sb = new StringBundler(
+			PropsValues.USERS_EXPORT_CSV_FIELDS.length * 2);
+
+		for (int i = 0; i < PropsValues.USERS_EXPORT_CSV_FIELDS.length; i++) {
+			String field = PropsValues.USERS_EXPORT_CSV_FIELDS[i];
+
+			if (field.equals("fullName")) {
+				sb.append(CSVUtil.encode(user.getFullName()));
+			}
+			else if (field.startsWith("expando:")) {
+				String attributeName = field.substring(8);
+
+				ExpandoBridge expandoBridge = user.getExpandoBridge();
+
+				sb.append(
+					CSVUtil.encode(expandoBridge.getAttribute(attributeName)));
+			}
+			else {
+				sb.append(
+					CSVUtil.encode(BeanPropertiesUtil.getString(user, field)));
+			}
+
+			if ((i + 1) < PropsValues.USERS_EXPORT_CSV_FIELDS.length) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		sb.append(StringPool.NEW_LINE);
+
+		return sb.toString();
+	}
+
+	protected List<User> getUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		boolean exportAllUsers = PortalPermissionUtil.contains(
+			permissionChecker, ActionKeys.EXPORT_USER);
+
+		if (!exportAllUsers &&
+			!PortletPermissionUtil.contains(
+				permissionChecker, PortletKeys.USERS_ADMIN,
+				ActionKeys.EXPORT_USER)) {
+
+			return Collections.emptyList();
+		}
+
+		PortletURL portletURL =
+			((ActionResponseImpl)actionResponse).createRenderURL(
+				PortletKeys.USERS_ADMIN);
+
+		UserSearch userSearch = new UserSearch(actionRequest, portletURL);
+
+		UserSearchTerms searchTerms =
+			(UserSearchTerms)userSearch.getSearchTerms();
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		long organizationId = searchTerms.getOrganizationId();
+
+		if (organizationId > 0) {
+			params.put("usersOrgs", Long.valueOf(organizationId));
+		}
+		else if (!exportAllUsers) {
+			User user = themeDisplay.getUser();
+
+			Long[] organizationIds = ArrayUtil.toArray(
+				user.getOrganizationIds(true));
+
+			if (organizationIds.length > 0) {
+				params.put("usersOrgs", organizationIds);
+			}
+		}
+
+		long roleId = searchTerms.getRoleId();
+
+		if (roleId > 0) {
+			params.put("usersRoles", Long.valueOf(roleId));
+		}
+
+		long userGroupId = searchTerms.getUserGroupId();
+
+		if (userGroupId > 0) {
+			params.put("usersUserGroups", Long.valueOf(userGroupId));
+		}
+
+		if (PropsValues.USERS_INDEXER_ENABLED &&
+			PropsValues.USERS_SEARCH_WITH_INDEX) {
+
+			params.put("expandoAttributes", searchTerms.getKeywords());
+		}
+
+		if (searchTerms.isAdvancedSearch()) {
+			return UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getFirstName(),
+				searchTerms.getMiddleName(), searchTerms.getLastName(),
+				searchTerms.getScreenName(), searchTerms.getEmailAddress(),
+				searchTerms.getStatus(), params, searchTerms.isAndOperator(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				(OrderByComparator<User>)null);
+		}
+		else {
+			return UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), params, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, (OrderByComparator<User>)null);
+		}
+	}
+
+	protected String getUsersCSV(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		List<User> users = getUsers(actionRequest, actionResponse);
+
+		if (users.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		String exportProgressId = ParamUtil.getString(
+			actionRequest, "exportProgressId");
+
+		ProgressTracker progressTracker = new ProgressTracker(exportProgressId);
+
+		progressTracker.start(actionRequest);
+
+		int percentage = 10;
+		int total = users.size();
+
+		progressTracker.setPercent(percentage);
+
+		StringBundler sb = new StringBundler(users.size());
+
+		for (int i = 0; i < users.size(); i++ ) {
+			User user = users.get(i);
+
+			sb.append(getUserCSV(user));
+
+			percentage = Math.min(10 + (i * 90) / total, 99);
+
+			progressTracker.setPercent(percentage);
+		}
+
+		progressTracker.finish(actionRequest);
+
+		return sb.toString();
 	}
 
 	@Override

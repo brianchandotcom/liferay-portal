@@ -460,7 +460,7 @@ urlConfigurationJSSB.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration
 urlConfigurationJSSB.append("', '");
 urlConfigurationJSSB.append(portletDisplay.getNamespace());
 urlConfigurationJSSB.append("', '");
-urlConfigurationJSSB.append(LanguageUtil.get(request, "configuration"));
+urlConfigurationJSSB.append(UnicodeLanguageUtil.get(request, "configuration"));
 urlConfigurationJSSB.append("', '");
 urlConfigurationJSSB.append(PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ? portletDisplay.getId() : StringPool.BLANK);
 urlConfigurationJSSB.append("'); return false;");

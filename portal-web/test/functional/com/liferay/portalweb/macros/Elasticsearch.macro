@@ -12,8 +12,8 @@
 				<var method="MathUtil#difference('${numberOfNodesCounter}', '1')" name="numberOfNodesCounter" />
 
 				<execute function="Open" locator1="http://localhost:920${numberOfNodesCounter}/_cluster/health?pretty=true" />
-				<execute function="AssertLocation" value1="http://localhost:920${numberOfNodesCounter}/_cluster/health?pretty=true" />
 
+				<execute function="AssertLocation" value1="http://localhost:920${numberOfNodesCounter}/_cluster/health?pretty=true" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;cluster_name&quot; : &quot;LiferayElasticSearch&quot;" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;status&quot; : &quot;green&quot;" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;timed_out&quot; : false" />

@@ -43,17 +43,27 @@ import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
 import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ProgressTracker;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -76,6 +86,7 @@ import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ListTypeLocalServiceUtil;
 import com.liferay.portal.service.OrgLaborServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
@@ -83,12 +94,17 @@ import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserGroupServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
@@ -96,7 +112,10 @@ import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.portlet.usersadmin.search.UserSearch;
+import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -104,6 +123,8 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -113,6 +134,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -304,45 +326,36 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void exportUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			String keywords = ParamUtil.getString(actionRequest, "keywords");
+		String keywords = ParamUtil.getString(actionRequest, "keywords");
 
-			if (Validator.isNotNull(keywords)) {
-				DynamicActionRequest dynamicActionRequest =
-					new DynamicActionRequest(actionRequest);
+		if (Validator.isNotNull(keywords)) {
+			DynamicActionRequest dynamicActionRequest =
+				new DynamicActionRequest(actionRequest);
 
-				dynamicActionRequest.setParameter("keywords", StringPool.BLANK);
+			dynamicActionRequest.setParameter("keywords", StringPool.BLANK);
 
-				actionRequest = dynamicActionRequest;
-			}
-
-			String csv = getUsersCSV(actionRequest, actionResponse);
-
-			String fileName = "users.csv";
-			byte[] bytes = csv.getBytes();
-
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
-
-			ServletResponseUtil.sendFile(
-				request, response, fileName, bytes, ContentTypes.TEXT_CSV_UTF8);
-
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
+			actionRequest = dynamicActionRequest;
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass());
 
-			setForward(actionRequest, "portlet.users_admin.error");
-		}
+		String csv = getUsersCSV(actionRequest, actionResponse);
+
+		String fileName = "users.csv";
+		byte[] bytes = csv.getBytes();
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		ServletResponseUtil.sendFile(
+			request, response, fileName, bytes, ContentTypes.TEXT_CSV_UTF8);
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, ActionConstants.COMMON_NULL);
 	}
 
 	public void restoreUsers(

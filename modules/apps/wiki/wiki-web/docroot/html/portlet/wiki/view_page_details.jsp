@@ -160,7 +160,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 				delta="<%= GetterUtil.getInteger(wikiGroupServiceSettings.rssDelta()) %>"
 				displayStyle="<%= wikiGroupServiceSettings.rssDisplayStyle() %>"
 				feedType="<%= wikiGroupServiceSettings.rssFeedType() %>"
-				url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() %>'
+				url='<%= themeDisplay.getPathMain() + "/wiki/rss?nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() %>'
 			/>
 		</td>
 	</tr>

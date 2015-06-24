@@ -55,6 +55,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.invocation.Gradle;
@@ -627,13 +628,13 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskDeployFrom(Copy deployTask) {
-		super.configureTaskDeployFrom(deployTask);
+	protected void configureTaskDeployFrom(Copy copy, CopySpec copySpec) {
+		super.configureTaskDeployFrom(copy, copySpec);
 
-		File wsddJarFile = getWSDDJarFile(deployTask.getProject());
+		File wsddJarFile = getWSDDJarFile(copy.getProject());
 
 		if (wsddJarFile.exists()) {
-			deployTask.from(wsddJarFile);
+			copySpec.from(wsddJarFile);
 		}
 	}
 

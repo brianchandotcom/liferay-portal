@@ -320,12 +320,11 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		buildXSDTask.setInputDir(inputDir);
 	}
 
-	@Override
-	protected void configureTaskDeployFrom(Copy deployTask) {
+	protected void configureTaskDeployFrom(Copy copy, CopySpec copySpec) {
 		War war = (War)GradleUtil.getTask(
-			deployTask.getProject(), WarPlugin.WAR_TASK_NAME);
+			copy.getProject(), WarPlugin.WAR_TASK_NAME);
 
-		deployTask.from(war.getOutputs());
+		copySpec.from(war.getOutputs());
 	}
 
 	protected void configureTaskDirectDeploy(

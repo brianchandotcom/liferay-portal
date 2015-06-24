@@ -18,7 +18,12 @@ import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 
@@ -55,7 +60,7 @@ public class JournalServiceUpgrade {
 	}
 
 	@Activate
-	protected void upgrade() throws PortalException {
+	protected void upgrade() throws Exception {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradeJournal());
@@ -68,7 +73,36 @@ public class JournalServiceUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);
+
+		// Delete temporary images
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Delete temporary images");
+		}
+
+		_deleteTempImages();
+
+		if (StartupHelperUtil.isUpgraded()) {
+			MultiVMPoolUtil.clear();
+		}
 	}
+
+	private void _deleteTempImages() throws Exception {
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQL(_DELETE_TEMP_IMAGES_1);
+		db.runSQL(_DELETE_TEMP_IMAGES_2);
+	}
+
+	private static final String _DELETE_TEMP_IMAGES_1 =
+		"delete from Image where imageId IN (SELECT articleImageId FROM " +
+			"JournalArticleImage where tempImage = TRUE)";
+
+	private static final String _DELETE_TEMP_IMAGES_2 =
+		"delete from JournalArticleImage where tempImage = TRUE";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalServiceUpgrade.class);
 
 	private ReleaseLocalService _releaseLocalService;
 

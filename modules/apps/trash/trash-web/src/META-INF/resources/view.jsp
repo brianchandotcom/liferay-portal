@@ -173,11 +173,6 @@ if (Validator.isNotNull(keywords)) {
 				viewContentURL.setParameter("trashEntryId", String.valueOf(entry.getEntryId()));
 			}
 
-			viewContentURL.setParameter("type", trashRenderer.getType());
-			viewContentURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
-			viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
-			viewContentURL.setParameter("showEditURL", Boolean.FALSE.toString());
-
 			viewContentURLString = viewContentURL.toString();
 		}
 		%>
@@ -209,10 +204,6 @@ if (Validator.isNotNull(keywords)) {
 
 					viewContentURL.setParameter("mvcPath", "/view_content.jsp");
 					viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
-					viewContentURL.setParameter("type", rootTrashRenderer.getType());
-					viewContentURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
-					viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
-					viewContentURL.setParameter("showEditURL", Boolean.FALSE.toString());
 
 					viewRootContentURLString = viewContentURL.toString();
 				}
@@ -233,7 +224,6 @@ if (Validator.isNotNull(keywords)) {
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
-			name="type"
 			orderable="<%= true %>"
 			value="<%= ResourceActionsUtil.getModelResource(locale, entry.getClassName()) %>"
 		/>

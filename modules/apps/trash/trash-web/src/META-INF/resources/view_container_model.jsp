@@ -26,18 +26,16 @@ long classNameId = ParamUtil.getLong(request, "classNameId");
 String className = PortalUtil.getClassName(classNameId);
 
 long classPK = ParamUtil.getLong(request, "classPK");
-
 boolean rootContainerModelMovable = ParamUtil.getBoolean(request, "rootContainerModelMovable");
-
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectContainer");
 
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 
 TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
-long containerModelClassNameId = ParamUtil.getLong(request, "containerModelClassNameId");
+long containerModelClassNameId = ParamUtil.getLong(request, "containerModelClassNameId", PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(classPK)));
 
-String containerModelClassName = ((containerModelClassNameId != 0) ? PortalUtil.getClassName(containerModelClassNameId) : trashHandler.getContainerModelClassName(classPK));
+String containerModelClassName = PortalUtil.getClassName(containerModelClassNameId);
 
 long containerModelId = ParamUtil.getLong(request, "containerModelId");
 
@@ -129,7 +127,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, co
 
 			long curContainerModelId = curContainerModel.getContainerModelId();
 
-				containerURL.setParameter("containerModelClassNameId", String.valueOf(PortalUtil.getClassNameId(curContainerModelTrashHandler.getClassName())));
+			containerURL.setParameter("containerModelClassNameId", String.valueOf(PortalUtil.getClassNameId(curContainerModelTrashHandler.getClassName())));
 			containerURL.setParameter("containerModelId", String.valueOf(curContainerModelId));
 			%>
 

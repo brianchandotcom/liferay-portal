@@ -3,50 +3,23 @@
 
 <routes>
 	<route>
-		<pattern>/{classNameId:\d+}/{classPK:\d+}/{containerModelClassNameId:\d+}/{containerModelId}/{rootContainerModelMovable}/view_container_model</pattern>
-		<implicit-parameter name="mvcPath">/view_container_model.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{classNameId:\d+}/{classPK:\d+}/{containerModelClassNameId:\d+}/view_container_model</pattern>
-		<implicit-parameter name="mvcPath">/view_container_model.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{type}/{classNameId:\d+}/{classPK:\d+}/view</pattern>
+		<pattern>/entry/{classNameId:\d+}/{classPK:\d+}</pattern>
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="showActions">false</implicit-parameter>
-		<implicit-parameter name="showEditURL">false</implicit-parameter>
-		<implicit-parameter name="status">8</implicit-parameter>
+		<overridden-parameter name="showActions">false</overridden-parameter>
+		<overridden-parameter name="showEditURL">false</overridden-parameter>
+		<overridden-parameter name="status">8</overridden-parameter>
 	</route>
 	<route>
-		<pattern>/{classNameId:\d+}/{classPK:\d+}/view</pattern>
+		<pattern>/entry/{trashEntryId:\d+}</pattern>
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="status">8</implicit-parameter>
+		<overridden-parameter name="showActions">false</overridden-parameter>
+		<overridden-parameter name="showEditURL">false</overridden-parameter>
+		<overridden-parameter name="status">8</overridden-parameter>
 	</route>
 	<route>
-		<pattern>/{type}/{trashEntryId:\d+}/view</pattern>
-		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="showActions">false</implicit-parameter>
-		<implicit-parameter name="showEditURL">false</implicit-parameter>
-		<implicit-parameter name="status">8</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/{classNameId:\d+}/view</pattern>
-		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="status">8</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/restore</pattern>
-		<implicit-parameter name="mvcPath">/restore_entry.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/list</pattern>
+		<pattern>/entries</pattern>
 		<ignored-parameter name="mvcPath" />
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>

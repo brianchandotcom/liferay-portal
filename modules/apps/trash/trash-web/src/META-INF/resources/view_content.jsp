@@ -59,7 +59,6 @@
 
 	containerModelURL.setParameter("mvcPath", "/view_content.jsp");
 	containerModelURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(trashHandlerContainerModelClassName)));
-	containerModelURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 
 	TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, className, classPK, containerModelURL);
 
@@ -68,18 +67,15 @@
 
 		PortletURL redirectURL = renderResponse.createRenderURL();
 
-		if (parentContainerModel != null && classNameId > 0) {
-
-			long parentContainerModelId = parentContainerModel.getContainerModelId();
+		if ((parentContainerModel != null) && (classNameId > 0)) {
+			String parentContainerModelClassName = parentContainerModel.getModelClassName();
 
 			redirectURL.setParameter("mvcPath", "/view_content.jsp");
-			redirectURL.setParameter("classNameId", String.valueOf(classNameId));
-			redirectURL.setParameter("classPK", String.valueOf(parentContainerModelId));
-			redirectURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
+			redirectURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(parentContainerModelClassName)));
+			redirectURL.setParameter("classPK", String.valueOf(parentContainerModel.getContainerModelId()));
 		}
 
 		redirect = redirectURL.toString();
-
 	}
 	%>
 
@@ -231,7 +227,6 @@
 			iteratorURL.setParameter("mvcPath", "/view_content.jsp");
 			iteratorURL.setParameter("classNameId", String.valueOf(classNameId));
 			iteratorURL.setParameter("classPK", String.valueOf(classPK));
-			iteratorURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 
 			int containerModelsCount = trashHandler.getTrashContainerModelsCount(classPK);
 			int baseModelsCount = trashHandler.getTrashContainedModelsCount(classPK);
@@ -268,7 +263,6 @@
 								rowURL.setParameter("mvcPath", "/view_content.jsp");
 								rowURL.setParameter("classNameId", String.valueOf(curTrashHandlerClassNameId));
 								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
-								rowURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 								%>
 
 								<liferay-ui:search-container-column-text
@@ -330,7 +324,6 @@
 								rowURL.setParameter("mvcPath", "/view_content.jsp");
 								rowURL.setParameter("classNameId", String.valueOf(curTrashHandlerClassNameId));
 								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
-								rowURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 								%>
 
 								<liferay-ui:search-container-column-text

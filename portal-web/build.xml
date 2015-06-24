@@ -657,4 +657,20 @@ Please set the property "jdk.7.home" in build.properties.
 			</metainf>
 		</war>
 	</target>
+
+	<target name="watch-css">
+		<watch>
+			<when>
+				<target name="build-css"/>
+				<fileset dir="${basedir}/docroot">
+					<include name="html/portlet/**/*.css" />
+					<exclude name="html/portlet/**/.sass-cache/*" />
+				</fileset>
+			</when>
+		</watch>
+	</target>
+
+	<taskdef name="watch"
+			 classname="com.liferay.ant.watch.WatchTask"
+			 classpath="${project.dir}/lib/development/com.liferay.ant.watch.jar" />
 </project>

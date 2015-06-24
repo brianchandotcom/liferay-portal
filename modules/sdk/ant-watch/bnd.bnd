@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Ant Watch
+Bundle-SymbolicName: com.liferay.ant.watch
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.ant.watch
+Include-Resource: classes

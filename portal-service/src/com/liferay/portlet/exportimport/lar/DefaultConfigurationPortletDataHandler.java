@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
@@ -29,7 +30,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Eduardo Garcia
  */
-public abstract class DefaultConfigurationPortletDataHandler
+public class DefaultConfigurationPortletDataHandler
 	extends BasePortletDataHandler {
 
 	public DefaultConfigurationPortletDataHandler() {
@@ -65,15 +66,21 @@ public abstract class DefaultConfigurationPortletDataHandler
 		return null;
 	}
 
-	protected abstract String getExportPortletPreferencesUuid(
+	protected String getExportPortletPreferencesUuid(
 			PortletDataContext portletDataContext, Portlet portlet,
 			String className, long primaryKeyLong)
-		throws Exception;
+		throws Exception {
 
-	protected abstract Long getImportPortletPreferencesNewPrimaryKey(
+		return StringPool.BLANK;
+	}
+
+	protected Long getImportPortletPreferencesNewPrimaryKey(
 			PortletDataContext portletDataContext, Class<?> clazz,
 			long companyGroupId, Map<Long, Long> primaryKeys, String uuid)
-		throws Exception;
+		throws Exception {
+
+		return Long.valueOf(0L);
+	}
 
 	protected void updateExportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext, Portlet portlet,

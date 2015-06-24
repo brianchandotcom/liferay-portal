@@ -70,9 +70,11 @@ public class ConfigurationPortletConfigurationIcon
 		sb.append("', '");
 		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "configuration"));
 		sb.append("', '");
-		sb.append(
-			PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ?
-				portletDisplay.getId() : StringPool.BLANK);
+
+		if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
+			sb.append(portletDisplay.getId());
+		}
+
 		sb.append("'); return false;");
 
 		return sb.toString();

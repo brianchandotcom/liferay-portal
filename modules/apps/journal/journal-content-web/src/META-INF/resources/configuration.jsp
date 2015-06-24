@@ -25,11 +25,13 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 <div class="article-preview row row-spacing">
 	<div class="col-md-4 col-xs-12">
 		<p class="text-muted"><liferay-ui:message key="selected-web-content" /></p>
-		<c:if test="<%= article != null %>">
-			<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>" >
-				<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
-			</liferay-util:include>
-		</c:if>
+		<div class="article-preview-content-container">
+			<c:if test="<%= article != null %>">
+				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
+				</liferay-util:include>
+			</c:if>
+		</div>
 	</div>
 	<div class="col-md-12">
 		<aui:button name="webContentSelector" value="change" />
@@ -145,7 +147,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
 						{
 							success: function(responseData) {
-								$('.article-preview .article-preview-content').replaceWith($('.article-preview-content', $(responseData)));
+								$('.article-preview .article-preview-content-container').html($('.article-preview-content', $(responseData)));
 								$('.template-preview .template-preview-content').replaceWith($('.template-preview-content', $(responseData)));
 								form.fm('assetEntryId').val(event.assetentryid);
 								form.fm('ddmTemplateKey').val($('.template-preview .template-preview-content').attr('data-template-key'));

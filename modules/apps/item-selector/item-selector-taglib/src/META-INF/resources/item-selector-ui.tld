@@ -14,6 +14,11 @@
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.ui.BrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>desiredItemSelectorReturnTypes</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -25,11 +30,6 @@
 		</attribute>
 		<attribute>
 			<name>itemSelectedEventName</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>desiredItemSelectorReturnTypes</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -21,16 +21,23 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Set;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
-import java.util.Set;
 
 /**
  * @author Roberto Díaz
  */
 public class BrowserTag extends IncludeTag {
+
+	public void setDesiredItemSelectorReturnTypes(
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
+	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
@@ -42,12 +49,6 @@ public class BrowserTag extends IncludeTag {
 
 	public void setItemSelectedEventName(String itemSelectedEventName) {
 		_itemSelectedEventName = itemSelectedEventName;
-	}
-
-	public void setDesiredItemSelectorReturnTypes(
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
-
-		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
 	}
 
 	@Override

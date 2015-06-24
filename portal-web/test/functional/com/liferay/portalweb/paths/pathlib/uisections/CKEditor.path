@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CKEDITOR_PNG</td>
+	<td>/portal/fields/ckeditor.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

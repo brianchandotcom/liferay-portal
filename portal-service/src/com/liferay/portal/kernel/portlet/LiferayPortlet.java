@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
@@ -37,14 +39,18 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -243,6 +249,13 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 	}
 
+	protected void checkPath(String path) throws PortletException {
+		if (!isValidTemplate(path)) {
+			throw new PortletException(
+				"Path " + path + " is not accessible by this portlet");
+		}
+	}
+
 	@SuppressWarnings("unused")
 	protected void doAbout(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -424,6 +437,20 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 	}
 
+	protected void initValidTemplates(
+		String templatePath, String fileExtension) {
+
+		String[] validTemplatesInitParameter = StringUtil.split(
+			getInitParameter("valid-templates"));
+
+		validTemplates = _getTemplates(templatePath, fileExtension);
+
+		validTemplates.addAll(
+			_getTemplates(_META_INF_RESOURCES + templatePath, fileExtension));
+
+		validTemplates.addAll(Arrays.asList(validTemplatesInitParameter));
+	}
+
 	protected boolean isAlwaysSendRedirect() {
 		return alwaysSendRedirect;
 	}
@@ -452,6 +479,18 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 
 		if (cause instanceof PortalException) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isValidTemplate(String path) throws PortletException {
+		String metaInfPath = _META_INF_RESOURCES + path;
+
+		if (validTemplates.contains(path) ||
+			validTemplates.contains(metaInfPath)) {
+
 			return true;
 		}
 
@@ -520,6 +559,30 @@ public class LiferayPortlet extends GenericPortlet {
 
 	protected boolean addProcessActionSuccessMessage;
 	protected boolean alwaysSendRedirect;
+	protected Set<String> validTemplates;
+
+	private Set<String> _getTemplates(String templatePath, String extension) {
+		Set<String> result = new HashSet<>();
+		PortletContext portletContext = getPortletContext();
+		Set<String> templates = portletContext.getResourcePaths(templatePath);
+
+		if (templates == null) {
+			return result;
+		}
+
+		for (String template : templates) {
+			if (template.endsWith(StringPool.SLASH)) {
+				result.addAll(_getTemplates(template, extension));
+			}
+			else if (template.endsWith(extension)) {
+				result.add(template);
+			}
+		}
+
+		return result;
+	}
+
+	private static final String _META_INF_RESOURCES = "/META-INF/resources";
 
 	private static final boolean _PROCESS_PORTLET_REQUEST = true;
 

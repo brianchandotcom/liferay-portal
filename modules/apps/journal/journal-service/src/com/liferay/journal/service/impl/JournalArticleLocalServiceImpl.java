@@ -4783,7 +4783,7 @@ public class JournalArticleLocalServiceImpl
 			final long folderId, final String treePath, final boolean reindex)
 		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		final ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
@@ -4824,7 +4824,10 @@ public class JournalArticleLocalServiceImpl
 						return;
 					}
 
-					indexer.reindex(article);
+					com.liferay.portal.kernel.search.Document document =
+						indexer.getDocument(article);
+
+					actionableDynamicQuery.addDocument(document);
 				}
 
 			});

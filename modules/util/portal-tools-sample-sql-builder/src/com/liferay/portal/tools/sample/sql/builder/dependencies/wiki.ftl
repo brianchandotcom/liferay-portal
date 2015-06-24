@@ -22,7 +22,7 @@
 
 		<#assign wikiPageResourceModel = dataFactory.newWikiPageResourceModel(wikiPageModel)>
 
-		insert into WikiPageResource values ('${wikiPageResourceModel.uuid}', ${wikiPageResourceModel.resourcePrimKey}, ${wikiPageResourceModel.nodeId}, '${wikiPageResourceModel.title}');
+		insert into WikiPageResource values ('${wikiPageResourceModel.uuid}', ${wikiPageResourceModel.resourcePrimKey}, ${wikiPageResourceModel.groupId}, ${wikiPageResourceModel.nodeId}, '${wikiPageResourceModel.title}');
 
 		<@insertAssetEntry
 			_entry = wikiPageModel

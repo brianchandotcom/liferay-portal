@@ -54,6 +54,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
+		attributes.put("groupId", getGroupId());
 		attributes.put("nodeId", getNodeId());
 		attributes.put("title", getTitle());
 
@@ -72,6 +73,12 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 
 		if (resourcePrimKey != null) {
 			setResourcePrimKey(resourcePrimKey);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long nodeId = (Long)attributes.get("nodeId");
@@ -101,6 +108,16 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
 		return _wikiPageResource.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this wiki page resource.
+	*
+	* @return the group ID of this wiki page resource
+	*/
+	@Override
+	public long getGroupId() {
+		return _wikiPageResource.getGroupId();
 	}
 
 	/**
@@ -204,6 +221,16 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_wikiPageResource.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the group ID of this wiki page resource.
+	*
+	* @param groupId the group ID of this wiki page resource
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_wikiPageResource.setGroupId(groupId);
 	}
 
 	@Override

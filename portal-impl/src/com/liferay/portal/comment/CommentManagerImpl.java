@@ -58,7 +58,7 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public void addComment(
+	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
@@ -66,7 +66,7 @@ public class CommentManagerImpl implements CommentManager {
 
 		CommentManager commentManager = getCommentManager();
 
-		commentManager.addComment(
+		return commentManager.addComment(
 			userId, groupId, className, classPK, body, serviceContextFunction);
 	}
 

@@ -81,7 +81,8 @@ public class BaseJSPSettingsConfigurationAction
 				_log.error("Unable to include JSP", se);
 			}
 
-			throw new IOException("Unable to include JSP", se);
+			throw new IOException(
+				"Unable to include JSP: " + getJspPath(renderRequest), se);
 		}
 	}
 

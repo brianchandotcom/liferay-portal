@@ -48,7 +48,7 @@ public abstract class BaseJSPAssetAddonEntry extends BaseAssetAddonEntry {
 				_log.error("Unable to include JSP", se);
 			}
 
-			throw new IOException("Unable to include JSP", se);
+			throw new IOException("Unable to include JSP: " + getJSPPath(), se);
 		}
 	}
 

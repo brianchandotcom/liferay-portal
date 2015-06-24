@@ -64,8 +64,6 @@ public class PermissionImporter {
 
 		String name = roleElement.attributeValue("name");
 
-		String uuid = roleElement.attributeValue("uuid");
-
 		Role role = null;
 
 		if (name.startsWith(PermissionExporter.ROLE_TEAM_PREFIX)) {
@@ -85,36 +83,40 @@ public class PermissionImporter {
 
 			role = RoleLocalServiceUtil.getTeamRole(
 				companyId, team.getTeamId());
-		}
-		else {
-			role = layoutCache.getRoleByUuid(companyId, uuid);
 
-			if (role == null) {
-				role = layoutCache.getRoleByName(companyId, name);
-			}
+			return role;
 		}
+
+		String uuid = roleElement.attributeValue("uuid");
+
+		role = layoutCache.getRoleByUuid(companyId, uuid);
 
 		if (role == null) {
-			String title = roleElement.attributeValue("title");
-
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-				title);
-
-			String description = roleElement.attributeValue("description");
-
-			Map<Locale, String> descriptionMap =
-				LocalizationUtil.getLocalizationMap(description);
-
-			int type = GetterUtil.getInteger(
-				roleElement.attributeValue("type"));
-			String subtype = roleElement.attributeValue("subtype");
-
-			role = RoleLocalServiceUtil.addRole(
-				userId, null, 0, name, titleMap, descriptionMap, type, subtype,
-				null);
-
-			role.setUuid(uuid);
+			role = layoutCache.getRoleByName(companyId, name);
 		}
+
+		if (role != null) {
+			return role;
+		}
+
+		String title = roleElement.attributeValue("title");
+
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			title);
+
+		String description = roleElement.attributeValue("description");
+
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(description);
+
+		int type = GetterUtil.getInteger(roleElement.attributeValue("type"));
+		String subtype = roleElement.attributeValue("subtype");
+
+		role = RoleLocalServiceUtil.addRole(
+			userId, null, 0, name, titleMap, descriptionMap, type, subtype,
+			null);
+
+		role.setUuid(uuid);
 
 		return role;
 	}

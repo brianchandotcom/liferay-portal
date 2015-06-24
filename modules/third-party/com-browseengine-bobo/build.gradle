@@ -1,6 +1,19 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
 dependencies {
 	compile group: "com.browseengine.bobo", name: "bobo-browse", optional, version: "3.2.0"
 	compile group: "org.apache.lucene", name: "lucene-core", version: "3.5.0"
+}
+
+deploy {
+	into("../../../modules/portal/portal-search-lucene/lib") {
+		from jar.outputs
+		rename {
+			"bobo-browse.jar"
+		}
+	}
 }
 
 liferay {
@@ -9,3 +22,10 @@ liferay {
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "**/DocComparatorSource.java"
+	fileNames "**/ReverseDocComparatorSource.java"
+	fileNames "**/SortCollector.java"
+	originalLibModuleName = "bobo-browse"
+}

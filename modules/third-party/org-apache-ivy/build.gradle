@@ -1,3 +1,7 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
 dependencies {
 	compile group: "org.apache.ivy", name: "ivy", optional, version: "2.4.0"
 }
@@ -8,3 +12,8 @@ liferay {
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "org/apache/ivy/util/PropertiesFile.java"
+	originalLibModuleName = "ivy"
+}

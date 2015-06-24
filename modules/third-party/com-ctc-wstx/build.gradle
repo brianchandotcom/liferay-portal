@@ -1,5 +1,18 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
 dependencies {
 	compile group: "woodstox", name: "wstx-asl", optional, version: "3.2.4"
+}
+
+deploy {
+	into("../../../lib/portal") {
+		from jar.outputs
+		rename {
+			"wstx.jar"
+		}
+	}
 }
 
 liferay {
@@ -8,3 +21,9 @@ liferay {
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "**/com/ctc/wstx/sw/BufferingXmlWriter.java"
+	originalLibModuleName = "wstx-asl"
+	originalLibSrcDirName = "src/java"
+}

@@ -1,3 +1,7 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
 dependencies {
 	compile group: "commons-fileupload", name: "commons-fileupload", optional, version: "1.2.2"
 	compile group: "commons-io", name: "commons-io", version: "1.3.2"
@@ -12,3 +16,9 @@ liferay {
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "org/apache/commons/fileupload/FileUploadBase.java"
+	fileNames "org/apache/commons/fileupload/MultipartStream.java"
+	originalLibModuleName = "commons-fileupload"
+}

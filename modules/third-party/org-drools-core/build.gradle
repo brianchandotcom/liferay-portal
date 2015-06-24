@@ -1,3 +1,7 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
 dependencies {
 	compile group: "com.google.protobuf", name: "protobuf-java", version: "2.4.1"
 	compile group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.1"
@@ -15,3 +19,8 @@ liferay {
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "org/drools/base/ClassFieldAccessorCache.java"
+	originalLibModuleName = "drools-core"
+}

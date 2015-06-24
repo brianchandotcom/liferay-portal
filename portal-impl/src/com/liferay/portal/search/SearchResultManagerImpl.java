@@ -16,6 +16,7 @@ package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseSearchResultManager;
@@ -31,7 +32,6 @@ import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
-import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.registry.ServiceReference;
@@ -224,7 +224,8 @@ public class SearchResultManagerImpl implements SearchResultManager {
 			MBMessage mbMessage = mbMessageLocalService.getMessage(
 				entryClassPK);
 
-			Comment comment = new MBCommentImpl(mbMessage);
+			Comment comment = CommentManagerUtil.fetchComment(
+				mbMessage.getMessageId());
 
 			Summary summary = new Summary(null, mbMessage.getBody());
 

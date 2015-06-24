@@ -59,7 +59,8 @@ public class LocalesUserToolAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.locales)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.locales)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

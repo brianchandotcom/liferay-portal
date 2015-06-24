@@ -59,7 +59,8 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.related.assets)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.related.assets)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

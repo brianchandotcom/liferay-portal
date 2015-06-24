@@ -694,7 +694,7 @@
 				}
 
 				if (windowSubtitle) {
-					titleHtml += '<div class="portlet-subtitle"><span class="portlet-subtitle-text">' + windowSubtitle + '</span></div>';
+					titleHtml += '<div class="portlet-configuration-subtitle small"><span class="portlet-configuration-subtitle-text">' + windowSubtitle + '</span></div>';
 				}
 
 				Liferay.Util.openWindow(
@@ -712,7 +712,7 @@
 						dialog.once(
 							'drag:init',
 							function() {
-								dialog.dd.addInvalid('.portlet-subtitle-text');
+								dialog.dd.addInvalid('.portlet-configuration-subtitle-text');
 							}
 						);
 					}

@@ -191,6 +191,10 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 		long plid, boolean head);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutRevision fetchLatestLayoutRevision(
+		long layoutSetBranchId, long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutRevision fetchLayoutRevision(
 		long layoutRevisionId);
 

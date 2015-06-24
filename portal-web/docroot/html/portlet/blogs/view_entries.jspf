@@ -26,15 +26,11 @@
 
 <div class="subscribe">
 	<c:if test="<%= blogsPortletInstanceSettings.isEnableRSS() %>">
-		<liferay-portlet:resourceURL varImpl="rssURL">
-			<portlet:param name="struts_action" value="/blogs/rss" />
-		</liferay-portlet:resourceURL>
-
 		<liferay-ui:rss
 			delta="<%= blogsPortletInstanceSettings.getRssDelta() %>"
 			displayStyle="<%= blogsPortletInstanceSettings.getRssDisplayStyle() %>"
 			feedType="<%= blogsPortletInstanceSettings.getRssFeedType() %>"
-			resourceURL="<%= rssURL %>"
+			url='<%= themeDisplay.getPathMain() + "/blogs/rss" %>'
 		/>
 	</c:if>
 

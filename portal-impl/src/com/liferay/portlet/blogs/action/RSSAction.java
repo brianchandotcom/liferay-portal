@@ -15,29 +15,29 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 
 import java.util.Date;
 
-import javax.portlet.PortletRequest;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RSSAction extends com.liferay.portal.struts.RSSAction {
+@OSGiBeanProperties(property = "path=/blogs/rss", service = StrutsAction.class)
+public class RSSAction extends BaseRSSStrutsAction {
 
 	@Override
 	protected byte[] getRSS(HttpServletRequest request) throws Exception {
@@ -94,9 +94,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		else if (layout != null) {
 			groupId = themeDisplay.getScopeGroupId();
 
-			feedURL =
-				PortalUtil.getLayoutFullURL(themeDisplay) +
-					Portal.FRIENDLY_URL_SEPARATOR + "blogs/rss";
+			feedURL = themeDisplay.getPathMain() + "/blogs/rss";
 
 			entryURL = feedURL;
 
@@ -109,10 +107,10 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 	}
 
 	@Override
-	protected boolean isRSSFeedsEnabled(PortletRequest portletRequest)
+	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();

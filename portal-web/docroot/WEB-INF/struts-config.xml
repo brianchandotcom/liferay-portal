@@ -215,8 +215,6 @@
 
 		<action path="/blogs/find_entry" type="com.liferay.portlet.blogs.action.FindEntryAction" />
 
-		<action path="/blogs/rss" type="com.liferay.portlet.blogs.action.RSSAction" />
-
 		<action path="/blogs/small_image_selector" type="com.liferay.portlet.blogs.action.SmallImageSelectorAction" />
 
 		<action path="/blogs/upload_editor_image" type="com.liferay.portlet.blogs.action.UploadEditorImageAction" />
@@ -238,8 +236,6 @@
 		<action path="/blogs_aggregator/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
 		</action>
-
-		<action path="/blogs_aggregator/rss" type="com.liferay.portlet.blogs.action.RSSAction" />
 
 		<!-- Control Panel Home -->
 

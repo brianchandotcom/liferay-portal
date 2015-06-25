@@ -24,11 +24,11 @@ public class ConfigurationException extends PortalException {
 	public static Class<?>[] getNestedClasses() {
 		return _NESTED_CLASSES;
 	}
-	
+
 	public ConfigurationException(String msg) {
 		super(msg);
 	}
-	
+
 	public static class MustBeSelectableScope extends ConfigurationException {
 
 		public MustBeSelectableScope(String scopeId, long groupId) {
@@ -45,9 +45,25 @@ public class ConfigurationException extends PortalException {
 		public final String scopeId;
 
 	}
-	
+
+	public static class MustBeStrictPortlet extends ConfigurationException {
+
+		public MustBeStrictPortlet(String portletId) {
+			super(
+				String.format(
+					"Portlet preferences for portlet %s must be an instance " +
+					"of StrictPortletPreferencesImpl", portletId));
+
+			this.portletId = portletId;
+		}
+
+		public final String portletId;
+
+	}
+
 	private static final Class<?>[] _NESTED_CLASSES = {
-		ConfigurationException.MustBeSelectableScope.class
+		ConfigurationException.MustBeSelectableScope.class,
+		ConfigurationException.MustBeStrictPortlet.class
 	};
 
 }

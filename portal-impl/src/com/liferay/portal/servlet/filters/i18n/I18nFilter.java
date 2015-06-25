@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -73,7 +72,7 @@ public class I18nFilter extends BasePortalFilter {
 		HttpServletRequest request, HttpServletResponse response) {
 
 		if (!isAlreadyFiltered(request) && !isForwardedByI18nServlet(request) &&
-			!GetterUtil.getBoolean(request.getAttribute(WebKeys.WIDGET))) {
+			!isWidget(request)) {
 
 			return true;
 		}
@@ -176,6 +175,15 @@ public class I18nFilter extends BasePortalFilter {
 		if ((request.getAttribute(WebKeys.I18N_LANGUAGE_ID) != null) ||
 			(request.getAttribute(WebKeys.I18N_PATH) != null)) {
 
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isWidget(HttpServletRequest request) {
+		if (request.getAttribute(WebKeys.WIDGET) != null) {
 			return true;
 		}
 		else {

@@ -15,8 +15,6 @@ buildscript {
 apply plugin: "com.liferay.poshi.runner"
 
 poshiRunner {
-	baseDir = file("test/functional")
-
 	if (project.hasProperty("componentNames")) {
 		poshiProperty "component.names", project.properties["componentNames"]
 	}
@@ -33,15 +31,19 @@ poshiRunner {
 		poshiProperty "selenium.logger.enabled", project.properties["seleniumLoggerEnabled"]
 	}
 
+	poshiProperty "test.base.dir.name", "test/functional"
+
 	if (project.hasProperty("testCaseAvailablePropertyNames")) {
 		poshiProperty "test.case.available.property.names", project.properties["testCaseAvailablePropertyNames"]
 	}
+
+	poshiProperty "test.dependencies.dir.name", "com/liferay/portalweb/dependencies"
 
 	if (project.hasProperty("testSkipTearDown")) {
 		poshiProperty "test.skip.tear.down", project.properties["testSkipTearDown"]
 	}
 
-	version = "1.0.4"
+	version = "1.0.5"
 }
 
 repositories {

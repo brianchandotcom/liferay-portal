@@ -51,14 +51,35 @@ public class SearchResultUtilMBMessageTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		stubCommentManagerUtilFetchComment();
+		stub(
+			method(CommentManagerUtil.class, "fetchComment", long.class)
+		).toReturn(
+			_comment
+		);
 
-		whenCommentGetCommentId();
+		when(
+			_comment.getCommentId()
+		).thenReturn(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
 
-		whenMBMessageGetMessageId();
+		when(
+			_mbMessage.getMessageId()
+		).thenReturn(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
 
-		whenMBMessageLocalServiceGetMessage(SearchTestUtil.ENTRY_CLASS_PK);
-		whenMBMessageLocalServiceGetMessage(SearchTestUtil.ENTRY_CLASS_PK + 1);
+		when(
+			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
+		).thenReturn(
+			_mbMessage
+		);
+
+		when(
+			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK + 1)
+		).thenReturn(
+			_mbMessage
+		);
 	}
 
 	@Test
@@ -136,40 +157,6 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(
 			searchResult.getClassPK(),
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK);
-	}
-
-	protected void stubCommentManagerUtilFetchComment() {
-		stub(
-			method(CommentManagerUtil.class, "fetchComment", long.class)
-		).toReturn(
-			_comment
-		);
-	}
-
-	protected void whenCommentGetCommentId() {
-		when(
-			_comment.getCommentId()
-		).thenReturn(
-			SearchTestUtil.ENTRY_CLASS_PK
-		);
-	}
-
-	protected void whenMBMessageGetMessageId() {
-		when(
-			_mbMessage.getMessageId()
-		).thenReturn(
-			SearchTestUtil.ENTRY_CLASS_PK
-		);
-	}
-
-	protected void whenMBMessageLocalServiceGetMessage(Long entryClassPK)
-		throws Exception {
-
-		when(
-			mbMessageLocalService.getMessage(entryClassPK)
-		).thenReturn(
-			_mbMessage
-		);
 	}
 
 	private static final String _MB_MESSAGE_CLASS_NAME =

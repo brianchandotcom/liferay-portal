@@ -25,6 +25,7 @@ import com.liferay.registry.collections.ServiceTrackerCollections;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,6 +45,21 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilMBMessageTest
 	extends BaseSearchResultUtilTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		stubCommentManagerUtilFetchComment();
+
+		whenCommentGetCommentId();
+
+		whenMBMessageGetMessageId();
+
+		whenMBMessageLocalServiceGetMessage(SearchTestUtil.ENTRY_CLASS_PK);
+		whenMBMessageLocalServiceGetMessage(SearchTestUtil.ENTRY_CLASS_PK + 1);
+	}
 
 	@Test
 	public void testMBMessage() throws Exception {
@@ -70,33 +86,9 @@ public class SearchResultUtilMBMessageTest
 
 	@Test
 	public void testMBMessageAttachment() throws Exception {
-		when(
-			_comment.getCommentId()
-		).thenReturn(
-			SearchTestUtil.ENTRY_CLASS_PK
-		);
-
-		stub(
-			method(CommentManagerUtil.class, "fetchComment", long.class)
-		).toReturn(
-			_comment
-		);
-
 		mockStatic(
 			IndexerRegistryUtil.class,
 			new ThrowsExceptionClass(IllegalStateException.class));
-
-		when(
-			_mbMessage.getMessageId()
-		).thenReturn(
-			SearchTestUtil.ENTRY_CLASS_PK
-		);
-
-		when(
-			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
-		).thenReturn(
-			_mbMessage
-		);
 
 		SearchResult searchResult = assertOneSearchResult(
 			SearchTestUtil.createAttachmentDocument(_MB_MESSAGE_CLASS_NAME));
@@ -144,6 +136,40 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(
 			searchResult.getClassPK(),
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK);
+	}
+
+	protected void stubCommentManagerUtilFetchComment() {
+		stub(
+			method(CommentManagerUtil.class, "fetchComment", long.class)
+		).toReturn(
+			_comment
+		);
+	}
+
+	protected void whenCommentGetCommentId() {
+		when(
+			_comment.getCommentId()
+		).thenReturn(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
+	}
+
+	protected void whenMBMessageGetMessageId() {
+		when(
+			_mbMessage.getMessageId()
+		).thenReturn(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
+	}
+
+	protected void whenMBMessageLocalServiceGetMessage(Long entryClassPK)
+		throws Exception {
+
+		when(
+			mbMessageLocalService.getMessage(entryClassPK)
+		).thenReturn(
+			_mbMessage
+		);
 	}
 
 	private static final String _MB_MESSAGE_CLASS_NAME =

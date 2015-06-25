@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.microblogs.web.util;
 
-<%
-MicroblogsEntry microblogsEntry = (MicroblogsEntry)request.getAttribute(WebKeys.MICROBLOGS_ENTRY);
-%>
+/**
+ * @author Jonathan Lee
+ */
+public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
-<%= HtmlUtil.stripHtml(microblogsEntry.getContent()) %>
+	public static final String MICROBLOGS_ENTRIES = "MICROBLOGS_ENTRIES";
+
+	public static final String MICROBLOGS_ENTRIES_URL =
+		"MICROBLOGS_ENTRIES_URL";
+
+	public static final String MICROBLOGS_ENTRY = "MICROBLOGS_ENTRY";
+
+}

@@ -16,7 +16,7 @@ package com.liferay.microblogs.web.microblogs.asset;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
-import com.liferay.microblogs.util.WebKeys;
+import com.liferay.microblogs.web.util.WebKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.model.Group;
@@ -100,7 +100,7 @@ public class MicroblogsEntryAssetRenderer extends BaseAssetRenderer {
 				liferayPortletRequest, "1_WAR_microblogsportlet", portletPlid,
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("mvcPath", "/microblogs/view.jsp");
+			portletURL.setParameter("mvcPath", "/html/microblogs/view.jsp");
 
 			long microblogsEntryId = _entry.getMicroblogsEntryId();
 

@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
+Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 pageContext.setAttribute("portletURL", portletURL);

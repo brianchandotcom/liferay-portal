@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.application.list.taglib.constants.ApplicationListWebKeys" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -17,7 +19,7 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.MY_SPACE);
 %>
 

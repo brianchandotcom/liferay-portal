@@ -29,7 +29,25 @@ public class ConfigurationException extends PortalException {
 		super(msg);
 	}
 	
+	public static class MustBeSelectableScope extends ConfigurationException {
+
+		public MustBeSelectableScope(String scopeId, long groupId) {
+			super(
+				String.format(
+					"Scope %s for group %s must be selectable", scopeId,
+					groupId));
+
+			this.groupId = groupId;
+			this.scopeId = scopeId;
+		}
+
+		public final long groupId;
+		public final String scopeId;
+
+	}
+	
 	private static final Class<?>[] _NESTED_CLASSES = {
+		ConfigurationException.MustBeSelectableScope.class
 	};
 
 }

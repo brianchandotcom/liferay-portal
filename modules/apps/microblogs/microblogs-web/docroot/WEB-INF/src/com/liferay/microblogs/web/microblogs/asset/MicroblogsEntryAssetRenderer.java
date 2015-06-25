@@ -100,7 +100,7 @@ public class MicroblogsEntryAssetRenderer extends BaseAssetRenderer {
 				liferayPortletRequest, "1_WAR_microblogsportlet", portletPlid,
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("mvcPath", "/microblogs/view.jsp");
+			portletURL.setParameter("mvcPath", "/html/microblogs/view.jsp");
 
 			long microblogsEntryId = _entry.getMicroblogsEntryId();
 

@@ -4804,7 +4804,7 @@ public class JournalArticleLocalServiceImpl
 
 			});
 
-		final Indexer indexer = IndexerRegistryUtil.getIndexer(
+		final Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class.getName());
 
 		actionableDynamicQuery.setPerformActionMethod(
@@ -6156,8 +6156,8 @@ public class JournalArticleLocalServiceImpl
 
 			updatePreviousApprovedArticle(article);
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
+			Indexer<JournalArticle> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
 
 			indexer.reindex(article);
 

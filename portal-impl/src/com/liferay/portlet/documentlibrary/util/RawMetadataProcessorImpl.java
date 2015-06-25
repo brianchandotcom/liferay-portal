@@ -34,6 +34,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
@@ -179,7 +180,7 @@ public class RawMetadataProcessorImpl
 		FileEntry fileEntry = fileVersion.getFileEntry();
 
 		if (fileEntry instanceof LiferayFileEntry) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
 				DLFileEntryConstants.getClassName());
 
 			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;

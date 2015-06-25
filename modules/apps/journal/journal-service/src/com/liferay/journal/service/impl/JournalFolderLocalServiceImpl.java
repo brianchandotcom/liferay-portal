@@ -680,11 +680,13 @@ public class JournalFolderLocalServiceImpl
 						return;
 					}
 
-					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-						JournalFolder.class);
+					Indexer<JournalFolder> indexer =
+						IndexerRegistryUtil.nullSafeGetIndexer(
+							JournalFolder.class);
 
 					for (TreeModel treeModel : treeModels) {
-						indexer.reindex(treeModel);
+						JournalFolder journalFolder = (JournalFolder)treeModel;
+						indexer.reindex(journalFolder);
 					}
 				}
 
@@ -946,7 +948,7 @@ public class JournalFolderLocalServiceImpl
 
 		// Index
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<JournalFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			JournalFolder.class);
 
 		indexer.reindex(folder);
@@ -1131,8 +1133,8 @@ public class JournalFolderLocalServiceImpl
 
 			journalArticlePersistence.update(article);
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
+			Indexer<JournalArticle> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
 
 			indexer.reindex(article);
 		}
@@ -1211,8 +1213,9 @@ public class JournalFolderLocalServiceImpl
 
 				// Indexer
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					JournalArticle.class);
+				Indexer<JournalArticle> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						JournalArticle.class);
 
 				indexer.reindex(article);
 			}
@@ -1254,8 +1257,8 @@ public class JournalFolderLocalServiceImpl
 
 				// Index
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					JournalFolder.class);
+				Indexer<JournalFolder> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(JournalFolder.class);
 
 				indexer.reindex(folder);
 			}
@@ -1327,8 +1330,9 @@ public class JournalFolderLocalServiceImpl
 
 				// Indexer
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					JournalArticle.class);
+				Indexer<JournalArticle> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						JournalArticle.class);
 
 				indexer.reindex(article);
 			}
@@ -1377,8 +1381,8 @@ public class JournalFolderLocalServiceImpl
 
 				// Index
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					JournalFolder.class);
+				Indexer<JournalFolder> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(JournalFolder.class);
 
 				indexer.reindex(folder);
 			}

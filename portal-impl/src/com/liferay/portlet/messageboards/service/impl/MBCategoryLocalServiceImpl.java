@@ -875,8 +875,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				// Indexer
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBMessage.class);
+				Indexer<MBMessage> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
 
 				indexer.reindex(message);
 			}
@@ -931,8 +931,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				// Indexer
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBThread.class);
+				Indexer<MBThread> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(MBThread.class);
 
 				indexer.reindex(thread);
 			}
@@ -1013,8 +1013,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				// Indexer
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBThread.class);
+				Indexer<MBThread> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(MBThread.class);
 
 				indexer.reindex(thread);
 			}

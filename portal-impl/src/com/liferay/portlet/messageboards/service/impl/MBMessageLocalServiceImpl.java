@@ -679,7 +679,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Indexer
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				MBThread.class);
 
 			indexer.delete(thread);
@@ -786,7 +786,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Indexer
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				MBThread.class);
 
 			indexer.reindex(thread);
@@ -1638,8 +1638,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					// Indexer
 
-					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-						MBMessage.class);
+					Indexer<MBMessage> indexer =
+						IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
 
 					indexer.delete(message);
 				}
@@ -1799,7 +1799,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		updateThreadStatus(thread, message, user, oldStatus, modifiedDate);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
@@ -2533,7 +2533,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBThread.class);
 
 		indexer.reindex(thread);

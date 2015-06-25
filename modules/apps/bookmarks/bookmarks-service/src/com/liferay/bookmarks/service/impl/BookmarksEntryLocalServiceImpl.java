@@ -514,8 +514,8 @@ public class BookmarksEntryLocalServiceImpl
 
 			});
 
-		final Indexer indexer = IndexerRegistryUtil.getIndexer(
-			BookmarksEntry.class.getName());
+		final Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
+			BookmarksEntry.class);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {

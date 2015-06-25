@@ -12,76 +12,48 @@
  * details.
  */
 
-package com.liferay.portlet.myaccount.action;
+package com.liferay.portlet.myaccount;
 
 import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.RenderRequestImpl;
+import com.liferay.portlet.usersadmin.UsersAdminPortlet;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Pei-Jung Lan
  */
-public class EditUserAction
-	extends com.liferay.portlet.usersadmin.action.EditUserAction {
+public class MyAccountPortlet extends UsersAdminPortlet {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void editUser(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		if (redirectToLogin(actionRequest, actionResponse)) {
 			return;
 		}
-
-		super.processAction(
-			actionMapping, actionForm, portletConfig, actionRequest,
-			actionResponse);
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		User user = PortalUtil.getUser(renderRequest);
-
-		RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
-
-		DynamicServletRequest dynamicRequest =
-			(DynamicServletRequest)renderRequestImpl.getHttpServletRequest();
-
-		dynamicRequest.setParameter(
-			"p_u_i_d", String.valueOf(user.getUserId()));
-
-		return super.render(
-			actionMapping, actionForm, portletConfig, renderRequest,
-			renderResponse);
-	}
-
-	@Override
-	protected Object[] updateUser(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
 
 		String currentPassword = actionRequest.getParameter("password0");
 		String newPassword = actionRequest.getParameter("password1");
@@ -121,7 +93,63 @@ public class EditUserAction
 			throw new UserPasswordException.MustNotBeNull(user.getUserId());
 		}
 
-		return super.updateUser(actionRequest, actionResponse);
+		super.editUser(actionRequest, actionResponse);
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if ((renderRequest.getRemoteUser() == null) ||
+			!renderRequest.getWindowState().equals(WindowState.MAXIMIZED)) {
+
+			super.render(renderRequest, renderResponse);
+
+			return;
+		}
+
+		try {
+			User user = PortalUtil.getUser(renderRequest);
+
+			RenderRequestImpl renderRequestImpl =
+				(RenderRequestImpl)renderRequest;
+
+			DynamicServletRequest dynamicRequest =
+				(DynamicServletRequest)
+					renderRequestImpl.getHttpServletRequest();
+
+			dynamicRequest.setParameter(
+				"p_u_i_d", String.valueOf(user.getUserId()));
+
+			include(
+				"/html/portlet/my_account/edit_user.jsp", renderRequest,
+				renderResponse);
+		}
+		catch (PortalException pe) {
+			super.render(renderRequest, renderResponse);
+		}
+	}
+
+	protected boolean redirectToLogin(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
+		if (actionRequest.getRemoteUser() == null) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			SessionErrors.add(request, PrincipalException.class.getName());
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			actionResponse.sendRedirect(themeDisplay.getURLSignIn());
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

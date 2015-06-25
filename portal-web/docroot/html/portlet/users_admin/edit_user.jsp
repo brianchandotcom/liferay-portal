@@ -170,16 +170,16 @@ if (selUser != null) {
 </c:if>
 
 <portlet:actionURL var="editUserActionURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_user" />
+	<portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_user.jsp" />
 </portlet:actionURL>
 
 <portlet:renderURL var="editUserRenderURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_user" />
+	<portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_user.jsp" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= editUserActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value='<%= (selUser == null) ? "addUser" : "editUser" %>' />
 	<aui:input name="redirect" type="hidden" value="<%= editUserRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= (selUser != null) ? selUser.getUserId() : 0 %>" />
@@ -250,7 +250,7 @@ if (selUser != null) {
 				<div class="alert alert-warning"><liferay-ui:message key="this-user-account-has-been-locked-due-to-excessive-failed-login-attempts" /></div>
 
 				<%
-				String taglibOnClick = renderResponse.getNamespace() + "saveUser('unlock');";
+				String taglibOnClick = renderResponse.getNamespace() + "saveUser('editLockout');";
 				%>
 
 				<aui:button onClick="<%= taglibOnClick %>" value="unlock" />
@@ -279,8 +279,10 @@ if (selUser != null) {
 	}
 
 	function <portlet:namespace />saveUser(cmd) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
+		var form = AUI.$(document.<portlet:namespace />fm);
 
-		submitForm(document.<portlet:namespace />fm);
+		form.fm('<%= ActionRequest.ACTION_NAME %>').val(cmd);
+
+		submitForm(form);
 	}
 </aui:script>

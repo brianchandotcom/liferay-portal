@@ -68,17 +68,16 @@ else {
 	title="<%= headerTitle %>"
 />
 
-<portlet:actionURL var="editOrganizationActionURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+<portlet:actionURL name="editOrganization" var="editOrganizationActionURL">
+	<portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_organization.jsp" />
 </portlet:actionURL>
 
 <portlet:renderURL var="editOrganizationRenderURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+	<portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_organization.jsp" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= editOrganizationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= editOrganizationRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />

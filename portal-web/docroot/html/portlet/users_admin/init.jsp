@@ -65,6 +65,8 @@ page import="com.liferay.portlet.rolesadmin.search.UserRoleChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserOrganizationChecker" %>
 
+<%@ page import="javax.portlet.ActionRequest" %>
+
 <%
 boolean filterManageableGroups = true;
 

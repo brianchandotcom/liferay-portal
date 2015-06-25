@@ -34,13 +34,13 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 	<c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
 		<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>'>
 			<portlet:renderURL var="viewUsersURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="mvcPath" value="/html/portlet/users_admin/view.jsp" />
 				<portlet:param name="sitesListView" value="<%= usersListView %>" />
 			</portlet:renderURL>
 
 			<c:if test="<%= hasAddUserPermission %>">
 				<portlet:renderURL var="addUserURL">
-					<portlet:param name="struts_action" value="/users_admin/edit_user" />
+					<portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_user.jsp" />
 					<portlet:param name="redirect" value="<%= viewUsersURL %>" />
 				</portlet:renderURL>
 
@@ -56,7 +56,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 				%>
 
 					<portlet:renderURL var="addOrganizationURL">
-						<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+						<portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_organization.jsp" />
 						<portlet:param name="redirect" value="<%= viewUsersURL %>" />
 						<portlet:param name="type" value="<%= organizationType %>" />
 					</portlet:renderURL>
@@ -85,6 +85,6 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 	function <portlet:namespace />exportUsers() {
 		document.<portlet:namespace />fm.method = 'post';
 
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/export_users" /></portlet:actionURL>&compress=0&etag=0&strip=0', false);
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="exportUsers" />&compress=0&etag=0&strip=0', false);
 	}
 </aui:script>

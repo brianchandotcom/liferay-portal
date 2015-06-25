@@ -126,7 +126,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 
 		<aui:nav cssClass="nav-tabs">
 			<portlet:renderURL var="viewUsersTreeURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="mvcPath" value="/html/portlet/users_admin/view.jsp" />
 				<portlet:param name="toolbarItem" value="browse" />
 				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
 				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
@@ -135,7 +135,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
 
 			<portlet:renderURL var="viewOrganizationsFlatURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="mvcPath" value="/html/portlet/users_admin/view.jsp" />
 				<portlet:param name="toolbarItem" value="view-all-organizations" />
 				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
 				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
@@ -144,7 +144,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
 
 			<portlet:renderURL var="viewUsersFlatURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="mvcPath" value="/html/portlet/users_admin/view.jsp" />
 				<portlet:param name="toolbarItem" value="view-all-users" />
 				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
 				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
@@ -245,7 +245,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		rowIdProperty="screenName"
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user" />
+			<portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_user.jsp" />
 			<portlet:param name="redirect" value="<%= userSearchContainer.getIteratorURL().toString() %>" />
 			<portlet:param name="p_u_i_d" value="<%= String.valueOf(user2.getUserId()) %>" />
 		</liferay-portlet:renderURL>
@@ -279,7 +279,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<c:if test="<%= showDeleteButton %>">
 
 				<%
-				String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
+				String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? "deactivateUsers" : "deleteUsers") + "');";
 				%>
 
 				<aui:button disabled="<%= true %>" name="deactivate" onClick="<%= taglibOnClick %>" value="<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
@@ -288,7 +288,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<c:if test="<%= showRestoreButton %>">
 
 				<%
-				String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + Constants.RESTORE + "');";
+				String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + "restoreUsers" + "');";
 				%>
 
 				<aui:button disabled="<%= true %>" name="restore" onClick="<%= taglibOnClick %>" value="restore" />

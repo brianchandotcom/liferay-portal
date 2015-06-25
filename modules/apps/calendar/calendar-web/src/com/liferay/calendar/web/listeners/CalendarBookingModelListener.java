@@ -44,7 +44,7 @@ public class CalendarBookingModelListener
 	protected void setCalEventLocalService(
 		CalEventLocalService calEventLocalService) {
 
-		this._calEventLocalService = calEventLocalService;
+		_calEventLocalService = calEventLocalService;
 	}
 
 	private CalEventLocalService _calEventLocalService;

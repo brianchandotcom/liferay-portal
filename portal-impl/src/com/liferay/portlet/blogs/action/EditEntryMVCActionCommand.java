@@ -290,13 +290,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				redirect = getSaveAndContinueRedirect(
 					actionRequest, entry, redirect);
 
-				actionResponse.sendRedirect(redirect);
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				WindowState windowState = actionRequest.getWindowState();
 
 				if (!windowState.equals(LiferayWindowState.POP_UP)) {
-					actionResponse.sendRedirect(redirect);
+					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {
 					redirect = PortalUtil.escapeRedirect(redirect);
@@ -314,7 +314,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 								entry.getEntryId());
 						}
 
-						actionResponse.sendRedirect(redirect);
+						sendRedirect(actionRequest, actionResponse, redirect);
 					}
 				}
 			}

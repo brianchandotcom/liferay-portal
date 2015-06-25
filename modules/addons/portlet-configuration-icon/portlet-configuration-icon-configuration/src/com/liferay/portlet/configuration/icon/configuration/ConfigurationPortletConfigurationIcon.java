@@ -14,12 +14,8 @@
 
 package com.liferay.portlet.configuration.icon.configuration;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,27 +53,7 @@ public class ConfigurationPortletConfigurationIcon
 	public String getOnClick() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		StringBuilder sb = new StringBuilder(13);
-
-		sb.append("Liferay.Portlet.openWindow('#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_', '");
-		sb.append(portletDisplay.getId());
-		sb.append("', '");
-		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
-		sb.append("', '");
-		sb.append(portletDisplay.getNamespace());
-		sb.append("', '");
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "configuration"));
-		sb.append("', '");
-
-		if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
-			sb.append(portletDisplay.getId());
-		}
-
-		sb.append("'); return false;");
-
-		return sb.toString();
+		return portletDisplay.getURLConfigurationJS();
 	}
 
 	@Override

@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.calendar.service.CalendarLocalService" class="com.liferay.calendar.service.impl.CalendarLocalServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarLocalService" ref="com.liferay.calendar.service.CalendarLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="Calendar" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.CalendarService" class="com.liferay.calendar.service.impl.CalendarServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarService" ref="com.liferay.calendar.service.CalendarService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="Calendar" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.persistence.CalendarPersistence" class="com.liferay.calendar.service.persistence.impl.CalendarPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.calendar.service.persistence.CalendarPersistence" ref="com.liferay.calendar.service.persistence.CalendarPersistence" />
+	<bean id="com.liferay.calendar.service.persistence.CalendarFinder" class="com.liferay.calendar.service.persistence.impl.CalendarFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.calendar.service.persistence.CalendarFinder" ref="com.liferay.calendar.service.persistence.CalendarFinder" />
+	<bean id="com.liferay.calendar.service.CalendarBookingLocalService" class="com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarBookingLocalService" ref="com.liferay.calendar.service.CalendarBookingLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="CalendarBooking" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.CalendarBookingService" class="com.liferay.calendar.service.impl.CalendarBookingServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarBookingService" ref="com.liferay.calendar.service.CalendarBookingService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="CalendarBooking" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.persistence.CalendarBookingPersistence" class="com.liferay.calendar.service.persistence.impl.CalendarBookingPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.calendar.service.persistence.CalendarBookingPersistence" ref="com.liferay.calendar.service.persistence.CalendarBookingPersistence" />
+	<bean id="com.liferay.calendar.service.persistence.CalendarBookingFinder" class="com.liferay.calendar.service.persistence.impl.CalendarBookingFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.calendar.service.persistence.CalendarBookingFinder" ref="com.liferay.calendar.service.persistence.CalendarBookingFinder" />
+	<bean id="com.liferay.calendar.service.CalendarImporterLocalService" class="com.liferay.calendar.service.impl.CalendarImporterLocalServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarImporterLocalService" ref="com.liferay.calendar.service.CalendarImporterLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="CalendarImporter" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.CalendarNotificationTemplateLocalService" class="com.liferay.calendar.service.impl.CalendarNotificationTemplateLocalServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarNotificationTemplateLocalService" ref="com.liferay.calendar.service.CalendarNotificationTemplateLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="CalendarNotificationTemplate" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.CalendarNotificationTemplateService" class="com.liferay.calendar.service.impl.CalendarNotificationTemplateServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarNotificationTemplateService" ref="com.liferay.calendar.service.CalendarNotificationTemplateService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="CalendarNotificationTemplate" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence" class="com.liferay.calendar.service.persistence.impl.CalendarNotificationTemplatePersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence" ref="com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence" />
+	<bean id="com.liferay.calendar.service.CalendarResourceLocalService" class="com.liferay.calendar.service.impl.CalendarResourceLocalServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarResourceLocalService" ref="com.liferay.calendar.service.CalendarResourceLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="CalendarResource" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.CalendarResourceService" class="com.liferay.calendar.service.impl.CalendarResourceServiceImpl" />
+	<osgi:service interface="com.liferay.calendar.service.CalendarResourceService" ref="com.liferay.calendar.service.CalendarResourceService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="calendar" />
+			<entry key="json.web.service.context.path" value="CalendarResource" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.calendar.service.persistence.CalendarResourcePersistence" class="com.liferay.calendar.service.persistence.impl.CalendarResourcePersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.calendar.service.persistence.CalendarResourcePersistence" ref="com.liferay.calendar.service.persistence.CalendarResourcePersistence" />
+	<bean id="com.liferay.calendar.service.persistence.CalendarResourceFinder" class="com.liferay.calendar.service.persistence.impl.CalendarResourceFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.calendar.service.persistence.CalendarResourceFinder" ref="com.liferay.calendar.service.persistence.CalendarResourceFinder" />
+</beans>

@@ -1,0 +1,57 @@
+import com.liferay.gradle.util.FileUtil
+
+dependencies {
+	compile fileTree(dir: "lib", include: "*.jar")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task downloadSrc(type: Copy)
+
+compileJava {
+	dependsOn downloadSrc
+}
+
+downloadSrc {
+	eachFile {
+		String relativePathString = relativePath.pathString
+
+		relativePathString = relativePathString.replaceFirst("^gdata/java/lib/", "lib/");
+		relativePathString = relativePathString.replaceFirst("^gdata/java/sample/util/lib/", "lib/")
+		relativePathString = relativePathString.replaceFirst("^gdata/java/", "src/com/google/gdata/");
+
+		relativePath = RelativePath.parse(true, relativePathString)
+	}
+
+	ext.autoClean = false
+
+	filesMatching("**/*.java") {
+		filter {
+			String line ->
+
+			line.replace("sample.appsforyourdomain", "com.google.gdata.sample.appsforyourdomain")
+		}
+	}
+
+	from zipTree({
+		FileUtil.get(project, "https://gdata-java-client.googlecode.com/files/gdata-samples.java-1.47.1.zip")
+	})
+
+	include "gdata/java/lib/gdata-appsforyourdomain-1.0.jar"
+	include "gdata/java/lib/gdata-client-1.0.jar"
+	include "gdata/java/lib/gdata-core-1.0.jar"
+	include "gdata/java/lib/gdata-media-1.0.jar"
+	include "gdata/java/sample/appsforyourdomain/**"
+	include "gdata/java/sample/util/lib/sample-util.jar"
+
+	into projectDir
+
+	onlyIf {
+		!FileUtil.exists(project, "src/com")
+	}
+}

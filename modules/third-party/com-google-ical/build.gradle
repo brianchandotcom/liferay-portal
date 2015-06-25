@@ -1,0 +1,48 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.OSDetector
+
+dependencies {
+	compile group: "joda-time", name: "joda-time", version: "1.5.2"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task downloadSrc(type: Exec)
+
+compileJava {
+	dependsOn downloadSrc
+}
+
+downloadSrc {
+	if (OSDetector.windows) {
+		executable "cmd.exe"
+
+		args "/c"
+	}
+	else {
+		executable "/bin/sh"
+
+		args "-c"
+	}
+
+	args "\"svn export http://google-rfc-2445.googlecode.com/svn/trunk/src@36 src\""
+
+	doFirst {
+		delete "src"
+	}
+
+	doLast {
+		File sourceFormatterIgnoreFile = file("src/source_formatter.ignore")
+
+		sourceFormatterIgnoreFile.createNewFile()
+	}
+
+	onlyIf {
+		!FileUtil.exists(project, "src/com")
+	}
+}

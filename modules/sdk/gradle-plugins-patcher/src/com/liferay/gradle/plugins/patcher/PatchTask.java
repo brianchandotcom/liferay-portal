@@ -19,6 +19,7 @@ import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import java.nio.file.Files;
@@ -147,7 +148,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	public File getOriginalLibSrcFile() throws Exception {
-		return FileUtil.get(_project, getOriginalLibSrcUrl(), null);
+		return FileUtil.get(_project, getOriginalLibSrcUrl());
 	}
 
 	public Map<String, File> getPatchedSrcDirMappings() {
@@ -257,12 +258,7 @@ public class PatchTask extends DefaultTask {
 						});
 				}
 
-				Map<String, Object> args = new HashMap<>();
-
-				args.put("eol", FixCrLfFilter.CrLf.newInstance("lf"));
-
-				copySpec.filter(args, FixCrLfFilter.class);
-
+				copySpec.filter(FixCrLfFilter.class);
 				copySpec.from(_project.zipTree(getOriginalLibSrcFile()));
 				copySpec.include(getFileNames());
 				copySpec.into(temporaryDir);
@@ -274,6 +270,9 @@ public class PatchTask extends DefaultTask {
 		_project.copy(closure);
 
 		for (final File patchFile : getPatchFiles()) {
+			final ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
 			_project.exec(
 				new Action<ExecSpec>() {
 
@@ -282,13 +281,18 @@ public class PatchTask extends DefaultTask {
 						execSpec.setExecutable("patch");
 						execSpec.setWorkingDir(temporaryDir);
 
+						execSpec.args("--binary");
 						execSpec.args(
 							"--input=" +
 								FileUtil.relativize(patchFile, temporaryDir));
 						execSpec.args("--strip=1");
+
+						execSpec.setStandardOutput(byteArrayOutputStream);
 					}
 
 				});
+
+			System.out.println(byteArrayOutputStream.toString());
 		}
 
 		FileTree fileTree = _project.fileTree(temporaryDir);

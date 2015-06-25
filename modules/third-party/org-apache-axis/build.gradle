@@ -1,0 +1,24 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+dependencies {
+	compile group: "axis", name: "axis", optional, version: "1.4"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "org/apache/axis/AxisEngine.java"
+	fileNames "org/apache/axis/description/JavaServiceDesc.java"
+	fileNames "org/apache/axis/encoding/ser/MapDeserializer.java"
+	fileNames "org/apache/axis/EngineConfiguration.java"
+	fileNames "org/apache/axis/session/Session.java"
+	fileNames "org/apache/axis/wsdl/fromJava/Types.java"
+	originalLibModuleName = "axis"
+}

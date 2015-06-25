@@ -82,12 +82,15 @@ import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
@@ -105,6 +108,8 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
  * @author Andrea Di Giorgi
  */
 public class LiferayJavaPlugin implements Plugin<Project> {
+
+	public static final String AUTO_CLEAN_PROPERTY_NAME = "autoClean";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
@@ -258,6 +263,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
 
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
+
+		ExtensionContainer extensionContainer = copy.getExtensions();
+
+		ExtraPropertiesExtension extraPropertiesExtension =
+			extensionContainer.getExtraProperties();
+
+		extraPropertiesExtension.set(AUTO_CLEAN_PROPERTY_NAME, false);
+
+		copy.setProperty(AUTO_CLEAN_PROPERTY_NAME, false);
 
 		return copy;
 	}
@@ -1132,21 +1146,24 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project = cleanTask.getProject();
 
 		for (Task task : project.getTasks()) {
-			String taskName = task.getName();
+			boolean autoClean = GradleUtil.getProperty(
+				task, AUTO_CLEAN_PROPERTY_NAME, true);
 
-			if (taskName.equals(DEPLOY_TASK_NAME)) {
+			if (!autoClean) {
 				continue;
 			}
 
 			TaskOutputs taskOutputs = task.getOutputs();
 
-			if (taskOutputs.getHasOutput()) {
-				taskName =
-					BasePlugin.CLEAN_TASK_NAME +
-						StringUtil.capitalize(taskName);
-
-				cleanTask.dependsOn(taskName);
+			if (!taskOutputs.getHasOutput()) {
+				continue;
 			}
+
+			String taskName =
+				BasePlugin.CLEAN_TASK_NAME +
+					StringUtil.capitalize(task.getName());
+
+			cleanTask.dependsOn(taskName);
 		}
 
 		Configuration compileConfiguration = GradleUtil.getConfiguration(
@@ -1160,23 +1177,27 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTaskDeploy(
 		Project project, LiferayExtension liferayExtension) {
 
-		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+		final Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
 
-		configureTaskDeployFrom(copy);
-		configureTaskDeployInto(copy, liferayExtension);
+		copy.into(project.getProjectDir());
+
+		copy.into(
+			project.relativePath(liferayExtension.getDeployDir()),
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					configureTaskDeployFrom(copy, copySpec);
+				}
+
+			});
 	}
 
-	protected void configureTaskDeployFrom(Copy deployTask) {
+	protected void configureTaskDeployFrom(Copy copy, CopySpec copySpec) {
 		Jar jar = (Jar)GradleUtil.getTask(
-			deployTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+			copy.getProject(), JavaPlugin.JAR_TASK_NAME);
 
-		deployTask.from(jar.getOutputs());
-	}
-
-	protected void configureTaskDeployInto(
-		Copy deployTask, LiferayExtension liferayExtension) {
-
-		deployTask.into(liferayExtension.getDeployDir());
+		copySpec.from(jar.getOutputs());
 	}
 
 	protected void configureTaskDirectDeployAppServerLibGlobalDir(

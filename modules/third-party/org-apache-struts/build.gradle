@@ -1,0 +1,19 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+dependencies {
+	compile group: "struts", name: "struts", optional, version: "1.2.9"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "org/apache/struts/tiles/xmlDefinition/I18nFactorySet.java"
+	originalLibModuleName = "struts"
+}

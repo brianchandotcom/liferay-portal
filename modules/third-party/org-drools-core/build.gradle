@@ -1,0 +1,26 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+dependencies {
+	compile group: "com.google.protobuf", name: "protobuf-java", version: "2.4.1"
+	compile group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.1"
+	compile group: "org.antlr", name: "antlr", version: "3.3"
+	compile group: "org.antlr", name: "antlr-runtime", version: "3.3"
+	compile group: "org.drools", name: "drools-core", optional, version: "5.4.0.Final"
+	compile group: "org.drools", name: "knowledge-api", version: "5.4.0.Final"
+	compile group: "org.drools", name: "knowledge-internal-api", version: "5.4.0.Final"
+	compile group: "org.mvel", name: "mvel2", version: "2.1.0.drools16"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "org/drools/base/ClassFieldAccessorCache.java"
+	originalLibModuleName = "drools-core"
+}

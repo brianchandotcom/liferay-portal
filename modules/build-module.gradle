@@ -9,6 +9,8 @@ File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
 File sdkDir = rootProject.file("../tools/sdk")
 
+ext.sdkDestinationDir = new File(sdkDir, "dist2")
+
 afterEvaluate {
 	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
 	project.ext.set("app.server.portal.dir", project.relativePath(liferay.appServerPortalDir))
@@ -47,7 +49,7 @@ dependencies {
 }
 
 jar {
-	destinationDir = new File(sdkDir, "dist2")
+	destinationDir = sdkDestinationDir
 }
 
 repositories {

@@ -1,0 +1,21 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+dependencies {
+	compile group: "net.sf.jpathwatch", name: "jpathwatch", optional, version: "0.95"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "**/name/pachler/nio/file/impl/BSDPathWatchService.java"
+	fileNames "**/name/pachler/nio/file/impl/LinuxPathWatchService.java"
+	originalLibModuleName = "jpathwatch"
+	originalLibSrcDirName = "jpathwatch-java/src"
+}

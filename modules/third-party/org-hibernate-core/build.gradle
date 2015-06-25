@@ -1,0 +1,29 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+dependencies {
+	compile group: "org.hibernate", name: "hibernate-core", optional, version: "3.6.10.Final"
+}
+
+deploy {
+	into("../../../lib/portal") {
+		from jar.outputs
+		rename {
+			"hibernate-core.jar"
+		}
+	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "org/hibernate/cache/UpdateTimestampsCache.java"
+	fileNames "org/hibernate/intercept/FieldInterceptionHelper.java"
+	originalLibModuleName = "hibernate-core"
+}

@@ -1,0 +1,25 @@
+dependencies {
+	compile group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.0"
+}
+
+task jar(type: Jar, overwrite: true) {
+	destinationDir = sdkDestinationDir
+
+	exclude "OSGI-INF/permissions.perm"
+
+	from zipTree({
+		configurations.compile.singleFile
+	})
+
+	manifest {
+		from {
+			copy {
+				from zipTree(configurations.compile.singleFile)
+				include "META-INF/MANIFEST.MF"
+				into temporaryDir
+			}
+
+			new File(temporaryDir, "META-INF/MANIFEST.MF")
+		}
+	}
+}

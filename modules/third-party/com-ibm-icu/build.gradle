@@ -1,0 +1,38 @@
+dependencies {
+	compile group: "com.googlecode.jarjar", name: "jarjar", optional, version: "1.3"
+	compile group: "com.ibm.icu", name: "icu4j", optional, version: "54.1.1"
+}
+
+deploy {
+	into("../../../lib/portal") {
+		from {
+			jar.archivePath
+		}
+		rename {
+			"liferay-icu4j.jar"
+		}
+	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+task jar(type: Jar, overwrite: true) {
+	destinationDir = sdkDestinationDir
+
+	deleteAllActions()
+
+	doLast {
+		Set<File> jarFiles = configurations.compile.files {
+			it.name == "icu4j"
+		}
+
+		ant.taskdef classname: "com.tonicsystems.jarjar.JarJarTask", classpath: configurations.compile.asPath, name: "jarjar"
+
+		ant.jarjar(jarfile: archivePath) {
+			rule pattern: "com.**", result: "com.liferay.@1"
+			zipfileset src: jarFiles.find()
+		}
+	}
+}

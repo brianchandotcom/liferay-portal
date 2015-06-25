@@ -1,0 +1,25 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+dependencies {
+	compile group: "org.freemarker", name: "freemarker", optional, version: "2.3.17"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask) {
+	fileNames "**/DebugBreak.java"
+	fileNames "**/DebuggerServer.java"
+	fileNames "**/DebuggerService.java"
+	fileNames "**/EnvironmentSuspendedEvent.java"
+	fileNames "**/RmiDebuggedEnvironmentImpl.java"
+	fileNames "**/RmiDebuggerImpl.java"
+	fileNames "**/RmiDebuggerService.java"
+	originalLibModuleName = "freemarker"
+}

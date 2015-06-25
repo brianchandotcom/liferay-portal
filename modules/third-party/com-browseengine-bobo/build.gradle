@@ -7,15 +7,6 @@ dependencies {
 	compile group: "org.apache.lucene", name: "lucene-core", version: "3.5.0"
 }
 
-deploy {
-	into("../../../modules/portal/portal-search-lucene/lib") {
-		from jar.outputs
-		rename {
-			"bobo-browse.jar"
-		}
-	}
-}
-
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }

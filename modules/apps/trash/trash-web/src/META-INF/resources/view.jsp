@@ -21,6 +21,12 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "staging");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 String keywords = ParamUtil.getString(request, "keywords");
 
 long groupId = themeDisplay.getScopeGroupId();
@@ -158,20 +164,14 @@ if (Validator.isNotNull(keywords)) {
 			PortletURL viewContentURL = renderResponse.createRenderURL();
 
 			viewContentURL.setParameter("mvcPath", "/view_content.jsp");
-			viewContentURL.setParameter("redirect", currentURL);
 
 			if (entry.getRootEntry() != null) {
-				viewContentURL.setParameter("className", entry.getClassName());
+				viewContentURL.setParameter("classNameId", String.valueOf(entry.getClassNameId()));
 				viewContentURL.setParameter("classPK", String.valueOf(entry.getClassPK()));
 			}
 			else {
 				viewContentURL.setParameter("trashEntryId", String.valueOf(entry.getEntryId()));
 			}
-
-			viewContentURL.setParameter("type", trashRenderer.getType());
-			viewContentURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
-			viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
-			viewContentURL.setParameter("showEditURL", Boolean.FALSE.toString());
 
 			viewContentURLString = viewContentURL.toString();
 		}
@@ -203,12 +203,7 @@ if (Validator.isNotNull(keywords)) {
 					PortletURL viewContentURL = renderResponse.createRenderURL();
 
 					viewContentURL.setParameter("mvcPath", "/view_content.jsp");
-					viewContentURL.setParameter("redirect", currentURL);
 					viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
-					viewContentURL.setParameter("type", rootTrashRenderer.getType());
-					viewContentURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
-					viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
-					viewContentURL.setParameter("showEditURL", Boolean.FALSE.toString());
 
 					viewRootContentURLString = viewContentURL.toString();
 				}

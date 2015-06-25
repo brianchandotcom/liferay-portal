@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/entry/{classNameId:\d+}/{classPK:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<overridden-parameter name="showActions">false</overridden-parameter>
+		<overridden-parameter name="showEditURL">false</overridden-parameter>
+		<overridden-parameter name="status">8</overridden-parameter>
+	</route>
+	<route>
+		<pattern>/entry/{trashEntryId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<overridden-parameter name="showActions">false</overridden-parameter>
+		<overridden-parameter name="showEditURL">false</overridden-parameter>
+		<overridden-parameter name="status">8</overridden-parameter>
+	</route>
+	<route>
+		<pattern>/entries</pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+</routes>

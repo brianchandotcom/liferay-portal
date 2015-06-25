@@ -21,19 +21,19 @@ import java.util.List;
  */
 public interface IndexerRegistry {
 
-	public Indexer getIndexer(Class<?> clazz);
+	public <T> Indexer<T> getIndexer(Class<T> clazz);
 
-	public Indexer getIndexer(String className);
+	public <T> Indexer<T> getIndexer(String className);
 
-	public List<Indexer> getIndexers();
+	public List<Indexer<?>> getIndexers();
 
-	public Indexer nullSafeGetIndexer(Class<?> clazz);
+	public <T> Indexer<T> nullSafeGetIndexer(Class<T> clazz);
 
-	public Indexer nullSafeGetIndexer(String className);
+	public <T> Indexer<T> nullSafeGetIndexer(String className);
 
-	public void register(Indexer indexer);
+	public void register(Indexer<?> indexer);
 
-	public void unregister(Indexer indexer);
+	public void unregister(Indexer<?> indexer);
 
 	public void unregister(String className);
 

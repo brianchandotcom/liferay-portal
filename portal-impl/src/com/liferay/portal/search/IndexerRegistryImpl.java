@@ -56,30 +56,32 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	@Override
-	public Indexer getIndexer(Class<?> clazz) {
+	public <T> Indexer<T> getIndexer(Class<T> clazz) {
 		return getIndexer(clazz.getName());
 	}
 
 	@Override
-	public Indexer getIndexer(String className) {
-		return _indexers.get(className);
+	@SuppressWarnings("unchecked")
+	public <T> Indexer<T> getIndexer(String className) {
+		return (Indexer<T>)_indexers.get(className);
 	}
 
 	@Override
-	public List<Indexer> getIndexers() {
-		List<Indexer> indexers = new ArrayList<>(_indexers.values());
+	public List<Indexer<?>> getIndexers() {
+		List<Indexer<?>> indexers = new ArrayList<>(_indexers.values());
 
 		return Collections.unmodifiableList(indexers);
 	}
 
 	@Override
-	public Indexer nullSafeGetIndexer(Class<?> clazz) {
+	public <T> Indexer<T> nullSafeGetIndexer(Class<T> clazz) {
 		return nullSafeGetIndexer(clazz.getName());
 	}
 
 	@Override
-	public Indexer nullSafeGetIndexer(String className) {
-		Indexer indexer = _indexers.get(className);
+	@SuppressWarnings("unchecked")
+	public <T> Indexer<T> nullSafeGetIndexer(String className) {
+		Indexer<T> indexer = getIndexer(className);
 
 		if (indexer != null) {
 			return indexer;
@@ -89,11 +91,11 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 			_log.warn("No indexer found for " + className);
 		}
 
-		return _dummyIndexer;
+		return (Indexer<T>)_dummyIndexer;
 	}
 
 	@Override
-	public void register(Indexer indexer) {
+	public void register(Indexer<?> indexer) {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceRegistration<Indexer> serviceRegistration =
@@ -103,7 +105,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	@Override
-	public void unregister(Indexer indexer) {
+	public void unregister(Indexer<?> indexer) {
 		unregister(indexer.getClassName());
 	}
 
@@ -120,9 +122,9 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexerRegistryImpl.class);
 
-	private static final Indexer _dummyIndexer = new DummyIndexer();
-
-	private final Map<String, Indexer> _indexers = new ConcurrentHashMap<>();
+	private final Indexer _dummyIndexer = new DummyIndexer();
+	private final Map<String, Indexer<? extends Object>> _indexers =
+		new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<Indexer> _serviceRegistrations =
 		new StringServiceRegistrationMap<>();
 	private ServiceTracker<Indexer, Indexer> _serviceTracker;
@@ -131,6 +133,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		implements ServiceTrackerCustomizer<Indexer, Indexer> {
 
 		@Override
+		@SuppressWarnings("unchecked")
 		public Indexer addingService(
 			ServiceReference<Indexer> serviceReference) {
 

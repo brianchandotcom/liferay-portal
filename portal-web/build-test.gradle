@@ -25,6 +25,10 @@ poshiRunner {
 		poshiProperty "product.names", project.properties["productNames"]
 	}
 
+	if (project.hasProperty("saveScreenshot")) {
+		poshiProperty "save.screenshot", project.properties["saveScreenshot"]
+	}
+
 	if (project.hasProperty("seleniumLoggerEnabled")) {
 		poshiProperty "selenium.logger.enabled", project.properties["seleniumLoggerEnabled"]
 	}

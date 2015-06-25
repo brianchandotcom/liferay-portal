@@ -158,7 +158,7 @@
 
 				<mirrors-get
 					dest="sass-spec.zip"
-					src="https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
+					src="https://github.com/sass/sass-spec/archive/f34eb8b4e6c9ba192fc37231a252af1ab79972fd.zip"
 				/>
 
 				<unzip

@@ -17,9 +17,9 @@ package com.liferay.product.menu.web.constants;
 /**
  * @author Adolfo Pérez
  */
-public class ProductivityCenterPortletKeys {
+public class ProductMenuPortletKeys {
 
-	public static final String PRODUCTIVITY_CENTER =
-		"com_liferay_productivity_center_portlet_ProductivityCenterPortlet";
+	public static final String PRODUCT_MENU =
+		"com_liferay_product_menu_portlet_ProductMenuPortlet";
 
 }

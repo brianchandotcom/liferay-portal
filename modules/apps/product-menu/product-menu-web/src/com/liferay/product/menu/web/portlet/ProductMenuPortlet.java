@@ -15,7 +15,7 @@
 package com.liferay.product.menu.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.product.menu.web.constants.ProductivityCenterPortletKeys;
+import com.liferay.product.menu.web.constants.ProductMenuPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.init-param.view-template=/portlet/view.jsp",
-		"javax.portlet.name=" + ProductivityCenterPortletKeys.PRODUCTIVITY_CENTER,
+		"javax.portlet.name=" + ProductMenuPortletKeys.PRODUCT_MENU,
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class ProductivityCenterPortlet extends MVCPortlet {
+public class ProductMenuPortlet extends MVCPortlet {
 }

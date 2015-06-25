@@ -24,7 +24,7 @@
 		<aui:container cssClass="panel-manage-frontpage">
 			<aui:row>
 				<aui:col cssClass="panel-page-menu" width="<%= 25 %>">
-					<liferay-portlet:runtime portletName="<%= ProductivityCenterPortletKeys.PRODUCTIVITY_CENTER %>" />
+					<liferay-portlet:runtime portletName="<%= ProductMenuPortletKeys.PRODUCT_MENU %>" />
 				</aui:col>
 				<aui:col width="<%= 75 %>">
 					<application-list-ui:panel-content portletId="<%= themeDisplay.getPpid() %>" />

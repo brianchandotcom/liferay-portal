@@ -112,9 +112,7 @@ public class UserPersonalPanelLayoutController
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.productivity.center.web)"
-	)
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.product.menu.web)")
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}

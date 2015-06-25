@@ -191,7 +191,7 @@
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/blogs/</value>
+			<value>/</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -521,7 +521,7 @@
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/recent_bloggers/</value>
+			<value>/</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>
@@ -552,7 +552,7 @@
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/blogs_aggregator/</value>
+			<value>/</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -936,7 +936,7 @@
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/blogs_admin/</value>
+			<value>/</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -23,6 +23,7 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalPermission;
+import com.liferay.journal.util.JournalContentUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -47,10 +48,10 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -58,12 +59,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleDisplay;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.permission.JournalArticlePermission;
-import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.journal.util.JournalContentUtil;
 import com.liferay.util.PropertyComparator;
 
 import java.util.ArrayList;
@@ -118,20 +113,19 @@ public class JournalContentDisplayContext {
 			return _article;
 		}
 
-		
 		long articleResourcePrimKey = ParamUtil.getLong(
 		_request, "articleResourcePrimKey");
 
 		if (articleResourcePrimKey > 0) {
 			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-				articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true); 
+				articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true);
 		}
 		else {
 			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
 				getArticleGroupId(), getArticleId(),
 				WorkflowConstants.STATUS_ANY);
 		}
-		
+
 		return _article;
 	}
 
@@ -225,7 +219,7 @@ public class JournalContentDisplayContext {
 		return null;
 		}
 
-		AssetRendererFactory assetRendererFactory = 
+		AssetRendererFactory assetRendererFactory =
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 		JournalArticle.class.getName());
 
@@ -262,8 +256,8 @@ public class JournalContentDisplayContext {
 
 		_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 			articleDisplay.getGroupId(),
-			PortalUtil.getClassNameId(DDMStructure.class),
-			getDDMTemplateKey(), true);
+			PortalUtil.getClassNameId(DDMStructure.class), getDDMTemplateKey(),
+			true);
 
 		return _ddmTemplate;
 	}

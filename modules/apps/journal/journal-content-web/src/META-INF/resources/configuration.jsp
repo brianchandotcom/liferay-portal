@@ -36,7 +36,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 	<div class="col-md-12">
 		<aui:button name="webContentSelector" value="change" />
 	</div>
-</div>	
+</div>
 
 <div class="<%= article == null ? "hidden " : "" %>row row-spacing template-preview">
 	<div class="col-md-4 col-xs-12">
@@ -64,7 +64,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<div class="<%= article == null ? "hidden" : ""%> configuration-options-container">
+	<div class="<%= article == null ? "hidden" : "" %> configuration-options-container">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 		<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
@@ -144,7 +144,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					$('.article-preview .article-preview-content-container').html('<div class="loading-animation"></div>');
 					$('.template-preview .template-preview-content-container').html('<div class="loading-animation"></div>');
-					
+
 					$.ajax(
 						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
 						{

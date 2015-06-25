@@ -283,20 +283,9 @@ public class WikiPageServiceUtil {
 		return getService().getPagesCount(groupId, userId, nodeId, status);
 	}
 
-	public static java.lang.String getPagesRSS(long companyId, long nodeId,
-		java.lang.String title, int max, java.lang.String type, double version,
-		java.lang.String displayStyle, java.lang.String feedURL,
-		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
-		java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getPagesRSS(companyId, nodeId, title, max, type, version,
-			displayStyle, feedURL, entryURL, attachmentURLPrefix, locale);
-	}
-
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, long,
-	String, int, String, double, String, String, String, String,
+	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
+	int, String, double, String, String, String, String,
 	java.util.Locale)}
 	*/
 	@Deprecated
@@ -308,6 +297,17 @@ public class WikiPageServiceUtil {
 		return getService()
 				   .getPagesRSS(companyId, nodeId, title, max, type, version,
 			displayStyle, feedURL, entryURL, locale);
+	}
+
+	public static java.lang.String getPagesRSS(long nodeId,
+		java.lang.String title, int max, java.lang.String type, double version,
+		java.lang.String displayStyle, java.lang.String feedURL,
+		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
+		java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getPagesRSS(nodeId, title, max, type, version,
+			displayStyle, feedURL, entryURL, attachmentURLPrefix, locale);
 	}
 
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(

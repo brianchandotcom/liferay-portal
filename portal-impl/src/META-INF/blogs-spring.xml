@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean id="com.liferay.portlet.blogs.action.CoverImageSelectorMVCActionCommand" class="com.liferay.portlet.blogs.action.CoverImageSelectorMVCActionCommand" />
+	<bean id="com.liferay.portlet.blogs.action.EditEntryMVCActionCommand" class="com.liferay.portlet.blogs.action.EditEntryMVCActionCommand" />
+	<bean id="com.liferay.portlet.blogs.action.EditEntryMVCRenderCommand" class="com.liferay.portlet.blogs.action.EditEntryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.blogs.action.FindEntryAction" class="com.liferay.portlet.blogs.action.FindEntryAction" />
+	<bean id="com.liferay.portlet.blogs.action.RSSAction" class="com.liferay.portlet.blogs.action.RSSAction" />
+	<bean id="com.liferay.portlet.blogs.action.SmallImageSelectorMVCActionCommand" class="com.liferay.portlet.blogs.action.SmallImageSelectorMVCActionCommand" />
+	<bean id="com.liferay.portlet.blogs.action.TrackbackMVCActionCommand" class="com.liferay.portlet.blogs.action.TrackbackMVCActionCommand" />
+	<bean id="com.liferay.portlet.blogs.action.UploadEditorImageMVCActionCommand" class="com.liferay.portlet.blogs.action.UploadEditorImageMVCActionCommand" />
+	<bean id="com.liferay.portlet.blogs.action.ViewEntryMVCRenderCommand" class="com.liferay.portlet.blogs.action.ViewEntryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.blogs.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogs.action.ViewMVCRenderCommand" />
+	<bean id="com.liferay.portlet.blogsadmin.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogsadmin.action.ViewMVCRenderCommand" />
+	<bean id="com.liferay.portlet.blogsaggregator.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogsaggregator.action.ViewMVCRenderCommand" />
+</beans>

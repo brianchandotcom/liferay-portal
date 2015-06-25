@@ -184,18 +184,14 @@
 	<portlet>
 		<portlet-name>33</portlet-name>
 		<display-name>Blogs</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.blogs.portlet.BlogsPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/blogs/configuration.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/blogs/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/blogs/view</value>
+			<value>/</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -518,14 +514,14 @@
 	<portlet>
 		<portlet-name>114</portlet-name>
 		<display-name>Recent Bloggers</display-name>
-		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.recentbloggers.portlet.RecentBloggersPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/recent_bloggers/configuration.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/recent_bloggers/</value>
+			<value>/</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>
@@ -549,18 +545,14 @@
 	<portlet>
 		<portlet-name>115</portlet-name>
 		<display-name>Blogs Aggregator</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.blogsaggregator.portlet.BlogsAggregatorPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/blogs_aggregator/configuration.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/blogs_aggregator/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/blogs_aggregator/view</value>
+			<value>/</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -937,18 +929,14 @@
 	<portlet>
 		<portlet-name>161</portlet-name>
 		<display-name>Blogs</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.blogsadmin.portlet.BlogsAdminPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/blogs_admin/configuration.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/blogs_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/blogs_admin/view</value>
+			<value>/</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -55,8 +55,8 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	/>
 </c:if>
 
-<portlet:actionURL var="editEntryURL">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL">
+	<portlet:param name="mvcPath" value="/html/portlet/blogs/edit_entry.jsp" />
 </portlet:actionURL>
 
 <div class="edit-entry">
@@ -114,9 +114,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 					</c:if>
 
-					<portlet:actionURL var="coverImageSelectorURL">
-						<portlet:param name="struts_action" value="/blogs/cover_image_selector" />
-					</portlet:actionURL>
+					<portlet:actionURL name="/blogs/cover_image_selector" var="coverImageSelectorURL" />
 
 					<div class="lfr-blogs-cover-image-selector">
 						<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= coverImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
@@ -181,9 +179,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						</div>
 
 						<aui:fieldset cssClass="entry-abstract">
-							<portlet:actionURL var="smallImageSelectorURL">
-								<portlet:param name="struts_action" value="/blogs/small_image_selector" />
-							</portlet:actionURL>
+							<portlet:actionURL name="/blogs/small_image_selector" var="smallImageSelectorURL" />
 
 							<div class="lfr-blogs-small-image-selector">
 								<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" maxFileSize="<%= smallImageMaxFileSize %>" paramName="smallImageFileEntry" uploadURL="<%= smallImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
@@ -344,7 +340,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 				<aui:button disabled="<%= pending %>" name="publishButton"  type="submit" value="<%= publishButtonLabel %>" />
 
-				<aui:button name="saveButton"  primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+				<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
 				<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
@@ -352,8 +348,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</aui:form>
 </div>
 
-<portlet:actionURL var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="ajax" value="true" />
 </portlet:actionURL>
 
@@ -426,7 +421,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 if (entry != null) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/blogs/view_entry");
+	portletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
 	portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 	PortalUtil.addPortletBreadcrumbEntry(request, entry.getTitle(), portletURL.toString());

@@ -14,34 +14,31 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
-import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portlet.blogs.util.BlogsFindEntryHelper;
+import com.liferay.portal.util.PortletKeys;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
 @OSGiBeanProperties(
-	property = "path=/blogs/find_entry", service = StrutsAction.class
+	property = {
+		"javax.portlet.name=" + PortletKeys.BLOGS, "mvc.command.name=",
+		"mvc.command.name=/blogs/view"
+	}
 )
-public class FindEntryAction extends BaseStrutsAction {
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		_findActionHelper.execute(request, response);
-
-		return null;
+		return "/html/portlet/blogs/view.jsp";
 	}
-
-	private final FindActionHelper _findActionHelper =
-		new BlogsFindEntryHelper();
 
 }

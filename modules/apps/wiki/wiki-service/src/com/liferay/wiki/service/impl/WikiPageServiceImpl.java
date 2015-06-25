@@ -395,9 +395,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		List<WikiPage> pages = getNodePages(nodeId, max);
 
 		return exportToRSS(
-			node.getCompanyId(), node.getName(), node.getDescription(), type,
-			version, displayStyle, feedURL, entryURL, attachmentURLPrefix,
-			pages, false, null);
+			node.getName(), node.getDescription(), type, version, displayStyle,
+			feedURL, entryURL, attachmentURLPrefix, pages, false, null);
 	}
 
 	@Override
@@ -533,8 +532,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, long,
-	 *             String, int, String, double, String, String, String, String,
+	 * @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
+	 *             int, String, double, String, String, String, String,
 	 *             java.util.Locale)}
 	 */
 	@Deprecated
@@ -546,15 +545,15 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		throws PortalException {
 
 		return getPagesRSS(
-			companyId, nodeId, title, max, type, version, displayStyle, feedURL,
-			entryURL, null, locale);
+			nodeId, title, max, type, version, displayStyle, feedURL, entryURL,
+			null, locale);
 	}
 
 	@Override
 	public String getPagesRSS(
-			long companyId, long nodeId, String title, int max, String type,
-			double version, String displayStyle, String feedURL,
-			String entryURL, String attachmentURLPrefix, Locale locale)
+			long nodeId, String title, int max, String type, double version,
+			String displayStyle, String feedURL, String entryURL,
+			String attachmentURLPrefix, Locale locale)
 		throws PortalException {
 
 		WikiPagePermissionChecker.check(
@@ -564,8 +563,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			nodeId, title, 0, max, new PageCreateDateComparator(true));
 
 		return exportToRSS(
-			companyId, title, title, type, version, displayStyle, feedURL,
-			entryURL, attachmentURLPrefix, pages, true, locale);
+			title, title, type, version, displayStyle, feedURL, entryURL,
+			attachmentURLPrefix, pages, true, locale);
 	}
 
 	@Override
@@ -749,10 +748,10 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	protected String exportToRSS(
-			long companyId, String name, String description, String type,
-			double version, String displayStyle, String feedURL,
-			String entryURL, String attachmentURLPrefix, List<WikiPage> pages,
-			boolean diff, Locale locale)
+			String name, String description, String type, double version,
+			String displayStyle, String feedURL, String entryURL,
+			String attachmentURLPrefix, List<WikiPage> pages, boolean diff,
+			Locale locale)
 		throws PortalException {
 
 		SyndFeed syndFeed = new SyndFeedImpl();

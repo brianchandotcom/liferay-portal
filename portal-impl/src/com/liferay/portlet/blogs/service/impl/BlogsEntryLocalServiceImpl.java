@@ -1750,7 +1750,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			request, PortletKeys.BLOGS_ADMIN, controlPanelPlid,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/blogs_admin/view_entry");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 		return portletURL.toString();
@@ -1971,8 +1971,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		String name = group.getDescriptiveName();
 		String url = layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs";
-		String changesURL =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs/rss";
+		String changesURL = serviceContext.getPathMain() + "/blogs/rss";
 
 		sb.append("http://blogsearch.google.com/ping?name=");
 		sb.append(HttpUtil.encodeURL(name));

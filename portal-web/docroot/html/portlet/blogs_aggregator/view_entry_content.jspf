@@ -20,7 +20,7 @@
 		<%
 		PortletURL showBlogEntryURL = renderResponse.createRenderURL();
 
-		showBlogEntryURL.setParameter("struts_action", "/blogs_aggregator/view_entry");
+		showBlogEntryURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
 		showBlogEntryURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 		StringBundler sb = new StringBundler(8);

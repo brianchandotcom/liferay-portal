@@ -137,7 +137,7 @@ public class BlogsEntryAssetRenderer
 			getControlPanelPlid(liferayPortletRequest), PortletKeys.BLOGS,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/blogs/edit_entry");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
 
 		return portletURL;
@@ -159,7 +159,7 @@ public class BlogsEntryAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("struts_action", "/blogs/view_entry");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
 		portletURL.setWindowState(windowState);
 

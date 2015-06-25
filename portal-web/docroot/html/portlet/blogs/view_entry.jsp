@@ -17,21 +17,21 @@
 <%@ include file="/html/portlet/blogs/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-if (Validator.isNull(redirect) || (strutsAction.equals("/blogs/view_entry") && !portletId.equals(PortletKeys.BLOGS))) {
+if (Validator.isNull(redirect) || (mvcRenderCommandName.equals("/blogs/view_entry") && !portletId.equals(PortletKeys.BLOGS))) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	if (portletId.equals(PortletKeys.BLOGS_ADMIN)) {
-		portletURL.setParameter("struts_action", "/blogs_admin/view");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	}
 	else if (portletId.equals(PortletKeys.BLOGS_AGGREGATOR)) {
-		portletURL.setParameter("struts_action", "/blogs_aggregator/view");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs_aggregator/view");
 	}
 	else {
-		portletURL.setParameter("struts_action", "/blogs/view");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	}
 
 	redirect = portletURL.toString();
@@ -64,9 +64,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	/>
 </c:if>
 
-<portlet:actionURL var="editEntryURL">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <aui:form action="<%= editEntryURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -93,7 +91,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 
 						<div class="previous-entry-content">
 							<portlet:renderURL var="previousEntryURL">
-								<portlet:param name="struts_action" value="/blogs/view_entry" />
+								<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 								<portlet:param name="redirect" value="<%= redirect %>" />
 								<portlet:param name="entryId" value="<%= String.valueOf(previousEntry.getEntryId()) %>" />
 							</portlet:renderURL>
@@ -145,7 +143,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 
 						<div class="next-entry-content">
 							<portlet:renderURL var="nextEntryURL">
-								<portlet:param name="struts_action" value="/blogs/view_entry" />
+								<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 								<portlet:param name="redirect" value="<%= redirect %>" />
 								<portlet:param name="entryId" value="<%= String.valueOf(nextEntry.getEntryId()) %>" />
 							</portlet:renderURL>
@@ -202,13 +200,9 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				<aui:input inlineLabel="left" name="trackbackURL" type="resource" value='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
 			</c:if>
 
-			<portlet:actionURL var="discussionURL">
-				<portlet:param name="struts_action" value="/blogs/edit_entry_discussion" />
-			</portlet:actionURL>
+			<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
-			<portlet:resourceURL var="discussionPaginationURL">
-				<portlet:param name="struts_action" value="/blogs/edit_entry_discussion" />
-			</portlet:resourceURL>
+			<portlet:resourceURL id="invokeTaglibDiscussionPagination" var="discussionPaginationURL" />
 
 			<liferay-ui:discussion
 				className="<%= BlogsEntry.class.getName() %>"

@@ -152,48 +152,6 @@
 		<put name="portlet_content" value="/portlet/background_task/error.jsp" />
 	</definition>
 
-	<!-- Blogs -->
-
-	<definition name="portlet.blogs" extends="portlet" />
-
-	<definition name="portlet.blogs.edit_entry" extends="portlet.blogs">
-		<put name="portlet_content" value="/portlet/blogs/edit_entry.jsp" />
-	</definition>
-
-	<definition name="portlet.blogs.error" extends="portlet.blogs">
-		<put name="portlet_content" value="/portlet/blogs/error.jsp" />
-	</definition>
-
-	<definition name="portlet.blogs.search" extends="portlet.blogs">
-		<put name="portlet_content" value="/portlet/blogs/search.jsp" />
-	</definition>
-
-	<definition name="portlet.blogs.view" extends="portlet.blogs">
-		<put name="portlet_content" value="/portlet/blogs/view.jsp" />
-	</definition>
-
-	<definition name="portlet.blogs.view_entry" extends="portlet.blogs">
-		<put name="portlet_content" value="/portlet/blogs/view_entry.jsp" />
-	</definition>
-
-	<!-- Blogs Admin -->
-
-	<definition name="portlet.blogs_admin.view" extends="portlet">
-			<put name="portlet_content" value="/portlet/blogs_admin/view.jsp" />
-	</definition>
-
-	<!-- Blogs Aggregator -->
-
-	<definition name="portlet.blogs_aggregator" extends="portlet" />
-
-	<definition name="portlet.blogs_aggregator.error" extends="portlet.blogs_aggregator">
-		<put name="portlet_content" value="/portlet/blogs_aggregator/error.jsp" />
-	</definition>
-
-	<definition name="portlet.blogs_aggregator.view" extends="portlet.blogs_aggregator">
-		<put name="portlet_content" value="/portlet/blogs_aggregator/view.jsp" />
-	</definition>
-
 	<!-- Calendar -->
 
 	<definition name="portlet.calendar" extends="portlet" />

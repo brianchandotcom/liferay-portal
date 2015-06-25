@@ -4,7 +4,7 @@
 	<div class="entry">
 		<#assign viewURL = renderResponse.createRenderURL() />
 
-		${viewURL.setParameter("struts_action", "/blogs/view_entry")}
+		${viewURL.setParameter("mvcRenderCommandName", "/blogs/view_entry")}
 		${viewURL.setParameter("redirect", currentURL)}
 		${viewURL.setParameter("urlTitle", entry.getUrlTitle())}
 

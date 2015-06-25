@@ -99,7 +99,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.BLOGS);
 
-		portletURL.setParameter("struts_action", "/blogs/edit_entry");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
 
 		return portletURL;
 	}

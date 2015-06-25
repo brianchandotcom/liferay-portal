@@ -75,7 +75,7 @@ public class BlogsPortletToolbarContributor
 			portletRequest, PortletKeys.BLOGS, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/blogs/edit_entry");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
 
 		String currentURL = PortalUtil.getCurrentURL(portletRequest);
 

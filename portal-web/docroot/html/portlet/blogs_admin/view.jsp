@@ -22,11 +22,10 @@ String assetTagName = ParamUtil.getString(request, "tag");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/blogs_admin/view");
+portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
+<portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -35,7 +34,7 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 />
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/blogs_admin/search" />
+	<portlet:param name="mvcPath" value="/html/portlet/blogs/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL.toString() %>" method="get" name="fm">
@@ -72,7 +71,7 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 			rowIdProperty="urlTitle"
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/blogs_admin/view_entry" />
+				<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 				<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 			</liferay-portlet:renderURL>
@@ -107,7 +106,7 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH :Constants.DELETE %>');
 			form.fm('deleteEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/blogs_admin/edit_entry" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="/blogs/edit_entry" />');
 		}
 	}
 </aui:script>

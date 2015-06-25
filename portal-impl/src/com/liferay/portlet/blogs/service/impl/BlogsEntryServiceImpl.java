@@ -572,20 +572,14 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 			StringBundler sb = new StringBundler(4);
 
-			if (entryURL.endsWith("/blogs/rss")) {
-				sb.append(entryURL.substring(0, entryURL.length() - 3));
-				sb.append(entry.getUrlTitle());
-			}
-			else {
-				sb.append(entryURL);
+			sb.append(entryURL);
 
-				if (!entryURL.endsWith(StringPool.QUESTION)) {
-					sb.append(StringPool.AMPERSAND);
-				}
-
-				sb.append("entryId=");
-				sb.append(entry.getEntryId());
+			if (!entryURL.endsWith(StringPool.QUESTION)) {
+				sb.append(StringPool.AMPERSAND);
 			}
+
+			sb.append("entryId=");
+			sb.append(entry.getEntryId());
 
 			String link = sb.toString();
 
@@ -611,16 +605,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 		selfSyndLink.setHref(feedURL);
 		selfSyndLink.setRel("self");
-
-		if (feedURL.endsWith("/-/blogs/rss")) {
-			SyndLink alternateSyndLink = new SyndLinkImpl();
-
-			syndLinks.add(alternateSyndLink);
-
-			alternateSyndLink.setHref(
-				feedURL.substring(0, feedURL.length() - 12));
-			alternateSyndLink.setRel("alternate");
-		}
 
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(name);

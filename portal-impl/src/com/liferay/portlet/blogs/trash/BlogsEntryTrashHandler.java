@@ -118,13 +118,8 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		if (!isContainerModel) {
-			if (portletId.equals(PortletKeys.BLOGS)) {
-				portletURL.setParameter("struts_action", "/blogs/view_entry");
-			}
-			else {
-				portletURL.setParameter(
-					"struts_action", "/blogs_admin/view_entry");
-			}
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/blogs/view_entry");
 		}
 
 		return portletURL;

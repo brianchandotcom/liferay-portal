@@ -29,7 +29,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewEntryURL">
-			<portlet:param name="struts_action" value="/blogs_admin/view_entry" />
+			<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:renderURL>
@@ -43,7 +43,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL">
-			<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
+			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
@@ -75,8 +75,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 	</c:if>
 
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteEntryURL">
-			<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
+		<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />

@@ -19,6 +19,7 @@ import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import java.nio.file.Files;
@@ -269,6 +270,9 @@ public class PatchTask extends DefaultTask {
 		_project.copy(closure);
 
 		for (final File patchFile : getPatchFiles()) {
+			final ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
 			_project.exec(
 				new Action<ExecSpec>() {
 
@@ -282,9 +286,13 @@ public class PatchTask extends DefaultTask {
 							"--input=" +
 								FileUtil.relativize(patchFile, temporaryDir));
 						execSpec.args("--strip=1");
+
+						execSpec.setStandardOutput(byteArrayOutputStream);
 					}
 
 				});
+
+			System.out.println(byteArrayOutputStream.toString());
 		}
 
 		FileTree fileTree = _project.fileTree(temporaryDir);

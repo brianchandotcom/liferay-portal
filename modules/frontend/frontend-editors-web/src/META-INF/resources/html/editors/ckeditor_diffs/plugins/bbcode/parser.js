@@ -127,11 +127,10 @@
 			if (token) {
 				var tokenItem = token[1] || token[3];
 
+				length = lastIndex;
+
 				if (instance._isValidTag(tokenItem)) {
 					length = token.index;
-				}
-				else {
-					length = lastIndex;
 				}
 			}
 

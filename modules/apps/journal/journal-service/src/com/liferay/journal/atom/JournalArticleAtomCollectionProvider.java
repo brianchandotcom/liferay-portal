@@ -15,7 +15,7 @@
 package com.liferay.journal.atom;
 
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
@@ -42,6 +42,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Spasic
@@ -114,7 +115,7 @@ public class JournalArticleAtomCollectionProvider
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		JournalArticleServiceUtil.deleteArticle(
+		_journalArticleService.deleteArticle(
 			groupId, articleId, null, serviceContext);
 	}
 
@@ -126,7 +127,7 @@ public class JournalArticleAtomCollectionProvider
 		long groupId = atomRequestContext.getLongParameter("groupId");
 		String articleId = resourceName;
 
-		return JournalArticleServiceUtil.getArticle(groupId, articleId);
+		return _journalArticleService.getArticle(groupId, articleId);
 	}
 
 	@Override
@@ -156,7 +157,7 @@ public class JournalArticleAtomCollectionProvider
 
 		OrderByComparator<JournalArticle> obc = new ArticleVersionComparator();
 
-		int count = JournalArticleServiceUtil.searchCount(
+		int count = _journalArticleService.searchCount(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate);
@@ -165,7 +166,7 @@ public class JournalArticleAtomCollectionProvider
 
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-		journalArticles = JournalArticleServiceUtil.search(
+		journalArticles = _journalArticleService.search(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate, atomPager.getStart(), atomPager.getEnd() + 1,
@@ -230,7 +231,7 @@ public class JournalArticleAtomCollectionProvider
 		serviceContext.setAddGuestPermissions(false);
 		serviceContext.setScopeGroupId(groupId);
 
-		JournalArticle journalArticle = JournalArticleServiceUtil.addArticle(
+		JournalArticle journalArticle = _journalArticleService.addArticle(
 			groupId, folderId, classNameId, classPK, articleId, autoArticleId,
 			titleMap, descriptionMap, content, ddmStructureKey, ddmTemplateKey,
 			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
@@ -243,7 +244,7 @@ public class JournalArticleAtomCollectionProvider
 		double version = journalArticle.getVersion();
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		journalArticle = JournalArticleServiceUtil.updateStatus(
+		journalArticle = _journalArticleService.updateStatus(
 			groupId, journalArticle.getArticleId(), version, status, articleURL,
 			serviceContext);
 
@@ -265,17 +266,26 @@ public class JournalArticleAtomCollectionProvider
 
 		serviceContext.setScopeGroupId(groupId);
 
-		journalArticle = JournalArticleServiceUtil.updateArticle(
+		journalArticle = _journalArticleService.updateArticle(
 			groupId, folderId, articleId, version, content, serviceContext);
 
 		int status = WorkflowConstants.STATUS_APPROVED;
 		String articleURL = StringPool.BLANK;
 
-		JournalArticleServiceUtil.updateStatus(
+		_journalArticleService.updateStatus(
 			groupId, journalArticle.getArticleId(), journalArticle.getVersion(),
 			status, articleURL, serviceContext);
 	}
 
+	@Reference
+	protected void setJournalArticleService(
+		JournalArticleService journalArticleService) {
+
+		_journalArticleService = journalArticleService;
+	}
+
 	private static final String _COLLECTION_NAME = "web-content";
+
+	private JournalArticleService _journalArticleService;
 
 }

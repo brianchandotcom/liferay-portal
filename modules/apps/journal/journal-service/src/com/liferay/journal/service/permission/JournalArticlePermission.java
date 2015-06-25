@@ -19,8 +19,8 @@ import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -33,6 +33,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -154,8 +155,8 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 			}
 			else {
 				try {
-					JournalFolder folder =
-						JournalFolderLocalServiceUtil.getFolder(folderId);
+					JournalFolder folder = _journalFolderLocalService.getFolder(
+						folderId);
 
 					if (!JournalFolderPermission.contains(
 							permissionChecker, folder, ActionKeys.ACCESS) &&
@@ -189,11 +190,11 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.fetchLatestArticle(classPK);
+		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
+			classPK);
 
 		if (article == null) {
-			article = JournalArticleLocalServiceUtil.getArticle(classPK);
+			article = _journalArticleLocalService.getArticle(classPK);
 		}
 
 		return contains(permissionChecker, article, actionId);
@@ -204,7 +205,7 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 			double version, String actionId)
 		throws PortalException {
 
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+		JournalArticle article = _journalArticleLocalService.getArticle(
 			groupId, articleId, version);
 
 		return contains(permissionChecker, article, actionId);
@@ -215,9 +216,8 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 			int status, String actionId)
 		throws PortalException {
 
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.getLatestArticle(
-				groupId, articleId, status);
+		JournalArticle article = _journalArticleLocalService.getLatestArticle(
+			groupId, articleId, status);
 
 		return contains(permissionChecker, article, actionId);
 	}
@@ -227,7 +227,7 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+		JournalArticle article = _journalArticleLocalService.getArticle(
 			groupId, articleId);
 
 		return contains(permissionChecker, article, actionId);
@@ -241,5 +241,22 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 
 		check(permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
+	}
+
+	private static JournalArticleLocalService _journalArticleLocalService;
+	private static JournalFolderLocalService _journalFolderLocalService;
 
 }

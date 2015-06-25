@@ -16,7 +16,7 @@ package com.liferay.journal.events;
 
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -27,12 +27,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  *
@@ -71,9 +72,9 @@ public class JournalArticleServicePreAction extends Action {
 
 		try {
 			JournalArticle mainJournalArticle =
-				JournalArticleServiceUtil.getArticle(mainJournalArticleId);
+				_journalArticleService.getArticle(mainJournalArticleId);
 
-			AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(
+			AssetEntry layoutAssetEntry = _assetEntryLocalService.getEntry(
 				JournalArticle.class.getName(),
 				mainJournalArticle.getResourcePrimKey());
 
@@ -86,9 +87,26 @@ public class JournalArticleServicePreAction extends Action {
 		}
 	}
 
+	@Reference
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference
+	protected void setJournalArticleService(
+		JournalArticleService journalArticleService) {
+
+		_journalArticleService = journalArticleService;
+	}
+
 	private static final String _PATH_PORTAL_LAYOUT = "/portal/layout";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleServicePreAction.class);
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private JournalArticleService _journalArticleService;
 
 }

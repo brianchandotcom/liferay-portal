@@ -15,7 +15,7 @@
 package com.liferay.journal.util.impl;
 
 import com.liferay.journal.model.JournalArticleDisplay;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
@@ -42,6 +42,7 @@ import javax.portlet.RenderRequest;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -270,7 +271,7 @@ public class JournalContentImpl implements JournalContent {
 						", " + ddmTemplateKey + "}");
 			}
 
-			return JournalArticleLocalServiceUtil.getArticleDisplay(
+			return _journalArticleLocalService.getArticleDisplay(
 				groupId, articleId, ddmTemplateKey, viewMode, languageId, page,
 				portletRequestModel, themeDisplay);
 		}
@@ -283,6 +284,13 @@ public class JournalContentImpl implements JournalContent {
 
 			return null;
 		}
+	}
+
+	@Reference
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
 	}
 
 	protected static final String CACHE_NAME = JournalContent.class.getName();
@@ -314,6 +322,8 @@ public class JournalContentImpl implements JournalContent {
 		_portalCache;
 	private static PortalCacheIndexer
 		<String, JournalContentKey, JournalArticleDisplay> _portalCacheIndexer;
+
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	private static class JournalContentKey implements IndexedCacheKey<String> {
 

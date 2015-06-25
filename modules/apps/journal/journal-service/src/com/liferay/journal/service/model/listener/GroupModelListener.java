@@ -19,9 +19,10 @@ import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -32,7 +33,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
-			SubscriptionLocalServiceUtil.deleteSubscriptions(
+			_subscriptionLocalService.deleteSubscriptions(
 				group.getCompanyId(), JournalArticle.class.getName(),
 				group.getGroupId());
 		}
@@ -40,5 +41,14 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

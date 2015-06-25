@@ -17,8 +17,8 @@ package com.liferay.journal.workflow;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 
 import java.io.Serializable;
 
@@ -41,6 +41,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -70,30 +71,27 @@ public class JournalArticleWorkflowHandler
 			long companyId, long groupId, long classPK)
 		throws PortalException {
 
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+		JournalArticle article = _journalArticleLocalService.getArticle(
 			classPK);
 
-		long folderId =
-			JournalFolderLocalServiceUtil.getInheritedWorkflowFolderId(
-				article.getFolderId());
+		long folderId = _journalFolderLocalService.getInheritedWorkflowFolderId(
+			article.getFolderId());
 
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			article.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
 				companyId, groupId, JournalFolder.class.getName(), folderId,
 				ddmStructure.getStructureId(), true);
 
 		if (workflowDefinitionLink == null) {
 			workflowDefinitionLink =
-				WorkflowDefinitionLinkLocalServiceUtil.
-					fetchWorkflowDefinitionLink(
-						companyId, groupId, JournalFolder.class.getName(),
-						folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
-						true);
+				_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+					companyId, groupId, JournalFolder.class.getName(), folderId,
+					JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
 		}
 
 		return workflowDefinitionLink;
@@ -115,7 +113,7 @@ public class JournalArticleWorkflowHandler
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+		JournalArticle article = _journalArticleLocalService.getArticle(
 			classPK);
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
@@ -127,7 +125,7 @@ public class JournalArticleWorkflowHandler
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT),
 				null);
 
-		return JournalArticleLocalServiceUtil.updateStatus(
+		return _journalArticleLocalService.updateStatus(
 			userId, article, status, articleURL, serviceContext,
 			workflowContext);
 	}
@@ -137,6 +135,41 @@ public class JournalArticleWorkflowHandler
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
+	@Reference
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
+	}
+
+	@Reference
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
 	private static final boolean _VISIBLE = false;
+
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

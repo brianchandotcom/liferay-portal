@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.layoutsadmin.util.SitemapURLProvider;
@@ -76,7 +76,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
 
 			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-				LayoutSetLocalServiceUtil.getLayoutSet(
+				_layoutSetLocalService.getLayoutSet(
 					journalArticle.getGroupId(), false),
 				themeDisplay);
 
@@ -129,6 +129,14 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		_journalArticleService = journalArticleService;
 	}
 
+	@Reference
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
 	private JournalArticleService _journalArticleService;
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -30,6 +30,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juan Fernández
@@ -91,7 +92,7 @@ public class JournalFolderPermission implements BaseModelPermissionChecker {
 				while (folderId !=
 							JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-					folder = JournalFolderLocalServiceUtil.getFolder(folderId);
+					folder = _journalFolderLocalService.getFolder(folderId);
 
 					if (!_hasPermission(permissionChecker, folder, actionId)) {
 						return false;
@@ -123,8 +124,8 @@ public class JournalFolderPermission implements BaseModelPermissionChecker {
 				permissionChecker, groupId, actionId);
 		}
 		else {
-			JournalFolder folder =
-				JournalFolderLocalServiceUtil.getJournalFolder(folderId);
+			JournalFolder folder = _journalFolderLocalService.getJournalFolder(
+				folderId);
 
 			return contains(permissionChecker, folder, actionId);
 		}
@@ -137,6 +138,13 @@ public class JournalFolderPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		check(permissionChecker, groupId, primaryKey, actionId);
+	}
+
+	@Reference
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
 	}
 
 	private static boolean _hasPermission(
@@ -155,5 +163,7 @@ public class JournalFolderPermission implements BaseModelPermissionChecker {
 
 		return false;
 	}
+
+	private static JournalFolderLocalService _journalFolderLocalService;
 
 }

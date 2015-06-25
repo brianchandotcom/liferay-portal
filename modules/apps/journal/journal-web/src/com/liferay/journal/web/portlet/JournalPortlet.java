@@ -290,13 +290,6 @@ public class JournalPortlet extends MVCPortlet {
 		sendEditEntryRedirect(actionRequest, actionResponse);
 	}
 
-	public void moveArticlesToTrash(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteArticles(actionRequest, actionResponse, true);
-	}
-
 	public void moveEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -363,6 +356,13 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		deleteFolders(actionRequest, actionResponse, true);
+	}
+
+	public void moveToTrash(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		deleteArticles(actionRequest, actionResponse, true);
 	}
 
 	public void previewArticle(

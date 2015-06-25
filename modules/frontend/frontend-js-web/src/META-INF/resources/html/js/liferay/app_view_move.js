@@ -40,8 +40,6 @@ AUI.add(
 
 		var STR_MOVE_ENTRY_URL = 'moveEntryRenderUrl';
 
-		var STR_MOVE_TO_TRASH = 'move_to_trash';
-
 		var STR_NODE = 'node';
 
 		var STR_PORTLET_GROUP = 'portletGroup';
@@ -85,6 +83,10 @@ AUI.add(
 					},
 
 					moveEntryRenderUrl: {
+						validator: Lang.isString
+					},
+
+					moveToTrashActionName: {
 						validator: Lang.isString
 					},
 
@@ -282,7 +284,7 @@ AUI.add(
 					_moveEntriesToTrash: function() {
 						var instance = this;
 
-						instance._processEntryAction(STR_MOVE_TO_TRASH, instance.get('editEntryUrl'));
+						instance._processEntryAction(instance.get('moveToTrashActionName'), instance.get('editEntryUrl'));
 					},
 
 					_onDragDropHit: function(event) {
@@ -407,7 +409,7 @@ AUI.add(
 
 						var redirectUrl = location.href;
 
-						if (action === STR_DELETE || action === STR_DELETE_ENTRIES || action === STR_MOVE_TO_TRASH || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
+						if (action === STR_DELETE || action === STR_DELETE_ENTRIES || action === instance.get('moveToTrashActionName') || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
 							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
 						}
 

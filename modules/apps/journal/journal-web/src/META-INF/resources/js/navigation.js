@@ -58,6 +58,7 @@ AUI.add(
 							{
 								displayStyleCSSClass: displayStyleCSSClass,
 								draggableCSSClass: '.entry-link',
+								moveToTrashActionName: 'moveToTrash',
 								namespace: namespace,
 								portletContainerId: portletContainerId,
 								portletGroup: 'journal',

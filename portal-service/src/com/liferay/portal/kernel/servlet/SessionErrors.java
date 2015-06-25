@@ -161,12 +161,28 @@ public class SessionErrors {
 		return contains(request.getSession(false), clazz.getName());
 	}
 
+	public static boolean contains(
+		HttpServletRequest request, Class<?>[] classes) {
+
+		return contains(request.getSession(false), classes);
+	}
+
 	public static boolean contains(HttpServletRequest request, String key) {
 		return contains(request.getSession(false), key);
 	}
 
 	public static boolean contains(HttpSession session, Class<?> clazz) {
 		return contains(session, clazz.getName());
+	}
+
+	public static boolean contains(HttpSession session, Class<?>[] classes) {
+		for (Class<?> clazz : classes) {
+			if (contains(session, clazz.getName())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean contains(HttpSession session, String key) {
@@ -189,15 +205,7 @@ public class SessionErrors {
 	public static boolean contains(
 		PortletRequest portletRequest, Class<?>[] classes) {
 
-		for (Class clazz : classes) {
-			if (contains(
-					portletRequest.getPortletSession(false), clazz.getName())) {
-
-				return true;
-			}
-		}
-
-		return false;
+		return contains(portletRequest.getPortletSession(false), classes);
 	}
 
 	public static boolean contains(PortletRequest portletRequest, String key) {
@@ -208,6 +216,18 @@ public class SessionErrors {
 		PortletSession portletSession, Class<?> clazz) {
 
 		return contains(portletSession, clazz.getName());
+	}
+
+	public static boolean contains(
+		PortletSession portletSession, Class<?>[] classes) {
+
+		for (Class<?> clazz : classes) {
+			if (contains(portletSession, clazz.getName())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean contains(PortletSession portletSession, String key) {

@@ -122,7 +122,7 @@
 
 			var length = data.length;
 
-			var lastIndex = instance._lexer.getLastIndex();;
+			var lastIndex = instance._lexer.getLastIndex();
 
 			if (token) {
 				var tokenItem = token[1] || token[3];

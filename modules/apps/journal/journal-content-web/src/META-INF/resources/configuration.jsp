@@ -141,6 +141,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 					</liferay-portlet:resourceURL>
 
 					var baseJournalArticleResourceUrl = '<%= journalArticleResource.toString() %>';
+
+					$('.article-preview .article-preview-content-container').html('<div class="loading-animation"></div>');
+					$('.template-preview .template-preview-content-container').html('<div class="loading-animation"></div>');
 					
 					$.ajax(
 						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),

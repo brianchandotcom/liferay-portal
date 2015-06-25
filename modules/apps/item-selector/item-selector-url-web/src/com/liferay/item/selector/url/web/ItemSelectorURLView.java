@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.item.selector.url.web.image;
+package com.liferay.item.selector.url.web;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.url.web.display.context.URLItemSelectorViewDisplayContext;
+import com.liferay.item.selector.url.web.display.context.ItemSelectorURLViewDisplayContext;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletURL;
@@ -43,11 +43,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorView.class)
-public class URLImageItemSelectorView
+public class ItemSelectorURLView
 	implements ItemSelectorView<ImageItemSelectorCriterion> {
 
-	public static final String URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+	public static final String ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT =
+		"ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT";
 
 	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -65,10 +65,7 @@ public class URLImageItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content.Language", locale);
-
-		return resourceBundle.getString("image-url");
+		return LanguageUtil.get(locale, "url");
 	}
 
 	@Override
@@ -83,18 +80,18 @@ public class URLImageItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/url.jsp");
 
-		URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext =
-			new URLItemSelectorViewDisplayContext(this, itemSelectedEventName);
+		ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext =
+			new ItemSelectorURLViewDisplayContext(this, itemSelectedEventName);
 
 		request.setAttribute(
-			URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
-			urlItemSelectorViewDisplayContext);
+			ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT,
+			itemSelectorURLViewDisplayContext);
 
 		requestDispatcher.include(request, response);
 	}
 
 	@Reference(
-		target ="(osgi.web.symbolicname=com.liferay.url.item.selector.web)",
+		target ="(osgi.web.symbolicname=com.liferay.item.selector.url.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

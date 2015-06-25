@@ -17,11 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext = (URLItemSelectorViewDisplayContext)request.getAttribute(URLImageItemSelectorView.URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
-
-String itemSelectedEventName = urlItemSelectorViewDisplayContext.getItemSelectedEventName();
-
-String tabName = urlItemSelectorViewDisplayContext.getTitle(locale);
+ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelectorURLViewDisplayContext)request.getAttribute(ItemSelectorURLView.ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT);
 
 ResourceBundle resourceBundle = ResourceBundle.getBundle("content/Language", locale);
 %>
@@ -38,18 +34,18 @@ ResourceBundle resourceBundle = ResourceBundle.getBundle("content/Language", loc
 			<aui:button cssClass="btn-primary" name="previewBtn" value='<%= LanguageUtil.get(resourceBundle, "enter") %>'/>
 		</div>
 
-		<em><%= LanguageUtil.format(resourceBundle, "for-example-x", "http://www.liferay.com/liferay.png", false) %></em>
+		<em><%= LanguageUtil.format(request, "for-example-x", "http://www.liferay.com/liferay.png", false) %></em>
 	</aui:col>
 </aui:row>
 
 <aui:script use="liferay-item-selector-url">
 	new Liferay.ItemSelectorUrl(
 		{
-			closeCaption: '<%= tabName %>',
+			closeCaption: '<%= itemSelectorURLViewDisplayContext.getTitle(locale) %>',
 			namespace: '<portlet:namespace/>',
 			on: {
 				selectedItem: function(event) {
-					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
+					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorURLViewDisplayContext.getItemSelectedEventName() %>', event);
 				}
 			},
 			rootNode: '#itemSelectorUrlContainer'

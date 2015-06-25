@@ -112,9 +112,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 					</c:if>
 
-					<portlet:actionURL var="coverImageSelectorURL">
-						<portlet:param name="struts_action" value="/blogs/cover_image_selector" />
-					</portlet:actionURL>
+					<portlet:actionURL name="/blogs/cover_image_selector" var="coverImageSelectorURL" />
 
 					<div class="lfr-blogs-cover-image-selector">
 						<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= coverImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
@@ -179,9 +177,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						</div>
 
 						<aui:fieldset cssClass="entry-abstract">
-							<portlet:actionURL var="smallImageSelectorURL">
-								<portlet:param name="struts_action" value="/blogs/small_image_selector" />
-							</portlet:actionURL>
+							<portlet:actionURL name="/blogs/small_image_selector" var="smallImageSelectorURL" />
 
 							<div class="lfr-blogs-small-image-selector">
 								<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" maxFileSize="<%= smallImageMaxFileSize %>" paramName="smallImageFileEntry" uploadURL="<%= smallImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />

@@ -15,26 +15,29 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.image.selector.ImageSelectorUploadHandler;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.image.selector.SmallImageSelectorUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Sergio González
  */
-public class SmallImageSelectorAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.BLOGS,
+		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN,
+		"mvc.command.name=/blogs/small_image_selector"
+	}
+)
+public class SmallImageSelectorMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		_imageSelectorUploadHandler.uploadSelectedImage(

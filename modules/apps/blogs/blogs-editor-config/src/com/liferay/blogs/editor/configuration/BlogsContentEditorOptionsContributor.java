@@ -21,6 +21,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,7 +52,8 @@ public class BlogsContentEditorOptionsContributor
 
 		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
-		portletURL.setParameter("struts_action", "/blogs/upload_editor_image");
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
 
 		editorOptions.setUploadURL(portletURL.toString());
 	}

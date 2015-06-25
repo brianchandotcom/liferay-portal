@@ -152,14 +152,6 @@
 		<put name="portlet_content" value="/portlet/background_task/error.jsp" />
 	</definition>
 
-	<!-- Blogs -->
-
-	<definition name="portlet.blogs" extends="portlet" />
-
-	<!-- Blogs Aggregator -->
-
-	<definition name="portlet.blogs_aggregator" extends="portlet" />
-
 	<!-- Calendar -->
 
 	<definition name="portlet.calendar" extends="portlet" />

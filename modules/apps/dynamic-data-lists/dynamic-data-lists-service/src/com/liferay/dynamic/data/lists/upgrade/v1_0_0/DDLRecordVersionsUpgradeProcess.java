@@ -47,6 +47,29 @@ import java.util.Set;
  */
 public class DDLRecordVersionsUpgradeProcess extends UpgradeProcess {
 
+	public String toXML(Map<String, String> expandoValuesMap) {
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		for (Map.Entry<String, String> entry : expandoValuesMap.entrySet()) {
+			Element dynamicElementElement = rootElement.addElement(
+				"dynamic-element");
+
+			String name = entry.getKey();
+			String data = entry.getValue();
+
+			dynamicElementElement.addAttribute("name", name);
+			dynamicElementElement.addAttribute(
+				"default-language-id",
+				LocalizationUtil.getDefaultLanguageId(data));
+
+			addDynamicContentElements(dynamicElementElement, name, data);
+		}
+
+		return document.asXML();
+	}
+
 	protected void addDDMContent(
 			String uuid_, long contentId, long groupId, long companyId,
 			long userId, String userName, Timestamp createDate,
@@ -237,29 +260,6 @@ public class DDLRecordVersionsUpgradeProcess extends UpgradeProcess {
 		_expandoStorageAdapterClassNameId = PortalUtil.getClassNameId(
 			"com.liferay.portlet.dynamicdatamapping.storage." +
 				"ExpandoStorageAdapter");
-	}
-
-	public String toXML(Map<String, String> expandoValuesMap) {
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		for (Map.Entry<String, String> entry : expandoValuesMap.entrySet()) {
-			Element dynamicElementElement = rootElement.addElement(
-				"dynamic-element");
-
-			String name = entry.getKey();
-			String data = entry.getValue();
-
-			dynamicElementElement.addAttribute("name", name);
-			dynamicElementElement.addAttribute(
-				"default-language-id",
-				LocalizationUtil.getDefaultLanguageId(data));
-
-			addDynamicContentElements(dynamicElementElement, name, data);
-		}
-
-		return document.asXML();
 	}
 
 	protected void updateDDMStorageLink(

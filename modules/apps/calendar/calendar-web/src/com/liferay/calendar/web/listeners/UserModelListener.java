@@ -63,7 +63,7 @@ public class UserModelListener extends BaseModelListener<User> {
 	protected void setCalendarResourceLocalService(
 		CalendarResourceLocalService calendarResourceLocalService) {
 
-		this._calendarResourceLocalService = calendarResourceLocalService;
+		_calendarResourceLocalService = calendarResourceLocalService;
 	}
 
 	private CalendarResourceLocalService _calendarResourceLocalService;

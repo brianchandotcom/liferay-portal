@@ -708,7 +708,7 @@
 			</then>
 		</if>
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT_SPANISH" />
 
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 

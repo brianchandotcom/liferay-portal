@@ -1,0 +1,13 @@
+dependencies {
+	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
+	compile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
+	compile project(":apps:dynamic-data-lists:dynamic-data-lists-web")
+	compile project(":apps:journal:journal-web")
+	compile project(":apps:wiki:wiki-api")
+	compile project(":apps:wiki:wiki-service")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/tools")
+}

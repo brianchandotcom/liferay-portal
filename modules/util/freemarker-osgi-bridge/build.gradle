@@ -1,0 +1,8 @@
+dependencies {
+	compile group: "org.freemarker", name: "freemarker", version: "2.3.17"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

@@ -1,0 +1,12 @@
+dependencies {
+	compile group: "com.thoughtworks.qdox", name: "qdox", transitive: false, version: "1.12.1"
+	compile group: "dom4j", name: "dom4j", transitive: false, version: "1.6.1"
+	compile group: "log4j", name: "log4j", version: "1.2.17"
+	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
+
+	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+}
+
+liferay {
+	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
+}

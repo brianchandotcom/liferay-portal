@@ -1,0 +1,12 @@
+dependencies {
+	compile group: "com.maxmind.geoip", name: "geoip-api", version: "1.2.14"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.tukaani", name: "xz", version: "1.5"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"

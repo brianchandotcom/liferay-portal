@@ -18,7 +18,7 @@ package com.liferay.calendar.constants;
  * @author Eduardo Lundgren
  * @author Fabio Pezzutto
  */
-public class CalendarPortletKeys extends com.liferay.portal.util.PortletKeys {
+public class CalendarPortletKeys {
 
 	public static final String CALENDAR =
 		"com_liferay_calendar_web_portlet_CalendarPortlet";

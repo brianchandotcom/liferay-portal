@@ -17,6 +17,7 @@ package com.liferay.journal.lar.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -54,6 +56,7 @@ import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -103,31 +106,36 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Test
-	public void testExportImportJournalArticleVersions() throws Exception {
+	public void testExportImportJournalArticleNoVersionHistory()
+		throws Exception {
+
 		JournalArticle article = (JournalArticle)addStagedModel(
 			group.getGroupId());
 
-		exportImportPortlet(PortletKeys.JOURNAL);
-
-		JournalArticle liveArticle =
-			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
-				article.getUuid(), importedGroup.getGroupId());
-
-		Assert.assertNotNull(liveArticle);
-
-		JournalTestUtil.updateArticle(article, RandomTestUtil.randomString());
+		article = (JournalArticle)addVersion(article);
 
 		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
 			group.getGroupId(), article.getArticleId());
 
 		Assert.assertEquals(2, articlesCount);
 
-		exportImportPortlet(PortletKeys.JOURNAL);
+		Map<String, String[]> exportParameterMap = new HashMap<>();
+
+		addParameter(exportParameterMap, "version-history", false);
+
+		exportImportPortlet(
+			PortletKeys.JOURNAL, exportParameterMap,
+			new HashMap<String, String[]>());
+
+		JournalArticle importedArticle = (JournalArticle)getStagedModel(
+			article.getUuid(), importedGroup.getGroupId());
+
+		Assert.assertNotNull(importedArticle);
 
 		articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
-			importedGroup.getGroupId(), liveArticle.getArticleId());
+			importedGroup.getGroupId(), importedArticle.getArticleId());
 
-		Assert.assertEquals(2, articlesCount);
+		Assert.assertEquals(1, articlesCount);
 	}
 
 	@Test
@@ -161,6 +169,50 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, title,
 			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
 			false, serviceContext);
+	}
+
+	@Override
+	protected StagedModel addVersion(StagedModel stagedModel) throws Exception {
+		JournalArticle article = (JournalArticle)stagedModel;
+
+		return JournalTestUtil.updateArticle(
+			article, RandomTestUtil.randomString());
+	}
+
+	@Override
+	protected void deleteFirstVersion(StagedModel stagedModel)
+		throws Exception {
+
+		JournalArticle article = (JournalArticle)stagedModel;
+
+		List<JournalArticle> articles =
+			JournalArticleLocalServiceUtil.getArticles(
+				article.getGroupId(), article.getArticleId());
+
+		JournalArticle firstArticle = null;
+
+		for (JournalArticle journalArticle : articles) {
+			if ((firstArticle == null) ||
+				(journalArticle.getVersion() < firstArticle.getVersion())) {
+
+				firstArticle = journalArticle;
+			}
+		}
+
+		deleteStagedModel(firstArticle);
+	}
+
+	@Override
+	protected void deleteLatestVersion(StagedModel stagedModel)
+		throws Exception {
+
+		JournalArticle article = (JournalArticle)stagedModel;
+
+		JournalArticle latestArticle =
+			JournalArticleLocalServiceUtil.getLatestArticle(
+				article.getGroupId(), article.getArticleId());
+
+		deleteStagedModel(latestArticle);
 	}
 
 	@Override
@@ -335,8 +387,86 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Override
+	protected boolean isVersioningEnabled() {
+		return true;
+	}
+
+	@Override
 	protected void testExportImportDisplayStyle(long groupId, String scopeType)
 		throws Exception {
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		JournalArticle article = (JournalArticle)stagedModel;
+		JournalArticle importedArticle = (JournalArticle)importedStagedModel;
+
+		Assert.assertEquals(article.getUuid(), importedArticle.getUuid());
+		Assert.assertEquals(
+			(Double)article.getVersion(), (Double)importedArticle.getVersion());
+		Assert.assertEquals(article.getTitle(), importedArticle.getTitle());
+		Assert.assertEquals(
+			article.getUrlTitle(), importedArticle.getUrlTitle());
+		Assert.assertEquals(
+			article.getDescription(), importedArticle.getDescription());
+		Assert.assertEquals(article.getContent(), importedArticle.getContent());
+		Assert.assertTrue(
+			String.valueOf(article.getDisplayDate()) + StringPool.SPACE +
+				importedArticle.getDisplayDate(),
+			DateUtil.equals(
+				article.getDisplayDate(), importedArticle.getDisplayDate(),
+				true));
+		Assert.assertTrue(
+			String.valueOf(article.getExpirationDate()) + StringPool.SPACE +
+				importedArticle.getExpirationDate(),
+			DateUtil.equals(
+				article.getExpirationDate(),
+				importedArticle.getExpirationDate(), true));
+		Assert.assertTrue(
+			String.valueOf(article.getReviewDate()) + StringPool.SPACE +
+				importedArticle.getReviewDate(),
+			DateUtil.equals(
+				article.getReviewDate(), importedArticle.getReviewDate(),
+				true));
+		Assert.assertEquals(
+			article.getSmallImage(), importedArticle.getSmallImage());
+		Assert.assertEquals(
+			article.getSmallImageURL(), importedArticle.getSmallImageURL());
+		Assert.assertEquals(article.getStatus(), importedArticle.getStatus());
+		Assert.assertTrue(
+			String.valueOf(article.getStatusDate()) + StringPool.SPACE +
+				importedArticle.getStatusDate(),
+			DateUtil.equals(
+				article.getStatusDate(), importedArticle.getStatusDate(),
+				true));
+
+		JournalArticleResource articleResource = article.getArticleResource();
+		JournalArticleResource importedArticleArticleResource =
+			importedArticle.getArticleResource();
+
+		Assert.assertEquals(
+			articleResource.getUuid(),
+			importedArticleArticleResource.getUuid());
+	}
+
+	@Override
+	protected void validateVersions() throws Exception {
+		List<JournalArticle> articles =
+			JournalArticleLocalServiceUtil.getArticles(group.getGroupId());
+
+		for (JournalArticle article : articles) {
+			JournalArticle importedArticle = (JournalArticle)getStagedModel(
+				article.getUuid(), importedGroup.getGroupId());
+
+			Assert.assertNotNull(importedArticle);
+
+			validateImportedStagedModel(article, importedArticle);
+		}
 	}
 
 }

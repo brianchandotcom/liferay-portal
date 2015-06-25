@@ -29,6 +29,8 @@ public interface PanelEntry {
 
 	public String getLabel(Locale locale);
 
+	public String getParentCategoryKey();
+
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException;

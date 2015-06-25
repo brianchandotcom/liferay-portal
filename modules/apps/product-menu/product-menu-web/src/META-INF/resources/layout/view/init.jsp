@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,17 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.application.list.taglib.constants;
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-/**
- * @author Adolfo Pérez
- */
-public class ProductivityCenterWebKeys {
+<%@ taglib uri="http://liferay.com/tld/application-list/ui" prefix="application-list-ui" %><%@
+taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";
+<%@ page import="com.liferay.product.menu.web.constants.ProductMenuPortletKeys" %>
 
-	public static final String PANEL_CATEGORY_REGISTRY =
-		"PANEL_CATEGORY_REGISTRY";
-
-}
+<liferay-theme:defineObjects />

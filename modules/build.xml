@@ -38,7 +38,6 @@
 		<dirset dir="apps/portlet-css" includes="*" />
 		<dirset dir="apps/portlet-display-template" includes="*" />
 		<dirset dir="apps/product-menu" includes="*" />
-		<dirset dir="apps/productivity-center" includes="*" />
 		<dirset dir="apps/quick-note" includes="*" />
 		<dirset dir="apps/roles" includes="*" />
 		<dirset dir="apps/rss" includes="*" />

@@ -37,6 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
+	}
+
+	@Override
 	public String getPortletId() {
 		return WikiPortletKeys.WIKI_ADMIN;
 	}

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/application-list/ui" prefix="application-list-ui" %>
+package com.liferay.application.list.taglib.constants;
 
-<%@ page import="com.liferay.application.list.PanelCategory" %><%@
-page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
-page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
-page import="com.liferay.application.list.taglib.constants.ProductivityCenterWebKeys" %>
+/**
+ * @author Adolfo Pérez
+ */
+public class ApplicationListWebKeys {
+
+	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";
+
+	public static final String PANEL_CATEGORY_REGISTRY =
+		"PANEL_CATEGORY_REGISTRY";
+
+}

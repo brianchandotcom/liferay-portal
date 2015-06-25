@@ -48,4 +48,9 @@ public class ProductivityCenterPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "productivity-center");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.MY_SPACE;
+	}
+
 }

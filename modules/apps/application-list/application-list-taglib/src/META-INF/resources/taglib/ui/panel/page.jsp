@@ -18,7 +18,7 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("application-list-ui:panel:panelCategory");
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 %>
 
 <div class="portal-add-content">
@@ -26,7 +26,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 		<liferay-ui:panel-container
 			accordion="<%= true %>"
 			extended="<%= true %>"
-			id="userPersonalPanelMenuAddContentPanelContainer"
+			id="<%= StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE) %>"
 			persistState="<%= true %>"
 		>
 

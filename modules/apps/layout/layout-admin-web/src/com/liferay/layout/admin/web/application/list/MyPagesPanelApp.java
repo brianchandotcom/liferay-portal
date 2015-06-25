@@ -37,6 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 public class MyPagesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.MY_SPACE_PRODUCTIVITY_CENTER;
+	}
+
+	@Override
 	public String getPortletId() {
 		return LayoutAdminPortletKeys.MY_PAGES;
 	}

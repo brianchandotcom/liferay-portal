@@ -12,12 +12,15 @@
  * details.
  */
 
-package com.liferay.productivity.center.portlet;
+package com.liferay.product.menu.web.layout;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.productivity.center.constants.ProductivityCenterPortletKeys;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutTypeAccessPolicy;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 
-import javax.portlet.Portlet;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,14 +29,15 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.instanceable=false",
-		"javax.portlet.init-param.view-template=/portlet/view.jsp",
-		"javax.portlet.name=" + ProductivityCenterPortletKeys.PRODUCTIVITY_CENTER,
-		"javax.portlet.supports.mime-type=text/html"
-	},
-	service = Portlet.class
+	property = {"layout.type=" + LayoutConstants.TYPE_USER_PERSONAL_PANEL},
+	service = LayoutTypeAccessPolicy.class
 )
-public class ProductivityCenterPortlet extends MVCPortlet {
+public class UserPersonalPanelLayoutTypeAccessPolicy
+	extends DefaultLayoutTypeAccessPolicyImpl {
+
+	@Override
+	public void checkAccessAllowedToPortlet(
+		HttpServletRequest request, Layout layout, Portlet portlet) {
+	}
+
 }

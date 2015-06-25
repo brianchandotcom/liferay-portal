@@ -28,7 +28,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
+	property = {
+		"panel.category.key=" + PanelCategoryKeys.ROOT,
+		"service.ranking:Integer=300"
+	},
 	service = PanelCategory.class
 )
 public class ControlPanelCategory extends BasePanelCategory {
@@ -46,6 +49,11 @@ public class ControlPanelCategory extends BasePanelCategory {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "control-panel");
+	}
+
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.ROOT;
 	}
 
 }

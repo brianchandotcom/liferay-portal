@@ -17,9 +17,10 @@ package com.liferay.product.menu.my.space.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,14 +29,17 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
+	property = {
+		"panel.category.key=" + PanelCategoryKeys.ROOT,
+		"service.ranking:Integer=200"
+	},
 	service = PanelCategory.class
 )
 public class MySpacePanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
-		return StringPool.BLANK;
+		return "icon-user";
 	}
 
 	@Override
@@ -45,7 +49,15 @@ public class MySpacePanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return StringPool.BLANK;
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", locale);
+
+		return LanguageUtil.get(resourceBundle, "my-space");
+	}
+
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.ROOT;
 	}
 
 }

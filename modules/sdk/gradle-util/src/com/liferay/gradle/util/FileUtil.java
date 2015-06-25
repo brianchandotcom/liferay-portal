@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -48,9 +49,12 @@ public class FileUtil {
 		return file.exists();
 	}
 
-	public static File get(
-			Project project, final String url, final File destinationFile)
-		throws Exception {
+	public static File get(Project project, String url) throws IOException {
+		return get(project, url, null);
+	}
+
+	public static File get(Project project, String url, File destinationFile)
+		throws IOException {
 
 		return get(project, url, destinationFile, false, true, false);
 	}
@@ -58,7 +62,7 @@ public class FileUtil {
 	public static File get(
 			Project project, String url, File destinationFile,
 			boolean ignoreErrors, boolean tryLocalNetwork, boolean verbose)
-		throws Exception {
+		throws IOException {
 
 		String mirrorsCacheArtifactSubdir = url.replaceFirst(
 			"https?:\\/\\/(.+\\/).+", "$1");
@@ -150,7 +154,7 @@ public class FileUtil {
 		project.ant(closure);
 	}
 
-	public static String read(String resourceName) throws Exception {
+	public static String read(String resourceName) throws IOException {
 		StringBuilder sb = new StringBuilder();
 
 		ClassLoader classLoader = FileUtil.class.getClassLoader();
@@ -170,7 +174,7 @@ public class FileUtil {
 		return sb.toString();
 	}
 
-	public static Properties readProperties(File file) throws Exception {
+	public static Properties readProperties(File file) throws IOException {
 		Properties properties = new Properties();
 
 		if (file.exists()) {
@@ -183,7 +187,7 @@ public class FileUtil {
 	}
 
 	public static Properties readProperties(Project project, String fileName)
-		throws Exception {
+		throws IOException {
 
 		File file = project.file(fileName);
 
@@ -243,7 +247,7 @@ public class FileUtil {
 		project.ant(closure);
 	}
 
-	public static void write(File file, List<String> lines) throws Exception {
+	public static void write(File file, List<String> lines) throws IOException {
 		try (PrintWriter printWriter = new PrintWriter(
 				new OutputStreamWriter(
 					new FileOutputStream(file), StandardCharsets.UTF_8))) {

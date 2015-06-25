@@ -14,10 +14,10 @@
 
 package com.liferay.quick.note.web.portlet.action;
 
+import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -65,7 +65,8 @@ public class SaveMVCActionCommand implements MVCActionCommand {
 					themeDisplay.getLayout(), themeDisplay.getPpid());
 
 			if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-				throw new PrincipalException();
+				throw new PortletPreferencesException.MustBeStrictPortlet(
+					themeDisplay.getPpid());
 			}
 
 			String color = ParamUtil.getString(actionRequest, "color");

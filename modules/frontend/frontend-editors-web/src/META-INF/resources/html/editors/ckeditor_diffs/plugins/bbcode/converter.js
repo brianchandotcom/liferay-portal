@@ -222,12 +222,12 @@
 			do {
 				token = instance._parsedData[index++];
 
-				if (token.type == TOKEN_DATA) {
+				if (token && token.type == TOKEN_DATA) {
 					result.push(token.value);
 				}
 
 			}
-			while (token.type != TOKEN_TAG_END && token.value != toTagName);
+			while (token && token.type != TOKEN_TAG_END && token.value != toTagName);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;

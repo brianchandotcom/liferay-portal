@@ -16,7 +16,7 @@ package com.liferay.microblogs.web.microblogs.asset;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
-import com.liferay.microblogs.util.WebKeys;
+import com.liferay.microblogs.web.util.WebKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.model.Group;

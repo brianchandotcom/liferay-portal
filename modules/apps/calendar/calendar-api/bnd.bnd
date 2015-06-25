@@ -3,9 +3,9 @@ Bundle-SymbolicName: com.liferay.calendar.api
 Bundle-Version: 1.0.0
 Include-Resource: classes
 Export-Package:\
-       com.google.ical.values,\
        com.google.ical.iter,\
        com.google.ical.util,\
+       com.google.ical.values,\
        com.liferay.calendar.exception,\
        com.liferay.calendar.exporter,\
        com.liferay.calendar.model,\

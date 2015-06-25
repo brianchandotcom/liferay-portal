@@ -568,6 +568,10 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void captureScreen(String fileName) throws Exception {
+		if (!PropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
+
 		File file = new File(fileName);
 
 		file.mkdirs();
@@ -1113,6 +1117,10 @@ public class LiferaySeleniumHelper {
 	public static void saveScreenshot(LiferaySelenium liferaySelenium)
 		throws Exception {
 
+		if (!PropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
+
 		_screenshotCount++;
 
 		captureScreen(
@@ -1124,6 +1132,10 @@ public class LiferaySeleniumHelper {
 	public static void saveScreenshotBeforeAction(
 			LiferaySelenium liferaySelenium, boolean actionFailed)
 		throws Exception {
+
+		if (!PropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
 
 		if (actionFailed) {
 			_screenshotErrorCount++;

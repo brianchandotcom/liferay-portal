@@ -8,6 +8,7 @@
 		<dirset dir="application-list" includes="*" />
 		<dirset dir="blogs" includes="*" />
 		<dirset dir="bookmarks" includes="*" />
+		<dirset dir="calendar" includes="*" />
 		<dirset dir="comments" includes="*" />
 		<dirset dir="configuration-admin" includes="*" />
 		<dirset dir="control-panel" includes="*" />

@@ -9,6 +9,7 @@
 		<dirset dir="apps/application-list" includes="*" />
 		<dirset dir="apps/blogs" includes="*" />
 		<dirset dir="apps/bookmarks" includes="*" />
+		<dirset dir="apps/calendar" includes="*" />
 		<dirset dir="apps/comments" includes="*" />
 		<dirset dir="apps/configuration-admin" includes="*" />
 		<dirset dir="apps/control-panel" includes="*" />

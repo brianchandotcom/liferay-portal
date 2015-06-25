@@ -37,10 +37,6 @@ public class RepositoryUserUtil {
 	public static long getUserId() throws PrincipalException {
 		String name = PrincipalThreadLocal.getName();
 
-		if (name == null) {
-			throw new PrincipalException();
-		}
-
 		if (Validator.isNull(name)) {
 			throw new PrincipalException("Principal is null");
 		}

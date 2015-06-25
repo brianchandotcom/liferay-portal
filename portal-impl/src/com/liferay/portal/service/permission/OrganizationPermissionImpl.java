@@ -80,7 +80,9 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 		}
 
 		for (long organizationId : organizationIds) {
-			check(permissionChecker, organizationId, actionId);
+			if (!contains(permissionChecker, organizationId, actionId)) {
+				return false;
+			}
 		}
 
 		return true;

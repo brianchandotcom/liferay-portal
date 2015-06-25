@@ -27,7 +27,7 @@ portletURL.setParameter("category", category);
 		<div class="alert-container"></div>
 
 		<div class="category-nav well">
-			<%@ include file="/html/portlet/app_manager/categories.jspf" %>
+			<%@ include file="/app_manager/categories.jspf" %>
 		</div>
 	</div>
 
@@ -183,7 +183,7 @@ portletURL.setParameter("category", category);
 								</ul>
 
 								<div class="plugin-list">
-									<%@ include file="/html/portlet/app_manager/plugins.jspf" %>
+									<%@ include file="/app_manager/plugins.jspf" %>
 								</div>
 							</c:when>
 							<c:otherwise>

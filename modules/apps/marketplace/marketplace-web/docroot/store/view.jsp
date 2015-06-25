@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <div class="loading-animation">
 	<iframe class="hide-accessible" frameborder="0" id="<portlet:namespace />frame" name="<portlet:namespace />frame" scrolling="no" src="about:blank"></iframe>

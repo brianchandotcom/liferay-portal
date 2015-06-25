@@ -67,12 +67,15 @@ public class OrganizationStagedModelDataHandlerTest
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		_organization =
-			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
-				_organization.getUuid(), _organization.getCompanyId());
-
 		if (_organization != null) {
-			deleteOrganizations(_organization);
+			_organization =
+				OrganizationLocalServiceUtil.
+					fetchOrganizationByUuidAndCompanyId(
+						_organization.getUuid(), _organization.getCompanyId());
+
+			if (_organization != null) {
+				deleteOrganizations(_organization);
+			}
 		}
 	}
 

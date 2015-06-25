@@ -61,9 +61,27 @@ public class ConfigurationException extends PortalException {
 
 	}
 
+	public static class MustHaveAncestor extends ConfigurationException {
+
+		public MustHaveAncestor(long childGroupId, long ancestorGroupId) {
+			super(
+				String.format(
+					"Child group %s must have group %s as its ancestor",
+					childGroupId, ancestorGroupId));
+
+			this.ancestorGroupId = ancestorGroupId;
+			this.childGroupId = childGroupId;
+		}
+
+		public final long ancestorGroupId;
+		public final long childGroupId;
+
+	}
+
 	private static final Class<?>[] _NESTED_CLASSES = {
 		ConfigurationException.MustBeSelectableScope.class,
-		ConfigurationException.MustBeStrictPortlet.class
+		ConfigurationException.MustBeStrictPortlet.class,
+		ConfigurationException.MustHaveAncestor.class
 	};
 
 }

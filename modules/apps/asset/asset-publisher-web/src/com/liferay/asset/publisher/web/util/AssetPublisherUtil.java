@@ -52,6 +52,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -905,7 +906,8 @@ public class AssetPublisherUtil {
 			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
 
 			if (!childGroup.hasAncestor(siteGroupId)) {
-				throw new PrincipalException();
+				throw new ConfigurationException.MustHaveAncestor(
+					childGroupId, siteGroupId);
 			}
 
 			return childGroupId;
@@ -990,7 +992,8 @@ public class AssetPublisherUtil {
 			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
 
 			if (!group.hasAncestor(parentGroupId)) {
-				throw new PrincipalException();
+				throw new ConfigurationException.MustHaveAncestor(
+					siteGroupId, parentGroupId);
 			}
 
 			return parentGroupId;

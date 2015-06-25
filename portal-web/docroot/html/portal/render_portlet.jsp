@@ -449,6 +449,28 @@ urlConfiguration.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimar
 
 portletDisplay.setURLConfiguration(urlConfiguration.toString() + "&" + PortalUtil.getPortletNamespace(PortletKeys.PORTLET_CONFIGURATION));
 
+StringBuilder urlConfigurationJSSB = new StringBuilder(13);
+
+urlConfigurationJSSB.append("Liferay.Portlet.openWindow('#p_p_id_");
+urlConfigurationJSSB.append(portletDisplay.getId());
+urlConfigurationJSSB.append("_', '");
+urlConfigurationJSSB.append(portletDisplay.getId());
+urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
+urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append(portletDisplay.getNamespace());
+urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append(UnicodeLanguageUtil.get(request, "configuration"));
+urlConfigurationJSSB.append("', '");
+
+if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
+	urlConfigurationJSSB.append(portletDisplay.getId());
+}
+
+urlConfigurationJSSB.append("'); return false;");
+
+portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
+
 // URL edit
 
 PortletURLImpl urlEdit = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);

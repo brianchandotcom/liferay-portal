@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
-import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -55,6 +52,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
@@ -279,7 +277,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		throws PortalException {
 
 		RepositoryEventTrigger repositoryEventTrigger =
-			getRepositoryEventTrigger(dlFolder.getFolderId());
+			RepositoryUtil.getRepositoryEventTrigger(
+				dlFolder.getRepositoryId());
 
 		// Folders
 
@@ -1484,22 +1483,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return parentDLFolder.getFolderId();
 	}
 
-	protected RepositoryEventTrigger getRepositoryEventTrigger(long folderId)
-		throws PortalException {
-
-		LocalRepository localRepository =
-			RepositoryProviderUtil.getFolderLocalRepository(folderId);
-
-		if (!localRepository.isCapabilityProvided(
-				RepositoryEventTriggerCapability.class)) {
-
-			return _dummyRepositoryEventTrigger;
-		}
-
-		return localRepository.getCapability(
-			RepositoryEventTriggerCapability.class);
-	}
-
 	protected void validateFolder(
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException {
@@ -1543,16 +1526,5 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFolderLocalServiceImpl.class);
-
-	private final RepositoryEventTrigger _dummyRepositoryEventTrigger =
-		new RepositoryEventTrigger() {
-
-			@Override
-			public <S extends RepositoryEventType, T> void trigger(
-				Class<S> repositoryEventTypeClass, Class<T> modelClass,
-				T model) {
-			}
-
-		};
 
 }

@@ -968,6 +968,7 @@
 			<forward name="portlet.software_catalog.view_product_entry" path="portlet.software_catalog.view_product_entry" />
 			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />
 		</action>
+	</action-mappings>
 
 	<!-- Custom Request Processor -->
 

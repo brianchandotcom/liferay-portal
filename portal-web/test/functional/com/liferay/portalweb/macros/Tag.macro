@@ -285,14 +285,9 @@
 
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" />
-			<then>
-				<execute function="AssertClick" locator1="PGBlogsAdd#CATEGORIZATION_DROPDOWN" value1="Categorization" />
-			</then>
-		</if>
+		<execute macro="BlogsNavigator#gotoSettingsTab" />
 
-		<execute function="AssertClick" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="AssetCategorization#TAGS_SELECT_BUTTON" value1="Select" />
 
 		<var name="key_tagName" value="${tagName1}" />
 

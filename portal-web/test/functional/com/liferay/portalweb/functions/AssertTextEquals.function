@@ -19,22 +19,10 @@
 
 	<command name="assertPartialText" summary="Assert that '${locator1}' contains the value '${value1}'">
 		<if>
-			<contains string="${locator1}" substring="alert-danger" />
+			<contains string="${locator1}" substring="alert" />
 			<then>
 				<execute function="Pause" locator1="1000" />
 			</then>
-			<elseif>
-				<contains string="${locator1}" substring="alert-error" />
-				<then>
-					<execute function="Pause" locator1="1000" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${locator1}" substring="alert-success" />
-				<then>
-					<execute function="Pause" locator1="1000" />
-				</then>
-			</elseif>
 			<else>
 				<execute selenium="waitForVisible" />
 
@@ -63,22 +51,10 @@
 
 	<command name="assertTextEquals">
 		<if>
-			<contains string="${locator1}" substring="alert-danger" />
+			<contains string="${locator1}" substring="alert" />
 			<then>
 				<execute function="Pause" locator1="1000" />
 			</then>
-			<elseif>
-				<contains string="${locator1}" substring="alert-success" />
-				<then>
-					<execute function="Pause" locator1="1000" />
-				</then>
-			</elseif>
-			<elseif>
-				<contains string="${value1}" substring="Your request" />
-				<then>
-					<execute function="Pause" locator1="1000" />
-				</then>
-			</elseif>
 			<else>
 				<if>
 					<contains string="${locator1}" substring="/input" />

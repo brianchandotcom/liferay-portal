@@ -38,24 +38,21 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 	</div>
 </div>	
 
-<c:if test="<%= article != null %>">
-
-	<%
-	DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
-	%>
-
-	<div class="row row-spacing template-preview">
-		<div class="col-md-4 col-xs-12">
-			<p class="text-muted"><liferay-ui:message key="template" /></p>
-			<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>" >
-				<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
-			</liferay-util:include>
-		</div>
-		<div class="col-md-12">
-			<aui:button name="templateSelector" value="change" />
+<div class="<%= article == null ? "hidden " : "" %>row row-spacing template-preview">
+	<div class="col-md-4 col-xs-12">
+		<p class="text-muted"><liferay-ui:message key="template" /></p>
+		<div class="template-preview-content-container">
+			<c:if test="<%= article != null %>">
+				<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
+				</liferay-util:include>
+			</c:if>
 		</div>
 	</div>
-</c:if>
+	<div class="col-md-12">
+		<aui:button name="templateSelector" value="change" />
+	</div>
+</div>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
@@ -148,7 +145,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 						{
 							success: function(responseData) {
 								$('.article-preview .article-preview-content-container').html($('.article-preview-content', $(responseData)));
-								$('.template-preview .template-preview-content').replaceWith($('.template-preview-content', $(responseData)));
+								$('.template-preview .template-preview-content-container').html($('.template-preview-content', $(responseData)));
+								$('.template-preview').removeClass('hidden');
 								form.fm('assetEntryId').val(event.assetentryid);
 								form.fm('ddmTemplateKey').val($('.template-preview .template-preview-content').attr('data-template-key'));
 							}

@@ -36,9 +36,7 @@ import org.springframework.context.ApplicationContext;
 public class CalendarServiceUpgrade {
 
 	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.calendar.service)",
+		target = "(org.springframework.context.service.name=com.liferay.calendar.service)",
 		unbind = "-"
 	)
 	protected void setApplicationContext(

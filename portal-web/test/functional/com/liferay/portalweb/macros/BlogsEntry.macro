@@ -829,7 +829,6 @@
 			<isset var="entrySubtitleEdit" />
 			<then>
 				<execute macro="BlogsEntry#editSubtitle">
-					<var name="entryEditSubtitle" value="${entryEditSubtitle}" />
 					<var name="entrySubtitle" value="${entrySubtitle}" />
 					<var name="entrySubtitleEdit" value="${entrySubtitleEdit}" />
 				</execute>
@@ -877,7 +876,7 @@
 	<command name="editSubtitle">
 		<execute function="AssertTextEquals" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entryEditSubtitle}" />
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitleEdit}" />
 	</command>
 
 	<command name="editTitle">

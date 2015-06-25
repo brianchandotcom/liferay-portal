@@ -26,7 +26,7 @@
 		position: relative;
 
 		.icon {
-			background: #FFF url(../html/images/app.png) no-repeat;
+			background: #FFF url(../images/app.png) no-repeat;
 			float: left;
 			height: 90px;
 			width: 90px;

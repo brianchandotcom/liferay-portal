@@ -516,7 +516,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		}
 
 		private static final Transformer _transformer = new Transformer(
-			PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
+			PropsKeys.PORTLET_DISPLAY_TEMPLATES_ERROR, true);
 
 	}
 

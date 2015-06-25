@@ -35,7 +35,7 @@
 	rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 	rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 	rowURL.setParameter("articleId", curArticle.getArticleId());
-	rowURL.setParameter("status", String.valueOf(status));
+	rowURL.setParameter("status", String.valueOf(curArticle.getStatus()));
 	%>
 
 	<liferay-ui:icon

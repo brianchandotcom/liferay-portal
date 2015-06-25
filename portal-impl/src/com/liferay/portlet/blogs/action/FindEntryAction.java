@@ -14,82 +14,34 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.struts.FindAction;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-
-import javax.portlet.PortletURL;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portlet.blogs.util.BlogsFindEntryHelper;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindEntryAction extends FindAction {
+@OSGiBeanProperties(
+	property = "path=/blogs/find_entry", service = StrutsAction.class
+)
+public class FindEntryAction extends BaseStrutsAction {
 
 	@Override
-	protected long getGroupId(long primaryKey) throws Exception {
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(primaryKey);
-
-		return entry.getGroupId();
-	}
-
-	@Override
-	protected String getPrimaryKeyParameterName() {
-		return "entryId";
-	}
-
-	@Override
-	protected String getStrutsAction(
-		HttpServletRequest request, String portletId) {
-
-		String strutsAction = StringPool.BLANK;
-
-		if (portletId.equals(PortletKeys.BLOGS_ADMIN)) {
-			strutsAction = "/blogs_admin";
-		}
-		else if (portletId.equals(PortletKeys.BLOGS)) {
-			strutsAction = "/blogs";
-		}
-		else {
-			strutsAction = "/blogs_aggregator";
-		}
-
-		boolean showAllEntries = ParamUtil.getBoolean(
-			request, "showAllEntries");
-
-		if (showAllEntries) {
-			strutsAction += "/view";
-		}
-		else {
-			strutsAction += "/view_entry";
-		}
-
-		return strutsAction;
-	}
-
-	@Override
-	protected String[] initPortletIds() {
-
-		// Order is important. See LPS-23770.
-
-		return new String[] {
-			PortletKeys.BLOGS_ADMIN, PortletKeys.BLOGS,
-			PortletKeys.BLOGS_AGGREGATOR
-		};
-	}
-
-	@Override
-	protected void setPrimaryKeyParameter(
-			PortletURL portletURL, long primaryKey)
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(primaryKey);
+		_findActionHelper.execute(request, response);
 
-		portletURL.setParameter("urlTitle", entry.getUrlTitle());
+		return null;
 	}
+
+	private final FindActionHelper _findActionHelper =
+		new BlogsFindEntryHelper();
 
 }

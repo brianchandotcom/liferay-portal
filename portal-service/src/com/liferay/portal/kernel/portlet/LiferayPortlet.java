@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -439,6 +440,23 @@ public class LiferayPortlet extends GenericPortlet {
 
 	protected void initValidTemplates(
 		String templatePath, String fileExtension) {
+
+		if (templatePath.equals(StringPool.SLASH)) {
+			String contextName = getPortletContext().getPortletContextName();
+
+			PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
+				contextName);
+
+			if (!portletApp.isWARFile()) {
+				_log.error(
+					"Portlet " + getPortletName() + " has incorrect " +
+						"templatePath and can access all portal JSPs. " +
+						"Portal disabled access to the JSPs");
+
+				validTemplates = new HashSet<>();
+				return;
+			}
+		}
 
 		String[] validTemplatesInitParameter = StringUtil.split(
 			getInitParameter("valid-templates"));

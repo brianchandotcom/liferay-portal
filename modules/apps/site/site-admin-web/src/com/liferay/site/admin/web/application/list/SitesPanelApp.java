@@ -37,6 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SitesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.CONTROL_PANEL_SITES;
+	}
+
+	@Override
 	public String getPortletId() {
 		return SiteAdminPortletKeys.SITE_ADMIN;
 	}

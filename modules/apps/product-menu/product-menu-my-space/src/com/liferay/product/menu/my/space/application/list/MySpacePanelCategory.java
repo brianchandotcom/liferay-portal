@@ -51,4 +51,9 @@ public class MySpacePanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "my-space");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.ROOT;
+	}
+
 }

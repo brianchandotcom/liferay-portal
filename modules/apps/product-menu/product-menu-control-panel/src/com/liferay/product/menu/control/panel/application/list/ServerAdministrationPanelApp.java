@@ -38,6 +38,11 @@ public class ServerAdministrationPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.ADMIN_SERVER;
 	}

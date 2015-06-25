@@ -51,4 +51,9 @@ public class SitesPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "category.sites");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.CONTROL_PANEL;
+	}
+
 }

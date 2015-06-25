@@ -37,6 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 public class GroupPagesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.SITE_ADMINISTRATION_PAGES;
+	}
+
+	@Override
 	public String getPortletId() {
 		return LayoutAdminPortletKeys.GROUP_PAGES;
 	}

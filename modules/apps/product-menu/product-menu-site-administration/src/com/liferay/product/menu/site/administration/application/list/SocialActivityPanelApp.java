@@ -37,6 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SocialActivityPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.SOCIAL_ACTIVITY;
 	}

@@ -52,4 +52,9 @@ public class ConfigurationPanelCategory extends BasePanelCategory {
 			locale, "category.site_administration.configuration");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.SITE_ADMINISTRATION;
+	}
+
 }

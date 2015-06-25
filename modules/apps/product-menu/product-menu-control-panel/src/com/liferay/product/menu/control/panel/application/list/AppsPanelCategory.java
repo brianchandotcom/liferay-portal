@@ -51,4 +51,9 @@ public class AppsPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "category.apps");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.CONTROL_PANEL;
+	}
+
 }

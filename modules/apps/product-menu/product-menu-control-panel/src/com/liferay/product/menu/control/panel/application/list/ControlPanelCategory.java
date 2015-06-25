@@ -51,4 +51,9 @@ public class ControlPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "control-panel");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.ROOT;
+	}
+
 }

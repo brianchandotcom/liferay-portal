@@ -51,4 +51,9 @@ public class ConfigurationPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "category.configuration");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.CONTROL_PANEL;
+	}
+
 }

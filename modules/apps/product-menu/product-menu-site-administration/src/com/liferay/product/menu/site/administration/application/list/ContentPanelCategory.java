@@ -51,4 +51,9 @@ public class ContentPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "category.site_administration.content");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.SITE_ADMINISTRATION;
+	}
+
 }

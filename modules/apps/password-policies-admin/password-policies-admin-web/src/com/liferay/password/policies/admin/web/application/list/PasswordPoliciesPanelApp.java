@@ -37,6 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 public class PasswordPoliciesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.CONTROL_PANEL_USERS;
+	}
+
+	@Override
 	public String getPortletId() {
 		return PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN;
 	}

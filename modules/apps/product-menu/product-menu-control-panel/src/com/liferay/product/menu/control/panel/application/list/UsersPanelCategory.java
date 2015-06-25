@@ -51,4 +51,9 @@ public class UsersPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "category.users");
 	}
 
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.CONTROL_PANEL;
+	}
+
 }

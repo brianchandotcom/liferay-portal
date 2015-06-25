@@ -123,8 +123,6 @@ public class CalendarIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String calendarId = document.get(Field.ENTRY_CLASS_PK);
-
 		Summary summary = createSummary(
 			document, Field.NAME, Field.DESCRIPTION);
 

@@ -352,7 +352,9 @@
 		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Message Boards" />
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
 
 		<execute function="Close" locator1="home - ${userGroupName} - Liferay" />
 	</command>

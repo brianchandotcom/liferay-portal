@@ -44,7 +44,6 @@ Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 <aui:form action="<%= editTeamURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="teamId" type="hidden" value="<%= teamId %>" />
-	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateTeamException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= TeamNameException.class %>" message="please-enter-a-valid-name" />

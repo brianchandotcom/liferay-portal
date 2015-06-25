@@ -57,7 +57,7 @@ public class CheckBookingsMessageListener
 	protected void setCalendarBookingLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {
 
-		this._calendarBookingLocalService = calendarBookingLocalService;
+		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
 	@Reference

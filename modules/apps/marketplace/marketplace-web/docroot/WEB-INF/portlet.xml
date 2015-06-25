@@ -7,7 +7,7 @@
 		<portlet-class>com.liferay.marketplace.web.store.portlet.StorePortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/html/portlet/store/view.jsp</value>
+			<value>/html/store/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -38,7 +38,7 @@
 		<portlet-class>com.liferay.marketplace.web.store.portlet.StorePortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/html/portlet/store/view.jsp</value>
+			<value>/html/store/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -69,7 +69,7 @@
 		<portlet-class>com.liferay.marketplace.web.appmanager.portlet.AppManagerPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/html/portlet/app_manager/view.jsp</value>
+			<value>/html/app_manager/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

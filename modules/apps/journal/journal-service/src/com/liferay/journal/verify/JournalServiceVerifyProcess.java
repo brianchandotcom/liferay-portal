@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.VerifyLayout;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shinn Lok
  */
 @Component(immediate = true, service = JournalServiceVerifyProcess.class)
-public class JournalServiceVerifyProcess extends VerifyProcess {
+public class JournalServiceVerifyProcess extends VerifyLayout {
 
 	public static final long DEFAULT_GROUP_ID = 14;
 
@@ -91,6 +91,7 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();
 		verifyArticleContents();
+		verifyArticleLayouts();
 		verifyArticleStructures();
 		verifyContentSearch();
 		verifyFolderAssets();
@@ -624,6 +625,10 @@ public class JournalServiceVerifyProcess extends VerifyProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	protected void verifyArticleLayouts() throws Exception {
+		verifyUuid("JournalArticle");
 	}
 
 	protected void verifyArticleStructures() throws PortalException {

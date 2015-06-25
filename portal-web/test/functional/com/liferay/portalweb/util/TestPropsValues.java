@@ -220,6 +220,9 @@ public class TestPropsValues
 	public static final boolean MOBILE_DEVICE_ENABLED = GetterUtil.getBoolean(
 		TestPropsUtil.get("mobile.device.enabled"));
 
+	public static final String OSB_LCS_PORTLET_HOST_NAME = TestPropsUtil.get(
+		"osb.lcs.portlet.host.name");
+
 	public static final String OUTPUT_DIR_NAME = TestPropsUtil.get(
 		"output.dir");
 

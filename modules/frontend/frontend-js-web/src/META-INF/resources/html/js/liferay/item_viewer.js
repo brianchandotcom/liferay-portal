@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var CSS_ACTIVE = 'active';
+
 		var CSS_IMAGE_VIEWER = A.getClassName('image', 'viewer');
 
 		var CSS_IMAGE_VIEWER_BASE = A.getClassName(CSS_IMAGE_VIEWER, 'base');
@@ -25,9 +27,21 @@ AUI.add(
 
 		var CSS_LOADING_ICON = A.getClassName(CSS_IMAGE_VIEWER_BASE, 'loading', 'icon');
 
+		var STR_DOT = '.';
+
 		var STR_RENDER_CONTROLS = 'renderControls';
 
 		var TPL_CLOSE = '<button class="close image-viewer-base-control image-viewer-close lfr-item-viewer-close" type="button"><span class="glyphicon glyphicon-chevron-left"></span><span>{0}</span></button>';
+
+		var TPL_INFO_ICON = '<span class="glyphicon glyphicon-info-sign lfr-item-viewer-icon-info"></span>';
+
+		var TPL_INFO_LAYER = '<div class="tab-group"><ul class="nav nav-tabs"></ul><div class="tab-content"></div></div>';
+
+		var TPL_INFO_LAYER_TAB_TITLE = '<li class="{className}"><a href="#{tabId}" data-toggle="tab" aria-expanded="false">{tabTitle}</a></li>';
+
+		var TPL_INFO_LAYER_TAB_SECTION = '<div id="{tabId}" class="{className} fade in tab-pane"><dl>{content}</dl></div>';
+
+		var TPL_INFO_LAYER_TAB_SECTION_CONTENT = '<dt>{dt}</dt><dd>{dd}</dd>';
 
 		var LiferayItemViewer = A.Component.create(
 			{
@@ -79,7 +93,7 @@ AUI.add(
 					'</a>',
 
 					TPL_IMAGE_CONTAINER: '<div class="' + CSS_IMAGE_CONTAINER + '">' +
-						'<div class="' + CSS_IMAGE_INFO + '"></div>' +
+						'<div class="' + CSS_IMAGE_INFO + ' hide"></div>' +
 						'<span class="glyphicon glyphicon-time ' + CSS_LOADING_ICON + '"></span>' +
 					'</div>',
 
@@ -92,12 +106,109 @@ AUI.add(
 						);
 					},
 
+					bindUI: function() {
+						var instance = this;
+
+						LiferayItemViewer.superclass.bindUI.apply(this, arguments);
+
+						instance._eventHandles.push(
+							instance._infoIconEl.on('click', instance._onClickInfoIcon, instance),
+							A.Do.after(instance._afterShowCurrentImage, instance, '_showCurrentImage', instance)
+						);
+					},
+
+					_afterShowCurrentImage: function() {
+						var instance = this;
+
+						var link = instance.get('links').item(instance.get('currentIndex'));
+
+						var metadata = link.getData('metadata');
+
+						var image = this._getCurrentImage();
+
+						if (!image.getData('metadata-rendered') && metadata) {
+							instance._populateImageMetadata(image, metadata);
+
+							image.setData('metadata-rendered', true);
+						}
+					},
+
+					_getImageInfoNodes: function() {
+						var instance = this;
+
+						if (!instance._imageInfoNodes) {
+							instance._imageInfoNodes = instance.get('srcNode').all(STR_DOT + CSS_IMAGE_INFO);
+						}
+
+						return instance._imageInfoNodes;
+					},
+
 					_onClickControl: function(event) {
 						var instance = this;
 
 						event.stopImmediatePropagation();
 
 						LiferayItemViewer.superclass._onClickControl.apply(instance, arguments);
+					},
+
+					_onClickInfoIcon: function(event) {
+						var instance = this;
+
+						instance._getImageInfoNodes().toggle();
+					},
+
+					_populateImageMetadata: function(image, metadata) {
+						var imageInfoNode = image.siblings(STR_DOT + CSS_IMAGE_INFO);
+
+						imageInfoNode.setHTML(A.Node.create(TPL_INFO_LAYER));
+
+						metadata = JSON.parse(metadata);
+
+						metadata.groups.forEach(
+							function(tab, index) {
+								var tabId = A.guid();
+
+								var tabTitleNode = A.Node.create(
+									Lang.sub(
+										TPL_INFO_LAYER_TAB_TITLE,
+										{
+											className: index === 0 ? CSS_ACTIVE : '',
+											tabId: tabId,
+											tabTitle: tab.title
+										}
+									)
+								);
+
+								imageInfoNode.one('ul').append(tabTitleNode);
+
+								var dataStr = '';
+
+								tab.data.forEach(
+									function(data) {
+										dataStr += Lang.sub(
+											TPL_INFO_LAYER_TAB_SECTION_CONTENT,
+											{
+												dd: data.value,
+												dt: data.key
+											}
+										);
+									}
+								);
+
+								var tabContentNode = A.Node.create(
+									Lang.sub(
+										TPL_INFO_LAYER_TAB_SECTION,
+										{
+											className: index === 0 ? CSS_ACTIVE : '',
+											content: dataStr,
+											tabId: tabId
+										}
+									)
+								);
+
+								imageInfoNode.one(STR_DOT + 'tab-content').append(tabContentNode);
+							}
+						);
 					},
 
 					_renderFooter: function() {
@@ -128,6 +239,12 @@ AUI.add(
 
 							container.append(instance.get('controlNext'));
 						}
+
+						var infoIconEl = A.Node.create(TPL_INFO_ICON);
+
+						container.append(infoIconEl);
+
+						instance._infoIconEl = infoIconEl;
 					},
 
 					_syncInfoUI: function() {

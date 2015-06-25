@@ -36,6 +36,17 @@
 	}
 }
 
+.lfr-item-viewer-icon-info {
+	float: right;
+	font-size: 20px;
+}
+
+.image-viewer-base-image-info {
+	float: right;
+	text-align: left;
+	width: 300px;
+}
+
 /* Skin */
 
 .lfr-item-viewer {
@@ -50,4 +61,8 @@
 
 .lfr-item-viewer-close {
 	color: #FFF;
+}
+
+.image-viewer-base-image-info, .lfr-item-viewer-icon-info {
+	color: #CCC;
 }

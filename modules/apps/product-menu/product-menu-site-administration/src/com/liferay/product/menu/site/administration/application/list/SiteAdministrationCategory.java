@@ -17,7 +17,7 @@ package com.liferay.product.menu.site.administration.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
@@ -38,7 +38,7 @@ public class SiteAdministrationCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
-		return StringPool.BLANK;
+		return "icon-compass";
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SiteAdministrationCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return StringPool.BLANK;
+		return LanguageUtil.get(locale, "sites");
 	}
 
 }

@@ -224,6 +224,7 @@ if (Validator.isNotNull(keywords)) {
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
+			name="type"
 			orderable="<%= true %>"
 			value="<%= ResourceActionsUtil.getModelResource(locale, entry.getClassName()) %>"
 		/>

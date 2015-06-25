@@ -37,6 +37,6 @@ public class TrashFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		return _MAPPING;
 	}
 
-	private static final String _MAPPING = "trash";
+	private static final String _MAPPING = "recycle_bin";
 
 }

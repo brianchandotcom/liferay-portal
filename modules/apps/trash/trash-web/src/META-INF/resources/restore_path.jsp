@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-	String redirect = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
 
-	if (Validator.isNull(redirect)) {
-		PortletURL portletURL = renderResponse.createRenderURL();
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
 
-		redirect = portletURL.toString();
-	}
+	redirect = portletURL.toString();
+}
 %>
 
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">

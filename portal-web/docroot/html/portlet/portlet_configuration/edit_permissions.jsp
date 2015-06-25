@@ -111,6 +111,7 @@ definePermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permi
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setPortletMode(PortletMode.VIEW);
 definePermissionsURL.setRefererPlid(plid);
+definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
 <div class="edit-permissions">

@@ -16,9 +16,11 @@ package com.liferay.portlet.ratings.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
+import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -28,6 +30,7 @@ import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 
@@ -80,21 +83,8 @@ public class RatingsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		if (!portletDataContext.getBooleanParameter(
-				NAMESPACE, "ratings-entries")) {
-
-			return null;
-		}
-
-		Element entriesElement = portletDataContext.getImportDataGroupElement(
-			RatingsEntry.class);
-
-		List<Element> entryElements = entriesElement.elements();
-
-		for (Element entryElement : entryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, entryElement);
-		}
+		ExportImportProcessCallbackRegistryUtil.registerCallback(
+			new ImportRatingsCallable(portletDataContext));
 
 		return null;
 	}
@@ -125,6 +115,38 @@ public class RatingsPortletDataHandler extends BasePortletDataHandler {
 				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
 
 		return exportActionableDynamicQuery;
+	}
+
+	private class ImportRatingsCallable implements Callable<Void> {
+
+		public ImportRatingsCallable(PortletDataContext portletDataContext) {
+			_portletDataContext = portletDataContext;
+		}
+
+		@Override
+		public Void call() throws PortalException {
+			if (!_portletDataContext.getBooleanParameter(
+					NAMESPACE, "ratings-entries")) {
+
+				return null;
+			}
+
+			Element entriesElement =
+				_portletDataContext.getImportDataGroupElement(
+					RatingsEntry.class);
+
+			List<Element> entryElements = entriesElement.elements();
+
+			for (Element entryElement : entryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					_portletDataContext, entryElement);
+			}
+
+			return null;
+		}
+
+		private final PortletDataContext _portletDataContext;
+
 	}
 
 }

@@ -55,7 +55,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	/>
 </c:if>
 
-<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL">
+	<portlet:param name="mvcPath" value="/html/portlet/blogs/edit_entry.jsp" />
+</portlet:actionURL>
 
 <div class="edit-entry">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
@@ -338,7 +340,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 				<aui:button disabled="<%= pending %>" name="publishButton"  type="submit" value="<%= publishButtonLabel %>" />
 
-				<aui:button name="saveButton"  primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+				<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
 				<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>

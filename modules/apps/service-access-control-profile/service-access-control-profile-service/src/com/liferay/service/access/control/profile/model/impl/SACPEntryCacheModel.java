@@ -66,7 +66,7 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,6 +84,8 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 		sb.append(modifiedDate);
 		sb.append(", allowedServiceSignatures=");
 		sb.append(allowedServiceSignatures);
+		sb.append(", defaultProfile=");
+		sb.append(defaultProfile);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", title=");
@@ -136,6 +138,8 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 			sacpEntryImpl.setAllowedServiceSignatures(allowedServiceSignatures);
 		}
 
+		sacpEntryImpl.setDefaultProfile(defaultProfile);
+
 		if (name == null) {
 			sacpEntryImpl.setName(StringPool.BLANK);
 		}
@@ -165,6 +169,7 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		allowedServiceSignatures = objectInput.readUTF();
+		defaultProfile = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 	}
@@ -200,6 +205,8 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 			objectOutput.writeUTF(allowedServiceSignatures);
 		}
 
+		objectOutput.writeBoolean(defaultProfile);
+
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -223,6 +230,7 @@ public class SACPEntryCacheModel implements CacheModel<SACPEntry>,
 	public long createDate;
 	public long modifiedDate;
 	public String allowedServiceSignatures;
+	public boolean defaultProfile;
 	public String name;
 	public String title;
 }

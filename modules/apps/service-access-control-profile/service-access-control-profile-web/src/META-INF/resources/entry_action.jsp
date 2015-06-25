@@ -55,7 +55,7 @@ SACPEntry sacpEntry = (SACPEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= SACPEntryPermission.contains(permissionChecker, sacpEntry, ActionKeys.DELETE) %>">
+	<c:if test="<%= !sacpEntry.isDefaultProfile() && SACPEntryPermission.contains(permissionChecker, sacpEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteSACPEntry" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sacpEntryId" value="<%= String.valueOf(sacpEntry.getSacpEntryId()) %>" />

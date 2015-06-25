@@ -87,10 +87,11 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "allowedServiceSignatures", Types.VARCHAR },
+			{ "defaultProfile", Types.BOOLEAN },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SACPEntry (uuid_ VARCHAR(75) null,sacpEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,allowedServiceSignatures STRING null,name VARCHAR(75) null,title STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table SACPEntry (uuid_ VARCHAR(75) null,sacpEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,allowedServiceSignatures STRING null,defaultProfile BOOLEAN,name VARCHAR(75) null,title STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table SACPEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY sacpEntry.sacpEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SACPEntry.sacpEntryId ASC";
@@ -132,6 +133,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setAllowedServiceSignatures(soapModel.getAllowedServiceSignatures());
+		model.setDefaultProfile(soapModel.getDefaultProfile());
 		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 
@@ -206,6 +208,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
+		attributes.put("defaultProfile", getDefaultProfile());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 
@@ -264,6 +267,12 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 
 		if (allowedServiceSignatures != null) {
 			setAllowedServiceSignatures(allowedServiceSignatures);
+		}
+
+		Boolean defaultProfile = (Boolean)attributes.get("defaultProfile");
+
+		if (defaultProfile != null) {
+			setDefaultProfile(defaultProfile);
 		}
 
 		String name = (String)attributes.get("name");
@@ -422,6 +431,22 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	@Override
 	public void setAllowedServiceSignatures(String allowedServiceSignatures) {
 		_allowedServiceSignatures = allowedServiceSignatures;
+	}
+
+	@JSON
+	@Override
+	public boolean getDefaultProfile() {
+		return _defaultProfile;
+	}
+
+	@Override
+	public boolean isDefaultProfile() {
+		return _defaultProfile;
+	}
+
+	@Override
+	public void setDefaultProfile(boolean defaultProfile) {
+		_defaultProfile = defaultProfile;
 	}
 
 	@JSON
@@ -655,6 +680,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sacpEntryImpl.setCreateDate(getCreateDate());
 		sacpEntryImpl.setModifiedDate(getModifiedDate());
 		sacpEntryImpl.setAllowedServiceSignatures(getAllowedServiceSignatures());
+		sacpEntryImpl.setDefaultProfile(getDefaultProfile());
 		sacpEntryImpl.setName(getName());
 		sacpEntryImpl.setTitle(getTitle());
 
@@ -785,6 +811,8 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 			sacpEntryCacheModel.allowedServiceSignatures = null;
 		}
 
+		sacpEntryCacheModel.defaultProfile = getDefaultProfile();
+
 		sacpEntryCacheModel.name = getName();
 
 		String name = sacpEntryCacheModel.name;
@@ -806,7 +834,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -824,6 +852,8 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sb.append(getModifiedDate());
 		sb.append(", allowedServiceSignatures=");
 		sb.append(getAllowedServiceSignatures());
+		sb.append(", defaultProfile=");
+		sb.append(getDefaultProfile());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", title=");
@@ -835,7 +865,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.service.access.control.profile.model.SACPEntry");
@@ -874,6 +904,10 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sb.append(getAllowedServiceSignatures());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>defaultProfile</column-name><column-value><![CDATA[");
+		sb.append(getDefaultProfile());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
@@ -903,6 +937,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _allowedServiceSignatures;
+	private boolean _defaultProfile;
 	private String _name;
 	private String _originalName;
 	private String _title;

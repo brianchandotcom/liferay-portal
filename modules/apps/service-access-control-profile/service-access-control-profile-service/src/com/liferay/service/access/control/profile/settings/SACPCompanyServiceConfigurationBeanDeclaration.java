@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.access.control.profile;
+package com.liferay.service.access.control.profile.settings;
 
-import java.util.List;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.service.access.control.profile.configuration.SACPConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto
  */
-public interface ServiceAccessControlProfileManager {
+@Component
+public class SACPCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public ServiceAccessControlProfile getDefaultServiceAccessControlProfile(
-		long companyId);
-
-	public ServiceAccessControlProfile getServiceAccessControlProfile(
-		long companyId, String name);
-
-	public List<ServiceAccessControlProfile> getServiceAccessControlProfiles(
-		long companyId, int start, int end);
-
-	public int getServiceAccessControlProfilesCount(long companyId);
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return SACPConfiguration.class;
+	}
 
 }

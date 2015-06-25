@@ -42,6 +42,7 @@ public class SACPEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAllowedServiceSignatures(model.getAllowedServiceSignatures());
+		soapModel.setDefaultProfile(model.getDefaultProfile());
 		soapModel.setName(model.getName());
 		soapModel.setTitle(model.getTitle());
 
@@ -160,6 +161,18 @@ public class SACPEntrySoap implements Serializable {
 		_allowedServiceSignatures = allowedServiceSignatures;
 	}
 
+	public boolean getDefaultProfile() {
+		return _defaultProfile;
+	}
+
+	public boolean isDefaultProfile() {
+		return _defaultProfile;
+	}
+
+	public void setDefaultProfile(boolean defaultProfile) {
+		_defaultProfile = defaultProfile;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -184,6 +197,7 @@ public class SACPEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _allowedServiceSignatures;
+	private boolean _defaultProfile;
 	private String _name;
 	private String _title;
 }

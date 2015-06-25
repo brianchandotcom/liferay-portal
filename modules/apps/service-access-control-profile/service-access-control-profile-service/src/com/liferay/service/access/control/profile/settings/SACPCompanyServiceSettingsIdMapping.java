@@ -12,24 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.access.control.profile;
+package com.liferay.service.access.control.profile.settings;
 
-import java.util.List;
+import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.service.access.control.profile.configuration.SACPConfiguration;
+import com.liferay.service.access.control.profile.constants.SACPConstants;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto
  */
-public interface ServiceAccessControlProfileManager {
+@Component
+public class SACPCompanyServiceSettingsIdMapping implements SettingsIdMapping {
 
-	public ServiceAccessControlProfile getDefaultServiceAccessControlProfile(
-		long companyId);
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return SACPConfiguration.class;
+	}
 
-	public ServiceAccessControlProfile getServiceAccessControlProfile(
-		long companyId, String name);
-
-	public List<ServiceAccessControlProfile> getServiceAccessControlProfiles(
-		long companyId, int start, int end);
-
-	public int getServiceAccessControlProfilesCount(long companyId);
+	@Override
+	public String getSettingsId() {
+		return SACPConstants.SERVICE_NAME;
+	}
 
 }

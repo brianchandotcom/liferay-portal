@@ -12,24 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.access.control.profile;
+package com.liferay.service.access.control.profile.exception;
 
-import java.util.List;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Mika Koivisto
+ * @author Brian Wing Shun Chan
  */
-public interface ServiceAccessControlProfileManager {
+@ProviderType
+public class RequiredProfileException extends PortalException {
 
-	public ServiceAccessControlProfile getDefaultServiceAccessControlProfile(
-		long companyId);
+	public RequiredProfileException() {
+	}
 
-	public ServiceAccessControlProfile getServiceAccessControlProfile(
-		long companyId, String name);
+	public RequiredProfileException(String msg) {
+		super(msg);
+	}
 
-	public List<ServiceAccessControlProfile> getServiceAccessControlProfiles(
-		long companyId, int start, int end);
+	public RequiredProfileException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	public int getServiceAccessControlProfilesCount(long companyId);
+	public RequiredProfileException(Throwable cause) {
+		super(cause);
+	}
 
 }

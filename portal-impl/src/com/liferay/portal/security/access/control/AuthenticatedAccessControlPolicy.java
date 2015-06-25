@@ -16,6 +16,8 @@ package com.liferay.portal.security.access.control;
 
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.access.control.BaseAccessControlPolicy;
+import com.liferay.portal.kernel.security.access.control.profile.ServiceAccessControlProfile;
+import com.liferay.portal.kernel.security.access.control.profile.ServiceAccessControlProfileManagerUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 
@@ -38,7 +40,19 @@ public class AuthenticatedAccessControlPolicy extends BaseAccessControlPolicy {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!accessControlled.guestAccessEnabled() &&
+		ServiceAccessControlProfile defaultServiceAccessControlProfile = null;
+
+		if (ServiceAccessControlProfileManagerUtil.
+				getServiceAccessControlProfileManager() != null) {
+
+			defaultServiceAccessControlProfile =
+				ServiceAccessControlProfileManagerUtil.
+					getDefaultServiceAccessControlProfile(
+						permissionChecker.getCompanyId());
+		}
+
+		if ((defaultServiceAccessControlProfile == null) &&
+			!accessControlled.guestAccessEnabled() &&
 			((permissionChecker == null) || !permissionChecker.isSignedIn())) {
 
 			throw new SecurityException("Authenticated access required");

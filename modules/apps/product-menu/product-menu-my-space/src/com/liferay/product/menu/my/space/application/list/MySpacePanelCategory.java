@@ -20,6 +20,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,7 +49,10 @@ public class MySpacePanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "my-space");
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", locale);
+
+		return LanguageUtil.get(resourceBundle, "my-space");
 	}
 
 	@Override

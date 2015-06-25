@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.indexer;
+package com.liferay.calendar.search;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;

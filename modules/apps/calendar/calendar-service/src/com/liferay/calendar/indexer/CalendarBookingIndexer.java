@@ -213,6 +213,7 @@ public class CalendarBookingIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
+
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
 					Property statusProperty = PropertyFactoryUtil.forName(
@@ -225,10 +226,12 @@ public class CalendarBookingIndexer extends BaseIndexer {
 
 					dynamicQuery.add(statusProperty.in(statuses));
 				}
+
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
+
 				@Override
 				public void performAction(Object object)
 					throws PortalException {
@@ -239,6 +242,7 @@ public class CalendarBookingIndexer extends BaseIndexer {
 
 					documents.add(document);
 				}
+
 			});
 
 		actionableDynamicQuery.setCompanyId(companyId);

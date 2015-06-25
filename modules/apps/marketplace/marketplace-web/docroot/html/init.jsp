@@ -25,8 +25,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.marketplace.model.App" %><%@
 page import="com.liferay.marketplace.service.AppLocalServiceUtil" %><%@
-page import="com.liferay.marketplace.util.MarketplaceConstants" %><%@
-page import="com.liferay.marketplace.util.PortletKeys" %><%@
 page import="com.liferay.marketplace.util.comparator.PluginComparator" %><%@
 page import="com.liferay.marketplace.web.constants.MarketplacePortletKeys" %><%@
 page import="com.liferay.marketplace.web.util.MarketplaceConstants" %><%@

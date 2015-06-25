@@ -78,10 +78,27 @@ public class ConfigurationException extends PortalException {
 
 	}
 
+	public static class MustHaveContentSharingWithChildrenEnabled
+		extends ConfigurationException {
+
+		public MustHaveContentSharingWithChildrenEnabled(long scopeGroupId) {
+			super(
+				String.format(
+					"Content sharing with children site is must be enabled " +
+					"for site %s", scopeGroupId));
+
+			this.scopeGroupId = scopeGroupId;
+		}
+
+		public final long scopeGroupId;
+
+	}
+
 	private static final Class<?>[] _NESTED_CLASSES = {
 		ConfigurationException.MustBeSelectableScope.class,
 		ConfigurationException.MustBeStrictPortlet.class,
-		ConfigurationException.MustHaveAncestor.class
+		ConfigurationException.MustHaveAncestor.class,
+		ConfigurationException.MustHaveContentSharingWithChildrenEnabled.class
 	};
 
 }

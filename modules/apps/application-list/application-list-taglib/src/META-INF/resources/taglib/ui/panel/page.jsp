@@ -26,7 +26,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 		<liferay-ui:panel-container
 			accordion="<%= true %>"
 			extended="<%= true %>"
-			id="userPersonalPanelMenuAddContentPanelContainer"
+			id="<%= StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE) %>"
 			persistState="<%= true %>"
 		>
 

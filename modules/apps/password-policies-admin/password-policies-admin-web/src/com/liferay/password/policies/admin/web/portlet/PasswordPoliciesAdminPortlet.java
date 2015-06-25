@@ -204,7 +204,7 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, NoSuchPasswordPolicyException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include("/error.jsp", renderRequest, renderResponse);
 		}

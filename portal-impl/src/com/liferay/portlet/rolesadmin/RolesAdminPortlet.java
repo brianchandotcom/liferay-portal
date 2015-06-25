@@ -376,9 +376,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 				renderResponse);
 		}
 		else if (SessionErrors.contains(
-					renderRequest, PrincipalException.class.getName()) ||
+					renderRequest, NoSuchRoleException.class.getName()) ||
 				 SessionErrors.contains(
-					 renderRequest, NoSuchRoleException.class.getName()) ||
+					 renderRequest, PrincipalException.getNestedClasses()) ||
 				 SessionErrors.contains(
 					 renderRequest, RoleAssignmentException.class.getName()) ||
 				 SessionErrors.contains(

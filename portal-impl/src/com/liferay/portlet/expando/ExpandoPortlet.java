@@ -142,7 +142,7 @@ public class ExpandoPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, NoSuchColumnException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include(
 				"/html/portlet/expando/error.jsp", renderRequest,

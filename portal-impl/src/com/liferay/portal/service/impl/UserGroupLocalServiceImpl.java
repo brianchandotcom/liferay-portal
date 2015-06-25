@@ -205,7 +205,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
 		indexer.reindex(userGroup);
@@ -848,9 +848,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		userPersistence.setUserGroups(userId, userGroupIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
 
-		indexer.reindex(userId);
+		User user = userLocalService.fetchUser(userId);
+
+		if (user != null) {
+			indexer.reindex(user);
+		}
 
 		PermissionCacheUtil.clearCache(userId);
 	}
@@ -947,7 +952,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
 		indexer.reindex(userGroup);

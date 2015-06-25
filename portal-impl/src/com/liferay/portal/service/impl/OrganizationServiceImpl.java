@@ -252,8 +252,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 				websites);
 
 			if (indexingEnabled) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					Organization.class);
+				Indexer<Organization> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 
 				indexer.reindex(organization);
 			}

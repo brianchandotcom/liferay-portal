@@ -646,7 +646,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				user.getUserId(), announcementsDelivers);
 
 			if (indexingEnabled) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					User.class);
 
 				indexer.reindex(user);

@@ -148,7 +148,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	public File getOriginalLibSrcFile() throws Exception {
-		return FileUtil.get(_project, getOriginalLibSrcUrl(), null);
+		return FileUtil.get(_project, getOriginalLibSrcUrl());
 	}
 
 	public Map<String, File> getPatchedSrcDirMappings() {

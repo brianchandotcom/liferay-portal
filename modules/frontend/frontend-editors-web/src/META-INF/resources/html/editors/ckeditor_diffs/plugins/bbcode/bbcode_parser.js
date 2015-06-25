@@ -165,15 +165,15 @@
 
 			var length = data.length;
 
-			var lastIndex = length;
+			var lastIndex = instance._lexer.getLastIndex();
 
 			if (token) {
 				var tokenItem = token[1] || token[3];
 
+				length = lastIndex;
+
 				if (instance._isValidTag(tokenItem)) {
 					length = token.index;
-
-					lastIndex = instance._lexer.getLastIndex();
 				}
 			}
 
@@ -512,12 +512,12 @@
 			do {
 				token = instance._parsedData[index++];
 
-				if (token.type == TOKEN_DATA) {
+				if (token && token.type == TOKEN_DATA) {
 					result.push(token.value);
 				}
 
 			}
-			while (token.type != TOKEN_TAG_END && token.value != toTagName);
+			while (token && token.type != TOKEN_TAG_END && token.value != toTagName);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;

@@ -64,34 +64,36 @@ String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
-	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
+	<div class="<%= article == null ? "hidden" : ""%> configuration-options-container">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+		<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
+		<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
 
-	<aui:fieldset>
-		<aui:field-wrapper label="user-tools">
-			<liferay-ui:asset-addon-entry-selector
-				assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
-				hiddenInput="preferences--userToolAssetAddonEntryKeys--"
-				id="userToolsAssetAddonEntriesSelector"
-				selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
-				title="select-user-tools"
-			/>
-		</aui:field-wrapper>
+		<aui:fieldset>
+			<aui:field-wrapper label="user-tools">
+				<liferay-ui:asset-addon-entry-selector
+					assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
+					hiddenInput="preferences--userToolAssetAddonEntryKeys--"
+					id="userToolsAssetAddonEntriesSelector"
+					selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+					title="select-user-tools"
+				/>
+			</aui:field-wrapper>
 
-		<aui:field-wrapper label="content-metadata">
-			<liferay-ui:asset-addon-entry-selector
-				assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
-				hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
-				id="contentMetadataAssetAddonEntriesSelector"
-				selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
-				title="select-content-metadata"
-			/>
-		</aui:field-wrapper>
+			<aui:field-wrapper label="content-metadata">
+				<liferay-ui:asset-addon-entry-selector
+					assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
+					hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
+					id="contentMetadataAssetAddonEntriesSelector"
+					selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
+					title="select-content-metadata"
+				/>
+			</aui:field-wrapper>
 
-		<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
-	</aui:fieldset>
+			<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+		</aui:fieldset>
+	</div>
 
 	<aui:button-row cssClass="dialog-footer">
 		<aui:button name="saveButton" type="submit" value="done" />
@@ -149,6 +151,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 								$('.template-preview').removeClass('hidden');
 								form.fm('assetEntryId').val(event.assetentryid);
 								form.fm('ddmTemplateKey').val($('.template-preview .template-preview-content').attr('data-template-key'));
+								$('.configuration-options-container').removeClass('hidden');
 							}
 						}
 					);

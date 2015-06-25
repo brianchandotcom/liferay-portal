@@ -94,11 +94,27 @@ public class ConfigurationException extends PortalException {
 
 	}
 
+	public static class MustHaveValidScopeGroupId
+		extends ConfigurationException {
+
+		public MustHaveValidScopeGroupId(long scopeGroupId) {
+			super(
+				String.format(
+					"No scope group found matching id %s", scopeGroupId));
+
+			this.scopeGroupId = scopeGroupId;
+		}
+
+		public final long scopeGroupId;
+
+	}
+
 	private static final Class<?>[] _NESTED_CLASSES = {
 		ConfigurationException.MustBeSelectableScope.class,
 		ConfigurationException.MustBeStrictPortlet.class,
 		ConfigurationException.MustHaveAncestor.class,
-		ConfigurationException.MustHaveContentSharingWithChildrenEnabled.class
+		ConfigurationException.MustHaveContentSharingWithChildrenEnabled.class,
+		ConfigurationException.MustHaveValidScopeGroupId.class
 	};
 
 }

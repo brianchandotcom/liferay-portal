@@ -53,7 +53,6 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.ConfigurationException;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -925,7 +924,8 @@ public class AssetPublisherUtil {
 			Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
 			if (scopeGroup == null) {
-				throw new PrincipalException();
+				throw new ConfigurationException.MustHaveValidScopeGroupId(
+					scopeGroupId);
 			}
 
 			return scopeGroupId;

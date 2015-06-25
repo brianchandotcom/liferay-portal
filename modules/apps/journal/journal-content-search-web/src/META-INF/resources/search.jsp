@@ -19,6 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 if (Validator.isNotNull(redirect)) {
 	portletDisplay.setURLBack(redirect);
 }
@@ -35,8 +41,6 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 
 <portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="showListed" value="<%= String.valueOf(journalContentSearchPortletInstanceConfiguration.showListed()) %>" />
 	<portlet:param name="targetPortletId" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
 </portlet:renderURL>
 
@@ -47,7 +51,6 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 
 	renderURL.setParameter("mvcPath", "/search.jsp");
 	renderURL.setParameter("keywords", keywords);
-	renderURL.setParameter("redirect", redirect);
 
 	List<String> headerNames = new ArrayList<String>();
 

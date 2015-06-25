@@ -446,10 +446,22 @@
 		</if>
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
-		<execute function="Type" locator1="PGAssetpublisherAddnewblogsentry#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type" locator1="PGAssetpublisherAddnewblogsentry#CONTENT_FIELD" value1="${entryContent}" />
-		<execute function="AssertClick" locator1="PGAssetpublisherAddnewblogsentry#PUBLISH_BUTTON" value1="Publish" />
+
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+
+		<if>
+			<isset var="entrySubtitle" />
+			<then>
+				<execute function="Type#typeCKEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
+			</then>
+		</if>
+
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
 		<execute function="Pause" locator1="5000" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<var name="key_assetTitle" value="${entryTitle}" />

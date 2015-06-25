@@ -19,4 +19,4 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
-page import="com.liferay.application.list.taglib.constants.ProductivityCenterWebKeys" %>
+page import="com.liferay.application.list.taglib.constants.ApplicationListWebKeys" %>

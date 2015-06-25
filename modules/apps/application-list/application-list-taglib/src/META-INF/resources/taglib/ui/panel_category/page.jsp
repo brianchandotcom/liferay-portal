@@ -17,7 +17,7 @@
 <%@ include file="/taglib/ui/panel_category/init.jsp" %>
 
 <%
-PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_APP_REGISTRY);
+PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("application-list-ui:panel-category:panelCategory");
 
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategory);

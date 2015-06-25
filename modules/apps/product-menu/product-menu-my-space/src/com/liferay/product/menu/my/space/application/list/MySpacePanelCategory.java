@@ -28,7 +28,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
+	property = {
+		"panel.category.key=" + PanelCategoryKeys.ROOT,
+		"service.ranking:Integer=200"
+	},
 	service = PanelCategory.class
 )
 public class MySpacePanelCategory extends BasePanelCategory {

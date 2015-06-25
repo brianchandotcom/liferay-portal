@@ -27,6 +27,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.TeamServiceUtil;
 import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.site.teams.web.upgrade.SiteTeamsWebUpgrade;
 
 import java.io.IOException;
@@ -83,9 +84,11 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
@@ -93,7 +96,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 			// Add team
 
-			TeamServiceUtil.addTeam(groupId, name, description);
+			TeamServiceUtil.addTeam(
+				themeDisplay.getSiteGroupId(), name, description);
 		}
 		else {
 

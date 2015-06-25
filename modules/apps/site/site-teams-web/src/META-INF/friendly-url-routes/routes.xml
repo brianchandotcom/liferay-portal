@@ -3,27 +3,27 @@
 
 <routes>
 	<route>
-		<pattern>/teams/{teamId:\d+}/{tabs1}/{tabs2}/assignments</pattern>
+		<pattern>/team/{teamId:\d+}/{tabs1}/{tabs2}/assignments</pattern>
 		<implicit-parameter name="mvcPath">/edit_team_assignments.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/teams/{teamId:\d+}/{tabs1}/assignments</pattern>
+		<pattern>/team/{teamId:\d+}/{tabs1}/assignments</pattern>
 		<implicit-parameter name="mvcPath">/edit_team_assignments.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/teams/{teamId:\d+}/assignments</pattern>
+		<pattern>/team/{teamId:\d+}/assignments</pattern>
 		<implicit-parameter name="mvcPath">/edit_team_assignments.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/teams/{teamId:\d+}/edit</pattern>
+		<pattern>/team/{teamId:\d+}/edit</pattern>
 		<implicit-parameter name="mvcPath">/edit_team.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/teams/{groupId:\d+}/new</pattern>
+		<pattern>/teams/new</pattern>
 		<implicit-parameter name="mvcPath">/edit_team.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>

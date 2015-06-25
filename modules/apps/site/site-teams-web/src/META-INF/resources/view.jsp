@@ -21,19 +21,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-Group group = ActionUtil.getGroup(renderRequest);
-
-long groupId = group.getGroupId();
-
-Organization organization = null;
-
-if (group.isOrganization()) {
-	organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
-}
+Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("groupId", String.valueOf(groupId));
 
 pageContext.setAttribute("portletURL", portletURL);
 %>
@@ -59,7 +49,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
 
-		total = TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
+		total = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 
 		searchContainer.setTotal(total);
 		%>
@@ -69,7 +59,6 @@ pageContext.setAttribute("portletURL", portletURL);
 				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_TEAMS) %>">
 					<portlet:renderURL var="addTeamURL">
 						<portlet:param name="mvcPath" value="/edit_team.jsp" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item href="<%= addTeamURL %>" iconCssClass="icon-plus" label="add-team" />
@@ -84,7 +73,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results
-			results="<%= TeamLocalServiceUtil.search(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			results="<%= TeamLocalServiceUtil.search(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -128,6 +117,8 @@ pageContext.setAttribute("portletURL", portletURL);
 
 <%
 if (group.isOrganization()) {
+	Organization organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
+
 	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 }
 else {

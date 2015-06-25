@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 JournalArticle article = journalContentDisplayContext.getArticle();
 %>
 
@@ -60,7 +62,6 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 
 <%
 String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
-String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
@@ -96,7 +97,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</div>
 
 	<aui:button-row cssClass="dialog-footer">
-		<aui:button name="saveButton" type="submit" value="done" />
+		<aui:button name="saveButton" type="submit" />
+
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

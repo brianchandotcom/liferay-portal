@@ -145,8 +145,6 @@ public class CalendarBookingIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String calendarBookingId = document.get(Field.ENTRY_CLASS_PK);
-
 		Summary summary = createSummary(
 			document, Field.TITLE, Field.DESCRIPTION);
 

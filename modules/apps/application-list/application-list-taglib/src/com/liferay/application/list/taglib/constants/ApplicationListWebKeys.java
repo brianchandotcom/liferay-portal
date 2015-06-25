@@ -17,7 +17,7 @@ package com.liferay.application.list.taglib.constants;
 /**
  * @author Adolfo Pérez
  */
-public class ProductivityCenterWebKeys {
+public class ApplicationListWebKeys {
 
 	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";
 

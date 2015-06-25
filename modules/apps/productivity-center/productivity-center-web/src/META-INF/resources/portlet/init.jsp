@@ -19,4 +19,4 @@
 <%@ page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
-page import="com.liferay.application.list.taglib.constants.ProductivityCenterWebKeys" %>
+page import="com.liferay.application.list.taglib.constants.ApplicationListWebKeys" %>

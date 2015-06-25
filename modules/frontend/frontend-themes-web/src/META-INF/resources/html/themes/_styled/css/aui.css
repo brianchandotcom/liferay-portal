@@ -1,7 +1,1 @@
-@import "aui_variables";
-
-@import "aui/bootstrap";
-@import "aui_custom";
-@import "liferay_custom";
-
-@import "aui/alloy-font-awesome/scss/font-awesome";
+@import "aui/lexicon/lexicon";

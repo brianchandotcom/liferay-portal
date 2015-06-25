@@ -41,7 +41,6 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 
 <portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
-	<portlet:param name="showListed" value="<%= String.valueOf(journalContentSearchPortletInstanceConfiguration.showListed()) %>" />
 	<portlet:param name="targetPortletId" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
 </portlet:renderURL>
 

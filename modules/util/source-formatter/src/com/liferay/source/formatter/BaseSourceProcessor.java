@@ -783,8 +783,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
-	protected String getAbsolutePath(File file) {
-		String absolutePath = file.getAbsolutePath();
+	protected String getAbsolutePath(File file) throws Exception {
+		String absolutePath = file.getCanonicalPath();
 
 		absolutePath = StringUtil.replace(
 			absolutePath, CharPool.BACK_SLASH, CharPool.SLASH);

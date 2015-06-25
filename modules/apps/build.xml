@@ -5,6 +5,7 @@
 	<path id="plugins.includes.path">
 		<dirset dir="amazon-rankings" includes="*" />
 		<dirset dir="asset" includes="*" />
+		<dirset dir="application-list" includes="*" />
 		<dirset dir="blogs" includes="*" />
 		<dirset dir="bookmarks" includes="*" />
 		<dirset dir="comments" includes="*" />
@@ -35,6 +36,7 @@
 		<dirset dir="polls" includes="*" />
 		<dirset dir="portlet-css" includes="*" />
 		<dirset dir="portlet-display-template" includes="*" />
+		<dirset dir="product-menu" includes="*" />
 		<dirset dir="productivity-center" includes="*" />
 		<dirset dir="quick-note" includes="*" />
 		<dirset dir="roles" includes="*" />

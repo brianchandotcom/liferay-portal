@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="../application-list/application-list-api" />
+	<property name="osgi.ide.dependencies" value="spring-context.jar" />
+	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.service.tracker.map.jar" />
+
+	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+</project>

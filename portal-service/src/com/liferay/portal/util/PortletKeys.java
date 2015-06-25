@@ -87,6 +87,8 @@ public class PortletKeys {
 	public static final String LAYOUTS_ADMIN =
 		"com_liferay_layout_admin_web_portlet_LayoutAdminPortlet";
 
+	public static final String LICENSE_MANAGER = "176";
+
 	public static final String LIFERAY_PORTAL = "LIFERAY_PORTAL";
 
 	public static final String LOGIN = "58";

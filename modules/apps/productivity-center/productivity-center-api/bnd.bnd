@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Productivity Center API
-Bundle-SymbolicName: com.liferay.productivity.center.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.productivity.center.*
-Include-Resource: classes

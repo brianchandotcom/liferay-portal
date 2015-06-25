@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="polls-service" />
+	<property name="import.shared" value="polls-service,../application-list/application-list-api" />
 	<property name="osgi.auto.update.xml" value="true" />
 	<property name="osgi.ide.dependencies" value="jcommon.jar,jfreechart.jar,struts.jar" />
 

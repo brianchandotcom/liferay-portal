@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Product Menu Site Administration Service
+Bundle-SymbolicName: com.liferay.product.menu.site.administration.service
+Bundle-Version: 1.0.0
+Include-Resource: classes

@@ -140,7 +140,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -322,7 +324,7 @@
 		<execute function="AssertTextNotPresent" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="WC WebContent Content" />
 	</command>
 
-	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">
+	<command known-issues="LPS-56572" name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -478,7 +480,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="saveAsDraft" value="true" />
@@ -531,7 +535,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -693,7 +699,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -721,7 +729,7 @@
 		</execute>
 	</command>
 
-	<command name="EditGlobalWebContentTemplate" priority="4">
+	<command known-issues="LPS-56572" name="EditGlobalWebContentTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -794,7 +802,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWebContentTemplate" priority="4">
+	<command known-issues="LPS-56568" name="EditWebContentTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -842,7 +850,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -1249,7 +1259,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -1448,7 +1460,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content 3 Title" />
+			<var name="webContentTitle" value="WC WebContent 3 Title" />
 		</execute>
 
 		<execute macro="WebContent#addExistingRelatedAssetCP">
@@ -1478,7 +1490,7 @@
 		</execute>
 	</command>
 
-	<command name="WebcontentAdministrationTemplateValidation" priority="4">
+	<command known-issues="LPS-56572" name="WebcontentAdministrationTemplateValidation" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

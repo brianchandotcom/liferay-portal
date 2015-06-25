@@ -435,7 +435,7 @@ public class StagingBarPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, NoSuchGroupException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName()) ||
+				renderRequest, PrincipalException.getNestedClasses()) ||
 			SessionErrors.contains(
 				renderRequest, SystemException.class.getName())) {
 

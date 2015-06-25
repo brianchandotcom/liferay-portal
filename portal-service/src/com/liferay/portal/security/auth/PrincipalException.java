@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class PrincipalException extends PortalException {
 
+	public static Class<?>[] getNestedClasses() {
+		return _NESTED_CLASSES;
+	}
+
 	public PrincipalException() {
 	}
 
@@ -35,5 +39,9 @@ public class PrincipalException extends PortalException {
 	public PrincipalException(Throwable cause) {
 		super(cause);
 	}
+
+	private static final Class<?>[] _NESTED_CLASSES = {
+		PrincipalException.class
+	};
 
 }

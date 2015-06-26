@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -37,14 +39,18 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -249,6 +255,13 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 	}
 
+	protected void checkPath(String path) throws PortletException {
+		if (!isValidPath(path)) {
+			throw new PortletException(
+				"Path " + path + " is not accessible by this portlet");
+		}
+	}
+
 	@SuppressWarnings("unused")
 	protected void doAbout(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -430,6 +443,18 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 	}
 
+	protected void initValidPaths(String rootPath, String fileExtension) {
+		String[] validPathsInitParameter = StringUtil.split(
+			getInitParameter("valid-paths"));
+
+		validPaths = _getPaths(rootPath, fileExtension);
+
+		validPaths.addAll(
+			_getPaths(_META_INF_RESOURCES + rootPath, fileExtension));
+
+		validPaths.addAll(Arrays.asList(validPathsInitParameter));
+	}
+
 	protected boolean isAlwaysSendRedirect() {
 		return alwaysSendRedirect;
 	}
@@ -480,6 +505,16 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 
 		if (cause instanceof PortalException) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isValidPath(String path) throws PortletException {
+		String metaInfPath = _META_INF_RESOURCES + path;
+
+		if (validPaths.contains(path) || validPaths.contains(metaInfPath)) {
 			return true;
 		}
 
@@ -548,6 +583,28 @@ public class LiferayPortlet extends GenericPortlet {
 
 	protected boolean addProcessActionSuccessMessage;
 	protected boolean alwaysSendRedirect;
+	protected Set<String> validPaths;
+
+	private Set<String> _getPaths(String rootPath, String extension) {
+		Set<String> result = new HashSet<String>();
+		PortletContext portletContext = getPortletContext();
+		Set<String> paths = portletContext.getResourcePaths(rootPath);
+
+		if (paths == null) {
+			return result;
+		}
+
+		for (String path : paths) {
+			if (path.endsWith(StringPool.SLASH)) {
+				result.addAll(_getPaths(path, extension));
+			}
+			else if (path.endsWith(extension)) {
+				result.add(path);
+			}
+		}
+
+		return result;
+	}
 
 	private static final String[] _IGNORED_SESSION_MESSAGE_SUFFIXES = {
 		SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
@@ -556,6 +613,8 @@ public class LiferayPortlet extends GenericPortlet {
 		SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE,
 		SessionMessages.KEY_SUFFIX_REFRESH_PORTLET
 	};
+
+	private static final String _META_INF_RESOURCES = "/META-INF/resources";
 
 	private static final boolean _PROCESS_PORTLET_REQUEST = true;
 

@@ -212,6 +212,8 @@ public class MVCPortlet extends LiferayPortlet {
 			getInitParameter("mvc-resource-command-package-prefix"),
 			getPortletName(), MVCResourceCommand.class.getName(),
 			"ResourceCommand");
+
+		initValidPaths(templatePath, ".jsp");
 	}
 
 	/**
@@ -439,17 +441,6 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 
 		return super.callResourceMethod(resourceRequest, resourceResponse);
-	}
-
-	protected void checkPath(String path) throws PortletException {
-		if (Validator.isNotNull(path) &&
-			(!path.startsWith(templatePath) ||
-			 !PortalUtil.isValidResourceId(path) ||
-			 !Validator.isFilePath(path, false))) {
-
-			throw new PortletException(
-				"Path " + path + " is not accessible by this portlet");
-		}
 	}
 
 	protected void checkPermissions(PortletRequest portletRequest)

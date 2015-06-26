@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
@@ -29,7 +29,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
 		</liferay-portlet:renderURL>
@@ -61,7 +61,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 
 	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.VIEW) && MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 		<portlet:renderURL var="editRulesURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/view_rules" />
+			<portlet:param name="mvcPath" value="/view_rules.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -73,8 +73,8 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 			url="<%= editRulesURL.toString() %>"
 		/>
 
-		<portlet:actionURL var="copyURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+		<portlet:actionURL name="/mobile_device_rules/edit_rule_group" var="copyURL">
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.COPY %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
@@ -89,8 +89,8 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+		<portlet:actionURL name="/mobile_device_rules/edit_rule_group" var="deleteURL">
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />

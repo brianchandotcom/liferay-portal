@@ -14,15 +14,60 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page import="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil" %><%@
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+
+<%@ page import="com.liferay.mobile.device.rules.web.util.MobileDeviceRulesWebKeys" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
+page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
+page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil" %><%@
 page import="com.liferay.portal.kernel.mobile.device.VersionableName" %><%@
 page import="com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil" %><%@
 page import="com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil" %><%@
 page import="com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler" %><%@
 page import="com.liferay.portal.kernel.mobile.device.rulegroup.rule.UnknownRuleHandlerException" %><%@
+page import="com.liferay.portal.kernel.plugin.PluginPackage" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.SetUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.mobile.device.rulegroup.rule.impl.SimpleRuleHandler" %><%@
+page import="com.liferay.portal.model.ColorScheme" %><%@
+page import="com.liferay.portal.model.Group" %><%@
+page import="com.liferay.portal.model.Layout" %><%@
+page import="com.liferay.portal.model.LayoutSet" %><%@
+page import="com.liferay.portal.model.Theme" %><%@
+page import="com.liferay.portal.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.GroupServiceUtil" %><%@
+page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.LayoutServiceUtil" %><%@
+page import="com.liferay.portal.service.LayoutSetLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.LayoutTemplateLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.ThemeLocalServiceUtil" %><%@
+page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.ActionTypeException" %><%@
 page import="com.liferay.portlet.mobiledevicerules.NoSuchActionException" %><%@
 page import="com.liferay.portlet.mobiledevicerules.NoSuchRuleException" %><%@
@@ -46,7 +91,28 @@ page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGro
 page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %>
 
+<%@ page import="java.util.Collection" %><%@
+page import="java.util.Collections" %><%@
+page import="java.util.HashMap" %><%@
+page import="java.util.LinkedHashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %><%@
+page import="java.util.Set" %>
+
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
+
+<portlet:defineObjects />
+
+<liferay-theme:defineObjects />
+
 <%
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
+
+WindowState windowState = liferayPortletRequest.getWindowState();
+
 long groupId = ParamUtil.getLong(request, "groupId");
 
 if (groupId == 0) {
@@ -54,4 +120,4 @@ if (groupId == 0) {
 }
 %>
 
-<%@ include file="/html/portlet/mobile_device_rules/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

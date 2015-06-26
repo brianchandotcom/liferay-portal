@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 RuleGroupSearch searchContainer = (RuleGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");

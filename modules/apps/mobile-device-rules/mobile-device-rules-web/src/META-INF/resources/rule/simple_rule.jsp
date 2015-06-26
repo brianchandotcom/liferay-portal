@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-MDRRule rule = (MDRRule)request.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE);
+MDRRule rule = (MDRRule)request.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE);
 
 Set<String> operatingSystems = Collections.emptySet();
 int tablet = 0;

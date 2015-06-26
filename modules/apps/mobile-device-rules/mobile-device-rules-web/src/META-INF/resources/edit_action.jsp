@@ -14,20 +14,20 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-MDRAction action = (MDRAction)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION);
+MDRAction action = (MDRAction)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION);
 
 long actionId = BeanParamUtil.getLong(action, request, "actionId");
 
-String editorJSP = (String)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_EDITOR_JSP);
-String type = (String)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_TYPE);
+String editorJSP = (String)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_EDITOR_JSP);
+String type = (String)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_TYPE);
 
-MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_INSTANCE);
-MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
+MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_INSTANCE);
+MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
 
 String title = null;
 
@@ -59,8 +59,8 @@ else {
 	</div>
 </c:if>
 
-<portlet:actionURL var="editActionURL">
-	<portlet:param name="struts_action" value="/mobile_device_rules/edit_action" />
+<portlet:actionURL name="/mobile_device_rules/edit_action" var="editActionURL">
+	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 </portlet:actionURL>
 
 <aui:form action="<%= editActionURL %>" enctype="multipart/form-data" method="post" name="fm">
@@ -97,7 +97,7 @@ else {
 
 		<div id="<%= renderResponse.getNamespace() %>typeSettings">
 			<c:if test="<%= Validator.isNotNull(editorJSP) %>">
-				<liferay-util:include page="<%= editorJSP %>" />
+				<liferay-util:include page="<%= editorJSP %>" servletContext="<%= application %>" />
 			</c:if>
 		</div>
 	</aui:fieldset>
@@ -115,9 +115,7 @@ else {
 
 		var form = $(document.<portlet:namespace />fm);
 
-		<portlet:resourceURL var="siteURLLayoutsURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/site_url_layouts" />
-		</portlet:resourceURL>
+		<portlet:resourceURL id="/mobile_device_rules/site_url_layouts" var="siteURLLayoutsURL" />
 
 		$.ajax(
 			'<%= siteURLLayoutsURL.toString() %>',
@@ -138,8 +136,7 @@ else {
 
 		var form = $(document.<portlet:namespace />fm);
 
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="editorURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_action_editor" />
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/mobile_device_rules/edit_action" var="editorURL">
 			<portlet:param name="ajax" value="true" />
 		</liferay-portlet:resourceURL>
 

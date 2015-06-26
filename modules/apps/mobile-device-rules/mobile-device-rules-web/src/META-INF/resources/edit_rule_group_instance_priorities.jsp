@@ -1,5 +1,4 @@
 <%--
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -15,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -45,8 +44,8 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 
 <div class="separator"><!-- --></div>
 
-<portlet:actionURL var="editRuleGroupInstancesURL">
-	<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group_instance" />
+<portlet:actionURL name="/mobile_device_rules/edit_rule_group_instance" var="editRuleGroupInstancesURL">
+	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group_instance" />
 </portlet:actionURL>
 
 <aui:form action="<%= editRuleGroupInstancesURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "saveRuleGroupInstancesPriorities()" %>'>

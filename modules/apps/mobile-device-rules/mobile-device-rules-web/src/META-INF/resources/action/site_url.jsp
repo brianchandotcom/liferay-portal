@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/action/init.jsp" %>
+<%@ include file="/action/init.jsp" %>
 
 <%
 long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("groupId"));
@@ -44,5 +44,5 @@ long actionGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("grou
 </aui:select>
 
 <div id="<portlet:namespace />layouts">
-	<liferay-util:include page="/html/portlet/mobile_device_rules/action/site_url_layouts.jsp" />
+	<liferay-util:include page="/action/site_url_layouts.jsp" servletContext="<%= application %>" />
 </div>

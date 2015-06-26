@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -28,7 +28,7 @@ MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/mobile_device_rules/view_actions");
+portletURL.setParameter("mvcPath", "/view_actions.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceId));
 %>
@@ -65,17 +65,17 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 			modelVar="action"
 		>
 			<liferay-portlet:renderURL var="rowURL">
-				<portlet:param name="struts_action" value="/mobile_device_rules/edit_action" />
+				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="actionId" value="<%= String.valueOf(action.getActionId()) %>" />
 			</liferay-portlet:renderURL>
 
-			<%@ include file="/html/portlet/mobile_device_rules/action_columns.jspf" %>
+			<%@ include file="/action_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 			<liferay-portlet:renderURL var="addURL">
-				<portlet:param name="struts_action" value="/mobile_device_rules/edit_action" />
+				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
 			</liferay-portlet:renderURL>
@@ -109,7 +109,7 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('actionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/mobile_device_rules/edit_action" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="/mobile_device_rules/edit_action"><portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

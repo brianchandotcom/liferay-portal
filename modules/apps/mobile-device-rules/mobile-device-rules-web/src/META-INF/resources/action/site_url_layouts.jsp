@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/action/init.jsp" %>
+<%@ include file="/action/init.jsp" %>
 
 <%
 long actionGroupId = 0;

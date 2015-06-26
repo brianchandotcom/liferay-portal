@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -24,7 +24,7 @@ String backURL = ParamUtil.getString(request, "backURL");
 if (Validator.isNull(redirect) && Validator.isNull(backURL)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/mobile_device_rules/view");
+	portletURL.setParameter("mvcPath", "/view.jsp");
 	portletURL.setParameter("groupId", String.valueOf(groupId));
 
 	backURL = portletURL.toString();
@@ -36,7 +36,7 @@ MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.getRuleGroup(ruleGroupId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/mobile_device_rules/view_rules");
+portletURL.setParameter("mvcPath", "/view_rules.jsp");
 portletURL.setParameter("ruleGroupId", String.valueOf(ruleGroupId));
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("redirect", redirect);
@@ -51,7 +51,7 @@ portletURL.setParameter("redirect", redirect);
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL var="addURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
 			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroupId) %>" />
 		</liferay-portlet:renderURL>
@@ -81,13 +81,13 @@ portletURL.setParameter("redirect", redirect);
 		modelVar="rule"
 	>
 		<liferay-portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="ruleId" value="<%= String.valueOf(rule.getRuleId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<%@ include file="/html/portlet/mobile_device_rules/rule_columns.jspf" %>
+		<%@ include file="/rule_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator type="more" />

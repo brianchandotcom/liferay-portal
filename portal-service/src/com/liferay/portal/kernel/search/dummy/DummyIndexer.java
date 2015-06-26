@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.StringPool;
@@ -42,7 +41,7 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	@Override
-	public void delete(Object obj) {
+	public void delete(Object object) {
 	}
 
 	@Override
@@ -60,7 +59,7 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	@Override
-	public Document getDocument(Object obj) {
+	public Document getDocument(Object object) {
 		return null;
 	}
 
@@ -210,14 +209,15 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	@Override
-	public void reindex(Collection<Object> objects) throws SearchException {
+	public void reindex(Collection<Object> objects) {
 	}
 
 	@Override
 	public void reindex(Object obj) {
 	}
 
-	public void reindex(Object... objects) throws SearchException {
+	@Override
+	public void reindex(Object... objects) {
 	}
 
 	@Override

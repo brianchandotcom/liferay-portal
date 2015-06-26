@@ -1,0 +1,56 @@
+import com.liferay.gradle.util.FileUtil
+
+configurations {
+	jruby
+}
+
+dependencies {
+	jruby group: "org.jruby", name: "jruby-complete", version: "1.6.5"
+}
+
+ext.compassUrl = "http://rubygems.org/gems/compass-1.0.1.gem"
+
+task downloadGems
+
+classes {
+	dependsOn downloadGems
+}
+
+deploy {
+	into("../../../lib/development") {
+		from {
+			jar.archivePath
+		}
+		rename {
+			"ruby-gems.jar"
+		}
+	}
+}
+
+downloadGems {
+	doLast {
+		File compassFile = FileUtil.get(project, compassUrl, temporaryDir)
+
+		javaexec {
+			args configurations.jruby.singleFile
+			args "-S"
+			args "gem", "install"
+			args "-i", "./classes"
+			args relativePath(compassFile)
+			args "--no-rdoc"
+			args "--no-ri"
+
+			main = "-jar"
+		}
+
+		ant.replace(dir: "classes/bin") {
+			ant.replacetoken "#! jruby"
+			ant.replacevalue "#!/usr/bin/env jruby"
+		}
+	}
+
+	onlyIf {
+		!FileUtil.exists(project, "classes/gems")
+	}
+
+}

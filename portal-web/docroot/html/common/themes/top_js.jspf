@@ -378,10 +378,10 @@
 
 			<c:choose>
 				<c:when test="<%= layoutTypePortlet.hasStateMax() %>">
-					Liferay.Portlet.list = ['<%= layoutTypePortlet.getStateMaxPortletId() %>'];
+					Liferay.Portlet.list = ['<%= HtmlUtil.escapeJS(layoutTypePortlet.getStateMaxPortletId()) %>'];
 				</c:when>
 				<c:when test="<%= themeDisplay.isStatePopUp() %>">
-					Liferay.Portlet.list = ['<%= themeDisplay.getPpid() %>'];
+					Liferay.Portlet.list = ['<%= HtmlUtil.escapeJS(themeDisplay.getPpid()) %>'];
 				</c:when>
 				<c:when test="<%= (sb.index() > 0) && !layoutTypePortlet.hasStateMax() %>">
 					Liferay.Portlet.list = ['<%= sb.toString() %>'];

@@ -14,30 +14,22 @@
 
 package com.liferay.portal.repository.capabilities;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.Repository;
-import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.event.WorkflowRepositoryEventType;
-import com.liferay.portal.kernel.repository.model.BaseRepositoryModelOperation;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.repository.liferayrepository.LiferaySyncLocalRepositoryWrapper;
-import com.liferay.portal.repository.liferayrepository.LiferaySyncRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
@@ -51,18 +43,7 @@ import java.util.concurrent.Callable;
  * @author Adolfo Pérez
  */
 public class LiferaySyncCapability
-	implements RepositoryEventAware, RepositoryWrapperAware, SyncCapability {
-
-	public LiferaySyncCapability(
-		BulkOperationCapability bulkOperationCapability) {
-
-		_bulkOperationCapability = bulkOperationCapability;
-	}
-
-	@Override
-	public void destroyDocumentRepository() throws PortalException {
-		_bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
-	}
+	implements RepositoryEventAware, SyncCapability {
 
 	@Override
 	public void registerRepositoryEventListeners(
@@ -107,18 +88,6 @@ public class LiferaySyncCapability
 		repositoryEventRegistry.registerRepositoryEventListener(
 			WorkflowRepositoryEventType.Update.class, FileEntry.class,
 			WORKFLOW_UPDATE_FILE_ENTRY_EVENT_LISTENER);
-	}
-
-	@Override
-	public LocalRepository wrapLocalRepository(
-		LocalRepository localRepository) {
-
-		return new LiferaySyncLocalRepositoryWrapper(localRepository, this);
-	}
-
-	@Override
-	public Repository wrapRepository(Repository repository) {
-		return new LiferaySyncRepositoryWrapper(repository, this);
 	}
 
 	protected static boolean isStagingGroup(long groupId) {
@@ -264,8 +233,6 @@ public class LiferaySyncCapability
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_UPDATE);
 
-	private final BulkOperationCapability _bulkOperationCapability;
-
 	private static class SyncFileEntryRepositoryEventListener
 			<S extends RepositoryEventType>
 		implements RepositoryEventListener<S, FileEntry> {
@@ -297,22 +264,6 @@ public class LiferaySyncCapability
 		}
 
 		private final String _syncEvent;
-
-	}
-
-	private class DeleteRepositoryModelOperation
-		extends BaseRepositoryModelOperation {
-
-		@Override
-		public void execute(FileEntry fileEntry) {
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_DELETE, fileEntry);
-		}
-
-		@Override
-		public void execute(Folder folder) {
-			registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
-		}
 
 	}
 

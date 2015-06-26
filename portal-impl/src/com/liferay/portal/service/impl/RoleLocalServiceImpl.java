@@ -1519,9 +1519,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		User user = userLocalService.fetchUser(userId);
 
-		if (user == null) {
-			indexer.reindex(user);
-		}
+		indexer.reindex(user);
 	}
 
 	protected void setRolePermissions(

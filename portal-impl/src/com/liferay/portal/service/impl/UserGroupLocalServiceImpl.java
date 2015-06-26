@@ -853,9 +853,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		User user = userLocalService.fetchUser(userId);
 
-		if (user != null) {
-			indexer.reindex(user);
-		}
+		indexer.reindex(user);
 
 		PermissionCacheUtil.clearCache(userId);
 	}

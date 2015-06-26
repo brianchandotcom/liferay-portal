@@ -575,9 +575,7 @@ public class PortletImporter {
 
 				User user = UserLocalServiceUtil.fetchUser(userId);
 
-				if (user != null) {
-					indexer.reindex(user);
-				}
+				indexer.reindex(user);
 			}
 		}
 

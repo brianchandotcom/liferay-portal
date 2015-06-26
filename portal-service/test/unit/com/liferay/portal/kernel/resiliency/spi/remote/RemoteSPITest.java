@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -103,7 +102,7 @@ public class RemoteSPITest {
 		System.setProperty(
 			PropsKeys.INTRABAND_WELDER_IMPL, MockWelder.class.getName());
 		System.setProperty(
-			PropsKeys.LIFERAY_HOME, _currentDir.getAbsolutePath());
+			PropsKeys.LIFERAY_HOME, System.getProperty("user.dir"));
 
 		SPIAgentFactoryUtil.registerSPIAgentClass(MockSPIAgent.class);
 	}
@@ -375,7 +374,7 @@ public class RemoteSPITest {
 			MockWelder.class.getName(),
 			System.getProperty(PropsKeys.INTRABAND_WELDER_IMPL));
 		Assert.assertEquals(
-			_currentDir.getAbsolutePath(),
+			System.getProperty("user.dir"),
 			System.getProperty("portal:" + PropsKeys.LIFERAY_HOME));
 		Assert.assertEquals(
 			"-".concat(_spiConfiguration.getSPIId()),
@@ -904,8 +903,6 @@ public class RemoteSPITest {
 
 		return new MockRegistrationReference(mockIntraband);
 	}
-
-	private static final File _currentDir = new File(".");
 
 	private MockRemoteSPI _mockRemoteSPI;
 	private SPIConfiguration _spiConfiguration;

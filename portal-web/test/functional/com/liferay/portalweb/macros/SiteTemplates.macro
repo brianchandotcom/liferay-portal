@@ -286,6 +286,14 @@
 		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberFrom}_PORTLET_TITLE" value1="${portletName}" />
 	</command>
 
+	<command name="viewSiteTemplatePage">
+		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage" />
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
 	<command name="viewTemplateStatusCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 

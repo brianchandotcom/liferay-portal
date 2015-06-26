@@ -25,6 +25,18 @@
 		</if>
 	</command>
 
+	<command name="addPageToSiteTemplates">
+		<execute macro="SiteTemplatesNavigator#gotoManageSiteTemplates">
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+
+		<execute macro="PageNavigator#gotoAddPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#saveAddPage" />
+	</command>
+
 	<command name="addPageTypePanelPG">
 		<var name="key_componentName" value="${componentName}" />
 
@@ -189,6 +201,16 @@
 
 		<execute function="Click" locator1="DockbarEditpanel#DETAILS_LAYOUT_RADIO" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="gotoAdmin">
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN_DROP_DOWN_BUTTON" value1="Admin" />
+
+		<execute function="AssertClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
+
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 	</command>
 
 	<command name="gotoChildPagePG">
@@ -573,6 +595,24 @@
 		<execute function="Open" locator1="${localizationPageURL}" />
 
 		<execute function="AssertLocation" value1="${localizationPageURL}" />
+	</command>
+
+	<command name="pageTypeTemplate">
+		<var name="key_pageType" value="${pageTemplateName}" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+
+		<execute function="Click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+
+		<execute function="Check" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
+	</command>
+
+	<command name="saveAddPage">
+		<execute function="AssertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
+
+		<execute function="AssertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="selectPageTypeRadioPG">

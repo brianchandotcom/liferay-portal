@@ -90,6 +90,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -109,7 +110,7 @@ import javax.portlet.PortletResponse;
  * @author Ryan Park
  * @author Raymond Augé
  */
-public abstract class BaseIndexer implements Indexer {
+public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void delete(long companyId, String uid) throws SearchException {
@@ -126,7 +127,11 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void delete(Object obj) throws SearchException {
+	public void delete(T obj) throws SearchException {
+		if (obj == null) {
+			return;
+		}
+
 		try {
 			doDelete(obj);
 		}
@@ -148,7 +153,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public Document getDocument(Object obj) throws SearchException {
+	public Document getDocument(T obj) throws SearchException {
 		try {
 			Document document = doGetDocument(obj);
 
@@ -485,22 +490,29 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void reindex(Object obj) throws SearchException {
+	public void reindex(Collection<T> collection) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+				collection.isEmpty()) {
+
 				return;
 			}
 
-			if (obj instanceof List<?>) {
-				List<?> list = (List<?>)obj;
+			List<Document> documents = new ArrayList<>();
 
-				for (Object element : list) {
-					doReindex(element);
-				}
+			for (T element : collection) {
+				Document document = getDocument(element);
+
+				documents.add(document);
 			}
-			else {
-				doReindex(obj);
-			}
+
+			Document document = documents.get(0);
+
+			long companyId = Long.parseLong(document.get(Field.COMPANY_ID));
+
+			SearchEngineUtil.updateDocuments(
+				getSearchEngineId(), companyId, documents,
+				isCommitImmediately());
 		}
 		catch (SearchException se) {
 			throw se;
@@ -549,6 +561,33 @@ public abstract class BaseIndexer implements Indexer {
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
+	}
+
+	@Override
+	public void reindex(T obj) throws SearchException {
+		try {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+				return;
+			}
+
+			if (obj == null) {
+				return;
+			}
+
+			doReindex(obj);
+		}
+		catch (SearchException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
+	@Override
+	@SafeVarargs
+	public final void reindex(T... objects) throws SearchException {
+		reindex(Arrays.asList(objects));
 	}
 
 	@Override
@@ -1372,9 +1411,9 @@ public abstract class BaseIndexer implements Indexer {
 			_commitImmediately);
 	}
 
-	protected abstract void doDelete(Object obj) throws Exception;
+	protected abstract void doDelete(T obj) throws Exception;
 
-	protected abstract Document doGetDocument(Object obj) throws Exception;
+	protected abstract Document doGetDocument(T obj) throws Exception;
 
 	protected String doGetSortField(String orderByCol) {
 		return orderByCol;
@@ -1406,12 +1445,12 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
-	protected abstract void doReindex(Object obj) throws Exception;
-
 	protected abstract void doReindex(String className, long classPK)
 		throws Exception;
 
 	protected abstract void doReindex(String[] ids) throws Exception;
+
+	protected abstract void doReindex(T obj) throws Exception;
 
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {

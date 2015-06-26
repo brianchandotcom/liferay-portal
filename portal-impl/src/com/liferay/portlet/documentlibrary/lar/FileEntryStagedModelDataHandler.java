@@ -526,10 +526,12 @@ public class FileEntryStagedModelDataHandler
 						LiferayFileEntry liferayFileEntry =
 							(LiferayFileEntry)importedFileEntry;
 
-						Indexer indexer = IndexerRegistryUtil.getIndexer(
-							DLFileEntry.class);
+						Indexer<DLFileEntry> indexer =
+							IndexerRegistryUtil.nullSafeGetIndexer(
+								DLFileEntry.class);
 
-						indexer.reindex(liferayFileEntry.getModel());
+						indexer.reindex(
+							(DLFileEntry)liferayFileEntry.getModel());
 					}
 
 					if (deleteFileEntry &&

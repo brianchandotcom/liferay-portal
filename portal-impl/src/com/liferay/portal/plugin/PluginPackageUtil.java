@@ -485,7 +485,8 @@ public class PluginPackageUtil {
 	private void _indexPluginPackage(PluginPackage pluginPackage)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(PluginPackage.class);
+		Indexer<PluginPackage> indexer = IndexerRegistryUtil.getIndexer(
+			PluginPackage.class);
 
 		indexer.reindex(pluginPackage);
 	}

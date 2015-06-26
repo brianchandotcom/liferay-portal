@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -519,13 +517,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		trashEntryLocalService.deleteEntry(
 			BlogsEntry.class.getName(), entry.getEntryId());
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BlogsEntry.class);
-
-		indexer.delete(entry);
 
 		// Workflow
 

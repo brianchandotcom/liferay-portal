@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -1745,7 +1746,7 @@ public class DLFileEntryLocalServiceImpl
 			final long folderId, final String treePath, final boolean reindex)
 		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		final ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
@@ -1766,7 +1767,7 @@ public class DLFileEntryLocalServiceImpl
 
 			});
 
-		final Indexer indexer = IndexerRegistryUtil.getIndexer(
+		final Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
 			DLFileEntry.class.getName());
 
 		actionableDynamicQuery.setPerformActionMethod(
@@ -1786,7 +1787,9 @@ public class DLFileEntryLocalServiceImpl
 						return;
 					}
 
-					indexer.reindex(dlFileEntry);
+					Document document = indexer.getDocument(dlFileEntry);
+
+					actionableDynamicQuery.addDocument(document);
 				}
 
 			});
@@ -1976,8 +1979,8 @@ public class DLFileEntryLocalServiceImpl
 					dlFileVersion.getVersion(),
 					DLFileEntryConstants.VERSION_DEFAULT)) {
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					DLFileEntry.class);
+				Indexer<DLFileEntry> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
 
 				indexer.delete(dlFileEntry);
 			}
@@ -2525,7 +2528,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected void reindex(DLFileEntry dlFileEntry) throws SearchException {
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DLFileEntry.class);
 
 		indexer.reindex(dlFileEntry);

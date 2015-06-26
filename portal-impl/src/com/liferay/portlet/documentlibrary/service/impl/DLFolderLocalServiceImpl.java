@@ -927,11 +927,13 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 						return;
 					}
 
-					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-						DLFolder.class);
+					Indexer<DLFolder> indexer =
+						IndexerRegistryUtil.nullSafeGetIndexer(DLFolder.class);
 
 					for (TreeModel treeModel : treeModels) {
-						indexer.reindex(treeModel);
+						DLFolder dlFolder = (DLFolder)treeModel;
+
+						indexer.reindex(dlFolder);
 					}
 				}
 
@@ -1342,8 +1344,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			 (oldStatus == WorkflowConstants.STATUS_IN_TRASH)) &&
 			((serviceContext == null) || serviceContext.isIndexingEnabled())) {
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				DLFolderConstants.getClassName());
+			Indexer<DLFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				DLFolder.class);
 
 			indexer.reindex(dlFolder);
 		}

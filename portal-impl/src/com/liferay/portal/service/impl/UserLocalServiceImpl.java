@@ -468,9 +468,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		groupPersistence.addUsers(groupId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 
@@ -491,9 +489,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		organizationPersistence.addUsers(organizationId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 	}
@@ -525,9 +521,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		rolePersistence.addUsers(roleId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 	}
@@ -546,9 +540,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		teamPersistence.addUsers(teamId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 	}
@@ -661,9 +653,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		userGroupPersistence.addUsers(userGroupId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 	}
@@ -1772,9 +1762,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		rolePersistence.removeUser(roleId, userId);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userId);
+		reindex(userId);
 
 		PermissionCacheUtil.clearCache(userId);
 	}
@@ -1945,9 +1933,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		userGroupPersistence.removeUser(userGroupId, userId);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userId);
+		reindex(userId);
 
 		PermissionCacheUtil.clearCache(userId);
 	}
@@ -3904,9 +3890,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		rolePersistence.setUsers(roleId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(updateUserIds);
+		reindex(updateUserIds);
 
 		PermissionCacheUtil.clearCache(updateUserIds);
 	}
@@ -3938,9 +3922,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		userGroupPersistence.setUsers(userGroupId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(updateUserIds);
+		reindex(updateUserIds);
 
 		PermissionCacheUtil.clearCache(updateUserIds);
 	}
@@ -3987,9 +3969,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		groupPersistence.removeUsers(groupId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 
@@ -4035,9 +4015,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		organizationPersistence.removeUsers(organizationId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 
@@ -4099,7 +4077,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		rolePersistence.removeUsers(roleId, users);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
 
 		indexer.reindex(users);
 
@@ -4138,9 +4117,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		rolePersistence.removeUsers(roleId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 	}
@@ -4158,9 +4135,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		teamPersistence.removeUsers(teamId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 	}
@@ -4178,9 +4153,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		userGroupPersistence.removeUsers(userGroupId, userIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userIds);
+		reindex(userIds);
 
 		PermissionCacheUtil.clearCache(userIds);
 	}
@@ -4578,7 +4551,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			// Indexer
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				User.class);
 
 			indexer.reindex(user);
@@ -5459,7 +5432,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Indexer
 
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				User.class);
 
 			indexer.reindex(user);
@@ -6181,8 +6154,32 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
+	protected void reindex(long userId) throws SearchException {
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
+
+		User user = userLocalService.fetchUser(userId);
+
+		indexer.reindex(user);
+	}
+
+	protected void reindex(long[] userIds) throws SearchException {
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
+
+		List<User> users = new ArrayList<>(userIds.length);
+
+		for (Long userId : userIds) {
+			User user = userLocalService.fetchUser(userId);
+
+			users.add(user);
+		}
+
+		indexer.reindex(users);
+	}
+
 	protected void reindex(final User user) {
-		final Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		final Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			User.class);
 
 		Callable<Void> callable = new ShardCallable<Void>(
@@ -6365,10 +6362,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (indexingEnabled) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				User.class);
-
-			indexer.reindex(new long[] {userId});
+			reindex(userId);
 		}
 
 		PermissionCacheUtil.clearCache(userId);
@@ -6397,10 +6391,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (indexingEnabled) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				User.class);
-
-			indexer.reindex(new long[] {userId});
+			reindex(userId);
 		}
 
 		PermissionCacheUtil.clearCache(userId);

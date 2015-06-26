@@ -34,7 +34,7 @@ import javax.portlet.PortletResponse;
  * @author Julio Camarero
  */
 @OSGiBeanProperties
-public class AssetIndexer extends BaseIndexer {
+public class AssetIndexer extends BaseIndexer<AssetEntry> {
 
 	public static final String CLASS_NAME = AssetEntry.class.getName();
 
@@ -64,11 +64,11 @@ public class AssetIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) {
+	protected void doDelete(AssetEntry assetEntry) {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) {
+	protected Document doGetDocument(AssetEntry assetEntry) {
 		return null;
 	}
 
@@ -81,7 +81,7 @@ public class AssetIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) {
+	protected void doReindex(AssetEntry assetEntry) {
 	}
 
 	@Override

@@ -229,7 +229,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 			// Indexer
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<WikiNode> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				WikiNode.class);
 
 			indexer.delete(node);
@@ -478,7 +478,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<WikiNode> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			WikiNode.class);
 
 		indexer.reindex(node);

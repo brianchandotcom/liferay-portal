@@ -315,8 +315,8 @@ public class OrganizationLocalServiceImpl
 		// Indexer
 
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				Organization.class);
+			Indexer<Organization> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 
 			indexer.reindex(organization);
 		}
@@ -1909,13 +1909,22 @@ public class OrganizationLocalServiceImpl
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<Organization> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			Organization.class);
 
 		if (oldParentOrganizationId != parentOrganizationId) {
 			long[] organizationIds = getReindexOrganizationIds(organization);
 
-			indexer.reindex(organizationIds);
+			List<Organization> organizations = new ArrayList<>(
+				organizationIds.length);
+
+			for (long orgId : organizationIds) {
+				Organization org = fetchOrganization(orgId);
+
+				organizations.add(org);
+			}
+
+			indexer.reindex(organizations);
 		}
 		else {
 			indexer.reindex(organization);

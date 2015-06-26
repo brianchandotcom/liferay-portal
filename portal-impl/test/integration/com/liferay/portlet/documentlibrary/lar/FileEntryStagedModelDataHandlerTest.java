@@ -46,7 +46,6 @@ import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -249,24 +248,6 @@ public class FileEntryStagedModelDataHandlerTest
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, false, (byte[])null,
 			ServiceContextThreadLocal.getServiceContext());
-	}
-
-	protected void exportImportStagedModel(StagedModel stagedModel)
-		throws Exception {
-
-		initExport();
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		initImport();
-
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
 	}
 
 	@Override

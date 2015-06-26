@@ -204,8 +204,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			return;
 		}
 
-		initExport();
-
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addDependentStagedModelsMap(stagingGroup);
 
@@ -214,20 +212,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		stagedModel = addVersion(stagedModel);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		validateExport(
-			portletDataContext, stagedModel, dependentStagedModelsMap);
-
-		initImport();
-
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+		exportImportStagedModel(stagedModel);
 
 		StagedModel importedStagedModel = getStagedModel(
 			stagedModel.getUuid(), liveGroup);
@@ -243,8 +228,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			return;
 		}
 
-		initExport();
-
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addDependentStagedModelsMap(stagingGroup);
 
@@ -253,44 +236,16 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Thread.currentThread().sleep(4000);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		validateExport(
-			portletDataContext, stagedModel, dependentStagedModelsMap);
-
-		initImport();
-
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+		exportImportStagedModel(stagedModel);
 
 		StagedModel importedStagedModel = getStagedModel(
 			stagedModel.getUuid(), liveGroup);
 
 		validateImportedStagedModel(stagedModel, importedStagedModel);
 
-		initExport();
-
 		stagedModel = addVersion(stagedModel);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		validateExport(
-			portletDataContext, stagedModel, dependentStagedModelsMap);
-
-		initImport();
-
-		exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+		exportImportStagedModel(stagedModel);
 
 		importedStagedModel = getStagedModel(stagedModel.getUuid(), liveGroup);
 
@@ -303,8 +258,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			return;
 		}
 
-		initExport();
-
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addDependentStagedModelsMap(stagingGroup);
 
@@ -313,20 +266,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		stagedModel = addVersion(stagedModel);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		validateExport(
-			portletDataContext, stagedModel, dependentStagedModelsMap);
-
-		initImport();
-
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+		exportImportStagedModel(stagedModel);
 
 		StagedModel importedStagedModel = getStagedModel(
 			stagedModel.getUuid(), liveGroup);
@@ -335,22 +275,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		validateImportedStagedModel(stagedModel, importedStagedModel);
 
-		initExport();
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		validateExport(
-			portletDataContext, stagedModel, dependentStagedModelsMap);
-
-		initImport();
-
-		exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+		exportImportStagedModel(stagedModel);
 
 		importedStagedModel = getStagedModel(stagedModel.getUuid(), liveGroup);
 
@@ -454,6 +379,24 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				stagedModelDataHandler.deleteStagedModel(dependentStagedModel);
 			}
 		}
+	}
+
+	protected void exportImportStagedModel(StagedModel stagedModel)
+		throws Exception {
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
 	}
 
 	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)

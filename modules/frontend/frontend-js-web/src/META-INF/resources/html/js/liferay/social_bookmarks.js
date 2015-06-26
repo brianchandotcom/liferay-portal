@@ -30,7 +30,9 @@ AUI.add(
 						var id = portletBody.guid();
 
 						if (!SocialBookmarks.registered[id]) {
-							portletBody.delegate(
+							var dropdownMenu = instance.get('contentBox').one('.dropdown-menu');
+
+							dropdownMenu.delegate(
 								'click',
 								function(event) {
 									event.preventDefault();

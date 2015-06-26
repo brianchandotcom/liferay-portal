@@ -16,8 +16,10 @@ dependencies {
 	testCompile group: "junit", name: "junit", version: "4.12"
 }
 
-ext.libSassUrl = "https://github.com/sass/libsass/archive/3.1.0.zip"
-ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
+ext.libSassVersion = "3.2.5"
+
+ext.libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
+ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/f34eb8b4e6c9ba192fc37231a252af1ab79972fd.zip"
 
 task buildLibSass_Darwin(type: BuildLibSassTask)
 task buildLibSass_Linux_x86(type: BuildLibSassTask)
@@ -28,36 +30,51 @@ task downloadSassSpec(type: Copy)
 task generateJNALibrary
 
 buildLibSass_Darwin {
+	doFirst {
+		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}")
+
+		libSassDir.mkdirs()
+
+		File buildShFile = new File(libSassDir, "build.sh")
+
+		buildShFile.write("""\
+LIBSASS_VERSION=\"${libSassVersion}\"
+autoreconf --force --install
+./configure --disable-tests --enable-shared
+make -j5""")
+	}
+
+	inputDirName = ".libs"
 	inputFileName = "libsass.dylib"
-	makeExecutable = "make"
+	makeExecutable = "./build.sh"
 	outputFileName = "libliferaysass.dylib"
 	resourcesDirName = "darwin"
 }
 
 buildLibSass_Linux_x86 {
 	inputFileName = "libsass.so"
-	makeExecutable = "make"
+	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
 	outputFileName = "libliferaysass.so"
 	resourcesDirName = "linux-x86"
 }
 
 buildLibSass_Linux_x86_64 {
 	inputFileName = "libsass.so"
-	makeExecutable = "make"
+	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
 	outputFileName = "libliferaysass.so"
 	resourcesDirName = "linux-x86-64"
 }
 
 buildLibSass_Win32_x86 {
 	inputFileName = "sass.dll"
-	makeExecutable = "mingw32-make.exe"
+	makeExecutable = "mingw32-make.exe shared"
 	outputFileName = "liferaysass.dll"
 	resourcesDirName = "win32-x86"
 }
 
 buildLibSass_Win32_x86_64 {
 	inputFileName = "sass.dll"
-	makeExecutable = "mingw32-make.exe"
+	makeExecutable = "mingw32-make.exe shared"
 	outputFileName = "liferaysass.dll"
 	resourcesDirName = "win32-x86-64"
 }
@@ -97,7 +114,7 @@ generateJNALibrary {
 			into temporaryDir
 		}
 
-		File libSassDir = new File(temporaryDir, "libsass-3.1.0")
+		File libSassDir = new File(temporaryDir, "libsass-${libSassVersion}")
 
 		javaexec {
 			args configurations.jnaerator.singleFile
@@ -133,6 +150,9 @@ class BuildLibSassTask extends DefaultTask {
 	}
 
 	@Input
+	String inputDirName = "lib"
+
+	@Input
 	String inputFileName
 
 	@Input
@@ -156,18 +176,29 @@ class BuildLibSassTask extends DefaultTask {
 			into temporaryDir
 		}
 
-		File libSassDir = new File(temporaryDir, "libsass-3.1.0")
+		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}")
 
-		ant.patch(dir: libSassDir, patchfile: "patches/LPS-52961.patch")
+		FileCollection shFiles = project.fileTree(dir: libSassDir, include: "**/*.sh")
+
+		shFiles.each {
+			it.setExecutable(true, false)
+		}
+
+		String[] makeExecutableArgs = makeExecutable.split(" ")
+
+		println makeExecutableArgs
 
 		project.exec {
-			args "shared"
-			executable = makeExecutable
+			if (makeExecutableArgs.length > 1) {
+				args makeExecutableArgs[1 .. makeExecutableArgs.length - 1]
+			}
+
+			executable = makeExecutableArgs[0]
 			workingDir = libSassDir
 		}
 
 		project.copy {
-			from new File(libSassDir, "lib/" + inputFileName)
+			from new File(libSassDir, inputDirName + "/" + inputFileName)
 			into resourcesDir
 			rename {
 				outputFileName

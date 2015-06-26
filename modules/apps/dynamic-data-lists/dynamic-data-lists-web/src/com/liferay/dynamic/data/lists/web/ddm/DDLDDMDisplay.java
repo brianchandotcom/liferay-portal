@@ -45,7 +45,7 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.DYNAMIC_DATA_LISTS;
+		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.web.constants.DDLWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -118,7 +119,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 		portletURL.setParameter(

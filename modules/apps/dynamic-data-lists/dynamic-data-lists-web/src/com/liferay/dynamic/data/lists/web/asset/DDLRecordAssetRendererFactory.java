@@ -111,7 +111,7 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			PortletKeys.DYNAMIC_DATA_LISTS);
+			DDLPortletKeys.DYNAMIC_DATA_LISTS);
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 

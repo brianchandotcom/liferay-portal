@@ -208,7 +208,7 @@ public class DDLDisplayContext {
 
 		_hasEditDisplayDDMTemplatePermission = DDMTemplatePermission.contains(
 			getPermissionChecker(), getScopeGroupId(),
-			getDisplayDDMTemplateId(), PortletKeys.DYNAMIC_DATA_LISTS,
+			getDisplayDDMTemplateId(), DDLPortletKeys.DYNAMIC_DATA_LISTS,
 			ActionKeys.UPDATE);
 
 		return _hasEditDisplayDDMTemplatePermission;
@@ -227,7 +227,7 @@ public class DDLDisplayContext {
 
 		_hasEditFormDDMTemplatePermission = DDMTemplatePermission.contains(
 			getPermissionChecker(), getScopeGroupId(), getFormDDMTemplateId(),
-			PortletKeys.DYNAMIC_DATA_LISTS, ActionKeys.UPDATE);
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, ActionKeys.UPDATE);
 
 		return _hasEditFormDDMTemplatePermission;
 	}

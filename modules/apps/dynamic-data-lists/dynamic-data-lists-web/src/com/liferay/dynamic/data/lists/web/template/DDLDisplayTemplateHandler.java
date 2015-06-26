@@ -65,7 +65,7 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.DYNAMIC_DATA_LISTS, locale);
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));

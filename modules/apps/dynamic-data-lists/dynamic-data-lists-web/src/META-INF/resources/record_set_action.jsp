@@ -27,7 +27,7 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 
 DDLRecordSet selRecordSet = (DDLRecordSet)request.getAttribute("record_set_action.jsp-selRecordSet");
 
-boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW);
+boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW);
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
@@ -59,7 +59,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 	</c:if>
 
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.UPDATE) %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="editRecordSetURL">
+		<liferay-portlet:renderURL portletName="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" var="editRecordSetURL">
 			<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
@@ -114,7 +114,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 	</c:if>
 
 	<c:if test="<%= ((selRecordSet == null) || (selRecordSet.getRecordSetId() != recordSet.getRecordSetId())) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.DELETE) %>">
-		<liferay-portlet:actionURL name="deleteRecordSet" portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="deleteRecordSetURL">
+		<liferay-portlet:actionURL name="deleteRecordSet" portletName="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" var="deleteRecordSetURL">
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:actionURL>

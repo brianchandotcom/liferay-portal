@@ -255,7 +255,7 @@ public class LiferayTrashCapability
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			DLFolderLocalServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlFolderServiceAdapter.getFoldersAndFileEntriesAndFileShortcuts(
 				groupId, dlFolderId, null, true, queryDefinition);
 
 		for (Object folderFileEntryOrFileShortcut :

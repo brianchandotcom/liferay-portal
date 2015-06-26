@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.lock.ExpiredLockException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -447,8 +449,14 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			inheritable = lock.isInheritable();
 		}
 		catch (ExpiredLockException ele) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ele, ele);
+			}
 		}
 		catch (NoSuchLockException nsle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsle, nsle);
+			}
 		}
 
 		return inheritable;
@@ -618,5 +626,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return verified;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFolderServiceImpl.class);
 
 }

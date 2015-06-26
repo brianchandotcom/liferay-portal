@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -557,6 +559,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			return localRepository.getFileEntry(folderId, title);
 		}
 		catch (NoSuchFileEntryException nsfee) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
 		}
 
 		LocalRepository localRepository = getFolderLocalRepository(folderId);
@@ -582,6 +587,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			return localRepository.getFileEntryByUuid(uuid);
 		}
 		catch (NoSuchFileEntryException nsfee) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
 		}
 
 		List<com.liferay.portal.model.Repository> repositories =
@@ -595,6 +603,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				return localRepository.getFileEntryByUuid(uuid);
 			}
 			catch (NoSuchFileEntryException nsfee) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfee, nsfee);
+				}
 			}
 		}
 
@@ -1578,5 +1589,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		return destinationFolder;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLAppLocalServiceImpl.class);
 
 }

@@ -86,6 +86,10 @@ public class FileShortcutStagedModelDataHandler
 			return new LiferayFileShortcut(dlFileShortcut);
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}

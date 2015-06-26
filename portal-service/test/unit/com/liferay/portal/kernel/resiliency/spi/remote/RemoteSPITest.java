@@ -274,7 +274,7 @@ public class RemoteSPITest {
 			Assert.assertSame(RemoteException.class, re.getClass());
 		}
 
-		assertUnexported();
+		unexported();
 
 		// Successfully destroy
 
@@ -286,7 +286,7 @@ public class RemoteSPITest {
 
 		_mockRemoteSPI.destroy();
 
-		assertUnexported();
+		unexported();
 	}
 
 	@Test
@@ -510,7 +510,7 @@ public class RemoteSPITest {
 				"Proceed with SPI shutdown", logRecord.getMessage());
 		}
 
-		assertUnexported();
+		unexported();
 	}
 
 	@Test
@@ -544,7 +544,7 @@ public class RemoteSPITest {
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 
-		assertUnexported();
+		unexported();
 	}
 
 	@Test
@@ -589,7 +589,7 @@ public class RemoteSPITest {
 
 		Assert.assertNull(future.get());
 
-		assertUnexported();
+		unexported();
 	}
 
 	@Test
@@ -635,7 +635,7 @@ public class RemoteSPITest {
 
 		Assert.assertNull(future.get());
 
-		assertUnexported();
+		unexported();
 	}
 
 	@Test
@@ -681,7 +681,7 @@ public class RemoteSPITest {
 
 		Assert.assertNull(future.get());
 
-		assertUnexported();
+		unexported();
 	}
 
 	@Test
@@ -706,7 +706,7 @@ public class RemoteSPITest {
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 
-		assertUnexported();
+		unexported();
 	}
 
 	@Test
@@ -729,7 +729,7 @@ public class RemoteSPITest {
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 
-		assertUnexported();
+		unexported();
 	}
 
 	@Test
@@ -870,15 +870,6 @@ public class RemoteSPITest {
 		return futureTask;
 	}
 
-	protected void assertUnexported() {
-		try {
-			UnicastRemoteObject.unexportObject(_mockRemoteSPI, true);
-		}
-		catch (RemoteException re) {
-			Assert.assertSame(NoSuchObjectException.class, re.getClass());
-		}
-	}
-
 	protected RegistrationReference mockRegistrationReference(
 		final boolean unregistered) {
 
@@ -902,6 +893,14 @@ public class RemoteSPITest {
 		};
 
 		return new MockRegistrationReference(mockIntraband);
+	}
+
+	protected void unexported() {
+		try {
+			UnicastRemoteObject.unexportObject(_mockRemoteSPI, true);
+		}
+		catch (NoSuchObjectException nsoe) {
+		}
 	}
 
 	private MockRemoteSPI _mockRemoteSPI;

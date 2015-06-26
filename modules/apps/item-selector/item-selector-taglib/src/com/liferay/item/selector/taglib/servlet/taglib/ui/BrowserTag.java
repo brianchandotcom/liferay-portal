@@ -15,11 +15,16 @@
 package com.liferay.item.selector.taglib.servlet.taglib.ui;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -31,6 +36,12 @@ import javax.servlet.jsp.PageContext;
  */
 public class BrowserTag extends IncludeTag {
 
+	public void setDesiredItemSelectorReturnTypes(
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
+	}
+
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
@@ -41,12 +52,6 @@ public class BrowserTag extends IncludeTag {
 
 	public void setItemSelectedEventName(String itemSelectedEventName) {
 		_itemSelectedEventName = itemSelectedEventName;
-	}
-
-	public void setItemSelectorReturnType(
-		ItemSelectorReturnType itemSelectorReturnType) {
-
-		_itemSelectorReturnType = itemSelectorReturnType;
 	}
 
 	@Override
@@ -68,17 +73,22 @@ public class BrowserTag extends IncludeTag {
 		_uploadMessage = uploadMessage;
 	}
 
+	public void setUploadURL(PortletURL uploadURL) {
+		_uploadURL = uploadURL;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_desiredItemSelectorReturnTypes = null;
 		_displayStyle = null;
 		_displayStyleURL = null;
 		_itemSelectedEventName = null;
-		_itemSelectorReturnType = null;
 		_searchContainer = null;
 		_tabName = null;
 		_uploadMessage = null;
+		_uploadURL = null;
 	}
 
 	protected String getDisplayStyle() {
@@ -87,6 +97,23 @@ public class BrowserTag extends IncludeTag {
 		}
 
 		return _DEFAULT_DISPLAY_STYLE;
+	}
+
+	protected ItemSelectorReturnType getDraggableFileReturnType() {
+		ItemSelectorReturnType firstDraggableFileReturnType =
+			ItemSelectorBrowserReturnTypeUtil.
+				getFirstAvailableDraggableFileReturnType(
+					_desiredItemSelectorReturnTypes);
+
+		if (Validator.equals(
+				ClassUtil.getClassName(firstDraggableFileReturnType),
+				UploadableFileReturnType.class.getName()) &&
+			(_uploadURL == null)) {
+
+			return null;
+		}
+
+		return firstDraggableFileReturnType;
 	}
 
 	@Override
@@ -113,11 +140,15 @@ public class BrowserTag extends IncludeTag {
 			"liferay-ui:item-selector-browser:displayStyleURL",
 			_displayStyleURL);
 		request.setAttribute(
+			"liferay-ui:item-selector-browser:draggableFileReturnType",
+			getDraggableFileReturnType());
+		request.setAttribute(
+			"liferay-ui:item-selector-browser:existingFileEntryReturnType",
+			ItemSelectorBrowserReturnTypeUtil.getExistingFileEntryReturnType(
+				_desiredItemSelectorReturnTypes));
+		request.setAttribute(
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);
-		request.setAttribute(
-			"liferay-ui:item-selector-browser:itemSelectorReturnType",
-			_itemSelectorReturnType);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchContainer",
 			_searchContainer);
@@ -126,18 +157,21 @@ public class BrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:uploadMessage",
 			getUploadMessage());
+		request.setAttribute(
+			"liferay-ui:item-selector-browser:uploadURL", _uploadURL);
 	}
 
 	private static final String _DEFAULT_DISPLAY_STYLE = "icon";
 
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
+	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
 	private PortletURL _displayStyleURL;
 	private String _itemSelectedEventName;
-	private ItemSelectorReturnType _itemSelectorReturnType;
 	private SearchContainer<?> _searchContainer;
 	private String _tabName;
 	private String _uploadMessage;
+	private PortletURL _uploadURL;
 
 }

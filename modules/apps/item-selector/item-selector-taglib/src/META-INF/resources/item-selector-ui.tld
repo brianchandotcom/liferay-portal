@@ -14,6 +14,11 @@
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.ui.BrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>desiredItemSelectorReturnTypes</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -29,11 +34,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>itemSelectorReturnType</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>searchContainer</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -45,6 +45,11 @@
 		</attribute>
 		<attribute>
 			<name>uploadMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>uploadURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

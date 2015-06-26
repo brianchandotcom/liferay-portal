@@ -307,23 +307,29 @@ public class AssetEntryFinderImpl
 				 Validator.isNotNull(entryQuery.getDescription())) {
 
 			sb.append(" AND (");
-			sb.append(
-				entryQuery.isAndOperator() ? Boolean.TRUE : Boolean.FALSE);
+
+			boolean requiresOperator = false;
 
 			if (Validator.isNotNull(entryQuery.getUserName())) {
-				sb.append(entryQuery.isAndOperator() ? " AND " : " OR ");
-
 				sb.append("(AssetEntry.userName LIKE ?)");
+
+				requiresOperator = true;
 			}
 
 			if (Validator.isNotNull(entryQuery.getTitle())) {
-				sb.append(entryQuery.isAndOperator() ? " AND " : " OR ");
+				if (requiresOperator) {
+					sb.append(entryQuery.isAndOperator() ? " AND " : " OR ");
+				}
 
 				sb.append("(AssetEntry.title LIKE ?)");
+
+				requiresOperator = true;
 			}
 
 			if (Validator.isNotNull(entryQuery.getDescription())) {
-				sb.append(entryQuery.isAndOperator() ? " AND " : " OR ");
+				if (requiresOperator) {
+					sb.append(entryQuery.isAndOperator() ? " AND " : " OR ");
+				}
 
 				sb.append("(AssetEntry.description LIKE ?)");
 			}

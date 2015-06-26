@@ -19,29 +19,31 @@
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
 
-String groupId = article != null ? String.valueOf(article.getGroupId()) : String.valueOf(scopeGroupId);
-
 DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
-String ddmStructureId = ddmStructure != null ? String.valueOf(ddmStructure.getClassNameId()) : "0";
-String ddmStructureKey = ddmStructure != null ? String.valueOf(ddmStructure.getPrimaryKey()) : "0";
 
 List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
+
 DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
-String ddmTemplateId = ddmTemplate != null ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK;
-String ddmTemplateKey = ddmTemplate.getTemplateKey();
-String templateTitle = ddmTemplate.getName(locale);
-String templateDescription = ddmTemplate.getDescription();
-String templateImgUrl = ddmTemplate.getTemplateImageURL(themeDisplay);
+
+String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 %>
 
 <c:if test="<%= ddmTemplates.size() > 1 %>">
-	<div class="media template-preview-content" data-group-id="<%= groupId %>" data-structure-id="<%= ddmStructureId %>" data-structure-key="<%= ddmStructureKey %>" data-template-id="<%= ddmTemplateId %>" data-template-key="<%= ddmTemplateKey %>">
-		<c:if test="<%= templateImgUrl != null %>">
-			<img alt="<%= templateTitle %>" class="media-object pull-left template-image" src="<%= templateImgUrl %>">
+	<div
+		class="media template-preview-content"
+		data-group-id="<%= (article != null) ? article.getGroupId() : scopeGroupId %>"
+		data-structure-id="<%= (ddmStructure != null) ? ddmStructure.getClassNameId() : 0 %>"
+		data-structure-key="<%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>"
+		data-template-id="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : StringPool.BLANK %>"
+		data-template-key="<%= ddmTemplate.getTemplateKey() %>"
+	>
+
+		<c:if test="<%= Validator.isNotNull(ddmTemplateImageURL) %>">
+			<img alt="<%= ddmTemplate.getName(locale) %>" class="media-object pull-left template-image" src="<%= ddmTemplateImageURL %>">
 		</c:if>
 		<div class="media-body">
-			<h2 class="heading4 template-title"><%= templateTitle %></h2>
-			<p class="template-description"><%= templateDescription %></p>
+			<h2 class="heading4 template-title"><%= ddmTemplate.getName(locale) %></h2>
+			<p class="template-description"><%= ddmTemplate.getDescription() %></p>
 		</div>
 	</div>
 </c:if>

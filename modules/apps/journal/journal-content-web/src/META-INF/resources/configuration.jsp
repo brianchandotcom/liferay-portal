@@ -27,6 +27,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 <div class="article-preview row row-spacing">
 	<div class="col-md-4 col-xs-12">
 		<p class="text-muted"><liferay-ui:message key="selected-web-content" /></p>
+
 		<div class="article-preview-content-container">
 			<c:if test="<%= article != null %>">
 				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>">
@@ -35,6 +36,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			</c:if>
 		</div>
 	</div>
+
 	<div class="col-md-12">
 		<aui:button name="webContentSelector" value="change" />
 	</div>
@@ -43,6 +45,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 <div class="<%= article == null ? "hidden " : "" %>row row-spacing template-preview">
 	<div class="col-md-4 col-xs-12">
 		<p class="text-muted"><liferay-ui:message key="template" /></p>
+
 		<div class="template-preview-content-container">
 			<c:if test="<%= article != null %>">
 				<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>">
@@ -51,6 +54,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			</c:if>
 		</div>
 	</div>
+
 	<div class="col-md-12">
 		<aui:button name="templateSelector" value="change" />
 	</div>
@@ -178,10 +182,6 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 		'click',
 		function(event) {
 			event.preventDefault();
-
-			<%
-			DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
-			%>
 
 			Liferay.Util.openDDMPortlet(
 				{

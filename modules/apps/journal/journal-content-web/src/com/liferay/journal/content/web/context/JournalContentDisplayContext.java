@@ -114,7 +114,7 @@ public class JournalContentDisplayContext {
 		}
 
 		long articleResourcePrimKey = ParamUtil.getLong(
-		_request, "articleResourcePrimKey");
+			_request, "articleResourcePrimKey");
 
 		if (articleResourcePrimKey > 0) {
 			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
@@ -216,19 +216,19 @@ public class JournalContentDisplayContext {
 		JournalArticle article = getArticle();
 
 		if (article == null) {
-		return null;
+			return null;
 		}
 
 		AssetRendererFactory assetRendererFactory =
-		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-		JournalArticle.class.getName());
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+			JournalArticle.class.getName());
 
 		if (assetRendererFactory == null) {
-		return null;
+			return null;
 		}
 
 		return assetRendererFactory.getAssetRenderer(
-		JournalArticleAssetRenderer.getClassPK(article));
+			JournalArticleAssetRenderer.getClassPK(article));
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {

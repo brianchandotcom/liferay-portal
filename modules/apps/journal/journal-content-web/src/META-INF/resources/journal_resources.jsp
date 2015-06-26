@@ -18,15 +18,14 @@
 
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
-String articleId = article.getArticleId();
 %>
 
-<div id="<%= articleId %>-container">
+<div id="<%= article.getArticleId() %>-container">
 	<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="articleId" value="<%= articleId %>" />
+		<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
 	</liferay-util:include>
 
 	<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="articleId" value="<%= articleId %>" />
+		<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
 	</liferay-util:include>
 </div>

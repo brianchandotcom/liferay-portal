@@ -17,38 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalArticle article = journalContentDisplayContext.getArticle();
-JournalArticleDisplay articleDisplay = journalContentDisplayContext.getArticleDisplay();
-AssetRenderer articleAssetRenderer = journalContentDisplayContext.getAssetRenderer();
-
-String webContentTitle = HtmlUtil.escapeAttribute(articleDisplay.getTitle());
-
-String webContentSummary = HtmlUtil.escape(articleDisplay.getDescription());
-webContentSummary = HtmlUtil.replaceNewLine(webContentSummary);
-
-if (Validator.isNull(webContentSummary)) {
-	webContentSummary = HtmlUtil.stripHtml(articleDisplay.getContent());
-}
-
-webContentSummary = StringUtil.shorten(webContentSummary, 70);
-
-String webContentImgURL = HtmlUtil.escapeAttribute(articleAssetRenderer.getThumbnailPath(liferayPortletRequest));
-
-long webContentUserId = articleDisplay.getUserId();
+AssetRenderer assetRenderer = journalContentDisplayContext.getAssetRenderer();
 %>
 
 <div class="article-preview-content">
 	<div class="card-horizontal">
 		<div class="card-row">
 			<div class="card-col-5">
-				<div class="square-thumbnail" style="background-image: url('<%= webContentImgURL %>');"></div>
+				<div class="square-thumbnail" style="background-image: url('<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>');"></div>
 			</div>
+
 			<div class="card-col-7 card-col-gutters">
-				<h4><%= webContentTitle %></h4>
-				<p><%= webContentSummary %></p>
+				<h4><%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %></h4>
+
+				<p><%= assetRenderer.getSummary() %></p>
+
 				<liferay-ui:user-display
 					displayStyle="4"
-					userId="<%= webContentUserId %>"
+					userId="<%= assetRenderer.getUserId() %>"
 				/>
 			</div>
 		</div>

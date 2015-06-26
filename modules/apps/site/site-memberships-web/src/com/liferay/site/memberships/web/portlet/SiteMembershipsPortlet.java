@@ -92,7 +92,8 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long[] addOrganizationIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
@@ -100,9 +101,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
 
 		OrganizationServiceUtil.addGroupOrganizations(
-			groupId, addOrganizationIds);
+			themeDisplay.getSiteGroupId(), addOrganizationIds);
 		OrganizationServiceUtil.unsetGroupOrganizations(
-			groupId, removeOrganizationIds);
+			themeDisplay.getSiteGroupId(), removeOrganizationIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -116,15 +117,18 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long[] addUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
 		long[] removeUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
-		UserGroupServiceUtil.addGroupUserGroups(groupId, addUserGroupIds);
-		UserGroupServiceUtil.unsetGroupUserGroups(groupId, removeUserGroupIds);
+		UserGroupServiceUtil.addGroupUserGroups(
+			themeDisplay.getSiteGroupId(), addUserGroupIds);
+		UserGroupServiceUtil.unsetGroupUserGroups(
+			themeDisplay.getSiteGroupId(), removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -141,7 +145,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long groupId = themeDisplay.getSiteGroupId();
 
 		long[] addUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
@@ -175,7 +179,8 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long userGroupId = ParamUtil.getLong(actionRequest, "userGroupId");
 
@@ -185,9 +190,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "removeRoleIds"), 0L);
 
 		UserGroupGroupRoleServiceUtil.addUserGroupGroupRoles(
-			userGroupId, groupId, addRoleIds);
+			userGroupId, themeDisplay.getSiteGroupId(), addRoleIds);
 		UserGroupGroupRoleServiceUtil.deleteUserGroupGroupRoles(
-			userGroupId, groupId, removeRoleIds);
+			userGroupId, themeDisplay.getSiteGroupId(), removeRoleIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -207,7 +212,8 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			return;
 		}
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long[] addRoleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addRoleIds"), 0L);
@@ -215,9 +221,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "removeRoleIds"), 0L);
 
 		UserGroupRoleServiceUtil.addUserGroupRoles(
-			user.getUserId(), groupId, addRoleIds);
+			user.getUserId(), themeDisplay.getSiteGroupId(), addRoleIds);
 		UserGroupRoleServiceUtil.deleteUserGroupRoles(
-			user.getUserId(), groupId, removeRoleIds);
+			user.getUserId(), themeDisplay.getSiteGroupId(), removeRoleIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");

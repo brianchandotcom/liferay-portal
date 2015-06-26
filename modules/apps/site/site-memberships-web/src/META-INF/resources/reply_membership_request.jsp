@@ -19,6 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = GroupLocalServiceUtil.getGroup(groupId);

@@ -19,7 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-long groupId = ParamUtil.getLong(request, "groupId");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectTeam");
 %>
 
@@ -29,7 +28,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="mvcPath" value="/select_team.jsp" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="eventName" value="<%= eventName %>" />
 </liferay-portlet:renderURL>
 
@@ -45,7 +43,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
 
-		total = TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
+		total = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 
 		searchContainer.setTotal(total);
 		%>
@@ -55,7 +53,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		<div class="separator"><!-- --></div>
 
 		<liferay-ui:search-container-results
-			results="<%= TeamLocalServiceUtil.search(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			results="<%= TeamLocalServiceUtil.search(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -86,7 +84,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 				boolean disabled = false;
 
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 				long[] defaultTeamIds = StringUtil.split(group.getTypeSettingsProperties().getProperty("defaultTeamIds"), 0L);
 

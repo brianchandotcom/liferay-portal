@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/membership_request/{membershipRequestId:\d+}/reply/{p_u_i_d:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/reply_membership_request.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/membership_requests</pattern>
+		<implicit-parameter name="mvcPath">/view_membership_requests.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/members/{tabs1}</pattern>
+		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="tabs2">current</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/members/{tabs1}/assignments</pattern>
+		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="tabs2">available</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/members</pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+</routes>

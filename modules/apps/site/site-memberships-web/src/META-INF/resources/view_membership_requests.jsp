@@ -19,6 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 String tabs1 = ParamUtil.getString(request, "tabs1", "pending");
 
 int statusId = -1;
@@ -40,14 +46,12 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
 
-<c:if test="<%= !layout.isTypeControlPanel() %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		escapeXml="<%= false %>"
-		localizeTitle="<%= false %>"
-		title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, "manage-memberships") %>'
-	/>
-</c:if>
+<liferay-ui:header
+	backURL="<%= redirect %>"
+	escapeXml="<%= false %>"
+	localizeTitle="<%= false %>"
+	title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, "manage-memberships") %>'
+/>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="toolbarItem" value="view-membership-requests" />
@@ -55,7 +59,7 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 <liferay-ui:tabs
 	names="pending,approved,denied"
-	url="<%= currentURL %>"
+	portletURL="<%= currentURLObj %>"
 />
 
 <%

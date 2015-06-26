@@ -26,7 +26,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 
 <div class="article-preview row row-spacing">
 	<div class="col-md-4 col-xs-12">
-		<p class="text-muted"><liferay-ui:message key="selected-web-content" /></p>
+		<p class="text-muted"><liferay-ui:message key="layout.types.article" /></p>
 
 		<div class="article-preview-content-container">
 			<c:if test="<%= article != null %>">

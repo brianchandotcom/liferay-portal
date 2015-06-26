@@ -109,6 +109,7 @@ PortletURLImpl definePermissionsURL = new PortletURLImpl(request, PortletKeys.RO
 
 definePermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
+definePermissionsURL.setParameter("p_p_state", LiferayWindowState.POP_UP.toString());
 definePermissionsURL.setPortletMode(PortletMode.VIEW);
 definePermissionsURL.setRefererPlid(plid);
 %>

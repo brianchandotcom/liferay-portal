@@ -15,6 +15,8 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
@@ -40,8 +42,47 @@ public class PrincipalException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustHavePermission extends PrincipalException {
+
+		public MustHavePermission(long userId, String ... actionId) {
+			super(
+				String.format(
+					"User %s must have permission to perform action %s",
+					Validator.isNull(userId) ? "" : userId,
+					StringUtil.merge(actionId, ",")));
+
+			this.actionId = actionId;
+			this.resourceId = 0;
+			this.resourceName = null;
+			this.userId = userId;
+		}
+
+		public MustHavePermission(
+			long userId, String resourceName, long resourceId,
+			String ... actionId) {
+
+			super(
+				String.format(
+					"User %s must have %s permission for %s %s",
+					Validator.isNull(userId) ? "" : userId,
+					StringUtil.merge(actionId, ","), resourceName,
+					Validator.isNull(resourceId) ? "" : resourceId));
+
+			this.actionId = actionId;
+			this.resourceName = resourceName;
+			this.resourceId = resourceId;
+			this.userId = userId;
+		}
+
+		public final String[] actionId;
+		public final long resourceId;
+		public final String resourceName;
+		public final long userId;
+
+	}
+
 	private static final Class<?>[] _NESTED_CLASSES = {
-		PrincipalException.class
+		PrincipalException.class, PrincipalException.MustHavePermission.class
 	};
 
 }

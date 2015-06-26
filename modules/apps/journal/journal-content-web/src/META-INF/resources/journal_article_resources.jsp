@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+JournalArticle article = journalContentDisplayContext.getArticle();
+
 AssetRenderer assetRenderer = journalContentDisplayContext.getAssetRenderer();
 %>
 
@@ -28,6 +30,8 @@ AssetRenderer assetRenderer = journalContentDisplayContext.getAssetRenderer();
 			</div>
 
 			<div class="card-col-7 card-col-gutters">
+				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
+
 				<h4><%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %></h4>
 
 				<p><%= assetRenderer.getSummary() %></p>

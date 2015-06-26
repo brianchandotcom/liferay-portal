@@ -31,9 +31,12 @@ import com.liferay.portlet.exportimport.staging.LayoutStaging;
 
 import java.lang.reflect.InvocationHandler;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Raymond Augé
  */
+@Component(immediate = true)
 @DoPrivileged
 public class LayoutStagingImpl implements LayoutStaging {
 

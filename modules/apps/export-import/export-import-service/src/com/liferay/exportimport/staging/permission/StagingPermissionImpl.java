@@ -24,9 +24,12 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermission;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(immediate = true)
 @DoPrivileged
 public class StagingPermissionImpl implements StagingPermission {
 

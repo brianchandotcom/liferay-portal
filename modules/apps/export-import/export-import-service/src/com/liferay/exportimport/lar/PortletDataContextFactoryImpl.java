@@ -38,9 +38,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
+@Component(immediate = true)
 public class PortletDataContextFactoryImpl
 	implements PortletDataContextFactory {
 

@@ -143,12 +143,15 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Raymond Augé
  * @author Bruno Farache
  * @author Wesley Gong
  * @author Zsolt Balogh
  */
+@Component(immediate = true)
 @DoPrivileged
 public class StagingImpl implements Staging {
 

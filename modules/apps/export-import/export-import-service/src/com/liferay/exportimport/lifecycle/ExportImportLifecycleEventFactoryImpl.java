@@ -19,9 +19,12 @@ import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFact
 
 import java.io.Serializable;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(immediate = true)
 public class ExportImportLifecycleEventFactoryImpl
 	implements ExportImportLifecycleEventFactory {
 

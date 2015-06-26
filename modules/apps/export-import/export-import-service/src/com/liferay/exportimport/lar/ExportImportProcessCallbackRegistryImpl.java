@@ -19,9 +19,12 @@ import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistry;
 
 import java.util.concurrent.Callable;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(immediate = true)
 @DoPrivileged
 public class ExportImportProcessCallbackRegistryImpl
 	implements ExportImportProcessCallbackRegistry {

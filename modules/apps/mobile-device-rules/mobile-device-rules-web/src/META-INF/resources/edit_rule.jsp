@@ -14,20 +14,20 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
 
-MDRRule rule = (MDRRule)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE);
+MDRRule rule = (MDRRule)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE);
 
 long ruleId = BeanParamUtil.getLong(rule, request, "ruleId");
 
-String type = (String)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_TYPE);
-String editorJSP = (String)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_EDITOR_JSP);
+String type = (String)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_TYPE);
+String editorJSP = (String)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_EDITOR_JSP);
 
-MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
+MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
 
 long ruleGroupId = BeanParamUtil.getLong(ruleGroup, request, "ruleGroupId");
 
@@ -56,8 +56,8 @@ Collection<String> ruleHandlerTypes = RuleGroupProcessorUtil.getRuleHandlerTypes
 	</div>
 </c:if>
 
-<portlet:actionURL var="editRuleURL">
-	<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
+<portlet:actionURL name="/mobile_device_rules/edit_rule" var="editRuleURL">
+	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
 </portlet:actionURL>
 
 <aui:form action="<%= editRuleURL %>" enctype="multipart/form-data" method="post" name="fm">
@@ -106,7 +106,7 @@ Collection<String> ruleHandlerTypes = RuleGroupProcessorUtil.getRuleHandlerTypes
 
 		<div id="<%= renderResponse.getNamespace() %>typeSettings">
 			<c:if test="<%= Validator.isNotNull(editorJSP) %>">
-				<liferay-util:include page="<%= editorJSP %>" />
+				<liferay-util:include page="<%= editorJSP %>" servletContext="<%= application %>" />
 			</c:if>
 		</div>
 	</aui:fieldset>
@@ -122,9 +122,7 @@ Collection<String> ruleHandlerTypes = RuleGroupProcessorUtil.getRuleHandlerTypes
 	var typeSettings = $('#<portlet:namespace />typeSettings');
 
 	var loadTypeFields = function() {
-		<portlet:resourceURL var="editorURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_editor" />
-		</portlet:resourceURL>
+		<portlet:resourceURL id="/mobile_device_rules/edit_rule_editor" var="editorURL" />
 
 		$.ajax(
 			'<%= editorURL.toString() %>',

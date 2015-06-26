@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String className = ParamUtil.getString(request, "className");
@@ -44,14 +44,14 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 		<aui:nav-bar>
 			<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 				<portlet:renderURL var="viewRulesURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/view" />
+					<portlet:param name="mvcRenderCommandName" value="/view.jsp" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="className" value="<%= className %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 				</portlet:renderURL>
 
 				<liferay-portlet:renderURL var="addRuleGroupURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+					<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 					<portlet:param name="redirect" value="<%= viewRulesURL %>" />
 					<portlet:param name="backURL" value="<%= viewRulesURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -62,7 +62,14 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 				</aui:nav>
 			</c:if>
 
-			<aui:nav-bar-search file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
+			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+
+				<%
+				request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
+				%>
+
+				<liferay-util:include page="/rule_group_search.jsp" servletContext="<%= application %>" />
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<%
@@ -76,7 +83,7 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 		%>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/mobile_device_rules/rule_group_search_results.jspf" %>
+			<%@ include file="/rule_group_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
@@ -85,7 +92,7 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 			keyProperty="ruleGroupId"
 			modelVar="ruleGroup"
 		>
-			<%@ include file="/html/portlet/mobile_device_rules/rule_group_columns.jspf" %>
+			<%@ include file="/rule_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<c:if test="<%= total > 0 %>">
@@ -111,7 +118,7 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('ruleGroupIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="/mobile_device_rules/edit_rule_group"><portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

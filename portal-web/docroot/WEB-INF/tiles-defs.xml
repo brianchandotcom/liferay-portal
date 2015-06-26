@@ -328,10 +328,6 @@
 
 	<definition name="portlet.my_account" extends="portlet" />
 
-	<definition name="portlet.my_account.view" extends="portlet.my_account">
-		<put name="portlet_content" value="/portlet/my_account/view.jsp" />
-	</definition>
-
 	<!-- News -->
 
 	<definition name="portlet.news" extends="portlet" />

@@ -61,7 +61,6 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T> Indexer<T> getIndexer(String className) {
 		return (Indexer<T>)_indexers.get(className);
 	}
@@ -79,7 +78,6 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T> Indexer<T> nullSafeGetIndexer(String className) {
 		Indexer<T> indexer = getIndexer(className);
 
@@ -91,7 +89,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 			_log.info("No indexer found for " + className);
 		}
 
-		return (Indexer<T>)_dummyIndexer;
+		return _dummyIndexer;
 	}
 
 	@Override

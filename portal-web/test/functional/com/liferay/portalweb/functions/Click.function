@@ -126,6 +126,16 @@
 		<execute argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')] | //script[contains(@src,'/html/js/liferay/dockbar_add_page.js')] " selenium="waitForElementPresent" />
 	</command>
 
+	<command name="clickNoMouseOver">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="click" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="clickWaitForInlineCKEditor">
 		<if>
 			<condition argument1="//div[contains(@class,'cke_editable_inline')]" selenium="isElementPresent" />

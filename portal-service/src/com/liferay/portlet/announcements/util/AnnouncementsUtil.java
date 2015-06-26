@@ -167,16 +167,14 @@ public class AnnouncementsUtil {
 		List<Group> groups = GroupLocalServiceUtil.getUserGroups(
 			themeDisplay.getUserId(), true);
 
-		if (!groups.isEmpty()) {
-			for (Group group : groups) {
-				if (((group.isOrganization() && group.isSite()) ||
-					 group.isRegularSite()) &&
-					GroupPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), group.getGroupId(),
-						ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+		for (Group group : groups) {
+			if (((group.isOrganization() && group.isSite()) ||
+				 group.isRegularSite()) &&
+				GroupPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), group.getGroupId(),
+					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-					filteredGroups.add(group);
-				}
+				filteredGroups.add(group);
 			}
 		}
 

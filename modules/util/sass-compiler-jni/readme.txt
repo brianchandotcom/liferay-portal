@@ -1,4 +1,4 @@
-The native Sass library requires a specifc environment in order to build.
+The native Sass library requires a specific environment in order to build.
 Once on the correct environment, run the related Ant build task for creating
 the library (e.g. "ant build-libsass-linux-x86-64" for building the Linux 64-bit
 library).

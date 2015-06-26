@@ -27,6 +27,8 @@ import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.configuration.configurator.JournalServiceConfigurator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -91,6 +93,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();
 		verifyArticleContents();
+		verifyArticleImages();
 		verifyArticleLayouts();
 		verifyArticleStructures();
 		verifyContentSearch();
@@ -627,6 +630,21 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
+	protected void verifyArticleImages() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Delete temporary images");
+		}
+
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQL(_DELETE_TEMP_IMAGES_1);
+		db.runSQL(_DELETE_TEMP_IMAGES_2);
+
+		if (StartupHelperUtil.isUpgraded()) {
+			MultiVMPoolUtil.clear();
+		}
+	}
+
 	protected void verifyArticleLayouts() throws Exception {
 		verifyUuid("JournalArticle");
 	}
@@ -849,6 +867,13 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
+
+	private static final String _DELETE_TEMP_IMAGES_1 =
+		"delete from Image where imageId IN (SELECT articleImageId FROM " +
+			"JournalArticleImage where tempImage = TRUE)";
+
+	private static final String _DELETE_TEMP_IMAGES_2 =
+		"delete from JournalArticleImage where tempImage = TRUE";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceVerifyProcess.class);

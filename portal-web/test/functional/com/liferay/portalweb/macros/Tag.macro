@@ -330,38 +330,6 @@
 		<execute function="AssertTextNotPresent" locator1="PGBlogs#TAG" value1="${tagName1}" />
 	</command>
 
-	<command name="searchMultipleTagsViaBlogsPG">
-		<execute function="Type" locator1="PGBlogs#SEARCH_FIELD" value1="${tagName1}" />
-		<execute function="AssertClick" locator1="PGBlogs#SEARCH_BUTTON" value1="Search" />
-
-		<var name="key_blogsEntryTitle" value="${entryTitle1}" />
-
-		<execute function="AssertTextEquals" locator1="PGBlogs#SEARCH_RESULT_BLOG_ENTRY_TITLE" value1="${entryTitle1}" />
-
-		<var name="key_blogsEntryContent" value="${entryContent1}" />
-
-		<execute function="AssertTextEquals" locator1="PGBlogs#SEARCH_RESULT_BLOG_ENTRY_CONTENT" value1="${entryContent1}" />
-
-		<var name="key_blogsEntryTitle" value="${entryTitle2}" />
-
-		<execute function="AssertTextEquals" locator1="PGBlogs#SEARCH_RESULT_BLOG_ENTRY_TITLE" value1="${entryTitle2}" />
-
-		<var name="key_blogsEntryContent" value="${entryContent2}" />
-
-		<execute function="AssertTextEquals" locator1="PGBlogs#SEARCH_RESULT_BLOG_ENTRY_CONTENT" value1="${entryContent2}" />
-
-		<execute function="Type" locator1="PGBlogs#SEARCH_FIELD" value1="${tagName3}" />
-		<execute function="AssertClick" locator1="PGBlogs#SEARCH_BUTTON" value1="Search" />
-
-		<var name="key_blogsEntryTitle" value="${entryTitle3}" />
-
-		<execute function="AssertTextEquals" locator1="PGBlogs#SEARCH_RESULT_BLOG_ENTRY_TITLE" value1="${entryTitle3}" />
-
-		<var name="key_blogsEntryContent" value="${entryContent3}" />
-
-		<execute function="AssertTextEquals" locator1="PGBlogs#SEARCH_RESULT_BLOG_ENTRY_CONTENT" value1="${entryContent3}" />
-	</command>
-
 	<command name="searchTagCP">
 		<execute function="Type" locator1="CPTags#SEARCH_FIELD" value1="3" />
 

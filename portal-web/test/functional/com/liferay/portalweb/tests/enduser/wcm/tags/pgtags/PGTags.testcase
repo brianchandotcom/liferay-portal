@@ -922,15 +922,32 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#searchMultipleTagsViaBlogsPG">
-			<var name="entryContent1" value="Entry Content 1" />
-			<var name="entryContent2" value="Entry Content 2" />
-			<var name="entryContent3" value="Entry Content 3" />
-			<var name="entryTitle1" value="Entry Title 1" />
-			<var name="entryTitle2" value="Entry Title 2" />
-			<var name="entryTitle3" value="Entry Title 3" />
-			<var name="tagName1" value="blue" />
-			<var name="tagName3" value="yellow" />
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="blue" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetSummary" value="Entry Content 1" />
+			<var name="searchAssetTitle" value="Entry Title 1" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="yellow" />
+		</execute>
+
+		<execute macro="Search#viewSearchAssetTitle">
+			<var name="searchAssetSummary" value="Entry Content 3" />
+			<var name="searchAssetTitle" value="Entry Title 3" />
 		</execute>
 	</command>
 

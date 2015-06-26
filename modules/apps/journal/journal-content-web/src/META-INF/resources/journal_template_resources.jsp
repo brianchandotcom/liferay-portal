@@ -25,6 +25,7 @@ DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
 String ddmStructureId = ddmStructure != null ? String.valueOf(ddmStructure.getClassNameId()) : "0";
 String ddmStructureKey = ddmStructure != null ? String.valueOf(ddmStructure.getPrimaryKey()) : "0";
 
+List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
 String ddmTemplateId = ddmTemplate != null ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK;
 String ddmTemplateKey = ddmTemplate.getTemplateKey();
@@ -33,12 +34,14 @@ String templateDescription = ddmTemplate.getDescription();
 String templateImgUrl = ddmTemplate.getTemplateImageURL(themeDisplay);
 %>
 
-<div class="media template-preview-content" data-group-id="<%= groupId %>" data-structure-id="<%= ddmStructureId %>" data-structure-key="<%= ddmStructureKey %>" data-template-id="<%= ddmTemplateId %>" data-template-key="<%= ddmTemplateKey %>">
-	<c:if test="<%= templateImgUrl != null %>">
-		<img alt="<%= templateTitle %>" class="media-object pull-left template-image" src="<%= templateImgUrl %>">
-	</c:if>
-	<div class="media-body">
-		<h2 class="heading4 template-title"><%= templateTitle %></h2>
-		<p class="template-description"><%= templateDescription %></p>
+<c:if test="<%= ddmTemplates.size() > 1 %>">
+	<div class="media template-preview-content" data-group-id="<%= groupId %>" data-structure-id="<%= ddmStructureId %>" data-structure-key="<%= ddmStructureKey %>" data-template-id="<%= ddmTemplateId %>" data-template-key="<%= ddmTemplateKey %>">
+		<c:if test="<%= templateImgUrl != null %>">
+			<img alt="<%= templateTitle %>" class="media-object pull-left template-image" src="<%= templateImgUrl %>">
+		</c:if>
+		<div class="media-body">
+			<h2 class="heading4 template-title"><%= templateTitle %></h2>
+			<p class="template-description"><%= templateDescription %></p>
+		</div>
 	</div>
-</div>
+</c:if>

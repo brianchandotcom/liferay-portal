@@ -152,8 +152,17 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 						{
 							success: function(responseData) {
 								$('.article-preview .article-preview-content-container').html($('.article-preview-content', $(responseData)));
-								$('.template-preview .template-preview-content-container').html($('.template-preview-content', $(responseData)));
-								$('.template-preview').removeClass('hidden');
+
+								var templatePreviewContent = $('.template-preview-content', $(responseData));
+
+								if (templatePreviewContent.length > 0) {
+									$('.template-preview .template-preview-content-container').html($('.template-preview-content', $(responseData)));
+									$('.template-preview').removeClass('hidden');
+								}
+								else {
+									$('.template-preview').addClass('hidden');
+								}
+
 								form.fm('assetEntryId').val(event.assetentryid);
 								form.fm('ddmTemplateKey').val($('.template-preview .template-preview-content').attr('data-template-key'));
 								$('.configuration-options-container').removeClass('hidden');

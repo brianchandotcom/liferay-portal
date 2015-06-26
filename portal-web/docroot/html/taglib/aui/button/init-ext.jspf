@@ -90,4 +90,8 @@ if (primary == Boolean.TRUE) {
 if (type.equals("cancel")) {
 	cssClass += " btn-cancel btn-default";
 }
+
+if (dropdown) {
+	cssClass += " dropdown-toggle direction-down";
+}
 %>

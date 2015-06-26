@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String className = ParamUtil.getString(request, "className");
@@ -23,7 +23,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/mobile_device_rules/view");
+portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("eventName", eventName);
 %>
@@ -40,7 +40,7 @@ portletURL.setParameter("eventName", eventName);
 		<aui:nav-bar>
 			<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 				<liferay-portlet:renderURL var="addRuleGroupURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+					<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -51,7 +51,14 @@ portletURL.setParameter("eventName", eventName);
 				</aui:nav>
 			</c:if>
 
-			<aui:nav-bar-search file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
+			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+
+				<%
+				request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
+				%>
+
+				<liferay-util:include page="/rule_group_search.jsp" servletContext="<%= application %>" />
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<%
@@ -65,7 +72,7 @@ portletURL.setParameter("eventName", eventName);
 		%>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/mobile_device_rules/rule_group_search_results.jspf" %>
+			<%@ include file="/rule_group_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row

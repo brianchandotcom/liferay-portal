@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -25,7 +25,7 @@ MDRRule rule = (MDRRule)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, rule.getRuleGroupId(), ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="ruleId" value="<%= String.valueOf(rule.getRuleId()) %>" />
@@ -37,8 +37,8 @@ MDRRule rule = (MDRRule)row.getObject();
 			url="<%= editURL %>"
 		/>
 
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
+		<portlet:actionURL name="/mobile_device_rules/edit_rule" var="deleteURL">
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />

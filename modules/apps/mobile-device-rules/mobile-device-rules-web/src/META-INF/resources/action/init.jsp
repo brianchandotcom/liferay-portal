@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-MDRAction action = (MDRAction)request.getAttribute(WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION);
+MDRAction action = (MDRAction)request.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION);
 
 UnicodeProperties typeSettingsProperties = null;
 

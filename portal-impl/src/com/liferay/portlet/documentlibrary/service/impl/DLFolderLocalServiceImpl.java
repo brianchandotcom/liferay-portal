@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,9 +57,9 @@ import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -1401,22 +1400,16 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// Workflow
 
 		for (long fileEntryTypeId : fileEntryTypeIds) {
-			WorkflowDefinitionLink workflowDefinitionLink = null;
+			WorkflowDefinitionLink workflowDefinitionLink =
+				workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+					dlFolder.getCompanyId(), dlFolder.getGroupId(),
+					DLFolder.class.getName(), dlFolder.getFolderId(),
+					fileEntryTypeId);
 
-			try {
-				workflowDefinitionLink =
-					workflowDefinitionLinkLocalService.
-						getWorkflowDefinitionLink(
-							dlFolder.getCompanyId(), dlFolder.getGroupId(),
-							DLFolder.class.getName(), dlFolder.getFolderId(),
-							fileEntryTypeId);
+			if (workflowDefinitionLink != null) {
+				workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+					workflowDefinitionLink);
 			}
-			catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-				continue;
-			}
-
-			workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-				workflowDefinitionLink);
 		}
 	}
 
@@ -1528,12 +1521,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		DLValidatorUtil.validateDirectoryName(name);
 
-		try {
-			dlFileEntryLocalService.getFileEntry(groupId, parentFolderId, name);
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchFileEntry(
+			groupId, parentFolderId, name);
 
+		if (dlFileEntry != null) {
 			throw new DuplicateFileException(name);
-		}
-		catch (NoSuchFileEntryException nsfee) {
 		}
 
 		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(

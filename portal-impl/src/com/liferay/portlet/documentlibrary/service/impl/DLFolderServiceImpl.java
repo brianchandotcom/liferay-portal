@@ -26,7 +26,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
@@ -523,13 +522,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException {
 
-		try {
-			DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
+		DLFolder dlFolder = dlFolderLocalService.fetchFolder(folderId);
 
+		if (dlFolder != null) {
 			DLFolderPermission.check(
 				getPermissionChecker(), dlFolder, ActionKeys.UPDATE);
-		}
-		catch (NoSuchFolderException nsfe) {
 		}
 
 		dlFolderLocalService.unlockFolder(folderId, lockUuid);

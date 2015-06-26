@@ -35,8 +35,8 @@ import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
@@ -142,11 +142,11 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 
 		serviceContext.setAttribute("ddmForm", ddmForm);
 
-		try {
-			_dlFileEntryTypeLocalService.getFileEntryType(
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchFileEntryType(
 				groupId, dlFileEntryTypeKey);
-		}
-		catch (NoSuchFileEntryTypeException nsfete) {
+
+		if (dlFileEntryType == null) {
 			Map<Locale, String> localizationMap = getLocalizationMap(
 				languageKey);
 

@@ -14,9 +14,12 @@
 
 package com.liferay.dynamic.data.lists.service.permission;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
@@ -65,11 +68,14 @@ public class DDLRecordSetPermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, DDLRecordSet recordSet,
 		String actionId) {
+		
+		String portletId = PortletProviderUtil.getPortletId(
+				DDLRecord.class.getName(), PortletProvider.Action.EDIT);
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, recordSet.getGroupId(),
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId(),
-			PortletKeys.DYNAMIC_DATA_LISTS, actionId);
+			portletId, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

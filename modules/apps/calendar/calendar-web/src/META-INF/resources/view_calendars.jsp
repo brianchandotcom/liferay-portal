@@ -137,10 +137,12 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 										on: {
 											complete: function(event, id, xhr) {
 												var responseData = {};
+
 												try {
 													responseData = A.JSON.parse(xhr.responseText);
 												}
-												catch(e) {}
+												catch (e) {
+												}
 
 												var portletErrorMessage = A.one('#<portlet:namespace />portletErrorMessage');
 

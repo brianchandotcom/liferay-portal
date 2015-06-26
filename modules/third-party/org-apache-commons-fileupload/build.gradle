@@ -17,7 +17,9 @@ liferay {
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
-task patch(type: PatchTask) {
+task patch(type: PatchTask)
+
+patch {
 	fileNames "org/apache/commons/fileupload/FileUploadBase.java"
 	fileNames "org/apache/commons/fileupload/MultipartStream.java"
 	originalLibModuleName = "commons-fileupload"

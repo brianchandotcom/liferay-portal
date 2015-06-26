@@ -6,6 +6,15 @@ dependencies {
 	compile group: "org.hibernate", name: "hibernate-core", optional, version: "3.6.10.Final"
 }
 
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask)
+
 deploy {
 	into("../../../lib/portal") {
 		from jar.outputs
@@ -15,14 +24,7 @@ deploy {
 	}
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
-
-task patch(type: PatchTask) {
+patch {
 	fileNames "org/hibernate/cache/UpdateTimestampsCache.java"
 	fileNames "org/hibernate/intercept/FieldInterceptionHelper.java"
 	originalLibModuleName = "hibernate-core"

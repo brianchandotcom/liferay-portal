@@ -31,8 +31,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.portlet.PortletURL;
-
 /**
  * @author Sergio González
  * @author Roberto Díaz
@@ -58,21 +56,13 @@ public class ItemSelectorBrowserReturnTypeUtil
 
 	public static String getValue(
 			ItemSelectorReturnType itemSelectorReturnType, FileEntry fileEntry,
-			ThemeDisplay themeDisplay, PortletURL uploadURL)
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		String className = ClassUtil.getClassName(itemSelectorReturnType);
 
-		if (className.equals(Base64ItemSelectorReturnType.class.getName())) {
-			return StringPool.BLANK;
-		}
-		else if (className.equals(
-					FileEntryItemSelectorReturnType.class.getName())) {
-
+		if (className.equals(FileEntryItemSelectorReturnType.class.getName())) {
 			return getFileEntryValue(fileEntry, themeDisplay);
-		}
-		else if (className.equals(UploadableFileReturnType.class.getName())) {
-			return getUploadableFileValue(uploadURL);
 		}
 		else if (className.equals(URLItemSelectorReturnType.class.getName())) {
 			return getURLValue(fileEntry, themeDisplay);
@@ -125,15 +115,6 @@ public class ItemSelectorBrowserReturnTypeUtil
 		throws Exception {
 
 		return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
-	}
-
-	private static String getUploadableFileValue(PortletURL uploadURL) {
-		JSONObject base64JSONObject = JSONFactoryUtil.createJSONObject();
-
-		base64JSONObject.put("file", StringPool.BLANK);
-		base64JSONObject.put("uploadURL", uploadURL);
-
-		return base64JSONObject.toString();
 	}
 
 	private static final Set<String> _draggableFileReturnTypeNames =

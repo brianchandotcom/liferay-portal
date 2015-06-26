@@ -69,7 +69,7 @@
 		<build-libsass
 			libsass.lib.input.file="libsass.so"
 			libsass.lib.output.file="libliferaysass.so"
-			libsass.make.exe="make"
+			libsass.make.exe="make CXX=g++-4.6 CC=gcc-4.4"
 			libsass.resources.dir="linux-x86"
 		/>
 	</target>
@@ -78,7 +78,7 @@
 		<build-libsass
 			libsass.lib.input.file="libsass.so"
 			libsass.lib.output.file="libliferaysass.so"
-			libsass.make.exe="make"
+			libsass.make.exe="make CXX=g++-4.6 CC=gcc-4.4"
 			libsass.resources.dir="linux-x86-64"
 		/>
 	</target>

@@ -28,8 +28,10 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @author Hugo Huijser
@@ -115,30 +117,49 @@ public class SourceFormatter {
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceProcessors.size());
 
+		List<Future<Void>> futures = new ArrayList<>(sourceProcessors.size());
+
 		for (final SourceProcessor sourceProcessor : sourceProcessors) {
-			executorService.submit(
+			Future<Void> future = executorService.submit(
 				new Callable<Void>() {
 
 					@Override
 					public Void call() throws Exception {
-						try {
-							_runSourceProcessor(sourceProcessor);
-						}
-						catch (Throwable t) {
-							t.printStackTrace();
-						}
+						_runSourceProcessor(sourceProcessor);
 
 						return null;
 					}
 
 				}
 			);
+
+			futures.add(future);
+		}
+
+		ExecutionException ee1 = null;
+
+		for (Future<Void> future : futures) {
+			try {
+				future.get();
+			}
+			catch (ExecutionException ee2) {
+				if (ee1 == null) {
+					ee1 = ee2;
+				}
+				else {
+					ee1.addSuppressed(ee2);
+				}
+			}
 		}
 
 		executorService.shutdown();
 
 		while (!executorService.isTerminated()) {
 			Thread.sleep(20);
+		}
+
+		if (ee1 != null) {
+			throw ee1;
 		}
 
 		if (_sourceFormatterArgs.isThrowException()) {

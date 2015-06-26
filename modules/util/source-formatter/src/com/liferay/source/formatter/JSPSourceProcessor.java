@@ -889,9 +889,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			content = content.substring(0, content.length() - 1);
 		}
 
-		content = formatTaglibQuotes(fileName, content, StringPool.QUOTE);
-		content = formatTaglibQuotes(fileName, content, StringPool.APOSTROPHE);
-
 		if (Validator.isNotNull(previousAttributeAndValue)) {
 			content = StringUtil.replaceFirst(
 				content,
@@ -1045,73 +1042,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return line;
 	}
 
-	protected String formatTaglibQuotes(
-		String fileName, String content, String quoteType) {
-
-		String quoteFix = StringPool.APOSTROPHE;
-
-		if (quoteFix.equals(quoteType)) {
-			quoteFix = StringPool.QUOTE;
-		}
-
-		Pattern pattern = Pattern.compile(getTaglibRegex(quoteType));
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			int x = content.indexOf(quoteType + "<%=", matcher.start());
-			int y = content.indexOf("%>" + quoteType, x);
-
-			while ((x != -1) && (y != -1)) {
-				String beforeResult = content.substring(matcher.start(), x);
-
-				if (beforeResult.contains(" />\"")) {
-					break;
-				}
-
-				String result = content.substring(x + 1, y + 2);
-
-				if (result.contains(quoteType)) {
-					int lineCount = 1;
-
-					char[] contentCharArray = content.toCharArray();
-
-					for (int i = 0; i < x; i++) {
-						if (contentCharArray[i] == CharPool.NEW_LINE) {
-							lineCount++;
-						}
-					}
-
-					if (!result.contains(quoteFix)) {
-						StringBundler sb = new StringBundler(5);
-
-						sb.append(content.substring(0, x));
-						sb.append(quoteFix);
-						sb.append(result);
-						sb.append(quoteFix);
-						sb.append(content.substring(y + 3, content.length()));
-
-						content = sb.toString();
-					}
-					else {
-						processErrorMessage(
-							fileName, "taglib: " + fileName + " " + lineCount);
-					}
-				}
-
-				x = content.indexOf(quoteType + "<%=", y);
-
-				if (x > matcher.end()) {
-					break;
-				}
-
-				y = content.indexOf("%>" + quoteType, x);
-			}
-		}
-
-		return content;
-	}
-
 	protected List<String> getJSPDuplicateImports(
 		String fileName, String content, List<String> importLines) {
 
@@ -1209,28 +1139,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_tagJavaClassesMap.put(tag, tagJavaClass);
 
 		return tagJavaClass;
-	}
-
-	protected String getTaglibRegex(String quoteType) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<(");
-
-		for (int i = 0; i < _TAG_LIBRARIES.length; i++) {
-			sb.append(_TAG_LIBRARIES[i]);
-			sb.append(StringPool.PIPE);
-		}
-
-		sb.deleteCharAt(sb.length() - 1);
-		sb.append("):([^>]|%>)*");
-		sb.append(quoteType);
-		sb.append("<%=.*");
-		sb.append(quoteType);
-		sb.append(".*%>");
-		sb.append(quoteType);
-		sb.append("([^>]|%>)*>");
-
-		return sb.toString();
 	}
 
 	protected String getUtilTaglibDirName() {

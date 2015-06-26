@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class DynamicDataListPanelApp extends BaseControlPanelEntryPanelApp {
+public class DDLPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getParentCategoryKey() {

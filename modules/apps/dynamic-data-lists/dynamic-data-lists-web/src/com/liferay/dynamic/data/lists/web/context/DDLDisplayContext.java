@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
-import com.liferay.dynamic.data.lists.util.DDLUtil;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -138,12 +137,6 @@ public class DDLDisplayContext {
 	public long getRecordSetId() {
 		return PrefsParamUtil.getLong(
 			_portletPreferences, _renderRequest, "recordSetId");
-	}
-
-	public String getTemplateContent() throws Exception {
-		return DDLUtil.getTemplateContent(
-			getDisplayDDMTemplateId(), _recordSet, getThemeDisplay(),
-			_renderRequest, _renderResponse);
 	}
 
 	public boolean isEditable() {

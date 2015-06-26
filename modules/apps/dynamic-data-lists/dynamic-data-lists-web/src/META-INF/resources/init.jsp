@@ -46,6 +46,7 @@ page import="com.liferay.dynamic.data.lists.web.context.DDLDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetSearch" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetSearchTerms" %><%@
+page import="com.liferay.dynamic.data.lists.web.template.DDLDisplayTemplateTransformer" %><%@
 page import="com.liferay.portal.NoSuchWorkflowDefinitionLinkException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@

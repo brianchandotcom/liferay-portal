@@ -23,13 +23,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,12 +59,6 @@ public interface DDL {
 
 	public JSONArray getRecordsJSONArray(
 			List<DDLRecord> records, boolean latestRecordVersion)
-		throws Exception;
-
-	public String getTemplateContent(
-			long ddmTemplateId, DDLRecordSet recordSet,
-			ThemeDisplay themeDisplay, RenderRequest renderRequest,
-			RenderResponse renderResponse)
 		throws Exception;
 
 	/**

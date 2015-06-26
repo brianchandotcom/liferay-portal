@@ -29,6 +29,8 @@ boolean showAddRecordButton = false;
 if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGroupId())) {
 	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD);
 }
+
+DDLDisplayTemplateTransformer ddlDisplayTemplateTransformer = new DDLDisplayTemplateTransformer(displayDDMTemplateId, recordSet, themeDisplay, renderRequest);
 %>
 
 <portlet:actionURL name="addRecord" var="addRecordURL">
@@ -51,5 +53,5 @@ if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGro
 		</aui:nav-bar>
 	</c:if>
 
-	<%= DDLUtil.getTemplateContent(displayDDMTemplateId, recordSet, themeDisplay, renderRequest, renderResponse) %>
+	<%= ddlDisplayTemplateTransformer.transform() %>
 </aui:form>

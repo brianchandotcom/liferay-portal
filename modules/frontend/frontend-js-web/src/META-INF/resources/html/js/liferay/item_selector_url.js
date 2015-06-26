@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var ITEM_LINK_TPL = '<a data-returnType="URL" data-value="{value}" href="{preview}" title=" "></a>';
+		var ITEM_LINK_TPL = '<a data-returnType="URL" data-value="{value}" href="{preview}" title=""></a>';
 
 		var STR_LINKS = 'links';
 
@@ -39,7 +39,6 @@ AUI.add(
 						);
 
 						instance._inputNode = instance.one('#urlInput');
-
 						instance._buttonNode = instance.one('#previewBtn');
 
 						instance._bindUI();
@@ -115,8 +114,11 @@ AUI.add(
 								)
 							);
 
-							instance._itemViewer.set(STR_LINKS, new A.NodeList(linkNode));
-							instance._itemViewer.show();
+							var itemViewer = instance._itemViewer;
+
+							itemViewer.set(STR_LINKS, new A.NodeList(linkNode));
+
+							itemViewer.show();
 						}
 					},
 

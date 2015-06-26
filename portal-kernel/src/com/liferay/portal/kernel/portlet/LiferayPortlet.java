@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -444,6 +445,23 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected void initValidPaths(String rootPath, String fileExtension) {
+		if (rootPath.equals(StringPool.SLASH)) {
+			String contextName = getPortletContext().getPortletContextName();
+
+			PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
+				contextName);
+
+			if (!portletApp.isWARFile()) {
+				_log.error(
+					"Portlet " + getPortletName() + " has incorrect " +
+						"root path and can access all portal JSPs. " +
+						"Portal disabled access to the JSPs");
+
+				validPaths = new HashSet<>();
+				return;
+			}
+		}
+
 		String[] validPathsInitParameter = StringUtil.split(
 			getInitParameter("valid-paths"));
 

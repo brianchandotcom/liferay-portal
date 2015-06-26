@@ -48,7 +48,7 @@ public class BookmarksEntryPermissionChecker
 
 		if (!contains(permissionChecker, entry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), BookmarksEntry.class.getName(),
+				permissionChecker, BookmarksEntry.class.getName(),
 				entry.getEntryId(), actionId);
 		}
 	}
@@ -59,8 +59,8 @@ public class BookmarksEntryPermissionChecker
 
 		if (!contains(permissionChecker, entryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), BookmarksEntry.class.getName(),
-				entryId, actionId);
+				permissionChecker, BookmarksEntry.class.getName(), entryId,
+				actionId);
 		}
 	}
 

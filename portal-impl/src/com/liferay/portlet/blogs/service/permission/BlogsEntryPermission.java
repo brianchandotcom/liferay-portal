@@ -41,7 +41,7 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, entry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), BlogsEntry.class.getName(),
+				permissionChecker, BlogsEntry.class.getName(),
 				entry.getEntryId(), actionId);
 		}
 	}
@@ -52,8 +52,8 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, entryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), BlogsEntry.class.getName(),
-				entryId, actionId);
+				permissionChecker, BlogsEntry.class.getName(), entryId,
+				actionId);
 		}
 	}
 

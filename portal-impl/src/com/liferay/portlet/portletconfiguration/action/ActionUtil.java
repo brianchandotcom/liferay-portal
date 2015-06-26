@@ -132,8 +132,8 @@ public class ActionUtil {
 				portletId, ActionKeys.CONFIGURATION)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Portlet.class.getName(),
-				portletId, ActionKeys.CONFIGURATION);
+				permissionChecker, Portlet.class.getName(), portletId,
+				ActionKeys.CONFIGURATION);
 		}
 
 		return PortletLocalServiceUtil.getPortletById(

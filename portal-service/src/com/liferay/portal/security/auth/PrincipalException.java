@@ -45,12 +45,6 @@ public class PrincipalException extends PortalException {
 
 	public static class MustHavePermission extends PrincipalException {
 
-		public MustHavePermission(
-			PermissionChecker permissionChecker, String... actionIds) {
-			
-			this(permissionChecker.getUserId(), actionIds);
-		}
-
 		public MustHavePermission(long userId, String... actionIds) {
 			super(
 				String.format(
@@ -79,6 +73,21 @@ public class PrincipalException extends PortalException {
 			this.resourceName = resourceName;
 			this.resourceId = resourceId;
 			this.userId = userId;
+		}
+
+		public MustHavePermission(
+			PermissionChecker permissionChecker, String... actionIds) {
+
+			this(permissionChecker.getUserId(), actionIds);
+		}
+
+		public MustHavePermission(
+			PermissionChecker permissionChecker, String resourceName,
+			long resourceId, String... actionIds) {
+
+			this(
+				permissionChecker.getUserId(), resourceName, resourceId,
+				actionIds);
 		}
 
 		public final String[] actionId;

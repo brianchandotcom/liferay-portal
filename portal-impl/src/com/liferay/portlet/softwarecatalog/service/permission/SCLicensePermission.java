@@ -34,8 +34,8 @@ public class SCLicensePermission {
 
 		if (!contains(permissionChecker, productEntryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SCLicense.class.getName(),
-				productEntryId, actionId);
+				permissionChecker, SCLicense.class.getName(), productEntryId,
+				actionId);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class SCLicensePermission {
 
 		if (!contains(permissionChecker, license, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SCLicense.class.getName(),
+				permissionChecker, SCLicense.class.getName(),
 				license.getLicenseId(), actionId);
 		}
 	}

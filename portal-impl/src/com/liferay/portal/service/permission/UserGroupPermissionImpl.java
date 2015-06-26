@@ -31,8 +31,8 @@ public class UserGroupPermissionImpl implements UserGroupPermission {
 
 		if (!contains(permissionChecker, userGroupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), UserGroup.class.getName(),
-				userGroupId, actionId);
+				permissionChecker, UserGroup.class.getName(), userGroupId,
+				actionId);
 		}
 	}
 

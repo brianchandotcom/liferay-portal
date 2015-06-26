@@ -36,7 +36,7 @@ public class DLFileShortcutPermission {
 
 		if (!contains(permissionChecker, dlFileShortcut, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DLFileShortcut.class.getName(),
+				permissionChecker, DLFileShortcut.class.getName(),
 				dlFileShortcut.getFileShortcutId(), actionId);
 		}
 	}
@@ -48,7 +48,7 @@ public class DLFileShortcutPermission {
 
 		if (!contains(permissionChecker, fileShortcut, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), FileShortcut.class.getName(),
+				permissionChecker, FileShortcut.class.getName(),
 				fileShortcut.getFileShortcutId(), actionId);
 		}
 	}
@@ -60,7 +60,7 @@ public class DLFileShortcutPermission {
 
 		if (!contains(permissionChecker, fileShortcutId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DLFileShortcut.class.getName(),
+				permissionChecker, DLFileShortcut.class.getName(),
 				fileShortcutId, actionId);
 		}
 	}

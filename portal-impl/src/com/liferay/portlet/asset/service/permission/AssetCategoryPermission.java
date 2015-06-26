@@ -35,7 +35,7 @@ public class AssetCategoryPermission {
 
 		if (!contains(permissionChecker, category, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AssetCategory.class.getName(),
+				permissionChecker, AssetCategory.class.getName(),
 				category.getCategoryId(), actionId);
 		}
 	}
@@ -47,8 +47,8 @@ public class AssetCategoryPermission {
 
 		if (!contains(permissionChecker, groupId, categoryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AssetCategory.class.getName(),
-				categoryId, actionId);
+				permissionChecker, AssetCategory.class.getName(), categoryId,
+				actionId);
 		}
 	}
 
@@ -59,8 +59,8 @@ public class AssetCategoryPermission {
 
 		if (!contains(permissionChecker, categoryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AssetCategory.class.getName(),
-				categoryId, actionId);
+				permissionChecker, AssetCategory.class.getName(), categoryId,
+				actionId);
 		}
 	}
 

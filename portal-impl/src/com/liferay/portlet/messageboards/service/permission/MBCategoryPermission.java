@@ -47,8 +47,8 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, categoryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), MBCategory.class.getName(),
-				categoryId, actionId);
+				permissionChecker, MBCategory.class.getName(), categoryId,
+				actionId);
 		}
 	}
 
@@ -59,8 +59,8 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, categoryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), MBCategory.class.getName(),
-				categoryId, actionId);
+				permissionChecker, MBCategory.class.getName(), categoryId,
+				actionId);
 		}
 	}
 
@@ -71,7 +71,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, category, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), MBCategory.class.getName(),
+				permissionChecker, MBCategory.class.getName(),
 				category.getCategoryId(), actionId);
 		}
 	}

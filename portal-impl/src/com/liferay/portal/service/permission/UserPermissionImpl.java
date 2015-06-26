@@ -69,8 +69,7 @@ public class UserPermissionImpl
 
 		if (!contains(permissionChecker, userId, organizationIds, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), User.class.getName(), userId,
-				actionId);
+				permissionChecker, User.class.getName(), userId, actionId);
 		}
 	}
 
@@ -81,8 +80,7 @@ public class UserPermissionImpl
 
 		if (!contains(permissionChecker, userId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), User.class.getName(), userId,
-				actionId);
+				permissionChecker, User.class.getName(), userId, actionId);
 		}
 	}
 

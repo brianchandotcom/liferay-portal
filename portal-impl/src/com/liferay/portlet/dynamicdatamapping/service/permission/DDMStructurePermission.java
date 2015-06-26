@@ -34,7 +34,7 @@ public class DDMStructurePermission {
 
 		if (!contains(permissionChecker, structure, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DDMStructure.class.getName(),
+				permissionChecker, DDMStructure.class.getName(),
 				structure.getStructureId(), actionId);
 		}
 	}
@@ -57,8 +57,8 @@ public class DDMStructurePermission {
 
 		if (!contains(permissionChecker, structureId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DDMStructure.class.getName(),
-				structureId, actionId);
+				permissionChecker, DDMStructure.class.getName(), structureId,
+				actionId);
 		}
 	}
 

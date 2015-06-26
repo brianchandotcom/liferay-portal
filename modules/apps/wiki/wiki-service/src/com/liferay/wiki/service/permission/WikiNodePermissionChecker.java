@@ -59,8 +59,8 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, node, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), WikiNode.class.getName(),
-				node.getNodeId(), actionId);
+				permissionChecker, WikiNode.class.getName(), node.getNodeId(),
+				actionId);
 		}
 	}
 

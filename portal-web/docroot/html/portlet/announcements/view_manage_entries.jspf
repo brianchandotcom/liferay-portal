@@ -28,7 +28,7 @@ if (distributionScopeArray.length == 2) {
 }
 
 if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS)) {
-	throw new PrincipalException.MustHavePermission(permissionChecker.getUserId(), ActionKeys.ADD_GENERAL_ANNOUNCEMENTS);
+	throw new PrincipalException.MustHavePermission(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS);
 }
 %>
 

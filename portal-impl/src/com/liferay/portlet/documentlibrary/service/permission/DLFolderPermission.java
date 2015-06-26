@@ -47,7 +47,7 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, dlFolder, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DLFolder.class.getName(),
+				permissionChecker, DLFolder.class.getName(),
 				dlFolder.getFolderId(), actionId);
 		}
 	}
@@ -58,8 +58,8 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 
 		if (!folder.containsPermission(permissionChecker, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Folder.class.getName(),
-				folder.getFolderId(), actionId);
+				permissionChecker, Folder.class.getName(), folder.getFolderId(),
+				actionId);
 		}
 	}
 
@@ -70,8 +70,7 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, folderId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Folder.class.getName(), folderId,
-				actionId);
+				permissionChecker, Folder.class.getName(), folderId, actionId);
 		}
 	}
 

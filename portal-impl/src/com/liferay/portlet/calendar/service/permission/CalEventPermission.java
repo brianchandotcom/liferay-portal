@@ -32,8 +32,8 @@ public class CalEventPermission {
 
 		if (!contains(permissionChecker, event, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), CalEvent.class.getName(),
-				event.getEventId(), actionId);
+				permissionChecker, CalEvent.class.getName(), event.getEventId(),
+				actionId);
 		}
 	}
 
@@ -43,8 +43,7 @@ public class CalEventPermission {
 
 		if (!contains(permissionChecker, eventId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), CalEvent.class.getName(),
-				eventId, actionId);
+				permissionChecker, CalEvent.class.getName(), eventId, actionId);
 		}
 	}
 

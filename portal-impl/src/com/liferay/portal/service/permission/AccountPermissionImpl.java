@@ -33,7 +33,7 @@ public class AccountPermissionImpl implements AccountPermission {
 
 		if (!contains(permissionChecker, account, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Account.class.getName(),
+				permissionChecker, Account.class.getName(),
 				account.getAccountId(), actionId);
 		}
 	}
@@ -46,8 +46,8 @@ public class AccountPermissionImpl implements AccountPermission {
 
 		if (!contains(permissionChecker, accountId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Account.class.getName(),
-				accountId, actionId);
+				permissionChecker, Account.class.getName(), accountId,
+				actionId);
 		}
 	}
 

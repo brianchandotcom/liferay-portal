@@ -31,7 +31,7 @@ public class PasswordPolicyPermissionImpl implements PasswordPolicyPermission {
 
 		if (!contains(permissionChecker, passwordPolicyId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), PasswordPolicy.class.getName(),
+				permissionChecker, PasswordPolicy.class.getName(),
 				passwordPolicyId, actionId);
 		}
 	}

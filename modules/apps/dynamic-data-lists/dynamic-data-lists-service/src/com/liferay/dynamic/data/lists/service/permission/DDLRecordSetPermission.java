@@ -34,7 +34,7 @@ public class DDLRecordSetPermission {
 
 		if (!contains(permissionChecker, recordSet, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DDLRecordSet.class.getName(),
+				permissionChecker, DDLRecordSet.class.getName(),
 				recordSet.getRecordSetId(), actionId);
 		}
 	}
@@ -46,8 +46,8 @@ public class DDLRecordSetPermission {
 
 		if (!contains(permissionChecker, recordSetId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DDLRecordSet.class.getName(),
-				recordSetId, actionId);
+				permissionChecker, DDLRecordSet.class.getName(), recordSetId,
+				actionId);
 		}
 	}
 

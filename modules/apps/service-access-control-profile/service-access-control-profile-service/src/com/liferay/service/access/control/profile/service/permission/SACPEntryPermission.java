@@ -40,8 +40,8 @@ public class SACPEntryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, sacpEntryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SACPEntry.class.getName(),
-				sacpEntryId, actionId);
+				permissionChecker, SACPEntry.class.getName(), sacpEntryId,
+				actionId);
 		}
 	}
 
@@ -52,7 +52,7 @@ public class SACPEntryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, sacpEntry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SACPEntry.class.getName(),
+				permissionChecker, SACPEntry.class.getName(),
 				sacpEntry.getSacpEntryId(), actionId);
 		}
 	}

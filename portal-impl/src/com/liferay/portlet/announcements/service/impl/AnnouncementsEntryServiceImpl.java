@@ -69,8 +69,8 @@ public class AnnouncementsEntryServiceImpl
 					permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS)) {
 
 				throw new PrincipalException.MustHavePermission(
-					permissionChecker.getUserId(), PortletKeys.PORTAL,
-					PortletKeys.PORTAL, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS);
+					permissionChecker, PortletKeys.PORTAL, PortletKeys.PORTAL,
+					ActionKeys.ADD_GENERAL_ANNOUNCEMENTS);
 			}
 		}
 		else {
@@ -82,7 +82,7 @@ public class AnnouncementsEntryServiceImpl
 					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 				throw new PrincipalException.MustHavePermission(
-					permissionChecker.getUserId(), className, classPK,
+					permissionChecker, className, classPK,
 					ActionKeys.MANAGE_ANNOUNCEMENTS);
 			}
 
@@ -92,7 +92,7 @@ public class AnnouncementsEntryServiceImpl
 					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 				throw new PrincipalException.MustHavePermission(
-					permissionChecker.getUserId(), className, classPK,
+					permissionChecker, className, classPK,
 					ActionKeys.MANAGE_ANNOUNCEMENTS);
 			}
 
@@ -110,8 +110,8 @@ public class AnnouncementsEntryServiceImpl
 							ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 						throw new PrincipalException.MustHavePermission(
-							permissionChecker.getUserId(), Team.class.getName(),
-							classPK, ActionKeys.MANAGE_ANNOUNCEMENTS);
+							permissionChecker, Team.class.getName(), classPK,
+							ActionKeys.MANAGE_ANNOUNCEMENTS);
 					}
 				}
 				else if (!RolePermissionUtil.contains(
@@ -119,7 +119,7 @@ public class AnnouncementsEntryServiceImpl
 							ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 					throw new PrincipalException.MustHavePermission(
-						permissionChecker.getUserId(), className, classPK,
+						permissionChecker, className, classPK,
 						ActionKeys.MANAGE_ANNOUNCEMENTS);
 				}
 			}
@@ -130,7 +130,7 @@ public class AnnouncementsEntryServiceImpl
 					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
 				throw new PrincipalException.MustHavePermission(
-					permissionChecker.getUserId(), className, classPK,
+					permissionChecker, className, classPK,
 					ActionKeys.MANAGE_ANNOUNCEMENTS);
 			}
 		}

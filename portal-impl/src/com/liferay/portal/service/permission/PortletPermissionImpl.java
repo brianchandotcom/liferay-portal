@@ -58,8 +58,8 @@ public class PortletPermissionImpl implements PortletPermission {
 				_STRICT_DEFAULT)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Portlet.class.getName(),
-				portletId, actionId);
+				permissionChecker, Portlet.class.getName(), portletId,
+				actionId);
 		}
 	}
 
@@ -73,8 +73,8 @@ public class PortletPermissionImpl implements PortletPermission {
 				permissionChecker, 0, layout, portletId, actionId, strict)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Portlet.class.getName(),
-				portletId, actionId);
+				permissionChecker, Portlet.class.getName(), portletId,
+				actionId);
 		}
 	}
 
@@ -89,8 +89,8 @@ public class PortletPermissionImpl implements PortletPermission {
 				_STRICT_DEFAULT)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Portlet.class.getName(),
-				portletId, actionId);
+				permissionChecker, Portlet.class.getName(), portletId,
+				actionId);
 		}
 	}
 
@@ -117,8 +117,8 @@ public class PortletPermissionImpl implements PortletPermission {
 				checkStagingPermission)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Portlet.class.getName(),
-				portletId, actionId);
+				permissionChecker, Portlet.class.getName(), portletId,
+				actionId);
 		}
 	}
 
@@ -144,8 +144,8 @@ public class PortletPermissionImpl implements PortletPermission {
 				strict)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Portlet.class.getName(),
-				portletId, actionId);
+				permissionChecker, Portlet.class.getName(), portletId,
+				actionId);
 		}
 	}
 
@@ -166,8 +166,8 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		if (!contains(permissionChecker, plid, portletId, actionId, strict)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Portlet.class.getName(),
-				portletId, actionId);
+				permissionChecker, Portlet.class.getName(), portletId,
+				actionId);
 		}
 	}
 
@@ -179,8 +179,8 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		if (!contains(permissionChecker, portletId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Portlet.class.getName(),
-				portletId, actionId);
+				permissionChecker, Portlet.class.getName(), portletId,
+				actionId);
 		}
 	}
 

@@ -240,8 +240,8 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 						ActionKeys.DEFINE_PERMISSIONS)) {
 
 					throw new PrincipalException.MustHavePermission(
-						permissionChecker.getUserId(), name,
-						Long.valueOf(primKey), ActionKeys.DEFINE_PERMISSIONS);
+						permissionChecker, name, Long.valueOf(primKey),
+						ActionKeys.DEFINE_PERMISSIONS);
 				}
 			}
 		}

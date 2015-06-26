@@ -33,7 +33,7 @@ public class AssetVocabularyPermission {
 
 		if (!contains(permissionChecker, vocabulary, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AssetVocabulary.class.getName(),
+				permissionChecker, AssetVocabulary.class.getName(),
 				vocabulary.getVocabularyId(), actionId);
 		}
 	}
@@ -45,7 +45,7 @@ public class AssetVocabularyPermission {
 
 		if (!contains(permissionChecker, vocabularyId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), AssetVocabulary.class.getName(),
+				permissionChecker, AssetVocabulary.class.getName(),
 				vocabularyId, actionId);
 		}
 	}

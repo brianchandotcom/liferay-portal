@@ -35,7 +35,7 @@ public class AssetEntryPermission {
 
 		if (!contains(permissionChecker, entry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(),
+				permissionChecker,
 				PortalUtil.getClassName(entry.getClassNameId()),
 				entry.getClassPK(), actionId);
 		}
@@ -57,7 +57,7 @@ public class AssetEntryPermission {
 
 		if (!contains(permissionChecker, className, classPK, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), className, classPK, actionId);
+				permissionChecker, className, classPK, actionId);
 		}
 	}
 
@@ -78,8 +78,7 @@ public class AssetEntryPermission {
 		}
 		catch (Exception e) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), className, entry.getClassPK(),
-				actionId);
+				permissionChecker, className, entry.getClassPK(), actionId);
 		}
 	}
 

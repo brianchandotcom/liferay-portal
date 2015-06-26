@@ -34,7 +34,7 @@ public class LayoutSetBranchPermissionImpl
 
 		if (!contains(permissionChecker, layoutSetBranch, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), LayoutSetBranch.class.getName(),
+				permissionChecker, LayoutSetBranch.class.getName(),
 				layoutSetBranch.getLayoutSetBranchId(), actionId);
 		}
 	}
@@ -47,7 +47,7 @@ public class LayoutSetBranchPermissionImpl
 
 		if (!contains(permissionChecker, layoutSetBranchId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), LayoutSetBranch.class.getName(),
+				permissionChecker, LayoutSetBranch.class.getName(),
 				layoutSetBranchId, actionId);
 		}
 	}

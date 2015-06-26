@@ -535,9 +535,8 @@ public class SitesImpl implements Sites {
 				permissionChecker, group, ActionKeys.PUBLISH_STAGING)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Group.class.getName(),
-				group.getGroupId(), ActionKeys.MANAGE_STAGING,
-				ActionKeys.PUBLISH_STAGING);
+				permissionChecker, Group.class.getName(), group.getGroupId(),
+				ActionKeys.MANAGE_STAGING, ActionKeys.PUBLISH_STAGING);
 		}
 
 		if (LayoutPermissionUtil.contains(
@@ -1572,16 +1571,16 @@ public class SitesImpl implements Sites {
 				permissionChecker, layout, ActionKeys.UPDATE)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), layout.getName(),
-				layout.getLayoutId(), ActionKeys.UPDATE);
+				permissionChecker, layout.getName(), layout.getLayoutId(),
+				ActionKeys.UPDATE);
 		}
 		else if (!group.isUser() &&
 				 !GroupPermissionUtil.contains(
 					 permissionChecker, group, ActionKeys.UPDATE)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), group.getName(),
-				group.getGroupId(), ActionKeys.UPDATE);
+				permissionChecker, group.getName(), group.getGroupId(),
+				ActionKeys.UPDATE);
 		}
 		else if (group.isUser() &&
 				 (permissionChecker.getUserId() != group.getClassPK())) {

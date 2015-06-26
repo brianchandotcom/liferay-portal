@@ -32,7 +32,7 @@ public class LayoutPrototypePermissionImpl
 
 		if (!contains(permissionChecker, layoutPrototypeId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), LayoutPrototype.class.getName(),
+				permissionChecker, LayoutPrototype.class.getName(),
 				layoutPrototypeId, actionId);
 		}
 	}

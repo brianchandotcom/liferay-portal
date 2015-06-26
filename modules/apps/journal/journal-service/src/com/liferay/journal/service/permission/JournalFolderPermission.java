@@ -49,7 +49,7 @@ public class JournalFolderPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, folder, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), JournalFolder.class.getName(),
+				permissionChecker, JournalFolder.class.getName(),
 				folder.getFolderId(), actionId);
 		}
 	}
@@ -61,8 +61,8 @@ public class JournalFolderPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, folderId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), JournalFolder.class.getName(),
-				folderId, actionId);
+				permissionChecker, JournalFolder.class.getName(), folderId,
+				actionId);
 		}
 	}
 

@@ -31,8 +31,8 @@ public class SocialActivityPermissionImpl implements SocialActivityPermission {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), PortletKeys.SOCIAL_ACTIVITY,
-				groupId, actionId);
+				permissionChecker, PortletKeys.SOCIAL_ACTIVITY, groupId,
+				actionId);
 		}
 	}
 

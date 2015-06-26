@@ -33,7 +33,7 @@ public class DDLRecordPermission {
 
 		if (!contains(permissionChecker, record, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DDLRecord.class.getName(),
+				permissionChecker, DDLRecord.class.getName(),
 				record.getRecordId(), actionId);
 		}
 	}
@@ -44,8 +44,8 @@ public class DDLRecordPermission {
 
 		if (!contains(permissionChecker, recordId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DDLRecord.class.getName(),
-				recordId, actionId);
+				permissionChecker, DDLRecord.class.getName(), recordId,
+				actionId);
 		}
 	}
 

@@ -36,9 +36,8 @@ public class MDRRuleGroupInstancePermissionImpl
 
 		if (!contains(permissionChecker, ruleGroupInstanceId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(),
-				MDRRuleGroupInstance.class.getName(), ruleGroupInstanceId,
-				actionId);
+				permissionChecker, MDRRuleGroupInstance.class.getName(),
+				ruleGroupInstanceId, actionId);
 		}
 	}
 
@@ -50,8 +49,7 @@ public class MDRRuleGroupInstancePermissionImpl
 
 		if (!contains(permissionChecker, ruleGroupInstance, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(),
-				MDRRuleGroupInstance.class.getName(),
+				permissionChecker, MDRRuleGroupInstance.class.getName(),
 				ruleGroupInstance.getRuleGroupInstanceId(), actionId);
 		}
 	}

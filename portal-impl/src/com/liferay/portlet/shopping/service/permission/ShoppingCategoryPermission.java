@@ -42,8 +42,8 @@ public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, categoryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), ShoppingCategory.class.getName(),
-				categoryId, actionId);
+				permissionChecker, ShoppingCategory.class.getName(), categoryId,
+				actionId);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, category, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), ShoppingCategory.class.getName(),
+				permissionChecker, ShoppingCategory.class.getName(),
 				category.getCategoryId(), actionId);
 		}
 	}

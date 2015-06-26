@@ -33,7 +33,7 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 
 		if (!contains(permissionChecker, column, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), ExpandoColumn.class.getName(),
+				permissionChecker, ExpandoColumn.class.getName(),
 				column.getColumnId(), actionId);
 		}
 	}
@@ -45,8 +45,8 @@ public class ExpandoColumnPermissionImpl implements ExpandoColumnPermission {
 
 		if (!contains(permissionChecker, columnId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), ExpandoColumn.class.getName(),
-				columnId, actionId);
+				permissionChecker, ExpandoColumn.class.getName(), columnId,
+				actionId);
 		}
 	}
 

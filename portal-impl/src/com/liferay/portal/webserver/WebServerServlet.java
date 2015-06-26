@@ -910,7 +910,7 @@ public class WebServerServlet extends HttpServlet {
 					permissionChecker, fileEntry.getGroupId(), portletId)) {
 
 				throw new PrincipalException.MustHavePermission(
-					permissionChecker.getUserId(), FileEntry.class.getName(),
+					permissionChecker, FileEntry.class.getName(),
 					fileEntry.getFileEntryId(),
 					ActionKeys.ACCESS_IN_CONTROL_PANEL);
 			}

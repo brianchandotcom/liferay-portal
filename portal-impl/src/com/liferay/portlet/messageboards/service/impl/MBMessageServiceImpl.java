@@ -29,6 +29,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -790,28 +791,28 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long groupId, long categoryId, long parentMessageId)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		if (parentMessageId > 0) {
 			if (MBCategoryPermission.contains(
-					getPermissionChecker(), groupId, categoryId,
+					permissionChecker, groupId, categoryId,
 					ActionKeys.ADD_MESSAGE)) {
 
 				return;
 			}
 
 			if (!MBCategoryPermission.contains(
-					getPermissionChecker(), groupId, categoryId,
+					permissionChecker, groupId, categoryId,
 					ActionKeys.REPLY_TO_MESSAGE)) {
 
 				throw new PrincipalException.MustHavePermission(
-					getPermissionChecker().getUserId(),
-					MBCategory.class.getName(), categoryId,
+					permissionChecker, MBCategory.class.getName(), categoryId,
 					ActionKeys.REPLY_TO_MESSAGE);
 			}
 		}
 		else {
 			MBCategoryPermission.check(
-				getPermissionChecker(), groupId, categoryId,
-				ActionKeys.ADD_MESSAGE);
+				permissionChecker, groupId, categoryId, ActionKeys.ADD_MESSAGE);
 		}
 	}
 

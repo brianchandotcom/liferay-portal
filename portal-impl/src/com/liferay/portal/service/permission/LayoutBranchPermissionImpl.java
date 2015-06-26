@@ -33,7 +33,7 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 
 		if (!contains(permissionChecker, layoutBranch, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), LayoutBranch.class.getName(),
+				permissionChecker, LayoutBranch.class.getName(),
 				layoutBranch.getLayoutBranchId(), actionId);
 		}
 	}
@@ -46,8 +46,8 @@ public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 
 		if (!contains(permissionChecker, layoutBranchId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), LayoutBranch.class.getName(),
-				layoutBranchId, actionId);
+				permissionChecker, LayoutBranch.class.getName(), layoutBranchId,
+				actionId);
 		}
 	}
 

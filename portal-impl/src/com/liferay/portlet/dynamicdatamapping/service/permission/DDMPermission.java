@@ -30,7 +30,7 @@ public class DDMPermission {
 
 		if (!contains(permissionChecker, groupId, name, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), name, groupId, actionId);
+				permissionChecker, name, groupId, actionId);
 		}
 	}
 

@@ -38,8 +38,8 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 
 		if (!contains(permissionChecker, organizationId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Organization.class.getName(),
-				organizationId, actionId);
+				permissionChecker, Organization.class.getName(), organizationId,
+				actionId);
 		}
 	}
 
@@ -51,7 +51,7 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 
 		if (!contains(permissionChecker, organization, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Organization.class.getName(),
+				permissionChecker, Organization.class.getName(),
 				organization.getOrganizationId(), actionId);
 		}
 	}

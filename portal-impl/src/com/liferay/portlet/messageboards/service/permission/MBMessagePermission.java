@@ -51,8 +51,8 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, messageId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), MBMessage.class.getName(),
-				messageId, actionId);
+				permissionChecker, MBMessage.class.getName(), messageId,
+				actionId);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, message, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), MBMessage.class.getName(),
+				permissionChecker, MBMessage.class.getName(),
 				message.getMessageId(), actionId);
 		}
 	}

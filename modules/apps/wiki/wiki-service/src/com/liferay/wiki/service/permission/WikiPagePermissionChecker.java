@@ -60,8 +60,7 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, nodeId, title, version, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), WikiNode.class.getName(), nodeId,
-				actionId);
+				permissionChecker, WikiNode.class.getName(), nodeId, actionId);
 		}
 	}
 
@@ -72,8 +71,7 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, nodeId, title, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), WikiNode.class.getName(), nodeId,
-				actionId);
+				permissionChecker, WikiNode.class.getName(), nodeId, actionId);
 		}
 	}
 
@@ -83,8 +81,8 @@ public class WikiPagePermissionChecker implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, page, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), WikiPage.class.getName(),
-				page.getPageId(), actionId);
+				permissionChecker, WikiPage.class.getName(), page.getPageId(),
+				actionId);
 		}
 	}
 

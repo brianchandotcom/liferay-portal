@@ -52,7 +52,7 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, article, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), JournalArticle.class.getName(),
+				permissionChecker, JournalArticle.class.getName(),
 				article.getArticleId(), actionId);
 		}
 	}
@@ -64,7 +64,7 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, resourcePrimKey, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), JournalArticle.class.getName(),
+				permissionChecker, JournalArticle.class.getName(),
 				resourcePrimKey, actionId);
 		}
 	}
@@ -78,8 +78,8 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 				permissionChecker, groupId, articleId, version, actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), JournalArticle.class.getName(),
-				articleId, actionId);
+				permissionChecker, JournalArticle.class.getName(), articleId,
+				actionId);
 		}
 	}
 
@@ -92,8 +92,8 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 				permissionChecker, groupId, articleId, status, actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), JournalArticle.class.getName(),
-				articleId, actionId);
+				permissionChecker, JournalArticle.class.getName(), articleId,
+				actionId);
 		}
 	}
 
@@ -104,8 +104,8 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, articleId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), JournalArticle.class.getName(),
-				articleId, actionId);
+				permissionChecker, JournalArticle.class.getName(), articleId,
+				actionId);
 		}
 	}
 

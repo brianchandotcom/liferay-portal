@@ -33,8 +33,8 @@ public class ShoppingOrderPermission {
 
 		if (!contains(permissionChecker, groupId, orderId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), ShoppingOrder.class.getName(),
-				orderId, actionId);
+				permissionChecker, ShoppingOrder.class.getName(), orderId,
+				actionId);
 		}
 	}
 
@@ -45,7 +45,7 @@ public class ShoppingOrderPermission {
 
 		if (!contains(permissionChecker, groupId, order, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), ShoppingOrder.class.getName(),
+				permissionChecker, ShoppingOrder.class.getName(),
 				order.getOrderId(), actionId);
 		}
 	}

@@ -51,7 +51,7 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, dlFileEntry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), DLFileEntry.class.getName(),
+				permissionChecker, DLFileEntry.class.getName(),
 				dlFileEntry.getFileEntryId(), actionId);
 		}
 	}
@@ -63,7 +63,7 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 		if (!fileEntry.containsPermission(permissionChecker, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), FileEntry.class.getName(),
+				permissionChecker, FileEntry.class.getName(),
 				fileEntry.getFileEntryId(), actionId);
 		}
 	}
@@ -75,8 +75,8 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, fileEntryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), FileEntry.class.getName(),
-				fileEntryId, actionId);
+				permissionChecker, FileEntry.class.getName(), fileEntryId,
+				actionId);
 		}
 	}
 

@@ -41,7 +41,7 @@ public class SCProductEntryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, productEntryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SCProductEntry.class.getName(),
+				permissionChecker, SCProductEntry.class.getName(),
 				productEntryId, actionId);
 		}
 	}
@@ -53,7 +53,7 @@ public class SCProductEntryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, productEntry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SCProductEntry.class.getName(),
+				permissionChecker, SCProductEntry.class.getName(),
 				productEntry.getProductEntryId(), actionId);
 		}
 	}

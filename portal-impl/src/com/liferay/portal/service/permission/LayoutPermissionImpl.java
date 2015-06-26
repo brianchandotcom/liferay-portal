@@ -62,8 +62,8 @@ public class LayoutPermissionImpl
 				permissionChecker, layout, checkViewableGroup, actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Layout.class.getName(),
-				layout.getLayoutId(), actionId);
+				permissionChecker, Layout.class.getName(), layout.getLayoutId(),
+				actionId);
 		}
 	}
 
@@ -74,8 +74,8 @@ public class LayoutPermissionImpl
 
 		if (!contains(permissionChecker, layout, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Layout.class.getName(),
-				layout.getLayoutId(), actionId);
+				permissionChecker, Layout.class.getName(), layout.getLayoutId(),
+				actionId);
 		}
 	}
 
@@ -90,8 +90,7 @@ public class LayoutPermissionImpl
 				actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Layout.class.getName(), layoutId,
-				actionId);
+				permissionChecker, Layout.class.getName(), layoutId, actionId);
 		}
 	}
 

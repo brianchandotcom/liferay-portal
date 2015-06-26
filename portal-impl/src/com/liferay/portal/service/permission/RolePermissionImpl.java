@@ -30,8 +30,7 @@ public class RolePermissionImpl implements RolePermission {
 
 		if (!contains(permissionChecker, roleId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), Role.class.getName(), roleId,
-				actionId);
+				permissionChecker, Role.class.getName(), roleId, actionId);
 		}
 	}
 

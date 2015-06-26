@@ -34,8 +34,8 @@ public class SocialRequestPermissionImpl implements SocialRequestPermission {
 
 		if (!contains(permissionChecker, requestId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), SocialRequest.class.getName(),
-				requestId, actionId);
+				permissionChecker, SocialRequest.class.getName(), requestId,
+				actionId);
 		}
 	}
 

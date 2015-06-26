@@ -42,8 +42,8 @@ public class PollsQuestionPermissionChecker
 
 		if (!contains(permissionChecker, questionId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), PollsQuestion.class.getName(),
-				questionId, actionId);
+				permissionChecker, PollsQuestion.class.getName(), questionId,
+				actionId);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class PollsQuestionPermissionChecker
 
 		if (!contains(permissionChecker, question, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), PollsQuestion.class.getName(),
+				permissionChecker, PollsQuestion.class.getName(),
 				question.getQuestionId(), actionId);
 		}
 	}

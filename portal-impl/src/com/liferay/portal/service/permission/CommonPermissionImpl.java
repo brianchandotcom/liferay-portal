@@ -72,7 +72,7 @@ public class CommonPermissionImpl implements CommonPermission {
 			}
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), className, classPK, actionId);
+				permissionChecker, className, classPK, actionId);
 		}
 	}
 

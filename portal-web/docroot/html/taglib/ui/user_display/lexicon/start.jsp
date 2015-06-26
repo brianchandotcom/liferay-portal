@@ -16,19 +16,12 @@
 
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-<div class="display-style-<%= displayStyle %> taglib-user-display">
-	<aui:a href="<%= url %>">
-		<span class="user-profile-image">
-			<span class="avatar <%= imageCssClass %>" style="background-image: url('<%= HtmlUtil.escape(taglibSrc) %>')"></span>
-		</span>
-
-		<c:if test="<%= showUserName %>">
-			<span class="user-name">
-				<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-			</span>
-		</c:if>
-	</aui:a>
-
-	<c:if test="<%= showUserDetails %>">
-		<div class="user-details">
-	</c:if>
+<div class="profile-header">
+	<div class="nameplate">
+		<div class="nameplate-field">
+			<div class="user-icon user-icon-lg user-icon-success">
+				<img alt="" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(taglibSrc) %>">
+			</div>
+		</div>
+		<div class="nameplate-content">
+			<div class="heading4"><aui:a href="<%= url %>"><%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %></aui:a></div>

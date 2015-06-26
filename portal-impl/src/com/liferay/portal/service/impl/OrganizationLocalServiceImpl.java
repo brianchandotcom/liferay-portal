@@ -1913,18 +1913,20 @@ public class OrganizationLocalServiceImpl
 			Organization.class);
 
 		if (oldParentOrganizationId != parentOrganizationId) {
-			long[] organizationIds = getReindexOrganizationIds(organization);
+			long[] reindexOrganizationIds = getReindexOrganizationIds(
+				organization);
 
-			List<Organization> organizations = new ArrayList<>(
-				organizationIds.length);
+			List<Organization> reindexOrganizations = new ArrayList<>(
+				reindexOrganizationIds.length);
 
-			for (long orgId : organizationIds) {
-				Organization org = fetchOrganization(orgId);
+			for (long reindexOrganizationId : reindexOrganizationIds) {
+				Organization reindexOrganization = fetchOrganization(
+					reindexOrganizationId);
 
-				organizations.add(org);
+				reindexOrganizations.add(reindexOrganization);
 			}
 
-			indexer.reindex(organizations);
+			indexer.reindex(reindexOrganizations);
 		}
 		else {
 			indexer.reindex(organization);

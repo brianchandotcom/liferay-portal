@@ -467,7 +467,7 @@ if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
 	urlConfigurationJSSB.append(portletDisplay.getId());
 }
 
-urlConfigurationJSSB.append("'); return false;");
+urlConfigurationJSSB.append("', 'dialog-with-footer'); return false;");
 
 portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
 

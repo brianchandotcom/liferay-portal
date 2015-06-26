@@ -139,7 +139,7 @@ public class RemoteSPITest {
 	public void testCall() throws Exception {
 		final AtomicBoolean throwIOException = new AtomicBoolean();
 
-		// Sucess
+		// Success
 
 		ProcessOutputStream processOutputStream = new ProcessOutputStream(
 			new ObjectOutputStream(new UnsyncByteArrayOutputStream())) {

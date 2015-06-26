@@ -34,7 +34,9 @@ String templateImgUrl = ddmTemplate.getTemplateImageURL(themeDisplay);
 %>
 
 <div class="media template-preview-content" data-group-id="<%= groupId %>" data-structure-id="<%= ddmStructureId %>" data-structure-key="<%= ddmStructureKey %>" data-template-id="<%= ddmTemplateId %>" data-template-key="<%= ddmTemplateKey %>">
-	<img alt="<%= templateTitle %>" class="media-object pull-left template-image" src="<%= templateImgUrl %>">
+	<c:if test="<%= templateImgUrl != null %>">
+		<img alt="<%= templateTitle %>" class="media-object pull-left template-image" src="<%= templateImgUrl %>">
+	</c:if>
 	<div class="media-body">
 		<h2 class="heading4 template-title"><%= templateTitle %></h2>
 		<p class="template-description"><%= templateDescription %></p>

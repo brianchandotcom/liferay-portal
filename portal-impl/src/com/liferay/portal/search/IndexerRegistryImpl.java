@@ -38,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class IndexerRegistryImpl implements IndexerRegistry {
 
-	public void afterPropertiesSet() {
+	public IndexerRegistryImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(

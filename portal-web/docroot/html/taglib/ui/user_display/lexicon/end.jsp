@@ -14,21 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/user_display/init.jsp" %>
-
-<div class="display-style-<%= displayStyle %> taglib-user-display">
-	<aui:a href="<%= url %>">
-		<span class="user-profile-image">
-			<span class="avatar <%= imageCssClass %>" style="background-image: url('<%= HtmlUtil.escape(taglibSrc) %>')"></span>
-		</span>
-
-		<c:if test="<%= showUserName %>">
-			<span class="user-name">
-				<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-			</span>
-		</c:if>
-	</aui:a>
-
-	<c:if test="<%= showUserDetails %>">
-		<div class="user-details">
-	</c:if>
+		</div>
+	</div>
+</div>

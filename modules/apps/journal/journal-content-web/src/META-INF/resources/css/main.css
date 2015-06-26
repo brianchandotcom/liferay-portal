@@ -58,6 +58,12 @@
 		}
 	}
 
+	.taglib-workflow-status {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
 	.row-spacing {
 		margin-bottom: 40px;
 	}

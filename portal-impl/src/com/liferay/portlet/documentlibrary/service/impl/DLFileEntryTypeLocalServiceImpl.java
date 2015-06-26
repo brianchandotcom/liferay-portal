@@ -16,6 +16,8 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -770,6 +772,10 @@ public class DLFileEntryTypeLocalServiceImpl
 			return ddmStructure.getStructureId();
 		}
 		catch (StructureDefinitionException sde) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sde, sde);
+			}
+
 			if (ddmStructure != null) {
 				ddmStructureLocalService.deleteStructure(
 					ddmStructure.getStructureId());
@@ -813,5 +819,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@BeanReference(type = DDMStructureLocalService.class)
 	protected DDMStructureLocalService ddmStructureLocalService;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFileEntryTypeLocalServiceImpl.class);
 
 }

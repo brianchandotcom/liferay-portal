@@ -418,7 +418,8 @@ public class JCRStore extends BaseStore {
 			session.save();
 		}
 		catch (PathNotFoundException pnfe) {
-			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+			logFailedDeletion(
+				companyId, repositoryId, fileName, versionLabel, pnfe);
 		}
 		catch (RepositoryException re) {
 			throw new SystemException(re);

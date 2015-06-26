@@ -171,7 +171,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index wikiNode " + node.getNodeId(),
+								"Unable to index wiki node " + node.getNodeId(),
 								pe);
 						}
 					}

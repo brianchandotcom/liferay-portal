@@ -112,7 +112,7 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing assetVocabulary " + assetVocabulary);
+			_log.debug("Indexing asset vocabulary " + assetVocabulary);
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, assetVocabulary);
@@ -189,7 +189,7 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index asset assetVocabulary " +
+								"Unable to index asset vocabulary " +
 									assetVocabulary.getVocabularyId(),
 								pe);
 						}

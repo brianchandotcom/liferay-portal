@@ -186,7 +186,7 @@ public class JournalFolderIndexer
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index journal journalFolder " +
+								"Unable to index journal folder " +
 									folder.getFolderId(),
 								pe);
 						}

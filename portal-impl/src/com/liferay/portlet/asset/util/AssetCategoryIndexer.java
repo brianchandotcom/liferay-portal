@@ -155,7 +155,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing assetCategory " + assetCategory);
+			_log.debug("Indexing asset category " + assetCategory);
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, assetCategory);
@@ -245,7 +245,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index asset assetCategory " +
+								"Unable to index asset category " +
 									category.getCategoryId(),
 								pe);
 						}

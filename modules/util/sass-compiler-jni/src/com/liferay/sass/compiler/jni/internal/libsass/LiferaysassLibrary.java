@@ -68,47 +68,65 @@ public interface LiferaysassLibrary extends Library {
 	};
 	/**
 	 * Different render styles<br>
-	 * <i>native declaration : sass.h:27</i><br>
+	 * <i>native declaration : sass.h:30</i><br>
 	 * enum values
 	 */
 	/**
 	 * Different render styles<br>
-	 * <i>native declaration : sass.h:27</i><br>
+	 * <i>native declaration : sass.h:30</i><br>
 	 * enum values
 	 */
 	public static interface Sass_Output_Style {
-		/// <i>native declaration : sass.h:28</i>
-		public static final int SASS_STYLE_NESTED = (int)0;
-		/// <i>native declaration : sass.h:29</i>
-		public static final int SASS_STYLE_EXPANDED = (int)1;
-		/// <i>native declaration : sass.h:30</i>
-		public static final int SASS_STYLE_COMPACT = (int)2;
 		/// <i>native declaration : sass.h:31</i>
+		public static final int SASS_STYLE_NESTED = (int)0;
+		/// <i>native declaration : sass.h:32</i>
+		public static final int SASS_STYLE_EXPANDED = (int)1;
+		/// <i>native declaration : sass.h:33</i>
+		public static final int SASS_STYLE_COMPACT = (int)2;
+		/// <i>native declaration : sass.h:34</i>
 		public static final int SASS_STYLE_COMPRESSED = (int)3;
 	};
-	/// <i>native declaration : sass.h</i>
+	/**
+	 * Compiler states<br>
+	 * <i>native declaration : sass_context.h:22</i><br>
+	 * enum values
+	 */
+	/**
+	 * Compiler states<br>
+	 * <i>native declaration : sass_context.h:22</i><br>
+	 * enum values
+	 */
+	public static interface Sass_Compiler_State {
+		/// <i>native declaration : sass_context.h:23</i>
+		public static final int SASS_COMPILER_CREATED = (int)0;
+		/// <i>native declaration : sass_context.h:24</i>
+		public static final int SASS_COMPILER_PARSED = (int)1;
+		/// <i>native declaration : sass_context.h:25</i>
+		public static final int SASS_COMPILER_EXECUTED = (int)2;
+	};
+	/// <i>native declaration : sass_version.h</i>
 	public static final String LIBSASS_VERSION = (String)"[NA]";
 	/**
-	 * Typedef defining the importer c function prototype<br>
-	 * <i>native declaration : sass_functions.h:16</i>
+	 * Typedef defining importer signature and return type<br>
+	 * <i>native declaration : sass_functions.h</i>
 	 */
 	/**
-	 * Typedef defining the importer c function prototype<br>
-	 * <i>native declaration : sass_functions.h:16</i>
+	 * Typedef defining importer signature and return type<br>
+	 * <i>native declaration : sass_functions.h</i>
 	 */
-	public interface Sass_C_Import_Fn extends Callback {
-		PointerByReference apply(Pointer url, Pointer prev, Pointer cookie);
+	public interface Sass_Importer_Fn extends Callback {
+		LiferaysassLibrary.Sass_Import_List apply(Pointer url, LiferaysassLibrary.Sass_Importer_Entry cb, LiferaysassLibrary.Sass_Compiler compiler);
 	};
 	/**
-	 * Typedef defining custom function prototype and its return value type<br>
-	 * <i>native declaration : sass_functions.h:63</i>
+	 * Typedef defining function signature and return type<br>
+	 * <i>native declaration : sass_functions.h:28</i>
 	 */
 	/**
-	 * Typedef defining custom function prototype and its return value type<br>
-	 * <i>native declaration : sass_functions.h:63</i>
+	 * Typedef defining function signature and return type<br>
+	 * <i>native declaration : sass_functions.h:28</i>
 	 */
-	public interface Sass_C_Function extends Callback {
-		LiferaysassLibrary.Sass_Value apply(LiferaysassLibrary.Sass_Value Sass_ValuePtr1, Pointer cookie);
+	public interface Sass_Function_Fn extends Callback {
+		LiferaysassLibrary.Sass_Value apply(LiferaysassLibrary.Sass_Value Sass_ValuePtr1, LiferaysassLibrary.Sass_Function_Entry cb, LiferaysassLibrary.Sass_Options options);
 	};
 	/**
 	 * Check is needed before accessing specific values!<br>
@@ -181,7 +199,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_number_set_unit(Sass_Value*, char*)</code><br>
 	 * <i>native declaration : sass_values.h:49</i><br>
-	 * @deprecated use the safer methods {@link #sass_number_set_unit(LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_number_set_unit(LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_number_set_unit(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_number_set_unit(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_number_set_unit(LiferaysassLibrary.Sass_Value v, Pointer unit);
@@ -199,7 +217,7 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Original signature : <code>void sass_string_set_value(Sass_Value*, char*)</code><br>
 	 * <i>native declaration : sass_values.h:53</i><br>
-	 * @deprecated use the safer methods {@link #sass_string_set_value(LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_string_set_value(LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
+	 * @deprecated use the safer methods {@link #sass_string_set_value(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_string_set_value(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_string_set_value(LiferaysassLibrary.Sass_Value v, Pointer value);
@@ -209,454 +227,518 @@ public interface LiferaysassLibrary extends Library {
 	 */
 	void sass_string_set_value(LiferaysassLibrary.Sass_Value v, ByteBuffer value);
 	/**
+	 * Original signature : <code>bool sass_string_is_quoted(Sass_Value*)</code><br>
+	 * <i>native declaration : sass_values.h:54</i>
+	 */
+	byte sass_string_is_quoted(LiferaysassLibrary.Sass_Value v);
+	/**
+	 * Original signature : <code>void sass_string_set_quoted(Sass_Value*, bool)</code><br>
+	 * <i>native declaration : sass_values.h:55</i>
+	 */
+	void sass_string_set_quoted(LiferaysassLibrary.Sass_Value v, byte quoted);
+	/**
 	 * Getters and setters for Sass_Boolean<br>
 	 * Original signature : <code>bool sass_boolean_get_value(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:56</i>
+	 * <i>native declaration : sass_values.h:58</i>
 	 */
 	byte sass_boolean_get_value(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Original signature : <code>void sass_boolean_set_value(Sass_Value*, bool)</code><br>
-	 * <i>native declaration : sass_values.h:57</i>
+	 * <i>native declaration : sass_values.h:59</i>
 	 */
 	void sass_boolean_set_value(LiferaysassLibrary.Sass_Value v, byte value);
 	/**
 	 * Getters and setters for Sass_Color<br>
 	 * Original signature : <code>double sass_color_get_r(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:60</i>
+	 * <i>native declaration : sass_values.h:62</i>
 	 */
 	double sass_color_get_r(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Original signature : <code>void sass_color_set_r(Sass_Value*, double)</code><br>
-	 * <i>native declaration : sass_values.h:61</i>
+	 * <i>native declaration : sass_values.h:63</i>
 	 */
 	void sass_color_set_r(LiferaysassLibrary.Sass_Value v, double r);
 	/**
 	 * Original signature : <code>double sass_color_get_g(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:62</i>
+	 * <i>native declaration : sass_values.h:64</i>
 	 */
 	double sass_color_get_g(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Original signature : <code>void sass_color_set_g(Sass_Value*, double)</code><br>
-	 * <i>native declaration : sass_values.h:63</i>
+	 * <i>native declaration : sass_values.h:65</i>
 	 */
 	void sass_color_set_g(LiferaysassLibrary.Sass_Value v, double g);
 	/**
 	 * Original signature : <code>double sass_color_get_b(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:64</i>
+	 * <i>native declaration : sass_values.h:66</i>
 	 */
 	double sass_color_get_b(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Original signature : <code>void sass_color_set_b(Sass_Value*, double)</code><br>
-	 * <i>native declaration : sass_values.h:65</i>
+	 * <i>native declaration : sass_values.h:67</i>
 	 */
 	void sass_color_set_b(LiferaysassLibrary.Sass_Value v, double b);
 	/**
 	 * Original signature : <code>double sass_color_get_a(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:66</i>
+	 * <i>native declaration : sass_values.h:68</i>
 	 */
 	double sass_color_get_a(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Original signature : <code>void sass_color_set_a(Sass_Value*, double)</code><br>
-	 * <i>native declaration : sass_values.h:67</i>
+	 * <i>native declaration : sass_values.h:69</i>
 	 */
 	void sass_color_set_a(LiferaysassLibrary.Sass_Value v, double a);
 	/**
 	 * Getter for the number of items in list<br>
 	 * Original signature : <code>size_t sass_list_get_length(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:70</i>
+	 * <i>native declaration : sass_values.h:72</i>
 	 */
 	NativeSize sass_list_get_length(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Getters and setters for Sass_List<br>
 	 * Original signature : <code>Sass_Separator sass_list_get_separator(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:72</i>
+	 * <i>native declaration : sass_values.h:74</i>
 	 */
 	int sass_list_get_separator(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Original signature : <code>void sass_list_set_separator(Sass_Value*, Sass_Separator)</code><br>
-	 * <i>native declaration : sass_values.h:73</i>
+	 * <i>native declaration : sass_values.h:75</i>
 	 */
 	void sass_list_set_separator(LiferaysassLibrary.Sass_Value v, int value);
 	/**
 	 * Getters and setters for Sass_List values<br>
 	 * Original signature : <code>Sass_Value* sass_list_get_value(Sass_Value*, size_t)</code><br>
-	 * <i>native declaration : sass_values.h:75</i>
+	 * <i>native declaration : sass_values.h:77</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_list_get_value(LiferaysassLibrary.Sass_Value v, NativeSize i);
 	/**
 	 * Original signature : <code>void sass_list_set_value(Sass_Value*, size_t, Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:76</i>
+	 * <i>native declaration : sass_values.h:78</i>
 	 */
 	void sass_list_set_value(LiferaysassLibrary.Sass_Value v, NativeSize i, LiferaysassLibrary.Sass_Value value);
 	/**
 	 * Getter for the number of items in map<br>
 	 * Original signature : <code>size_t sass_map_get_length(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:79</i>
+	 * <i>native declaration : sass_values.h:81</i>
 	 */
 	NativeSize sass_map_get_length(LiferaysassLibrary.Sass_Value v);
 	/**
-	 * Getters and setters for Sass_List keys and values<br>
+	 * Getters and setters for Sass_Map keys and values<br>
 	 * Original signature : <code>Sass_Value* sass_map_get_key(Sass_Value*, size_t)</code><br>
-	 * <i>native declaration : sass_values.h:81</i>
+	 * <i>native declaration : sass_values.h:83</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_map_get_key(LiferaysassLibrary.Sass_Value v, NativeSize i);
 	/**
 	 * Original signature : <code>void sass_map_set_key(Sass_Value*, size_t, Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:82</i>
+	 * <i>native declaration : sass_values.h:84</i>
 	 */
 	void sass_map_set_key(LiferaysassLibrary.Sass_Value v, NativeSize i, LiferaysassLibrary.Sass_Value Sass_ValuePtr1);
 	/**
 	 * Original signature : <code>Sass_Value* sass_map_get_value(Sass_Value*, size_t)</code><br>
-	 * <i>native declaration : sass_values.h:83</i>
+	 * <i>native declaration : sass_values.h:85</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_map_get_value(LiferaysassLibrary.Sass_Value v, NativeSize i);
 	/**
 	 * Original signature : <code>void sass_map_set_value(Sass_Value*, size_t, Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:84</i>
+	 * <i>native declaration : sass_values.h:86</i>
 	 */
 	void sass_map_set_value(LiferaysassLibrary.Sass_Value v, NativeSize i, LiferaysassLibrary.Sass_Value Sass_ValuePtr1);
 	/**
 	 * Getters and setters for Sass_Error<br>
 	 * Original signature : <code>char* sass_error_get_message(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:87</i>
+	 * <i>native declaration : sass_values.h:89</i>
 	 */
 	Pointer sass_error_get_message(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Original signature : <code>void sass_error_set_message(Sass_Value*, char*)</code><br>
-	 * <i>native declaration : sass_values.h:88</i><br>
-	 * @deprecated use the safer methods {@link #sass_error_set_message(LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_error_set_message(LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
+	 * <i>native declaration : sass_values.h:90</i><br>
+	 * @deprecated use the safer methods {@link #sass_error_set_message(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_error_set_message(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_error_set_message(LiferaysassLibrary.Sass_Value v, Pointer msg);
 	/**
 	 * Original signature : <code>void sass_error_set_message(Sass_Value*, char*)</code><br>
-	 * <i>native declaration : sass_values.h:88</i>
+	 * <i>native declaration : sass_values.h:90</i>
 	 */
 	void sass_error_set_message(LiferaysassLibrary.Sass_Value v, ByteBuffer msg);
 	/**
 	 * Getters and setters for Sass_Warning<br>
 	 * Original signature : <code>char* sass_warning_get_message(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:91</i>
+	 * <i>native declaration : sass_values.h:93</i>
 	 */
 	Pointer sass_warning_get_message(LiferaysassLibrary.Sass_Value v);
 	/**
 	 * Original signature : <code>void sass_warning_set_message(Sass_Value*, char*)</code><br>
-	 * <i>native declaration : sass_values.h:92</i><br>
-	 * @deprecated use the safer methods {@link #sass_warning_set_message(LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_warning_set_message(LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
+	 * <i>native declaration : sass_values.h:94</i><br>
+	 * @deprecated use the safer methods {@link #sass_warning_set_message(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Value, java.nio.ByteBuffer)} and {@link #sass_warning_set_message(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Value, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_warning_set_message(LiferaysassLibrary.Sass_Value v, Pointer msg);
 	/**
 	 * Original signature : <code>void sass_warning_set_message(Sass_Value*, char*)</code><br>
-	 * <i>native declaration : sass_values.h:92</i>
+	 * <i>native declaration : sass_values.h:94</i>
 	 */
 	void sass_warning_set_message(LiferaysassLibrary.Sass_Value v, ByteBuffer msg);
 	/**
 	 * Creator functions for all value types<br>
 	 * Original signature : <code>Sass_Value* sass_make_null()</code><br>
-	 * <i>native declaration : sass_values.h:95</i>
+	 * <i>native declaration : sass_values.h:97</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_null();
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_boolean(bool)</code><br>
-	 * <i>native declaration : sass_values.h:96</i>
+	 * <i>native declaration : sass_values.h:98</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_boolean(byte val);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_string(const char*)</code><br>
-	 * <i>native declaration : sass_values.h:97</i><br>
+	 * <i>native declaration : sass_values.h:99</i><br>
 	 * @deprecated use the safer methods {@link #sass_make_string(java.lang.String)} and {@link #sass_make_string(com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	LiferaysassLibrary.Sass_Value sass_make_string(Pointer val);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_string(const char*)</code><br>
-	 * <i>native declaration : sass_values.h:97</i>
+	 * <i>native declaration : sass_values.h:99</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_string(String val);
 	/**
+	 * Original signature : <code>Sass_Value* sass_make_qstring(const char*)</code><br>
+	 * <i>native declaration : sass_values.h:100</i><br>
+	 * @deprecated use the safer methods {@link #sass_make_qstring(java.lang.String)} and {@link #sass_make_qstring(com.sun.jna.Pointer)} instead
+	 */
+	@Deprecated 
+	LiferaysassLibrary.Sass_Value sass_make_qstring(Pointer val);
+	/**
+	 * Original signature : <code>Sass_Value* sass_make_qstring(const char*)</code><br>
+	 * <i>native declaration : sass_values.h:100</i>
+	 */
+	LiferaysassLibrary.Sass_Value sass_make_qstring(String val);
+	/**
 	 * Original signature : <code>Sass_Value* sass_make_number(double, const char*)</code><br>
-	 * <i>native declaration : sass_values.h:98</i><br>
+	 * <i>native declaration : sass_values.h:101</i><br>
 	 * @deprecated use the safer methods {@link #sass_make_number(double, java.lang.String)} and {@link #sass_make_number(double, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	LiferaysassLibrary.Sass_Value sass_make_number(double val, Pointer unit);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_number(double, const char*)</code><br>
-	 * <i>native declaration : sass_values.h:98</i>
+	 * <i>native declaration : sass_values.h:101</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_number(double val, String unit);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_color(double, double, double, double)</code><br>
-	 * <i>native declaration : sass_values.h:99</i>
+	 * <i>native declaration : sass_values.h:102</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_color(double r, double g, double b, double a);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_list(size_t, Sass_Separator)</code><br>
-	 * <i>native declaration : sass_values.h:100</i>
+	 * <i>native declaration : sass_values.h:103</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_list(NativeSize len, int sep);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_map(size_t)</code><br>
-	 * <i>native declaration : sass_values.h:101</i>
+	 * <i>native declaration : sass_values.h:104</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_map(NativeSize len);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_error(const char*)</code><br>
-	 * <i>native declaration : sass_values.h:102</i><br>
+	 * <i>native declaration : sass_values.h:105</i><br>
 	 * @deprecated use the safer methods {@link #sass_make_error(java.lang.String)} and {@link #sass_make_error(com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	LiferaysassLibrary.Sass_Value sass_make_error(Pointer msg);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_error(const char*)</code><br>
-	 * <i>native declaration : sass_values.h:102</i>
+	 * <i>native declaration : sass_values.h:105</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_error(String msg);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_warning(const char*)</code><br>
-	 * <i>native declaration : sass_values.h:103</i><br>
+	 * <i>native declaration : sass_values.h:106</i><br>
 	 * @deprecated use the safer methods {@link #sass_make_warning(java.lang.String)} and {@link #sass_make_warning(com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	LiferaysassLibrary.Sass_Value sass_make_warning(Pointer msg);
 	/**
 	 * Original signature : <code>Sass_Value* sass_make_warning(const char*)</code><br>
-	 * <i>native declaration : sass_values.h:103</i>
+	 * <i>native declaration : sass_values.h:106</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_make_warning(String msg);
 	/**
 	 * Means we will delete recursively for lists and maps<br>
 	 * Original signature : <code>void sass_delete_value(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:108</i>
+	 * <i>native declaration : sass_values.h:111</i>
 	 */
 	void sass_delete_value(LiferaysassLibrary.Sass_Value val);
 	/**
 	 * Make a deep cloned copy of the given sass value<br>
 	 * Original signature : <code>Sass_Value* sass_clone_value(Sass_Value*)</code><br>
-	 * <i>native declaration : sass_values.h:111</i>
+	 * <i>native declaration : sass_values.h:114</i>
 	 */
 	LiferaysassLibrary.Sass_Value sass_clone_value(LiferaysassLibrary.Sass_Value val);
 	/**
-	 * The pointer is mostly used to store the callback into the actual binding<br>
-	 * Original signature : <code>Sass_C_Import_Callback sass_make_importer(Sass_C_Import_Fn, void*)</code><br>
-	 * <i>native declaration : sass_functions.h:20</i>
+	 * Creator for sass custom importer return argument list<br>
+	 * Original signature : <code>Sass_Importer_List sass_make_importer_list(size_t)</code><br>
+	 * <i>native declaration : sass_functions.h:33</i>
 	 */
-	LiferaysassLibrary.Sass_C_Import_Callback sass_make_importer(LiferaysassLibrary.Sass_C_Import_Fn Sass_C_Import_Fn1, Pointer cookie);
+	LiferaysassLibrary.Sass_Importer_List sass_make_importer_list(NativeSize length);
+	/**
+	 * Original signature : <code>Sass_Importer_Entry sass_importer_get_list_entry(Sass_Importer_List, size_t)</code><br>
+	 * <i>native declaration : sass_functions.h:34</i>
+	 */
+	LiferaysassLibrary.Sass_Importer_Entry sass_importer_get_list_entry(LiferaysassLibrary.Sass_Importer_List list, NativeSize idx);
+	/**
+	 * Original signature : <code>void sass_importer_set_list_entry(Sass_Importer_List, size_t, Sass_Importer_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:35</i>
+	 */
+	void sass_importer_set_list_entry(LiferaysassLibrary.Sass_Importer_List list, NativeSize idx, LiferaysassLibrary.Sass_Importer_Entry entry);
+	/**
+	 * The pointer is mostly used to store the callback into the actual binding<br>
+	 * Original signature : <code>Sass_Importer_Entry sass_make_importer(Sass_Importer_Fn, double, void*)</code><br>
+	 * <i>native declaration : sass_functions.h:40</i>
+	 */
+	LiferaysassLibrary.Sass_Importer_Entry sass_make_importer(LiferaysassLibrary.Sass_Importer_Fn importer, double priority, Pointer cookie);
 	/**
 	 * Getters for import function descriptors<br>
-	 * Original signature : <code>Sass_C_Import_Fn sass_import_get_function(Sass_C_Import_Callback)</code><br>
-	 * <i>native declaration : sass_functions.h:23</i>
+	 * Original signature : <code>Sass_Importer_Fn sass_importer_get_function(Sass_Importer_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:43</i>
 	 */
-	LiferaysassLibrary.Sass_C_Import_Fn sass_import_get_function(LiferaysassLibrary.Sass_C_Import_Callback fn);
+	LiferaysassLibrary.Sass_Importer_Fn sass_importer_get_function(LiferaysassLibrary.Sass_Importer_Entry cb);
 	/**
-	 * Original signature : <code>void* sass_import_get_cookie(Sass_C_Import_Callback)</code><br>
-	 * <i>native declaration : sass_functions.h:24</i>
+	 * Original signature : <code>double sass_importer_get_priority(Sass_Importer_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:44</i>
 	 */
-	Pointer sass_import_get_cookie(LiferaysassLibrary.Sass_C_Import_Callback fn);
+	double sass_importer_get_priority(LiferaysassLibrary.Sass_Importer_Entry cb);
+	/**
+	 * Original signature : <code>void* sass_importer_get_cookie(Sass_Importer_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:45</i>
+	 */
+	Pointer sass_importer_get_cookie(LiferaysassLibrary.Sass_Importer_Entry cb);
 	/**
 	 * Deallocator for associated memory<br>
-	 * Original signature : <code>void sass_delete_importer(Sass_C_Import_Callback)</code><br>
-	 * <i>native declaration : sass_functions.h:27</i>
+	 * Original signature : <code>void sass_delete_importer(Sass_Importer_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:48</i>
 	 */
-	void sass_delete_importer(LiferaysassLibrary.Sass_C_Import_Callback fn);
+	void sass_delete_importer(LiferaysassLibrary.Sass_Importer_Entry cb);
 	/**
 	 * Creator for sass custom importer return argument list<br>
-	 * Original signature : <code>Sass_Import** sass_make_import_list(size_t)</code><br>
-	 * <i>native declaration : sass_functions.h:30</i>
+	 * Original signature : <code>Sass_Import_List sass_make_import_list(size_t)</code><br>
+	 * <i>native declaration : sass_functions.h:51</i>
 	 */
-	LiferaysassLibrary.Sass_Import[] sass_make_import_list(NativeSize length);
+	LiferaysassLibrary.Sass_Import_List sass_make_import_list(NativeSize length);
 	/**
 	 * Creator for a single import entry returned by the custom importer inside the list<br>
-	 * Original signature : <code>Sass_Import* sass_make_import_entry(const char*, char*, char*)</code><br>
-	 * <i>native declaration : sass_functions.h:32</i><br>
+	 * Original signature : <code>Sass_Import_Entry sass_make_import_entry(const char*, char*, char*)</code><br>
+	 * <i>native declaration : sass_functions.h:53</i><br>
 	 * @deprecated use the safer methods {@link #sass_make_import_entry(java.lang.String, java.nio.ByteBuffer, java.nio.ByteBuffer)} and {@link #sass_make_import_entry(com.sun.jna.Pointer, com.sun.jna.Pointer, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
-	LiferaysassLibrary.Sass_Import sass_make_import_entry(Pointer path, Pointer source, Pointer srcmap);
+	LiferaysassLibrary.Sass_Import_Entry sass_make_import_entry(Pointer path, Pointer source, Pointer srcmap);
 	/**
 	 * Creator for a single import entry returned by the custom importer inside the list<br>
-	 * Original signature : <code>Sass_Import* sass_make_import_entry(const char*, char*, char*)</code><br>
-	 * <i>native declaration : sass_functions.h:32</i>
+	 * Original signature : <code>Sass_Import_Entry sass_make_import_entry(const char*, char*, char*)</code><br>
+	 * <i>native declaration : sass_functions.h:53</i>
 	 */
-	LiferaysassLibrary.Sass_Import sass_make_import_entry(String path, ByteBuffer source, ByteBuffer srcmap);
+	LiferaysassLibrary.Sass_Import_Entry sass_make_import_entry(String path, ByteBuffer source, ByteBuffer srcmap);
 	/**
-	 * Original signature : <code>Sass_Import* sass_make_import(const char*, const char*, char*, char*)</code><br>
-	 * <i>native declaration : sass_functions.h:33</i><br>
+	 * Original signature : <code>Sass_Import_Entry sass_make_import(const char*, const char*, char*, char*)</code><br>
+	 * <i>native declaration : sass_functions.h:54</i><br>
 	 * @deprecated use the safer methods {@link #sass_make_import(java.lang.String, java.lang.String, java.nio.ByteBuffer, java.nio.ByteBuffer)} and {@link #sass_make_import(com.sun.jna.Pointer, com.sun.jna.Pointer, com.sun.jna.Pointer, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
-	LiferaysassLibrary.Sass_Import sass_make_import(Pointer path, Pointer base, Pointer source, Pointer srcmap);
+	LiferaysassLibrary.Sass_Import_Entry sass_make_import(Pointer path, Pointer base, Pointer source, Pointer srcmap);
 	/**
-	 * Original signature : <code>Sass_Import* sass_make_import(const char*, const char*, char*, char*)</code><br>
-	 * <i>native declaration : sass_functions.h:33</i>
+	 * Original signature : <code>Sass_Import_Entry sass_make_import(const char*, const char*, char*, char*)</code><br>
+	 * <i>native declaration : sass_functions.h:54</i>
 	 */
-	LiferaysassLibrary.Sass_Import sass_make_import(String path, String base, ByteBuffer source, ByteBuffer srcmap);
+	LiferaysassLibrary.Sass_Import_Entry sass_make_import(String path, String base, ByteBuffer source, ByteBuffer srcmap);
 	/**
-	 * Since we are dealing with pointers they should have a guaranteed and fixed size<br>
-	 * Original signature : <code>void sass_import_set_list_entry(Sass_Import**, size_t, Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:37</i><br>
-	 * @deprecated use the safer method {@link #sass_import_set_list_entry(LiferaysassLibrary.Sass_Import[], com.ochafik.lang.jnaerator.runtime.NativeSize, LiferaysassLibrary.Sass_Import)} instead
-	 */
-	@Deprecated 
-	void sass_import_set_list_entry(PointerByReference list, NativeSize idx, LiferaysassLibrary.Sass_Import entry);
-	/**
-	 * Since we are dealing with pointers they should have a guaranteed and fixed size<br>
-	 * Original signature : <code>void sass_import_set_list_entry(Sass_Import**, size_t, Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:37</i>
-	 */
-	void sass_import_set_list_entry(LiferaysassLibrary.Sass_Import list[], NativeSize idx, LiferaysassLibrary.Sass_Import entry);
-	/**
-	 * Original signature : <code>Sass_Import* sass_import_get_list_entry(Sass_Import**, size_t)</code><br>
-	 * <i>native declaration : sass_functions.h:38</i><br>
-	 * @deprecated use the safer method {@link #sass_import_get_list_entry(LiferaysassLibrary.Sass_Import[], com.ochafik.lang.jnaerator.runtime.NativeSize)} instead
+	 * set error message to abort import and to print out a message (path from existing object is used in output)<br>
+	 * Original signature : <code>Sass_Import_Entry sass_import_set_error(Sass_Import_Entry, const char*, size_t, size_t)</code><br>
+	 * <i>native declaration : sass_functions.h:56</i><br>
+	 * @deprecated use the safer methods {@link #sass_import_set_error(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Import_Entry, java.lang.String, com.ochafik.lang.jnaerator.runtime.NativeSize, com.ochafik.lang.jnaerator.runtime.NativeSize)} and {@link #sass_import_set_error(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Import_Entry, com.sun.jna.Pointer, com.ochafik.lang.jnaerator.runtime.NativeSize, com.ochafik.lang.jnaerator.runtime.NativeSize)} instead
 	 */
 	@Deprecated 
-	LiferaysassLibrary.Sass_Import sass_import_get_list_entry(PointerByReference list, NativeSize idx);
+	LiferaysassLibrary.Sass_Import_Entry sass_import_set_error(LiferaysassLibrary.Sass_Import_Entry import$, Pointer message, NativeSize line, NativeSize col);
 	/**
-	 * Original signature : <code>Sass_Import* sass_import_get_list_entry(Sass_Import**, size_t)</code><br>
-	 * <i>native declaration : sass_functions.h:38</i>
+	 * set error message to abort import and to print out a message (path from existing object is used in output)<br>
+	 * Original signature : <code>Sass_Import_Entry sass_import_set_error(Sass_Import_Entry, const char*, size_t, size_t)</code><br>
+	 * <i>native declaration : sass_functions.h:56</i>
 	 */
-	LiferaysassLibrary.Sass_Import sass_import_get_list_entry(LiferaysassLibrary.Sass_Import list[], NativeSize idx);
+	LiferaysassLibrary.Sass_Import_Entry sass_import_set_error(LiferaysassLibrary.Sass_Import_Entry import$, String message, NativeSize line, NativeSize col);
+	/**
+	 * Since we are dealing with pointers they should have a guaranteed and fixed size<br>
+	 * Original signature : <code>void sass_import_set_list_entry(Sass_Import_List, size_t, Sass_Import_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:60</i>
+	 */
+	void sass_import_set_list_entry(LiferaysassLibrary.Sass_Import_List list, NativeSize idx, LiferaysassLibrary.Sass_Import_Entry entry);
+	/**
+	 * Original signature : <code>Sass_Import_Entry sass_import_get_list_entry(Sass_Import_List, size_t)</code><br>
+	 * <i>native declaration : sass_functions.h:61</i>
+	 */
+	LiferaysassLibrary.Sass_Import_Entry sass_import_get_list_entry(LiferaysassLibrary.Sass_Import_List list, NativeSize idx);
 	/**
 	 * Getters for import entry<br>
-	 * Original signature : <code>char* sass_import_get_path(Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:41</i>
+	 * Original signature : <code>char* sass_import_get_path(Sass_Import_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:64</i>
 	 */
-	String sass_import_get_path(LiferaysassLibrary.Sass_Import Sass_ImportPtr1);
+	String sass_import_get_path(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
 	/**
-	 * Original signature : <code>char* sass_import_get_base(Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:42</i>
+	 * Original signature : <code>char* sass_import_get_base(Sass_Import_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:65</i>
 	 */
-	String sass_import_get_base(LiferaysassLibrary.Sass_Import Sass_ImportPtr1);
+	String sass_import_get_base(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
 	/**
-	 * Original signature : <code>char* sass_import_get_source(Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:43</i>
+	 * Original signature : <code>char* sass_import_get_source(Sass_Import_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:66</i>
 	 */
-	String sass_import_get_source(LiferaysassLibrary.Sass_Import Sass_ImportPtr1);
+	String sass_import_get_source(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
 	/**
-	 * Original signature : <code>char* sass_import_get_srcmap(Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:44</i>
-	 */
-	String sass_import_get_srcmap(LiferaysassLibrary.Sass_Import Sass_ImportPtr1);
-	/**
-	 * The property on our struct will be reset to NULL<br>
-	 * Original signature : <code>char* sass_import_take_source(Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:47</i>
-	 */
-	Pointer sass_import_take_source(LiferaysassLibrary.Sass_Import Sass_ImportPtr1);
-	/**
-	 * Original signature : <code>char* sass_import_take_srcmap(Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:48</i>
-	 */
-	Pointer sass_import_take_srcmap(LiferaysassLibrary.Sass_Import Sass_ImportPtr1);
-	/**
-	 * Deallocator for associated memory (incl. entries)<br>
-	 * Original signature : <code>void sass_delete_import_list(Sass_Import**)</code><br>
-	 * <i>native declaration : sass_functions.h:51</i><br>
-	 * @deprecated use the safer method {@link #sass_delete_import_list(LiferaysassLibrary.Sass_Import[])} instead
-	 */
-	@Deprecated 
-	void sass_delete_import_list(PointerByReference Sass_ImportPtrPtr1);
-	/**
-	 * Deallocator for associated memory (incl. entries)<br>
-	 * Original signature : <code>void sass_delete_import_list(Sass_Import**)</code><br>
-	 * <i>native declaration : sass_functions.h:51</i>
-	 */
-	void sass_delete_import_list(LiferaysassLibrary.Sass_Import Sass_ImportPtrPtr1[]);
-	/**
-	 * Just in case we have some stray import structs<br>
-	 * Original signature : <code>void sass_delete_import(Sass_Import*)</code><br>
-	 * <i>native declaration : sass_functions.h:53</i>
-	 */
-	void sass_delete_import(LiferaysassLibrary.Sass_Import Sass_ImportPtr1);
-	/**
-	 * Creators for sass function list and function descriptors<br>
-	 * Original signature : <code>Sass_C_Function_List sass_make_function_list(size_t)</code><br>
+	 * Original signature : <code>char* sass_import_get_srcmap(Sass_Import_Entry)</code><br>
 	 * <i>native declaration : sass_functions.h:67</i>
 	 */
-	LiferaysassLibrary.Sass_C_Function_List sass_make_function_list(NativeSize length);
+	String sass_import_get_srcmap(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
 	/**
-	 * Original signature : <code>Sass_C_Function_Callback sass_make_function(const char*, Sass_C_Function, void*)</code><br>
-	 * <i>native declaration : sass_functions.h:68</i><br>
-	 * @deprecated use the safer methods {@link #sass_make_function(java.lang.String, LiferaysassLibrary.Sass_C_Function, com.sun.jna.Pointer)} and {@link #sass_make_function(com.sun.jna.Pointer, LiferaysassLibrary.Sass_C_Function, com.sun.jna.Pointer)} instead
+	 * The property on our struct will be reset to NULL<br>
+	 * Original signature : <code>char* sass_import_take_source(Sass_Import_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:70</i>
 	 */
-	@Deprecated 
-	LiferaysassLibrary.Sass_C_Function_Callback sass_make_function(Pointer signature, LiferaysassLibrary.Sass_C_Function fn, Pointer cookie);
+	Pointer sass_import_take_source(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
 	/**
-	 * Original signature : <code>Sass_C_Function_Callback sass_make_function(const char*, Sass_C_Function, void*)</code><br>
-	 * <i>native declaration : sass_functions.h:68</i>
-	 */
-	LiferaysassLibrary.Sass_C_Function_Callback sass_make_function(String signature, LiferaysassLibrary.Sass_C_Function fn, Pointer cookie);
-	/**
-	 * Setters and getters for callbacks on function lists<br>
-	 * Original signature : <code>Sass_C_Function_Callback sass_function_get_list_entry(Sass_C_Function_List, size_t)</code><br>
+	 * Original signature : <code>char* sass_import_take_srcmap(Sass_Import_Entry)</code><br>
 	 * <i>native declaration : sass_functions.h:71</i>
 	 */
-	LiferaysassLibrary.Sass_C_Function_Callback sass_function_get_list_entry(LiferaysassLibrary.Sass_C_Function_List list, NativeSize pos);
+	Pointer sass_import_take_srcmap(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
 	/**
-	 * Original signature : <code>void sass_function_set_list_entry(Sass_C_Function_List, size_t, Sass_C_Function_Callback)</code><br>
-	 * <i>native declaration : sass_functions.h:72</i>
+	 * Getters from import error entry<br>
+	 * Original signature : <code>size_t sass_import_get_error_line(Sass_Import_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:73</i>
 	 */
-	void sass_function_set_list_entry(LiferaysassLibrary.Sass_C_Function_List list, NativeSize pos, LiferaysassLibrary.Sass_C_Function_Callback cb);
+	NativeSize sass_import_get_error_line(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
 	/**
-	 * Getters for custom function descriptors<br>
-	 * Original signature : <code>char* sass_function_get_signature(Sass_C_Function_Callback)</code><br>
+	 * Original signature : <code>size_t sass_import_get_error_column(Sass_Import_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:74</i>
+	 */
+	NativeSize sass_import_get_error_column(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
+	/**
+	 * Original signature : <code>char* sass_import_get_error_message(Sass_Import_Entry)</code><br>
 	 * <i>native declaration : sass_functions.h:75</i>
 	 */
-	String sass_function_get_signature(LiferaysassLibrary.Sass_C_Function_Callback fn);
+	String sass_import_get_error_message(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
 	/**
-	 * Original signature : <code>Sass_C_Function sass_function_get_function(Sass_C_Function_Callback)</code><br>
-	 * <i>native declaration : sass_functions.h:76</i>
+	 * Deallocator for associated memory (incl. entries)<br>
+	 * Original signature : <code>void sass_delete_import_list(Sass_Import_List)</code><br>
+	 * <i>native declaration : sass_functions.h:78</i>
 	 */
-	LiferaysassLibrary.Sass_C_Function sass_function_get_function(LiferaysassLibrary.Sass_C_Function_Callback fn);
+	void sass_delete_import_list(LiferaysassLibrary.Sass_Import_List Sass_Import_List1);
 	/**
-	 * Original signature : <code>void* sass_function_get_cookie(Sass_C_Function_Callback)</code><br>
-	 * <i>native declaration : sass_functions.h:77</i>
+	 * Just in case we have some stray import structs<br>
+	 * Original signature : <code>void sass_delete_import(Sass_Import_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:80</i>
 	 */
-	Pointer sass_function_get_cookie(LiferaysassLibrary.Sass_C_Function_Callback fn);
+	void sass_delete_import(LiferaysassLibrary.Sass_Import_Entry Sass_Import_Entry1);
+	/**
+	 * Creators for sass function list and function descriptors<br>
+	 * Original signature : <code>Sass_Function_List sass_make_function_list(size_t)</code><br>
+	 * <i>native declaration : sass_functions.h:85</i>
+	 */
+	LiferaysassLibrary.Sass_Function_List sass_make_function_list(NativeSize length);
+	/**
+	 * Original signature : <code>Sass_Function_Entry sass_make_function(const char*, Sass_Function_Fn, void*)</code><br>
+	 * <i>native declaration : sass_functions.h:86</i><br>
+	 * @deprecated use the safer methods {@link #sass_make_function(java.lang.String, com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Function_Fn, com.sun.jna.Pointer)} and {@link #sass_make_function(com.sun.jna.Pointer, com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Function_Fn, com.sun.jna.Pointer)} instead
+	 */
+	@Deprecated 
+	LiferaysassLibrary.Sass_Function_Entry sass_make_function(Pointer signature, LiferaysassLibrary.Sass_Function_Fn cb, Pointer cookie);
+	/**
+	 * Original signature : <code>Sass_Function_Entry sass_make_function(const char*, Sass_Function_Fn, void*)</code><br>
+	 * <i>native declaration : sass_functions.h:86</i>
+	 */
+	LiferaysassLibrary.Sass_Function_Entry sass_make_function(String signature, LiferaysassLibrary.Sass_Function_Fn cb, Pointer cookie);
+	/**
+	 * Setters and getters for callbacks on function lists<br>
+	 * Original signature : <code>Sass_Function_Entry sass_function_get_list_entry(Sass_Function_List, size_t)</code><br>
+	 * <i>native declaration : sass_functions.h:89</i>
+	 */
+	LiferaysassLibrary.Sass_Function_Entry sass_function_get_list_entry(LiferaysassLibrary.Sass_Function_List list, NativeSize pos);
+	/**
+	 * Original signature : <code>void sass_function_set_list_entry(Sass_Function_List, size_t, Sass_Function_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:90</i>
+	 */
+	void sass_function_set_list_entry(LiferaysassLibrary.Sass_Function_List list, NativeSize pos, LiferaysassLibrary.Sass_Function_Entry cb);
+	/**
+	 * Getters for custom function descriptors<br>
+	 * Original signature : <code>char* sass_function_get_signature(Sass_Function_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:93</i>
+	 */
+	String sass_function_get_signature(LiferaysassLibrary.Sass_Function_Entry cb);
+	/**
+	 * Original signature : <code>Sass_Function_Fn sass_function_get_function(Sass_Function_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:94</i>
+	 */
+	LiferaysassLibrary.Sass_Function_Fn sass_function_get_function(LiferaysassLibrary.Sass_Function_Entry cb);
+	/**
+	 * Original signature : <code>void* sass_function_get_cookie(Sass_Function_Entry)</code><br>
+	 * <i>native declaration : sass_functions.h:95</i>
+	 */
+	Pointer sass_function_get_cookie(LiferaysassLibrary.Sass_Function_Entry cb);
 	/**
 	 * Some convenient string helper function<br>
 	 * Original signature : <code>char* sass_string_quote(const char*, const char)</code><br>
-	 * <i>native declaration : sass.h:35</i><br>
+	 * <i>native declaration : sass.h:38</i><br>
 	 * @deprecated use the safer methods {@link #sass_string_quote(java.lang.String, byte)} and {@link #sass_string_quote(com.sun.jna.Pointer, byte)} instead
 	 */
 	@Deprecated 
-	Pointer sass_string_quote(Pointer str, byte quotemark);
+	Pointer sass_string_quote(Pointer str, byte quote_mark);
 	/**
 	 * Some convenient string helper function<br>
 	 * Original signature : <code>char* sass_string_quote(const char*, const char)</code><br>
-	 * <i>native declaration : sass.h:35</i>
+	 * <i>native declaration : sass.h:38</i>
 	 */
-	Pointer sass_string_quote(String str, byte quotemark);
+	Pointer sass_string_quote(String str, byte quote_mark);
 	/**
 	 * Original signature : <code>char* sass_string_unquote(const char*)</code><br>
-	 * <i>native declaration : sass.h:36</i><br>
+	 * <i>native declaration : sass.h:39</i><br>
 	 * @deprecated use the safer methods {@link #sass_string_unquote(java.lang.String)} and {@link #sass_string_unquote(com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	Pointer sass_string_unquote(Pointer str);
 	/**
 	 * Original signature : <code>char* sass_string_unquote(const char*)</code><br>
-	 * <i>native declaration : sass.h:36</i>
+	 * <i>native declaration : sass.h:39</i>
 	 */
 	Pointer sass_string_unquote(String str);
 	/**
+	 * Resolve a file via the given include paths in the include char* array<br>
+	 * Original signature : <code>char* sass_resolve_file(const char*, const char*[])</code><br>
+	 * <i>native declaration : sass.h:42</i><br>
+	 * @deprecated use the safer methods {@link #sass_resolve_file(java.lang.String, com.sun.jna.ptr.PointerByReference)} and {@link #sass_resolve_file(com.sun.jna.Pointer, com.sun.jna.ptr.PointerByReference)} instead
+	 */
+	@Deprecated 
+	Pointer sass_resolve_file(Pointer path, PointerByReference incs);
+	/**
+	 * Resolve a file via the given include paths in the include char* array<br>
+	 * Original signature : <code>char* sass_resolve_file(const char*, const char*[])</code><br>
+	 * <i>native declaration : sass.h:42</i>
+	 */
+	Pointer sass_resolve_file(String path, PointerByReference incs);
+	/**
 	 * Get compiled libsass version<br>
 	 * Original signature : <code>char* libsass_version()</code><br>
-	 * <i>native declaration : sass.h:39</i>
+	 * <i>native declaration : sass.h:45</i>
 	 */
 	String libsass_version();
 	/**
 	 * Create and initialize an option struct<br>
 	 * Original signature : <code>Sass_Options* sass_make_options()</code><br>
-	 * <i>native declaration : sass_context.h:22</i>
+	 * <i>native declaration : sass_context.h:29</i>
 	 */
 	LiferaysassLibrary.Sass_Options sass_make_options();
 	/**
 	 * Create and initialize a specific context<br>
 	 * Original signature : <code>Sass_File_Context* sass_make_file_context(const char*)</code><br>
-	 * <i>native declaration : sass_context.h:24</i><br>
+	 * <i>native declaration : sass_context.h:31</i><br>
 	 * @deprecated use the safer methods {@link #sass_make_file_context(java.lang.String)} and {@link #sass_make_file_context(com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
@@ -664,369 +746,494 @@ public interface LiferaysassLibrary extends Library {
 	/**
 	 * Create and initialize a specific context<br>
 	 * Original signature : <code>Sass_File_Context* sass_make_file_context(const char*)</code><br>
-	 * <i>native declaration : sass_context.h:24</i>
+	 * <i>native declaration : sass_context.h:31</i>
 	 */
 	LiferaysassLibrary.Sass_File_Context sass_make_file_context(String input_path);
 	/**
 	 * Original signature : <code>Sass_Data_Context* sass_make_data_context(char*)</code><br>
-	 * <i>native declaration : sass_context.h:25</i><br>
+	 * <i>native declaration : sass_context.h:32</i><br>
 	 * @deprecated use the safer methods {@link #sass_make_data_context(java.nio.ByteBuffer)} and {@link #sass_make_data_context(com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	LiferaysassLibrary.Sass_Data_Context sass_make_data_context(Pointer source_string);
 	/**
 	 * Original signature : <code>Sass_Data_Context* sass_make_data_context(char*)</code><br>
-	 * <i>native declaration : sass_context.h:25</i>
+	 * <i>native declaration : sass_context.h:32</i>
 	 */
 	LiferaysassLibrary.Sass_Data_Context sass_make_data_context(ByteBuffer source_string);
 	/**
 	 * Call the compilation step for the specific context<br>
 	 * Original signature : <code>int sass_compile_file_context(Sass_File_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:28</i>
+	 * <i>native declaration : sass_context.h:35</i>
 	 */
 	int sass_compile_file_context(LiferaysassLibrary.Sass_File_Context ctx);
 	/**
 	 * Original signature : <code>int sass_compile_data_context(Sass_Data_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:29</i>
+	 * <i>native declaration : sass_context.h:36</i>
 	 */
 	int sass_compile_data_context(LiferaysassLibrary.Sass_Data_Context ctx);
 	/**
 	 * Create a sass compiler instance for more control<br>
 	 * Original signature : <code>Sass_Compiler* sass_make_file_compiler(Sass_File_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:32</i>
+	 * <i>native declaration : sass_context.h:39</i>
 	 */
 	LiferaysassLibrary.Sass_Compiler sass_make_file_compiler(LiferaysassLibrary.Sass_File_Context file_ctx);
 	/**
 	 * Original signature : <code>Sass_Compiler* sass_make_data_compiler(Sass_Data_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:33</i>
+	 * <i>native declaration : sass_context.h:40</i>
 	 */
 	LiferaysassLibrary.Sass_Compiler sass_make_data_compiler(LiferaysassLibrary.Sass_Data_Context data_ctx);
 	/**
 	 * Usefull if you only want to query the included files<br>
 	 * Original signature : <code>int sass_compiler_parse(Sass_Compiler*)</code><br>
-	 * <i>native declaration : sass_context.h:37</i>
+	 * <i>native declaration : sass_context.h:44</i>
 	 */
 	int sass_compiler_parse(LiferaysassLibrary.Sass_Compiler compiler);
 	/**
 	 * Original signature : <code>int sass_compiler_execute(Sass_Compiler*)</code><br>
-	 * <i>native declaration : sass_context.h:38</i>
+	 * <i>native declaration : sass_context.h:45</i>
 	 */
 	int sass_compiler_execute(LiferaysassLibrary.Sass_Compiler compiler);
 	/**
 	 * This does _not_ include any contexts or options<br>
 	 * Original signature : <code>void sass_delete_compiler(Sass_Compiler*)</code><br>
-	 * <i>native declaration : sass_context.h:42</i>
+	 * <i>native declaration : sass_context.h:49</i>
 	 */
 	void sass_delete_compiler(LiferaysassLibrary.Sass_Compiler compiler);
 	/**
 	 * Release all memory allocated and also ourself<br>
 	 * Original signature : <code>void sass_delete_file_context(Sass_File_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:45</i>
+	 * <i>native declaration : sass_context.h:52</i>
 	 */
 	void sass_delete_file_context(LiferaysassLibrary.Sass_File_Context ctx);
 	/**
 	 * Original signature : <code>void sass_delete_data_context(Sass_Data_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:46</i>
+	 * <i>native declaration : sass_context.h:53</i>
 	 */
 	void sass_delete_data_context(LiferaysassLibrary.Sass_Data_Context ctx);
 	/**
 	 * Getters for context from specific implementation<br>
 	 * Original signature : <code>Sass_Context* sass_file_context_get_context(Sass_File_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:49</i>
+	 * <i>native declaration : sass_context.h:56</i>
 	 */
 	LiferaysassLibrary.Sass_Context sass_file_context_get_context(LiferaysassLibrary.Sass_File_Context file_ctx);
 	/**
 	 * Original signature : <code>Sass_Context* sass_data_context_get_context(Sass_Data_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:50</i>
+	 * <i>native declaration : sass_context.h:57</i>
 	 */
 	LiferaysassLibrary.Sass_Context sass_data_context_get_context(LiferaysassLibrary.Sass_Data_Context data_ctx);
 	/**
-	 * Getters for context options from Sass_Context<br>
+	 * Getters for Context_Options from Sass_Context<br>
 	 * Original signature : <code>Sass_Options* sass_context_get_options(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:53</i>
+	 * <i>native declaration : sass_context.h:60</i>
 	 */
 	LiferaysassLibrary.Sass_Options sass_context_get_options(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>Sass_Options* sass_file_context_get_options(Sass_File_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:54</i>
+	 * <i>native declaration : sass_context.h:61</i>
 	 */
 	LiferaysassLibrary.Sass_Options sass_file_context_get_options(LiferaysassLibrary.Sass_File_Context file_ctx);
 	/**
 	 * Original signature : <code>Sass_Options* sass_data_context_get_options(Sass_Data_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:55</i>
+	 * <i>native declaration : sass_context.h:62</i>
 	 */
 	LiferaysassLibrary.Sass_Options sass_data_context_get_options(LiferaysassLibrary.Sass_Data_Context data_ctx);
 	/**
 	 * Original signature : <code>void sass_file_context_set_options(Sass_File_Context*, Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:56</i>
+	 * <i>native declaration : sass_context.h:63</i>
 	 */
 	void sass_file_context_set_options(LiferaysassLibrary.Sass_File_Context file_ctx, LiferaysassLibrary.Sass_Options opt);
 	/**
 	 * Original signature : <code>void sass_data_context_set_options(Sass_Data_Context*, Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:57</i>
+	 * <i>native declaration : sass_context.h:64</i>
 	 */
 	void sass_data_context_set_options(LiferaysassLibrary.Sass_Data_Context data_ctx, LiferaysassLibrary.Sass_Options opt);
 	/**
-	 * Getters for options<br>
+	 * Getters for Context_Option values<br>
 	 * Original signature : <code>int sass_option_get_precision(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:61</i>
+	 * <i>native declaration : sass_context.h:68</i>
 	 */
 	int sass_option_get_precision(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>Sass_Output_Style sass_option_get_output_style(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:62</i>
+	 * <i>native declaration : sass_context.h:69</i>
 	 */
 	int sass_option_get_output_style(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>bool sass_option_get_source_comments(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:63</i>
+	 * <i>native declaration : sass_context.h:70</i>
 	 */
 	byte sass_option_get_source_comments(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>bool sass_option_get_source_map_embed(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:64</i>
+	 * <i>native declaration : sass_context.h:71</i>
 	 */
 	byte sass_option_get_source_map_embed(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>bool sass_option_get_source_map_contents(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:65</i>
+	 * <i>native declaration : sass_context.h:72</i>
 	 */
 	byte sass_option_get_source_map_contents(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>bool sass_option_get_omit_source_map_url(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:66</i>
+	 * <i>native declaration : sass_context.h:73</i>
 	 */
 	byte sass_option_get_omit_source_map_url(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>bool sass_option_get_is_indented_syntax_src(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:67</i>
+	 * <i>native declaration : sass_context.h:74</i>
 	 */
 	byte sass_option_get_is_indented_syntax_src(LiferaysassLibrary.Sass_Options options);
 	/**
+	 * Original signature : <code>char* sass_option_get_indent(Sass_Options*)</code><br>
+	 * <i>native declaration : sass_context.h:75</i>
+	 */
+	String sass_option_get_indent(LiferaysassLibrary.Sass_Options options);
+	/**
+	 * Original signature : <code>char* sass_option_get_linefeed(Sass_Options*)</code><br>
+	 * <i>native declaration : sass_context.h:76</i>
+	 */
+	String sass_option_get_linefeed(LiferaysassLibrary.Sass_Options options);
+	/**
 	 * Original signature : <code>char* sass_option_get_input_path(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:68</i>
+	 * <i>native declaration : sass_context.h:77</i>
 	 */
 	String sass_option_get_input_path(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>char* sass_option_get_output_path(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:69</i>
+	 * <i>native declaration : sass_context.h:78</i>
 	 */
 	String sass_option_get_output_path(LiferaysassLibrary.Sass_Options options);
 	/**
-	 * Original signature : <code>char* sass_option_get_image_path(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:70</i>
+	 * Original signature : <code>char* sass_option_get_plugin_path(Sass_Options*)</code><br>
+	 * <i>native declaration : sass_context.h:79</i>
 	 */
-	String sass_option_get_image_path(LiferaysassLibrary.Sass_Options options);
+	String sass_option_get_plugin_path(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>char* sass_option_get_include_path(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:71</i>
+	 * <i>native declaration : sass_context.h:80</i>
 	 */
 	String sass_option_get_include_path(LiferaysassLibrary.Sass_Options options);
 	/**
 	 * Original signature : <code>char* sass_option_get_source_map_file(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:72</i>
+	 * <i>native declaration : sass_context.h:81</i>
 	 */
 	String sass_option_get_source_map_file(LiferaysassLibrary.Sass_Options options);
 	/**
-	 * Original signature : <code>Sass_C_Function_List sass_option_get_c_functions(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:73</i>
+	 * Original signature : <code>char* sass_option_get_source_map_root(Sass_Options*)</code><br>
+	 * <i>native declaration : sass_context.h:82</i>
 	 */
-	LiferaysassLibrary.Sass_C_Function_List sass_option_get_c_functions(LiferaysassLibrary.Sass_Options options);
+	String sass_option_get_source_map_root(LiferaysassLibrary.Sass_Options options);
 	/**
-	 * Original signature : <code>Sass_C_Import_Callback sass_option_get_importer(Sass_Options*)</code><br>
-	 * <i>native declaration : sass_context.h:74</i>
+	 * Original signature : <code>Sass_Importer_List sass_option_get_c_headers(Sass_Options*)</code><br>
+	 * <i>native declaration : sass_context.h:83</i>
 	 */
-	LiferaysassLibrary.Sass_C_Import_Callback sass_option_get_importer(LiferaysassLibrary.Sass_Options options);
+	LiferaysassLibrary.Sass_Importer_List sass_option_get_c_headers(LiferaysassLibrary.Sass_Options options);
 	/**
-	 * Setters for options<br>
+	 * Original signature : <code>Sass_Importer_List sass_option_get_c_importers(Sass_Options*)</code><br>
+	 * <i>native declaration : sass_context.h:84</i>
+	 */
+	LiferaysassLibrary.Sass_Importer_List sass_option_get_c_importers(LiferaysassLibrary.Sass_Options options);
+	/**
+	 * Original signature : <code>Sass_Function_List sass_option_get_c_functions(Sass_Options*)</code><br>
+	 * <i>native declaration : sass_context.h:85</i>
+	 */
+	LiferaysassLibrary.Sass_Function_List sass_option_get_c_functions(LiferaysassLibrary.Sass_Options options);
+	/**
+	 * Setters for Context_Option values<br>
 	 * Original signature : <code>void sass_option_set_precision(Sass_Options*, int)</code><br>
-	 * <i>native declaration : sass_context.h:77</i>
+	 * <i>native declaration : sass_context.h:88</i>
 	 */
 	void sass_option_set_precision(LiferaysassLibrary.Sass_Options options, int precision);
 	/**
 	 * Original signature : <code>void sass_option_set_output_style(Sass_Options*, Sass_Output_Style)</code><br>
-	 * <i>native declaration : sass_context.h:78</i>
+	 * <i>native declaration : sass_context.h:89</i>
 	 */
 	void sass_option_set_output_style(LiferaysassLibrary.Sass_Options options, int output_style);
 	/**
 	 * Original signature : <code>void sass_option_set_source_comments(Sass_Options*, bool)</code><br>
-	 * <i>native declaration : sass_context.h:79</i>
+	 * <i>native declaration : sass_context.h:90</i>
 	 */
 	void sass_option_set_source_comments(LiferaysassLibrary.Sass_Options options, byte source_comments);
 	/**
 	 * Original signature : <code>void sass_option_set_source_map_embed(Sass_Options*, bool)</code><br>
-	 * <i>native declaration : sass_context.h:80</i>
+	 * <i>native declaration : sass_context.h:91</i>
 	 */
 	void sass_option_set_source_map_embed(LiferaysassLibrary.Sass_Options options, byte source_map_embed);
 	/**
 	 * Original signature : <code>void sass_option_set_source_map_contents(Sass_Options*, bool)</code><br>
-	 * <i>native declaration : sass_context.h:81</i>
+	 * <i>native declaration : sass_context.h:92</i>
 	 */
 	void sass_option_set_source_map_contents(LiferaysassLibrary.Sass_Options options, byte source_map_contents);
 	/**
 	 * Original signature : <code>void sass_option_set_omit_source_map_url(Sass_Options*, bool)</code><br>
-	 * <i>native declaration : sass_context.h:82</i>
+	 * <i>native declaration : sass_context.h:93</i>
 	 */
 	void sass_option_set_omit_source_map_url(LiferaysassLibrary.Sass_Options options, byte omit_source_map_url);
 	/**
 	 * Original signature : <code>void sass_option_set_is_indented_syntax_src(Sass_Options*, bool)</code><br>
-	 * <i>native declaration : sass_context.h:83</i>
+	 * <i>native declaration : sass_context.h:94</i>
 	 */
 	void sass_option_set_is_indented_syntax_src(LiferaysassLibrary.Sass_Options options, byte is_indented_syntax_src);
 	/**
+	 * Original signature : <code>void sass_option_set_indent(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:95</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_set_indent(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_indent(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 */
+	@Deprecated 
+	void sass_option_set_indent(LiferaysassLibrary.Sass_Options options, Pointer indent);
+	/**
+	 * Original signature : <code>void sass_option_set_indent(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:95</i>
+	 */
+	void sass_option_set_indent(LiferaysassLibrary.Sass_Options options, String indent);
+	/**
+	 * Original signature : <code>void sass_option_set_linefeed(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:96</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_set_linefeed(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_linefeed(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 */
+	@Deprecated 
+	void sass_option_set_linefeed(LiferaysassLibrary.Sass_Options options, Pointer linefeed);
+	/**
+	 * Original signature : <code>void sass_option_set_linefeed(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:96</i>
+	 */
+	void sass_option_set_linefeed(LiferaysassLibrary.Sass_Options options, String linefeed);
+	/**
 	 * Original signature : <code>void sass_option_set_input_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:84</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_input_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_input_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * <i>native declaration : sass_context.h:97</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_set_input_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_input_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_input_path(LiferaysassLibrary.Sass_Options options, Pointer input_path);
 	/**
 	 * Original signature : <code>void sass_option_set_input_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:84</i>
+	 * <i>native declaration : sass_context.h:97</i>
 	 */
 	void sass_option_set_input_path(LiferaysassLibrary.Sass_Options options, String input_path);
 	/**
 	 * Original signature : <code>void sass_option_set_output_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:85</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_output_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_output_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * <i>native declaration : sass_context.h:98</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_set_output_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_output_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_output_path(LiferaysassLibrary.Sass_Options options, Pointer output_path);
 	/**
 	 * Original signature : <code>void sass_option_set_output_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:85</i>
+	 * <i>native declaration : sass_context.h:98</i>
 	 */
 	void sass_option_set_output_path(LiferaysassLibrary.Sass_Options options, String output_path);
 	/**
-	 * Original signature : <code>void sass_option_set_image_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:86</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_image_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_image_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * Original signature : <code>void sass_option_set_plugin_path(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:99</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_set_plugin_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_plugin_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
-	void sass_option_set_image_path(LiferaysassLibrary.Sass_Options options, Pointer image_path);
+	void sass_option_set_plugin_path(LiferaysassLibrary.Sass_Options options, Pointer plugin_path);
 	/**
-	 * Original signature : <code>void sass_option_set_image_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:86</i>
+	 * Original signature : <code>void sass_option_set_plugin_path(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:99</i>
 	 */
-	void sass_option_set_image_path(LiferaysassLibrary.Sass_Options options, String image_path);
+	void sass_option_set_plugin_path(LiferaysassLibrary.Sass_Options options, String plugin_path);
 	/**
 	 * Original signature : <code>void sass_option_set_include_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:87</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_include_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_include_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * <i>native declaration : sass_context.h:100</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_set_include_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_include_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_include_path(LiferaysassLibrary.Sass_Options options, Pointer include_path);
 	/**
 	 * Original signature : <code>void sass_option_set_include_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:87</i>
+	 * <i>native declaration : sass_context.h:100</i>
 	 */
 	void sass_option_set_include_path(LiferaysassLibrary.Sass_Options options, String include_path);
 	/**
 	 * Original signature : <code>void sass_option_set_source_map_file(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:88</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_set_source_map_file(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_source_map_file(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * <i>native declaration : sass_context.h:101</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_set_source_map_file(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_source_map_file(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_set_source_map_file(LiferaysassLibrary.Sass_Options options, Pointer source_map_file);
 	/**
 	 * Original signature : <code>void sass_option_set_source_map_file(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:88</i>
+	 * <i>native declaration : sass_context.h:101</i>
 	 */
 	void sass_option_set_source_map_file(LiferaysassLibrary.Sass_Options options, String source_map_file);
 	/**
-	 * Original signature : <code>void sass_option_set_c_functions(Sass_Options*, Sass_C_Function_List)</code><br>
-	 * <i>native declaration : sass_context.h:89</i>
+	 * Original signature : <code>void sass_option_set_source_map_root(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:102</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_set_source_map_root(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_set_source_map_root(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
-	void sass_option_set_c_functions(LiferaysassLibrary.Sass_Options options, LiferaysassLibrary.Sass_C_Function_List c_functions);
+	@Deprecated 
+	void sass_option_set_source_map_root(LiferaysassLibrary.Sass_Options options, Pointer source_map_root);
 	/**
-	 * Original signature : <code>void sass_option_set_importer(Sass_Options*, Sass_C_Import_Callback)</code><br>
-	 * <i>native declaration : sass_context.h:90</i>
+	 * Original signature : <code>void sass_option_set_source_map_root(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:102</i>
 	 */
-	void sass_option_set_importer(LiferaysassLibrary.Sass_Options options, LiferaysassLibrary.Sass_C_Import_Callback importer);
+	void sass_option_set_source_map_root(LiferaysassLibrary.Sass_Options options, String source_map_root);
 	/**
-	 * Getter for context<br>
+	 * Original signature : <code>void sass_option_set_c_headers(Sass_Options*, Sass_Importer_List)</code><br>
+	 * <i>native declaration : sass_context.h:103</i>
+	 */
+	void sass_option_set_c_headers(LiferaysassLibrary.Sass_Options options, LiferaysassLibrary.Sass_Importer_List c_headers);
+	/**
+	 * Original signature : <code>void sass_option_set_c_importers(Sass_Options*, Sass_Importer_List)</code><br>
+	 * <i>native declaration : sass_context.h:104</i>
+	 */
+	void sass_option_set_c_importers(LiferaysassLibrary.Sass_Options options, LiferaysassLibrary.Sass_Importer_List c_importers);
+	/**
+	 * Original signature : <code>void sass_option_set_c_functions(Sass_Options*, Sass_Function_List)</code><br>
+	 * <i>native declaration : sass_context.h:105</i>
+	 */
+	void sass_option_set_c_functions(LiferaysassLibrary.Sass_Options options, LiferaysassLibrary.Sass_Function_List c_functions);
+	/**
+	 * Getters for Sass_Context values<br>
 	 * Original signature : <code>char* sass_context_get_output_string(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:94</i>
+	 * <i>native declaration : sass_context.h:109</i>
 	 */
 	String sass_context_get_output_string(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>int sass_context_get_error_status(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:95</i>
+	 * <i>native declaration : sass_context.h:110</i>
 	 */
 	int sass_context_get_error_status(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_error_json(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:96</i>
+	 * <i>native declaration : sass_context.h:111</i>
 	 */
 	String sass_context_get_error_json(LiferaysassLibrary.Sass_Context ctx);
 	/**
+	 * Original signature : <code>char* sass_context_get_error_text(Sass_Context*)</code><br>
+	 * <i>native declaration : sass_context.h:112</i>
+	 */
+	String sass_context_get_error_text(LiferaysassLibrary.Sass_Context ctx);
+	/**
 	 * Original signature : <code>char* sass_context_get_error_message(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:97</i>
+	 * <i>native declaration : sass_context.h:113</i>
 	 */
 	String sass_context_get_error_message(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_error_file(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:98</i>
+	 * <i>native declaration : sass_context.h:114</i>
 	 */
 	String sass_context_get_error_file(LiferaysassLibrary.Sass_Context ctx);
 	/**
+	 * Original signature : <code>char* sass_context_get_error_src(Sass_Context*)</code><br>
+	 * <i>native declaration : sass_context.h:115</i>
+	 */
+	String sass_context_get_error_src(LiferaysassLibrary.Sass_Context ctx);
+	/**
 	 * Original signature : <code>size_t sass_context_get_error_line(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:99</i>
+	 * <i>native declaration : sass_context.h:116</i>
 	 */
 	NativeSize sass_context_get_error_line(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>size_t sass_context_get_error_column(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:100</i>
+	 * <i>native declaration : sass_context.h:117</i>
 	 */
 	NativeSize sass_context_get_error_column(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>char* sass_context_get_source_map_string(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:101</i>
+	 * <i>native declaration : sass_context.h:118</i>
 	 */
 	String sass_context_get_source_map_string(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>char** sass_context_get_included_files(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:102</i>
+	 * <i>native declaration : sass_context.h:119</i>
 	 */
 	PointerByReference sass_context_get_included_files(LiferaysassLibrary.Sass_Context ctx);
 	/**
+	 * Calculate the size of the stored null terminated array<br>
+	 * Original signature : <code>size_t sass_context_get_included_files_size(Sass_Context*)</code><br>
+	 * <i>native declaration : sass_context.h:122</i>
+	 */
+	NativeSize sass_context_get_included_files_size(LiferaysassLibrary.Sass_Context ctx);
+	/**
 	 * Take ownership of memory (value on context is set to 0)<br>
 	 * Original signature : <code>char* sass_context_take_error_json(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:105</i>
+	 * <i>native declaration : sass_context.h:125</i>
 	 */
 	Pointer sass_context_take_error_json(LiferaysassLibrary.Sass_Context ctx);
 	/**
+	 * Original signature : <code>char* sass_context_take_error_text(Sass_Context*)</code><br>
+	 * <i>native declaration : sass_context.h:126</i>
+	 */
+	Pointer sass_context_take_error_text(LiferaysassLibrary.Sass_Context ctx);
+	/**
 	 * Original signature : <code>char* sass_context_take_error_message(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:106</i>
+	 * <i>native declaration : sass_context.h:127</i>
 	 */
 	Pointer sass_context_take_error_message(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>char* sass_context_take_error_file(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:107</i>
+	 * <i>native declaration : sass_context.h:128</i>
 	 */
 	Pointer sass_context_take_error_file(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>char* sass_context_take_output_string(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:108</i>
+	 * <i>native declaration : sass_context.h:129</i>
 	 */
 	Pointer sass_context_take_output_string(LiferaysassLibrary.Sass_Context ctx);
 	/**
 	 * Original signature : <code>char* sass_context_take_source_map_string(Sass_Context*)</code><br>
-	 * <i>native declaration : sass_context.h:109</i>
+	 * <i>native declaration : sass_context.h:130</i>
 	 */
 	Pointer sass_context_take_source_map_string(LiferaysassLibrary.Sass_Context ctx);
 	/**
-	 * Push function for include paths (no manipulation support for now)<br>
+	 * Original signature : <code>char** sass_context_take_included_files(Sass_Context*)</code><br>
+	 * <i>native declaration : sass_context.h:131</i>
+	 */
+	PointerByReference sass_context_take_included_files(LiferaysassLibrary.Sass_Context ctx);
+	/**
+	 * Getters for Sass_Compiler options<br>
+	 * Original signature : <code>Sass_Compiler_State sass_compiler_get_state(Sass_Compiler*)</code><br>
+	 * <i>native declaration : sass_context.h:134</i>
+	 */
+	int sass_compiler_get_state(LiferaysassLibrary.Sass_Compiler compiler);
+	/**
+	 * Original signature : <code>Sass_Context* sass_compiler_get_context(Sass_Compiler*)</code><br>
+	 * <i>native declaration : sass_context.h:135</i>
+	 */
+	LiferaysassLibrary.Sass_Context sass_compiler_get_context(LiferaysassLibrary.Sass_Compiler compiler);
+	/**
+	 * Original signature : <code>size_t sass_compiler_get_import_stack_size(Sass_Compiler*)</code><br>
+	 * <i>native declaration : sass_context.h:136</i>
+	 */
+	NativeSize sass_compiler_get_import_stack_size(LiferaysassLibrary.Sass_Compiler compiler);
+	/**
+	 * Original signature : <code>Sass_Import_Entry sass_compiler_get_last_import(Sass_Compiler*)</code><br>
+	 * <i>native declaration : sass_context.h:137</i>
+	 */
+	LiferaysassLibrary.Sass_Import_Entry sass_compiler_get_last_import(LiferaysassLibrary.Sass_Compiler compiler);
+	/**
+	 * Original signature : <code>Sass_Import_Entry sass_compiler_get_import_entry(Sass_Compiler*, size_t)</code><br>
+	 * <i>native declaration : sass_context.h:138</i>
+	 */
+	LiferaysassLibrary.Sass_Import_Entry sass_compiler_get_import_entry(LiferaysassLibrary.Sass_Compiler compiler, NativeSize idx);
+	/**
+	 * Push function for paths (no manipulation support for now)<br>
+	 * Original signature : <code>void sass_option_push_plugin_path(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:141</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_push_plugin_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_push_plugin_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 */
+	@Deprecated 
+	void sass_option_push_plugin_path(LiferaysassLibrary.Sass_Options options, Pointer path);
+	/**
+	 * Push function for paths (no manipulation support for now)<br>
+	 * Original signature : <code>void sass_option_push_plugin_path(Sass_Options*, const char*)</code><br>
+	 * <i>native declaration : sass_context.h:141</i>
+	 */
+	void sass_option_push_plugin_path(LiferaysassLibrary.Sass_Options options, String path);
+	/**
 	 * Original signature : <code>void sass_option_push_include_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:112</i><br>
-	 * @deprecated use the safer methods {@link #sass_option_push_include_path(LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_push_include_path(LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
+	 * <i>native declaration : sass_context.h:142</i><br>
+	 * @deprecated use the safer methods {@link #sass_option_push_include_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, java.lang.String)} and {@link #sass_option_push_include_path(com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options, com.sun.jna.Pointer)} instead
 	 */
 	@Deprecated 
 	void sass_option_push_include_path(LiferaysassLibrary.Sass_Options options, Pointer path);
 	/**
-	 * Push function for include paths (no manipulation support for now)<br>
 	 * Original signature : <code>void sass_option_push_include_path(Sass_Options*, const char*)</code><br>
-	 * <i>native declaration : sass_context.h:112</i>
+	 * <i>native declaration : sass_context.h:142</i>
 	 */
 	void sass_option_push_include_path(LiferaysassLibrary.Sass_Options options, String path);
 	public static class Sass_Context extends PointerType {
@@ -1037,11 +1244,19 @@ public interface LiferaysassLibrary extends Library {
 			super();
 		}
 	};
-	public static class Sass_Import extends PointerType {
-		public Sass_Import(Pointer address) {
+	public static class Sass_Function_Entry extends PointerType {
+		public Sass_Function_Entry(Pointer address) {
 			super(address);
 		}
-		public Sass_Import() {
+		public Sass_Function_Entry() {
+			super();
+		}
+	};
+	public static class Sass_Importer_Entry extends PointerType {
+		public Sass_Importer_Entry(Pointer address) {
+			super(address);
+		}
+		public Sass_Importer_Entry() {
 			super();
 		}
 	};
@@ -1053,14 +1268,6 @@ public interface LiferaysassLibrary extends Library {
 			super();
 		}
 	};
-	public static class Sass_C_Function_List extends PointerType {
-		public Sass_C_Function_List(Pointer address) {
-			super(address);
-		}
-		public Sass_C_Function_List() {
-			super();
-		}
-	};
 	public static class Sass_Value extends PointerType {
 		public Sass_Value(Pointer address) {
 			super(address);
@@ -1069,11 +1276,11 @@ public interface LiferaysassLibrary extends Library {
 			super();
 		}
 	};
-	public static class Sass_C_Function_Callback extends PointerType {
-		public Sass_C_Function_Callback(Pointer address) {
+	public static class Sass_Function_List extends PointerType {
+		public Sass_Function_List(Pointer address) {
 			super(address);
 		}
-		public Sass_C_Function_Callback() {
+		public Sass_Function_List() {
 			super();
 		}
 	};
@@ -1085,14 +1292,6 @@ public interface LiferaysassLibrary extends Library {
 			super();
 		}
 	};
-	public static class Sass_C_Import_Callback extends PointerType {
-		public Sass_C_Import_Callback(Pointer address) {
-			super(address);
-		}
-		public Sass_C_Import_Callback() {
-			super();
-		}
-	};
 	public static class Sass_Data_Context extends PointerType {
 		public Sass_Data_Context(Pointer address) {
 			super(address);
@@ -1101,11 +1300,35 @@ public interface LiferaysassLibrary extends Library {
 			super();
 		}
 	};
+	public static class Sass_Importer_List extends PointerType {
+		public Sass_Importer_List(Pointer address) {
+			super(address);
+		}
+		public Sass_Importer_List() {
+			super();
+		}
+	};
+	public static class Sass_Import_Entry extends PointerType {
+		public Sass_Import_Entry(Pointer address) {
+			super(address);
+		}
+		public Sass_Import_Entry() {
+			super();
+		}
+	};
 	public static class Sass_Options extends PointerType {
 		public Sass_Options(Pointer address) {
 			super(address);
 		}
 		public Sass_Options() {
+			super();
+		}
+	};
+	public static class Sass_Import_List extends PointerType {
+		public Sass_Import_List(Pointer address) {
+			super(address);
+		}
+		public Sass_Import_List() {
 			super();
 		}
 	};

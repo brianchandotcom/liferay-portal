@@ -84,8 +84,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 			<%
 			BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(searchResult.getClassPK());
 
-			entry = entry.toEscapedModel();
-
 			Summary summary = searchResult.getSummary();
 			%>
 

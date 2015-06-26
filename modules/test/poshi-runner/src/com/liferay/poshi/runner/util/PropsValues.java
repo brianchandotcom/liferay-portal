@@ -134,6 +134,9 @@ public class PropsValues {
 	public static final String TEST_CASE_AVAILABLE_PROPERTY_NAMES =
 		PropsUtil.get("test.case.available.property.names");
 
+	public static final String TEST_CASE_REQUIRED_PROPERTY_NAMES =
+		PropsUtil.get("test.case.required.property.names");
+
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		PropsUtil.get("test.database.minimal"));
 

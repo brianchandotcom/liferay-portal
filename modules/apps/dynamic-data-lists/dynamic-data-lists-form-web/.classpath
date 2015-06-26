@@ -17,11 +17,17 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.application.list.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.lists.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.lists.service.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.lists.web.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.form.renderer.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.form.values.factory.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.osgi.service.tracker.map.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.expression.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
+	<classpathentry kind="lib" path="lib/commons-compiler.jar" />
+	<classpathentry kind="lib" path="lib/janino.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />

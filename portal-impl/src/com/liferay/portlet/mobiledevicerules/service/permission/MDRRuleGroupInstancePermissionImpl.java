@@ -35,7 +35,9 @@ public class MDRRuleGroupInstancePermissionImpl
 		throws PortalException {
 
 		if (!contains(permissionChecker, ruleGroupInstanceId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, MDRRuleGroupInstance.class.getName(),
+				ruleGroupInstanceId, actionId);
 		}
 	}
 
@@ -46,7 +48,9 @@ public class MDRRuleGroupInstancePermissionImpl
 		throws PortalException {
 
 		if (!contains(permissionChecker, ruleGroupInstance, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, MDRRuleGroupInstance.class.getName(),
+				ruleGroupInstance.getRuleGroupInstanceId(), actionId);
 		}
 	}
 

@@ -34,7 +34,10 @@ public class AssetEntryPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, entry, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker,
+				PortalUtil.getClassName(entry.getClassNameId()),
+				entry.getClassPK(), actionId);
 		}
 	}
 
@@ -42,9 +45,9 @@ public class AssetEntryPermission {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, entryId, actionId)) {
-			throw new PrincipalException();
-		}
+		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(entryId);
+
+		check(permissionChecker, entry, actionId);
 	}
 
 	public static void check(
@@ -53,7 +56,8 @@ public class AssetEntryPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, className, classPK, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, className, classPK, actionId);
 		}
 	}
 
@@ -73,7 +77,8 @@ public class AssetEntryPermission {
 				permissionChecker, entry.getClassPK(), actionId);
 		}
 		catch (Exception e) {
-			throw new PrincipalException(e);
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, className, entry.getClassPK(), actionId);
 		}
 	}
 

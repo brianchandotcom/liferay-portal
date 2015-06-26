@@ -32,7 +32,9 @@ public class ShoppingOrderPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, orderId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ShoppingOrder.class.getName(), orderId,
+				actionId);
 		}
 	}
 
@@ -42,7 +44,9 @@ public class ShoppingOrderPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, order, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ShoppingOrder.class.getName(),
+				order.getOrderId(), actionId);
 		}
 	}
 

@@ -169,7 +169,7 @@ public class RepositoryProviderTest {
 		RepositoryProviderUtil.getFolderLocalRepository(dlFolder.getFolderId());
 	}
 
-	@Test(expected = PrincipalException.class)
+	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testCreateRepositoryFromExistingFolderWithoutPermissions()
 		throws Exception {
 
@@ -179,7 +179,7 @@ public class RepositoryProviderTest {
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
+			PermissionChecker permissionChecker =
 				new SimplePermissionChecker() {
 
 					@Override
@@ -206,7 +206,11 @@ public class RepositoryProviderTest {
 						return false;
 					}
 
-				});
+				};
+
+			permissionChecker.init(originalPermissionChecker.getUser());
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 			RepositoryProviderUtil.getFolderRepository(dlFolder.getFolderId());
 		}

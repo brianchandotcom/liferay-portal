@@ -32,7 +32,9 @@ public class AssetVocabularyPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, vocabulary, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AssetVocabulary.class.getName(),
+				vocabulary.getVocabularyId(), actionId);
 		}
 	}
 
@@ -42,7 +44,9 @@ public class AssetVocabularyPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, vocabularyId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AssetVocabulary.class.getName(),
+				vocabularyId, actionId);
 		}
 	}
 

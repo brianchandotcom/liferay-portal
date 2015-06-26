@@ -33,7 +33,9 @@ public class SCLicensePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, productEntryId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, SCLicense.class.getName(), productEntryId,
+				actionId);
 		}
 	}
 
@@ -43,7 +45,9 @@ public class SCLicensePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, license, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, SCLicense.class.getName(),
+				license.getLicenseId(), actionId);
 		}
 	}
 

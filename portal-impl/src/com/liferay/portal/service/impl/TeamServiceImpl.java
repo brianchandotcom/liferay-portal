@@ -108,7 +108,9 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 			!UserPermissionUtil.contains(
 				permissionChecker, userId, ActionKeys.UPDATE)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Team.class.getName(), teamId,
+				ActionKeys.MANAGE_TEAMS, ActionKeys.UPDATE);
 		}
 
 		return userPersistence.containsTeam(userId, teamId);

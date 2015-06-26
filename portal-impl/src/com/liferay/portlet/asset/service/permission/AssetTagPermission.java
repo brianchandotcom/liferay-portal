@@ -30,7 +30,9 @@ public class AssetTagPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, tag, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AssetTag.class.getName(), tag.getTagId(),
+				actionId);
 		}
 	}
 
@@ -39,7 +41,8 @@ public class AssetTagPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, tagId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AssetTag.class.getName(), tagId, actionId);
 		}
 	}
 

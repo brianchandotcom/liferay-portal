@@ -33,7 +33,9 @@ public class SocialRequestPermissionImpl implements SocialRequestPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, requestId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, SocialRequest.class.getName(), requestId,
+				actionId);
 		}
 	}
 

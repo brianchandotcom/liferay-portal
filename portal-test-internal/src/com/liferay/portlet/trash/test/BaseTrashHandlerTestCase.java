@@ -1643,6 +1643,9 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashRecentBaseModel() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasRecentBaseModelCount);
 
+		WhenHasRecentBaseModelCount whenHasRecentBaseModelCountInstance =
+			(WhenHasRecentBaseModelCount)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1650,21 +1653,21 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		int initialBaseModelsCount =
-			((WhenHasRecentBaseModelCount)this).getRecentBaseModelsCount(
+			whenHasRecentBaseModelCountInstance.getRecentBaseModelsCount(
 				group.getGroupId());
 
 		addBaseModel(parentBaseModel, true, serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
-			((WhenHasRecentBaseModelCount)this).getRecentBaseModelsCount(
+			whenHasRecentBaseModelCountInstance.getRecentBaseModelsCount(
 				group.getGroupId()));
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
-			((WhenHasRecentBaseModelCount)this).getRecentBaseModelsCount(
+			whenHasRecentBaseModelCountInstance.getRecentBaseModelsCount(
 				group.getGroupId()));
 	}
 

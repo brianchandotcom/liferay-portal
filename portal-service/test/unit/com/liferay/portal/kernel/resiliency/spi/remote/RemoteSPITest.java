@@ -805,7 +805,7 @@ public class RemoteSPITest {
 
 		Assert.assertFalse(processCallable.call());
 
-		// Unable to unregister SPI
+		// Unable to unregister SPI, due MPI mismatch
 
 		MPIHelperUtil.registerSPIProvider(new MockSPIProvider(spiProviderName));
 
@@ -815,7 +815,23 @@ public class RemoteSPITest {
 
 		MPIHelperUtilTestUtil.directResigterSPI(spiId, mockSPI);
 
-		Assert.assertFalse(processCallable.call());
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					MPIHelperUtil.class.getName(), Level.WARNING)) {
+
+			Assert.assertFalse(processCallable.call());
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Not unregistering SPI " + mockSPI + " with foreign MPI null " +
+					"versus " + MPIHelperUtil.getMPI(),
+				logRecord.getMessage());
+		}
 
 		// Successfully unregister SPI
 

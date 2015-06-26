@@ -2216,11 +2216,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<WikiPage> childPages = wikiPagePersistence.findByN_P(
-			nodeId, title);
-
 		Indexer<WikiPage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			WikiPage.class);
+
+		List<WikiPage> childPages = wikiPagePersistence.findByN_P(
+			nodeId, title);
 
 		for (WikiPage childPage : childPages) {
 			childPage = doChangeNode(
@@ -2236,10 +2236,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<WikiPage> redirectorPages = getRedirectorPages(nodeId, title);
-
 		Indexer<WikiPage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			WikiPage.class);
+
+		List<WikiPage> redirectorPages = getRedirectorPages(nodeId, title);
 
 		for (WikiPage redirectorPage : redirectorPages) {
 			redirectorPage = doChangeNode(

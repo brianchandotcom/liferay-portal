@@ -142,7 +142,7 @@ public class JournalArticleAssetRenderer
 		String summary = _article.getDescription(locale);
 
 		if (Validator.isNotNull(summary)) {
-			return summary;
+			return StringUtil.shorten(summary, 200);
 		}
 
 		try {

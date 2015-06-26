@@ -783,8 +783,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<MBThread> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(MBThread.class);
+		Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
 
 		indexer.reindex(thread);
 

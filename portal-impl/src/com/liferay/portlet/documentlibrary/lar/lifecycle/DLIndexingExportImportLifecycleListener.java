@@ -91,8 +91,8 @@ public class DLIndexingExportImportLifecycleListener
 
 			});
 
-		Indexer<DLFileEntry> dlFileEntryIndexer =IndexerRegistryUtil.getIndexer(
-			DLFileEntry.class);
+		Indexer<DLFileEntry> dlFileEntryIndexer =
+			IndexerRegistryUtil.getIndexer(DLFileEntry.class);
 
 		if (dlFileEntryIndexer == null) {
 			return;

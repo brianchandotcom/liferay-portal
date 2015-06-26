@@ -1426,6 +1426,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	</#if>
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = ${entity.name}ModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " + columnName + " for table " + ${entity.name}ModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	<#if entity.isHierarchicalTree()>
 		@Override
 		public long countAncestors(${entity.name} ${entity.varName}) {

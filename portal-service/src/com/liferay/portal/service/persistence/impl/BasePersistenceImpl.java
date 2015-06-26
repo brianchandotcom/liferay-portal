@@ -43,6 +43,7 @@ import com.liferay.portal.service.persistence.BasePersistence;
 import java.io.Serializable;
 
 import java.sql.Connection;
+import java.sql.Types;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -425,16 +426,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		String[] orderByFields = orderByComparator.getOrderByFields();
 
 		for (int i = 0; i < orderByFields.length; i++) {
-			query.append(entityAlias);
-			query.append(orderByFields[i]);
-
-			if (sqlQuery) {
-				Set<String> badColumnNames = getBadColumnNames();
-
-				if (badColumnNames.contains(orderByFields[i])) {
-					query.append(StringPool.UNDERLINE);
-				}
-			}
+			query.append(
+				getColumnName(entityAlias, orderByFields[i], sqlQuery));
 
 			if ((i + 1) < orderByFields.length) {
 				if (orderByComparator.isAscending(orderByFields[i])) {
@@ -463,6 +456,35 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		Class<?> clazz = getClass();
 
 		return clazz.getClassLoader();
+	}
+
+	protected String getColumnName(
+		String entityAlias, String fieldName, boolean sqlQuery) {
+
+		String columnName = fieldName;
+
+		Set<String> badColumnNames = getBadColumnNames();
+
+		if (badColumnNames.contains(fieldName)) {
+			columnName = columnName.concat(StringPool.UNDERLINE);
+		}
+
+		if (sqlQuery) {
+			fieldName = columnName;
+		}
+
+		fieldName = entityAlias.concat(fieldName);
+
+		if (getColumnType(columnName) == Types.CLOB) {
+			fieldName = CAST_CLOB_TEXT_OPEN.concat(fieldName).concat(
+				StringPool.CLOSE_PARENTHESIS);
+		}
+
+		return fieldName;
+	}
+
+	protected int getColumnType(String columnName) {
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -500,6 +522,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected T updateImpl(T model, boolean merge) {
 		return updateImpl(model);
 	}
+
+	protected static final String CAST_CLOB_TEXT_OPEN = "CAST_CLOB_TEXT(";
 
 	protected static final Object[] FINDER_ARGS_EMPTY = new Object[0];
 

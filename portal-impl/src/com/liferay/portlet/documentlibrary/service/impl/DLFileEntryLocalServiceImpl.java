@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -350,13 +349,9 @@ public class DLFileEntryLocalServiceImpl
 
 				// File
 
-				try {
-					DLStoreUtil.deleteFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), lastDLFileVersion.getVersion());
-				}
-				catch (NoSuchModelException nsme) {
-				}
+				DLStoreUtil.deleteFile(
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName(), lastDLFileVersion.getVersion());
 
 				DLStoreUtil.copyFileVersion(
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
@@ -580,14 +575,10 @@ public class DLFileEntryLocalServiceImpl
 					dlFileVersion.getFileVersionId());
 			}
 
-			try {
-				DLStoreUtil.deleteFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-			}
-			catch (NoSuchModelException nsme) {
-			}
+			DLStoreUtil.deleteFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(),
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
 			DLStoreUtil.copyFileVersion(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
@@ -948,14 +939,9 @@ public class DLFileEntryLocalServiceImpl
 				}
 			}
 
-			try {
-				DLStoreUtil.deleteFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					version);
-			}
-			catch (NoSuchModelException nsme) {
-			}
+			DLStoreUtil.deleteFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), version);
 		}
 		finally {
 			unlockFileEntry(fileEntryId);
@@ -2567,14 +2553,10 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntryMetadataLocalService.deleteFileVersionFileEntryMetadata(
 			dlFileVersion.getFileVersionId());
 
-		try {
-			DLStoreUtil.deleteFile(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(),
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-		}
-		catch (NoSuchModelException nsme) {
-		}
+		DLStoreUtil.deleteFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(),
+			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
 		unlockFileEntry(dlFileEntry.getFileEntryId());
 	}
@@ -2685,13 +2667,9 @@ public class DLFileEntryLocalServiceImpl
 			// File
 
 			if ((file != null) || (is != null)) {
-				try {
-					DLStoreUtil.deleteFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), version);
-				}
-				catch (NoSuchModelException nsme) {
-				}
+				DLStoreUtil.deleteFile(
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName(), version);
 
 				if (file != null) {
 					DLStoreUtil.updateFile(

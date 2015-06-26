@@ -1037,12 +1037,6 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.exportimport.lar.ExportImportHelper" class="com.liferay.portlet.exportimport.lar.ExportImportHelperImpl" />
-	<bean id="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" class="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil">
-		<property name="exportImportHelper" ref="com.liferay.portlet.exportimport.lar.ExportImportHelper" />
-	</bean>
-	<bean id="com.liferay.portlet.exportimport.lar.PortletDataContextIndexer" class="com.liferay.portlet.exportimport.lar.PortletDataContextIndexer" />
-	<bean id="com.liferay.portlet.exportimport.util.ExportImportConfigurationIndexer" class="com.liferay.portlet.exportimport.util.ExportImportConfigurationIndexer" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil" class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil">
 		<property name="IGDisplayContextProvider">
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />

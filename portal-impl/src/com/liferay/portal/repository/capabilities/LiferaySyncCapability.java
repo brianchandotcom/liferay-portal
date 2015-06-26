@@ -130,10 +130,10 @@ public class LiferaySyncCapability
 		return new LiferaySyncRepositoryWrapper(repository, this);
 	}
 
-	protected static void registerDLSyncEventCallback(
+	protected void registerDLSyncEventCallback(
 		final String event, final String type, final long typePK) {
 
-		DLSyncEvent dlSyncEvent = DLSyncEventLocalServiceUtil.addDLSyncEvent(
+		DLSyncEvent dlSyncEvent = _dlSyncEventLocalService.addDLSyncEvent(
 			event, type, typePK);
 
 		final long modifiedTime = dlSyncEvent.getModifiedTime();

@@ -299,11 +299,11 @@ public class RemoteSPITest {
 		final SynchronousQueue<SPI> synchronousQueue =
 			SPISynchronousQueueUtil.createSynchronousQueue(uuid);
 
-		FutureTask<SPI> takeSPIFutureTask = new FutureTask<SPI>(
+		FutureTask<SPI> takeSPIFutureTask = new FutureTask<>(
 			new Callable<SPI>() {
 
 				@Override
-				public SPI call() throws Exception {
+				public SPI call() throws InterruptedException {
 					return synchronousQueue.take();
 				}
 
@@ -830,7 +830,7 @@ public class RemoteSPITest {
 	protected Future<?> actionOnMPIWaiting(final boolean countDownOrInterrupt) {
 		final Thread currentThread = Thread.currentThread();
 
-		FutureTask<?> futureTask = new FutureTask<Object>(
+		FutureTask<?> futureTask = new FutureTask<>(
 			new Callable<Object>() {
 
 				@Override

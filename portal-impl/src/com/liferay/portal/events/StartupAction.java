@@ -116,6 +116,7 @@ public class StartupAction extends SimpleAction {
 
 		indexerRegistryServiceDependencyManager.addServiceDependencyListener(
 			new ServiceDependencyListener() {
+
 				@Override
 				public void dependenciesFulfilled() {
 					IndexerRegistryUtil.register(new MBMessageIndexer());
@@ -125,6 +126,7 @@ public class StartupAction extends SimpleAction {
 				@Override
 				public void destroy() {
 				}
+
 			});
 
 		// Upgrade

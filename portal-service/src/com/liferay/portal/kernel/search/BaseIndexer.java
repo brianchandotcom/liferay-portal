@@ -127,13 +127,13 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public void delete(T obj) throws SearchException {
-		if (obj == null) {
+	public void delete(T object) throws SearchException {
+		if (object == null) {
 			return;
 		}
 
 		try {
-			doDelete(obj);
+			doDelete(object);
 		}
 		catch (SearchException se) {
 			throw se;
@@ -153,14 +153,14 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public Document getDocument(T obj) throws SearchException {
+	public Document getDocument(T object) throws SearchException {
 		try {
-			Document document = doGetDocument(obj);
+			Document document = doGetDocument(object);
 
 			for (IndexerPostProcessor indexerPostProcessor :
 					_indexerPostProcessors) {
 
-				indexerPostProcessor.postProcessDocument(document, obj);
+				indexerPostProcessor.postProcessDocument(document, object);
 			}
 
 			if (document == null) {
@@ -564,17 +564,17 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public void reindex(T obj) throws SearchException {
+	public void reindex(T object) throws SearchException {
 		try {
 			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
 				return;
 			}
 
-			if (obj == null) {
+			if (object == null) {
 				return;
 			}
 
-			doReindex(obj);
+			doReindex(object);
 		}
 		catch (SearchException se) {
 			throw se;
@@ -1411,9 +1411,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			_commitImmediately);
 	}
 
-	protected abstract void doDelete(T obj) throws Exception;
+	protected abstract void doDelete(T object) throws Exception;
 
-	protected abstract Document doGetDocument(T obj) throws Exception;
+	protected abstract Document doGetDocument(T object) throws Exception;
 
 	protected String doGetSortField(String orderByCol) {
 		return orderByCol;
@@ -1450,7 +1450,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	protected abstract void doReindex(String[] ids) throws Exception;
 
-	protected abstract void doReindex(T obj) throws Exception;
+	protected abstract void doReindex(T object) throws Exception;
 
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {

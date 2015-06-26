@@ -210,7 +210,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates" priority="3">
+	<command known-issues="LPS-56625" name="SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>

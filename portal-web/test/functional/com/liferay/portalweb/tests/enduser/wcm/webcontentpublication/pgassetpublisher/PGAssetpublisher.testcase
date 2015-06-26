@@ -137,7 +137,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertViewPermissionsViaCPAndPG" priority="4">
+	<command known-issues="LPS-56665" name="AssertViewPermissionsViaCPAndPG" priority="4">
 		<var name="roleType1" value="Regular" />
 		<var name="roleType2" value="Regular" />
 
@@ -777,7 +777,7 @@
 		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
 	</command>
 
-	<command name="ConfigureAPPortletDisplaytemplateFullContentWithBookmarks" priority="4">
+	<command known-issues="LPS-56541" name="ConfigureAPPortletDisplaytemplateFullContentWithBookmarks" priority="4">
 		<var name="bookmarkURL" value="http://www.liferay.com" />
 
 		<execute macro="Page#addPG">
@@ -1259,7 +1259,7 @@
 		</execute>
 	</command>
 
-	<command name="OrderWCByModifiedDateViaAP" priority="3">
+	<command known-issues="LPS-56665" name="OrderWCByModifiedDateViaAP" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -1335,7 +1335,7 @@
 		</execute>
 	</command>
 
-	<command name="OrderWCByPublishDateViaAP" priority="3">
+	<command known-issues="LPS-56665" name="OrderWCByPublishDateViaAP" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>

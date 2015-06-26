@@ -14,9 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
+
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Iván Zaera
@@ -27,16 +31,21 @@ import com.liferay.portal.util.PortletKeys;
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
 		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/edit_file_entry"
+		"mvc.command.name=/document_library/upload_multiple_file_entries"
 	},
-	service = MVCRenderCommand.class
+	service = MVCResourceCommand.class
 )
-public class EditFileEntryMVCRenderCommand
-	extends GetFileEntryMVCRenderCommand {
+public class UploadMultipleFileEntriesMVCResourceCommand
+	extends BaseMVCResourceCommand {
 
 	@Override
-	protected String getPath() {
-		return "/html/portlet/document_library/edit_file_entry.jsp";
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		include(
+			resourceRequest, resourceResponse,
+			"/html/portlet/document_library/upload_multiple_file_entries.jsp");
 	}
 
 }

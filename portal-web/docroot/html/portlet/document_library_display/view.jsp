@@ -69,7 +69,7 @@ boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetT
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
+portletURL.setParameter("mvcRenderCommandName", "/document_library_display/view");
 portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("folderId", String.valueOf(folderId));
 
@@ -178,7 +178,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 									rowVar="row"
 								>
 									<liferay-portlet:renderURL varImpl="rowURL">
-										<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+										<portlet:param name="mvcRenderCommandName" value="/document_library_display/view" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 									</liferay-portlet:renderURL>

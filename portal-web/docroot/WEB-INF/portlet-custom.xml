@@ -494,7 +494,7 @@
 		</init-param>
 		<init-param>
 			<name>view-action</name>
-			<value>/document_library/view</value>
+			<value>/document_library_display/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

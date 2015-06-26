@@ -192,7 +192,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					%>
 
 					<portlet:renderURL var="rowURL">
-						<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library_display/view" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 					</portlet:renderURL>

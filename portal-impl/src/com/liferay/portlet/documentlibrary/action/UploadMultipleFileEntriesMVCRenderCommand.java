@@ -14,37 +14,29 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
-import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.portal.util.PortletKeys;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera
  */
 @OSGiBeanProperties(
 	property = {
-		"path=/document_library/find_folder",
-		"path=/image_gallery_display/find_folder"
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
+		"mvc.command.name=/document_library/upload_multiple_file_entries"
 	},
-	service = StrutsAction.class
+	service = MVCRenderCommand.class
 )
-public class FindFolderAction extends BaseStrutsAction {
+public class UploadMultipleFileEntriesMVCRenderCommand
+	extends BaseGetFileEntryMVCRenderCommand implements MVCRenderCommand {
 
-	@Override
-	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-
-		_findActionHelper.execute(request, response);
-
-		return null;
+	public UploadMultipleFileEntriesMVCRenderCommand() {
+		super(
+			"/html/portlet/document_library/upload_multiple_file_entries.jsp");
 	}
-
-	private final FindActionHelper _findActionHelper =
-		new DLFindFolderActionHelper();
 
 }

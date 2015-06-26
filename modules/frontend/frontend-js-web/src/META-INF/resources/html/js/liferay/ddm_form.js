@@ -963,7 +963,7 @@ AUI.add(
 
 						portletURL.setParameter('cmd', 'add_temp');
 						portletURL.setParameter('p_auth', Liferay.authToken);
-						portletURL.setParameter('struts_action', '/document_library/upload_file_entry');
+						portletURL.setParameter('javax.portlet.action', '/document_library/upload_file_entry');
 
 						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
 

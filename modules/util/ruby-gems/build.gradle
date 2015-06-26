@@ -16,17 +16,6 @@ classes {
 	dependsOn downloadGems
 }
 
-deploy {
-	into("../../../lib/development") {
-		from {
-			jar.archivePath
-		}
-		rename {
-			"ruby-gems.jar"
-		}
-	}
-}
-
 downloadGems {
 	doLast {
 		File compassFile = FileUtil.get(project, compassUrl, temporaryDir)

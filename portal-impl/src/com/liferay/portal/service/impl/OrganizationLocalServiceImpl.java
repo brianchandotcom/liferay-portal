@@ -1407,8 +1407,8 @@ public class OrganizationLocalServiceImpl
 		int end, Sort sort) {
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				Organization.class);
+			Indexer<Organization> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, parentOrganizationId, name, type, street, city, zip,
@@ -1485,8 +1485,9 @@ public class OrganizationLocalServiceImpl
 				params.put("keywords", keywords);
 			}
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				Organization.class);
+			Indexer<Organization> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					Organization.class);
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, parentOrganizationId, name, type, street, city, zip,
@@ -1553,8 +1554,9 @@ public class OrganizationLocalServiceImpl
 		}
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				Organization.class);
+			Indexer<Organization> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					Organization.class);
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, parentOrganizationId, name, type, street, city, zip,
@@ -1613,7 +1615,7 @@ public class OrganizationLocalServiceImpl
 			boolean andSearch, int start, int end, Sort sort)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<Organization> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			Organization.class);
 
 		SearchContext searchContext = buildSearchContext(

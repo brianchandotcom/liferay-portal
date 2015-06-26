@@ -335,8 +335,8 @@ public class AssetVocabularyLocalServiceImpl
 			if (vocabulary == null) {
 				vocabularies = null;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					AssetVocabulary.class);
+				Indexer<AssetVocabulary> indexer =
+					IndexerRegistryUtil.getIndexer(AssetVocabulary.class);
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));
@@ -449,8 +449,8 @@ public class AssetVocabularyLocalServiceImpl
 			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			AssetVocabulary.class);
+		Indexer<AssetVocabulary> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(AssetVocabulary.class);
 
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext);

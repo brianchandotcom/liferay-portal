@@ -125,7 +125,7 @@ public class MBMessageIndexer
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(entryClassPK);
 
 		if (message.isDiscussion()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				message.getClassName());
 
 			return indexer.hasPermission(
@@ -151,7 +151,7 @@ public class MBMessageIndexer
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
 
 		if (message.isDiscussion()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				message.getClassName());
 
 			return indexer.isVisible(message.getClassPK(), status);
@@ -258,7 +258,7 @@ public class MBMessageIndexer
 		document.addKeyword("threadId", mbMessage.getThreadId());
 
 		if (mbMessage.isDiscussion()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				mbMessage.getClassName());
 
 			if ((indexer != null) && (indexer instanceof RelatedEntryIndexer)) {

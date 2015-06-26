@@ -9,10 +9,6 @@
 			<name>template-path</name>
 			<value>/html/portlet/my_account/</value>
 		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/my_account/view</value>
-		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

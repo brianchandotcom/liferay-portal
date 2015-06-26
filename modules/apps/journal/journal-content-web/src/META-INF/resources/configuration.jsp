@@ -42,7 +42,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 	</div>
 </div>
 
-<div class="<%= article == null ? "hidden " : "" %>row row-spacing template-preview">
+<div class="row row-spacing template-preview">
 	<div class="col-md-4 col-xs-12">
 		<p class="text-muted"><liferay-ui:message key="template" /></p>
 
@@ -55,7 +55,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		</div>
 	</div>
 
-	<div class="col-md-12">
+	<div class="button-container col-md-12">
 		<aui:button name="templateSelector" value="change" />
 	</div>
 </div>
@@ -157,14 +157,13 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 							success: function(responseData) {
 								$('.article-preview .article-preview-content-container').html($('.article-preview-content', $(responseData)));
 
-								var templatePreviewContent = $('.template-preview-content', $(responseData));
+								$('.template-preview .template-preview-content-container').html($('.template-preview-content', $(responseData)));
 
-								if (templatePreviewContent.length > 0) {
-									$('.template-preview .template-preview-content-container').html($('.template-preview-content', $(responseData)));
-									$('.template-preview').removeClass('hidden');
+								if ($('.template-preview .template-preview-content').attr('data-change-enabled') === 'false') {
+									$('.template-preview .button-container').addClass('hidden');
 								}
 								else {
-									$('.template-preview').addClass('hidden');
+									$('.template-preview .button-container').removeClass('hidden');
 								}
 
 								form.fm('assetEntryId').val(event.assetentryid);

@@ -226,11 +226,18 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
+		RepositoryEventTrigger repositoryEventTrigger =
+			RepositoryUtil.getRepositoryEventTrigger(repositoryId);
+
 		List<DLFolder> dlFolders = dlFolderPersistence.findByRepositoryId(
 			repositoryId);
 
 		for (DLFolder dlFolder : dlFolders) {
-			dlFolderLocalService.deleteFolder(dlFolder);
+			deleteFolderEntries(dlFolder, true);
+
+			repositoryEventTrigger.trigger(
+				RepositoryEventType.Delete.class, Folder.class,
+				new LiferayFolder(dlFolder));
 		}
 
 		if (repository != null) {
@@ -276,111 +283,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			DLFolder dlFolder, boolean includeTrashedEntries)
 		throws PortalException {
 
-		RepositoryEventTrigger repositoryEventTrigger =
-			RepositoryUtil.getRepositoryEventTrigger(
-				dlFolder.getRepositoryId());
+		deleteSubfolders(dlFolder, includeTrashedEntries);
 
-		// Folders
-
-		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
-			dlFolder.getGroupId(), dlFolder.getFolderId());
-
-		for (DLFolder curDLFolder : dlFolders) {
-			if (includeTrashedEntries || !curDLFolder.isInTrashExplicitly()) {
-				repositoryEventTrigger.trigger(
-					RepositoryEventType.Delete.class, Folder.class,
-					new LiferayFolder(curDLFolder));
-
-				dlFolderLocalService.deleteFolder(
-					curDLFolder, includeTrashedEntries);
-			}
-		}
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			dlFolder.getCompanyId(), DLFolder.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, dlFolder.getFolderId());
-
-		// WebDAVProps
-
-		webDAVPropsLocalService.deleteWebDAVProps(
-			DLFolder.class.getName(), dlFolder.getFolderId());
-
-		// File entries
-
-		dlFileEntryLocalService.deleteFileEntries(
-			dlFolder.getGroupId(), dlFolder.getFolderId(),
-			includeTrashedEntries);
-
-		// File entry types
-
-		List<Long> fileEntryTypeIds = new ArrayList<>();
-
-		for (DLFileEntryType dlFileEntryType :
-				dlFileEntryTypeLocalService.getDLFolderDLFileEntryTypes(
-					dlFolder.getFolderId())) {
-
-			fileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
-		}
-
-		if (fileEntryTypeIds.isEmpty()) {
-			fileEntryTypeIds.add(
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
-		}
-
-		dlFileEntryTypeLocalService.unsetFolderFileEntryTypes(
-			dlFolder.getFolderId());
-
-		// File shortcuts
-
-		dlFileShortcutLocalService.deleteFileShortcuts(
-			dlFolder.getGroupId(), dlFolder.getFolderId(),
-			includeTrashedEntries);
-
-		// Expando
-
-		expandoRowLocalService.deleteRows(dlFolder.getFolderId());
-
-		// Folder
-
-		dlFolderPersistence.remove(dlFolder);
-
-		// Directory
-
-		try {
-			if (includeTrashedEntries) {
-				DLStoreUtil.deleteDirectory(
-					dlFolder.getCompanyId(), dlFolder.getFolderId(),
-					StringPool.BLANK);
-			}
-		}
-		catch (NoSuchDirectoryException nsde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsde.getMessage());
-			}
-		}
-
-		// Workflow
-
-		for (long fileEntryTypeId : fileEntryTypeIds) {
-			WorkflowDefinitionLink workflowDefinitionLink = null;
-
-			try {
-				workflowDefinitionLink =
-					workflowDefinitionLinkLocalService.
-						getWorkflowDefinitionLink(
-							dlFolder.getCompanyId(), dlFolder.getGroupId(),
-							DLFolder.class.getName(), dlFolder.getFolderId(),
-							fileEntryTypeId);
-			}
-			catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-				continue;
-			}
-
-			workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-				workflowDefinitionLink);
-		}
+		deleteFolderEntries(dlFolder, includeTrashedEntries);
 
 		return dlFolder;
 	}
@@ -1404,6 +1309,120 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
 		addFolderResources(dlFolder, groupPermissions, guestPermissions);
+	}
+
+	protected void deleteFolderEntries(
+			DLFolder dlFolder, boolean includeTrashedEntries)
+		throws PortalException {
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			dlFolder.getCompanyId(), DLFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, dlFolder.getFolderId());
+
+		// WebDAVProps
+
+		webDAVPropsLocalService.deleteWebDAVProps(
+			DLFolder.class.getName(), dlFolder.getFolderId());
+
+		// File entries
+
+		dlFileEntryLocalService.deleteFileEntries(
+			dlFolder.getGroupId(), dlFolder.getFolderId(),
+			includeTrashedEntries);
+
+		// File entry types
+
+		List<Long> fileEntryTypeIds = new ArrayList<>();
+
+		for (DLFileEntryType dlFileEntryType :
+				dlFileEntryTypeLocalService.getDLFolderDLFileEntryTypes(
+					dlFolder.getFolderId())) {
+
+			fileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
+		}
+
+		if (fileEntryTypeIds.isEmpty()) {
+			fileEntryTypeIds.add(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
+		}
+
+		dlFileEntryTypeLocalService.unsetFolderFileEntryTypes(
+			dlFolder.getFolderId());
+
+		// File shortcuts
+
+		dlFileShortcutLocalService.deleteFileShortcuts(
+			dlFolder.getGroupId(), dlFolder.getFolderId(),
+			includeTrashedEntries);
+
+		// Expando
+
+		expandoRowLocalService.deleteRows(dlFolder.getFolderId());
+
+		// Folder
+
+		dlFolderPersistence.remove(dlFolder);
+
+		// Directory
+
+		try {
+			if (includeTrashedEntries) {
+				DLStoreUtil.deleteDirectory(
+					dlFolder.getCompanyId(), dlFolder.getFolderId(),
+					StringPool.BLANK);
+			}
+		}
+		catch (NoSuchDirectoryException nsde) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsde.getMessage());
+			}
+		}
+
+		// Workflow
+
+		for (long fileEntryTypeId : fileEntryTypeIds) {
+			WorkflowDefinitionLink workflowDefinitionLink = null;
+
+			try {
+				workflowDefinitionLink =
+					workflowDefinitionLinkLocalService.
+						getWorkflowDefinitionLink(
+							dlFolder.getCompanyId(), dlFolder.getGroupId(),
+							DLFolder.class.getName(), dlFolder.getFolderId(),
+							fileEntryTypeId);
+			}
+			catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+				continue;
+			}
+
+			workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				workflowDefinitionLink);
+		}
+	}
+
+	protected void deleteSubfolders(
+			DLFolder dlFolder, boolean includeTrashedEntries)
+		throws PortalException {
+
+		RepositoryEventTrigger repositoryEventTrigger =
+			RepositoryUtil.getRepositoryEventTrigger(
+				dlFolder.getRepositoryId());
+
+		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
+			dlFolder.getGroupId(), dlFolder.getFolderId());
+
+		for (DLFolder curDLFolder : dlFolders) {
+			if (includeTrashedEntries || !curDLFolder.isInTrashExplicitly()) {
+				repositoryEventTrigger.trigger(
+					RepositoryEventType.Delete.class, Folder.class,
+					new LiferayFolder(curDLFolder));
+
+				dlFolderLocalService.deleteFolder(
+					curDLFolder, includeTrashedEntries);
+			}
+		}
 	}
 
 	protected Set<Long> getFileEntryTypeIds(

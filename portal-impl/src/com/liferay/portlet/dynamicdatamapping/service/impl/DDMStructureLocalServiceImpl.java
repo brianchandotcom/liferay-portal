@@ -233,15 +233,14 @@ public class DDMStructureLocalServiceImpl
 	public DDMStructure addStructure(
 			long userId, long groupId, long classNameId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout, String storageType,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addStructure(
 			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			classNameId, null, nameMap, descriptionMap, ddmForm, ddmFormLayout,
-			StorageType.JSON.toString(),
-			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+			storageType, DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 	}
 
 	/**

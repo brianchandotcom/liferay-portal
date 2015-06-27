@@ -16,10 +16,10 @@ package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.plugins.LiferayThemePlugin;
 import com.liferay.gradle.util.ArrayUtil;
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
+import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.lang.Closure;
 
@@ -178,7 +178,8 @@ public class CompileThemeTask extends DefaultTask {
 		final String prefix = "html/themes/" + theme + "/";
 
 		final File frontendThemesWebDir = getFrontendThemesWebDir();
-		File frontendThemesWebFile = getFrontendThemesWebFile();
+		final File frontendThemesWebFile = getFrontendThemesWebFile();
+		final File themeRootDir = getThemeRootDir();
 
 		if (frontendThemesWebDir != null) {
 			Closure<Void> closure = new Closure<Void>(null) {
@@ -192,7 +193,7 @@ public class CompileThemeTask extends DefaultTask {
 					}
 
 					copySpec.include(include);
-					copySpec.into(getThemeRootDir());
+					copySpec.into(themeRootDir);
 				}
 
 			};
@@ -202,12 +203,29 @@ public class CompileThemeTask extends DefaultTask {
 		else if (frontendThemesWebFile != null) {
 			String jarPrefix = "META-INF/resources/" + prefix;
 
-			String[] prefixedExcludes = StringUtil.prepend(excludes, jarPrefix);
-			String prefixedInclude = jarPrefix + include;
+			final String[] prefixedExcludes = StringUtil.prepend(
+				excludes, jarPrefix);
+			final String prefixedInclude = jarPrefix + include;
 
-			FileUtil.unzip(
-				_project, frontendThemesWebFile, getThemeRootDir(), 5,
-				prefixedExcludes, new String[] {prefixedInclude});
+			Closure<Void> closure = new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(new StripPathSegmentsAction(5));
+
+					if (ArrayUtil.isNotEmpty(prefixedExcludes)) {
+						copySpec.exclude(prefixedExcludes);
+					}
+
+					copySpec.from(_project.zipTree(frontendThemesWebFile));
+					copySpec.include(prefixedInclude);
+					copySpec.into(themeRootDir);
+					copySpec.setIncludeEmptyDirs(false);
+				}
+
+			};
+
+			_project.copy(closure);
 		}
 		else {
 			throw new GradleException("Unable to find frontend themes web");

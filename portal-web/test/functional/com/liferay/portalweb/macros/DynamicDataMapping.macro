@@ -8,12 +8,18 @@
 
 		<execute function="DragAndDrop" locator1="Dynamicdatamapping#FIELDS_FIELD" locator2="Dynamicdatamapping#FORM_BUILDER" value1="${field}" />
 
-		<execute macro="DynamicDataMapping#editFieldLabelCmd" />
+		<execute macro="DynamicDataMapping#editFieldLabelCmd">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
-		<execute macro="DynamicDataMapping#editFieldNameCmd" />
+		<execute macro="DynamicDataMapping#editFieldNameCmd">
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_NAME" value1="${fieldName}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
@@ -79,12 +85,18 @@
 		<execute function="SikuliMouseMove" locator1="Dynamicdatamapping#FORM_FIELD_PNG" />
 		<execute function="SikuliLeftMouseUp" />
 
-		<execute macro="DynamicDataMapping#editFieldLabelCmd" />
+		<execute macro="DynamicDataMapping#editFieldLabelCmd">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
 
-		<execute macro="DynamicDataMapping#editFieldNameCmd" />
+		<execute macro="DynamicDataMapping#editFieldNameCmd">
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_NAME" value1="${fieldName}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Dynamicdatamapping#FIELDS_LINK" value1="Fields" />
@@ -200,7 +212,10 @@
 
 		<var name="key_fieldFieldLabel" value="${field}" />
 
-		<execute macro="DynamicDataMapping#editFieldNameCmd" />
+		<execute macro="DynamicDataMapping#editFieldNameCmd">
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_FIELD_ALERT" value1="Please enter only alphanumeric characters." />
 

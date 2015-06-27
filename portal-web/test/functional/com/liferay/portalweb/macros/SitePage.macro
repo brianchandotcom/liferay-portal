@@ -14,7 +14,9 @@
 			</then>
 		</if>
 
-		<execute macro="SitePage#addCmd" />
+		<execute macro="SitePage#addCmd">
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		</execute>
 
 		<execute macro="SitePage#expandRootCP" />
 
@@ -69,7 +71,9 @@
 			</then>
 		</if>
 
-		<execute macro="SitePage#addCmd" />
+		<execute macro="SitePage#addCmd">
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />

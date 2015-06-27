@@ -803,8 +803,6 @@ public interface PropsKeys {
 
 	public static final String DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP = "dockbar.administrative.links.show.in.pop.up";
 
-	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE = "dynamic.data.lists.error.template";
-
 	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE = "dynamic.data.lists.storage.type";
 
 	public static final String DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS = "dynamic.data.mapping.image.extensions";

@@ -446,31 +446,30 @@ public class LiferayPortlet extends GenericPortlet {
 
 	protected void initValidPaths(String rootPath, String extension) {
 		if (rootPath.equals(StringPool.SLASH)) {
-			String contextName = getPortletContext().getPortletContextName();
+			PortletContext portletContext = getPortletContext();
 
 			PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
-				contextName);
+				portletContext.getPortletContextName());
 
 			if (!portletApp.isWARFile()) {
 				_log.error(
-					"Portlet " + getPortletName() + " has incorrect " +
-						"root path and can access all portal JSPs. " +
-						"Portal disabled access to the JSPs");
+					"Disabling paths for portlet " + getPortletName() +
+						" because root path is configured to have access to " +
+							"all portal paths");
 
 				validPaths = new HashSet<>();
+
 				return;
 			}
 		}
-
-		String[] validPathsInitParameter = StringUtil.split(
-			getInitParameter("valid-paths"));
 
 		validPaths = getPaths(rootPath, extension);
 
 		validPaths.addAll(
 			getPaths(_PATH_META_INF_RESOURCES + rootPath, extension));
 
-		validPaths.addAll(Arrays.asList(validPathsInitParameter));
+		validPaths.addAll(
+			Arrays.asList(StringUtil.split(getInitParameter("valid-paths"))));
 	}
 
 	protected boolean isAlwaysSendRedirect() {

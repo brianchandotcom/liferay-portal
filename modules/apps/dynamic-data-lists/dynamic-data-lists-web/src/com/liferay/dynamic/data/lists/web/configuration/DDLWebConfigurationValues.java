@@ -28,5 +28,11 @@ public class DDLWebConfigurationValues {
 
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE =
 		"dynamic.data.lists.error.template";
+	
+	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE =
+			GetterUtil.getString(
+					DDLWebConfigurationUtil.get(
+							"dynamic.data.lists.storage.type"));
+
 
 }

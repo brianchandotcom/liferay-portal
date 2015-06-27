@@ -280,7 +280,9 @@
 	</command>
 
 	<command name="gotoSitepageCP">
-		<execute macro="SitePage#addCmd" />
+		<execute macro="SitePage#addCmd">
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		</execute>
 
 		<execute macro="SitePage#expandRootCP" />
 

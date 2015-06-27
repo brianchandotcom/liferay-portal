@@ -468,7 +468,7 @@ public class LiferayPortlet extends GenericPortlet {
 		validPaths = _getPaths(rootPath, fileExtension);
 
 		validPaths.addAll(
-			_getPaths(_META_INF_RESOURCES + rootPath, fileExtension));
+			_getPaths(_PATH_META_INF_RESOURCES + rootPath, fileExtension));
 
 		validPaths.addAll(Arrays.asList(validPathsInitParameter));
 	}
@@ -530,9 +530,9 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected boolean isValidPath(String path) throws PortletException {
-		String metaInfPath = _META_INF_RESOURCES + path;
+		if (validPaths.contains(path) ||
+			validPaths.contains(_PATH_META_INF_RESOURCES + path)) {
 
-		if (validPaths.contains(path) || validPaths.contains(metaInfPath)) {
 			return true;
 		}
 
@@ -632,7 +632,7 @@ public class LiferayPortlet extends GenericPortlet {
 		SessionMessages.KEY_SUFFIX_REFRESH_PORTLET
 	};
 
-	private static final String _META_INF_RESOURCES = "/META-INF/resources";
+	private static final String _PATH_META_INF_RESOURCES = "/META-INF/resources";
 
 	private static final boolean _PROCESS_PORTLET_REQUEST = true;
 

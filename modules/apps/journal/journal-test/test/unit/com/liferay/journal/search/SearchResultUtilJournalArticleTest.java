@@ -20,13 +20,19 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -78,17 +84,35 @@ public class SearchResultUtilJournalArticleTest
 
 		Document document = createDocument();
 
-		SearchResult searchResult = assertOneSearchResult(document);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					SearchResultUtil.class.getName(), Level.WARNING)) {
 
-		assertSearchResult(searchResult);
+			SearchResult searchResult = assertOneSearchResult(document);
 
-		Assert.assertNull(searchResult.getSummary());
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		Mockito.verify(
-			indexer
-		).getSummary(
-			document, StringPool.BLANK, null, null
-		);
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			Assert.assertEquals(
+				"Search index is stale and contains entry {" + entryClassPK +
+					"}", logRecord.getMessage());
+
+			assertSearchResult(searchResult);
+
+			Assert.assertNull(searchResult.getSummary());
+
+			Mockito.verify(
+				indexer
+			).getSummary(
+				document, StringPool.BLANK, null, null
+			);
+		}
 	}
 
 	protected void assertSearchResult(SearchResult searchResult) {

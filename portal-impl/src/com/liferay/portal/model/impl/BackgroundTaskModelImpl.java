@@ -80,7 +80,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 			{ "name", Types.VARCHAR },
 			{ "servletContextNames", Types.VARCHAR },
 			{ "taskExecutorClassName", Types.VARCHAR },
-			{ "taskContextMap", Types.VARCHAR },
+			{ "taskContextMap", Types.CLOB },
 			{ "completed", Types.BOOLEAN },
 			{ "completionDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },

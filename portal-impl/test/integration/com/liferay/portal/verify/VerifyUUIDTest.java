@@ -59,7 +59,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				dbType = DB.TYPE_POSTGRESQL, expectedLog =
 					"Unable to process runnable: ERROR: column \"unknown\" " +
-						"does not exist_",
+						"does not exist",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -93,7 +93,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				dbType = DB.TYPE_POSTGRESQL, expectedLog =
 					"Unable to process runnable: ERROR: relation " +
-						"\"unknown\" does not exist_",
+						"\"unknown\" does not exist",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -138,7 +138,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				dbType = DB.TYPE_POSTGRESQL, expectedLog =
 					"Unable to process runnable: ERROR: relation \"unknown\" " +
-						"does not exist_",
+						"does not exist",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

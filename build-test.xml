@@ -166,6 +166,8 @@ jdbc.default.password=${database.password}]]></echo>
 
 					<set-portal-impl-portal-test-ext-properties />
 
+					<set-portal-impl-system-ext-properties />
+
 					<exec executable="service" failonerror="true">
 						<arg line="${database.service.name} start" />
 					</exec>
@@ -1297,6 +1299,12 @@ ${tomcat-gc-log}
 module.framework.base.dir=${project.dir}/osgi]]></echo>
 				</post-action>
 			</generate-jdbc-properties>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="set-portal-impl-system-ext-properties">
+		<sequential>
+			<echo file="portal-impl/test/system-ext.properties">log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 

@@ -465,10 +465,10 @@ public class LiferayPortlet extends GenericPortlet {
 		String[] validPathsInitParameter = StringUtil.split(
 			getInitParameter("valid-paths"));
 
-		validPaths = _getPaths(rootPath, fileExtension);
+		validPaths = getPaths(rootPath, fileExtension);
 
 		validPaths.addAll(
-			_getPaths(_PATH_META_INF_RESOURCES + rootPath, fileExtension));
+			getPaths(_PATH_META_INF_RESOURCES + rootPath, fileExtension));
 
 		validPaths.addAll(Arrays.asList(validPathsInitParameter));
 	}
@@ -603,7 +603,7 @@ public class LiferayPortlet extends GenericPortlet {
 	protected boolean alwaysSendRedirect;
 	protected Set<String> validPaths;
 
-	private Set<String> _getPaths(String rootPath, String extension) {
+	private Set<String> getPaths(String rootPath, String extension) {
 		Set<String> result = new HashSet<String>();
 		PortletContext portletContext = getPortletContext();
 		Set<String> paths = portletContext.getResourcePaths(rootPath);
@@ -614,7 +614,7 @@ public class LiferayPortlet extends GenericPortlet {
 
 		for (String path : paths) {
 			if (path.endsWith(StringPool.SLASH)) {
-				result.addAll(_getPaths(path, extension));
+				result.addAll(getPaths(path, extension));
 			}
 			else if (path.endsWith(extension)) {
 				result.add(path);

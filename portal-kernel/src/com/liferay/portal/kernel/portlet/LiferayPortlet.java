@@ -444,7 +444,7 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 	}
 
-	protected void initValidPaths(String rootPath, String fileExtension) {
+	protected void initValidPaths(String rootPath, String extension) {
 		if (rootPath.equals(StringPool.SLASH)) {
 			String contextName = getPortletContext().getPortletContextName();
 
@@ -465,10 +465,10 @@ public class LiferayPortlet extends GenericPortlet {
 		String[] validPathsInitParameter = StringUtil.split(
 			getInitParameter("valid-paths"));
 
-		validPaths = getPaths(rootPath, fileExtension);
+		validPaths = getPaths(rootPath, extension);
 
 		validPaths.addAll(
-			getPaths(_PATH_META_INF_RESOURCES + rootPath, fileExtension));
+			getPaths(_PATH_META_INF_RESOURCES + rootPath, extension));
 
 		validPaths.addAll(Arrays.asList(validPathsInitParameter));
 	}
@@ -603,25 +603,27 @@ public class LiferayPortlet extends GenericPortlet {
 	protected boolean alwaysSendRedirect;
 	protected Set<String> validPaths;
 
-	private Set<String> getPaths(String rootPath, String extension) {
-		Set<String> result = new HashSet<String>();
+	private Set<String> getPaths(String path, String extension) {
+		Set<String> paths = new HashSet<String>();
+
 		PortletContext portletContext = getPortletContext();
-		Set<String> paths = portletContext.getResourcePaths(rootPath);
 
-		if (paths == null) {
-			return result;
+		Set<String> childPaths = portletContext.getResourcePaths(path);
+
+		if (childPaths == null) {
+			return paths;
 		}
 
-		for (String path : paths) {
-			if (path.endsWith(StringPool.SLASH)) {
-				result.addAll(getPaths(path, extension));
+		for (String childPath : childPaths) {
+			if (childPath.endsWith(StringPool.SLASH)) {
+				paths.addAll(getPaths(childPath, extension));
 			}
-			else if (path.endsWith(extension)) {
-				result.add(path);
+			else if (childPath.endsWith(extension)) {
+				paths.add(childPath);
 			}
 		}
 
-		return result;
+		return paths;
 	}
 
 	private static final String[] _IGNORED_SESSION_MESSAGE_SUFFIXES = {

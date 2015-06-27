@@ -1283,6 +1283,7 @@
 		</execute>
 
 		<execute macro="Team#assignUserGroups">
+			<var name="teamName" value="Site Team Name" />
 			<var name="userGroupName" value="UG UserGroup1 Name" />
 		</execute>
 

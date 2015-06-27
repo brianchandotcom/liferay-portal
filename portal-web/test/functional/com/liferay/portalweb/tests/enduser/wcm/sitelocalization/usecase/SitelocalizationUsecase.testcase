@@ -502,7 +502,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteTemplateLocalization" priority="5">
+	<command known-issues="LPS-56473" name="SiteTemplateLocalization" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoCP">

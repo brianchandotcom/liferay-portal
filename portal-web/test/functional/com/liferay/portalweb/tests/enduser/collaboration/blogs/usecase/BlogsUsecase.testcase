@@ -642,82 +642,81 @@
 	</command>
 
 	<command name="ViewBlogsEntryAsPublishedViaAP" priority="3">
-		<var name="assetTitle" value="Blogs Entry Title" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="pageName2" value="Asset Publisher Page" />
-		<var name="portletName2" value="Asset Publisher" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName2}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute macro="BlogsEntry#addPGViaAP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#editContentPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContentEdit" value="${entryContentEdit}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute macro="Blogs#editEntryAndSaveDraftPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entrySubtitleEdit" value="Blogs Entry Subtitle Edit" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
 			<var name="saveAsDraft" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoEntryViaAPPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#publishDraftCP">
+			<var name="entryContent" value="Blogs Entry Content Edit" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle Edit" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#publishDraftPG">
-			<var name="entryContent" value="${entryContentEdit}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="entryContent" value="${entryContentEdit}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="assetTitle" value="Blogs Entry Title Edit" />
+			<var name="entryContent" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
 		</execute>
 	</command>
 

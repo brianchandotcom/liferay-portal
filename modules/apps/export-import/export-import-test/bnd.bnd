@@ -7,10 +7,4 @@ Include-Resource:\
 	test-classes/integration,\
 	@lib/com.liferay.bookmarks.test.jar!/com/liferay/bookmarks/util/test/BookmarksTestUtil.class,\
 	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class,\
-	@lib/javassist.jar,\
-	@lib/mockito-all.jar,\
-	@lib/powermock-api-mockito.jar,\
-	@lib/powermock-api-support.jar,\
-	@lib/powermock-core.jar,\
-	@lib/powermock-reflect.jar,\
 	../../../../portal-impl/test/test-portal-impl.properties

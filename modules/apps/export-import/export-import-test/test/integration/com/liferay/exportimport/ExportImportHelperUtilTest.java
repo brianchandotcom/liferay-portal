@@ -98,15 +98,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Zsolt Berentey
  * @author Peter Borkuti
  */
 @RunWith(Arquillian.class)
 @Sync
-public class ExportImportHelperUtilTest extends PowerMockito {
+public class ExportImportHelperUtilTest {
 
 	@ClassRule
 	@Rule
@@ -273,13 +271,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testExportLayoutReferencesWithContext() throws Exception {
-		PortalImpl portalImpl = spy(new PortalImpl());
+		PortalImpl portalImpl = new PortalImpl() {
 
-		when(
-			portalImpl.getPathContext()
-		).thenReturn(
-			"/de"
-		);
+			@Override
+			public String getPathContext() {
+				return "/de";
+			}
+
+		};
 
 		PortalUtil portalUtil = new PortalUtil();
 

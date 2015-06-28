@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
  */
 @OSGiBeanProperties(
 	property = {
-		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN, "mvc.command.name=",
+		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN,
 		"mvc.command.name=/blogs_admin/view"
 	}
 )

@@ -64,14 +64,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Daniel Kocsis
  */
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
-public class ExportImportLifecycleEventTest extends PowerMockito {
+public class ExportImportLifecycleEventTest {
 
 	@ClassRule
 	@Rule

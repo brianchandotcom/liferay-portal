@@ -12,15 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
+package com.liferay.blogs.web.blogs.customattributes;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
+	service = CustomAttributesDisplay.class
+)
 public class BlogsEntryCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 

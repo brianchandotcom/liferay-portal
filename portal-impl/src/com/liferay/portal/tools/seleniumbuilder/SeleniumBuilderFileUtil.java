@@ -74,13 +74,12 @@ public class SeleniumBuilderFileUtil {
 		}
 
 		_componentNames = ListUtil.fromArray(
-			StringUtil.split(_props.getProperty("component.names")));
+			StringUtil.split(getProperty("component.names")));
 		_testCaseAvailablePropertyNames = ListUtil.fromArray(
 			StringUtil.split(
-				_props.getProperty("test.case.available.property.names")));
+				getProperty("test.case.available.property.names")));
 		_testrayAvailableComponentNames = ListUtil.fromArray(
-			StringUtil.split(
-				_props.getProperty("testray.available.component.names")));
+			StringUtil.split(getProperty("testray.available.component.names")));
 	}
 
 	public String escapeHtml(String input) {

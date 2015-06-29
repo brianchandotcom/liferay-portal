@@ -189,6 +189,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ClassNameId" return-type="Collection">
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="StructureId" return-type="Collection">
 			<finder-column name="structureId" />
 		</finder>

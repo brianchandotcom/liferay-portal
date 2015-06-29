@@ -1,0 +1,15 @@
+dependencies {
+	compile group: "org.apache.cxf", name: "cxf-rt-transports-http", version: "3.0.3"
+	compile group: "org.apache.cxf", name: "cxf-tools-common", version: "3.0.3"
+	compile group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.0.3"
+	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
+	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
+	compile group: "org.eclipse.equinox", name: "org.eclipse.equinox.http.servlet", version: "1.2.0-SNAPSHOT"
+	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi.services", version: "3.5.0-SNAPSHOT"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

@@ -1,0 +1,7 @@
+dependencies {
+	compile group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

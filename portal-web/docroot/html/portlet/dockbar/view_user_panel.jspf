@@ -29,5 +29,11 @@
 		<%@ include file="/html/portlet/dockbar/view_my_sites.jspf" %>
 	</c:if>
 
-	<%@ include file="/html/portlet/dockbar/view_user_account.jspf" %>
+	<%
+	String portletId = PortletProviderUtil.getPortletId(PortalUserPersonalBarApplicationType.UserPersonalBar.CLASS_NAME, PortletProvider.Action.VIEW);
+	%>
+
+	<aui:nav-item cssClass="staging-controls">
+		<liferay-portlet:runtime portletName="<%= portletId %>" />
+	</aui:nav-item>
 </aui:nav>

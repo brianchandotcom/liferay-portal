@@ -138,8 +138,6 @@ public interface Indexer<T> {
 
 	public void reindex(T object) throws SearchException;
 
-	public void reindex(T... objects) throws SearchException;
-
 	public Hits search(SearchContext searchContext) throws SearchException;
 
 	public Hits search(

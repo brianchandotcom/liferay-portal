@@ -217,10 +217,6 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	@Override
-	public void reindex(Object... objects) {
-	}
-
-	@Override
 	public void reindex(String className, long classPK) {
 	}
 

@@ -90,7 +90,6 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -582,12 +581,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
-	}
-
-	@Override
-	@SafeVarargs
-	public final void reindex(T... objects) throws SearchException {
-		reindex(Arrays.asList(objects));
 	}
 
 	@Override

@@ -81,8 +81,9 @@ public class ElasticsearchEngineConfigurator
 
 	@Override
 	protected void initialize() {
-		super.initialize();
 		_elasticsearchConnectionManager.connect();
+
+		super.initialize();
 	}
 
 	@Reference(unbind = "-")

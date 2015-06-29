@@ -26,7 +26,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
@@ -38,6 +38,9 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Jorge Ferrer
  * @author Juan Fernández
@@ -45,7 +48,7 @@ import javax.portlet.WindowState;
  * @author Zsolt Berentey
  */
 public class BlogsEntryAssetRenderer
-	extends BaseAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer implements TrashRenderer {
 
 	public BlogsEntryAssetRenderer(BlogsEntry entry) {
 		_entry = entry;
@@ -84,6 +87,18 @@ public class BlogsEntryAssetRenderer
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/blogs/blogs.png";
+	}
+
+	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
+			return "/html/portlet/blogs/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
@@ -210,26 +225,19 @@ public class BlogsEntryAssetRenderer
 	}
 
 	@Override
-	public boolean isPrintable() {
-		return true;
-	}
-
-	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
+		request.setAttribute(WebKeys.BLOGS_ENTRY, _entry);
 
-			portletRequest.setAttribute(WebKeys.BLOGS_ENTRY, _entry);
+		return super.include(request, response, template);
+	}
 
-			return "/html/portlet/blogs/asset/" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
+	@Override
+	public boolean isPrintable() {
+		return true;
 	}
 
 	private final BlogsEntry _entry;

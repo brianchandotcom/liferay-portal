@@ -31,7 +31,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
 import java.util.Locale;
 
@@ -40,13 +40,19 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Fabio Pezzutto
  * @author Eduardo Lundgren
  * @author Pier Paolo Ramon
  */
 public class CalendarBookingAssetRenderer
-	extends BaseAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer implements TrashRenderer {
 
 	public CalendarBookingAssetRenderer(CalendarBooking calendarBooking) {
 		_calendarBooking = calendarBooking;
@@ -70,6 +76,18 @@ public class CalendarBookingAssetRenderer
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/date.png";
+	}
+
+	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
+			return "/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
@@ -188,27 +206,29 @@ public class CalendarBookingAssetRenderer
 	}
 
 	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String template)
+		throws Exception {
+
+		request.setAttribute(
+			CalendarWebKeys.CALENDAR_BOOKING, _calendarBooking);
+
+		return super.include(request, response, template);
+	}
+
+	@Override
 	public boolean isPrintable() {
 		return true;
 	}
 
 	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			String template)
-		throws Exception {
-
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
-
-			portletRequest.setAttribute(
-				CalendarWebKeys.CALENDAR_BOOKING, _calendarBooking);
-
-			return "/asset/" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.calendar.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

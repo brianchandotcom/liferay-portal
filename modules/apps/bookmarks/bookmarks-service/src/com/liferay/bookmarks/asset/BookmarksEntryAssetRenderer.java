@@ -26,7 +26,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
 import java.util.Date;
 import java.util.Locale;
@@ -36,13 +36,19 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Sergio González
  */
 public class BookmarksEntryAssetRenderer
-	extends BaseAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer implements TrashRenderer {
 
 	public BookmarksEntryAssetRenderer(BookmarksEntry entry) {
 		_entry = entry;
@@ -71,6 +77,16 @@ public class BookmarksEntryAssetRenderer
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/ratings/star_hover.png";
+	}
+
+	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			return "/html/portlet/bookmarks/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
@@ -195,25 +211,28 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String template)
+		throws Exception {
+
+		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
+
+		return super.include(request, response, template);
+	}
+
+	@Override
 	public boolean isPrintable() {
 		return true;
 	}
 
 	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			String template)
-		throws Exception {
-
-		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			portletRequest.setAttribute(
-				BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
-
-			return "/html/portlet/bookmarks/asset/" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	private final BookmarksEntry _entry;

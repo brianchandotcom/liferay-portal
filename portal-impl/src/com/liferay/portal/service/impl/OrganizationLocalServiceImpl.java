@@ -1486,8 +1486,7 @@ public class OrganizationLocalServiceImpl
 			}
 
 			Indexer<Organization> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(
-					Organization.class);
+				IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, parentOrganizationId, name, type, street, city, zip,
@@ -1555,8 +1554,7 @@ public class OrganizationLocalServiceImpl
 
 		try {
 			Indexer<Organization> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(
-					Organization.class);
+				IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, parentOrganizationId, name, type, street, city, zip,

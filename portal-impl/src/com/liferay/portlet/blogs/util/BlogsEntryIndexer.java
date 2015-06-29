@@ -204,6 +204,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(BlogsEntryIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsEntryIndexer.class);
 
 }

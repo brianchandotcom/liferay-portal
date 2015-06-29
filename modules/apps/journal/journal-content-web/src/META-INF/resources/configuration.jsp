@@ -118,6 +118,34 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 <aui:script sandbox="<%= true %>">
 	var form = AUI.$(document.<portlet:namespace />fm);
 
+	var articlePreviewNode = $('.article-preview');
+	var templatePreviewNode = $('.template-preview');
+
+	var showLoading = function(element) {
+		element.find('.loading-animation').removeClass('hidden');
+	}
+
+	var hideLoading = function(element) {
+		element.find('.loading-animation').addClass('hidden');
+	}
+
+	var showError = function(element) {
+		element.find('.alert').removeClass('hidden');
+	}
+
+	var hideError = function(element) {
+		element.find('.alert').addClass('hidden');
+	}
+
+	var showArticleError = function() {
+		templatePreviewNode.addClass('hidden');
+		showError(articlePreviewNode);
+	}
+
+	var showTemplateError = function() {
+		showError(templatePreviewNode);
+	}
+
 	$('#<portlet:namespace />webContentSelector').on(
 		'click',
 		function(event) {
@@ -156,76 +184,52 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 					var baseJournalArticleResourceUrl = '<%= journalArticleResource.toString() %>';
 
-					function showLoading(element) {
-						element.find('.loading-animation').removeClass('hidden');
-					}
-
-					function hideLoading(element) {
-						element.find('.loading-animation').addClass('hidden');
-					}
-
-					function showError(element) {
-						element.find('.alert').removeClass('hidden');
-					}
-
-					function hideError(element) {
-						element.find('.alert').addClass('hidden');
-					}
-
-					function showArticleError() {
-						$('.template-preview').addClass('hidden');
-						showError($('.article-preview'));
-					}
-
-					function showTemplateError() {
-						showError($('.template-preview'));
-					}
-
 					form.fm('assetEntryId').val(event.assetentryid);
 					form.fm('ddmTemplateKey').val('');
 
-					hideError($('.article-preview'));
-					hideError($('.template-preview'));
+					hideError(articlePreviewNode);
+					hideError(templatePreviewNode);
 
-					showLoading($('.article-preview'));
-					showLoading($('.template-preview'));
+					showLoading(articlePreviewNode);
+					showLoading(templatePreviewNode);
 
-					$('.article-preview .article-preview-content-container').html('');
-					$('.template-preview .template-preview-content-container').html('');
+					articlePreviewNode.find('.article-preview-content-container').html('');
+					templatePreviewNode.find('.template-preview-content-container').html('');
 
-					$('.template-preview').removeClass('hidden');
+					templatePreviewNode.removeClass('hidden');
 
 					$.ajax(
 						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
 						{
 							error: function() {
-								hideLoading($('.article-preview'));
+								hideLoading(articlePreviewNode);
 								showArticleError();
 							},
 							success: function(responseData) {
-								var articlePreviewContent = $('.article-preview-content', $(responseData));
-								var templatePreviewContent = $('.template-preview-content', $(responseData));
+								var responseDataNode = $(responseData);
+								var articlePreviewContent = responseDataNode.find('.article-preview-content');
+								var templatePreviewContent = responseDataNode.find('.template-preview-content');
 
-								hideLoading($('.article-preview'));
-								hideLoading($('.template-preview'));
+								hideLoading(articlePreviewNode);
+								hideLoading(templatePreviewNode);
 
-								$('.article-preview .article-preview-content-container').html(articlePreviewContent);
-								$('.template-preview .template-preview-content-container').html(templatePreviewContent);
+								articlePreviewNode.find('.article-preview-content-container').html(articlePreviewContent);
+								templatePreviewNode.find('.template-preview-content-container').html(templatePreviewContent);
 
 								if (articlePreviewContent.length > 0) {
-
 									$('.configuration-options-container').removeClass('hidden');
 
 									if (templatePreviewContent.length > 0) {
+										var templatePreviewContentNode = templatePreviewNode.find('.template-preview-content');
 
-										if ($('.template-preview .template-preview-content').attr('data-change-enabled') === 'false') {
-											$('.template-preview .button-container').addClass('hidden');
+										if (templatePreviewContentNode.attr('data-change-enabled') === 'false') {
+											templatePreviewNode.find('.button-container').addClass('hidden');
 										}
 										else {
-											$('.template-preview .button-container').removeClass('hidden');
+											templatePreviewNode.find('.button-container').removeClass('hidden');
 										}
 
-										form.fm('ddmTemplateKey').val($('.template-preview .template-preview-content').attr('data-template-key'));
+										form.fm('ddmTemplateKey').val(templatePreviewContentNode.attr('data-template-key'));
 									}
 									else {
 										showTemplateError();
@@ -247,11 +251,13 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 		function(event) {
 			event.preventDefault();
 
+			var templatePreviewContent = templatePreviewNode.find('.template-preview-content');
+
 			Liferay.Util.openDDMPortlet(
 				{
 					basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE) %>',
 					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
-					classPK: $('.template-preview-content').attr('data-structure-key'),
+					classPK: templatePreviewContent.attr('data-structure-key'),
 					dialog: {
 						destroyOnHide: true
 					},
@@ -265,13 +271,13 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					title: '<liferay-ui:message key="templates" />'
 				},
 				function(event) {
-					$('.template-preview-content').attr('data-template-id', event.ddmtemplateid);
-					$('.template-preview-content').attr('data-template-key', event.ddmtemplatekey);
+					templatePreviewContent.attr('data-template-id', event.ddmtemplateid);
+					templatePreviewContent.attr('data-template-key', event.ddmtemplatekey);
 
-					$('.template-preview-content .template-title').html(event.name);
-					$('.template-preview-content .template-description').html(event.description);
+					templatePreviewContent.find('.template-title').html(event.name);
+					templatePreviewContent.find('.template-description').html(event.description);
 
-					var templateImage = $('.template-preview-content .template-image');
+					var templateImage = templatePreviewContent.find('.template-image');
 
 					templateImage.attr('src', event.imageurl);
 					templateImage.attr('alt', event.name);

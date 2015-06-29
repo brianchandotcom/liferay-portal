@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseJSPAssetAddonEntry extends BaseAssetAddonEntry {
 
-	public abstract String getJSPPath();
+	public abstract String getJspPath();
 
 	@Override
 	public void include(
@@ -38,7 +38,7 @@ public abstract class BaseJSPAssetAddonEntry extends BaseAssetAddonEntry {
 		throws IOException {
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getJSPPath());
+			_servletContext.getRequestDispatcher(getJspPath());
 
 		try {
 			requestDispatcher.include(request, response);
@@ -48,7 +48,7 @@ public abstract class BaseJSPAssetAddonEntry extends BaseAssetAddonEntry {
 				_log.error("Unable to include JSP", se);
 			}
 
-			throw new IOException("Unable to include " + getJSPPath(), se);
+			throw new IOException("Unable to include " + getJspPath(), se);
 		}
 	}
 

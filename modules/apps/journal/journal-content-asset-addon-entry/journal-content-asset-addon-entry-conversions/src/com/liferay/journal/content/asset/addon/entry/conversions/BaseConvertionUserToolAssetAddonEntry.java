@@ -41,7 +41,7 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 	public abstract String getExtension();
 
 	@Override
-	public String getJSPPath() {
+	public String getJspPath() {
 		return "/META-INF/resources/conversions.jsp";
 	}
 

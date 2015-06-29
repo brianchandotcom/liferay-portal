@@ -30,10 +30,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Levente Hudák
@@ -116,10 +113,6 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			exportImportConfiguration.getGroupId());
 
 		return GroupPermissionUtil.contains(permissionChecker, group, actionId);
-	}
-
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

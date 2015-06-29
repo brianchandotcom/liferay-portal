@@ -28,10 +28,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -100,10 +97,6 @@ public class PortletDataContextIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
-	}
-
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

@@ -905,7 +905,7 @@ public class LiferayRepository
 
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
-		Indexer indexer = null;
+		Indexer<?> indexer = null;
 
 		if (searchContext.isIncludeFolders()) {
 			indexer = DLSearcher.getInstance();

@@ -27,7 +27,7 @@ import javax.portlet.RenderResponse;
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.BLOGS_AGGREGATOR,
-		"mvc.command.name=/blogs_aggregator/view"
+		"mvc.command.name=", "mvc.command.name=/blogs_aggregator/view"
 	}
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {

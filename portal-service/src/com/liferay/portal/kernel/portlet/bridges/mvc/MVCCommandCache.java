@@ -191,13 +191,15 @@ public class MVCCommandCache {
 
 			registry.ungetService(serviceReference);
 
-			String mvcCommandName = (String)serviceReference.getProperty(
-				"mvc.command.name");
+			List<String> mvcCommandNames = StringPlus.asList(
+				serviceReference.getProperty("mvc.command.name"));
 
-			_mvcCommandCache.remove(mvcCommandName);
+			for (String mvcCommandName : mvcCommandNames) {
+				_mvcCommandCache.remove(mvcCommandName);
 
-			for (List<MVCCommand> mvcCommands : _mvcCommands.values()) {
-				mvcCommands.remove(mvcCommand);
+				for (List<MVCCommand> mvcCommands : _mvcCommands.values()) {
+					mvcCommands.remove(mvcCommand);
+				}
 			}
 		}
 

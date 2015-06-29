@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
@@ -90,19 +89,6 @@ public class SearchResultUtilJournalArticleTest
 
 			SearchResult searchResult = assertOneSearchResult(document);
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			Assert.assertEquals(
-				"Search index is stale and contains entry {" + entryClassPK +
-					"}", logRecord.getMessage());
-
 			assertSearchResult(searchResult);
 
 			Assert.assertNull(searchResult.getSummary());
@@ -112,6 +98,17 @@ public class SearchResultUtilJournalArticleTest
 			).getSummary(
 				document, StringPool.BLANK, null, null
 			);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Search index is stale and contains entry {" +
+					document.get(Field.ENTRY_CLASS_PK) + "}",
+				logRecord.getMessage());
 		}
 	}
 

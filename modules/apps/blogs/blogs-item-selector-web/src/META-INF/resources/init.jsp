@@ -22,14 +22,15 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion" %><%@
 page import="com.liferay.blogs.item.selector.web.BlogsItemSelectorView" %><%@
 page import="com.liferay.blogs.item.selector.web.display.context.BlogsItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.ResourceBundle" %>
 
 <portlet:defineObjects />
 

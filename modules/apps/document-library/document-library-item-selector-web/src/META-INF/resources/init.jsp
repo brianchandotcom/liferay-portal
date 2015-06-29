@@ -22,8 +22,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.document.library.item.selector.web.DLItemSelectorView" %><%@
 page import="com.liferay.document.library.item.selector.web.display.context.DLItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
-page import="com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %>
 
 <portlet:defineObjects />

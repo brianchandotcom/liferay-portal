@@ -234,6 +234,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
+		// Make sure the dates are different
+
 		Thread.currentThread().sleep(4000);
 
 		exportImportStagedModel(stagedModel);

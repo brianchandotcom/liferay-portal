@@ -16,13 +16,13 @@ package com.liferay.frontend.editors.web.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -37,8 +37,7 @@ public class BaseTinyMCEEditorConfigConfigurator
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 		String themeCssPath = HtmlUtil.escape(themeDisplay.getPathThemeCss());
 

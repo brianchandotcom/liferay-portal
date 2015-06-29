@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 
 import java.util.Map;
@@ -42,12 +42,11 @@ public class CKEditorBBCodeConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 		super.populateConfigJSONObject(
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
-			liferayPortletResponse);
+			portletURLBuilder);
 
 		jsonObject.put("allowedContent", Boolean.TRUE);
 		jsonObject.put("enterMode", 2);

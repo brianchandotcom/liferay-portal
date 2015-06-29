@@ -19,7 +19,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.io.IOException;
+
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
@@ -56,6 +61,14 @@ public class RootPanelCategory implements PanelCategory {
 		throws PortalException {
 
 		return true;
+	}
+
+	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		return false;
 	}
 
 	private RootPanelCategory() {

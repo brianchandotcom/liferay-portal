@@ -51,6 +51,7 @@
 		<dirset dir="apps/translator" includes="*" />
 		<dirset dir="apps/trash" includes="*" />
 		<dirset dir="apps/unit-converter" includes="*" />
+		<dirset dir="apps/user-personal-bar" includes="*" />
 		<dirset dir="apps/web-proxy" includes="*" />
 		<dirset dir="apps/wiki" includes="*" />
 		<dirset dir="apps/workflow" includes="*" />

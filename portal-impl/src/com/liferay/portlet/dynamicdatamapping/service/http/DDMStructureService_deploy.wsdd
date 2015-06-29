@@ -29,6 +29,7 @@
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="descriptionMapValues" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="http://model.dynamicdatamapping.portlet.liferay.com" qname="ddmForm" type="tns:DDMForm"></parameter>
 			<parameter xmlns:tns="http://model.dynamicdatamapping.portlet.liferay.com" qname="ddmFormLayout" type="tns:DDMFormLayout"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="storageType" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.dynamicdatamapping.portlet.liferay.com" xmlns:rtns="http://model.dynamicdatamapping.portlet.liferay.com" name="addStructure" qname="operNS:addStructure" returnQName="addStructureReturn" returnType="rtns:DDMStructureSoap" soapAction="">
@@ -158,6 +159,11 @@
 		<operation xmlns:operNS="urn:http.service.dynamicdatamapping.portlet.liferay.com" xmlns:rtns="urn:http.service.dynamicdatamapping.portlet.liferay.com" xmlns:tns2="http://model.dynamicdatamapping.portlet.liferay.com" name="getStructures" qname="operNS:getStructures" returnQName="getStructuresReturn" returnType="rtns:ArrayOf_tns3_DDMStructureSoap" returnItemType="tns2:DDMStructureSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.dynamicdatamapping.portlet.liferay.com" name="revertStructure" qname="operNS:revertStructure" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="structureId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.dynamicdatamapping.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="searchCount" qname="operNS:searchCount" returnQName="searchCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 			<parameter xmlns:tns="urn:http.service.dynamicdatamapping.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
@@ -242,7 +248,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="definition" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addStructure copyStructure deleteStructure fetchStructure getStructure getStructures search searchCount updateStructure" />
+		<parameter name="allowedMethods" value="addStructure copyStructure deleteStructure fetchStructure getStructure getStructures revertStructure search searchCount updateStructure" />
 		<parameter name="className" value="com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.dynamicdatamapping.portlet.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.dynamicdatamapping.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

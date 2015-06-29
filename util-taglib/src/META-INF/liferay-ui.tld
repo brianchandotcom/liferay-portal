@@ -1527,6 +1527,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates an authorization failure error message to display to the user.</description>
 		<name>error-principal</name>
 		<tag-class>com.liferay.taglib.ui.ErrorPrincipalTag</tag-class>
 		<body-content>JSP</body-content>

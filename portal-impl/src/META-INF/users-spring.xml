@@ -16,5 +16,6 @@
 	<bean id="com.liferay.portlet.usersadmin.action.EditOrgLaborMVCRenderCommand" class="com.liferay.portlet.usersadmin.action.EditOrgLaborMVCRenderCommand" />
 	<bean id="com.liferay.portlet.usersadmin.action.EditUserMVCActionCommand" class="com.liferay.portlet.usersadmin.action.EditUserMVCActionCommand" />
 	<bean id="com.liferay.portlet.usersadmin.action.EditUserMVCRenderCommand" class="com.liferay.portlet.usersadmin.action.EditUserMVCRenderCommand" />
+	<bean id="com.liferay.portlet.usersadmin.action.ExportUsersMVCActionCommand" class="com.liferay.portlet.usersadmin.action.ExportUsersMVCActionCommand" />
 	<bean id="com.liferay.portlet.usersadmin.action.ViewMVCRenderCommand" class="com.liferay.portlet.usersadmin.action.ViewMVCRenderCommand" />
 </beans>

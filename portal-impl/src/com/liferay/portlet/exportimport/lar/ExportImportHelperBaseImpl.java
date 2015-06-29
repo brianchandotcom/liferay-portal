@@ -38,15 +38,12 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
- * @author Zsolt Berentey
- * @author Levente Hud�k
- * @author Julio Camarero
- * @author Mate Thurzo
+ * @author Daniel Kocsis
  */
 public class ExportImportHelperBaseImpl implements ExportImportHelper {
 
 	public ExportImportHelperBaseImpl() {
-		this(new DummyExportImportHelper());
+		this(new DummyExportImportHelperImpl());
 	}
 
 	public ExportImportHelperBaseImpl(

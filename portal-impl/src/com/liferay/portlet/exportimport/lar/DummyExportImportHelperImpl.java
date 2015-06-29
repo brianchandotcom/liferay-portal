@@ -43,7 +43,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Daniel Kocsis
  */
-public class DummyExportImportHelper implements ExportImportHelper {
+public class DummyExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public long[] getAllLayoutIds(long groupId, boolean privateLayout) {

@@ -202,7 +202,6 @@
 	<portlet>
 		<portlet-name>33</portlet-name>
 		<struts-path>blogs</struts-path>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.blogs.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
 			<trigger>
@@ -422,12 +421,10 @@
 	<portlet>
 		<portlet-name>114</portlet-name>
 		<struts-path>recent_bloggers</struts-path>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 	</portlet>
 	<portlet>
 		<portlet-name>115</portlet-name>
 		<struts-path>blogs_aggregator</struts-path>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 	</portlet>
 	<portlet>
@@ -650,7 +647,6 @@
 	<portlet>
 		<portlet-name>161</portlet-name>
 		<struts-path>blogs_admin</struts-path>
-		<configuration-action-class>com.liferay.portlet.blogsadmin.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 	</portlet>
 	<portlet>

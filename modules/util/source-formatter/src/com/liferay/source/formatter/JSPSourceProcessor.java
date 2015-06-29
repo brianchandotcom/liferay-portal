@@ -451,6 +451,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectParameterTypeForLanguageUtil(
 			newContent, true, fileName);
 
+		// LPS-48156
+
+		newContent = checkPrincipalException(newContent);
+
 		Matcher matcher = _javaClassPattern.matcher(newContent);
 
 		if (matcher.find()) {

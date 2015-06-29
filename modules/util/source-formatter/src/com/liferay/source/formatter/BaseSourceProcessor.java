@@ -420,6 +420,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected String checkPrincipalException(String content) {
+		String newContent = content;
+
+		Matcher matcher = principalExceptionPattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			String replacement = StringUtil.replace(
+				match, "class.getName", "getNestedClasses");
+
+			newContent = StringUtil.replace(newContent, match, replacement);
+		}
+
+		return newContent;
+	}
+
 	protected void checkStringBundler(
 		String line, String fileName, int lineCount) {
 
@@ -1537,6 +1554,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	protected static boolean portalSource;
+	protected static Pattern principalExceptionPattern = Pattern.compile(
+		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
+			"PrincipalException\\.class\\.getName\\(\\)");
 	protected static Pattern sessionKeyPattern = Pattern.compile(
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),

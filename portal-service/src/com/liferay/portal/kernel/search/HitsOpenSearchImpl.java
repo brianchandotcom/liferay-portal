@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 
-	public Indexer getIndexer() {
+	public Indexer<?> getIndexer() {
 		if (_log.isWarnEnabled()) {
 			_log.warn(getClass() + " does not implement getIndexer()");
 		}
@@ -52,7 +52,8 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 	public abstract String getSearchPath();
 
 	public Summary getSummary(
-			Indexer indexer, Document document, Locale locale, String snippet)
+			Indexer<?> indexer, Document document, Locale locale,
+			String snippet)
 		throws SearchException {
 
 		return indexer.getSummary(document, snippet, null, null);
@@ -106,7 +107,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 
 			searchContext.setUserId(userId);
 
-			Indexer indexer = getIndexer();
+			Indexer<?> indexer = getIndexer();
 
 			Hits results = indexer.search(searchContext);
 

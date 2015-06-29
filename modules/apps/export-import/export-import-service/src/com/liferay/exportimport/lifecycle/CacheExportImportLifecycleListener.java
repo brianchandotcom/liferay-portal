@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mate Thurzo
  */
-@Component(service = ExportImportLifecycleListener.class)
+@Component(immediate = true, service = ExportImportLifecycleListener.class)
 public class CacheExportImportLifecycleListener
 	extends BaseExportImportLifecycleListener {
 

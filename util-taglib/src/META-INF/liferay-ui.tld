@@ -4930,19 +4930,19 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A target window in which to open the social bookmark's URL. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
+			<description>A target window in which to open the social bookmarks' URLs. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The title of the content being shared.</description>
+			<description>A title for the content being shared.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The types of social outlets to bookmark such as <![CDATA[<code>Facebook</code>]]>, <![CDATA[<code>Plusone</code>]]>, and <![CDATA[<code>Twitter</code>]]>.</description>
+			<description>The types of social outlets to use, such as <![CDATA[<code>Facebook</code>]]>, <![CDATA[<code>Plusone</code>]]>, and <![CDATA[<code>Twitter</code>]]>.</description>
 			<name>types</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

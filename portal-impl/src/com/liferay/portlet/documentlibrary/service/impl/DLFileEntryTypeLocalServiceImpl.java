@@ -14,11 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,14 +49,19 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the local service for accessing, adding, cascading, deleting, and
@@ -65,6 +72,19 @@ import java.util.Map;
  */
 public class DLFileEntryTypeLocalServiceImpl
 	extends DLFileEntryTypeLocalServiceBaseImpl {
+
+	@Override
+	public void addDDMStructureLinks(
+		long fileEntryTypeId, Set<Long> ddmStructureIds) {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			DLFileEntryType.class);
+
+		for (long ddmStructureId : ddmStructureIds) {
+			ddmStructureLinkLocalService.addStructureLink(
+				classNameId, fileEntryTypeId, ddmStructureId);
+		}
+	}
 
 	@Override
 	public DLFileEntryType addFileEntryType(
@@ -114,8 +134,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		dlFileEntryTypePersistence.update(dlFileEntryType);
 
-		dlFileEntryTypePersistence.addDDMStructures(
-			fileEntryTypeId, ddmStructureIds);
+		addDDMStructureLinks(
+			fileEntryTypeId, SetUtil.fromArray(ddmStructureIds));
 
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
@@ -279,6 +299,32 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByG_F(groupId, fileEntryTypeKey);
 	}
 
+	public List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
+		throws PortalException {
+
+		List<DLFileEntryType> fileEntryTypes = new ArrayList<>();
+
+		long classNameId = classNameLocalService.getClassNameId(
+			DLFileEntryType.class);
+
+		List<DDMStructureLink> ddmStructureLinks =
+			ddmStructureLinkLocalService.getClassNameStructureLinks(
+				classNameId);
+
+		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
+			if (ddmStructureId != ddmStructureLink.getStructureId()) {
+				continue;
+			}
+
+			DLFileEntryType fileEntryType = getFileEntryType(
+				ddmStructureLink.getClassPK());
+
+			fileEntryTypes.add(fileEntryType);
+		}
+
+		return fileEntryTypes;
+	}
+
 	@Override
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds) {
 		return dlFileEntryTypePersistence.findByGroupId(groupIds);
@@ -343,6 +389,25 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFolderPersistence.removeDLFileEntryType(
 				folderId, dlFileEntryType);
 		}
+	}
+
+	@Override
+	public void updateDDMStructureLinks(
+			long fileEntryTypeId, Set<Long> ddmStructureIds)
+		throws PortalException {
+
+		Set<Long> existingDDMStructureLinkStructureIds =
+			getExistingDDMStructureLinkStructureIds(fileEntryTypeId);
+
+		deleteDDMStructureLinks(
+			fileEntryTypeId,
+			getStaleDDMStructureLinkStructureIds(
+				ddmStructureIds, existingDDMStructureLinkStructureIds));
+
+		addDDMStructureLinks(
+			fileEntryTypeId,
+			getMissingDDMStructureLinkStructureIds(
+				ddmStructureIds, existingDDMStructureLinkStructureIds));
 	}
 
 	@Override
@@ -417,8 +482,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		dlFileEntryTypePersistence.update(dlFileEntryType);
 
-		dlFileEntryTypePersistence.setDDMStructures(
-			fileEntryTypeId, ddmStructureIds);
+		updateDDMStructureLinks(
+			fileEntryTypeId, SetUtil.fromArray(ddmStructureIds));
 	}
 
 	@Override
@@ -553,6 +618,19 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
+	protected void deleteDDMStructureLinks(
+			long fileEntryTypeId, Set<Long> ddmStructureIds)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			DLFileEntryType.class);
+
+		for (long ddmStructureId : ddmStructureIds) {
+			ddmStructureLinkLocalService.deleteStructureLink(
+				classNameId, fileEntryTypeId, ddmStructureId);
+		}
+	}
+
 	protected void fixDDMStructureKey(
 		String fileEntryTypeUuid, long fileEntryTypeId, long groupId) {
 
@@ -567,6 +645,26 @@ public class DLFileEntryTypeLocalServiceImpl
 
 			ddmStructureLocalService.updateDDMStructure(ddmStructure);
 		}
+	}
+
+	protected Set<Long> getExistingDDMStructureLinkStructureIds(
+		long fileEntryTypeId) {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			DLFileEntryType.class);
+
+		Set<Long> existingDDMStructureLinkStructureIds = new HashSet<>();
+
+		List<DDMStructureLink> structureLinks =
+			ddmStructureLinkLocalService.getStructureLinks(
+				classNameId, fileEntryTypeId);
+
+		for (DDMStructureLink structureLink : structureLinks) {
+			existingDDMStructureLinkStructureIds.add(
+				structureLink.getStructureId());
+		}
+
+		return existingDDMStructureLinkStructureIds;
 	}
 
 	protected List<Long> getFileEntryTypeIds(
@@ -598,6 +696,28 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		return folderId;
+	}
+
+	protected Set<Long> getMissingDDMStructureLinkStructureIds(
+		Set<Long> ddmStructureIds, Set<Long> existingDDMStructureIds) {
+
+		Set<Long> missingDDMStructureLinkStructureIds = new HashSet<>(
+			ddmStructureIds);
+
+		missingDDMStructureLinkStructureIds.removeAll(existingDDMStructureIds);
+
+		return missingDDMStructureLinkStructureIds;
+	}
+
+	protected Set<Long> getStaleDDMStructureLinkStructureIds(
+		Set<Long> ddmStructureIds, Set<Long> existingDDMStructureIds) {
+
+		Set<Long> staleDDMStructureLinkStructureIds = new HashSet<>(
+			existingDDMStructureIds);
+
+		staleDDMStructureLinkStructureIds.removeAll(ddmStructureIds);
+
+		return staleDDMStructureLinkStructureIds;
 	}
 
 	protected long updateDDMStructure(
@@ -677,8 +797,8 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		for (long ddmStructureId : ddmStructureIds) {
-			DDMStructure ddmStructure =
-				ddmStructurePersistence.fetchByPrimaryKey(ddmStructureId);
+			DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
+				ddmStructureId);
 
 			if (ddmStructure == null) {
 				throw new NoSuchMetadataSetException(
@@ -686,5 +806,11 @@ public class DLFileEntryTypeLocalServiceImpl
 			}
 		}
 	}
+
+	@BeanReference(type = DDMStructureLinkLocalService.class)
+	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
+
+	@BeanReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
 
 }

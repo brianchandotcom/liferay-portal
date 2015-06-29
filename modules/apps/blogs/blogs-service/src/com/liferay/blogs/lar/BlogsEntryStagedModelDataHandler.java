@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.lar;
+package com.liferay.blogs.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,6 +41,7 @@ import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
@@ -49,9 +50,12 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Zsolt Berentey
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class BlogsEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<BlogsEntry> {
 
@@ -147,7 +151,7 @@ public class BlogsEntryStagedModelDataHandler
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, entry, entry.getContent(),
 			portletDataContext.getBooleanParameter(
-				BlogsPortletDataHandler.NAMESPACE, "referenced-content"));
+				"blogs", "referenced-content"));
 
 		entry.setContent(content);
 

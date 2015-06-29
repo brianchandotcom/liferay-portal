@@ -206,7 +206,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		Group group = TransactionHandlerUtil.invoke(
 			_transactionAttribute, groupCallable);
 
-		String redirect = StringPool.BLANK;
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
@@ -235,10 +235,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 			MultiSessionMessages.add(
 				actionRequest,
 				SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
-
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-
-			sendRedirect(actionRequest, actionResponse);
 		}
 		else {
 			long newRefererPlid = getRefererPlid(
@@ -248,9 +244,11 @@ public class SiteAdminPortlet extends MVCPortlet {
 				redirect, "doAsGroupId", group.getGroupId());
 			redirect = HttpUtil.setParameter(
 				redirect, "refererPlid", newRefererPlid);
-
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	public void editGroupAssignments(

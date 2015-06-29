@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -110,7 +111,12 @@ public class DiscussionTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return themeDisplay.getPathMain() + "/portal/more_comments";
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletId = portletDisplay.getId();
+
+		return themeDisplay.getPathMain() +
+			"/portal/more_comments?p_p_isolated=1&portletId=" + portletId;
 	}
 
 	@Override

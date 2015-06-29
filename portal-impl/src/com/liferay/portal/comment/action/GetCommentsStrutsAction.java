@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 
 import javax.servlet.RequestDispatcher;
@@ -79,6 +80,10 @@ public class GetCommentsStrutsAction extends BaseStrutsAction {
 			String.valueOf(rootIndexPage));
 
 		request.setAttribute("aui:form:portletNamespace", namespace);
+
+		String portletId = ParamUtil.getString(request, "portletId");
+
+		request.setAttribute(WebKeys.PORTLET_ID, portletId);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 			"/html/taglib/ui/discussion/page_resources.jsp");

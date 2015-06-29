@@ -20,6 +20,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +73,11 @@ public abstract class BaseEditorConfigContributor
 
 		ItemSelector itemSelector = getItemSelector();
 
+		PortletURLBuilder portletURLBuilder = PortletURLBuilder.create(
+			liferayPortletResponse);
+
 		return itemSelector.getItemSelectorURL(
-			liferayPortletResponse, name + "selectItem", itemSelectorCriterion);
+			portletURLBuilder, name + "selectItem", itemSelectorCriterion);
 	}
 
 	protected abstract ItemSelector getItemSelector();

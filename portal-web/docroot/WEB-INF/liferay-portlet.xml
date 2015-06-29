@@ -203,7 +203,6 @@
 		<portlet-name>33</portlet-name>
 		<struts-path>blogs</struts-path>
 		<xml-rpc-method-class>com.liferay.portlet.blogs.util.PingbackMethodImpl</xml-rpc-method-class>
-		<atom-collection-adapter>com.liferay.portlet.blogs.atom.BlogsEntryAtomCollectionAdapter</atom-collection-adapter>
 		<trash-handler>com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler</trash-handler>
 		<workflow-handler>com.liferay.portlet.blogs.workflow.BlogsEntryWorkflowHandler</workflow-handler>
 	</portlet>

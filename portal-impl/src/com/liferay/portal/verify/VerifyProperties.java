@@ -515,6 +515,18 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.security.auth.verifier"
 		},
 
+		// Blogs
+
+		new String[] {
+			"blogs.entry.check.interval", "entry.check.interval",
+			"com.liferay.blogs.web"
+		},
+
+		new String[] {
+			"blogs.linkback.job.interval", "linkback.job.interval",
+			"com.liferay.blogs.web"
+		},
+
 		// Bookmarks
 
 		new String[] {

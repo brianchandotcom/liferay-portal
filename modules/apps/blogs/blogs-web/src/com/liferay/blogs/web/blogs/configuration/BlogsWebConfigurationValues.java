@@ -12,20 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.messaging;
+package com.liferay.blogs.web.blogs.configuration;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
- * @author Zsolt Berentey
+ * @author Sergio González
  */
-public class CheckEntryMessageListener extends BaseMessageListener {
+public class BlogsWebConfigurationValues {
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		BlogsEntryLocalServiceUtil.checkEntries();
-	}
+	public static final String ENTRY_CHECK_INTERVAL =
+		GetterUtil.getString(
+			BlogsWebConfigurationUtil.get("entry.check.interval"));
+
+	public static final String LINKBACK_JOB_INTERVAL =
+		GetterUtil.getString(
+			BlogsWebConfigurationUtil.get("linkback.job.interval"));
 
 }

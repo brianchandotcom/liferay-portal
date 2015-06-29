@@ -14,14 +14,18 @@
 
 package com.liferay.portal.store.cmis.test.activator.configuration;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
+import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Manuel de la Peña
@@ -29,6 +33,7 @@ import java.util.Hashtable;
 public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	public static final String STORE_CMIS_CREDENTIALS_PASSWORD = "test";
+
 	public static final String STORE_CMIS_CREDENTIALS_USERNAME = "test";
 
 	@Override
@@ -56,6 +61,26 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			properties.put("systemRootDir", "testStore");
 
 			_cmisConfiguration.update(properties);
+
+			Filter filter = bundleContext.createFilter(
+				"(&(objectClass=" + Store.class.getName() +
+					")(store.type=com.liferay.portal.store.cmis.CMISStore))");
+
+			ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
+				bundleContext, filter, null);
+
+			serviceTracker.open();
+
+			Object cmisStore = serviceTracker.waitForService(10000);
+
+			serviceTracker.close();
+
+			if (cmisStore == null) {
+				_cmisConfiguration.delete();
+
+				throw new IllegalStateException(
+					"CMISStore was not registered within 10 seconds");
+			}
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);

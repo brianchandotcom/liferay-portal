@@ -74,33 +74,6 @@ public class EditOrgLaborAction extends PortletAction {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getOrgLabor(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrgLaborException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.users_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.users_admin.edit_org_labor"));
-	}
-
 	protected void deleteOrgLabor(ActionRequest actionRequest)
 		throws Exception {
 

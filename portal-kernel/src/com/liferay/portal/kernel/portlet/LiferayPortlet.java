@@ -392,6 +392,29 @@ public class LiferayPortlet extends GenericPortlet {
 		return ContentTypes.APPLICATION_JSON;
 	}
 
+	protected Set<String> getPaths(String path, String extension) {
+		Set<String> paths = new HashSet<>();
+
+		PortletContext portletContext = getPortletContext();
+
+		Set<String> childPaths = portletContext.getResourcePaths(path);
+
+		if (childPaths == null) {
+			return paths;
+		}
+
+		for (String childPath : childPaths) {
+			if (childPath.endsWith(StringPool.SLASH)) {
+				paths.addAll(getPaths(childPath, extension));
+			}
+			else if (childPath.endsWith(extension)) {
+				paths.add(childPath);
+			}
+		}
+
+		return paths;
+	}
+
 	protected String getRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
@@ -601,29 +624,6 @@ public class LiferayPortlet extends GenericPortlet {
 	protected boolean addProcessActionSuccessMessage;
 	protected boolean alwaysSendRedirect;
 	protected Set<String> validPaths;
-
-	private Set<String> getPaths(String path, String extension) {
-		Set<String> paths = new HashSet<String>();
-
-		PortletContext portletContext = getPortletContext();
-
-		Set<String> childPaths = portletContext.getResourcePaths(path);
-
-		if (childPaths == null) {
-			return paths;
-		}
-
-		for (String childPath : childPaths) {
-			if (childPath.endsWith(StringPool.SLASH)) {
-				paths.addAll(getPaths(childPath, extension));
-			}
-			else if (childPath.endsWith(extension)) {
-				paths.add(childPath);
-			}
-		}
-
-		return paths;
-	}
 
 	private static final String[] _IGNORED_SESSION_MESSAGE_SUFFIXES = {
 		SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,

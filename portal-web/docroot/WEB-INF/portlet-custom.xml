@@ -484,26 +484,6 @@
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
-		<portlet-name>114</portlet-name>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/recent_bloggers/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/recent_bloggers/view.jsp</value>
-		</init-param>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-	</portlet>
-	<portlet>
-		<portlet-name>115</portlet-name>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/blogs_aggregator/configuration.jsp</value>
-		</init-param>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-	</portlet>
-	<portlet>
 		<portlet-name>119</portlet-name>
 		<display-name>Asset</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

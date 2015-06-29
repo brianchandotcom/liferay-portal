@@ -406,7 +406,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		JournalArticle article = (JournalArticle)stagedModel;
 		JournalArticle importedArticle = (JournalArticle)importedStagedModel;
 
-		Assert.assertEquals(article.getUuid(), importedArticle.getUuid());
 		Assert.assertEquals(
 			(Double)article.getVersion(), (Double)importedArticle.getVersion());
 		Assert.assertEquals(article.getTitle(), importedArticle.getTitle());

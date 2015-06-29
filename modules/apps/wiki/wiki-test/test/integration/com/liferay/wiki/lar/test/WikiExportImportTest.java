@@ -181,7 +181,6 @@ public class WikiExportImportTest extends BasePortletExportImportTestCase {
 		WikiPage page = (WikiPage)stagedModel;
 		WikiPage importedPage = (WikiPage)importedStagedModel;
 
-		Assert.assertEquals(page.getUuid(), importedPage.getUuid());
 		Assert.assertEquals(page.getTitle(), importedPage.getTitle());
 		Assert.assertEquals(
 			(Double)page.getVersion(), (Double)importedPage.getVersion());

@@ -58,11 +58,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(immediate = true, service = Indexer.class)
-public class DDLIndexer extends BaseIndexer<DDLRecord> {
+public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 	public static final String CLASS_NAME = DDLRecord.class.getName();
 
-	public DDLIndexer() {
+	public DDLRecordIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.UID);
@@ -297,6 +297,7 @@ public class DDLIndexer extends BaseIndexer<DDLRecord> {
 			getSearchEngineId(), companyId, documents, isCommitImmediately());
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DDLIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLRecordIndexer.class);
 
 }

@@ -550,10 +550,6 @@
 
 	<definition name="portlet.users_admin" extends="portlet" />
 
-	<definition name="portlet.users_admin.edit_organization_assignments" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_organization_assignments.jsp" />
-	</definition>
-
 	<definition name="portlet.users_admin.edit_user" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/edit_user.jsp" />
 	</definition>

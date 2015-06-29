@@ -491,11 +491,6 @@
 
 		<!-- Users Admin -->
 
-		<action path="/users_admin/edit_organization_assignments" type="com.liferay.portlet.usersadmin.action.EditOrganizationAssignmentsAction">
-			<forward name="portlet.users_admin.edit_organization_assignments" path="portlet.users_admin.edit_organization_assignments" />
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
 		<action path="/users_admin/edit_user" type="com.liferay.portlet.usersadmin.action.EditUserAction">
 			<forward name="portlet.users_admin.edit_user" path="portlet.users_admin.edit_user" />
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />

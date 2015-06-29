@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trash;
+package com.liferay.blogs.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -30,11 +31,17 @@ import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Implements trash handling for the blogs entry entity.
  *
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	service = TrashHandler.class
+)
 public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	@Override

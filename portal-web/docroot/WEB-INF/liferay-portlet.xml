@@ -203,7 +203,6 @@
 		<portlet-name>33</portlet-name>
 		<struts-path>blogs</struts-path>
 		<xml-rpc-method-class>com.liferay.portlet.blogs.util.PingbackMethodImpl</xml-rpc-method-class>
-		<trash-handler>com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler</trash-handler>
 	</portlet>
 	<portlet>
 		<portlet-name>34</portlet-name>

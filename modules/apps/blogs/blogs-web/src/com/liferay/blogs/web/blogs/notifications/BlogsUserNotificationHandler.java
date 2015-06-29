@@ -12,19 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.notifications;
+package com.liferay.blogs.web.blogs.notifications;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
+	service = UserNotificationHandler.class
+)
 public class BlogsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public BlogsUserNotificationHandler() {
-		setPortletId(PortletKeys.BLOGS);
+		setPortletId(BlogsPortletKeys.BLOGS);
 	}
 
 }

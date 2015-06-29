@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <liferay-util:buffer var="userName">
 	<c:if test="<%= themeDisplay.isImpersonated() %>">
 		<b class="alert-icon icon-warning-sign"></b>
@@ -82,7 +84,7 @@
 					<aui:nav-item cssClass="current-user-language" href='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsUserLanguageId", doAsUserLanguageId) %>' label="<%= changeLanguageMessage %>" />
 				</c:if>
 			</c:if>
-			<c:if test="<%= userSetupComplete && (themeDisplay.getURLMyAccount() != null) %>">
+			<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && (themeDisplay.getURLMyAccount() != null) %>">
 
 				<%
 				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);

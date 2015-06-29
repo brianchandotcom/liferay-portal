@@ -42,7 +42,7 @@ public class BaseRelatedEntryIndexer implements RelatedEntryIndexer {
 		BooleanFilter relatedBooleanFilters = new BooleanFilter();
 
 		for (String relatedEntryClassName : relatedEntryClassNames) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				relatedEntryClassName);
 
 			if (indexer == null) {

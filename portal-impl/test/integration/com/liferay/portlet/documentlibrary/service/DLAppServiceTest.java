@@ -1515,7 +1515,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		searchContext.setQueryConfig(queryConfig);
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
 			DLFileEntryConstants.getClassName());
 
 		Hits hits = indexer.search(searchContext);

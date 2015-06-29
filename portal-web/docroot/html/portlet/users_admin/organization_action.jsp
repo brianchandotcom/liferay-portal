@@ -127,7 +127,7 @@ if (row == null) {
 
 	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignMembersURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_organization_assignments" />
+			<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization_assignments" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
 		</portlet:renderURL>

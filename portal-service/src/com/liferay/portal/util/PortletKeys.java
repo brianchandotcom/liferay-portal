@@ -60,7 +60,8 @@ public class PortletKeys {
 	public static final String EXPANDO =
 		"com_liferay_expando_web_portlet_ExpandoPortlet";
 
-	public static final String EXPORT_IMPORT = "200";
+	public static final String EXPORT_IMPORT =
+		"com_liferay_exportimport_web_portlet_ExportImportPortlet";
 
 	public static final String FAST_LOGIN = "164";
 

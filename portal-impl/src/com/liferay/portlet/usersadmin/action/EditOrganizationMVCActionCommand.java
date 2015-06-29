@@ -28,8 +28,11 @@ import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.RequiredOrganizationException;
 import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -51,9 +54,9 @@ import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
@@ -63,27 +66,35 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  * @author Jorge Ferrer
  */
-public class EditOrganizationAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"mvc.command.name=/users_admin/edit_organization"
+	}
+)
+public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteOrganizations(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "deleteOrganizationIds"), 0L);
+
+		for (long deleteOrganizationId : deleteOrganizationIds) {
+			OrganizationServiceUtil.deleteOrganization(deleteOrganizationId);
+		}
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -114,7 +125,8 @@ public class EditOrganizationAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.users_admin.error");
+				actionRequest.setAttribute(
+					MVCPortlet.MVC_PATH, "/html/portlet/users_admin/error.jsp");
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||
@@ -163,17 +175,6 @@ public class EditOrganizationAction extends PortletAction {
 			else {
 				throw e;
 			}
-		}
-	}
-
-	protected void deleteOrganizations(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteOrganizationIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "deleteOrganizationIds"), 0L);
-
-		for (long deleteOrganizationId : deleteOrganizationIds) {
-			OrganizationServiceUtil.deleteOrganization(deleteOrganizationId);
 		}
 	}
 

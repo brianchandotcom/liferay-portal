@@ -85,6 +85,6 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 	function <portlet:namespace />exportUsers() {
 		document.<portlet:namespace />fm.method = 'post';
 
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/export_users" /></portlet:actionURL>&compress=0&etag=0&strip=0', false);
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="/users_admin/export_users" />&compress=0&etag=0&strip=0', false);
 	}
 </aui:script>

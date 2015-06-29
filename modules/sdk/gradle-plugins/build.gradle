@@ -1,4 +1,5 @@
 dependencies {
+	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "1.0.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "1.0.0"
@@ -14,15 +15,4 @@ dependencies {
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "2.2.2"
 	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.6.2"
 	compile group: "org.zeroturnaround", name: "zt-exec", version: "1.8"
-
-	provided group: "com.liferay", name: "org.gradle.gradle-base-services", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-base-services-groovy", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-core", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-language-java", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-language-jvm", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-model-core", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-platform-jvm", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-plugins", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-reporting", transitive: false, version: "2.4"
-	provided group: "org.codehaus.groovy", name: "groovy-all", transitive: false, version: "2.3.10"
 }

@@ -1,9 +1,5 @@
 dependencies {
+	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.11"
 	compile project(":util:tld-formatter")
-
-	provided group: "com.liferay", name: "org.gradle.gradle-base-services", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-base-services-groovy", transitive: false, version: "2.4"
-	provided group: "com.liferay", name: "org.gradle.gradle-core", transitive: false, version: "2.4"
-	provided group: "org.codehaus.groovy", name: "groovy-all", transitive: false, version: "2.3.10"
 }

@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.FileUtil
+
 dependencies {
 	compile group: "com.github.rotty3000", name: "phidias", version: "0.3.2"
 	compile group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
@@ -12,4 +14,29 @@ dependencies {
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
+}
+
+ext.schemasUrl = "http://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk/java/javax/servlet/jsp/resources"
+
+task downloadSchemas
+
+classes {
+	dependsOn downloadSchemas
+}
+
+downloadSchemas {
+	File schemasDir = file("src/javax/servlet/jsp/resources")
+
+	doLast {
+		for (fileName in ["jsp_2_0.xsd", "jsp_2_1.xsd", "jsp_2_2.xsd", "jspxml.dtd", "web-jsptaglibrary_1_1.dtd", "web-jsptaglibrary_1_2.dtd", "web-jsptaglibrary_2_0.xsd", "web-jsptaglibrary_2_1.xsd"]) {
+			FileUtil.get(project, "${schemasUrl}/${fileName}", new File(schemasDir, fileName))
+		}
+
+		FileUtil.get(project, schemasUrl + "/jspxml.xsd", new File(schemasDir, "jspmlx.xsd"))
+		FileUtil.get(project, "http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/jsp_2_3.xsd", new File(schemasDir, "jsp_2_3.xsd"))
+	}
+
+	onlyIf {
+		!schemasDir.exists()
+	}
 }

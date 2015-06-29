@@ -3848,7 +3848,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A time in milliseconds to use as the progress bar update frequency. The default value is <![CDATA[<code>1000</code>]]>.</description>
+			<description>An interval in milliseconds on how often to update the progress bar. The default value is <![CDATA[<code>1000</code>]]> milliseconds.</description>
 			<name>updatePeriod</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5436,7 +5436,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A message to use as the component label.</description>
+			<description>A message to label the component.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

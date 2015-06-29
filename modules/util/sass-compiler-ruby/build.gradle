@@ -10,7 +10,9 @@ dependencies {
 	testCompile group: "junit", name: "junit", version: "4.12"
 }
 
-ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
+ext.sassSpecVersion = "3818b9d686765461add05e996d990b085e15a348"
+
+ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
 
 task downloadSassSpec(type: Copy)
 
@@ -19,9 +21,10 @@ downloadSassSpec {
 
 	eachFile new StripPathSegmentsAction(3)
 
-	from zipTree({
-		FileUtil.get(project, sassSpecUrl)
-	})
+	from zipTree(
+		{
+			FileUtil.get(project, sassSpecUrl)
+		})
 
 	include "**/spec/basic/**"
 

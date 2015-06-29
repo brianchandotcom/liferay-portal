@@ -18,9 +18,10 @@ dependencies {
 }
 
 ext.libSassVersion = "3.2.5"
+ext.sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
 
 ext.libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
-ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/f34eb8b4e6c9ba192fc37231a252af1ab79972fd.zip"
+ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
 
 task buildLibSass_Darwin(type: BuildLibSassTask)
 task buildLibSass_Linux_x86(type: BuildLibSassTask)
@@ -85,20 +86,21 @@ compileJava {
 }
 
 downloadSassSpec {
-	File sassSpecFile = project.file("test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
+	File sassSpecDir = project.file("test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
 
 	eachFile new StripPathSegmentsAction(3)
 
-	from zipTree({
-		FileUtil.get(project, sassSpecUrl)
-	})
+	from zipTree(
+		{
+			FileUtil.get(project, sassSpecUrl)
+		})
 
 	include "**/spec/basic/**"
 
-	into sassSpecFile
+	into sassSpecDir
 
 	onlyIf {
-		!sassSpecFile.exists()
+		!sassSpecDir.exists()
 	}
 }
 
@@ -182,8 +184,6 @@ class BuildLibSassTask extends DefaultTask {
 		}
 
 		String[] makeExecutableArgs = makeExecutable.split(" ")
-
-		println makeExecutableArgs
 
 		project.exec {
 			if (makeExecutableArgs.length > 1) {

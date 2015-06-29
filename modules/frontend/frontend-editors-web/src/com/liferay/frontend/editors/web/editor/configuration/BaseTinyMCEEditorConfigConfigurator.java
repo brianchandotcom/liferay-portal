@@ -69,11 +69,14 @@ public class BaseTinyMCEEditorConfigConfigurator
 		jsonObject.put("relative_urls", Boolean.FALSE);
 		jsonObject.put("remove_script_host", Boolean.FALSE);
 
+		String namespace = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:namespace"));
+
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
 
-		jsonObject.put(
-			"selector", "#" + liferayPortletResponse.getNamespace() + name);
+		jsonObject.put("selector", "#" + namespace + name);
 
 		jsonObject.put(
 			"toolbar",

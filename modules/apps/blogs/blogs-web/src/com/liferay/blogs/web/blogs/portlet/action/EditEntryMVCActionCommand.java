@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.blogs.web.blogs.portlet.action;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -24,13 +25,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -51,7 +52,6 @@ import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
@@ -83,6 +83,8 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
+import org.osgi.service.component.annotations.Component;
+
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
@@ -93,13 +95,15 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * @author Zsolt Berentey
  * @author Levente Hudák
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.BLOGS,
-		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN,
-		"javax.portlet.name=" + PortletKeys.BLOGS_AGGREGATOR,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,
 		"mvc.command.name=/blogs/edit_entry"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 

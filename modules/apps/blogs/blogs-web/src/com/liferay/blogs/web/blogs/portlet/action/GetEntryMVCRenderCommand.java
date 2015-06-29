@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.blogs.web.blogs.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;

@@ -12,21 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.blogs.web.blogs.portlet.action;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.BLOGS,
-		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN,
-		"javax.portlet.name=" + PortletKeys.BLOGS_AGGREGATOR,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR,
 		"mvc.command.name=/blogs/view_entry"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class ViewEntryMVCRenderCommand extends GetEntryMVCRenderCommand {
 

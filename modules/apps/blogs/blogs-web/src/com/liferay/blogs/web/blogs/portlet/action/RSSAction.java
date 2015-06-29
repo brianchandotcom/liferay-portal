@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.blogs.web.blogs.portlet.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
@@ -33,10 +32,14 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-@OSGiBeanProperties(property = "path=/blogs/rss", service = StrutsAction.class)
+@Component(
+	immediate = true, property = "path=/blogs/rss", service = StrutsAction.class
+)
 public class RSSAction extends BaseRSSStrutsAction {
 
 	@Override

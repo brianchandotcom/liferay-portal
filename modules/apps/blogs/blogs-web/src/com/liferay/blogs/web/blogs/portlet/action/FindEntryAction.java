@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.blogs.web.blogs.portlet.action;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.struts.FindActionHelper;
@@ -23,11 +22,14 @@ import com.liferay.portlet.blogs.util.BlogsFindEntryHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-@OSGiBeanProperties(
-	property = "path=/blogs/find_entry", service = StrutsAction.class
+@Component(
+	immediate = true, property = "path=/blogs/find_entry",
+	service = StrutsAction.class
 )
 public class FindEntryAction extends BaseStrutsAction {
 

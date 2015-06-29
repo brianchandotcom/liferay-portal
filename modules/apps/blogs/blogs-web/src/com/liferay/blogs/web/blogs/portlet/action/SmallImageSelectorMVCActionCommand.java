@@ -12,28 +12,32 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.blogs.web.blogs.portlet.action;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.image.selector.ImageSelectorUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.blogs.image.selector.EditorImageSelectorUploadHandler;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portlet.blogs.image.selector.SmallImageSelectorUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.BLOGS,
-		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN,
-		"mvc.command.name=/blogs/upload_editor_image"
-	}
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
+		"mvc.command.name=/blogs/small_image_selector"
+	},
+	service = MVCActionCommand.class
 )
-public class UploadEditorImageMVCActionCommand extends BaseMVCActionCommand {
+public class SmallImageSelectorMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -45,6 +49,6 @@ public class UploadEditorImageMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private final ImageSelectorUploadHandler _imageSelectorUploadHandler =
-		new EditorImageSelectorUploadHandler();
+		new SmallImageSelectorUploadHandler();
 
 }

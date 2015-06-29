@@ -33,6 +33,8 @@ create table DDMStructureLayout (
 	definition TEXT null
 );
 
+drop index IX_C803899D on DDMStructureLink;
+
 create table DDMStructureVersion (
 	structureVersionId LONG not null primary key,
 	groupId LONG,

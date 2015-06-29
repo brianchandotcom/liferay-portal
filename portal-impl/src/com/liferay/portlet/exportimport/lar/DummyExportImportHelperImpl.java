@@ -516,6 +516,13 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 		return StringPool.BLANK;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             DefaultConfigurationPortletDataHandler#updateExportPortletPreferencesClassPKs(
+	 *             PortletDataContext, Portlet, PortletPreferences, String,
+	 *             String)}
+	 */
+	@Deprecated
 	@Override
 	public void updateExportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext, Portlet portlet,
@@ -523,6 +530,12 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #updateExportPortletPreferencesClassPKs(PortletDataContext,
+	 *             Portlet, PortletPreferences, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public void updateExportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext, Portlet portlet,
@@ -531,6 +544,12 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             DefaultConfigurationPortletDataHandler#updateImportPortletPreferencesClassPKs(
+	 *             PortletDataContext, PortletPreferences, String, Class, long)}
+	 */
+	@Deprecated
 	@Override
 	public void updateImportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext,
@@ -539,7 +558,11 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 	}
 
-	@Override
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #validateMissingReferences(PortletDataContext)}
+	 */
+	@Deprecated
 	public MissingReferences validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)

@@ -221,7 +221,7 @@ public class JournalContentDisplayContext {
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-			JournalArticle.class.getName());
+				JournalArticle.class.getName());
 
 		if (assetRendererFactory == null) {
 			return null;

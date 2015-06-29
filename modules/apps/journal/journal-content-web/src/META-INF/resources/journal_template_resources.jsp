@@ -30,12 +30,12 @@ String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 
 <div
 	class="media template-preview-content"
+	data-change-enabled="<%= ddmTemplates.size() > 1 %>"
 	data-group-id="<%= (article != null) ? article.getGroupId() : scopeGroupId %>"
 	data-structure-id="<%= (ddmStructure != null) ? ddmStructure.getClassNameId() : 0 %>"
 	data-structure-key="<%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>"
 	data-template-id="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : StringPool.BLANK %>"
 	data-template-key="<%= ddmTemplate.getTemplateKey() %>"
-	data-change-enabled="<%= ddmTemplates.size() > 1 %>"
 >
 	<c:if test="<%= Validator.isNotNull(ddmTemplateImageURL) %>">
 		<img alt="<%= ddmTemplate.getName(locale) %>" class="media-object pull-left template-image" src="<%= ddmTemplateImageURL %>">

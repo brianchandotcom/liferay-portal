@@ -28,7 +28,6 @@ List<Portlet> portlets = PortalUtil.getControlPanelPortlets(controlPanelCategory
 			String urlControlPanelSitesPortlet = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", curPortletId);
 
 			urlControlPanelSitesPortlet = HttpUtil.setParameter(urlControlPanelSitesPortlet, "controlPanelCategory", controlPanelCategory);
-			urlControlPanelSitesPortlet = HttpUtil.setParameter(urlControlPanelSitesPortlet, "doAsGroupId", group.getGroupId());
 		%>
 
 			<aui:nav-item anchorId='<%= "controlPanelSubNav" + curPortletId + "Link" %>' href="<%= urlControlPanelSitesPortlet %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" selected="<%= curPortletId.equals(ppid) %>" />

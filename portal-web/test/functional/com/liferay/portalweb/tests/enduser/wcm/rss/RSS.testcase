@@ -3,15 +3,7 @@
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
-	</set-up>
 
-	<tear-down>
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
-
-	<command name="AddFeedBetweenFeeds" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -30,7 +22,15 @@
 			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
+	</set-up>
 
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="AddFeedBetweenFeeds" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -432,12 +432,6 @@
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
 			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="SitePage#addCP">
-			<var name="sitePageName" value="Page1 Name" />
-			<var name="sitePagePrivacy" value="Public" />
-			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="SitePage#addCP">

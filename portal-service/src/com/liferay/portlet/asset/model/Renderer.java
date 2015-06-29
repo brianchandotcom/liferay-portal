@@ -21,6 +21,9 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Julio Camarero
  */
@@ -39,8 +42,8 @@ public interface Renderer {
 
 	public String getTitle(Locale locale);
 
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception;
 

@@ -202,24 +202,6 @@
 	<portlet>
 		<portlet-name>33</portlet-name>
 		<struts-path>blogs</struts-path>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.blogs.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>blogs.entry.check.interval</property-key>
-					<time-unit>minute</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.blogs.messaging.LinkbackMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>blogs.linkback.job.interval</property-key>
-					<time-unit>minute</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
 		<template-handler>com.liferay.portlet.blogs.template.BlogsPortletDisplayTemplateHandler</template-handler>
 		<xml-rpc-method-class>com.liferay.portlet.blogs.util.PingbackMethodImpl</xml-rpc-method-class>
 		<atom-collection-adapter>com.liferay.portlet.blogs.atom.BlogsEntryAtomCollectionAdapter</atom-collection-adapter>

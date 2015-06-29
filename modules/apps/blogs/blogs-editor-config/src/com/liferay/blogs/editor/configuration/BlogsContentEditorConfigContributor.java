@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,8 +106,11 @@ public class BlogsContentEditorConfigContributor
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			blogsContentEditorDesiredItemSelectorReturnTypes);
 
+		PortletURLBuilder portletURLBuilder = PortletURLBuilder.create(
+			liferayPortletResponse);
+
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			liferayPortletResponse, eventName, blogsItemSelectorCriterion,
+			portletURLBuilder, eventName, blogsItemSelectorCriterion,
 			imageItemSelectorCriterion);
 
 		jsonObject.put(

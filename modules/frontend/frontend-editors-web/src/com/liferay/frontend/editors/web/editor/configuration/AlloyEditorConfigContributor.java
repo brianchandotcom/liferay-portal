@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -323,8 +324,11 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			urlDesiredItemSelectorReturnTypes);
 
+		PortletURLBuilder portletURLBuilder = PortletURLBuilder.create(
+			liferayPortletResponse);
+
 		PortletURL layoutItemSelectorURL = _itemSelector.getItemSelectorURL(
-			liferayPortletResponse, eventName, urlItemSelectorCriterion);
+			portletURLBuilder, eventName, urlItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserBrowseUrl", layoutItemSelectorURL.toString());
@@ -341,7 +345,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			imageDesiredItemSelectorReturnTypes);
 
 		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
-			liferayPortletResponse, eventName, imageItemSelectorCriterion);
+			portletURLBuilder, eventName, imageItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", dlItemSelectorURL.toString());

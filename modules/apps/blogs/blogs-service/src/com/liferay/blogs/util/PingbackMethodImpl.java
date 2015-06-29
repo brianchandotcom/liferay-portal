@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.blogs.util;
 
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -62,9 +62,12 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 import net.htmlparser.jericho.TextExtractor;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alexander Chow
  */
+@Component
 public class PingbackMethodImpl implements Method {
 
 	public static final int ACCESS_DENIED = 49;

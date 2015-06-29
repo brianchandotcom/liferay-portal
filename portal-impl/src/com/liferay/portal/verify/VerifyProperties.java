@@ -518,6 +518,11 @@ public class VerifyProperties extends VerifyProcess {
 		// Blogs
 
 		new String[] {
+			"blogs.display.templates.config", "display.templates.config",
+			"com.liferay.blogs.web"
+		},
+
+		new String[] {
 			"blogs.entry.check.interval", "entry.check.interval",
 			"com.liferay.blogs.web"
 		},

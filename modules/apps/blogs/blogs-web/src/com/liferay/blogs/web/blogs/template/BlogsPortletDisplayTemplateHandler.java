@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.template;
+package com.liferay.blogs.web.blogs.template;
 
+import com.liferay.blogs.web.blogs.configuration.BlogsWebConfigurationValues;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.BlogsEntryService;
@@ -30,9 +32,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Juan Fernández
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
+	service = TemplateHandler.class
+)
 public class BlogsPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -91,7 +100,7 @@ public class BlogsPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.BLOGS_DISPLAY_TEMPLATES_CONFIG;
+		return BlogsWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

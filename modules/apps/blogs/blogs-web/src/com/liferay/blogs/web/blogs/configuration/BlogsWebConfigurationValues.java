@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class BlogsWebConfigurationValues {
 
+	public static final String DISPLAY_TEMPLATES_CONFIG =
+		GetterUtil.getString(
+			BlogsWebConfigurationUtil.get("display.templates.config"));
+
 	public static final String ENTRY_CHECK_INTERVAL =
 		GetterUtil.getString(
 			BlogsWebConfigurationUtil.get("entry.check.interval"));

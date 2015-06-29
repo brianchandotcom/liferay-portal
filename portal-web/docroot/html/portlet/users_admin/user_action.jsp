@@ -38,7 +38,7 @@ long userId = user2.getUserId();
 
 	<c:if test="<%= hasUpdatePermission %>">
 		<portlet:renderURL var="editUserURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user" />
+			<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="p_u_i_d" value="<%= String.valueOf(userId) %>" />
 		</portlet:renderURL>

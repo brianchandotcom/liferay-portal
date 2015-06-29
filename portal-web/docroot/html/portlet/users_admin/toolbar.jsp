@@ -40,7 +40,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 
 			<c:if test="<%= hasAddUserPermission %>">
 				<portlet:renderURL var="addUserURL">
-					<portlet:param name="struts_action" value="/users_admin/edit_user" />
+					<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
 					<portlet:param name="redirect" value="<%= viewUsersURL %>" />
 				</portlet:renderURL>
 

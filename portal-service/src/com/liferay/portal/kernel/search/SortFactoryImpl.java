@@ -88,7 +88,7 @@ public class SortFactoryImpl implements SortFactory {
 	}
 
 	protected String getSortField(String orderByCol, int type, Class<?> clazz) {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(clazz);
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
 
 		return indexer.getSortField(orderByCol, type);
 	}

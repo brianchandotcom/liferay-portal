@@ -107,7 +107,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testSummaryFromIndexer() throws Exception {
-		Indexer indexer = Mockito.mock(Indexer.class);
+		Indexer<?> indexer = Mockito.mock(Indexer.class);
 
 		Summary summary = new Summary(
 			null, SearchTestUtil.SUMMARY_TITLE, SearchTestUtil.SUMMARY_CONTENT);

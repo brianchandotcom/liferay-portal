@@ -77,13 +77,13 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.journal.model.JournalArticleImage"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.journal.model.JournalArticleImage"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.journal.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticleImage"),
 			true);
 	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
@@ -94,7 +94,7 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	public static final long TEMPIMAGE_COLUMN_BITMASK = 32L;
 	public static final long VERSION_COLUMN_BITMASK = 64L;
 	public static final long ARTICLEIMAGEID_COLUMN_BITMASK = 128L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.journal.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.journal.model.JournalArticleImage"));
 
 	public JournalArticleImageModelImpl() {

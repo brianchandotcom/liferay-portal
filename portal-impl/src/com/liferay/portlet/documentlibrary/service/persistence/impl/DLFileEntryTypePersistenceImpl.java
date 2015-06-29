@@ -49,7 +49,6 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypePersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 
 import java.io.Serializable;
 
@@ -3233,8 +3232,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 		dlFileEntryTypeToDLFolderTableMapper.deleteLeftPrimaryKeyTableMappings(dlFileEntryType.getPrimaryKey());
 
-		dlFileEntryTypeToDDMStructureTableMapper.deleteLeftPrimaryKeyTableMappings(dlFileEntryType.getPrimaryKey());
-
 		Session session = null;
 
 		try {
@@ -4050,285 +4047,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 	}
 
-	/**
-	 * Returns the primaryKeys of d d m structures associated with the document library file entry type.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @return long[] of the primaryKeys of d d m structures associated with the document library file entry type
-	 */
-	@Override
-	public long[] getDDMStructurePrimaryKeys(long pk) {
-		long[] pks = dlFileEntryTypeToDDMStructureTableMapper.getRightPrimaryKeys(pk);
-
-		return pks.clone();
-	}
-
-	/**
-	 * Returns all the d d m structures associated with the document library file entry type.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @return the d d m structures associated with the document library file entry type
-	 */
-	@Override
-	public List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
-		long pk) {
-		return getDDMStructures(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	/**
-	 * Returns a range of all the d d m structures associated with the document library file entry type.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param start the lower bound of the range of document library file entry types
-	 * @param end the upper bound of the range of document library file entry types (not inclusive)
-	 * @return the range of d d m structures associated with the document library file entry type
-	 */
-	@Override
-	public List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
-		long pk, int start, int end) {
-		return getDDMStructures(pk, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the d d m structures associated with the document library file entry type.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryTypeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param start the lower bound of the range of document library file entry types
-	 * @param end the upper bound of the range of document library file entry types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d d m structures associated with the document library file entry type
-	 */
-	@Override
-	public List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
-		long pk, int start, int end,
-		OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
-		return dlFileEntryTypeToDDMStructureTableMapper.getRightBaseModels(pk,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of d d m structures associated with the document library file entry type.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @return the number of d d m structures associated with the document library file entry type
-	 */
-	@Override
-	public int getDDMStructuresSize(long pk) {
-		long[] pks = dlFileEntryTypeToDDMStructureTableMapper.getRightPrimaryKeys(pk);
-
-		return pks.length;
-	}
-
-	/**
-	 * Returns <code>true</code> if the d d m structure is associated with the document library file entry type.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructurePK the primary key of the d d m structure
-	 * @return <code>true</code> if the d d m structure is associated with the document library file entry type; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean containsDDMStructure(long pk, long ddmStructurePK) {
-		return dlFileEntryTypeToDDMStructureTableMapper.containsTableMapping(pk,
-			ddmStructurePK);
-	}
-
-	/**
-	 * Returns <code>true</code> if the document library file entry type has any d d m structures associated with it.
-	 *
-	 * @param pk the primary key of the document library file entry type to check for associations with d d m structures
-	 * @return <code>true</code> if the document library file entry type has any d d m structures associated with it; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean containsDDMStructures(long pk) {
-		if (getDDMStructuresSize(pk) > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	/**
-	 * Adds an association between the document library file entry type and the d d m structure. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructurePK the primary key of the d d m structure
-	 */
-	@Override
-	public void addDDMStructure(long pk, long ddmStructurePK) {
-		dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
-			ddmStructurePK);
-	}
-
-	/**
-	 * Adds an association between the document library file entry type and the d d m structure. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructure the d d m structure
-	 */
-	@Override
-	public void addDDMStructure(long pk,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
-			ddmStructure.getPrimaryKey());
-	}
-
-	/**
-	 * Adds an association between the document library file entry type and the d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructurePKs the primary keys of the d d m structures
-	 */
-	@Override
-	public void addDDMStructures(long pk, long[] ddmStructurePKs) {
-		for (long ddmStructurePK : ddmStructurePKs) {
-			dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
-				ddmStructurePK);
-		}
-	}
-
-	/**
-	 * Adds an association between the document library file entry type and the d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructures the d d m structures
-	 */
-	@Override
-	public void addDDMStructures(long pk,
-		List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures) {
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure : ddmStructures) {
-			dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
-				ddmStructure.getPrimaryKey());
-		}
-	}
-
-	/**
-	 * Clears all associations between the document library file entry type and its d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type to clear the associated d d m structures from
-	 */
-	@Override
-	public void clearDDMStructures(long pk) {
-		dlFileEntryTypeToDDMStructureTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
-	}
-
-	/**
-	 * Removes the association between the document library file entry type and the d d m structure. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructurePK the primary key of the d d m structure
-	 */
-	@Override
-	public void removeDDMStructure(long pk, long ddmStructurePK) {
-		dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
-			ddmStructurePK);
-	}
-
-	/**
-	 * Removes the association between the document library file entry type and the d d m structure. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructure the d d m structure
-	 */
-	@Override
-	public void removeDDMStructure(long pk,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
-			ddmStructure.getPrimaryKey());
-	}
-
-	/**
-	 * Removes the association between the document library file entry type and the d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructurePKs the primary keys of the d d m structures
-	 */
-	@Override
-	public void removeDDMStructures(long pk, long[] ddmStructurePKs) {
-		for (long ddmStructurePK : ddmStructurePKs) {
-			dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
-				ddmStructurePK);
-		}
-	}
-
-	/**
-	 * Removes the association between the document library file entry type and the d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructures the d d m structures
-	 */
-	@Override
-	public void removeDDMStructures(long pk,
-		List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures) {
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure : ddmStructures) {
-			dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
-				ddmStructure.getPrimaryKey());
-		}
-	}
-
-	/**
-	 * Sets the d d m structures associated with the document library file entry type, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructurePKs the primary keys of the d d m structures to be associated with the document library file entry type
-	 */
-	@Override
-	public void setDDMStructures(long pk, long[] ddmStructurePKs) {
-		Set<Long> newDDMStructurePKsSet = SetUtil.fromArray(ddmStructurePKs);
-		Set<Long> oldDDMStructurePKsSet = SetUtil.fromArray(dlFileEntryTypeToDDMStructureTableMapper.getRightPrimaryKeys(
-					pk));
-
-		Set<Long> removeDDMStructurePKsSet = new HashSet<Long>(oldDDMStructurePKsSet);
-
-		removeDDMStructurePKsSet.removeAll(newDDMStructurePKsSet);
-
-		for (long removeDDMStructurePK : removeDDMStructurePKsSet) {
-			dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
-				removeDDMStructurePK);
-		}
-
-		newDDMStructurePKsSet.removeAll(oldDDMStructurePKsSet);
-
-		for (long newDDMStructurePK : newDDMStructurePKsSet) {
-			dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
-				newDDMStructurePK);
-		}
-	}
-
-	/**
-	 * Sets the d d m structures associated with the document library file entry type, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the document library file entry type
-	 * @param ddmStructures the d d m structures to be associated with the document library file entry type
-	 */
-	@Override
-	public void setDDMStructures(long pk,
-		List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures) {
-		try {
-			long[] ddmStructurePKs = new long[ddmStructures.size()];
-
-			for (int i = 0; i < ddmStructures.size(); i++) {
-				com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
-					ddmStructures.get(i);
-
-				ddmStructurePKs[i] = ddmStructure.getPrimaryKey();
-			}
-
-			setDDMStructures(pk, ddmStructurePKs);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-	}
-
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -4340,9 +4058,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void afterPropertiesSet() {
 		dlFileEntryTypeToDLFolderTableMapper = TableMapperFactory.getTableMapper("DLFileEntryTypes_DLFolders",
 				"fileEntryTypeId", "folderId", this, dlFolderPersistence);
-
-		dlFileEntryTypeToDDMStructureTableMapper = TableMapperFactory.getTableMapper("DLFileEntryTypes_DDMStructures",
-				"fileEntryTypeId", "structureId", this, ddmStructurePersistence);
 	}
 
 	public void destroy() {
@@ -4352,15 +4067,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		TableMapperFactory.removeTableMapper("DLFileEntryTypes_DLFolders");
-		TableMapperFactory.removeTableMapper("DLFileEntryTypes_DDMStructures");
 	}
 
 	@BeanReference(type = DLFolderPersistence.class)
 	protected DLFolderPersistence dlFolderPersistence;
 	protected TableMapper<DLFileEntryType, com.liferay.portlet.documentlibrary.model.DLFolder> dlFileEntryTypeToDLFolderTableMapper;
-	@BeanReference(type = DDMStructurePersistence.class)
-	protected DDMStructurePersistence ddmStructurePersistence;
-	protected TableMapper<DLFileEntryType, com.liferay.portlet.dynamicdatamapping.model.DDMStructure> dlFileEntryTypeToDDMStructureTableMapper;
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType";
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE_WHERE_PKS_IN = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType WHERE fileEntryTypeId IN (";
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE_WHERE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType WHERE ";

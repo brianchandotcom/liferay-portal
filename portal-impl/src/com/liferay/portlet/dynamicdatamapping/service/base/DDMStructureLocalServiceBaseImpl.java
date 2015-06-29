@@ -46,8 +46,6 @@ import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypePersistence;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
@@ -442,153 +440,6 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 */
-	@Override
-	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		dlFileEntryTypePersistence.addDDMStructure(fileEntryTypeId, structureId);
-	}
-
-	/**
-	 */
-	@Override
-	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		DDMStructure ddmStructure) {
-		dlFileEntryTypePersistence.addDDMStructure(fileEntryTypeId, ddmStructure);
-	}
-
-	/**
-	 */
-	@Override
-	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		dlFileEntryTypePersistence.addDDMStructures(fileEntryTypeId,
-			structureIds);
-	}
-
-	/**
-	 */
-	@Override
-	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		List<DDMStructure> DDMStructures) {
-		dlFileEntryTypePersistence.addDDMStructures(fileEntryTypeId,
-			DDMStructures);
-	}
-
-	/**
-	 */
-	@Override
-	public void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId) {
-		dlFileEntryTypePersistence.clearDDMStructures(fileEntryTypeId);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		dlFileEntryTypePersistence.removeDDMStructure(fileEntryTypeId,
-			structureId);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		DDMStructure ddmStructure) {
-		dlFileEntryTypePersistence.removeDDMStructure(fileEntryTypeId,
-			ddmStructure);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		dlFileEntryTypePersistence.removeDDMStructures(fileEntryTypeId,
-			structureIds);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		List<DDMStructure> DDMStructures) {
-		dlFileEntryTypePersistence.removeDDMStructures(fileEntryTypeId,
-			DDMStructures);
-	}
-
-	/**
-	 * Returns the fileEntryTypeIds of the document library file entry types associated with the d d m structure.
-	 *
-	 * @param structureId the structureId of the d d m structure
-	 * @return long[] the fileEntryTypeIds of document library file entry types associated with the d d m structure
-	 */
-	@Override
-	public long[] getDLFileEntryTypePrimaryKeys(long structureId) {
-		return ddmStructurePersistence.getDLFileEntryTypePrimaryKeys(structureId);
-	}
-
-	/**
-	 */
-	@Override
-	public List<DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId) {
-		return dlFileEntryTypePersistence.getDDMStructures(fileEntryTypeId);
-	}
-
-	/**
-	 */
-	@Override
-	public List<DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end) {
-		return dlFileEntryTypePersistence.getDDMStructures(fileEntryTypeId,
-			start, end);
-	}
-
-	/**
-	 */
-	@Override
-	public List<DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
-		return dlFileEntryTypePersistence.getDDMStructures(fileEntryTypeId,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 */
-	@Override
-	public int getDLFileEntryTypeDDMStructuresCount(long fileEntryTypeId) {
-		return dlFileEntryTypePersistence.getDDMStructuresSize(fileEntryTypeId);
-	}
-
-	/**
-	 */
-	@Override
-	public boolean hasDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		return dlFileEntryTypePersistence.containsDDMStructure(fileEntryTypeId,
-			structureId);
-	}
-
-	/**
-	 */
-	@Override
-	public boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId) {
-		return dlFileEntryTypePersistence.containsDDMStructures(fileEntryTypeId);
-	}
-
-	/**
-	 */
-	@Override
-	public void setDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		dlFileEntryTypePersistence.setDDMStructures(fileEntryTypeId,
-			structureIds);
-	}
-
-	/**
 	 * Returns the d d m structure local service.
 	 *
 	 * @return the d d m structure local service
@@ -945,82 +796,6 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the document library file entry type local service.
-	 *
-	 * @return the document library file entry type local service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService getDLFileEntryTypeLocalService() {
-		return dlFileEntryTypeLocalService;
-	}
-
-	/**
-	 * Sets the document library file entry type local service.
-	 *
-	 * @param dlFileEntryTypeLocalService the document library file entry type local service
-	 */
-	public void setDLFileEntryTypeLocalService(
-		com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-		this.dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
-	}
-
-	/**
-	 * Returns the document library file entry type remote service.
-	 *
-	 * @return the document library file entry type remote service
-	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService getDLFileEntryTypeService() {
-		return dlFileEntryTypeService;
-	}
-
-	/**
-	 * Sets the document library file entry type remote service.
-	 *
-	 * @param dlFileEntryTypeService the document library file entry type remote service
-	 */
-	public void setDLFileEntryTypeService(
-		com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService dlFileEntryTypeService) {
-		this.dlFileEntryTypeService = dlFileEntryTypeService;
-	}
-
-	/**
-	 * Returns the document library file entry type persistence.
-	 *
-	 * @return the document library file entry type persistence
-	 */
-	public DLFileEntryTypePersistence getDLFileEntryTypePersistence() {
-		return dlFileEntryTypePersistence;
-	}
-
-	/**
-	 * Sets the document library file entry type persistence.
-	 *
-	 * @param dlFileEntryTypePersistence the document library file entry type persistence
-	 */
-	public void setDLFileEntryTypePersistence(
-		DLFileEntryTypePersistence dlFileEntryTypePersistence) {
-		this.dlFileEntryTypePersistence = dlFileEntryTypePersistence;
-	}
-
-	/**
-	 * Returns the document library file entry type finder.
-	 *
-	 * @return the document library file entry type finder
-	 */
-	public DLFileEntryTypeFinder getDLFileEntryTypeFinder() {
-		return dlFileEntryTypeFinder;
-	}
-
-	/**
-	 * Sets the document library file entry type finder.
-	 *
-	 * @param dlFileEntryTypeFinder the document library file entry type finder
-	 */
-	public void setDLFileEntryTypeFinder(
-		DLFileEntryTypeFinder dlFileEntryTypeFinder) {
-		this.dlFileEntryTypeFinder = dlFileEntryTypeFinder;
-	}
-
-	/**
 	 * Returns the d d m structure layout local service.
 	 *
 	 * @return the d d m structure layout local service
@@ -1328,14 +1103,6 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
-	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService dlFileEntryTypeService;
-	@BeanReference(type = DLFileEntryTypePersistence.class)
-	protected DLFileEntryTypePersistence dlFileEntryTypePersistence;
-	@BeanReference(type = DLFileEntryTypeFinder.class)
-	protected DLFileEntryTypeFinder dlFileEntryTypeFinder;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
 	@BeanReference(type = DDMStructureLayoutPersistence.class)

@@ -59,18 +59,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addDDMStructure(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
-	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
-
-	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId);
-
-	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
-
-	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds);
-
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -245,8 +233,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
-	public void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId);
-
 	/**
 	* Copies a structure, creating a new structure with all the values
 	* extracted from the original one. The new structure supports a new name
@@ -304,18 +290,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure deleteDDMStructure(
 		long structureId) throws PortalException;
-
-	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
-
-	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId);
-
-	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
-
-	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds);
 
 	/**
 	* @throws PortalException
@@ -658,42 +632,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public int getDDMStructuresCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLFileEntryTypeDDMStructuresCount(long fileEntryTypeId);
-
-	/**
-	* Returns the fileEntryTypeIds of the document library file entry types associated with the d d m structure.
-	*
-	* @param structureId the structureId of the d d m structure
-	* @return long[] the fileEntryTypeIds of document library file entry types associated with the d d m structure
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getDLFileEntryTypePrimaryKeys(long structureId);
-
-	/**
-	* Returns all the structures for the document library file entry type.
-	*
-	* @param dlFileEntryTypeId the primary key of the document library file
-	entry type
-	* @return the structures for the document library file entry type
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeStructures(
-		long dlFileEntryTypeId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
 
@@ -961,13 +899,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructuresCount(long[] groupIds, long classNameId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId);
-
 	public void revertStructure(long userId, long structureId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1094,9 +1025,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	public void setDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds);
 
 	/**
 	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

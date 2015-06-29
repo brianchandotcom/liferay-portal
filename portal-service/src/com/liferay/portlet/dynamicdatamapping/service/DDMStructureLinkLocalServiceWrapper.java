@@ -238,6 +238,12 @@ public class DDMStructureLinkLocalServiceWrapper
 		return _ddmStructureLinkLocalService.getBeanIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getClassNameStructureLinks(
+		long classNameId) {
+		return _ddmStructureLinkLocalService.getClassNameStructureLinks(classNameId);
+	}
+
 	/**
 	* Returns the d d m structure link with the primary key.
 	*

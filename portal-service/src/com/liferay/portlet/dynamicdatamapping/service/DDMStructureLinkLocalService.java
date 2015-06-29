@@ -191,6 +191,10 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getBeanIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getClassNameStructureLinks(
+		long classNameId);
+
 	/**
 	* Returns the d d m structure link with the primary key.
 	*

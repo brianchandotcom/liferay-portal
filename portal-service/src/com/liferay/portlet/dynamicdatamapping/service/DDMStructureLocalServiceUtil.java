@@ -52,29 +52,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService().addDDMStructure(ddmStructure);
 	}
 
-	public static void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		getService()
-			.addDLFileEntryTypeDDMStructure(fileEntryTypeId, ddmStructure);
-	}
-
-	public static void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		getService().addDLFileEntryTypeDDMStructure(fileEntryTypeId, structureId);
-	}
-
-	public static void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures) {
-		getService()
-			.addDLFileEntryTypeDDMStructures(fileEntryTypeId, DDMStructures);
-	}
-
-	public static void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		getService()
-			.addDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
-	}
-
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -284,10 +261,6 @@ public class DDMStructureLocalServiceUtil {
 			.addStructureResources(structure, groupPermissions, guestPermissions);
 	}
 
-	public static void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId) {
-		getService().clearDLFileEntryTypeDDMStructures(fileEntryTypeId);
-	}
-
 	/**
 	* Copies a structure, creating a new structure with all the values
 	* extracted from the original one. The new structure supports a new name
@@ -355,31 +328,6 @@ public class DDMStructureLocalServiceUtil {
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDDMStructure(structureId);
-	}
-
-	public static void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		getService()
-			.deleteDLFileEntryTypeDDMStructure(fileEntryTypeId, ddmStructure);
-	}
-
-	public static void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		getService()
-			.deleteDLFileEntryTypeDDMStructure(fileEntryTypeId, structureId);
-	}
-
-	public static void deleteDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures) {
-		getService()
-			.deleteDLFileEntryTypeDDMStructures(fileEntryTypeId, DDMStructures);
-	}
-
-	public static void deleteDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, long[] structureIds) {
-		getService()
-			.deleteDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
 	}
 
 	/**
@@ -774,51 +722,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getDDMStructuresCount();
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId) {
-		return getService().getDLFileEntryTypeDDMStructures(fileEntryTypeId);
-	}
-
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end) {
-		return getService()
-				   .getDLFileEntryTypeDDMStructures(fileEntryTypeId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
-		return getService()
-				   .getDLFileEntryTypeDDMStructures(fileEntryTypeId, start,
-			end, orderByComparator);
-	}
-
-	public static int getDLFileEntryTypeDDMStructuresCount(long fileEntryTypeId) {
-		return getService().getDLFileEntryTypeDDMStructuresCount(fileEntryTypeId);
-	}
-
-	/**
-	* Returns the fileEntryTypeIds of the document library file entry types associated with the d d m structure.
-	*
-	* @param structureId the structureId of the d d m structure
-	* @return long[] the fileEntryTypeIds of document library file entry types associated with the d d m structure
-	*/
-	public static long[] getDLFileEntryTypePrimaryKeys(long structureId) {
-		return getService().getDLFileEntryTypePrimaryKeys(structureId);
-	}
-
-	/**
-	* Returns all the structures for the document library file entry type.
-	*
-	* @param dlFileEntryTypeId the primary key of the document library file
-	entry type
-	* @return the structures for the document library file entry type
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeStructures(
-		long dlFileEntryTypeId) {
-		return getService().getDLFileEntryTypeStructures(dlFileEntryTypeId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
@@ -1112,16 +1015,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getStructuresCount(groupIds, classNameId);
 	}
 
-	public static boolean hasDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		return getService()
-				   .hasDLFileEntryTypeDDMStructure(fileEntryTypeId, structureId);
-	}
-
-	public static boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId) {
-		return getService().hasDLFileEntryTypeDDMStructures(fileEntryTypeId);
-	}
-
 	public static void revertStructure(long userId, long structureId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1263,12 +1156,6 @@ public class DDMStructureLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void setDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		getService()
-			.setDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
 	}
 
 	/**

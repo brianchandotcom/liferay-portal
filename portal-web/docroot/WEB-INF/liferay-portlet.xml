@@ -419,15 +419,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>114</portlet-name>
-		<struts-path>recent_bloggers</struts-path>
-	</portlet>
-	<portlet>
-		<portlet-name>115</portlet-name>
-		<struts-path>blogs_aggregator</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-	</portlet>
-	<portlet>
 		<portlet-name>119</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>asset</struts-path>
@@ -658,11 +649,6 @@
 		<css-class-wrapper>portlet-dockbar</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
-	</portlet>
-	<portlet>
-		<portlet-name>161</portlet-name>
-		<struts-path>blogs_admin</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 	</portlet>
 	<portlet>
 		<portlet-name>162</portlet-name>

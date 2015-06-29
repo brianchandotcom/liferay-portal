@@ -97,6 +97,11 @@ public class DDMStructureLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId) {
+		return ddmStructureLinkPersistence.findByClassNameId(classNameId);
+	}
+
+	@Override
 	public DDMStructureLink getStructureLink(long structureLinkId)
 		throws PortalException {
 

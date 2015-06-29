@@ -1062,14 +1062,6 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		// LPS-56689, temporary workaround until Sergio González fixes it
-
-		if (line.contains(
-				"[Ljava.lang.String; cannot be cast to java.lang.String")) {
-
-			return true;
-		}
-
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

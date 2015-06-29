@@ -43,6 +43,7 @@ public class TestSingleIndexerPostProcessor implements IndexerPostProcessor {
 		throws Exception {
 	}
 
+	@Deprecated
 	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)

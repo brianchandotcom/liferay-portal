@@ -42,6 +42,7 @@ public class TestSingleEntityIndexerPostProcessor
 		throws Exception {
 	}
 
+	@Deprecated
 	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)

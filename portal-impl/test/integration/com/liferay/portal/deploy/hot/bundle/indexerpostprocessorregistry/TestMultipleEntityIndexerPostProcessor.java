@@ -45,6 +45,7 @@ public class TestMultipleEntityIndexerPostProcessor
 		throws Exception {
 	}
 
+	@Deprecated
 	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)

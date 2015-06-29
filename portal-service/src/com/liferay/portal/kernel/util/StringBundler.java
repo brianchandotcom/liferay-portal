@@ -297,15 +297,21 @@ public class StringBundler implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	static {
-		_THREAD_LOCAL_BUFFER_LIMIT = GetterUtil.getInteger(
+		int threadLocalBufferLimit = GetterUtil.getInteger(
 			System.getProperty(
 				StringBundler.class.getName() + ".threadlocal.buffer.limit"),
 			Integer.MAX_VALUE);
 
-		if (_THREAD_LOCAL_BUFFER_LIMIT < Integer.MAX_VALUE) {
+		if ((threadLocalBufferLimit > 0) &&
+			(threadLocalBufferLimit < Integer.MAX_VALUE)) {
+
+			_THREAD_LOCAL_BUFFER_LIMIT = threadLocalBufferLimit;
+
 			_stringBuilderThreadLocal = new SoftReferenceThreadLocal<>();
 		}
 		else {
+			_THREAD_LOCAL_BUFFER_LIMIT = Integer.MAX_VALUE;
+
 			_stringBuilderThreadLocal = null;
 		}
 	}

@@ -30,7 +30,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/users_admin/edit_organization_assignments");
+portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_organization_assignments");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);

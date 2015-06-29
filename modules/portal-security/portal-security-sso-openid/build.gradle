@@ -1,0 +1,8 @@
+dependencies {
+	compile group: "org.eclipse.birt.runtime.3_7_1", name: "org.apache.xml.resolver", transitive: false, version: "1.2.0"
+	compile group: "org.openid4java", name: "openid4java", version: "0.9.8"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

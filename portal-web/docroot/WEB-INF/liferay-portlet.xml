@@ -200,10 +200,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>33</portlet-name>
-		<struts-path>blogs</struts-path>
-	</portlet>
-	<portlet>
 		<portlet-name>34</portlet-name>
 		<icon>/html/icons/shopping.png</icon>
 		<struts-path>shopping</struts-path>

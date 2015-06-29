@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.patcher;
 
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction;
 
 import groovy.lang.Closure;
 
@@ -29,6 +30,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,9 +51,7 @@ import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
-import org.gradle.api.file.RelativePath;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
@@ -226,36 +226,9 @@ public class PatchTask extends DefaultTask {
 
 				if (!originalLibSrcDirName.equals(".")) {
 					copySpec.eachFile(
-						new Action<FileCopyDetails>() {
-
-							@Override
-							public void execute(
-								FileCopyDetails fileCopyDetails) {
-
-								RelativePath relativePath =
-									fileCopyDetails.getRelativePath();
-
-								String relativePathString =
-									relativePath.getPathString();
-
-								if (!relativePathString.startsWith(
-										originalLibSrcDirName + "/")) {
-
-									fileCopyDetails.exclude();
-
-									return;
-								}
-
-								relativePathString =
-									relativePathString.substring(
-										originalLibSrcDirName.length() + 1);
-
-								fileCopyDetails.setRelativePath(
-									RelativePath.parse(
-										true, relativePathString));
-							}
-
-						});
+						new ReplaceLeadingPathAction(
+							Collections.singletonMap(
+								originalLibSrcDirName, "")));
 				}
 
 				copySpec.filter(FixCrLfFilter.class);

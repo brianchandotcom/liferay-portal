@@ -17,7 +17,7 @@
 	<div class="breadcrumb breadcrumb-vertical">
 	    <ul>
 		    <#list entries as entry>
-			    <li><a href="${entry.getURL()!""}">${htmlUtil.escape(entry.getTitle())}</a></li>
+			    <li><a href="${entry.getURL()!""}">${entry.getTitle()}</a></li>
 		    </#list>
 	    </ul>
 	</div>

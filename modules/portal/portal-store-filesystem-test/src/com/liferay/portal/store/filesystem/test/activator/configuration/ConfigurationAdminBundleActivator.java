@@ -17,15 +17,18 @@ package com.liferay.portal.store.filesystem.test.activator.configuration;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Manuel de la Peña
@@ -48,6 +51,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 			_advancedFileSystemConfiguration.update(properties);
 
+			_waitForService(
+				bundleContext, _advancedFileSystemConfiguration,
+				"com.liferay.portal.store.filesystem.AdvancedFileSystemStore");
+
 			_fileSystemConfiguration = _getConfiguration(
 				bundleContext, serviceReference,
 				_FILE_SYSTEM_CONFIGURATION_PID);
@@ -57,6 +64,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			properties.put("rootDir", _ROOT_DIR);
 
 			_fileSystemConfiguration.update(properties);
+
+			_waitForService(
+				bundleContext, _fileSystemConfiguration,
+				"com.liferay.portal.store.filesystem.FileSystemStore");
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);
@@ -88,6 +99,33 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			serviceReference);
 
 		return configurationAdmin.getConfiguration(configurationPid, null);
+	}
+
+	private void _waitForService(
+			BundleContext bundleContext, Configuration configuration,
+			String storeType)
+		throws Exception {
+
+		Filter filter = bundleContext.createFilter(
+			"(&(objectClass=" + Store.class.getName() + ")(store.type=" +
+				storeType + "))");
+
+		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
+			bundleContext, filter, null);
+
+		serviceTracker.open();
+
+		Object service = serviceTracker.waitForService(10000);
+
+		serviceTracker.close();
+
+		if (service == null) {
+			configuration.delete();
+
+			throw new IllegalStateException(
+				"Service " + storeType +
+					" was not registered within 10 seconds");
+		}
 	}
 
 	private Configuration _advancedFileSystemConfiguration;

@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -1748,7 +1747,7 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException {
 
 		if (treePath == null) {
-			throw new IllegalArgumentException("Cannot set null treePath");
+			throw new IllegalArgumentException("Tree path is null");
 		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -1767,11 +1766,10 @@ public class DLFileEntryLocalServiceImpl
 					Property treePathProperty = PropertyFactoryUtil.forName(
 						"treePath");
 
-					Criterion criterion = RestrictionsFactoryUtil.or(
-						treePathProperty.isNull(),
-						treePathProperty.ne(treePath));
-
-					dynamicQuery.add(criterion);
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.or(
+							treePathProperty.isNull(),
+							treePathProperty.ne(treePath)));
 				}
 
 			});

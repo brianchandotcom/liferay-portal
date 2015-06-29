@@ -1711,6 +1711,34 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-lcs-app-server">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="8" name="app.server.leading.port.number" />
+
+		<sequential>
+			<parallel>
+				<sequential>
+					<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
+						<socket server="localhost" port="@{app.server.leading.port.number}080" />
+					</waitfor>
+				</sequential>
+				<daemons>
+					<exec dir="@{app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
+						<arg line="${app.server.start.executable.arg.line}" />
+					</exec>
+				</daemons>
+			</parallel>
+
+			<if>
+				<equals arg1="@{app.server.bundle.index}" arg2="0" />
+				<then>
+					<record action="stop" name="log" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-android-device">
 		<sequential>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
@@ -1834,6 +1862,33 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<record action="stop" name="log" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-lcs-app-server">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="8" name="app.server.leading.port.number" />
+
+		<sequential>
+			<if>
+				<equals arg1="@{app.server.bundle.index}" arg2="0" />
+				<then>
+					<antcall target="clean-up-logs" />
+
+					<record action="start" name="log" />
+				</then>
+			</if>
+
+			<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+				<arg line="${app.server.stop.executable.arg.line}" />
+			</exec>
+
+			<waitfor maxwait="1" maxwaitunit="minute">
+				<not>
+					<socket server="localhost" port="@{app.server.leading.port.number}080" />
+				</not>
+			</waitfor>
 		</sequential>
 	</macrodef>
 
@@ -6247,6 +6302,22 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		</if>
 	</target>
 
+	<target name="start-lcs-server">
+		<start-lcs-app-server
+			app.server.bin.dir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/bin"
+			app.server.bundle.index="1"
+			app.server.leading.port.number="7"
+		/>
+
+		<start-lcs-app-server
+			app.server.bin.dir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/bin"
+			app.server.bundle.index="2"
+			app.server.leading.port.number="9"
+		/>
+
+		<start-lcs-app-server />
+	</target>
+
 	<target name="start-ldap">
 		<exec dir="${app.server.parent.dir}/apacheds_1.5.7" executable="cmd">
 			<arg value="/c" />
@@ -6309,6 +6380,22 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<exec executable="taskkill.exe">
 			<arg line="/F /IM IEDriverServer.exe" />
 		</exec>
+	</target>
+
+	<target name="stop-lcs-server">
+		<stop-lcs-app-server
+			app.server.bin.dir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/bin"
+			app.server.bundle.index="1"
+			app.server.leading.port.number="7"
+		/>
+
+		<stop-lcs-app-server
+			app.server.bin.dir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/bin"
+			app.server.bundle.index="2"
+			app.server.leading.port.number="9"
+		/>
+
+		<stop-lcs-app-server />
 	</target>
 
 	<target name="stop-ldap">

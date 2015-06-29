@@ -493,10 +493,6 @@
 
 		<action path="/users_admin/edit_user_details" forward="portlet.users_admin.edit_user_details" />
 
-		<action path="/users_admin/export_users" type="com.liferay.portlet.usersadmin.action.ExportUsersAction">
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
 		<action path="/users_admin/get_users_count" type="com.liferay.portlet.usersadmin.action.GetUsersCountAction" />
 
 		<action path="/users_admin/select_organization" forward="portlet.users_admin.select_organization" />

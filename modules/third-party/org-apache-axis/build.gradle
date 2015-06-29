@@ -13,7 +13,9 @@ liferay {
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
-task patch(type: PatchTask) {
+task patch(type: PatchTask)
+
+patch {
 	fileNames "org/apache/axis/AxisEngine.java"
 	fileNames "org/apache/axis/description/JavaServiceDesc.java"
 	fileNames "org/apache/axis/encoding/ser/MapDeserializer.java"

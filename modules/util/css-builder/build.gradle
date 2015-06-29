@@ -1,0 +1,13 @@
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.rtl.css", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.sass.compiler.jni", version: "1.0.3"
+	compile group: "com.liferay", name: "com.liferay.sass.compiler.ruby", version: "1.0.0"
+	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
+	compile group: "org.slf4j", name: "slf4j-log4j12", version: "1.7.2"
+
+	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+}
+
+liferay {
+	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
+}

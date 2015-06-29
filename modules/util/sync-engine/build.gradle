@@ -1,0 +1,18 @@
+dependencies {
+	compile group: "ch.qos.logback", name: "logback-classic", version: "1.1.2"
+	compile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.5.3"
+	compile group: "com.h2database", name: "h2", version: "1.3.174"
+	compile group: "com.j256.ormlite", name: "ormlite-jdbc", version: "4.48"
+	compile group: "com.liferay", name: "ch.securityvision.xattrj", version: "1.0"
+	compile group: "com.liferay", name: "com.barbarysoftware.watchservice", version: "1.4"
+	compile group: "com.liferay", name: "com.btr.proxy.vole", version: "20131209"
+	compile group: "com.liferay", name: "com.liferay.io.delta", version: "1.0.0-SNAPSHOT"
+	compile group: "com.liferay", name: "net.sf.jpathwatch", version: "0.95.LIFERAY-PATCHED-2"
+	compile group: "commons-configuration", name: "commons-configuration", version: "1.10"
+	compile group: "commons-io", name: "commons-io", version: "2.4"
+	compile group: "net.java.dev.jna", name: "jna", version: "4.1.0"
+	compile group: "oauth.signpost", name: "signpost-commonshttp4", version: "1.2.1.2"
+	compile group: "org.apache.httpcomponents", name: "httpclient", version: "4.4"
+	compile group: "org.apache.httpcomponents", name: "httpmime", version: "4.4"
+	compile group: "org.slf4j", name: "slf4j-api", version: "1.7.6"
+}

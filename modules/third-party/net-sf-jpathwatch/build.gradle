@@ -13,7 +13,9 @@ liferay {
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
-task patch(type: PatchTask) {
+task patch(type: PatchTask)
+
+patch {
 	fileNames "**/name/pachler/nio/file/impl/BSDPathWatchService.java"
 	fileNames "**/name/pachler/nio/file/impl/LinuxPathWatchService.java"
 	originalLibModuleName = "jpathwatch"

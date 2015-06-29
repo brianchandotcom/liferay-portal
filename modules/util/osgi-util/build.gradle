@@ -1,0 +1,16 @@
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	testCompile group: "com.liferay.arquillian", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Alpha1-SNAPSHOT"
+	testCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "4.4.0"
+	testCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "4.4.0"
+	testCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.CR15"
+	testCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.6.Final"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"

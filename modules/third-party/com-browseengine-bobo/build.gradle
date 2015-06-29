@@ -14,7 +14,9 @@ liferay {
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
-task patch(type: PatchTask) {
+task patch(type: PatchTask)
+
+patch {
 	fileNames "**/DocComparatorSource.java"
 	fileNames "**/ReverseDocComparatorSource.java"
 	fileNames "**/SortCollector.java"

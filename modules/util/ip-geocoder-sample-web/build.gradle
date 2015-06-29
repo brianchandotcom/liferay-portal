@@ -1,0 +1,7 @@
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.ip.geocoder", version: "1.0.2"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

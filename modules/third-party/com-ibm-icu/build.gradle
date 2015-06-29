@@ -3,6 +3,12 @@ dependencies {
 	compile group: "com.ibm.icu", name: "icu4j", optional, version: "54.1.1"
 }
 
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+task jar(type: Jar, overwrite: true)
+
 deploy {
 	into("../../../lib/portal") {
 		from {
@@ -14,11 +20,7 @@ deploy {
 	}
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
-task jar(type: Jar, overwrite: true) {
+jar {
 	destinationDir = sdkDestinationDir
 
 	deleteAllActions()

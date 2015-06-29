@@ -1,0 +1,209 @@
+import com.liferay.gradle.util.FileUtil
+
+configurations {
+	jnaerator
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "1.0.0"
+
+	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.11"
+
+	provided group: "com.nativelibs4java", name: "jnaerator-runtime", transitive: false, version: "0.11"
+	provided group: "com.nativelibs4java", name: "ochafik-util", transitive: false, version: "0.11"
+	provided group: "net.java.dev.jna", name: "jna", transitive: false, version: "4.1.0"
+
+	testCompile group: "junit", name: "junit", version: "4.12"
+}
+
+ext.libSassVersion = "3.2.5"
+
+ext.libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
+ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/f34eb8b4e6c9ba192fc37231a252af1ab79972fd.zip"
+
+task buildLibSass_Darwin(type: BuildLibSassTask)
+task buildLibSass_Linux_x86(type: BuildLibSassTask)
+task buildLibSass_Linux_x86_64(type: BuildLibSassTask)
+task buildLibSass_Win32_x86(type: BuildLibSassTask)
+task buildLibSass_Win32_x86_64(type: BuildLibSassTask)
+task downloadSassSpec(type: Copy)
+task generateJNALibrary
+
+buildLibSass_Darwin {
+	doFirst {
+		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}")
+
+		libSassDir.mkdirs()
+
+		File buildShFile = new File(libSassDir, "build.sh")
+
+		buildShFile.write("""\
+LIBSASS_VERSION=\"${libSassVersion}\"
+autoreconf --force --install
+./configure --disable-tests --enable-shared
+make -j5""")
+	}
+
+	inputDirName = ".libs"
+	inputFileName = "libsass.dylib"
+	makeExecutable = "./build.sh"
+	outputFileName = "libliferaysass.dylib"
+	resourcesDirName = "darwin"
+}
+
+buildLibSass_Linux_x86 {
+	inputFileName = "libsass.so"
+	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
+	outputFileName = "libliferaysass.so"
+	resourcesDirName = "linux-x86"
+}
+
+buildLibSass_Linux_x86_64 {
+	inputFileName = "libsass.so"
+	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
+	outputFileName = "libliferaysass.so"
+	resourcesDirName = "linux-x86-64"
+}
+
+buildLibSass_Win32_x86 {
+	inputFileName = "sass.dll"
+	makeExecutable = "mingw32-make.exe shared"
+	outputFileName = "liferaysass.dll"
+	resourcesDirName = "win32-x86"
+}
+
+buildLibSass_Win32_x86_64 {
+	inputFileName = "sass.dll"
+	makeExecutable = "mingw32-make.exe shared"
+	outputFileName = "liferaysass.dll"
+	resourcesDirName = "win32-x86-64"
+}
+
+compileJava {
+	dependsOn generateJNALibrary
+}
+
+downloadSassSpec {
+	File sassSpecFile = project.file("test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
+
+	eachFile {
+		String[] segments = relativePath.segments
+
+		relativePath = new RelativePath(true, *segments[3 .. segments.length - 1])
+	}
+
+	from zipTree({
+		FileUtil.get(project, sassSpecUrl)
+	})
+
+	include "**/spec/basic/**"
+
+	into sassSpecFile
+
+	onlyIf {
+		!sassSpecFile.exists()
+	}
+}
+
+generateJNALibrary {
+	File jnaLibraryFile = project.file("src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java")
+
+	doLast {
+		copy {
+			from zipTree(FileUtil.get(project, libSassUrl))
+			into temporaryDir
+		}
+
+		File libSassDir = new File(temporaryDir, "libsass-${libSassVersion}")
+
+		javaexec {
+			args configurations.jnaerator.singleFile
+			args "-f"
+			args "-library", "liferaysass"
+			args "-mode", "Directory"
+			args "-o", FileUtil.relativize(file("src"), libSassDir)
+			args "-package", "com.liferay.sass.compiler.jni.internal.libsass"
+			args "-runtime", "JNAerator"
+			args "sass_context.h"
+
+			main = "-jar"
+
+			workingDir = libSassDir
+		}
+
+		jnaLibraryFile.text = "/* @generated */" + jnaLibraryFile.text
+	}
+
+	onlyIf {
+		!jnaLibraryFile.exists()
+	}
+}
+
+processTestResources {
+	dependsOn downloadSassSpec
+}
+
+class BuildLibSassTask extends DefaultTask {
+
+	BuildLibSassTask() {
+		group = "build"
+	}
+
+	@Input
+	String inputDirName = "lib"
+
+	@Input
+	String inputFileName
+
+	@Input
+	String makeExecutable
+
+	@Input
+	String outputFileName
+
+	@Input
+	String resourcesDirName
+
+	@OutputDirectory
+	File getResourcesDir() {
+		project.file("resources/" + resourcesDirName)
+	}
+
+	@TaskAction
+	void buildLibSass() {
+		project.copy {
+			from project.zipTree(FileUtil.get(project, project.libSassUrl))
+			into temporaryDir
+		}
+
+		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}")
+
+		FileCollection shFiles = project.fileTree(dir: libSassDir, include: "**/*.sh")
+
+		shFiles.each {
+			it.setExecutable(true, false)
+		}
+
+		String[] makeExecutableArgs = makeExecutable.split(" ")
+
+		println makeExecutableArgs
+
+		project.exec {
+			if (makeExecutableArgs.length > 1) {
+				args makeExecutableArgs[1 .. makeExecutableArgs.length - 1]
+			}
+
+			executable = makeExecutableArgs[0]
+			workingDir = libSassDir
+		}
+
+		project.copy {
+			from new File(libSassDir, inputDirName + "/" + inputFileName)
+			into resourcesDir
+			rename {
+				outputFileName
+			}
+		}
+	}
+
+}

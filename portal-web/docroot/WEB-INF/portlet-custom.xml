@@ -900,24 +900,11 @@
 	</portlet>
 	<portlet>
 		<portlet-name>161</portlet-name>
-		<display-name>Blogs</display-name>
-		<portlet-class>com.liferay.portlet.blogsadmin.portlet.BlogsAdminPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/blogs_admin/configuration.jsp</value>
 		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
 	</portlet>
 	<portlet>
 		<portlet-name>162</portlet-name>

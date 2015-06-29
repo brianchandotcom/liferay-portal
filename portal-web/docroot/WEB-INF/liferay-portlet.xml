@@ -685,23 +685,10 @@
 	</portlet>
 	<portlet>
 		<portlet-name>161</portlet-name>
-		<icon>/html/icons/blogs.png</icon>
 		<struts-path>blogs_admin</struts-path>
 		<configuration-action-class>com.liferay.portlet.blogsadmin.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.blogs.lar.BlogsPortletDataHandler</portlet-data-handler-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>5.0</control-panel-entry-weight>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/blogs/css/main.css</header-portlet-css>
-		<header-portlet-javascript>/html/portlet/blogs/js/modules.js</header-portlet-javascript>
-		<css-class-wrapper>portlet-blogs</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>162</portlet-name>

@@ -50,7 +50,7 @@ public class DirectoryOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public Indexer getIndexer() {
+	public Indexer<User> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(User.class);
 	}
 

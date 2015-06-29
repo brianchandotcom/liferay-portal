@@ -174,8 +174,9 @@ public class ExportImportConfigurationLocalServiceImpl
 			if (exportImportConfiguration == null) {
 				exportImportConfigurations = null;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					ExportImportConfiguration.class);
+				Indexer<ExportImportConfiguration> indexer =
+					IndexerRegistryUtil.getIndexer(
+						ExportImportConfiguration.class);
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));
@@ -302,8 +303,9 @@ public class ExportImportConfigurationLocalServiceImpl
 			Sort sort)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			ExportImportConfiguration.class);
+		Indexer<ExportImportConfiguration> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				ExportImportConfiguration.class);
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, groupId, type, name, description, andSearch, start, end,

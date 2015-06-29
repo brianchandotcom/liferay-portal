@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
@@ -106,8 +107,11 @@ public class WikiAttachmentEditorConfigContributor
 			name = namespace + name;
 		}
 
+		PortletURLBuilder portletURLBuilder = PortletURLBuilder.create(
+			liferayPortletResponse);
+
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			liferayPortletResponse, name + "selectItem",
+			portletURLBuilder, name + "selectItem",
 			attachmentItemSelectorCriterion);
 
 		jsonObject.put(

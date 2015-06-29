@@ -14,11 +14,11 @@
 
 package com.liferay.blogs.web.blogs.portlet.action;
 
+import com.liferay.blogs.web.blogs.image.selector.SmallImageSelectorUploadHandler;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.image.selector.ImageSelectorUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portlet.blogs.image.selector.SmallImageSelectorUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

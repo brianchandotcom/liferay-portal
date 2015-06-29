@@ -485,34 +485,15 @@
 	</portlet>
 	<portlet>
 		<portlet-name>114</portlet-name>
-		<display-name>Recent Bloggers</display-name>
-		<portlet-class>com.liferay.portlet.recentbloggers.portlet.RecentBloggersPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/recent_bloggers/configuration.jsp</value>
 		</init-param>
 		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/recent_bloggers/view.jsp</value>
 		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
 	</portlet>
 	<portlet>
 		<portlet-name>115</portlet-name>

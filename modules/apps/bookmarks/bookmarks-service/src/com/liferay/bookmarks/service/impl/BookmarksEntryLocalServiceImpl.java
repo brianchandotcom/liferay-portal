@@ -457,7 +457,7 @@ public class BookmarksEntryLocalServiceImpl
 			int start, int end)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
 			BookmarksEntry.class.getName());
 
 		SearchContext searchContext = new SearchContext();

@@ -37,7 +37,7 @@ public class BookmarksOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public Indexer getIndexer() {
+	public Indexer<BookmarksEntry> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
 	}
 

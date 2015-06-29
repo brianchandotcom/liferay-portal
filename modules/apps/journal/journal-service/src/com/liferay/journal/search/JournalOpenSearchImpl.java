@@ -58,7 +58,7 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public Indexer getIndexer() {
+	public Indexer<JournalArticle> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(JournalArticle.class);
 	}
 

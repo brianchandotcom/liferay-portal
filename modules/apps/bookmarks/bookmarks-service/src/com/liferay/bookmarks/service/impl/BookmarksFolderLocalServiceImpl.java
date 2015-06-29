@@ -794,8 +794,9 @@ public class BookmarksFolderLocalServiceImpl
 
 				// Indexer
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					BookmarksEntry.class);
+				Indexer<BookmarksEntry> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						BookmarksEntry.class);
 
 				indexer.reindex(entry);
 			}

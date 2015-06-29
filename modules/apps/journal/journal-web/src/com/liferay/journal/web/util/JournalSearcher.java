@@ -30,7 +30,7 @@ public class JournalSearcher extends BaseSearcher {
 		JournalArticle.class.getName(), JournalFolder.class.getName()
 	};
 
-	public static Indexer getInstance() {
+	public static Indexer<?> getInstance() {
 		return new JournalSearcher();
 	}
 

@@ -432,8 +432,8 @@ public class JournalUtil {
 			if (article == null) {
 				articles = null;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
-					JournalArticle.class);
+				Indexer<JournalArticle> indexer =
+					IndexerRegistryUtil.getIndexer(JournalArticle.class);
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));

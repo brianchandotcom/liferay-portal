@@ -421,7 +421,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public Hits search(SearchContext searchContext) {
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<DDLRecord> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				DDLRecord.class);
 
 			return indexer.search(searchContext);
@@ -436,7 +436,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		SearchContext searchContext) {
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<DDLRecord> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				DDLRecord.class);
 
 			Hits hits = indexer.search(searchContext, DDL.SELECTED_FIELD_NAMES);

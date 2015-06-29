@@ -85,8 +85,12 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"elementspath,image,link,liststyle,resize,toolbar");
 
 		if (liferayPortletResponse != null) {
+			String namespace = GetterUtil.getString(
+				inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:namespace"));
+
 			String name =
-				liferayPortletResponse.getNamespace() +
+				namespace +
 					GetterUtil.getString(
 						(String)inputEditorTaglibAttributes.get(
 							"liferay-ui:input-editor:name"));

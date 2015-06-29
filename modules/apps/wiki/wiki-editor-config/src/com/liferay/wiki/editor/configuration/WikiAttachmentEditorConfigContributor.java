@@ -99,7 +99,11 @@ public class WikiAttachmentEditorConfigContributor
 				"liferay-ui:input-editor:inlineEdit"));
 
 		if (!inlineEdit) {
-			name = liferayPortletResponse.getNamespace() + name;
+			String namespace = GetterUtil.getString(
+				inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:namespace"));
+
+			name = namespace + name;
 		}
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(

@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -35,6 +36,7 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Enumeration;
@@ -251,6 +253,8 @@ public class InputEditorTag extends IncludeTag {
 			}
 		}
 
+		attributes.put("liferay-ui:input-editor:namespace", getNamespace());
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -294,6 +298,22 @@ public class InputEditorTag extends IncludeTag {
 		Editor editor = getEditor(request);
 
 		return editor.getName();
+	}
+
+	protected String getNamespace() {
+		LiferayPortletRequest portletRequest =
+			(LiferayPortletRequest)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		LiferayPortletResponse portletResponse =
+			(LiferayPortletResponse)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if ((portletRequest == null) || (portletResponse == null)) {
+			return AUIUtil.getNamespace(request);
+		}
+
+		return AUIUtil.getNamespace(portletRequest, portletResponse);
 	}
 
 	@Override

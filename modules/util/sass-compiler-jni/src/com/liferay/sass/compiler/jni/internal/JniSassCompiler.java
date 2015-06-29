@@ -17,7 +17,6 @@ package com.liferay.sass.compiler.jni.internal;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Context;
-import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Data_Context;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_File_Context;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Output_Style;
@@ -25,7 +24,6 @@ import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Ou
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -91,7 +89,7 @@ public class JniSassCompiler implements SassCompiler {
 				sassOptions, inputFileName);
 			_liferaysassLibrary.sass_option_set_output_path(sassOptions, "");
 			_liferaysassLibrary.sass_option_set_output_style(
-				sassOptions, Sass_Output_Style.SASS_STYLE_COMPACT);
+				sassOptions, Sass_Output_Style.SASS_STYLE_NESTED);
 			_liferaysassLibrary.sass_option_set_source_comments(
 				sassOptions, sourceComments);
 
@@ -148,7 +146,8 @@ public class JniSassCompiler implements SassCompiler {
 
 			write(temp, input);
 
-			return compileFile(temp.getCanonicalPath(), includeDirName, imgDirName);
+			return compileFile(
+				temp.getCanonicalPath(), includeDirName, imgDirName);
 		}
 		catch (Exception e) {
 			throw new JniSassCompilerException(e);

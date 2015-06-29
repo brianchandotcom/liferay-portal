@@ -39,9 +39,12 @@ import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
@@ -74,7 +77,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -98,20 +100,14 @@ import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -119,205 +115,13 @@ import org.apache.struts.action.ActionMapping;
  * @author Julio Camarero
  * @author Wesley Gong
  */
-public class EditUserAction extends PortletAction {
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
-			actionRequest);
-
-		long prefixId = getListTypeId(
-			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
-
-		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
-
-		long suffixId = getListTypeId(
-			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
-
-		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));
-
-		actionRequest = dynamicActionRequest;
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			User user = null;
-			String oldScreenName = StringPool.BLANK;
-			boolean updateLanguageId = false;
-
-			if (cmd.equals(Constants.ADD)) {
-				user = addUser(actionRequest);
-			}
-			else if (cmd.equals(Constants.DEACTIVATE) ||
-					 cmd.equals(Constants.DELETE) ||
-					 cmd.equals(Constants.RESTORE)) {
-
-				deleteUsers(actionRequest);
-			}
-			else if (cmd.equals("deleteRole")) {
-				deleteRole(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				Object[] returnValue = updateUser(
-					actionRequest, actionResponse);
-
-				user = (User)returnValue[0];
-				oldScreenName = ((String)returnValue[1]);
-				updateLanguageId = ((Boolean)returnValue[2]);
-			}
-			else if (cmd.equals("unlock")) {
-				user = updateLockout(actionRequest);
-			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			if (user != null) {
-				if (Validator.isNotNull(oldScreenName)) {
-
-					// This will fix the redirect if the user is on his personal
-					// my account page and changes his screen name. A redirect
-					// that references the old screen name no longer points to a
-					// valid screen name and therefore needs to be updated.
-
-					Group group = user.getGroup();
-
-					if (group.getGroupId() == themeDisplay.getScopeGroupId()) {
-						Layout layout = themeDisplay.getLayout();
-
-						String friendlyURLPath = group.getPathFriendlyURL(
-							layout.isPrivateLayout(), themeDisplay);
-
-						String oldPath =
-							friendlyURLPath + StringPool.SLASH + oldScreenName;
-						String newPath =
-							friendlyURLPath + StringPool.SLASH +
-								user.getScreenName();
-
-						redirect = StringUtil.replace(
-							redirect, oldPath, newPath);
-
-						redirect = StringUtil.replace(
-							redirect, HttpUtil.encodeURL(oldPath),
-							HttpUtil.encodeURL(newPath));
-					}
-				}
-
-				if (updateLanguageId && themeDisplay.isI18n()) {
-					String i18nLanguageId = user.getLanguageId();
-					int pos = i18nLanguageId.indexOf(CharPool.UNDERLINE);
-
-					if (pos != -1) {
-						i18nLanguageId = i18nLanguageId.substring(0, pos);
-					}
-
-					String i18nPath = StringPool.SLASH + i18nLanguageId;
-
-					redirect = StringUtil.replace(
-						redirect, themeDisplay.getI18nPath(), i18nPath);
-				}
-
-				redirect = HttpUtil.setParameter(
-					redirect, actionResponse.getNamespace() + "p_u_i_d",
-					user.getUserId());
-			}
-
-			Group scopeGroup = themeDisplay.getScopeGroup();
-
-			if (scopeGroup.isUser() &&
-				(UserLocalServiceUtil.fetchUserById(
-					scopeGroup.getClassPK()) == null)) {
-
-				redirect = HttpUtil.setParameter(redirect, "doAsGroupId", 0);
-				redirect = HttpUtil.setParameter(redirect, "refererPlid", 0);
-			}
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchUserException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.users_admin.error");
-			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AddressStreetException ||
-					 e instanceof AddressZipException ||
-					 e instanceof CompanyMaxUsersException ||
-					 e instanceof ContactBirthdayException ||
-					 e instanceof ContactNameException ||
-					 e instanceof EmailAddressException ||
-					 e instanceof GroupFriendlyURLException ||
-					 e instanceof MembershipPolicyException ||
-					 e instanceof NoSuchCountryException ||
-					 e instanceof NoSuchListTypeException ||
-					 e instanceof NoSuchRegionException ||
-					 e instanceof PhoneNumberException ||
-					 e instanceof RequiredUserException ||
-					 e instanceof UserEmailAddressException ||
-					 e instanceof UserFieldException ||
-					 e instanceof UserIdException ||
-					 e instanceof UserPasswordException ||
-					 e instanceof UserReminderQueryException ||
-					 e instanceof UserScreenNameException ||
-					 e instanceof UserSmsException ||
-					 e instanceof WebsiteURLException) {
-
-				if (e instanceof NoSuchListTypeException) {
-					NoSuchListTypeException nslte = (NoSuchListTypeException)e;
-
-					SessionErrors.add(
-						actionRequest,
-						e.getClass().getName() + nslte.getType());
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass(), e);
-				}
-
-				String password1 = actionRequest.getParameter("password1");
-				String password2 = actionRequest.getParameter("password2");
-
-				boolean submittedPassword = false;
-
-				if (!Validator.isBlank(password1) ||
-					!Validator.isBlank(password2)) {
-
-					submittedPassword = true;
-				}
-
-				if (e instanceof CompanyMaxUsersException ||
-					e instanceof RequiredUserException || submittedPassword) {
-
-					String redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
-
-					if (submittedPassword) {
-						User user = PortalUtil.getSelectedUser(actionRequest);
-
-						redirect = HttpUtil.setParameter(
-							redirect, actionResponse.getNamespace() + "p_u_i_d",
-							user.getUserId());
-					}
-
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
-					}
-				}
-			}
-			else {
-				throw e;
-			}
-		}
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"mvc.command.name=/users_admin/edit_user"
 	}
+)
+public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 	protected User addUser(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -463,6 +267,203 @@ public class EditUserAction extends PortletAction {
 			}
 			else {
 				UserServiceUtil.deleteUser(deleteUserId);
+			}
+		}
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
+			actionRequest);
+
+		long prefixId = getListTypeId(
+			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
+
+		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
+
+		long suffixId = getListTypeId(
+			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
+
+		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));
+
+		actionRequest = dynamicActionRequest;
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			User user = null;
+			String oldScreenName = StringPool.BLANK;
+			boolean updateLanguageId = false;
+
+			if (cmd.equals(Constants.ADD)) {
+				user = addUser(actionRequest);
+			}
+			else if (cmd.equals(Constants.DEACTIVATE) ||
+					 cmd.equals(Constants.DELETE) ||
+					 cmd.equals(Constants.RESTORE)) {
+
+				deleteUsers(actionRequest);
+			}
+			else if (cmd.equals("deleteRole")) {
+				deleteRole(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				Object[] returnValue = updateUser(
+					actionRequest, actionResponse);
+
+				user = (User)returnValue[0];
+				oldScreenName = ((String)returnValue[1]);
+				updateLanguageId = ((Boolean)returnValue[2]);
+			}
+			else if (cmd.equals("unlock")) {
+				user = updateLockout(actionRequest);
+			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (user != null) {
+				if (Validator.isNotNull(oldScreenName)) {
+
+					// This will fix the redirect if the user is on his personal
+					// my account page and changes his screen name. A redirect
+					// that references the old screen name no longer points to a
+					// valid screen name and therefore needs to be updated.
+
+					Group group = user.getGroup();
+
+					if (group.getGroupId() == themeDisplay.getScopeGroupId()) {
+						Layout layout = themeDisplay.getLayout();
+
+						String friendlyURLPath = group.getPathFriendlyURL(
+							layout.isPrivateLayout(), themeDisplay);
+
+						String oldPath =
+							friendlyURLPath + StringPool.SLASH + oldScreenName;
+						String newPath =
+							friendlyURLPath + StringPool.SLASH +
+								user.getScreenName();
+
+						redirect = StringUtil.replace(
+							redirect, oldPath, newPath);
+
+						redirect = StringUtil.replace(
+							redirect, HttpUtil.encodeURL(oldPath),
+							HttpUtil.encodeURL(newPath));
+					}
+				}
+
+				if (updateLanguageId && themeDisplay.isI18n()) {
+					String i18nLanguageId = user.getLanguageId();
+					int pos = i18nLanguageId.indexOf(CharPool.UNDERLINE);
+
+					if (pos != -1) {
+						i18nLanguageId = i18nLanguageId.substring(0, pos);
+					}
+
+					String i18nPath = StringPool.SLASH + i18nLanguageId;
+
+					redirect = StringUtil.replace(
+						redirect, themeDisplay.getI18nPath(), i18nPath);
+				}
+
+				redirect = HttpUtil.setParameter(
+					redirect, actionResponse.getNamespace() + "p_u_i_d",
+					user.getUserId());
+			}
+
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
+			if (scopeGroup.isUser() &&
+				(UserLocalServiceUtil.fetchUserById(
+					scopeGroup.getClassPK()) == null)) {
+
+				redirect = HttpUtil.setParameter(redirect, "doAsGroupId", 0);
+				redirect = HttpUtil.setParameter(redirect, "refererPlid", 0);
+			}
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchUserException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionRequest.setAttribute(
+					MVCPortlet.MVC_PATH, "/html/portlet/users_admin/error.jsp");
+			}
+			else if (e instanceof AddressCityException ||
+					 e instanceof AddressStreetException ||
+					 e instanceof AddressZipException ||
+					 e instanceof CompanyMaxUsersException ||
+					 e instanceof ContactBirthdayException ||
+					 e instanceof ContactNameException ||
+					 e instanceof EmailAddressException ||
+					 e instanceof GroupFriendlyURLException ||
+					 e instanceof MembershipPolicyException ||
+					 e instanceof NoSuchCountryException ||
+					 e instanceof NoSuchListTypeException ||
+					 e instanceof NoSuchRegionException ||
+					 e instanceof PhoneNumberException ||
+					 e instanceof RequiredUserException ||
+					 e instanceof UserEmailAddressException ||
+					 e instanceof UserFieldException ||
+					 e instanceof UserIdException ||
+					 e instanceof UserPasswordException ||
+					 e instanceof UserReminderQueryException ||
+					 e instanceof UserScreenNameException ||
+					 e instanceof UserSmsException ||
+					 e instanceof WebsiteURLException) {
+
+				if (e instanceof NoSuchListTypeException) {
+					NoSuchListTypeException nslte = (NoSuchListTypeException)e;
+
+					SessionErrors.add(
+						actionRequest,
+						e.getClass().getName() + nslte.getType());
+				}
+				else {
+					SessionErrors.add(actionRequest, e.getClass(), e);
+				}
+
+				String password1 = actionRequest.getParameter("password1");
+				String password2 = actionRequest.getParameter("password2");
+
+				boolean submittedPassword = false;
+
+				if (!Validator.isBlank(password1) ||
+					!Validator.isBlank(password2)) {
+
+					submittedPassword = true;
+				}
+
+				if (e instanceof CompanyMaxUsersException ||
+					e instanceof RequiredUserException || submittedPassword) {
+
+					String redirect = PortalUtil.escapeRedirect(
+						ParamUtil.getString(actionRequest, "redirect"));
+
+					if (submittedPassword) {
+						User user = PortalUtil.getSelectedUser(actionRequest);
+
+						redirect = HttpUtil.setParameter(
+							redirect, actionResponse.getNamespace() + "p_u_i_d",
+							user.getUserId());
+					}
+
+					if (Validator.isNotNull(redirect)) {
+						actionResponse.sendRedirect(redirect);
+					}
+				}
+			}
+			else {
+				throw e;
 			}
 		}
 	}

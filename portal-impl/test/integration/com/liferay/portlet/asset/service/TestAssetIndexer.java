@@ -21,7 +21,7 @@ import org.junit.Assert;
 /**
  * @author Michael C. Han
  */
-public class AssetTestIndexer extends BlogsEntryIndexer {
+public class TestAssetIndexer extends BlogsEntryIndexer {
 
 	@Override
 	public void reindex(String className, long classPK) {

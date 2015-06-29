@@ -77,12 +77,12 @@ public class AssetTagLocalServiceTest {
 			TestPropsValues.getUserId(), "Test", RandomTestUtil.randomString(),
 			serviceContext);
 
-		AssetTestIndexer assetTestIndexer = new AssetTestIndexer();
+		TestAssetIndexer testAssetIndexer = new TestAssetIndexer();
 
-		assetTestIndexer.setExpectedValues(
+		testAssetIndexer.setExpectedValues(
 			BlogsEntry.class.getName(), blogsEntry.getEntryId());
 
-		IndexerRegistryUtil.register(assetTestIndexer);
+		IndexerRegistryUtil.register(testAssetIndexer);
 
 		AssetTagLocalServiceUtil.deleteTag(assetTag);
 	}

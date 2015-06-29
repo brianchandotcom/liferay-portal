@@ -3,10 +3,6 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
-		var CURRENT_CHECKED_NODES = [];
-
-		var CURRENT_UNCHECKED_NODES = [];
-
 		var Lang = A.Lang;
 
 		var STR_BOUNDING_BOX = 'boundingBox';
@@ -14,6 +10,10 @@ AUI.add(
 		var STR_CHECKED_NODES = 'checkedNodes';
 
 		var STR_HOST = 'host';
+
+		var STR_SESSION_CHECKED_NODES = 'sessionCheckedNodes';
+
+		var STR_SESSION_UNCHECKED_NODES = 'sessionUncheckedNodes';
 
 		var LayoutsTreeState = A.Component.create(
 			{
@@ -25,6 +25,14 @@ AUI.add(
 					rootNodeExpanded: {
 						validator: Lang.isBoolean,
 						value: true
+					},
+
+					sessionCheckedNodes: {
+						validator: Lang.isArray
+					},
+
+					sessionUncheckedNodes: {
+						validator: Lang.isArray
 					}
 				},
 
@@ -88,14 +96,22 @@ AUI.add(
 						var instance = this;
 
 						var host = instance.get(STR_HOST);
+						var sessionCheckedNodes = instance.get(STR_SESSION_CHECKED_NODES);
+						var sessionUncheckedNodes = instance.get(STR_SESSION_UNCHECKED_NODES);
 
 						var plid = host.extractPlid(node);
 
-						if (CURRENT_CHECKED_NODES.indexOf(plid) > -1) {
-							instance._updateCheckedNodes(node, true);
+						var checked;
+
+						if (sessionCheckedNodes.indexOf(plid) > -1) {
+							checked = true;
 						}
-						else if (CURRENT_UNCHECKED_NODES.indexOf(plid) > -1) {
-							instance._updateCheckedNodes(node, false);
+						else if (sessionUncheckedNodes.indexOf(plid) > -1) {
+							checked = false;
+						}
+
+						if (!Lang.isUndefined(checked)) {
+							instance._updateCheckedNodes(node, checked);
 						}
 					},
 
@@ -131,7 +147,6 @@ AUI.add(
 						var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
 
 						var expanded = event.newVal;
-
 						var target = event.target;
 
 						if (target === host.getChildren()[0]) {
@@ -149,8 +164,6 @@ AUI.add(
 					_onNodeIOSuccess: function(event) {
 						var instance = this;
 
-						var target = event.target;
-
 						var host = instance.get(STR_HOST);
 
 						var paginationMap = {};
@@ -167,13 +180,15 @@ AUI.add(
 							}
 						};
 
+						var target = event.target;
+
+						instance._matchParentNode(target);
+
 						var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
 
 						var root = host.get('root');
 
 						var key = treeId + ':' + root.groupId + ':' + root.privateLayout + ':Pagination';
-
-						instance._matchParentNode(target);
 
 						instance._invokeSessionClick(
 							{
@@ -274,41 +289,42 @@ AUI.add(
 					_updateCheckedNodes: function(node, state) {
 						var instance = this;
 
-						var children = node.get('children');
-
 						var plid = instance.get(STR_HOST).extractPlid(node);
 
 						var checkedNodes = instance.get(STR_CHECKED_NODES);
-						var curCheckedNodes = CURRENT_CHECKED_NODES;
-						var curUncheckedNodes = CURRENT_UNCHECKED_NODES;
+						var sessionCheckedNodes = instance.get(STR_SESSION_CHECKED_NODES);
+						var sessionUncheckedNodes = instance.get(STR_SESSION_UNCHECKED_NODES);
 
 						var checkedIndex = checkedNodes.indexOf(plid);
-						var curCheckedIndex = curCheckedNodes.indexOf(plid);
-						var curUncheckedIndex = curUncheckedNodes.indexOf(plid);
+						var sessionCheckedIndex = sessionCheckedNodes.indexOf(plid);
+						var sessionUncheckedIndex = sessionUncheckedNodes.indexOf(plid);
 
 						if (state) {
 							if (checkedIndex === -1) {
 								checkedNodes.push(plid);
 							}
 
-							if (curCheckedIndex == -1) {
-								curCheckedNodes.push(plid);
+							if (sessionCheckedIndex == -1) {
+								sessionCheckedNodes.push(plid);
 							}
 
-							if (curUncheckedIndex > -1) {
-								AArray.remove(curUncheckedNodes, curUncheckedIndex);
+							if (sessionUncheckedIndex > -1) {
+								AArray.remove(sessionCheckedNodes, sessionUncheckedIndex);
 							}
 						}
 						else if (checkedIndex > -1) {
 							AArray.remove(checkedNodes, checkedIndex);
-							curUncheckedNodes.push(plid);
 
-							if (curCheckedIndex > -1) {
-								AArray.remove(curCheckedNodes, curCheckedIndex);
+							sessionCheckedNodes.push(plid);
+
+							if (sessionCheckedIndex > -1) {
+								AArray.remove(sessionCheckedNodes, sessionCheckedIndex);
 							}
 						}
 
 						node.set('checked', state);
+
+						var children = node.get('children');
 
 						if (children.length) {
 							A.each(

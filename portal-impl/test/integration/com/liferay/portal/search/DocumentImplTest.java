@@ -521,7 +521,7 @@ public class DocumentImplTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private Indexer _indexer;
+	private Indexer<User> _indexer;
 	private IndexerPostProcessor _indexerPostProcessor;
 	private final Map<String, Integer[]> _integerArrays = new HashMap<>();
 	private final Map<String, Integer> _integers = new HashMap<>();

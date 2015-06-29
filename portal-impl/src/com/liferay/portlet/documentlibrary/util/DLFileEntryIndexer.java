@@ -186,7 +186,7 @@ public class DLFileEntryIndexer
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 			if (dlFileEntry.isInHiddenFolder()) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					dlFileEntry.getClassName());
 
 				return indexer.isVisible(dlFileEntry.getClassPK(), status);
@@ -465,7 +465,7 @@ public class DLFileEntryIndexer
 			addFileEntryTypeAttributes(document, dlFileVersion);
 
 			if (dlFileEntry.isInHiddenFolder()) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					dlFileEntry.getClassName());
 
 				if ((indexer != null) &&

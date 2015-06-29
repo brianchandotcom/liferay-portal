@@ -14,7 +14,6 @@
 
 package com.liferay.portal.server.capabilities;
 
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.server.DeepNamedValueScanner;
 
 import javax.servlet.ServletContext;
@@ -37,33 +36,28 @@ public class JBossServerCapabilities implements ServerCapabilities {
 	protected void determineSupportsHotDeploy(ServletContext servletContext)
 		throws Exception {
 
-		if (ServerDetector.isJBoss5()) {
-			_supportsHotDeploy = true;
+		DeepNamedValueScanner deepNamedValueScanner = new DeepNamedValueScanner(
+			"scanEnabled", true);
+
+		deepNamedValueScanner.setExcludedClassNames(
+			"ChainedInterceptorFactory", "TagAttributeInfo", ".jandex.",
+			".vfs.");
+		deepNamedValueScanner.setExcludedNames("serialversion");
+		deepNamedValueScanner.setIncludedClassNames(
+			"org.apache.", "org.jboss.");
+		deepNamedValueScanner.setVisitArrays(true);
+		deepNamedValueScanner.setVisitMaps(true);
+
+		deepNamedValueScanner.scan(servletContext);
+
+		Boolean scanEnabledValue =
+			(Boolean)deepNamedValueScanner.getMatchedValue();
+
+		if (scanEnabledValue == null) {
+			_supportsHotDeploy = false;
 		}
 		else {
-			DeepNamedValueScanner deepNamedValueScanner =
-				new DeepNamedValueScanner("scanEnabled", true);
-
-			deepNamedValueScanner.setExcludedClassNames(
-				"ChainedInterceptorFactory", "TagAttributeInfo", ".jandex.",
-				".vfs.");
-			deepNamedValueScanner.setExcludedNames("serialversion");
-			deepNamedValueScanner.setIncludedClassNames(
-				"org.apache.", "org.jboss.");
-			deepNamedValueScanner.setVisitArrays(true);
-			deepNamedValueScanner.setVisitMaps(true);
-
-			deepNamedValueScanner.scan(servletContext);
-
-			Boolean scanEnabledValue =
-				(Boolean)deepNamedValueScanner.getMatchedValue();
-
-			if (scanEnabledValue == null) {
-				_supportsHotDeploy = false;
-			}
-			else {
-				_supportsHotDeploy = scanEnabledValue.booleanValue();
-			}
+			_supportsHotDeploy = scanEnabledValue.booleanValue();
 		}
 	}
 

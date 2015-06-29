@@ -417,15 +417,6 @@ public class FileChecker extends BaseChecker {
 						fileName = fileName.substring(0, pos + 1);
 					}
 
-					if (ServerDetector.isJBoss7()) {
-						String jBossHomeDir = System.getProperty(
-							"jboss.home.dir");
-
-						if (fileName.startsWith(jBossHomeDir)) {
-							continue;
-						}
-					}
-
 					if (ServerDetector.isJetty()) {
 						String jettyHome = System.getProperty("jetty.home");
 

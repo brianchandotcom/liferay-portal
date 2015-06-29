@@ -526,21 +526,6 @@ Please set the property "jdk.7.home" in build.properties.
 		<antcall target="build-common-web.deploy" />
 
 		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="jboss" />
-				<equals arg1="${app.server.jboss.major.version}" arg2="5" />
-			</and>
-			<then>
-				<copy
-					file="${app.server.portal.dir}/WEB-INF/jboss-web.xml.5"
-					overwrite="true"
-					preservelastmodified="true"
-					tofile="${app.server.portal.dir}/WEB-INF/jboss-web.xml"
-				/>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${jsp.precompile}" arg2="on" />
 			<then>
 				<if>

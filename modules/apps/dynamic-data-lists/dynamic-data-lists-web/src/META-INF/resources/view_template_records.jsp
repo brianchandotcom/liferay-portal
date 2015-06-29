@@ -27,7 +27,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 boolean showAddRecordButton = false;
 
 if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGroupId())) {
-	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD);
+	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD);
 }
 
 DDLDisplayTemplateTransformer ddlDisplayTemplateTransformer = new DDLDisplayTemplateTransformer(displayDDMTemplateId, recordSet, themeDisplay, renderRequest);

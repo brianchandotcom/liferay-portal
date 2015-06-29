@@ -38,11 +38,11 @@ import javax.portlet.PortletResponse;
  * @author Brett Swaim
  */
 @OSGiBeanProperties
-public class CalIndexer extends BaseIndexer<CalEvent> {
+public class CalEventIndexer extends BaseIndexer<CalEvent> {
 
 	public static final String CLASS_NAME = CalEvent.class.getName();
 
-	public CalIndexer() {
+	public CalEventIndexer() {
 		setPermissionAware(true);
 	}
 
@@ -137,6 +137,7 @@ public class CalIndexer extends BaseIndexer<CalEvent> {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(CalIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CalEventIndexer.class);
 
 }

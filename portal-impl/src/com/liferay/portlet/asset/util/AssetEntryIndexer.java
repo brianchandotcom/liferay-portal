@@ -34,11 +34,11 @@ import javax.portlet.PortletResponse;
  * @author Julio Camarero
  */
 @OSGiBeanProperties
-public class AssetIndexer extends BaseIndexer<AssetEntry> {
+public class AssetEntryIndexer extends BaseIndexer<AssetEntry> {
 
 	public static final String CLASS_NAME = AssetEntry.class.getName();
 
-	public AssetIndexer() {
+	public AssetEntryIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID);
 	}

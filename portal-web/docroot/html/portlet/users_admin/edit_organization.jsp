@@ -73,7 +73,7 @@ else {
 </portlet:actionURL>
 
 <portlet:renderURL var="editOrganizationRenderURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 

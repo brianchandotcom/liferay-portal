@@ -56,7 +56,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 				%>
 
 					<portlet:renderURL var="addOrganizationURL">
-						<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+						<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
 						<portlet:param name="redirect" value="<%= viewUsersURL %>" />
 						<portlet:param name="type" value="<%= organizationType %>" />
 					</portlet:renderURL>

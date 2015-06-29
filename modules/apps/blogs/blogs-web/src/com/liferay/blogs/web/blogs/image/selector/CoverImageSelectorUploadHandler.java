@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.image.selector;
+package com.liferay.blogs.web.blogs.image.selector;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -23,7 +23,7 @@ import com.liferay.portlet.blogs.CoverImageSizeException;
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public class EditorImageSelectorUploadHandler
+public class CoverImageSelectorUploadHandler
 	extends BaseBlogsImageSelectorUploadHandler {
 
 	@Override
@@ -39,8 +39,7 @@ public class EditorImageSelectorUploadHandler
 
 	@Override
 	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(
-			PropsKeys.BLOGS_IMAGE_ALLOY_EDITOR_MAX_SIZE);
+		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE);
 	}
 
 }

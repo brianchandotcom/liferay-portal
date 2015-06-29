@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,8 +56,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 		String contentsLanguageDir = getContentsLanguageDir(
 			inputEditorTaglibAttributes);
@@ -85,22 +83,20 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"removePlugins",
 			"elementspath,image,link,liststyle,resize,toolbar");
 
-		if (liferayPortletResponse != null) {
-			String namespace = GetterUtil.getString(
-				inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:namespace"));
+		String namespace = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:namespace"));
 
-			String name =
-				namespace +
-					GetterUtil.getString(
-						inputEditorTaglibAttributes.get(
-							"liferay-ui:input-editor:name"));
+		String name =
+			namespace +
+				GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
 
-			populateFileBrowserURL(
-				jsonObject, liferayPortletResponse, name + "selectDocument");
+		populateFileBrowserURL(
+			jsonObject, portletURLBuilder, name + "selectDocument");
 
-			jsonObject.put("srcNode", name);
-		}
+		jsonObject.put("srcNode", name);
 
 		jsonObject.put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
@@ -307,7 +303,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	}
 
 	protected void populateFileBrowserURL(
-		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
+		JSONObject jsonObject, PortletURLBuilder portletURLBuilder,
 		String eventName) {
 
 		List<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
@@ -323,9 +319,6 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			urlDesiredItemSelectorReturnTypes);
-
-		PortletURLBuilder portletURLBuilder = PortletURLBuilder.create(
-			liferayPortletResponse);
 
 		PortletURL layoutItemSelectorURL = _itemSelector.getItemSelectorURL(
 			portletURLBuilder, eventName, urlItemSelectorCriterion);

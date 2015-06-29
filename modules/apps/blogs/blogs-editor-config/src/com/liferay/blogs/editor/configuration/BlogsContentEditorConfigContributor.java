@@ -25,7 +25,6 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLBuilder;
@@ -56,23 +55,20 @@ public class BlogsContentEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
-		if (liferayPortletResponse != null) {
-			String namespace = GetterUtil.getString(
-				inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:namespace"));
+		String namespace = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:namespace"));
 
-			String name =
-				namespace +
-					GetterUtil.getString(
-						inputEditorTaglibAttributes.get(
-							"liferay-ui:input-editor:name"));
+		String name =
+			namespace +
+				GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
 
-			populateFileBrowserURL(
-				jsonObject, liferayPortletResponse, name + "selectDocument");
-		}
+		populateFileBrowserURL(
+			jsonObject, portletURLBuilder, name + "selectDocument");
 	}
 
 	@Reference(unbind = "-")
@@ -81,7 +77,7 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	protected void populateFileBrowserURL(
-		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
+		JSONObject jsonObject, PortletURLBuilder portletURLBuilder,
 		String eventName) {
 
 		List<ItemSelectorReturnType>
@@ -105,9 +101,6 @@ public class BlogsContentEditorConfigContributor
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			blogsContentEditorDesiredItemSelectorReturnTypes);
-
-		PortletURLBuilder portletURLBuilder = PortletURLBuilder.create(
-			liferayPortletResponse);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			portletURLBuilder, eventName, blogsItemSelectorCriterion,

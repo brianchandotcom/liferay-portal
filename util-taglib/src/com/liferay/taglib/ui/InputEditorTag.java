@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -258,14 +259,10 @@ public class InputEditorTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		LiferayPortletResponse portletResponse =
-			(LiferayPortletResponse)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				portletId, getConfigKey(), getEditorName(request), attributes,
-				themeDisplay, portletResponse);
+				themeDisplay, getPortletURLBuilder());
 
 		Map<String, Object> data = editorConfiguration.getData();
 
@@ -321,6 +318,18 @@ public class InputEditorTag extends IncludeTag {
 		Editor editor = getEditor(request);
 
 		return editor.getJspPath(request);
+	}
+
+	protected PortletURLBuilder getPortletURLBuilder() {
+		LiferayPortletResponse portletResponse =
+			(LiferayPortletResponse)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if (portletResponse == null) {
+			return PortletURLBuilder.create(request);
+		}
+
+		return PortletURLBuilder.create(portletResponse);
 	}
 
 	@Override

@@ -72,6 +72,14 @@ public class SystemProperties {
 		return PropertiesUtil.fromMap(_properties);
 	}
 
+	public static Properties getProperties(
+		String prefix, boolean removePrefix) {
+
+		Properties properties = getProperties();
+
+		return PropertiesUtil.getProperties(properties, prefix, removePrefix);
+	}
+
 	public static void reload() {
 		if (_loaded) {
 			return;

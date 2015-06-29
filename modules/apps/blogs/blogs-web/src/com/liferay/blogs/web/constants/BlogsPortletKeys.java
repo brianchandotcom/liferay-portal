@@ -28,4 +28,7 @@ public class BlogsPortletKeys {
 	public static final String BLOGS_AGGREGATOR =
 		"com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 
+	public static final String RECENT_BLOGGERS =
+		"com_liferay_blogs_web_portlet_RecentBloggersPortlet";
+
 }

@@ -2305,7 +2305,7 @@ public abstract class BaseTrashHandlerTestCase {
 	protected int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(clazz);
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 

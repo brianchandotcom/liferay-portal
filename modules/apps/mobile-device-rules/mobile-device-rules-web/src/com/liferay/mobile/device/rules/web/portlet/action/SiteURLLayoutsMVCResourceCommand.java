@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules.action;
+package com.liferay.mobile.device.rules.web.portlet.action;
 
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.mobile.device.rules.web.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -22,20 +24,28 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Edward Han
+ * @author Mate Thurzo
  */
-public class SiteURLLayoutsAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MobileDeviceRulesPortletKeys.MOBILE_DEVICE_SITE_ADMIN,
+		"mvc.command.name=/mobile_device_rules/site_url_layouts"
+	},
+	service = MVCResourceCommand.class
+)
+public class SiteURLLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
+
+		PortletConfig portletConfig = getPortletConfig(resourceRequest);
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 
@@ -46,6 +56,6 @@ public class SiteURLLayoutsAction extends PortletAction {
 	}
 
 	private static final String _SITE_URL_LAYOUTS_JSP =
-		"/html/portlet/mobile_device_rules/action/site_url_layouts.jsp";
+		"/action/site_url_layouts.jsp";
 
 }

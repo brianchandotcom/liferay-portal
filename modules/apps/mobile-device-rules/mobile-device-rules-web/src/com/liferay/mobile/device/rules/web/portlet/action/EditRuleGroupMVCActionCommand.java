@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules.action;
+package com.liferay.mobile.device.rules.web.portlet.action;
 
+import com.liferay.mobile.device.rules.web.constants.MobileDeviceRulesPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupServiceUtil;
@@ -34,85 +36,23 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Edward Han
+ * @author Mate Thurzo
  */
-public class EditRuleGroupAction extends PortletAction {
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			MDRRuleGroup ruleGroup = null;
-
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				ruleGroup = updateRuleGroup(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteRuleGroups(actionRequest);
-			}
-			else if (cmd.equals(Constants.COPY)) {
-				ruleGroup = copyRuleGroup(actionRequest);
-			}
-
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.COPY)) {
-				String redirect = getRedirect(
-					actionRequest, actionResponse, ruleGroup);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else {
-				sendRedirect(actionRequest, actionResponse);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.mobile_device_rules.error");
-			}
-			else if (e instanceof NoSuchRuleGroupException) {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		long ruleGroupId = ParamUtil.getLong(renderRequest, "ruleGroupId");
-
-		MDRRuleGroup ruleGroup = MDRRuleGroupServiceUtil.fetchRuleGroup(
-			ruleGroupId);
-
-		renderRequest.setAttribute(
-			WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
-
-		return actionMapping.findForward(
-			"portlet.mobile_device_rules.edit_rule_group");
-	}
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MobileDeviceRulesPortletKeys.MOBILE_DEVICE_SITE_ADMIN,
+		"mvc.command.name=/mobile_device_rules/edit_rule_group"
+	},
+	service = MVCActionCommand.class
+)
+public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 
 	protected MDRRuleGroup copyRuleGroup(ActionRequest actionRequest)
 		throws Exception {
@@ -148,7 +88,53 @@ public class EditRuleGroupAction extends PortletAction {
 		}
 	}
 
-	protected String getRedirect(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			MDRRuleGroup ruleGroup = null;
+
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				ruleGroup = updateRuleGroup(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteRuleGroups(actionRequest);
+			}
+			else if (cmd.equals(Constants.COPY)) {
+				ruleGroup = copyRuleGroup(actionRequest);
+			}
+
+			String redirect = StringPool.BLANK;
+
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.COPY)) {
+				redirect = getAddOrCopyRedirect(
+					actionRequest, actionResponse, ruleGroup);
+			}
+			else {
+				redirect = getRedirect(actionRequest, actionResponse);
+			}
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchRuleGroupException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	protected String getAddOrCopyRedirect(
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		MDRRuleGroup ruleGroup) {
 
@@ -158,7 +144,7 @@ public class EditRuleGroupAction extends PortletAction {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/mobile_device_rules/edit_rule_group");
+			"mvcRenderCommandName", "/mobile_device_rules/edit_rule_group");
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -166,6 +152,24 @@ public class EditRuleGroupAction extends PortletAction {
 
 		portletURL.setParameter(
 			"ruleGroupId", String.valueOf(ruleGroup.getRuleGroupId()));
+
+		return portletURL.toString();
+	}
+
+	protected String getRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)actionResponse;
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/mobile_device_rules/edit_rule_group");
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect);
 
 		return portletURL.toString();
 	}

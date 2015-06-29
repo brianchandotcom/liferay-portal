@@ -12,46 +12,57 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules.action;
+package com.liferay.mobile.device.rules.web.portlet.action;
 
-import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.mobile.device.rules.web.constants.MobileDeviceRulesPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletURL;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Edward Han
+ * @author Mate Thurzo
  */
-public class EditRuleGroupInstanceAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MobileDeviceRulesPortletKeys.MOBILE_DEVICE_SITE_ADMIN,
+		"mvc.command.name=/mobile_device_rules/edit_rule_group_instance"
+	},
+	service = MVCActionCommand.class
+)
+public class EditRuleGroupInstanceMVCActionCommand
+	extends BaseMVCActionCommand {
+
+	protected void deleteRuleGroupInstance(ActionRequest actionRequest)
+		throws PortalException {
+
+		long ruleGroupInstanceId = ParamUtil.getLong(
+			actionRequest, "ruleGroupInstanceId");
+
+		MDRRuleGroupInstanceServiceUtil.deleteRuleGroupInstance(
+			ruleGroupInstanceId);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -64,16 +75,17 @@ public class EditRuleGroupInstanceAction extends PortletAction {
 				updateRuleGroupInstancesPriorities(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			sendRedirect(
+				actionRequest, actionResponse,
+				getRedirect(actionRequest, actionResponse));
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException) {
+			if (e instanceof NoSuchRuleGroupException ||
+				e instanceof PrincipalException) {
+
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.mobile_device_rules.error");
-			}
-			else if (e instanceof NoSuchRuleGroupException) {
-				SessionErrors.add(actionRequest, e.getClass());
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
 				throw e;
@@ -81,44 +93,23 @@ public class EditRuleGroupInstanceAction extends PortletAction {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	protected String getRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		long ruleGroupInstanceId = ParamUtil.getLong(
-			renderRequest, "ruleGroupInstanceId");
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)actionResponse;
 
-		MDRRuleGroupInstance ruleGroupInstance =
-			MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(
-				ruleGroupInstanceId);
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		renderRequest.setAttribute(
-			WebKeys.MOBILE_DEVICE_RULES_RULE_INSTANCE, ruleGroupInstance);
+		portletURL.setParameter(
+			"mvcRenderCommandName",
+			"/mobile_device_rules/edit_rule_group_instance");
 
-		long ruleGroupId = BeanParamUtil.getLong(
-			ruleGroupInstance, renderRequest, "ruleGroupId");
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(
-			ruleGroupId);
+		portletURL.setParameter("redirect", redirect);
 
-		renderRequest.setAttribute(
-			WebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
-
-		return actionMapping.findForward(
-			"portlet.mobile_device_rules.edit_rule_group_instance_priorities");
-	}
-
-	protected void deleteRuleGroupInstance(ActionRequest actionRequest)
-		throws PortalException {
-
-		long ruleGroupInstanceId = ParamUtil.getLong(
-			actionRequest, "ruleGroupInstanceId");
-
-		MDRRuleGroupInstanceServiceUtil.deleteRuleGroupInstance(
-			ruleGroupInstanceId);
+		return portletURL.toString();
 	}
 
 	protected void updateRuleGroupInstancesPriorities(

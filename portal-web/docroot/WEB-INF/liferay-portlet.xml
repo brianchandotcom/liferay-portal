@@ -220,9 +220,6 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>blogs</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/blogs/blogs-friendly-url-routes.xml</friendly-url-routes>
 		<template-handler>com.liferay.portlet.blogs.template.BlogsPortletDisplayTemplateHandler</template-handler>
 		<social-activity-interpreter-class>com.liferay.portlet.blogs.social.BlogsActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/portlet/blogs/blogs-user-notification-definitions.xml</user-notification-definitions>

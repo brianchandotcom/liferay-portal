@@ -191,7 +191,7 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
 		throws PortalException {
 
-		return null;
+		return Collections.<Long, Boolean>emptyMap();
 	}
 
 	@Override
@@ -382,7 +382,7 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	/**

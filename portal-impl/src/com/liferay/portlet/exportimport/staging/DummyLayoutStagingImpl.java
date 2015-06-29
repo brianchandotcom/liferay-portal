@@ -48,7 +48,7 @@ public class DummyLayoutStagingImpl implements LayoutStaging {
 
 	@Override
 	public LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
-		return null;
+		return new LayoutStagingHandler(layout);
 	}
 
 	@Override

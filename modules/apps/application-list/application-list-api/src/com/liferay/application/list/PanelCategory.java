@@ -14,11 +14,20 @@
 
 package com.liferay.application.list;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Adolfo Pérez
  */
 public interface PanelCategory extends PanelEntry {
 
 	public String getIconCssClass();
+
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
 
 }

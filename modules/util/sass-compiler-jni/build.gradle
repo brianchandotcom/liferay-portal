@@ -1,4 +1,5 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
 	jnaerator
@@ -86,11 +87,7 @@ compileJava {
 downloadSassSpec {
 	File sassSpecFile = project.file("test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
 
-	eachFile {
-		String[] segments = relativePath.segments
-
-		relativePath = new RelativePath(true, *segments[3 .. segments.length - 1])
-	}
+	eachFile new StripPathSegmentsAction(3)
 
 	from zipTree({
 		FileUtil.get(project, sassSpecUrl)

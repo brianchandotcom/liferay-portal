@@ -228,7 +228,7 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>A CSS style to be applied to the div containing the thumbnail for the entry.</description>
+			<description>A CSS style to be applied to the <![CDATA[<code>div</code>]]> containing the thumbnail for the entry.</description>
 			<name>thumbnailDivStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5247,7 +5247,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that toggles the visibility of a div and its contents.</description>
+		<description>Creates a component that toggles the visibility of a <![CDATA[<code>div</code>]]> and its contents.</description>
 		<name>toggle-area</name>
 		<tag-class>com.liferay.taglib.ui.ToggleAreaTag</tag-class>
 		<body-content>JSP</body-content>

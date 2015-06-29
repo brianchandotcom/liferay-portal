@@ -516,30 +516,11 @@
 	</portlet>
 	<portlet>
 		<portlet-name>115</portlet-name>
-		<display-name>Blogs Aggregator</display-name>
-		<portlet-class>com.liferay.portlet.blogsaggregator.portlet.BlogsAggregatorPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/blogs_aggregator/configuration.jsp</value>
 		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
 	</portlet>
 	<portlet>
 		<portlet-name>119</portlet-name>

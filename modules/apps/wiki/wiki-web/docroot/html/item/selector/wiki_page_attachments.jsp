@@ -21,12 +21,62 @@ WikiAttachmentItemSelectorViewDisplayContext wikiAttachmentItemSelectorViewDispl
 
 WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = wikiAttachmentItemSelectorViewDisplayContext.getWikiAttachmentItemSelectorCriterion();
 
+PortletURL searchURL = PortletURLUtil.clone(wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), liferayPortletResponse);
+
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), null, LanguageUtil.get(request, "there-are-no-wiki-attachments"));
 
 WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 
-searchContainer.setTotal(wikiPage.getAttachmentsFileEntriesCount());
-searchContainer.setResults(wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()));
+int total = 0;
+List<FileEntry> results = new ArrayList<FileEntry>();
+
+String keywords = ParamUtil.getString(request, "keywords");
+
+if (Validator.isNotNull(keywords)) {
+	SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+	searchContext.setEnd(searchContainer.getEnd());
+
+	Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
+
+	searchContext.setFolderIds(new long[] {folder.getFolderId()});
+
+	searchContext.setStart(searchContainer.getStart());
+
+	Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
+
+	total = hits.getLength();
+
+	Document[] docs = hits.getDocs();
+
+	results = new ArrayList(docs.length);
+
+	for (Document doc : docs) {
+		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Wiki attachments search index is stale and contains file entry {" + fileEntryId + "}");
+			}
+
+			continue;
+		}
+
+		results.add(fileEntry);
+	}
+}
+else {
+	total = wikiPage.getAttachmentsFileEntriesCount();
+	results = wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd());
+}
+
+searchContainer.setTotal(total);
+searchContainer.setResults(results);
 %>
 
 <item-selector-ui:browser
@@ -35,5 +85,10 @@ searchContainer.setResults(wikiPage.getAttachmentsFileEntries(searchContainer.ge
 	displayStyleURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL() %>"
 	itemSelectedEventName="<%= wikiAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	searchContainer="<%= searchContainer %>"
+	searchURL="<%= searchURL %>"
 	tabName="<%= wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
 />
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com_liferay_wiki_web.wiki_page_attachments_jsp");
+%>

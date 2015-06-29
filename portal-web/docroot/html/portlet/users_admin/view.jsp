@@ -199,7 +199,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		form.fm('redirect').val(form.fm('organizationsRedirect').val());
 		form.fm('deleteOrganizationIds').val(organizationIds);
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="/users_admin/edit_organization" />');
 	}
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {

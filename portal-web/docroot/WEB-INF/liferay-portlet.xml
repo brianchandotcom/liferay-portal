@@ -437,19 +437,10 @@
 	</portlet>
 	<portlet>
 		<portlet-name>115</portlet-name>
-		<icon>/html/icons/blogs_aggregator.png</icon>
 		<struts-path>blogs_aggregator</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.blogsaggregator.lar.BlogsAggregatorPortletDataHandler</portlet-data-handler-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/blogs_aggregator/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-blogs-aggregator</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>119</portlet-name>

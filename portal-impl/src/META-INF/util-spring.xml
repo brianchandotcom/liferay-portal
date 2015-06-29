@@ -823,7 +823,7 @@
 	<bean id="com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory" class="com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsPermission" class="com.liferay.portlet.blogs.service.permission.BlogsPermission" />
-	<bean id="com.liferay.portlet.blogs.util.BlogsIndexer" class="com.liferay.portlet.blogs.util.BlogsIndexer" />
+	<bean id="com.liferay.portlet.blogs.util.BlogsEntryIndexer" class="com.liferay.portlet.blogs.util.BlogsEntryIndexer" />
 	<bean id="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" class="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" />
 	<bean id="com.liferay.portlet.calendar.util.CalIndexer" class="com.liferay.portlet.calendar.util.CalIndexer" />
 	<bean id="com.liferay.portlet.directory.asset.UserAssetRendererFactory" class="com.liferay.portlet.directory.asset.UserAssetRendererFactory" />

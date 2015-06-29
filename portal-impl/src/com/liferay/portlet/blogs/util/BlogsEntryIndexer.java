@@ -51,11 +51,11 @@ import javax.portlet.PortletResponse;
  * @author Raymond Augé
  */
 @OSGiBeanProperties
-public class BlogsIndexer extends BaseIndexer<BlogsEntry> {
+public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 
 	public static final String CLASS_NAME = BlogsEntry.class.getName();
 
-	public BlogsIndexer() {
+	public BlogsEntryIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.ASSET_TAG_NAMES, Field.COMPANY_ID, Field.CONTENT,
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID,
@@ -204,6 +204,6 @@ public class BlogsIndexer extends BaseIndexer<BlogsEntry> {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(BlogsIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(BlogsEntryIndexer.class);
 
 }

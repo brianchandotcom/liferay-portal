@@ -29,7 +29,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.BlogsIndexer;
+import com.liferay.portlet.blogs.util.BlogsEntryIndexer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
@@ -143,7 +143,7 @@ public class IndexerPostProcessorRegistryTest {
 	@Test
 	public void testSingleIndexerPostProcessor() throws Exception {
 		Indexer<BlogsEntry> blogsEntryIndexer = IndexerRegistryUtil.getIndexer(
-			BlogsIndexer.class.getName());
+			BlogsEntryIndexer.class.getName());
 
 		IndexerPostProcessor[] blogIndexerPostProcessors =
 			blogsEntryIndexer.getIndexerPostProcessors();

@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.atom;
+package com.liferay.blogs.atom;
 
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
+import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
@@ -36,9 +37,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Spasic
  */
+@Component(
+	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	service = AtomCollectionAdapter.class
+)
 public class BlogsEntryAtomCollectionAdapter
 	extends BaseAtomCollectionAdapter<BlogsEntry> {
 

@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Export Import Service
+Bundle-SymbolicName: com.liferay.exportimport.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.exportimport.lar,\
+	com.liferay.exportimport.lifecycle,\
+	com.liferay.exportimport.messaging,\
+	com.liferay.exportimport.search,\
+	com.liferay.exportimport.staging,\
+	com.liferay.exportimport.trash,\
+	com.liferay.exportimport.xstream
+Include-Resource: classes

@@ -76,6 +76,7 @@ Export-Package:\
 	com.sun.syndication.feed.synd.impl;version='1.0',\
 	com.sun.syndication.io;version='1.0',\
 	com.sun.syndication.io.impl;version='1.0',\
+	com.thoughtworks.xstream.*;version='1.4.7',\
 	java_cup.runtime.*;version='2.7.1',\
 	javax.jms.*;version='1.1',\
 	javax.mail.*;version='1.4',\
@@ -93,6 +94,7 @@ Export-Package:\
 	javax.xml.validation.*;version='1.4',\
 	javax.xml.ws.*;version='2.2.11',\
 	javax.xml.xpath.*;version='1.4',\
+	jodd.bean.*;version='3.6.4',\
 	org.aopalliance.*;version='1.0',\
 	org.apache.bcel.*;version='2.7.1',\
 	org.apache.commons.beanutils;version='1.8.2',\
@@ -213,6 +215,7 @@ Include-Resource:\
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jaxrpc.jar,\
 	@../../../lib/portal/jdom.jar!/org/**,\
+	@../../../lib/portal/jodd.jar,\
 	@../../../lib/portal/json-java.jar,\
 	@../../../lib/portal/liferay-icu4j.jar,\
 	@../../../lib/portal/log4j.jar,\
@@ -240,5 +243,6 @@ Include-Resource:\
 	@../../../lib/portal/xercesImpl.jar,\
 	@../../../lib/portal/xml-apis.jar,\
 	@../../../lib/portal/xmlsec.jar,\
+	@../../../lib/portal/xstream.jar,\
 	@../../../portal-impl/portal-impl.jar,\
 	@../../../portal-service/portal-service.jar

@@ -20,6 +20,8 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 JournalArticle article = journalContentDisplayContext.getArticle();
+
+List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 %>
 
 <liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-web-content-could-not-be-found" />
@@ -63,7 +65,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		</div>
 	</div>
 
-	<div class="button-container col-md-12">
+	<div class="button-container col-md-12 <%= ddmTemplates.size() > 1 ? StringPool.BLANK : "hidden" %>">
 		<aui:button name="templateSelector" value="change" />
 	</div>
 </div>
@@ -116,35 +118,37 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
+	var STR_HIDDEN = 'hidden';
+
 	var form = AUI.$(document.<portlet:namespace />fm);
 
 	var articlePreviewNode = $('.article-preview');
 	var templatePreviewNode = $('.template-preview');
 
 	var showLoading = function(element) {
-		element.find('.loading-animation').removeClass('hidden');
-	}
+		element.find('.loading-animation').removeClass(STR_HIDDEN);
+	};
 
 	var hideLoading = function(element) {
-		element.find('.loading-animation').addClass('hidden');
-	}
+		element.find('.loading-animation').addClass(STR_HIDDEN);
+	};
 
 	var showError = function(element) {
-		element.find('.alert').removeClass('hidden');
-	}
+		element.find('.alert').removeClass(STR_HIDDEN);
+	};
 
 	var hideError = function(element) {
-		element.find('.alert').addClass('hidden');
-	}
+		element.find('.alert').addClass(STR_HIDDEN);
+	};
 
 	var showArticleError = function() {
-		templatePreviewNode.addClass('hidden');
 		showError(articlePreviewNode);
-	}
+	};
 
 	var showTemplateError = function() {
+		templatePreviewNode.removeClass(STR_HIDDEN);
 		showError(templatePreviewNode);
-	}
+	};
 
 	$('#<portlet:namespace />webContentSelector').on(
 		'click',
@@ -188,15 +192,12 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					form.fm('ddmTemplateKey').val('');
 
 					hideError(articlePreviewNode);
-					hideError(templatePreviewNode);
-
 					showLoading(articlePreviewNode);
-					showLoading(templatePreviewNode);
+
+					templatePreviewNode.addClass(STR_HIDDEN);
 
 					articlePreviewNode.find('.article-preview-content-container').html('');
 					templatePreviewNode.find('.template-preview-content-container').html('');
-
-					templatePreviewNode.removeClass('hidden');
 
 					$.ajax(
 						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
@@ -207,27 +208,29 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 							},
 							success: function(responseData) {
 								var responseDataNode = $(responseData);
+
 								var articlePreviewContent = responseDataNode.find('.article-preview-content');
 								var templatePreviewContent = responseDataNode.find('.template-preview-content');
 
 								hideLoading(articlePreviewNode);
-								hideLoading(templatePreviewNode);
 
 								articlePreviewNode.find('.article-preview-content-container').html(articlePreviewContent);
 								templatePreviewNode.find('.template-preview-content-container').html(templatePreviewContent);
 
 								if (articlePreviewContent.length > 0) {
-									$('.configuration-options-container').removeClass('hidden');
+									$('.configuration-options-container').removeClass(STR_HIDDEN);
 
 									if (templatePreviewContent.length > 0) {
 										var templatePreviewContentNode = templatePreviewNode.find('.template-preview-content');
 
 										if (templatePreviewContentNode.attr('data-change-enabled') === 'false') {
-											templatePreviewNode.find('.button-container').addClass('hidden');
+											templatePreviewNode.find('.button-container').addClass(STR_HIDDEN);
 										}
 										else {
-											templatePreviewNode.find('.button-container').removeClass('hidden');
+											templatePreviewNode.find('.button-container').removeClass(STR_HIDDEN);
 										}
+
+										templatePreviewNode.removeClass(STR_HIDDEN);
 
 										form.fm('ddmTemplateKey').val(templatePreviewContentNode.attr('data-template-key'));
 									}

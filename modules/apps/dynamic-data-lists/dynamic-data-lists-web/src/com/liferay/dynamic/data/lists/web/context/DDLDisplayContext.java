@@ -14,12 +14,6 @@
 
 package com.liferay.dynamic.data.lists.web.context;
 
-import java.util.Locale;
-
-import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
@@ -46,6 +40,12 @@ import com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePerm
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
+
+import java.util.Locale;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Marcellus Tavares

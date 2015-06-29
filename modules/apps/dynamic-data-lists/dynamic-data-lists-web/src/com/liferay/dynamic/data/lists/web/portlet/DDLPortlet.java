@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
 
@@ -147,7 +146,8 @@ public class DDLPortlet extends MVCPortlet {
 			record = _ddlRecordService.getRecord(recordId);
 		}
 
-		renderRequest.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, record);
+		renderRequest.setAttribute(
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, record);
 	}
 
 	protected void setDDLRecordSetRequestAttribute(RenderRequest renderRequest)
@@ -162,7 +162,7 @@ public class DDLPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(
-				DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLPortlet.class);

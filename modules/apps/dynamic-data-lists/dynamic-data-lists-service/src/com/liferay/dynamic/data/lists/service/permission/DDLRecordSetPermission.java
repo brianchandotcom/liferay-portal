@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 /**
@@ -68,14 +67,14 @@ public class DDLRecordSetPermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, DDLRecordSet recordSet,
 		String actionId) {
-		
+
 		String portletId = PortletProviderUtil.getPortletId(
-				DDLRecord.class.getName(), PortletProvider.Action.EDIT);
+			DDLRecord.class.getName(), PortletProvider.Action.EDIT);
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, recordSet.getGroupId(),
-			DDLRecordSet.class.getName(), recordSet.getRecordSetId(),
-			portletId, actionId);
+			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), portletId,
+			actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

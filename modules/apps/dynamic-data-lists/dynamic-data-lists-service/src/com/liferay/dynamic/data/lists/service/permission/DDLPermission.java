@@ -42,13 +42,11 @@ public class DDLPermission {
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
-		
-		String portletId = PortletProviderUtil.getPortletId(
-				DDLRecord.class.getName(), PortletProvider.Action.EDIT);
 
-		return contains(
-			permissionChecker, groupId, portletId,
-			actionId);
+		String portletId = PortletProviderUtil.getPortletId(
+			DDLRecord.class.getName(), PortletProvider.Action.EDIT);
+
+		return contains(permissionChecker, groupId, portletId, actionId);
 	}
 
 	public static boolean contains(

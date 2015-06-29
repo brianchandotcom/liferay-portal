@@ -42,7 +42,6 @@ page import="com.liferay.dynamic.data.lists.service.permission.DDLPermission" %>
 page import="com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission" %><%@
 page import="com.liferay.dynamic.data.lists.util.DDLUtil" %><%@
 page import="com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys" %><%@
-page import="com.liferay.dynamic.data.lists.web.constants.DDLWebKeys %><%@
 page import="com.liferay.dynamic.data.lists.web.context.DDLDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetSearch" %><%@

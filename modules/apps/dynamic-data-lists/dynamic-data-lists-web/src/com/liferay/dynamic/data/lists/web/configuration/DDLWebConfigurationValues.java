@@ -20,19 +20,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
  * @author Rafael Praxedes
  */
 public class DDLWebConfigurationValues {
-	
+
+	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE =
+		"dynamic.data.lists.error.template";
+
 	public static final boolean DYNAMIC_DATA_LISTS_RECORD_SET_FORCE_AUTOGENERATE_KEY =
 			GetterUtil.getBoolean(
 				DDLWebConfigurationUtil.get(
 					"dynamic.data.lists.record.set.force.autogenerate.key"));
 
-	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE =
-		"dynamic.data.lists.error.template";
-	
 	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE =
 			GetterUtil.getString(
 					DDLWebConfigurationUtil.get(
-							"dynamic.data.lists.storage.type"));
-
+						"dynamic.data.lists.storage.type"));
 
 }

@@ -83,20 +83,20 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.social.networking.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.social.networking.model.MeetupsRegistration"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.social.networking.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.social.networking.model.MeetupsRegistration"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.social.networking.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.social.networking.model.MeetupsRegistration"),
 			true);
 	public static final long MEETUPSENTRYID_COLUMN_BITMASK = 1L;
 	public static final long STATUS_COLUMN_BITMASK = 2L;
 	public static final long USERID_COLUMN_BITMASK = 4L;
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.social.networking.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.social.networking.model.MeetupsRegistration"));
 
 	public MeetupsRegistrationModelImpl() {

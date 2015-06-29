@@ -27,6 +27,10 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 <div class="article-preview row row-spacing">
 	<div class="col-md-4 col-xs-12">
 		<p class="text-muted"><liferay-ui:message key="layout.types.article" /></p>
+		<div class="hidden loading-animation"></div>
+		<div class="alert alert-danger hidden">
+			<liferay-ui:message key="an-unexpected-error-occurred" />
+		</div>
 
 		<div class="article-preview-content-container">
 			<c:if test="<%= article != null %>">
@@ -42,9 +46,13 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 	</div>
 </div>
 
-<div class="row row-spacing template-preview">
+<div class="row row-spacing template-preview <%= article == null ? "hidden" : "" %>">
 	<div class="col-md-4 col-xs-12">
 		<p class="text-muted"><liferay-ui:message key="template" /></p>
+		<div class="hidden loading-animation"></div>
+		<div class="alert alert-danger hidden">
+			<liferay-ui:message key="an-unexpected-error-occurred" />
+		</div>
 
 		<div class="template-preview-content-container">
 			<c:if test="<%= article != null %>">
@@ -148,27 +156,83 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 					var baseJournalArticleResourceUrl = '<%= journalArticleResource.toString() %>';
 
-					$('.article-preview .article-preview-content-container').html('<div class="loading-animation"></div>');
-					$('.template-preview .template-preview-content-container').html('<div class="loading-animation"></div>');
+					function showLoading(element) {
+						element.find('.loading-animation').removeClass('hidden');
+					}
+
+					function hideLoading(element) {
+						element.find('.loading-animation').addClass('hidden');
+					}
+
+					function showError(element) {
+						element.find('.alert').removeClass('hidden');
+					}
+
+					function hideError(element) {
+						element.find('.alert').addClass('hidden');
+					}
+
+					function showArticleError() {
+						$('.template-preview').addClass('hidden');
+						showError($('.article-preview'));
+					}
+
+					function showTemplateError() {
+						showError($('.template-preview'));
+					}
+
+					form.fm('assetEntryId').val(event.assetentryid);
+
+					hideError($('.article-preview'));
+					hideError($('.template-preview'));
+
+					showLoading($('.article-preview'));
+					showLoading($('.template-preview'));
+
+					$('.article-preview .article-preview-content-container').html('');
+					$('.template-preview .template-preview-content-container').html('');
+
+					$('.template-preview').removeClass('hidden');
 
 					$.ajax(
 						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
 						{
+							error: function() {
+								hideLoading($('.article-preview'));
+								showArticleError();
+							},
 							success: function(responseData) {
-								$('.article-preview .article-preview-content-container').html($('.article-preview-content', $(responseData)));
+								var articlePreviewContent = $('.article-preview-content', $(responseData));
+								var templatePreviewContent = $('.template-preview-content', $(responseData));
+								
+								hideLoading($('.article-preview'));
+								hideLoading($('.template-preview'));
 
-								$('.template-preview .template-preview-content-container').html($('.template-preview-content', $(responseData)));
+								$('.article-preview .article-preview-content-container').html(articlePreviewContent);
+								$('.template-preview .template-preview-content-container').html(templatePreviewContent);
+								
+								if (articlePreviewContent.length > 0) {
 
-								if ($('.template-preview .template-preview-content').attr('data-change-enabled') === 'false') {
-									$('.template-preview .button-container').addClass('hidden');
+									$('.configuration-options-container').removeClass('hidden');
+
+									if (templatePreviewContent.length > 0) {
+										
+										if ($('.template-preview .template-preview-content').attr('data-change-enabled') === 'false') {
+											$('.template-preview .button-container').addClass('hidden');
+										}
+										else {
+											$('.template-preview .button-container').removeClass('hidden');
+										}
+
+										form.fm('ddmTemplateKey').val($('.template-preview .template-preview-content').attr('data-template-key'));
+									}
+									else {
+										showTemplateError();
+									}
 								}
 								else {
-									$('.template-preview .button-container').removeClass('hidden');
+									showArticleError();
 								}
-
-								form.fm('assetEntryId').val(event.assetentryid);
-								form.fm('ddmTemplateKey').val($('.template-preview .template-preview-content').attr('data-template-key'));
-								$('.configuration-options-container').removeClass('hidden');
 							}
 						}
 					);

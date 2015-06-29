@@ -265,6 +265,8 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 				},
 				function(event) {
 					$('.template-preview-content').attr('data-template-id', event.ddmtemplateid);
+					$('.template-preview-content').attr('data-template-key', event.ddmtemplatekey);
+
 					$('.template-preview-content .template-title').html(event.name);
 					$('.template-preview-content .template-description').html(event.description);
 

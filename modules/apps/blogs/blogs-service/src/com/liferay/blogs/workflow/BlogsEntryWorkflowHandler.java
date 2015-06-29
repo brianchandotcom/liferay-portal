@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.workflow;
+package com.liferay.blogs.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -29,9 +30,15 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	service = WorkflowHandler.class
+)
 public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 
 	@Override

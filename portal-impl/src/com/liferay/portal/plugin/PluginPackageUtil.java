@@ -1289,7 +1289,8 @@ public class PluginPackageUtil {
 			}
 		}
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(PluginPackage.class);
+		Indexer<PluginPackage> indexer = IndexerRegistryUtil.getIndexer(
+			PluginPackage.class);
 
 		indexer.reindex(new String[0]);
 
@@ -1328,7 +1329,8 @@ public class PluginPackageUtil {
 
 		searchContext.setStart(start);
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(PluginPackage.class);
+		Indexer<PluginPackage> indexer = IndexerRegistryUtil.getIndexer(
+			PluginPackage.class);
 
 		return indexer.search(searchContext);
 	}

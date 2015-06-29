@@ -129,7 +129,7 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 
 				String content = StringPool.BLANK;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					entryClassName);
 
 				if (indexer != null) {

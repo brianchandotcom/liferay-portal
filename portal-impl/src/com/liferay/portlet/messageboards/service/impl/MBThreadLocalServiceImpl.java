@@ -1035,7 +1035,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			long endDate, int status, int start, int end)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<MBThread> indexer = IndexerRegistryUtil.getIndexer(
 			MBThread.class.getName());
 
 		SearchContext searchContext = new SearchContext();

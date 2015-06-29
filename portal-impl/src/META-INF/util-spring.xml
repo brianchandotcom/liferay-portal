@@ -815,7 +815,6 @@
 	<bean id="com.liferay.portlet.asset.util.AssetCategoryIndexer" class="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetEntryIndexer" class="com.liferay.portlet.asset.util.AssetEntryIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
-	<bean id="com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory" class="com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsPermission" class="com.liferay.portlet.blogs.service.permission.BlogsPermission" />
 	<bean id="com.liferay.portlet.blogs.util.BlogsEntryIndexer" class="com.liferay.portlet.blogs.util.BlogsEntryIndexer" />

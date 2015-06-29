@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.asset;
+package com.liferay.blogs.web.blogs.asset;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -36,14 +37,21 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  * @author Juan Fernández
  * @author Raymond Augé
  * @author Sergio González
  */
-@OSGiBeanProperties(
-	property = {"search.asset.type=com.liferay.portlet.blogs.model.BlogsEntry"}
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"search.asset.type=com.liferay.portlet.blogs.model.BlogsEntry"
+	},
+	service = AssetRendererFactory.class
 )
 public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 

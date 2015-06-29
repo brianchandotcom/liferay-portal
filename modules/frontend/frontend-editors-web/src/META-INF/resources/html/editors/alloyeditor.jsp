@@ -305,22 +305,3 @@ if (showSource) {
 
 	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>
-
-<%!
-public String marshallParams(Map<String, String> params) {
-	if (params == null) {
-		return StringPool.BLANK;
-	}
-
-	StringBundler sb = new StringBundler(4 * params.size());
-
-	for (Map.Entry<String, String> configParam : params.entrySet()) {
-		sb.append(StringPool.AMPERSAND);
-		sb.append(configParam.getKey());
-		sb.append(StringPool.EQUAL);
-		sb.append(HttpUtil.encodeURL(configParam.getValue()));
-	}
-
-	return sb.toString();
-}
-%>

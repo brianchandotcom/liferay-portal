@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.portlet;
-
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+package com.liferay.blogs.web.constants;
 
 /**
  * @author Sergio González
  */
-public class BlogsPortlet extends MVCPortlet {
+public class BlogsPortletKeys {
+
+	public static final String BLOGS =
+		"com_liferay_blogs_web_portlet_BlogsPortlet";
+
 }

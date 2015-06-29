@@ -14,6 +14,7 @@
 
 package com.liferay.journal.upgrade;
 
+import com.liferay.journal.service.configuration.configurator.JournalServiceConfigurator;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -33,6 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = JournalServiceUpgrade.class)
 public class JournalServiceUpgrade {
+
+	@Reference(unbind = "-")
+	protected void setJournalServiceConfigurator(
+		JournalServiceConfigurator journalServiceConfigurator) {
+	}
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(

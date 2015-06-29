@@ -663,7 +663,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		int end, Sort sort) {
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				UserGroup.class);
 
 			SearchContext searchContext = buildSearchContext(
@@ -717,7 +717,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				UserGroup.class);
 
 			SearchContext searchContext = buildSearchContext(
@@ -760,7 +760,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				UserGroup.class);
 
 			SearchContext searchContext = buildSearchContext(
@@ -808,7 +808,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			int end, Sort sort)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
 		SearchContext searchContext = buildSearchContext(

@@ -708,7 +708,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			if (organization == null) {
 				organizations = null;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<Organization> indexer = IndexerRegistryUtil.getIndexer(
 					Organization.class);
 
 				long companyId = GetterUtil.getLong(
@@ -993,7 +993,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			if (userGroup == null) {
 				userGroups = null;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<UserGroup> indexer = IndexerRegistryUtil.getIndexer(
 					UserGroup.class);
 
 				long companyId = GetterUtil.getLong(
@@ -1057,7 +1057,8 @@ public class UsersAdminImpl implements UsersAdmin {
 			if (user == null) {
 				users = null;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+				Indexer<User> indexer = IndexerRegistryUtil.getIndexer(
+					User.class);
 
 				long companyId = GetterUtil.getLong(
 					document.get(Field.COMPANY_ID));

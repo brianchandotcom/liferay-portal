@@ -38,7 +38,7 @@ public class LocalesUserToolAssetAddonEntry
 	}
 
 	@Override
-	public String getJSPPath() {
+	public String getJspPath() {
 		return "/META-INF/resources/locales.jsp";
 	}
 

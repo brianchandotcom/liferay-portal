@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>portletSetupShowBorders</name>
+		<value>false</value>
+	</preference>
+</portlet-preferences>

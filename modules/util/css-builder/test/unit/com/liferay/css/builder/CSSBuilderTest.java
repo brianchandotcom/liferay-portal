@@ -80,10 +80,28 @@ public class CSSBuilderTest {
 	}
 
 	@Test
-	public void testSassToCssBuilder() throws Exception {
+	public void testJniSassToCssBuilder() throws Exception {
+		_testSassToCssBuilder("jni");
+	}
+
+	@Test
+	public void testRubySassToCssBuilder() throws Exception {
+		_testSassToCssBuilder("ruby");
+	}
+
+	private String _read(String fileName) throws Exception {
+		Path path = Paths.get(fileName);
+
+		String s = new String(Files.readAllBytes(path), StringPool.UTF8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
+	private void _testSassToCssBuilder(String compiler) throws Exception {
 		CSSBuilder cssBuilder = new CSSBuilder(
 			_docrootDirName, "../../../portal-web/docroot/html/css/common",
-			new String[0], "jni");
+			new String[0], compiler);
 
 		cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
 
@@ -100,15 +118,6 @@ public class CSSBuilderTest {
 			_docrootDirName + "/css/.sass-cache/test_rtl.css");
 
 		Assert.assertEquals(expectedRtlCacheContent, actualRtlCacheContent);
-	}
-
-	private String _read(String fileName) throws Exception {
-		Path path = Paths.get(fileName);
-
-		String s = new String(Files.readAllBytes(path), StringPool.UTF8);
-
-		return StringUtil.replace(
-			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private static String _docrootDirName;

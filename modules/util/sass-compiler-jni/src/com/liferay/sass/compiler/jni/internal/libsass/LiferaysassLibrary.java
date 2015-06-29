@@ -105,7 +105,7 @@ public interface LiferaysassLibrary extends Library {
 		public static final int SASS_COMPILER_EXECUTED = (int)2;
 	};
 	/// <i>native declaration : sass_version.h</i>
-	public static final String LIBSASS_VERSION = (String)"[NA]";
+	public static final String LIBSASS_VERSION = (String)"sync-3.0.5-b6-10019-g01989e-dirty";
 	/**
 	 * Typedef defining importer signature and return type<br>
 	 * <i>native declaration : sass_functions.h</i>

@@ -3,6 +3,7 @@
 
 <project>
 	<property name="libsass.version" value="3.2.5" />
+	<property name="sass.spec.version" value="f34eb8b4e6c9ba192fc37231a252af1ab79972fd" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
@@ -31,7 +32,9 @@
 				src="libsass-${libsass.version}.zip"
 			/>
 
-			<chmod
+            <delete file="libsass-${libsass.version}.zip" />
+
+            <chmod
 				dir="tmp/libsass-${libsass.version}"
 				includes="**/*.sh"
 				perm="a+x"
@@ -53,6 +56,39 @@
 					/>
 				</filtermapper>
 			</copy>
+
+			<if>
+				<available file="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java" />
+				<then>
+					<delete file="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java" />
+				</then>
+			</if>
+
+			<mirrors-get
+					dest="jnaerator-0.11-shaded.jar"
+					src="https://oss.sonatype.org/content/groups/public/com/nativelibs4java/jnaerator/0.11/jnaerator-0.11-shaded.jar"
+					/>
+
+			<java
+					dir="tmp/libsass-${libsass.version}"
+					jar="jnaerator-0.11-shaded.jar"
+					fork="true"
+					failonerror="true"
+					>
+				<arg line="-f -library liferaysass -mode Directory -o ../../src -package com.liferay.sass.compiler.jni.internal.libsass -runtime JNAerator sass_context.h" />
+			</java>
+
+			<delete file="jnaerator-0.11-shaded.jar" />
+
+			<move
+					file="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java"
+					todir="tmp"
+					/>
+
+			<concat destfile="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java">
+				<header >/* @generated */</header>
+				<filelist dir="tmp" files="LiferaysassLibrary.java" />
+			</concat>
 
 			<delete dir="tmp" />
 		</sequential>
@@ -111,82 +147,32 @@ make -j5${line.separator}</echo>
 		/>
 	</target>
 
-	<target name="compile">
+	<target name="build-sass-spec">
 		<if>
-			<not>
-				<available file="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java" />
-			</not>
+			<available file="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec" />
 			<then>
-				<mirrors-get
-					dest="libsass-${libsass.version}.zip"
-					src="https://github.com/sass/libsass/archive/${libsass.version}.zip"
-				/>
-
-				<unzip
-					dest="tmp"
-					src="libsass-${libsass.version}.zip"
-				/>
-
-				<delete file="libsass-${libsass.version}.zip" />
-
-				<mirrors-get
-					dest="jnaerator-0.11-shaded.jar"
-					src="https://oss.sonatype.org/content/groups/public/com/nativelibs4java/jnaerator/0.11/jnaerator-0.11-shaded.jar"
-				/>
-
-				<java
-					dir="tmp/libsass-${libsass.version}"
-					jar="jnaerator-0.11-shaded.jar"
-					fork="true"
-					failonerror="true"
-				>
-					<arg line="-f -library liferaysass -mode Directory -o ../../src -package com.liferay.sass.compiler.jni.internal.libsass -runtime JNAerator sass_context.h" />
-				</java>
-
-				<delete file="jnaerator-0.11-shaded.jar" />
-
-				<move
-					file="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java"
-					todir="tmp"
-				/>
-
-				<concat destfile="src/com/liferay/sass/compiler/jni/internal/libsass/LiferaysassLibrary.java">
-					<header >/* @generated */</header>
-					<filelist dir="tmp" files="LiferaysassLibrary.java" />
-				</concat>
-
-				<delete dir="tmp" />
+				<delete dir="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec" />
 			</then>
 		</if>
 
-		<if>
-			<not>
-				<available file="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec" />
-			</not>
-			<then>
-				<mkdir dir="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec" />
+		<mkdir dir="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec" />
 
-				<mirrors-get
-					dest="sass-spec.zip"
-					src="https://github.com/sass/sass-spec/archive/f34eb8b4e6c9ba192fc37231a252af1ab79972fd.zip"
-				/>
-
-				<unzip
-					dest="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec"
-					src="sass-spec.zip"
-				>
-					<patternset>
-						<include name="**/spec/basic/**" />
-					</patternset>
-					<cutdirsmapper dirs="3" />
-				</unzip>
-
-				<delete file="sass-spec.zip" />
-			</then>
-		</if>
-
-		<compile
-			module.dir="${basedir}"
+		<mirrors-get
+			dest="sass-spec.zip"
+			src="https://github.com/sass/sass-spec/archive/${sass.spec.version}.zip"
 		/>
+
+		<unzip
+			dest="test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec"
+			src="sass-spec.zip"
+		>
+			<patternset>
+				<include name="**/spec/basic/**" />
+			</patternset>
+			<cutdirsmapper dirs="3" />
+		</unzip>
+
+		<delete file="sass-spec.zip" />
+
 	</target>
 </project>

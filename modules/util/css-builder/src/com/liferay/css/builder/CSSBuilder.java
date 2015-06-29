@@ -245,10 +245,12 @@ public class CSSBuilder {
 
 			try {
 				_sassCompiler = new JniSassCompiler();
+
+				System.out.println("Using native sass compiler");
 			}
 			catch (Throwable t) {
 				System.out.println(
-					"Unable to load native compiler, falling back to Ruby");
+					"Unable to load native compiler, falling back to ruby");
 
 				_sassCompiler = new RubySassCompiler();
 			}
@@ -256,6 +258,8 @@ public class CSSBuilder {
 		else {
 			try {
 				_sassCompiler = new RubySassCompiler();
+
+				System.out.println("Using ruby sass compiler");
 			}
 			catch (Exception e) {
 				System.out.println(

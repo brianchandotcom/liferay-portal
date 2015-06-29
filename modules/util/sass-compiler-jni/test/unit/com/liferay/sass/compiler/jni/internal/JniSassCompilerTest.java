@@ -77,7 +77,7 @@ public class JniSassCompilerTest {
 
 			Assert.assertNotNull(actualOutput);
 
-			File expectedOutputFile = new File(testDir, "expected.compact.css");
+			File expectedOutputFile = new File(testDir, "expected_output.css");
 
 			String expectedOutput = read(expectedOutputFile.toPath());
 

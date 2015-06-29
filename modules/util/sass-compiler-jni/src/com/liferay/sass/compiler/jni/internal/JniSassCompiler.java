@@ -17,7 +17,6 @@ package com.liferay.sass.compiler.jni.internal;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Context;
-import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Data_Context;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_File_Context;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Output_Style;
@@ -90,7 +89,7 @@ public class JniSassCompiler implements SassCompiler {
 				sassOptions, inputFileName);
 			_liferaysassLibrary.sass_option_set_output_path(sassOptions, "");
 			_liferaysassLibrary.sass_option_set_output_style(
-				sassOptions, Sass_Output_Style.SASS_STYLE_COMPACT);
+				sassOptions, Sass_Output_Style.SASS_STYLE_NESTED);
 			_liferaysassLibrary.sass_option_set_source_comments(
 				sassOptions, sourceComments);
 
@@ -136,71 +135,22 @@ public class JniSassCompiler implements SassCompiler {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
+	@Override
 	public String compileString(
 			String input, String includeDirName, String imgDirName)
 		throws JniSassCompilerException {
 
-		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
-
-		byte sourceComments = (byte)0;
-
-		Sass_Data_Context sassDataContext = null;
-
 		try {
-			Memory pointer = toPointer(input);
+			File temp = File.createTempFile("temp", ".scss");
+			temp.deleteOnExit();
 
-			sassDataContext = _liferaysassLibrary.sass_make_data_context(
-				pointer);
+			write(temp, input);
 
-			Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
-
-			_liferaysassLibrary.sass_option_set_include_path(
-				sassOptions, includeDirName);
-			_liferaysassLibrary.sass_option_set_output_style(
-				sassOptions, Sass_Output_Style.SASS_STYLE_COMPACT);
-			_liferaysassLibrary.sass_option_set_source_comments(
-				sassOptions, sourceComments);
-
-			_liferaysassLibrary.sass_data_context_set_options(
-				sassDataContext, sassOptions);
-
-			_liferaysassLibrary.sass_compile_data_context(sassDataContext);
-
-			Sass_Context sassContext =
-				_liferaysassLibrary.sass_data_context_get_context(
-					sassDataContext);
-
-			int errorStatus = _liferaysassLibrary.sass_context_get_error_status(
-				sassContext);
-
-			if (errorStatus != 0) {
-				String errorMessage =
-					_liferaysassLibrary.sass_context_get_error_message(
-						sassContext);
-
-				throw new JniSassCompilerException(errorMessage);
-			}
-
-			String output = _liferaysassLibrary.sass_context_get_output_string(
-				sassContext);
-
-			if (output == null) {
-				throw new JniSassCompilerException("Null output");
-			}
-
-			return output;
+			return compileFile(
+				temp.getCanonicalPath(), includeDirName, imgDirName);
 		}
-		finally {
-			try {
-				if (sassDataContext != null) {
-					_liferaysassLibrary.sass_delete_data_context(
-						sassDataContext);
-				}
-			}
-			catch (Throwable t) {
-				throw new JniSassCompilerException(t);
-			}
+		catch (Exception e) {
+			throw new JniSassCompilerException(e);
 		}
 	}
 

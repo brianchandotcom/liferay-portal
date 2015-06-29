@@ -182,6 +182,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					}
 
 					form.fm('assetEntryId').val(event.assetentryid);
+					form.fm('ddmTemplateKey').val('');
 
 					hideError($('.article-preview'));
 					hideError($('.template-preview'));
@@ -204,19 +205,19 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 							success: function(responseData) {
 								var articlePreviewContent = $('.article-preview-content', $(responseData));
 								var templatePreviewContent = $('.template-preview-content', $(responseData));
-								
+
 								hideLoading($('.article-preview'));
 								hideLoading($('.template-preview'));
 
 								$('.article-preview .article-preview-content-container').html(articlePreviewContent);
 								$('.template-preview .template-preview-content-container').html(templatePreviewContent);
-								
+
 								if (articlePreviewContent.length > 0) {
 
 									$('.configuration-options-container').removeClass('hidden');
 
 									if (templatePreviewContent.length > 0) {
-										
+
 										if ($('.template-preview .template-preview-content').attr('data-change-enabled') === 'false') {
 											$('.template-preview .button-container').addClass('hidden');
 										}

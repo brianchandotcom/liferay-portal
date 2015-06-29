@@ -61,28 +61,26 @@ public class SeleniumBuilderFileUtil {
 	public SeleniumBuilderFileUtil(String baseDirName, String projectDirName) {
 		_baseDirName = baseDirName;
 
-		Properties properties = new Properties();
-
 		try {
 			String content = FileUtil.read(projectDirName + "/test.properties");
 
 			InputStream inputStream = new ByteArrayInputStream(
 				content.getBytes());
 
-			properties.load(inputStream);
+			_props.load(inputStream);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		_componentNames = ListUtil.fromArray(
-			StringUtil.split(properties.getProperty("component.names")));
+			StringUtil.split(_props.getProperty("component.names")));
 		_testCaseAvailablePropertyNames = ListUtil.fromArray(
 			StringUtil.split(
-				properties.getProperty("test.case.available.property.names")));
+				_props.getProperty("test.case.available.property.names")));
 		_testrayAvailableComponentNames = ListUtil.fromArray(
 			StringUtil.split(
-				properties.getProperty("testray.available.component.names")));
+				_props.getProperty("testray.available.component.names")));
 	}
 
 	public String escapeHtml(String input) {
@@ -2136,6 +2134,7 @@ public class SeleniumBuilderFileUtil {
 		"[A-Za-z0-9\\-]+");
 	private final Pattern _pathTrElementWordPattern2 = Pattern.compile(
 		"[A-Z0-9][A-Za-z0-9\\-]*");
+	private final Properties _props = new Properties();
 	private final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
 	private final List<String> _testCaseAvailablePropertyNames;
 	private final List<String> _testrayAvailableComponentNames;

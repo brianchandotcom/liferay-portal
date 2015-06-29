@@ -10,7 +10,6 @@
 	</category>
 	<category name="category.collaboration">
 		<portlet id="19" />
-		<portlet id="33" />
 		<portlet id="114" />
 		<portlet id="115" />
 	</category>

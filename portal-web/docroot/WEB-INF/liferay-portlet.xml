@@ -236,17 +236,6 @@
 		<custom-attributes-display>com.liferay.portlet.blogs.BlogsEntryCustomAttributesDisplay</custom-attributes-display>
 		<trash-handler>com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler</trash-handler>
 		<workflow-handler>com.liferay.portlet.blogs.workflow.BlogsEntryWorkflowHandler</workflow-handler>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/blogs/css/main.css</header-portlet-css>
-		<header-portlet-javascript>/html/portlet/blogs/js/modules.js</header-portlet-javascript>
-		<css-class-wrapper>portlet-blogs</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>34</portlet-name>

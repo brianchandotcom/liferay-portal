@@ -109,6 +109,8 @@ public class FileUtil {
 			destinationPath = destinationPath.resolve(fileName);
 		}
 
+		Files.createDirectories(destinationPath.getParent());
+
 		Files.copy(mirrorsCacheArtifactFile.toPath(), destinationPath);
 
 		return destinationPath.toFile();

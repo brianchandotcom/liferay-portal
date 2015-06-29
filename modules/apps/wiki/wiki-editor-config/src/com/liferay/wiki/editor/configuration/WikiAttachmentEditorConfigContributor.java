@@ -21,7 +21,6 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLBuilder;
@@ -55,8 +54,7 @@ public class WikiAttachmentEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 		boolean allowBrowseDocuments = GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(
@@ -106,9 +104,6 @@ public class WikiAttachmentEditorConfigContributor
 
 			name = namespace + name;
 		}
-
-		PortletURLBuilder portletURLBuilder = PortletURLBuilder.create(
-			liferayPortletResponse);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			portletURLBuilder, name + "selectItem",

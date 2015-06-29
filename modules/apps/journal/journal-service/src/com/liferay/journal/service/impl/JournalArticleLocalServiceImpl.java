@@ -14,7 +14,9 @@
 
 package com.liferay.journal.service.impl;
 
+import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.exception.ArticleDisplayDateException;
 import com.liferay.journal.exception.ArticleExpirationDateException;
@@ -35,6 +37,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.service.base.JournalArticleLocalServiceBaseImpl;
 import com.liferay.journal.service.permission.JournalPermission;
+import com.liferay.journal.service.util.JournalServiceComponentProvider;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.journal.util.JournalContentUtil;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
@@ -73,6 +76,9 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -6976,6 +6982,23 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	protected JournalGroupServiceConfiguration
+			getJournalGroupServiceConfiguration(long groupId)
+		throws SettingsException {
+
+		JournalServiceComponentProvider journalServiceComponentProvider =
+			JournalServiceComponentProvider.
+				getJournalServiceComponentProvider();
+
+		SettingsFactory settingsFactory =
+			journalServiceComponentProvider.getSettingsFactory();
+
+		return settingsFactory.getSettings(
+			JournalGroupServiceConfiguration.class,
+			new GroupServiceSettingsLocator(
+				groupId, JournalConstants.SERVICE_NAME));
+	}
+
 	protected String getUniqueUrlTitle(
 			long id, long groupId, String articleId, String title)
 		throws PortalException {
@@ -7040,77 +7063,68 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
+		JournalGroupServiceConfiguration journalGroupServiceConfiguration =
+			getJournalGroupServiceConfiguration(article.getGroupId());
+
 		String articleTitle = article.getTitle(serviceContext.getLanguageId());
 
 		articleURL = buildArticleURL(
 			articleURL, article.getGroupId(), article.getFolderId(),
 			article.getArticleId());
 
-		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
-
-		if (preferences == null) {
-			long ownerId = article.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletProviderUtil.getPortletId(
-				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-			String defaultPreferences = null;
-
-			preferences = portletPreferencesLocalService.getPreferences(
-				article.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
-		}
-
 		if (action.equals("add") &&
-			JournalUtil.getEmailArticleAddedEnabled(preferences)) {
+			journalGroupServiceConfiguration.emailArticleAddedEnabled()) {
 		}
 		else if (action.equals("move_to") &&
-				 JournalUtil.getEmailArticleMovedToFolderEnabled(preferences)) {
+				 journalGroupServiceConfiguration.
+					 emailArticleMovedToFolderEnabled()) {
 		}
 		else if (action.equals("move_from") &&
-				 JournalUtil.getEmailArticleMovedFromFolderEnabled(
-					 preferences)) {
+				 journalGroupServiceConfiguration.
+					 emailArticleMovedFromFolderEnabled()) {
 		}
 		else if (action.equals("update") &&
-				 JournalUtil.getEmailArticleUpdatedEnabled(preferences)) {
+				 journalGroupServiceConfiguration.emailArticleUpdatedEnabled(
+					 )) {
 		}
 		else {
 			return;
 		}
 
-		String fromName = JournalUtil.getEmailFromName(
-			preferences, article.getCompanyId());
-		String fromAddress = JournalUtil.getEmailFromAddress(
-			preferences, article.getCompanyId());
+		String fromName = journalGroupServiceConfiguration.emailFromName();
+		String fromAddress =
+			journalGroupServiceConfiguration.emailFromAddress();
 
 		Map<Locale, String> localizedSubjectMap = null;
 		Map<Locale, String> localizedBodyMap = null;
 
 		if (action.equals("add")) {
-			localizedSubjectMap = JournalUtil.getEmailArticleAddedSubjectMap(
-				preferences);
-			localizedBodyMap = JournalUtil.getEmailArticleAddedBodyMap(
-				preferences);
+			localizedSubjectMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleAddedSubject());
+			localizedBodyMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleAddedBody());
 		}
 		else if (action.equals("move_to")) {
-			localizedSubjectMap =
-				JournalUtil.getEmailArticleMovedToFolderSubjectMap(preferences);
-			localizedBodyMap = JournalUtil.getEmailArticleMovedToFolderBodyMap(
-				preferences);
+			localizedSubjectMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedToFolderSubject());
+			localizedBodyMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedToFolderBody());
 		}
 		else if (action.equals("move_from")) {
-			localizedSubjectMap =
-				JournalUtil.getEmailArticleMovedFromFolderSubjectMap(
-					preferences);
-			localizedBodyMap =
-				JournalUtil.getEmailArticleMovedFromFolderBodyMap(preferences);
+			localizedSubjectMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedFromFolderSubject());
+			localizedBodyMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedFromFolderBody());
 		}
 		else if (action.equals("update")) {
-			localizedSubjectMap = JournalUtil.getEmailArticleUpdatedSubjectMap(
-				preferences);
-			localizedBodyMap = JournalUtil.getEmailArticleUpdatedBodyMap(
-				preferences);
+			localizedSubjectMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleUpdatedSubject());
+			localizedBodyMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleUpdatedBody());
 		}
 
 		String articleContent = StringPool.BLANK;
@@ -7260,23 +7274,26 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		JournalGroupServiceConfiguration journalGroupServiceConfiguration =
+			getJournalGroupServiceConfiguration(article.getGroupId());
+
 		if (preferences == null) {
 			return;
 		}
 		else if (emailType.equals("denied") &&
-				 JournalUtil.getEmailArticleApprovalDeniedEnabled(
-					 preferences)) {
+				 journalGroupServiceConfiguration.
+					 emailArticleApprovalDeniedEnabled()) {
 		}
 		else if (emailType.equals("granted") &&
-				 JournalUtil.getEmailArticleApprovalGrantedEnabled(
-					 preferences)) {
+				 journalGroupServiceConfiguration.
+					 emailArticleApprovalGrantedEnabled()) {
 		}
 		else if (emailType.equals("requested") &&
-				 JournalUtil.getEmailArticleApprovalRequestedEnabled(
-					 preferences)) {
+				 journalGroupServiceConfiguration.
+					 emailArticleApprovalRequestedEnabled()) {
 		}
 		else if (emailType.equals("review") &&
-				 JournalUtil.getEmailArticleReviewEnabled(preferences)) {
+				 journalGroupServiceConfiguration.emailArticleReviewEnabled()) {
 		}
 		else {
 			return;
@@ -7287,10 +7304,9 @@ public class JournalArticleLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(article.getUserId());
 
-		String fromName = JournalUtil.getEmailFromName(
-			preferences, article.getCompanyId());
-		String fromAddress = JournalUtil.getEmailFromAddress(
-			preferences, article.getCompanyId());
+		String fromName = journalGroupServiceConfiguration.emailFromName();
+		String fromAddress =
+			journalGroupServiceConfiguration.emailFromAddress();
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
@@ -7310,32 +7326,34 @@ public class JournalArticleLocalServiceImpl
 		Map<Locale, String> localizedBodyMap = null;
 
 		if (emailType.equals("denied")) {
-			localizedSubjectMap =
-				JournalUtil.getEmailArticleApprovalDeniedSubjectMap(
-					preferences);
-			localizedBodyMap = JournalUtil.getEmailArticleApprovalDeniedBodyMap(
-				preferences);
+			localizedSubjectMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalDeniedSubject());
+			localizedBodyMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalDeniedBody());
 		}
 		else if (emailType.equals("granted")) {
-			localizedSubjectMap =
-				JournalUtil.getEmailArticleApprovalGrantedSubjectMap(
-					preferences);
-			localizedBodyMap =
-				JournalUtil.getEmailArticleApprovalGrantedBodyMap(preferences);
+			localizedSubjectMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalGrantedSubject());
+			localizedBodyMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalGrantedBody());
 		}
 		else if (emailType.equals("requested")) {
-			localizedSubjectMap =
-				JournalUtil.getEmailArticleApprovalRequestedSubjectMap(
-					preferences);
-			localizedBodyMap =
-				JournalUtil.getEmailArticleApprovalRequestedBodyMap(
-					preferences);
+			localizedSubjectMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalGrantedSubject());
+			localizedBodyMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalGrantedBody());
 		}
 		else if (emailType.equals("review")) {
-			localizedSubjectMap = JournalUtil.getEmailArticleReviewSubjectMap(
-				preferences);
-			localizedBodyMap = JournalUtil.getEmailArticleReviewBodyMap(
-				preferences);
+			localizedSubjectMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleReviewSubject());
+			localizedBodyMap = LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleReviewBody());
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();

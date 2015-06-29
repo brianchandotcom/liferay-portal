@@ -14,8 +14,12 @@
 
 package com.liferay.journal.upgrade;
 
+import com.liferay.journal.service.configuration.configurator.JournalServiceConfigurator;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 
@@ -35,6 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalServiceUpgrade {
 
 	@Reference(unbind = "-")
+	protected void setJournalServiceConfigurator(
+		JournalServiceConfigurator journalServiceConfigurator) {
+	}
+
+	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
@@ -46,14 +55,37 @@ public class JournalServiceUpgrade {
 	}
 
 	@Activate
-	protected void upgrade() throws PortalException {
+	protected void upgrade() throws Exception {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradeClassNames());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Delete temporary images");
+		}
+
+		_deleteTempImages();
 	}
+
+	private void _deleteTempImages() throws Exception {
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQL(_DELETE_TEMP_IMAGES_1);
+		db.runSQL(_DELETE_TEMP_IMAGES_2);
+	}
+
+	private static final String _DELETE_TEMP_IMAGES_1 =
+		"delete from Image where imageId IN (SELECT articleImageId FROM " +
+			"JournalArticleImage where tempImage = TRUE)";
+
+	private static final String _DELETE_TEMP_IMAGES_2 =
+		"delete from JournalArticleImage where tempImage = TRUE";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalServiceUpgrade.class);
 
 	private ReleaseLocalService _releaseLocalService;
 

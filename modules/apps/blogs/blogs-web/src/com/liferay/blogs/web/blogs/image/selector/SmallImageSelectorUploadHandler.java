@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.image.selector;
+package com.liferay.blogs.web.blogs.image.selector;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PropsKeys;

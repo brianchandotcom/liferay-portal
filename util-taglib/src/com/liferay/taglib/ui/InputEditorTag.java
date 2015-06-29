@@ -232,9 +232,9 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	protected Map<String, Object> getData() {
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
 
-		if (portlet == null) {
+		if (portletId == null) {
 			return _data;
 		}
 
@@ -260,8 +260,8 @@ public class InputEditorTag extends IncludeTag {
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				portlet.getPortletId(), getConfigKey(), getEditorName(request),
-				attributes, themeDisplay, portletResponse);
+				portletId, getConfigKey(), getEditorName(request), attributes,
+				themeDisplay, portletResponse);
 
 		Map<String, Object> data = editorConfiguration.getData();
 

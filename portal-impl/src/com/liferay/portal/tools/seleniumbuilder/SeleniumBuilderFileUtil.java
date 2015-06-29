@@ -417,6 +417,21 @@ public class SeleniumBuilderFileUtil {
 		}
 	}
 
+	protected String getProperty(String propertyName) {
+		String propertyValue = _props.getProperty(propertyName);
+
+		if (Validator.isNotNull(propertyValue)) {
+			Matcher matcher = _varElementPattern.matcher(propertyValue);
+
+			while (matcher.find()) {
+				propertyValue = propertyValue.replace(
+					matcher.group(), getProperty(matcher.group(1)));
+			}
+		}
+
+		return propertyValue;
+	}
+
 	protected String processTemplate(String name, Map<String, Object> context)
 		throws Exception {
 

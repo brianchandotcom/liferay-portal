@@ -221,8 +221,6 @@
 			</trigger>
 		</scheduler-entry>
 		<template-handler>com.liferay.portlet.blogs.template.BlogsPortletDisplayTemplateHandler</template-handler>
-		<user-notification-definitions>com/liferay/portlet/blogs/blogs-user-notification-definitions.xml</user-notification-definitions>
-		<user-notification-handler-class>com.liferay.portlet.blogs.notifications.BlogsUserNotificationHandler</user-notification-handler-class>
 		<xml-rpc-method-class>com.liferay.portlet.blogs.util.PingbackMethodImpl</xml-rpc-method-class>
 		<asset-renderer-factory>com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory</asset-renderer-factory>
 		<atom-collection-adapter>com.liferay.portlet.blogs.atom.BlogsEntryAtomCollectionAdapter</atom-collection-adapter>

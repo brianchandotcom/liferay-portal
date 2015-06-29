@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.lar;
+package com.liferay.blogs.web.blogs.lar;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
@@ -29,6 +30,7 @@ import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.blogs.util.BlogsConstants;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -39,12 +41,21 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Juan Fernández
  * @author Zsolt Berentey
  */
+@Component(
+	property = {
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class BlogsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "blogs";

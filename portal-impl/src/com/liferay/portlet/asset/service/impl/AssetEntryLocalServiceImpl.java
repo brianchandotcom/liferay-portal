@@ -435,7 +435,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		boolean andSearch, int start, int end) {
 
 		try {
-			Indexer indexer = AssetSearcher.getInstance();
+			Indexer<?> indexer = AssetSearcher.getInstance();
 
 			AssetSearcher assetSearcher = (AssetSearcher)indexer;
 
@@ -1022,7 +1022,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	protected void reindex(AssetEntry entry) throws PortalException {
 		String className = PortalUtil.getClassName(entry.getClassNameId());
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(className);
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(className);
 
 		indexer.reindex(className, entry.getClassPK());
 	}

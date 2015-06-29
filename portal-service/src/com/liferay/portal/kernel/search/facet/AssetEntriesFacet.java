@@ -67,7 +67,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 		BooleanFilter facetFilter = new BooleanFilter();
 
 		for (String entryClassName : entryClassNames) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
 			if (indexer == null) {
 				continue;
@@ -199,7 +199,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 	@Deprecated
 	protected void postProcessContextQuery(
 			BooleanFilter entityFilter, SearchContext searchContext,
-			Indexer indexer)
+			Indexer<?> indexer)
 		throws Exception {
 
 		BooleanQuery entityBooleanQuery = new BooleanQueryImpl();

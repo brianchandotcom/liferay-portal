@@ -197,10 +197,10 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 
-	private Indexer _indexer;
+	private Indexer<Object> _indexer;
 	private final SearchContext _searchContext = new SearchContext();
 
-	private class TestIndexer extends BaseIndexer {
+	private class TestIndexer extends BaseIndexer<Object> {
 
 		@Override
 		public String getClassName() {
@@ -208,11 +208,11 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		}
 
 		@Override
-		protected void doDelete(Object obj) throws Exception {
+		protected void doDelete(Object object) throws Exception {
 		}
 
 		@Override
-		protected Document doGetDocument(Object obj) throws Exception {
+		protected Document doGetDocument(Object object) throws Exception {
 			return null;
 		}
 
@@ -226,7 +226,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		}
 
 		@Override
-		protected void doReindex(Object obj) throws Exception {
+		protected void doReindex(Object object) throws Exception {
 		}
 
 		@Override

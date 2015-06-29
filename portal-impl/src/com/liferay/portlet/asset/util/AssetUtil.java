@@ -727,7 +727,7 @@ public class AssetUtil {
 			int start, int end)
 		throws Exception {
 
-		Indexer searcher = AssetSearcher.getInstance();
+		Indexer<?> searcher = AssetSearcher.getInstance();
 
 		AssetSearcher assetSearcher = (AssetSearcher)searcher;
 

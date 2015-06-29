@@ -1551,7 +1551,7 @@ public class DDMStructureLocalServiceImpl
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			structure.getClassName());
 
 		if (indexer instanceof DDMStructureIndexer) {

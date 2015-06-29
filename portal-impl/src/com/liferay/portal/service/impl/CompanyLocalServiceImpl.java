@@ -796,7 +796,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// Search
 
-			Indexer indexer = FacetedSearcher.getInstance();
+			Indexer<?> indexer = FacetedSearcher.getInstance();
 
 			return indexer.search(searchContext);
 		}

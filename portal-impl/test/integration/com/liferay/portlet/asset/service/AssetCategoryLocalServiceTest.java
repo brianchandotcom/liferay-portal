@@ -59,12 +59,12 @@ public class AssetCategoryLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_blogsIndexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+		_blogsEntryIndexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		IndexerRegistryUtil.register(_blogsIndexer);
+		IndexerRegistryUtil.register(_blogsEntryIndexer);
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class AssetCategoryLocalServiceTest {
 		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory, true);
 	}
 
-	private Indexer _blogsIndexer;
+	private Indexer<BlogsEntry> _blogsEntryIndexer;
 
 	@DeleteAfterTestRun
 	private Group _group;

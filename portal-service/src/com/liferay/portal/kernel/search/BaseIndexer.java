@@ -1431,7 +1431,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 */
 	@Deprecated
 	protected void doPostProcessSearchQuery(
-			Indexer indexer, BooleanQuery searchQuery,
+			Indexer<?> indexer, BooleanQuery searchQuery,
 			SearchContext searchContext)
 		throws Exception {
 
@@ -1837,7 +1837,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected void resetFullQuery(SearchContext searchContext) {
 		searchContext.clearFullQueryEntryClassNames();
 
-		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+		for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
 			if (indexer instanceof RelatedEntryIndexer) {
 				RelatedEntryIndexer relatedEntryIndexer =
 					(RelatedEntryIndexer)indexer;

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
-@Component(service = ExportImportLifecycleListener.class)
+@Component(immediate = true, service = ExportImportLifecycleListener.class)
 public class LoggerExportImportLifecycleListener
 	extends BaseExportImportLifecycleListener {
 

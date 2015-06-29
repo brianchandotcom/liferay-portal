@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(service = ExportImportLifecycleListener.class)
+@Component(immediate = true, service = ExportImportLifecycleListener.class)
 public class ExportImportProcessCallbackLifecycleListener
 	extends BaseProcessExportImportLifecycleListener {
 

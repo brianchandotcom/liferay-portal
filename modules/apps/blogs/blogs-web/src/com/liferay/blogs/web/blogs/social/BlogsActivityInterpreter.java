@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.social;
+package com.liferay.blogs.web.blogs.social;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -23,17 +24,25 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
+import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
 
 import java.text.Format;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
+	service = SocialActivityInterpreter.class
+)
 public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override

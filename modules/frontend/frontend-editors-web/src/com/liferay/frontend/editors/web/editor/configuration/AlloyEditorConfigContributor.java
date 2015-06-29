@@ -92,7 +92,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			String name =
 				namespace +
 					GetterUtil.getString(
-						(String)inputEditorTaglibAttributes.get(
+						inputEditorTaglibAttributes.get(
 							"liferay-ui:input-editor:name"));
 
 			populateFileBrowserURL(

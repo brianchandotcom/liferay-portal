@@ -4,6 +4,12 @@
 	<#assign finderFieldName = entity.alias + "." + finderColName>
 </#if>
 
+<#if serviceBuilder.getSqlType(packagePath + ".model." + entity.getName(), finderCol.getName(), finderCol.getType()) == "CLOB">
+	<#assign textFinderFieldName = "CAST_CLOB_TEXT(" + finderFieldName + ")">
+<#else>
+	<#assign textFinderFieldName = finderFieldName>
+</#if>
+
 <#assign finderColConjunction = "">
 
 <#if finderCol_has_next>
@@ -27,15 +33,15 @@
 </#if>
 
 <#if finderCol.type == "String" && !finderCol.isCaseSensitive()>
-	<#assign finderColExpression = "lower(" + finderFieldName + ") " + finderCol.comparator + " ?">
+	<#assign finderColExpression = "lower(" + textFinderFieldName + ") " + finderCol.comparator + " ?">
 <#else>
-	<#assign finderColExpression = finderFieldName + " " + finderCol.comparator + " ?">
+	<#assign finderColExpression = textFinderFieldName + " " + finderCol.comparator + " ?">
 </#if>
 
 private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_2${finderFieldSuffix} = "${finderColExpression}${finderColConjunction}";
 
 <#if finderCol.type == "String">
-	<#assign finderColExpression = finderFieldName + " " + finderCol.comparator + " ''">
+	<#assign finderColExpression = textFinderFieldName + " " + finderCol.comparator + " ''">
 
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_3${finderFieldSuffix} = "(${finderFieldName} IS NULL OR ${finderColExpression})${finderColConjunction}";
 </#if>

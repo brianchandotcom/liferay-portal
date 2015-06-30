@@ -1306,7 +1306,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"\\n[\\t]++\\<tear-down\\>([\\s\\S]*?)\\</tear-down\\>" +
 			"[\\n|\\t]*?(?:[^(?:/\\>)]*?--\\>)*+\\n");
 	private final Pattern _poshiVariableLinePattern = Pattern.compile(
-		"([\\t]*+)(\\<var name=\\\"([^\\\"]*)\\\".*?/\\>.*+(?:\\</var\\>)??)");
+		"([\\t]*+)(\\<var.*?name=\\\"([^\\\"]*)\\\".*?/\\>" +
+			".*+(?:\\</var\\>)??)");
 	private final Pattern _poshiVariablesBlockPattern = Pattern.compile(
 		"((?:[\\t]*+\\<var.*?\\>\\n[\\t]*+){2,}?)" +
 			"(?:(?:\\n){1,}+|\\</execute\\>)");

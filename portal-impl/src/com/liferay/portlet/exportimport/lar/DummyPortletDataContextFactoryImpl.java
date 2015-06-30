@@ -93,6 +93,7 @@ public class DummyPortletDataContextFactoryImpl
 	private static final PortletDataContext _dummyPortletDataContext =
 		new PortletDataContext() {
 
+			@Deprecated
 			@Override
 			public void addAssetCategories(Class<?> clazz, long classPK) {
 			}
@@ -122,22 +123,26 @@ public class DummyPortletDataContextFactoryImpl
 				Class<?> clazz) {
 			}
 
+			@Deprecated
 			@Override
 			public void addClassedModel(
 				Element element, String path, ClassedModel classedModel,
 				Class<?> clazz, String namespace) {
 			}
 
+			@Deprecated
 			@Override
 			public void addClassedModel(
 				Element element, String path, ClassedModel classedModel,
 				String namespace) {
 			}
 
+			@Deprecated
 			@Override
 			public void addComments(Class<?> clazz, long classPK) {
 			}
 
+			@Deprecated
 			@Override
 			public void addComments(
 				String className, long classPK, List<MBMessage> messages) {
@@ -193,16 +198,19 @@ public class DummyPortletDataContextFactoryImpl
 				return false;
 			}
 
+			@Deprecated
 			@Override
 			public void addRatingsEntries(Class<?> clazz, long classPK) {
 			}
 
+			@Deprecated
 			@Override
 			public void addRatingsEntries(
 				String className, long classPK,
 				List<RatingsEntry> ratingsEntries) {
 			}
 
+			@Deprecated
 			@Override
 			public Element addReferenceElement(
 				ClassedModel referrerClassedModel, Element element,
@@ -281,6 +289,7 @@ public class DummyPortletDataContextFactoryImpl
 				return new ServiceContext();
 			}
 
+			@Deprecated
 			@Override
 			public ServiceContext createServiceContext(
 				Element element, ClassedModel classedModel, String namespace) {
@@ -309,6 +318,7 @@ public class DummyPortletDataContextFactoryImpl
 				return new ServiceContext();
 			}
 
+			@Deprecated
 			@Override
 			public ServiceContext createServiceContext(
 				String path, ClassedModel classedModel, String namespace) {
@@ -331,11 +341,13 @@ public class DummyPortletDataContextFactoryImpl
 				return new long[0];
 			}
 
+			@Deprecated
 			@Override
 			public Map<String, long[]> getAssetCategoryIdsMap() {
 				return Collections.<String, long[]>emptyMap();
 			}
 
+			@Deprecated
 			@Override
 			public Map<String, String[]> getAssetCategoryUuidsMap() {
 				return Collections.<String, String[]>emptyMap();
@@ -378,6 +390,7 @@ public class DummyPortletDataContextFactoryImpl
 				return getClass().getClassLoader();
 			}
 
+			@Deprecated
 			@Override
 			public Map<String, List<MBMessage>> getComments() {
 				return Collections.<String, List<MBMessage>>emptyMap();
@@ -430,6 +443,7 @@ public class DummyPortletDataContextFactoryImpl
 				return SAXReaderUtil.createElement("foo");
 			}
 
+			@Deprecated
 			@Override
 			public Element getExportDataElement(
 				ClassedModel classedModel, Class<?> modelClass) {
@@ -492,6 +506,7 @@ public class DummyPortletDataContextFactoryImpl
 				return SAXReaderUtil.createElement("foo");
 			}
 
+			@Deprecated
 			@Override
 			public String getLayoutPath(long plid) {
 				return StringPool.BLANK;
@@ -512,6 +527,7 @@ public class DummyPortletDataContextFactoryImpl
 				return SAXReaderUtil.createElement("foo");
 			}
 
+			@Deprecated
 			@Override
 			public List<Layout> getNewLayouts() {
 				return Collections.<Layout>emptyList();
@@ -532,6 +548,7 @@ public class DummyPortletDataContextFactoryImpl
 				return Collections.<String, Map<?, ?>>emptyMap();
 			}
 
+			@Deprecated
 			@Override
 			public long getOldPlid() {
 				return 0;
@@ -557,6 +574,7 @@ public class DummyPortletDataContextFactoryImpl
 				return StringPool.BLANK;
 			}
 
+			@Deprecated
 			@Override
 			public String getPortletPath(String portletId) {
 				return StringPool.BLANK;
@@ -567,6 +585,7 @@ public class DummyPortletDataContextFactoryImpl
 				return Collections.<String>emptySet();
 			}
 
+			@Deprecated
 			@Override
 			public Map<String, List<RatingsEntry>> getRatingsEntries() {
 				return Collections.<String, List<RatingsEntry>>emptyMap();
@@ -602,6 +621,7 @@ public class DummyPortletDataContextFactoryImpl
 				return SAXReaderUtil.createElement("foo");
 			}
 
+			@Deprecated
 			@Override
 			public List<Element> getReferenceDataElements(
 				Element parentElement, Class<?> clazz) {
@@ -660,6 +680,7 @@ public class DummyPortletDataContextFactoryImpl
 				return Collections.<Element>emptyList();
 			}
 
+			@Deprecated
 			@Override
 			public String getRootPath() {
 				return StringPool.BLANK;
@@ -670,6 +691,7 @@ public class DummyPortletDataContextFactoryImpl
 				return StringPool.BLANK;
 			}
 
+			@Deprecated
 			@Override
 			public Set<String> getScopedPrimaryKeys() {
 				return Collections.<String>emptySet();
@@ -705,16 +727,19 @@ public class DummyPortletDataContextFactoryImpl
 				return 0;
 			}
 
+			@Deprecated
 			@Override
 			public String getSourceLayoutPath(long layoutId) {
 				return StringPool.BLANK;
 			}
 
+			@Deprecated
 			@Override
 			public String getSourcePortletPath(String portletId) {
 				return StringPool.BLANK;
 			}
 
+			@Deprecated
 			@Override
 			public String getSourceRootPath() {
 				return StringPool.BLANK;
@@ -745,6 +770,7 @@ public class DummyPortletDataContextFactoryImpl
 				return 0;
 			}
 
+			@Deprecated
 			@Override
 			public List<String> getZipEntries() {
 				return Collections.<String>emptyList();
@@ -775,6 +801,7 @@ public class DummyPortletDataContextFactoryImpl
 				return StringPool.BLANK;
 			}
 
+			@Deprecated
 			@Override
 			public List<String> getZipFolderEntries() {
 				return Collections.<String>emptyList();
@@ -829,18 +856,21 @@ public class DummyPortletDataContextFactoryImpl
 				Class<?> clazz) {
 			}
 
+			@Deprecated
 			@Override
 			public void importClassedModel(
 				ClassedModel classedModel, ClassedModel newClassedModel,
 				Class<?> clazz, String namespace) {
 			}
 
+			@Deprecated
 			@Override
 			public void importClassedModel(
 				ClassedModel classedModel, ClassedModel newClassedModel,
 				String namespace) {
 			}
 
+			@Deprecated
 			@Override
 			public void importComments(
 				Class<?> clazz, long classPK, long newClassPK, long groupId) {
@@ -868,6 +898,7 @@ public class DummyPortletDataContextFactoryImpl
 			public void importPortletPermissions(String resourceName) {
 			}
 
+			@Deprecated
 			@Override
 			public void importRatingsEntries(
 				Class<?> clazz, long classPK, long newClassPK) {
@@ -905,6 +936,7 @@ public class DummyPortletDataContextFactoryImpl
 				return false;
 			}
 
+			@Deprecated
 			@Override
 			public boolean isPathNotExportedInScope(String path) {
 				return false;
@@ -1003,6 +1035,7 @@ public class DummyPortletDataContextFactoryImpl
 			public void setPlid(long plid) {
 			}
 
+			@Deprecated
 			@Override
 			public void setPortetDataContextListener(
 				PortletDataContextListener portletDataContextListener) {

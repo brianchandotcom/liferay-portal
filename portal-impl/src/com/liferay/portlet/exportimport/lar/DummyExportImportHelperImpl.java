@@ -552,6 +552,7 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 	 *             #validateMissingReferences(PortletDataContext)}
 	 */
 	@Deprecated
+	@Override
 	public MissingReferences validateMissingReferences(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)

@@ -20,21 +20,21 @@ import javax.portlet.PortletException;
 
 /**
  * Provides an interface to allow the portlet to process a particular action
- * request. This interface can only be used when the portlet is based on
- * {@link MVCPortlet}.
+ * request. This interface can only be used when the portlet is based on {@link
+ * MVCPortlet}.
  *
  * <p>
- * The action command that will be invoked is determined based on two different
- * factors:
+ * The action command to be invoked is determined by two factors:
  * </p>
  *
  * <ul>
  * <li>
- * The portlet name that the action url is referring to.
+ * The portlet name that the action URL refers to.
  * </li>
  * <li>
- * The parameter value <code>ActionRequest.ACTION_NAME</code> of the action url.
+ * The parameter value <code>ActionRequest.ACTION_NAME</code> of the action URL.
  * </li>
+ * </ul>
  *
  * <p>
  * Implementations of this interface must be OSGi components that are registered
@@ -47,38 +47,37 @@ import javax.portlet.PortletException;
  * command.
  * </li>
  * <li>
- * <code>mvc.command.name</code>: the command name that will match the parameter
+ * <code>mvc.command.name</code>: the command name to match with the parameter
  * value <code>ActionRequest.ACTION_NAME</code>. This name cannot contain any
  * comma (<code>,</code>).
  * </li>
+ * </ul>
  *
  * <p>
- * The method <code>processAction</code> in {@link MVCPortlet}
- * will search in the OSGi Registry the action command that will match both the
- * portlet name and the parameter value <code>ActionRequest.ACTION_NAME</code>
- * with the properties <code>javax.portlet.name</code> and
+ * The method {@link MVCPortlet#processAction(ActionRequest, ActionResponse)}
+ * searches the OSGi Registry for the action command that matches both the
+ * portlet name with the property <code>javax.portlet.name</code> and the
+ * parameter value <code>ActionRequest.ACTION_NAME</code> with the property
  * <code>mvc.command.name</code>.
  * </p>
  *
  * <p>
- * In general, only one action command will be executed per portlet action url.
- * However, if the parameter value <code>ActionRequest.ACTION_NAME</code> is a
- * comma separated list of multiple names, {@link MVCPortlet} will find the
- * action commands that matches and they will all be invoked sequentially based
- * on the order they were specified in the parameter value
- * <code>ActionRequest.ACTION_NAME</code>.
+ * In general, only one action command is executed per portlet action URL. If
+ * the parameter value <code>ActionRequest.ACTION_NAME</code> is, however, a
+ * comma separated list of names, {@link MVCPortlet} finds the matching action
+ * commands and invokes them sequentially in the order they're specified in the
+ * list.
  * </p>
  *
  * <p>
- * Every time there is more than one action command registered for the same
- * portlet name and with the same command name, only the one with the they
- * highest service ranking will be used.
+ * When there are multiple action commands registered for the same portlet name
+ * and with the same command name, only the action command with the highest
+ * service ranking is invoked.
  * </p>
  *
  * <p>
  * {@link BaseMVCActionCommand} is an abstract class that implements this
- * interface and can be used by extending it by third party developers to
- * simplify the use of action commands.
+ * interface and can be extended to simplify using action commands.
  * </p>
  *
  * @author Michael C. Han
@@ -100,10 +99,11 @@ public interface MVCActionCommand extends MVCCommand {
 	 * Invoked by {@link MVCPortlet} to allow the portlet to process an action
 	 * request.
 	 *
-	 * @param actionRequest the action request
-	 * @param actionResponse the action response
-	 * @return <code>true</code> if there was an error during the process of the
-	 *         action request; <code>false</code> otherwise.
+	 * @param  actionRequest the action request
+	 * @param  actionResponse the action response
+	 * @return <code>true</code> if an error occurs in processing the action
+	 *         request; <code>false</code> otherwise
+	 * @throws PortletException if a portlet exception occurred
 	 */
 	public boolean processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)

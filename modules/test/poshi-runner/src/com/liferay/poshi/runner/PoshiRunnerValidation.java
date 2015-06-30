@@ -1034,13 +1034,17 @@ public class PoshiRunnerValidation {
 	private static void _validatePossiblePropertyValues(
 		Element element, List<String> possiblePropertyValues, String filePath) {
 
-		String value = element.attributeValue("value");
+		List<String> propertyValues = Arrays.asList(
+			StringUtil.split(element.attributeValue("value")));
 
-		if (!possiblePropertyValues.contains(value)) {
-			_exceptions.add(
-				new Exception(
-					"Invalid " + value + " property value\n" + filePath + ":" +
-						element.attributeValue("line-number")));
+		for (String propertyValue : propertyValues) {
+			if (!possiblePropertyValues.contains(propertyValue.trim())) {
+				_exceptions.add(
+					new Exception(
+						"Invalid " + propertyValue.trim() +
+							" property value\n" + filePath + ":" +
+							element.attributeValue("line-number")));
+			}
 		}
 	}
 

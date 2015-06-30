@@ -12,7 +12,7 @@ CKEDITOR.dialog.add(
 
 			address = address.replace(/[\u200B-\u200D\uFEFF]/g, '');
 
-			if (address.startsWith('/')) {
+			if (address.indexOf('/') === 0) {
 				return address;
 			}
 

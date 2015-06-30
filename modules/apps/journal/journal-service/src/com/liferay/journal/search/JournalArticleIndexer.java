@@ -284,12 +284,12 @@ public class JournalArticleIndexer
 
 					@Override
 					public void addCriteria(DynamicQuery dynamicQuery) {
-
 						Property ddmStructureKey = PropertyFactoryUtil.forName(
 							"DDMStructureKey");
 
 						dynamicQuery.add(ddmStructureKey.in(ddmStructureKeys));
 					}
+
 				});
 
 			actionableDynamicQuery.setPerformActionMethod(
@@ -308,6 +308,7 @@ public class JournalArticleIndexer
 							throw new PortalException(ex);
 						}
 					}
+
 				});
 
 			actionableDynamicQuery.performActions();

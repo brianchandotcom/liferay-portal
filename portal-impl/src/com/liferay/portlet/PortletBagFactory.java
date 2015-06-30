@@ -59,7 +59,6 @@ import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -153,8 +152,6 @@ public class PortletBagFactory {
 		List<CustomAttributesDisplay> customAttributesDisplayInstances =
 			newCustomAttributesDisplayInstances(portlet);
 
-		List<DDMDisplay> ddmDisplayInstances = newDDMDisplayInstances(portlet);
-
 		List<PermissionPropagator> permissionPropagatorInstances =
 			newPermissionPropagators(portlet);
 
@@ -184,9 +181,9 @@ public class PortletBagFactory {
 			userNotificationHandlerInstances, webDAVStorageInstances,
 			xmlRpcMethodInstances, controlPanelEntryInstances,
 			assetRendererFactoryInstances, atomCollectionAdapterInstances,
-			customAttributesDisplayInstances, ddmDisplayInstances,
-			permissionPropagatorInstances, trashHandlerInstances,
-			workflowHandlerInstances, preferencesValidatorInstances);
+			customAttributesDisplayInstances, permissionPropagatorInstances,
+			trashHandlerInstances, workflowHandlerInstances,
+			preferencesValidatorInstances);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -418,22 +415,6 @@ public class PortletBagFactory {
 		}
 
 		return customAttributesDisplayInstances;
-	}
-
-	protected List<DDMDisplay> newDDMDisplayInstances(Portlet portlet)
-		throws Exception {
-
-		ServiceTrackerList<DDMDisplay> ddmDisplayInstances =
-			getServiceTrackerList(DDMDisplay.class, portlet);
-
-		if (Validator.isNotNull(portlet.getDDMDisplayClass())) {
-			DDMDisplay ddmDisplayInstance = (DDMDisplay)newInstance(
-				DDMDisplay.class, portlet.getDDMDisplayClass());
-
-			ddmDisplayInstances.add(ddmDisplayInstance);
-		}
-
-		return ddmDisplayInstances;
 	}
 
 	protected FriendlyURLMapperTracker newFriendlyURLMappers(Portlet portlet)

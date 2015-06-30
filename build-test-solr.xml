@@ -77,6 +77,11 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 				</waitfor>
 
 				<fail message="Solr server failed to initialized." if="solr.server.not.started" />
+
+				<exec executable="/bin/bash" os="${os.unix}">
+					<arg value="-c" />
+					<arg value="${solr.dir}/bin/solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+				</exec>
 			</then>
 			<else>
 				<exec executable="cmd" spawn="true">
@@ -89,6 +94,11 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 				</waitfor>
 
 				<fail message="Solr server failed to initialized." if="solr.server.not.started" />
+
+				<exec executable="cmd" >
+					<arg value="/c" />
+					<arg value="${solr.dir}/bin/solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+				</exec>
 			</else>
 		</if>
 	</target>

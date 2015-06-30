@@ -7,6 +7,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
+	<bean id="com.liferay.portlet.myaccount.action.EditUserMVCActionCommand" class="com.liferay.portlet.myaccount.action.EditUserMVCActionCommand" />
 	<bean id="com.liferay.portlet.myaccount.action.EditUserMVCRenderCommand" class="com.liferay.portlet.myaccount.action.EditUserMVCRenderCommand" />
 	<bean id="com.liferay.portlet.myaccount.action.ViewMVCRenderCommand" class="com.liferay.portlet.myaccount.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.usersadmin.action.EditOrganizationAssignmentsMVCActionCommand" class="com.liferay.portlet.usersadmin.action.EditOrganizationAssignmentsMVCActionCommand" />

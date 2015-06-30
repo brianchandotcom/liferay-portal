@@ -31,6 +31,7 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
@@ -83,30 +84,42 @@ public class PermissionImporter {
 
 			role = RoleLocalServiceUtil.getTeamRole(
 				companyId, team.getTeamId());
+
+			return role;
 		}
-		else {
-			role = layoutCache.getRole(companyId, name);
-		}
+
+		String uuid = roleElement.attributeValue("uuid");
+
+		role = layoutCache.getRoleByUuid(companyId, uuid);
 
 		if (role == null) {
-			String title = roleElement.attributeValue("title");
-
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-				title);
-
-			String description = roleElement.attributeValue("description");
-
-			Map<Locale, String> descriptionMap =
-				LocalizationUtil.getLocalizationMap(description);
-
-			int type = GetterUtil.getInteger(
-				roleElement.attributeValue("type"));
-			String subtype = roleElement.attributeValue("subtype");
-
-			role = RoleLocalServiceUtil.addRole(
-				userId, null, 0, name, titleMap, descriptionMap, type, subtype,
-				null);
+			role = layoutCache.getRoleByName(companyId, name);
 		}
+
+		if (role != null) {
+			return role;
+		}
+
+		String title = roleElement.attributeValue("title");
+
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			title);
+
+		String description = roleElement.attributeValue("description");
+
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(description);
+
+		int type = GetterUtil.getInteger(roleElement.attributeValue("type"));
+		String subtype = roleElement.attributeValue("subtype");
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setUuid(uuid);
+
+		role = RoleLocalServiceUtil.addRole(
+			userId, null, 0, name, titleMap, descriptionMap, type, subtype,
+			serviceContext);
 
 		return role;
 	}

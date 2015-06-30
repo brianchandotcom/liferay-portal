@@ -74,6 +74,7 @@ public class PermissionExporter {
 
 			Element roleElement = permissionsElement.addElement("role");
 
+			roleElement.addAttribute("uuid", role.getUuid());
 			roleElement.addAttribute("name", role.getName());
 			roleElement.addAttribute("title", role.getTitle());
 			roleElement.addAttribute("description", role.getDescription());

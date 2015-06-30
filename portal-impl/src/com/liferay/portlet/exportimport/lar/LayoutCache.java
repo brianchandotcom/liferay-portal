@@ -81,16 +81,35 @@ public class LayoutCache {
 		return users;
 	}
 
-	protected Role getRole(long companyId, String roleName)
+	protected Role getRoleByName(long companyId, String roleName)
 		throws PortalException {
 
-		Role role = rolesMap.get(roleName);
+		Role role = nameRolesMap.get(roleName);
 
 		if (role == null) {
 			try {
 				role = RoleLocalServiceUtil.getRole(companyId, roleName);
 
-				rolesMap.put(roleName, role);
+				nameRolesMap.put(roleName, role);
+			}
+			catch (NoSuchRoleException nsre) {
+			}
+		}
+
+		return role;
+	}
+
+	protected Role getRoleByUuid(long companyId, String uuid)
+		throws PortalException {
+
+		Role role = uuidRolesMap.get(uuid);
+
+		if (role == null) {
+			try {
+				role = RoleLocalServiceUtil.getRoleByUuidAndCompanyId(
+					uuid, companyId);
+
+				uuidRolesMap.put(uuid, role);
 			}
 			catch (NoSuchRoleException nsre) {
 			}
@@ -113,7 +132,8 @@ public class LayoutCache {
 
 	protected Map<Long, List<Role>> groupRolesMap = new HashMap<>();
 	protected Map<Long, List<User>> groupUsersMap = new HashMap<>();
-	protected Map<String, Role> rolesMap = new HashMap<>();
+	protected Map<String, Role> nameRolesMap = new HashMap<>();
 	protected Map<Long, List<Role>> userRolesMap = new HashMap<>();
+	protected Map<String, Role> uuidRolesMap = new HashMap<>();
 
 }

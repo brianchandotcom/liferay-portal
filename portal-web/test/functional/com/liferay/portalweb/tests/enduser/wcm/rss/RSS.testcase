@@ -435,13 +435,13 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
-			<var name="sitePageName" value="Page2 Name" />
+			<var name="sitePageName" value="Site Page Name 2" />
 			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Page1 Name" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -451,7 +451,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Page2 Name" />
+			<var name="pageName" value="Site Page Name 2" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -477,7 +477,7 @@
 		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Page2 Name" />
+			<var name="pageName" value="Site Page Name 2" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -485,7 +485,7 @@
 		<var attribute="href" locator="PGAssetpublisher#RSS_LINK" name="rssFeedUrl" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Page1 Name" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -505,7 +505,7 @@
 		<execute macro="RSS#save" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Page1 Name" />
+			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>

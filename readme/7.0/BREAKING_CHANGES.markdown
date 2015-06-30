@@ -2036,3 +2036,69 @@ This change is part of a greater effort to provide mechanisms to extend and
 configure any editor in Liferay Portal in a coherent and extensible way.
 
 ---------------------------------------
+
+### Removed the liferay-ui:journal-article taglib
+- **Date:** 2015-Jun-29
+- **JIRA Ticket:** LPS-56383
+
+#### What changed?
+
+The `liferay-ui:journal-article` taglib was removed.
+
+#### Who is affected?
+
+This affects developers using the `liferay-ui:journal-article` tag.
+
+#### How should I update my code?
+
+Use the `liferay-ui:asset-display` taglib instead.
+
+Old code:
+    
+    <liferay-ui:journal-article
+        articleId="<%= article.getArticleId() %>"
+    />
+
+New code:
+
+    <liferay-ui:asset-display
+        className="<%= JournalArticleResource.class.getName() %>"
+        template="<%= article.getResourcePrimKey() %>"
+    />
+
+#### Why was this change made?
+
+The `liferay-ui:asset-display` is a generic way to display any type of asset.
+
+---------------------------------------
+
+### Java package names changed for portlets extracted as modules
+- **Date:** 2015-Jun-29
+- **JIRA Ticket:** LPS-56383 and others
+
+#### What changed?
+
+The java package names changed for those portlets that were extracted as OSGi
+modules in 7.0. Here follows the complete list:
+
+- com.liferay.portlet.bookmarks -> com.liferay.bookmarks
+- com.liferay.portlet.dynamicdatalists -> com.liferay.dynamicdatalists
+- com.liferay.portlet.journal -> com.liferay.journal
+- com.liferay.portlet.polls -> com.liferay.polls
+- com.liferay.portlet.wiki -> com.liferay.wiki
+
+#### Who is affected?
+
+This affects developers using the portlets API from their own plugins.
+
+#### How should I update my code?
+
+Update the package imports to use the new package names. Any literal usage of
+the portlet className should also be updated.
+
+#### Why was this change made?
+
+Package names have been adapted to the new condition of Liferay portlets as
+OSGi services.
+
+---------------------------------------

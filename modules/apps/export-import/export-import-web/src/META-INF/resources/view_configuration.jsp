@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-long exportImportConfigurationId = (Long)request.getAttribute(WebKeys.EXPORT_IMPORT_CONFIGURATION_ID);
+long exportImportConfigurationId = (Long)request.getAttribute(ExportImportWebKeys.EXPORT_IMPORT_CONFIGURATION_ID);
 
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 %>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -23,7 +23,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/export_import/import_layouts");
+portletURL.setParameter("mvcRenderCommandName", "importLayouts");
 portletURL.setParameter("tabs2", "current-and-previous");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
@@ -76,7 +76,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 		<liferay-ui:search-container-column-jsp
 			cssClass="background-task-status-column"
 			name="status"
-			path="/html/portlet/export_import/publish_process_message.jsp"
+			path="/publish_process_message.jsp"
 		/>
 
 		<liferay-ui:search-container-column-date
@@ -98,8 +98,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 				Date completionDate = backgroundTask.getCompletionDate();
 				%>
 
-				<portlet:actionURL var="deleteBackgroundTaskURL">
-					<portlet:param name="struts_action" value="/export_import/delete_background_task" />
+				<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTaskURL">
 					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 					<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 				</portlet:actionURL>
@@ -121,7 +120,7 @@ int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackground
 %>
 
 <div class="hide incomplete-process-message">
-	<liferay-util:include page="/html/portlet/export_import/incomplete_processes_message.jsp">
+	<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 	</liferay-util:include>
 </div>

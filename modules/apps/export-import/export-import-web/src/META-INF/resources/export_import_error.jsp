@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />
 <liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
@@ -28,7 +28,7 @@
 	<liferay-ui:message arguments="<%= lte.getMessage() %>" key="please-import-a-lar-file-of-the-correct-type-x-is-not-valid" />
 </liferay-ui:error>
 
-<liferay-ui:error exception="<%= ExportImportAction.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
+<liferay-ui:error exception="<%= ExportImportMVCActionCommand.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 
 <liferay-ui:error exception="<%= LocaleException.class %>">
 

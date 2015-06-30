@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -36,8 +36,8 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 %>
 
-<portlet:actionURL var="confirmedActionURL">
-	<portlet:param name="struts_action" value='<%= cmd.equals(Constants.EXPORT) ? "/export_import/edit_export_configuration" : "/export_import/edit_publish_configuration" %>' />
+<portlet:actionURL name='<%= cmd.equals(Constants.EXPORT) ? "editExportConfiguration" : "editPublishConfiguration" %>' var="confirmedActionURL">
+	<portlet:param name="mvcRenderCommandName" value='<%= cmd.equals(Constants.EXPORT) ? "editExportConfiguration" : "editPublishConfiguration" %>' />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
@@ -51,7 +51,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 	<div class="export-dialog-tree">
 		<ul class="lfr-tree list-unstyled">
 			<portlet:renderURL var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/export_import/publish_layouts" />
+				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 				<portlet:param name="tabs2" value="new-publication-process" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirectURL = ParamUtil.getString(request, "redirect");
@@ -73,8 +73,8 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 		<liferay-ui:message key="<%= Time.getRelativeTimeDescription(exportImportConfiguration.getCreateDate(), locale, timeZone) %>" />
 	</aui:fieldset>
 
-	<portlet:actionURL var="confirmedActionURL">
-		<portlet:param name="struts_action" value='<%= (cmd.equals(Constants.EXPORT) ? "/export_import/edit_export_configuration" : "/export_import/edit_publish_configuration") %>' />
+	<portlet:actionURL name='<%= (cmd.equals(Constants.EXPORT) ? "editExportConfiguration" : "editPublishConfiguration") %>' var="confirmedActionURL">
+		<portlet:param name="mvcPath" value='<%= (cmd.equals(Constants.EXPORT) ? "/export_layouts.jsp" : "/publish_layouts.jsp") %>' />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
 		<portlet:param name="redirect" value="<%= redirectURL %>" />
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />

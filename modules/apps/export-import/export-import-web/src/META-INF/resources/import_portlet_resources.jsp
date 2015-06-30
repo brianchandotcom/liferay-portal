@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -28,12 +28,12 @@ FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisp
 ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(themeDisplay.getUserId(), groupId, new HashMap<String, String[]>(), fileEntry);
 %>
 
-<portlet:actionURL var="importPortletActionURL">
-	<portlet:param name="struts_action" value="/export_import/export_import" />
+<portlet:actionURL name="exportImport" var="importPortletActionURL">
+	<portlet:param name="mvcRenderCommandName" value="exportImport" />
 </portlet:actionURL>
 
 <portlet:renderURL var="importPortletRenderURL">
-	<portlet:param name="struts_action" value="/export_import/export_import" />
+	<portlet:param name="mvcRenderCommandName" value="exportImport" />
 	<portlet:param name="tabs2" value="import" />
 	<portlet:param name="tabs3" value="current-and-previous" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
@@ -115,7 +115,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 														request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 														%>
 
-														<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+														<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 													</ul>
 												</aui:fieldset>
 											</li>
@@ -191,7 +191,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 																%>
 
 																<ul class="lfr-tree list-unstyled">
-																	<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+																	<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																</ul>
 															</c:if>
 														</aui:field-wrapper>
@@ -210,7 +210,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 																	<aui:field-wrapper label="content-metadata">
 																		<ul class="lfr-tree list-unstyled">
-																			<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+																			<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																		</ul>
 																	</aui:field-wrapper>
 
@@ -289,7 +289,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 			</c:if>
 
 			<portlet:renderURL var="importPortletURL">
-				<portlet:param name="struts_action" value="/export_import/export_import" />
+				<portlet:param name="mvcRenderCommandName" value="exportImport" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 				<portlet:param name="tabs2" value="import" />
 				<portlet:param name="portletResource" value="<%= String.valueOf(portletResource) %>" />

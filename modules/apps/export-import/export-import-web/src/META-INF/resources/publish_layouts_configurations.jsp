@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -25,7 +25,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/export_import/publish_layouts" />
+	<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
 	<portlet:param name="tabs2" value="new-publication-process" />
 	<portlet:param name="publishConfigurationButtons" value="saved" />
@@ -52,7 +52,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 				<portlet:renderURL var="addPublishConfigurationURL">
-					<portlet:param name="struts_action" value="/export_import/publish_layouts" />
+					<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
@@ -63,11 +63,18 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 				<aui:nav-item href="<%= addPublishConfigurationURL %>" iconCssClass="icon-plus" label="new" />
 			</aui:nav>
 
-			<aui:nav-bar-search file="/html/portlet/export_import/export_import_configuration_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+
+				<%
+				request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
+				%>
+
+				<liferay-util:include page="/export_import_configuration_search.jsp" servletContext="<%= application %>" />
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/export_import/export_import_configuration_search_results.jspf" %>
+			<%@ include file="/export_import_configuration_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
@@ -88,7 +95,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			</liferay-ui:search-container-column-text>
 
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/export_import/publish_layouts" />
+				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
@@ -114,7 +121,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/export_import/publish_configuration_actions.jsp"
+				path="/publish_configuration_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

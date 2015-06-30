@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -24,7 +24,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/export_import/export_layouts" />
+	<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 	<portlet:param name="tabs2" value="new-export-process" />
 	<portlet:param name="exportConfigurationButtons" value="saved" />
@@ -46,7 +46,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 				<portlet:renderURL var="addExportConfigurationURL">
-					<portlet:param name="struts_action" value="/export_import/export_layouts" />
+					<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
@@ -57,7 +57,14 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 				<aui:nav-item href="<%= addExportConfigurationURL %>" iconCssClass="icon-plus" label="new" />
 			</aui:nav>
 
-			<aui:nav-bar-search file="/html/portlet/export_import/export_import_configuration_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+
+				<%
+				request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
+				%>
+
+				<liferay-util:include page="/export_import_configuration_search.jsp" servletContext="<%= application %>" />
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
@@ -66,7 +73,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 			int exportImportConfigurationType = ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT;
 			%>
 
-			<%@ include file="/html/portlet/export_import/export_import_configuration_search_results.jspf" %>
+			<%@ include file="/export_import_configuration_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
@@ -87,7 +94,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 			</liferay-ui:search-container-column-text>
 
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/export_import/export_layouts" />
+				<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
@@ -115,7 +122,7 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/export_import/export_configuration_actions.jsp"
+				path="/export_configuration_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

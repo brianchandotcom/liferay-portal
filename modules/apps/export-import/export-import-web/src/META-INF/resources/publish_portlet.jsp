@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-staging:defineObjects />
 
@@ -70,7 +70,7 @@ PortletURL portletURL = currentURLObj;
 portletURL.setParameter("tabs3", "current-and-previous");
 %>
 
-<liferay-util:include page="/html/portlet/export_import/export_import_error.jsp" />
+<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test="<%= (themeDisplay.getURLPublishToLive() == null) && !layout.isTypeControlPanel() %>">
@@ -91,13 +91,13 @@ portletURL.setParameter("tabs3", "current-and-previous");
 				%>
 
 				<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-					<liferay-util:include page="/html/portlet/export_import/incomplete_processes_message.jsp">
+					<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
 						<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 					</liferay-util:include>
 				</div>
 
-				<portlet:actionURL var="publishPortletURL">
-					<portlet:param name="struts_action" value="/export_import/export_import" />
+				<portlet:actionURL name="exportImport" var="publishPortletURL">
+					<portlet:param name="mvcRenderCommandName" value="exportImport" />
 				</portlet:actionURL>
 
 				<aui:form action="<%= publishPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishToLive();" %>'>
@@ -137,7 +137,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																	request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 																	%>
 
-																	<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+																	<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																</ul>
 															</aui:fieldset>
 														</li>
@@ -347,7 +347,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																					%>
 
 																					<ul class="lfr-tree list-unstyled">
-																						<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+																						<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																					</ul>
 																				</c:if>
 																			</aui:field-wrapper>
@@ -366,7 +366,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 																						<aui:field-wrapper label="content-metadata">
 																							<ul class="lfr-tree list-unstyled">
-																								<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+																								<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																							</ul>
 																						</aui:field-wrapper>
 
@@ -437,7 +437,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								Map<String, String[]> parameterMap = Collections.emptyMap();
 								%>
 
-								<%@ include file="/html/portlet/export_import/permissions.jspf" %>
+								<%@ include file="/permissions.jspf" %>
 							</aui:fieldset>
 						</c:if>
 
@@ -452,14 +452,13 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 			<liferay-ui:section>
 				<div class="process-list" id="<portlet:namespace />publishProcesses">
-					<liferay-util:include page="/html/portlet/export_import/publish_portlet_processes.jsp" />
+					<liferay-util:include page="/publish_portlet_processes.jsp" servletContext="<%= application %>" />
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
 
 		<aui:script use="liferay-export-import">
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="publishProcessesURL">
-				<portlet:param name="struts_action" value="/export_import/export_import" />
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="publishProcessesURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />

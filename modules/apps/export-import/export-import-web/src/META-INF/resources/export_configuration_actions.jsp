@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -28,7 +28,7 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 %>
 
 <portlet:renderURL var="deleteRedirectURL">
-	<portlet:param name="struts_action" value="/export_import/export_layouts" />
+	<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 	<portlet:param name="tabs2" value="new-export-process" />
 	<portlet:param name="exportConfigurationButtons" value="saved" />
@@ -38,15 +38,15 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 </portlet:renderURL>
 
-<portlet:actionURL var="deleteExportConfigurationURL">
-	<portlet:param name="struts_action" value="/export_import/edit_export_configuration" />
+<portlet:actionURL name="editExportConfiguration" var="deleteExportConfigurationURL">
+	<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(liveGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 	<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 </portlet:actionURL>
 
 <portlet:renderURL var="exportRedirectURL">
-	<portlet:param name="struts_action" value="/export_import/export_layouts" />
+	<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 	<portlet:param name="tabs2" value="current-and-previous" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -56,7 +56,7 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 </portlet:renderURL>
 
 <portlet:renderURL var="exportByExportImportConfigurationURL">
-	<portlet:param name="struts_action" value="/export_import/confirmation" />
+	<portlet:param name="mvcRenderCommandName" value="confirmation" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 	<portlet:param name="redirect" value="<%= exportRedirectURL %>" />
 	<portlet:param name="backURL" value="<%= deleteRedirectURL %>" />

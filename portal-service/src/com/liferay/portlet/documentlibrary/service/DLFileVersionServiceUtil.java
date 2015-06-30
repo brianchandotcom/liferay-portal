@@ -73,6 +73,12 @@ public class DLFileVersionServiceUtil {
 		return getService().getLatestFileVersion(fileEntryId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestFileVersion(fileEntryId, excludeWorkingCopy);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

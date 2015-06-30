@@ -268,6 +268,40 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		return trashEntriesList;
 	}
 
+	@Override
+	public List<TrashEntry> getEntries(long groupId, String className)
+		throws PrincipalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		List<TrashEntry> entries = trashEntryPersistence.findByG_C(
+			groupId, classNameId);
+
+		List<TrashEntry> filteredEntries = new ArrayList<>();
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		for (TrashEntry entry : entries) {
+			long classPK = entry.getClassPK();
+
+			try {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(className);
+
+				if (trashHandler.hasTrashPermission(
+						permissionChecker, 0, classPK, ActionKeys.VIEW)) {
+
+					filteredEntries.add(entry);
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		return filteredEntries;
+	}
+
 	/**
 	 * Moves the trash entry with the entity class name and primary key,
 	 * restoring it to a new location identified by the destination container

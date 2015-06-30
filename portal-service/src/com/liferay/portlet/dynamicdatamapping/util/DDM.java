@@ -24,6 +24,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -51,6 +52,11 @@ public interface DDM {
 
 	public JSONArray getDDMFormFieldsJSONArray(
 		DDMStructureVersion ddmStructureVersion, String script);
+
+	public DDMFormValues getDDMFormValues(
+			DDMStructure ddmStructure, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public DDMPermissionHandler getDDMPermissionHandler(long classNameId);
 

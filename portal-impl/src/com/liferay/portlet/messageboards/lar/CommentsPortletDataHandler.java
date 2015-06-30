@@ -93,19 +93,19 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(MBPermission.RESOURCE_NAME);
-
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "comments")) {
-			ActionableDynamicQuery commentActionableDynamicQuery =
-				getCommentActionableDynamicQuery(portletDataContext);
-
-			commentActionableDynamicQuery.performActions();
+		if (!portletDataContext.getBooleanParameter(NAMESPACE, "comments")) {
+			return getExportDataRootElementString(rootElement);
 		}
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getCommentActionableDynamicQuery(portletDataContext);
+
+		actionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -128,20 +128,20 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery commentActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			getCommentActionableDynamicQuery(portletDataContext);
 
-		commentActionableDynamicQuery.performCount();
+		actionableDynamicQuery.performCount();
 	}
 
 	protected ActionableDynamicQuery getCommentActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
 
-		final ExportActionableDynamicQuery commentActionableDynamicQuery =
+		final ExportActionableDynamicQuery actionableDynamicQuery =
 			MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		commentActionableDynamicQuery.setAddCriteriaMethod(
+		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -198,7 +198,7 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 
 			});
 
-		return commentActionableDynamicQuery;
+		return actionableDynamicQuery;
 	}
 
 	private class ImportCommentsCallable implements Callable<Void> {
@@ -212,19 +212,20 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			_portletDataContext.importPortletPermissions(
 				MBPermission.RESOURCE_NAME);
 
-			if (_portletDataContext.getBooleanParameter(
+			if (!_portletDataContext.getBooleanParameter(
 					NAMESPACE, "comments")) {
 
-				Element messagesElement =
-					_portletDataContext.getImportDataGroupElement(
-						MBMessage.class);
+				return null;
+			}
 
-				List<Element> messageElements = messagesElement.elements();
+			Element messagesElement =
+				_portletDataContext.getImportDataGroupElement(MBMessage.class);
 
-				for (Element messageElement : messageElements) {
-					StagedModelDataHandlerUtil.importStagedModel(
-						_portletDataContext, messageElement);
-				}
+			List<Element> messageElements = messagesElement.elements();
+
+			for (Element messageElement : messageElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					_portletDataContext, messageElement);
 			}
 
 			return null;

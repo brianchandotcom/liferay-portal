@@ -47,6 +47,10 @@
 writeURL=http://localhost:8983/solr/liferay</echo>
 	</target>
 
+	<target name="delete-elasticseach-osgi-bundle">
+		<delete file="${liferay.home}/osgi/com.liferay.portal.search.elasticsearch.jar" failonerror="false" />
+	</target>
+
 	<target name="prepare-solr-web-properties">
 		<if>
 			<available file="${lp.plugins.dir}/shared/solr4-shared/src/solr.properties" />
@@ -67,6 +71,8 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 		<unzip-solr />
 
 		<prepare-solr />
+
+		<antcall target="delete-elasticseach-osgi-bundle" />
 
 		<ant dir="modules/portal/portal-search-solr" target="all" />
 

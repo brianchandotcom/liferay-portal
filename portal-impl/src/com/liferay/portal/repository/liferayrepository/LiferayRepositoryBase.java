@@ -41,9 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,11 +159,8 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 						ddmStructure.getStructureId());
 
 			if (ddmFormValues == null) {
-				Fields fields = DDMUtil.getFields(
-					ddmStructure.getStructureId(), namespace, serviceContext);
-
-				ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
-					ddmStructure, fields);
+				ddmFormValues = DDMUtil.getDDMFormValues(
+					ddmStructure, namespace, serviceContext);
 			}
 
 			ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);

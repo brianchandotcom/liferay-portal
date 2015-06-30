@@ -826,7 +826,6 @@
 	<bean id="com.liferay.portlet.blogs.service.permission.BlogsPermission" class="com.liferay.portlet.blogs.service.permission.BlogsPermission" />
 	<bean id="com.liferay.portlet.blogs.util.BlogsIndexer" class="com.liferay.portlet.blogs.util.BlogsIndexer" />
 	<bean id="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" class="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" />
-	<bean id="com.liferay.portlet.calendar.util.CalIndexer" class="com.liferay.portlet.calendar.util.CalIndexer" />
 	<bean id="com.liferay.portlet.directory.asset.UserAssetRendererFactory" class="com.liferay.portlet.directory.asset.UserAssetRendererFactory" />
 	<bean id="com.liferay.portlet.directory.util.DirectoryOpenSearchImpl" class="com.liferay.portlet.directory.util.DirectoryOpenSearchImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">

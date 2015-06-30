@@ -229,12 +229,6 @@
 			<forward name="portlet.dockbar.view" path="portlet.dockbar.view" />
 		</action>
 
-		<!-- Document Library -->
-
-		<action path="/document_library/edit_file_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
-		</action>
-
 		<!-- Export Import -->
 
 		<action path="/export_import/confirmation" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">

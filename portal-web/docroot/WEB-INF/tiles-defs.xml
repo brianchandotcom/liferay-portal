@@ -220,14 +220,6 @@
 
 	<definition name="portlet.dockbar.view" path="/portlet/dockbar/view.jsp" />
 
-	<!-- Document Library -->
-
-	<definition name="portlet.document_library" extends="portlet" />
-
-	<definition name="portlet.document_library.error" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/error.jsp" />
-	</definition>
-
 	<!-- Export Import -->
 
 	<definition name="portlet.export_import" extends="portlet" />

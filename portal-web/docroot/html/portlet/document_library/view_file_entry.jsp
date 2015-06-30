@@ -245,9 +245,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
 					<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
-						<portlet:actionURL name="/document_library/edit_file_entry_discussion" var="discussionURL" />
+						<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
-						<portlet:resourceURL id="/document_library/edit_file_entry_discussion" var="discussionPaginationURL" />
+						<portlet:resourceURL id="invokeTaglibDiscussionPagination" var="discussionPaginationURL" />
 
 						<liferay-ui:discussion
 							className="<%= DLFileEntryConstants.getClassName() %>"

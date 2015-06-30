@@ -43,7 +43,7 @@ poshiRunner {
 		poshiProperty "test.skip.tear.down", project.properties["testSkipTearDown"]
 	}
 
-	version = "1.0.5"
+	version = "1.0.6"
 }
 
 repositories {

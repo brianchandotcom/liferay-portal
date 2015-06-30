@@ -135,7 +135,7 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="SiteTemplates#viewSiteTemplatePage">
+		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
 			<var name="pageName" value="Page1 Name" />
 		</execute>
 
@@ -607,7 +607,7 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="SiteTemplates#viewSiteTemplatePage">
+		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
 			<var name="pageName" value="Added Page Name" />
 		</execute>
 

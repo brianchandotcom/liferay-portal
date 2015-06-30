@@ -25,12 +25,18 @@
 		</if>
 	</command>
 
+	<command name="addPageTitle">
+		<execute function="Type#mouseOverFocusType" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+	</command>
+
 	<command name="addPageToSiteTemplates">
 		<execute macro="SiteTemplatesNavigator#gotoManageSiteTemplates">
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 
-		<execute macro="PageNavigator#gotoAddPage">
+		<execute macro="SitePageNavigator#gotoAddPage" />
+
+		<execute macro="Page#addPageTitle">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

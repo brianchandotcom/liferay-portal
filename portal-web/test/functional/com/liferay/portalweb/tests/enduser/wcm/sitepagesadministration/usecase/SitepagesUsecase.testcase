@@ -272,7 +272,9 @@
 			<var name="portletName" value="Site Pages" />
 		</execute>
 
-		<execute macro="PageNavigator#gotoAddPage">
+		<execute macro="SitePageNavigator#gotoAddPage" />
+
+		<execute macro="Page#addPageTitle">
 			<var name="pageName" value="Page Name" />
 		</execute>
 

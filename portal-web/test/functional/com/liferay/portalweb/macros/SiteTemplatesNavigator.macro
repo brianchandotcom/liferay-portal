@@ -9,5 +9,9 @@
 
 	<command name="gotoSiteTemplatesPage">
 		<execute function="AssertClick" locator1="SitePages#SITE_PAGES_LINK" value1="Site Pages" />
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</command>
 </definition>

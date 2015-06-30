@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,6 +43,26 @@ import org.gradle.api.Project;
  * @author Andrea Di Giorgi
  */
 public class FileUtil {
+
+	public static void concatenate(
+			File destinationFile, Iterable<File> sourceFiles)
+		throws IOException {
+
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				destinationFile);
+			FileChannel destinationChannel = fileOutputStream.getChannel()) {
+
+			for (File sourceFile : sourceFiles) {
+				try (FileInputStream fileInputStream = new FileInputStream(
+						sourceFile);
+					FileChannel sourceChannel = fileInputStream.getChannel()) {
+
+					sourceChannel.transferTo(
+						0, sourceChannel.size(), destinationChannel);
+				}
+			}
+		}
+	}
 
 	public static boolean exists(Project project, String fileName) {
 		File file = project.file(fileName);

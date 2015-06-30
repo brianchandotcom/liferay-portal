@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/aui/button/init.jsp" %>
 
 <c:if test="<%= dropdown %>">
-	<div class="btn-group" id="<%= id %>BtnGroup">
+	<div class="btn-group lfr-icon-menu" id="<%= id %>BtnGroup">
 </c:if>
 
 <c:choose>
@@ -85,20 +85,13 @@
 </c:choose>
 
 <c:if test="<%= dropdown %>">
-		<ul class="dropdown-menu" role="menu">
+		<ul class="direction-down dropdown-menu lfr-menu-list" role="menu">
 			<%= bodyContentString %>
 		</ul>
 	</div>
 
-	<aui:script use="aui-dropdown">
-		new A.Dropdown(
-			{
-				boundingBox: '#<%= id %>BtnGroup',
-				contentBox: '#<%= id %>BtnGroup',
-				render: true,
-				trigger: '#<%= id %>'
-			}
-		);
+	<aui:script use="liferay-menu">
+		Liferay.Menu.register('<%= id %>');
 	</aui:script>
 </c:if>
 

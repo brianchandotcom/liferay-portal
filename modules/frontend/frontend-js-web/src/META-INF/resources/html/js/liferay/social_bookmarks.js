@@ -25,12 +25,14 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var portletBody = instance.get('contentBox').ancestor('.portlet-body');
+						var contentBox = instance.get('contentBox');
 
-						var id = portletBody.guid();
+						var dropdownMenu = contentBox.one('.dropdown-menu');
+
+						var id = dropdownMenu.guid();
 
 						if (!SocialBookmarks.registered[id]) {
-							portletBody.delegate(
+							dropdownMenu.delegate(
 								'click',
 								function(event) {
 									event.preventDefault();

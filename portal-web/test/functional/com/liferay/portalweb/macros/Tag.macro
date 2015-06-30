@@ -58,10 +58,6 @@
 				<execute function="AssertClick" locator1="CPTagsAdd#SAVE_BUTTON" value1="Save" />
 
 				<execute function="AssertTextEquals" locator1="CPTags#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-				<var name="key_tagName" value="${tagName}" />
-
-				<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 			</else>
 		</if>
 	</command>

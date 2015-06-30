@@ -42,6 +42,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Zsolt Balogh
  */
+@Deprecated
 public class CalEventFinderImpl
 	extends BasePersistenceImpl<CalEvent> implements CalEventFinder {
 

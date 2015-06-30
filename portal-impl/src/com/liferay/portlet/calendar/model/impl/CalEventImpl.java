@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Brian Wing Shun Chan
  */
+@Deprecated
 public class CalEventImpl extends CalEventBaseImpl {
 
 	@Override

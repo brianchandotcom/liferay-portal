@@ -130,6 +130,7 @@ import net.fortuna.ical4j.model.property.XProperty;
  * @author Brett Swaim
  * @author Mate Thurzo
  */
+@Deprecated
 public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)

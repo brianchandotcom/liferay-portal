@@ -16,8 +16,8 @@ package com.liferay.dynamic.data.lists.web.template;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.util.DDLConstants;
+import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationKeys;
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationUtil;
-import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationValues;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -114,7 +114,7 @@ public class DDLDisplayTemplateTransformer {
 		}
 
 		private static final Transformer _transformer = new Transformer(
-			DDLWebConfigurationValues.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true) {
+			DDLWebConfigurationKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true) {
 
 			@Override
 			protected String getErrorTemplateId(

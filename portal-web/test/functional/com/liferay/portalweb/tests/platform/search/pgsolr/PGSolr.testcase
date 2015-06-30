@@ -81,12 +81,6 @@
 			<var name="searchAssetType2" value="Message Boards Message" />
 		</execute>
 
-		<!-- Verify Liferay is using Solr search engine by asserting the Solr log information (essentially a query string) in the console output -->
-
-		<execute macro="Solr#viewSolrLogsInConsole">
-			<var name="searchTerm" value="Apple" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Solr Page" />
 		</execute>
@@ -100,12 +94,6 @@
 			<var name="searchAssetTitle2" value="Apple" />
 			<var name="searchAssetType1" value="Document" />
 			<var name="searchAssetType2" value="Message Boards Message" />
-		</execute>
-
-		<!-- Verify Liferay is using Solr search engine by asserting the Solr log information (essentially a query string) in the console output -->
-
-		<execute macro="Solr#viewSolrLogsInConsole">
-			<var name="searchTerm" value="Orange" />
 		</execute>
 	</command>
 </definition>

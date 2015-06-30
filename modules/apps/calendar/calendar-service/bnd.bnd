@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.calendar.model.impl,\
 	com.liferay.calendar.notification.impl,\
 	com.liferay.calendar.service.configuration,\
+	com.liferay.calendar.service.configuration.configurator,\
 	com.liferay.calendar.service.permission,\
 	com.liferay.calendar.upgrade.*,\
 	com.liferay.calendar.util,\

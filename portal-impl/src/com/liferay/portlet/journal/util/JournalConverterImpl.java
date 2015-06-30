@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -55,6 +56,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Marcellus Tavares
@@ -351,27 +354,18 @@ public class JournalConverterImpl implements JournalConverter {
 
 	protected Serializable getDocumentLibraryValue(String url) {
 		try {
-			int x = url.indexOf("/documents/");
+			FileEntry fileEntry = null;
 
-			if (x == -1) {
+			if (url.contains("/documents/")) {
+				fileEntry = getFileEntryByDocumentLibraryURL(url);
+			}
+			else if (url.contains("/image/image_gallery?")) {
+				fileEntry = getFileEntryByImageGalleryURL(url);
+			}
+
+			if (fileEntry == null) {
 				return StringPool.BLANK;
 			}
-
-			int y = url.indexOf(StringPool.QUESTION);
-
-			if (y == -1) {
-				y = url.length();
-			}
-
-			url = url.substring(x, y);
-
-			String[] parts = StringUtil.split(url, CharPool.SLASH);
-
-			long groupId = GetterUtil.getLong(parts[2]);
-
-			FileEntry fileEntry =
-				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					parts[5], groupId);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -524,6 +518,41 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return serializable;
+	}
+
+	protected FileEntry getFileEntryByDocumentLibraryURL(String url)
+		throws PortalException {
+
+		int x = url.indexOf("/documents/");
+		int y = url.indexOf(StringPool.QUESTION);
+
+		if (y == -1) {
+			y = url.length();
+		}
+
+		url = url.substring(x, y);
+
+		String[] parts = StringUtil.split(url, CharPool.SLASH);
+
+		long groupId = GetterUtil.getLong(parts[2]);
+
+		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			parts[5], groupId);
+	}
+
+	protected FileEntry getFileEntryByImageGalleryURL(String url)
+		throws PortalException {
+
+		Matcher matcher = _imageGalleryURLPattern.matcher(url);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		long groupId = GetterUtil.getLong(matcher.group(2));
+
+		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			matcher.group(1), groupId);
 	}
 
 	protected void getJournalMetadataElement(Element metadataElement) {
@@ -1007,6 +1036,8 @@ public class JournalConverterImpl implements JournalConverter {
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;
+	private final Pattern _imageGalleryURLPattern = Pattern.compile(
+		"uuid=([^&]+)&groupId=([^&]+)");
 	private final Map<String, String> _journalTypesToDDMTypes;
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/blogs/init.jsp" %>
+<%@ include file="/blogs/init.jsp" %>
 
 <%
 blogsPortletInstanceSettings = BlogsPortletInstanceSettings.getInstance(layout, portletId, request.getParameterMap());
@@ -42,7 +42,7 @@ blogsPortletInstanceSettings = BlogsPortletInstanceSettings.getInstance(layout, 
 	>
 
 		<liferay-ui:section>
-			<%@ include file="/html/portlet/blogs/display_settings.jspf" %>
+			<%@ include file="/blogs/display_settings.jspf" %>
 		</liferay-ui:section>
 
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">

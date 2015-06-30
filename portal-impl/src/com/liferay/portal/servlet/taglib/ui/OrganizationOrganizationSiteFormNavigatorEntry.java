@@ -39,19 +39,6 @@ public class OrganizationOrganizationSiteFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, Organization organization) {
-		if (organization != null) {
-			Group group = organization.getGroup();
-
-			if (group.isSite()) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	@Override
 	protected String getJspPath() {
 		return "/html/portlet/users_admin/organization/organization_site.jsp";
 	}

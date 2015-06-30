@@ -197,6 +197,8 @@ public class ElasticsearchFixture {
 		embeddedElasticsearchConnection.activate(
 			_elasticsearchConfigurationProperties);
 
+		embeddedElasticsearchConnection.connect();
+
 		return embeddedElasticsearchConnection;
 	}
 

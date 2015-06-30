@@ -44,7 +44,7 @@ public class Cluster2InstancesTest {
 
 		createIndex(elasticsearchFixture0);
 
-		ClusterAssert.assert1PrimaryShardOnly(elasticsearchFixture0);
+		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture0);
 
 		ElasticsearchFixture elasticsearchFixture1 = _testCluster.getNode(1);
 

@@ -42,6 +42,13 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 )
 public class ElasticsearchConnectionManager {
 
+	public void connect() {
+		ElasticsearchConnection elasticsearchConnection =
+			getElasticsearchConnection();
+
+		elasticsearchConnection.connect();
+	}
+
 	public AdminClient getAdminClient() {
 		Client client = getClient();
 

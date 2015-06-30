@@ -34,7 +34,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 	<c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
 		<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>'>
 			<portlet:renderURL var="viewUsersURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
 				<portlet:param name="sitesListView" value="<%= usersListView %>" />
 			</portlet:renderURL>
 

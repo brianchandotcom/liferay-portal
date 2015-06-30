@@ -581,8 +581,4 @@
 	<definition name="portlet.users_admin.select_user_group" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/select_user_group.jsp" />
 	</definition>
-
-	<definition name="portlet.users_admin.view" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/view.jsp" />
-	</definition>
 </tiles-definitions>

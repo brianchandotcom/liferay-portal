@@ -26,8 +26,6 @@ import com.liferay.portal.service.ReleaseLocalService;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,10 +60,6 @@ public class JournalServiceUpgrade {
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

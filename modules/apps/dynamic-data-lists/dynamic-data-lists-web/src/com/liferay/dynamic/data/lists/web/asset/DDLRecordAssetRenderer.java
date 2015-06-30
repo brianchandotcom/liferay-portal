@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.web.constants.DDLWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,8 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.asset.model.DDMFormValuesReader;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -117,7 +117,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 		portletURL.setParameter(
@@ -181,9 +181,9 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
 			portletRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_LISTS_RECORD, _record);
+				DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _record);
 			portletRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _recordVersion);
+				DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _recordVersion);
 
 			return "/asset/full_content.jsp";
 		}

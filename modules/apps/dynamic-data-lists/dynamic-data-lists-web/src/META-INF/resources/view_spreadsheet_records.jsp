@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 boolean editable = ParamUtil.getBoolean(request, "editable", true);
 
-if (editable || portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
-	editable = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD) && DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
+if (editable || portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
+	editable = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD) && DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
 }
 
 DDMStructure ddmStructure = recordSet.getDDMStructure();
@@ -116,7 +116,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	<%
 	int status = WorkflowConstants.STATUS_APPROVED;
 
-	if (DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.ADD_RECORD)) {
+	if (DDLRecordSetPermission.contains(permissionChecker, recordSet, DDLActionKeys.ADD_RECORD)) {
 		status = WorkflowConstants.STATUS_ANY;
 	}
 

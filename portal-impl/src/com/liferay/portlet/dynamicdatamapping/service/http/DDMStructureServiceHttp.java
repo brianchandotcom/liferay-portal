@@ -62,6 +62,7 @@ public class DDMStructureServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
 		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		java.lang.String storageType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -70,7 +71,7 @@ public class DDMStructureServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					groupId, classNameId, nameMap, descriptionMap, ddmForm,
-					ddmFormLayout, serviceContext);
+					ddmFormLayout, storageType, serviceContext);
 
 			Object returnObj = null;
 
@@ -967,6 +968,7 @@ public class DDMStructureServiceHttp {
 			java.util.Map.class,
 			com.liferay.portlet.dynamicdatamapping.model.DDMForm.class,
 			com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout.class,
+			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addStructureParameterTypes1 = new Class[] {

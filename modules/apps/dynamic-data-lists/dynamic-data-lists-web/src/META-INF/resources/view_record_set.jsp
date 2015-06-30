@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
 
@@ -49,7 +49,7 @@ boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 </c:choose>
 
 <%
-if (portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
+if (portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
 	PortalUtil.setPageSubtitle(recordSet.getName(locale), request);
 	PortalUtil.setPageDescription(recordSet.getDescription(locale), request);
 }

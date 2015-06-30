@@ -34,6 +34,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
@@ -89,7 +90,7 @@ public class DDMWebDavUtil {
 			DDMStructureLocalServiceUtil.addStructure(
 				webDavRequest.getUserId(), webDavRequest.getGroupId(),
 				classNameId, nameMap, null, ddmForm, ddmFormLayout,
-				serviceContext);
+				StorageType.JSON.toString(), serviceContext);
 
 			return HttpServletResponse.SC_CREATED;
 		}

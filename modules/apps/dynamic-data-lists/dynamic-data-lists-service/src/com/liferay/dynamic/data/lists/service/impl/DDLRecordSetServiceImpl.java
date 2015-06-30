@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.service.impl;
 
+import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetServiceBaseImpl;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
@@ -44,7 +45,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 		throws PortalException {
 
 		DDLPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_RECORD_SET);
+			getPermissionChecker(), groupId, DDLActionKeys.ADD_RECORD_SET);
 
 		return ddlRecordSetLocalService.addRecordSet(
 			getUserId(), groupId, ddmStructureId, recordSetKey, nameMap,

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.context;
 
+import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.form.web.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -203,7 +204,7 @@ public class DDLFormAdminDisplayContext {
 		return DDLPermission.contains(
 			_ddlFormAdminRequestHelper.getPermissionChecker(),
 			_ddlFormAdminRequestHelper.getScopeGroupId(),
-			ActionKeys.ADD_RECORD_SET);
+			DDLActionKeys.ADD_RECORD_SET);
 	}
 
 	public boolean isShowDeleteRecordSetIcon(DDLRecordSet recordSet) {

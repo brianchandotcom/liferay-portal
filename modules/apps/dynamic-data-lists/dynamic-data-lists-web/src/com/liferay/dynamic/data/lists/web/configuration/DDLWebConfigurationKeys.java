@@ -14,16 +14,15 @@
 
 package com.liferay.dynamic.data.lists.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-
 /**
  * @author Rafael Praxedes
  */
-public class DDLWebConfigurationValues {
+public class DDLWebConfigurationKeys {
+
+	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE =
+		"dynamic.data.lists.error.template";
 
 	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE =
-		GetterUtil.getString(
-			DDLWebConfigurationUtil.get(
-				DDLWebConfigurationKeys.DYNAMIC_DATA_LISTS_STORAGE_TYPE));
+		"dynamic.data.lists.storage.type";
 
 }

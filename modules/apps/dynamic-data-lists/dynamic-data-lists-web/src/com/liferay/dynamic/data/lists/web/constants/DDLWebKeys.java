@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.configuration;
-
-import com.liferay.portal.kernel.util.GetterUtil;
+package com.liferay.dynamic.data.lists.web.constants;
 
 /**
  * @author Rafael Praxedes
  */
-public class DDLWebConfigurationValues {
+public class DDLWebKeys {
 
-	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE =
-		GetterUtil.getString(
-			DDLWebConfigurationUtil.get(
-				DDLWebConfigurationKeys.DYNAMIC_DATA_LISTS_STORAGE_TYPE));
+	public static final String DYNAMIC_DATA_LISTS_RECORD =
+		"DYNAMIC_DATA_LISTS_RECORD";
+
+	public static final String DYNAMIC_DATA_LISTS_RECORD_SET =
+		"DYNAMIC_DATA_LISTS_RECORD_SET";
+
+	public static final String DYNAMIC_DATA_LISTS_RECORD_VERSION =
+		"DYNAMIC_DATA_LISTS_RECORD_VERSION";
 
 }

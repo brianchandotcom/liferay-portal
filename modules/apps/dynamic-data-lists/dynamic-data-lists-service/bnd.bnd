@@ -2,6 +2,7 @@ Bundle-Name: Liferay Dynamic Data Lists Service
 Bundle-SymbolicName: com.liferay.dynamic.data.lists.service
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.dynamic.data.lists.constants,\
 	com.liferay.dynamic.data.lists.exporter.impl,\
 	com.liferay.dynamic.data.lists.indexer,\
 	com.liferay.dynamic.data.lists.lar,\

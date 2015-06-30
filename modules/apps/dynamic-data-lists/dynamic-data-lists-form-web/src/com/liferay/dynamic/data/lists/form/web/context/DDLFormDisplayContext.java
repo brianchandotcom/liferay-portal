@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.context;
 
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
@@ -59,7 +60,7 @@ public class DDLFormDisplayContext {
 		}
 
 		_recordSet = (DDLRecordSet)_renderRequest.getAttribute(
-			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+			DDLFormWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 		if (_recordSet != null) {
 			return _recordSet;

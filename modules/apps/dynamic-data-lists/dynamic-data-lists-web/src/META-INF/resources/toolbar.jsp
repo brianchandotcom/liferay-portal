@@ -24,7 +24,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
+		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
 			<portlet:renderURL var="addRecordSetURL">
 				<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -41,7 +41,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
+<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
 	<aui:script>
 		AUI.$('#<portlet:namespace />manageDDMStructuresLink').on(
 			'click',

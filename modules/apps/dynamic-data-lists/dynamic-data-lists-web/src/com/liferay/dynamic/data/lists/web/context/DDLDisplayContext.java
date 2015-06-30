@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.lists.web.context;
 
+import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.web.constants.DDLWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -122,7 +124,7 @@ public class DDLDisplayContext {
 		}
 
 		_recordSet = (DDLRecordSet)_renderRequest.getAttribute(
-			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 		if (_recordSet != null) {
 			return _recordSet;
@@ -174,7 +176,7 @@ public class DDLDisplayContext {
 
 		_hasAddRecordSetPermission = DDLPermission.contains(
 			getPermissionChecker(), getScopeGroupId(), getPortletId(),
-			ActionKeys.ADD_RECORD_SET);
+			DDLActionKeys.ADD_RECORD_SET);
 
 		return _hasAddRecordSetPermission;
 	}
@@ -206,7 +208,7 @@ public class DDLDisplayContext {
 
 		_hasEditDisplayDDMTemplatePermission = DDMTemplatePermission.contains(
 			getPermissionChecker(), getScopeGroupId(),
-			getDisplayDDMTemplateId(), PortletKeys.DYNAMIC_DATA_LISTS,
+			getDisplayDDMTemplateId(), DDLPortletKeys.DYNAMIC_DATA_LISTS,
 			ActionKeys.UPDATE);
 
 		return _hasEditDisplayDDMTemplatePermission;
@@ -225,7 +227,7 @@ public class DDLDisplayContext {
 
 		_hasEditFormDDMTemplatePermission = DDMTemplatePermission.contains(
 			getPermissionChecker(), getScopeGroupId(), getFormDDMTemplateId(),
-			PortletKeys.DYNAMIC_DATA_LISTS, ActionKeys.UPDATE);
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, ActionKeys.UPDATE);
 
 		return _hasEditFormDDMTemplatePermission;
 	}

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.portlet;
 
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -200,7 +201,7 @@ public class DDLFormPortlet extends MVCPortlet {
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
 		renderRequest.setAttribute(
-			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+			DDLFormWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 
 		String ddmFormHTML = getDDMFormHTML(
 			renderRequest, renderResponse, recordSet.getDDMStructure());

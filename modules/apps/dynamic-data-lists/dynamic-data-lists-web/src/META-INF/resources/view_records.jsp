@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
@@ -28,10 +28,10 @@ boolean hasDeletePermission = false;
 boolean hasUpdatePermission = false;
 boolean showAddRecordButton = false;
 
-if (editable || portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
+if (editable || portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
 	hasDeletePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.DELETE);
 	hasUpdatePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
-	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD);
+	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD);
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();

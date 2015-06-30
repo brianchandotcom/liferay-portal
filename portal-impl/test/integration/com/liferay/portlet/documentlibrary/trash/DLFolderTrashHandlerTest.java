@@ -33,6 +33,8 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
+import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -47,7 +49,9 @@ import org.junit.Test;
  */
 @Sync
 public class DLFolderTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsIndexableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
+		WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -59,24 +63,6 @@ public class DLFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testAddBaseModelWithDraftStatus() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashAndDeleteWithDraftStatus() throws Exception {
 	}
 
@@ -84,6 +70,12 @@ public class DLFolderTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
 	}
 
 	@Ignore
@@ -128,12 +120,6 @@ public class DLFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashRecentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
 	}
 
@@ -141,6 +127,13 @@ public class DLFolderTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndDeleteIsNotFound()
+		throws Exception {
 	}
 
 	@Ignore
@@ -172,7 +165,28 @@ public class DLFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore

@@ -27,6 +27,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiNode;
@@ -48,7 +49,8 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class WikiPageTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsIndexableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenIsAssetableBaseModel, WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -74,23 +76,6 @@ public class WikiPageTrashHandlerTest
 		PortalRunMode.setTestMode(_testMode);
 	}
 
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatus() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
-	}
-
 	@Ignore
 	@Override
 	@Test
@@ -101,6 +86,12 @@ public class WikiPageTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
 	}
 
 	@Ignore
@@ -179,19 +170,27 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashGrandparentBaseModelAndRestoreParentModelIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashGrandparentBaseModelAndRestoreParentModelIsVisible()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashGrandparentBaseModelIsNotVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashIsRestorableBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashMoveBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashMoveBaseModelIndexable() throws Exception {
 	}
 
 	@Ignore
@@ -203,7 +202,32 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashRecentBaseModel() throws Exception {
+	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentAndRestoreIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentWithBaseModelIsInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentWithBaseModelIsIsNotVisible() throws Exception {
 	}
 
 	@Ignore
@@ -215,7 +239,28 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore

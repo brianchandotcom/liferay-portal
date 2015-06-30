@@ -50,6 +50,9 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
+import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
+import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -68,7 +71,9 @@ import org.junit.Test;
  */
 @Sync
 public class DLFileEntryTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsIndexableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
+		WhenIsAssetableParentModel, WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -76,6 +81,13 @@ public class DLFileEntryTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public int getRecentBaseModelsCount(long groupId) throws Exception {
+		return DLAppServiceUtil.getGroupFileEntriesCount(
+			groupId, 0, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
+			WorkflowConstants.STATUS_APPROVED);
+	}
 
 	@Test
 	public void testFileNameUpdateWhenUpdatingTitle() throws Exception {
@@ -121,7 +133,28 @@ public class DLFileEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore
@@ -263,13 +296,6 @@ public class DLFileEntryTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return DLFolder.class;
-	}
-
-	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		return DLAppServiceUtil.getGroupFileEntriesCount(
-			groupId, 0, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
-			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

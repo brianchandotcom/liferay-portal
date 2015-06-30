@@ -41,6 +41,8 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
+import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 
 import java.io.InputStream;
@@ -60,7 +62,9 @@ import org.junit.Test;
  */
 @Sync
 public class MBThreadTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsIndexableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
+		WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -69,22 +73,14 @@ public class MBThreadTrashHandlerTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Ignore
 	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatus() throws Exception {
-	}
+	public int getRecentBaseModelsCount(long groupId) throws Exception {
+		Calendar calendar = Calendar.getInstance();
 
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
-	}
+		calendar.add(Calendar.HOUR, -1);
 
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
+		return MBThreadServiceUtil.getGroupThreadsCount(
+			groupId, 0, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Test
@@ -133,6 +129,12 @@ public class MBThreadTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
 	}
 
 	@Ignore
@@ -189,6 +191,13 @@ public class MBThreadTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionBaseModelAndDeleteIsNotFound()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
 	}
 
@@ -215,7 +224,28 @@ public class MBThreadTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore
@@ -334,16 +364,6 @@ public class MBThreadTrashHandlerTest
 	}
 
 	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.add(Calendar.HOUR, -1);
-
-		return MBThreadServiceUtil.getGroupThreadsCount(
-			groupId, 0, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
-	}
-
-	@Override
 	protected String getSearchKeywords() {
 		return _SUBJECT;
 	}
@@ -351,11 +371,6 @@ public class MBThreadTrashHandlerTest
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected boolean isAssetableParentModel() {
-		return false;
 	}
 
 	@Override

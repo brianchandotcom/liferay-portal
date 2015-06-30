@@ -71,6 +71,12 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashAndRestoreWithDraftStatus() throws Exception {
 	}
 
@@ -130,6 +136,13 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashBaseModelAndParentAndDeleteParentNoMoveableFromTrash()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashBaseModelAndParentAndRestoreModel() throws Exception {
 	}
 
@@ -137,6 +150,13 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashBaseModelAndParentAndRestoreModelIsVisible()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashBaseModelAndParentIsInContainerBaseModel()
 		throws Exception {
 	}
 
@@ -163,6 +183,12 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashBaseModelIsInTrashContainer() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashBaseModelWithParentIsRestorable() throws Exception {
 	}
 
@@ -182,19 +208,27 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashGrandparentBaseModelAndRestoreParentModelIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashGrandparentBaseModelAndRestoreParentModelIsVisible()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashGrandparentBaseModelIsNotVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashIsRestorableBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashMoveBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashMoveBaseModelIndexable() throws Exception {
 	}
 
 	@Ignore
@@ -224,7 +258,38 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testTrashRecentBaseModel() throws Exception {
+	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentAndRestoreIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentIsNotVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentWithBaseModelIsInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentWithBaseModelIsIsNotVisible() throws Exception {
 	}
 
 	@Ignore
@@ -237,6 +302,13 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndDeleteIsNotFound()
+		throws Exception {
 	}
 
 	@Ignore
@@ -268,7 +340,28 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore
@@ -334,11 +427,6 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 		WikiNode node = (WikiNode)baseModel;
 
 		return TrashUtil.getOriginalTitle(node.getName());
-	}
-
-	@Override
-	protected boolean isAssetableModel() {
-		return false;
 	}
 
 	@Override

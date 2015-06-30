@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -53,7 +54,8 @@ import org.junit.Test;
  * @author Eudaldo Alonso
  */
 @Sync
-public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class DLFileShortcutTrashHandlerTest
+	extends BaseTrashHandlerTestCase implements WhenIsAssetableParentModel {
 
 	@ClassRule
 	@Rule
@@ -72,6 +74,12 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
 	}
 
 	@Ignore
@@ -127,12 +135,6 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testTrashRecentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
 	}
 
@@ -140,6 +142,13 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndDeleteIsNotFound()
+		throws Exception {
 	}
 
 	@Ignore
@@ -171,7 +180,28 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore
@@ -288,11 +318,6 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected boolean isAssetableModel() {
-		return false;
 	}
 
 	@Override

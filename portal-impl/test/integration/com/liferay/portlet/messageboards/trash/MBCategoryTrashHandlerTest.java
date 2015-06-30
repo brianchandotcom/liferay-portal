@@ -64,6 +64,12 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashAndRestoreWithDraftStatus() throws Exception {
 	}
 
@@ -109,12 +115,6 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testTrashRecentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
 	}
 
@@ -122,6 +122,13 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndDeleteIsNotFound()
+		throws Exception {
 	}
 
 	@Ignore
@@ -153,7 +160,28 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore
@@ -258,16 +286,6 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected boolean isAssetableModel() {
-		return false;
-	}
-
-	@Override
-	protected boolean isAssetableParentModel() {
-		return false;
 	}
 
 	@Override

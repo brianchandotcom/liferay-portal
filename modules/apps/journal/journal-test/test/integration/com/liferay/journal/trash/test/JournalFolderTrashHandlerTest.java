@@ -34,6 +34,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
+import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -51,7 +53,9 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class JournalFolderTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsIndexableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
+		WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -80,24 +84,6 @@ public class JournalFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testAddBaseModelWithDraftStatus() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashAndDeleteWithDraftStatus() throws Exception {
 	}
 
@@ -105,6 +91,12 @@ public class JournalFolderTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
 	}
 
 	@Ignore
@@ -149,12 +141,6 @@ public class JournalFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashRecentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
 	}
 
@@ -162,6 +148,13 @@ public class JournalFolderTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndDeleteIsNotFound()
+		throws Exception {
 	}
 
 	@Ignore
@@ -193,7 +186,28 @@ public class JournalFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore

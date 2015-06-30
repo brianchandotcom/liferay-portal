@@ -38,6 +38,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
+import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
+import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 
 import org.junit.After;
@@ -54,7 +57,9 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class BookmarksEntryTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsIndexableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
+		WhenIsAssetableParentModel, WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -62,6 +67,11 @@ public class BookmarksEntryTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public int getRecentBaseModelsCount(long groupId) throws Exception {
+		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, 0);
+	}
 
 	@Before
 	@Override
@@ -83,24 +93,6 @@ public class BookmarksEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testAddBaseModelWithDraftStatus() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashAndDeleteWithDraftStatus() throws Exception {
 	}
 
@@ -108,6 +100,12 @@ public class BookmarksEntryTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
 	}
 
 	@Ignore
@@ -164,6 +162,13 @@ public class BookmarksEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionBaseModelAndDeleteIsNotFound()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
 	}
 
@@ -190,7 +195,28 @@ public class BookmarksEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore
@@ -308,11 +334,6 @@ public class BookmarksEntryTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return BookmarksFolder.class;
-	}
-
-	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, 0);
 	}
 
 	@Override

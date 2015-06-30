@@ -51,6 +51,9 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
+import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
+import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -72,7 +75,9 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class JournalArticleTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsIndexableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
+		WhenIsAssetableParentModel, WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -80,6 +85,12 @@ public class JournalArticleTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public int getRecentBaseModelsCount(long groupId) throws Exception {
+		return JournalArticleServiceUtil.getGroupArticlesCount(
+			groupId, 0, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
 
 	@Before
 	@Override
@@ -296,12 +307,6 @@ public class JournalArticleTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return JournalFolder.class;
-	}
-
-	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		return JournalArticleServiceUtil.getGroupArticlesCount(
-			groupId, 0, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override

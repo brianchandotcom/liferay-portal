@@ -270,11 +270,11 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 	protected ActionableDynamicQuery getMessageActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
 
-		final ExportActionableDynamicQuery messageActionableDynamicQuery =
+		final ExportActionableDynamicQuery actionableDynamicQuery =
 			MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		messageActionableDynamicQuery.setAddCriteriaMethod(
+		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -301,12 +301,12 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 					dynamicQuery.add(classNameIdProperty.eq(0L));
 
-					Property workflowStatusProperty =
-						PropertyFactoryUtil.forName("status");
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
 
 					if (portletDataContext.isInitialPublication()) {
 						dynamicQuery.add(
-							workflowStatusProperty.ne(
+							statusProperty.ne(
 								WorkflowConstants.STATUS_IN_TRASH));
 					}
 					else {
@@ -316,7 +316,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 									MBMessage.class.getName());
 
 						dynamicQuery.add(
-							workflowStatusProperty.in(
+							statusProperty.in(
 								stagedModelDataHandler.
 									getExportableStatuses()));
 					}
@@ -324,7 +324,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 			});
 
-		return messageActionableDynamicQuery;
+		return actionableDynamicQuery;
 	}
 
 }

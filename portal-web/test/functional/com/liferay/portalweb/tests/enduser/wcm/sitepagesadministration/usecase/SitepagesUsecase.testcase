@@ -266,10 +266,19 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute macro="Page#addPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="Page#gotoAdmin">
+			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_PAGES" />
+			<var name="portletCategoryName" value="Pages" />
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoAddPage" />
+
+		<execute macro="Page#addPageTitle">
 			<var name="pageName" value="Page Name" />
 		</execute>
+
+		<execute macro="Page#saveAddPage" />
 
 		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
 

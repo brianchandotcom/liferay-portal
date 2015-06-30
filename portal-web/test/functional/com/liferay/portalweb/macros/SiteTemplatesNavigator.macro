@@ -1,0 +1,17 @@
+<definition>
+	<command name="gotoManageSiteTemplates">
+		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+
+		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" />
+	</command>
+
+	<command name="gotoSiteTemplatesPage">
+		<execute function="AssertClick" locator1="SitePages#SITE_PAGES_LINK" value1="Site Pages" />
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+</definition>

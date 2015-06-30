@@ -130,12 +130,12 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute macro="SiteTemplates#gotoViewPages">
+		<execute macro="Page#addPageToSiteTemplates">
+			<var name="pageName" value="Page1 Name" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="Page#addPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
 			<var name="pageName" value="Page1 Name" />
 		</execute>
 
@@ -144,11 +144,13 @@
 			<var name="portletName" value="Hello World" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
 
-		<execute macro="Page#addPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="Page#addPageToSiteTemplates">
 			<var name="pageName" value="Page2 Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -157,6 +159,7 @@
 
 		<execute macro="Site#addSiteTemplateCP">
 			<var name="siteName" value="Site Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -320,6 +323,7 @@
 		</execute>
 
 		<execute macro="UserGroup#viewPG">
+			<var name="portletName" value="Message Boards" />
 			<var name="siteName" value="UG UserGroup Name" />
 			<var name="sitePageName" value="home" />
 			<var name="userGroupName" value="UG UserGroup Name" />
@@ -594,15 +598,16 @@
 			<var name="portletName" value="Dictionary" />
 		</execute>
 
-		<execute function="Refresh" />
-
-		<execute macro="Page#addPG">
-			<var name="defaultURL" value="false" />
-			<var name="pageName" value="Added Page Name" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="defaultURL" value="false" />
+		<execute macro="Page#addPageToSiteTemplates">
+			<var name="pageName" value="Added Page Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
 			<var name="pageName" value="Added Page Name" />
 		</execute>
 

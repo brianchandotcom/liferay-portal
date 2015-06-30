@@ -121,12 +121,16 @@
 
 											<%
 											for (Portlet categoryPortlet : categoryPortlets) {
+												if (Validator.equals(categoryPortlet.getControlPanelEntryClass(), com.liferay.portlet.OmniadminControlPanelEntry.class.getName())) {
+													continue;
+												}
+
 												editPermissionsResourceURL.setParameter("portletResource", categoryPortlet.getPortletId());
 
 												editPermissionsURL.setParameter("portletResource", categoryPortlet.getPortletId());
 
 												data.put("resource-href", editPermissionsResourceURL.toString());
-											%>
+												%>
 
 												<li class="permission-navigation-item-container">
 													<span class='permission-navigation-item <%= portletResource.equals(categoryPortlet.getPortletId())? "selected" : "" %>'>

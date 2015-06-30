@@ -327,11 +327,6 @@
 
 		<!-- My Account -->
 
-		<action path="/my_account/edit_user" type="com.liferay.portlet.myaccount.action.EditUserAction">
-			<forward name="portlet.users_admin.edit_user" path="portlet.users_admin.edit_user" />
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
 		<action path="/my_account/edit_user_details" forward="portlet.users_admin.edit_user_details" />
 
 		<!-- News -->

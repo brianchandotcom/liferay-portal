@@ -7,6 +7,20 @@ CKEDITOR.dialog.add(
 
 		var PLUGIN = CKEDITOR.plugins.link;
 
+		var handleAddress = function(val) {
+			var address = val.toString().trim();
+
+			if (address.startsWith('/')) {
+				return address;
+			}
+
+			if (address.indexOf('://') === -1) {
+				address = 'http://' + address;
+			}
+
+			return address;
+		}
+
 		var parseLink = function(editor, element) {
 			var instance = this;
 
@@ -53,9 +67,7 @@ CKEDITOR.dialog.add(
 
 										var address = val;
 
-										if (val.indexOf('www.') === 0) {
-											address = 'http://' + val;
-										}
+										address = handleAddress(address);
 
 										data.address = address;
 										data.text = val;

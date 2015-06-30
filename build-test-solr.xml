@@ -5,8 +5,12 @@
 
 	<macrodef name="prepare-solr">
 		<sequential>
-			<copy overwrite="true" todir="${solr.dir}/example/solr/collection1/conf">
-				<fileset dir="${lp.plugins.dir}/webs/solr4-web/docroot/WEB-INF/conf/">
+			<copy overwrite="true" todir="${solr.dir}/server/solr/liferay/conf">
+				<fileset dir="${solr.dir}/server/solr/configsets/data_driven_schema_configs/conf">
+					<exclude name="solrconfig.xml" />
+				</fileset>
+
+				<fileset dir="modules/portal/portal-search-solr/src/META-INF/resources">
 					<include name="schema.xml" />
 					<include name="solrconfig.xml" />
 				</fileset>

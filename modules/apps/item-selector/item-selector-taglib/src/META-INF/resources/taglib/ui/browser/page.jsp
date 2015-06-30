@@ -25,6 +25,7 @@ ItemSelectorReturnType draggableFileReturnType = (ItemSelectorReturnType)request
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-ui:item-selector-browser:existingFileEntryReturnType");
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:itemSelectedEventName"));
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
+PortletURL searchURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:searchURL");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
 %>
@@ -39,6 +40,17 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 					displayStyles='<%= new String[] {"descriptive", "list"} %>'
 				/>
 			</aui:nav>
+
+			<c:if test="<%= searchURL != null %>">
+				<aui:nav-bar-search>
+					<div class="form-search">
+						<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+							<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
+							<liferay-ui:input-search />
+						</aui:form>
+					</div>
+				</aui:nav-bar-search>
+			</c:if>
 		</aui:nav-bar>
 	</c:if>
 

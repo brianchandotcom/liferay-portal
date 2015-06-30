@@ -5985,6 +5985,10 @@ public class PortalImpl implements Portal {
 		return company.getDefaultUser();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void invokeTaglibDiscussion(
 			PortletConfig portletConfig, ActionRequest actionRequest,
@@ -5995,6 +5999,10 @@ public class PortalImpl implements Portal {
 			null, null, portletConfig, actionRequest, actionResponse);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void invokeTaglibDiscussionPagination(
 			PortletConfig portletConfig, ResourceRequest resourceRequest,

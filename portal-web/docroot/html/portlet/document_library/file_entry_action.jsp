@@ -55,7 +55,7 @@ if (row != null) {
 	}
 }
 else {
-	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		if (request.getAttribute("search.jsp-fileEntry") != null) {
 			fileEntry = (FileEntry)request.getAttribute("search.jsp-fileEntry");
 		}

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 
@@ -64,7 +65,8 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 	protected PortletConfig getPortletConfig(PortletRequest portletRequest) {
 		String portletId = PortalUtil.getPortletId(portletRequest);
 
-		return PortletConfigFactoryUtil.get(portletId);
+		return PortletConfigFactoryUtil.get(
+			PortletConstants.getRootPortletId(portletId));
 	}
 
 	protected void hideDefaultErrorMessage(PortletRequest portletRequest) {

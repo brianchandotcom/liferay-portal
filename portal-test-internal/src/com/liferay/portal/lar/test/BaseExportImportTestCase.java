@@ -17,7 +17,9 @@ package com.liferay.portal.lar.test;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedModel;
@@ -34,6 +36,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 
 /**
@@ -155,6 +158,28 @@ public class BaseExportImportTestCase {
 		throws PortalException {
 
 		return stagedModel.getUuid();
+	}
+
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		Assert.assertTrue(
+			String.valueOf(stagedModel.getCreateDate()) + StringPool.SPACE +
+				importedStagedModel.getCreateDate(),
+			DateUtil.equals(
+				stagedModel.getCreateDate(),
+				importedStagedModel.getCreateDate(), true));
+
+		Assert.assertTrue(
+			String.valueOf(stagedModel.getModifiedDate()) + StringPool.SPACE +
+				importedStagedModel.getModifiedDate(),
+			DateUtil.equals(
+				stagedModel.getModifiedDate(),
+				importedStagedModel.getModifiedDate(), true));
+
+		Assert.assertEquals(
+			stagedModel.getUuid(), importedStagedModel.getUuid());
 	}
 
 	@DeleteAfterTestRun

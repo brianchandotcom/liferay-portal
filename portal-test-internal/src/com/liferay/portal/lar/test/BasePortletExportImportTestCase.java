@@ -265,6 +265,103 @@ public abstract class BasePortletExportImportTestCase
 		Assert.assertNotNull(importedStagedModel);
 	}
 
+	@Test
+	public void testVersioning() throws Exception {
+		if (!isVersioningEnabled()) {
+			return;
+		}
+
+		StagedModel stagedModel = addStagedModel(group.getGroupId());
+
+		addVersion(stagedModel);
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+	}
+
+	@Test
+	public void testVersioning2() throws Exception {
+		if (!isVersioningEnabled()) {
+			return;
+		}
+
+		StagedModel stagedModel = addStagedModel(group.getGroupId());
+
+		Thread.currentThread().sleep(4000);
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+
+		addVersion(stagedModel);
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+	}
+
+	@Test
+	public void testVersioningDeleteFirst() throws Exception {
+		if (!isVersioningEnabled()) {
+			return;
+		}
+
+		StagedModel stagedModel = addStagedModel(group.getGroupId());
+
+		stagedModel = addVersion(stagedModel);
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+
+		deleteFirstVersion(stagedModel);
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+	}
+
+	@Test
+	public void testVersioningDeleteLatest() throws Exception {
+		if (!isVersioningEnabled()) {
+			return;
+		}
+
+		StagedModel stagedModel = addStagedModel(group.getGroupId());
+
+		stagedModel = addVersion(stagedModel);
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+
+		deleteLatestVersion(stagedModel);
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+	}
+
+	@Test
+	public void testVersioningExportImportTwice() throws Exception {
+		if (!isVersioningEnabled()) {
+			return;
+		}
+
+		StagedModel stagedModel = addStagedModel(group.getGroupId());
+
+		addVersion(stagedModel);
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+
+		exportImportPortlet(getPortletId());
+
+		validateVersions();
+	}
+
 	protected AssetLink addAssetLink(
 			StagedModel sourceStagedModel, StagedModel targetStagedModel,
 			int weight)
@@ -282,6 +379,18 @@ public abstract class BasePortletExportImportTestCase
 		Map<String, String[]> parameterMap, String name, boolean value) {
 
 		addParameter(parameterMap, getNamespace(), name, value);
+	}
+
+	protected StagedModel addVersion(StagedModel stagedModel) throws Exception {
+		return null;
+	}
+
+	protected void deleteFirstVersion(StagedModel stagedModel)
+		throws Exception {
+	}
+
+	protected void deleteLatestVersion(StagedModel stagedModel)
+		throws Exception {
 	}
 
 	protected void exportImportPortlet(String portletId) throws Exception {
@@ -371,6 +480,10 @@ public abstract class BasePortletExportImportTestCase
 		exportImportPortlet(portletId);
 
 		return LayoutTestUtil.getPortletPreferences(importedLayout, portletId);
+	}
+
+	protected boolean isVersioningEnabled() {
+		return false;
 	}
 
 	protected void testExportImportAvailableLocales(
@@ -544,6 +657,9 @@ public abstract class BasePortletExportImportTestCase
 		}
 
 		Assert.assertEquals(0, importedAssetLinks.size());
+	}
+
+	protected void validateVersions() throws Exception {
 	}
 
 }

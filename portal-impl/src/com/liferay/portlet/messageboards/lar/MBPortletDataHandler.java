@@ -15,11 +15,21 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
@@ -139,8 +149,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			categoryActionableDynamicQuery.performActions();
 
 			ActionableDynamicQuery messageActionableDynamicQuery =
-				MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
-					portletDataContext);
+				getMessageActionableDynamicQuery(portletDataContext);
 
 			messageActionableDynamicQuery.performActions();
 		}
@@ -241,8 +250,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		categoryActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery messageActionableDynamicQuery =
-			MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+			getMessageActionableDynamicQuery(portletDataContext);
 
 		messageActionableDynamicQuery.performCount();
 
@@ -257,6 +265,66 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		threadFlagActionableDynamicQuery.performCount();
+	}
+
+	protected ActionableDynamicQuery getMessageActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery actionableDynamicQuery =
+			MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Criterion modifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria("modifiedDate");
+					Criterion statusDateCriterion =
+						portletDataContext.getDateRangeCriteria("statusDate");
+
+					if ((modifiedDateCriterion != null) &&
+						(statusDateCriterion != null)) {
+
+						Disjunction disjunction =
+							RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(modifiedDateCriterion);
+						disjunction.add(statusDateCriterion);
+
+						dynamicQuery.add(disjunction);
+					}
+
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					dynamicQuery.add(classNameIdProperty.eq(0L));
+
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
+
+					if (portletDataContext.isInitialPublication()) {
+						dynamicQuery.add(
+							statusProperty.ne(
+								WorkflowConstants.STATUS_IN_TRASH));
+					}
+					else {
+						StagedModelDataHandler<?> stagedModelDataHandler =
+							StagedModelDataHandlerRegistryUtil.
+								getStagedModelDataHandler(
+									MBMessage.class.getName());
+
+						dynamicQuery.add(
+							statusProperty.in(
+								stagedModelDataHandler.
+									getExportableStatuses()));
+					}
+				}
+
+			});
+
+		return actionableDynamicQuery;
 	}
 
 }

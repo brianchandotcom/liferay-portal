@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/blogs/init.jsp" %>
+<%@ include file="/blogs/init.jsp" %>
 
 <%
 int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
@@ -26,7 +26,7 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 %>
 
 <liferay-util:html-top outputKey="blogs_common_main_css">
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/html/portlet/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext(request) + "/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <c:if test="<%= entry.isSmallImage() %>">

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/blogs_aggregator/init.jsp" %>
+<%@ include file="/blogs_aggregator/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -46,7 +46,7 @@ List results = ListUtil.subList(entries, searchContainer.getStart(), searchConta
 searchContainer.setResults(results);
 %>
 
-<%@ include file="/html/portlet/blogs_aggregator/view_entries.jspf" %>
+<%@ include file="/blogs_aggregator/view_entries.jspf" %>
 
 <c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 	<aui:script>

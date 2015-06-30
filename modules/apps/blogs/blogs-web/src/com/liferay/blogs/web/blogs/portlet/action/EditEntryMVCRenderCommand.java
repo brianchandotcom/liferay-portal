@@ -36,7 +36,7 @@ public class EditEntryMVCRenderCommand extends GetEntryMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/blogs/edit_entry.jsp";
+		return "/blogs/edit_entry.jsp";
 	}
 
 }

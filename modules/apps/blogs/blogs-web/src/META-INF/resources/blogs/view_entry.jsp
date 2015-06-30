@@ -14,14 +14,14 @@
  */
 --%>
 
-<%@ include file="/html/portlet/blogs/init.jsp" %>
+<%@ include file="/blogs/init.jsp" %>
 
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-if (Validator.isNull(redirect) || (mvcRenderCommandName.equals("/blogs/view_entry") && !portletId.equals(PortletKeys.BLOGS))) {
+if (Validator.isNull(redirect) || (mvcRenderCommandName.equals("/blogs/view_entry") && !portletId.equals(BlogsPortletKeys.BLOGS))) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	if (portletId.equals(PortletKeys.BLOGS_ADMIN)) {
@@ -70,7 +70,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="entryId" type="hidden" value="<%= String.valueOf(entryId) %>" />
 
-	<liferay-util:include page="/html/portlet/blogs/view_entry_content.jsp" />
+	<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
 </aui:form>
 
 <c:if test="<%= !portletId.equals(PortletKeys.BLOGS_ADMIN) && PropsValues.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">

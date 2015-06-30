@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/blogs/init.jsp" %>
+<%@ include file="/blogs_admin/init.jsp" %>
 
 <%
 blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId, request.getParameterMap());

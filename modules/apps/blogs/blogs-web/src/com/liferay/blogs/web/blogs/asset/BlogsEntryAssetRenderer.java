@@ -94,7 +94,7 @@ public class BlogsEntryAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			return "/html/portlet/blogs/asset/" + template + ".jsp";
+			return "/blogs/asset/" + template + ".jsp";
 		}
 		else {
 			return null;

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/blogs/init.jsp" %>
+<%@ include file="/blogs/init.jsp" %>
 
 <%
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
@@ -34,7 +34,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 />
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/html/portlet/blogs/search.jsp" />
+	<portlet:param name="mvcPath" value="/blogs/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm1">
@@ -70,5 +70,5 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	searchContainer.setResults(results);
 	%>
 
-	<%@ include file="/html/portlet/blogs/view_entries.jspf" %>
+	<%@ include file="/blogs/view_entries.jspf" %>
 </aui:form>

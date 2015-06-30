@@ -107,7 +107,7 @@ contextObjects.put("blogsPortletInstanceSettings", blogsPortletInstanceSettings)
 		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	%>
 
-	<liferay-util:include page="/html/portlet/blogs/view_entry_content.jsp" />
+	<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
 
 	<c:if test="<%= index < searchContainer.getTotal() %>">
 		<div class="separator"><!-- --></div>

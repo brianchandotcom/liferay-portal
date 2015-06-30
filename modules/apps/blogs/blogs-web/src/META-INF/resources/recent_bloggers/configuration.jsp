@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/recent_bloggers/init.jsp" %>
+<%@ include file="/recent_bloggers/init.jsp" %>
 
 <%
 String organizationName = StringPool.BLANK;

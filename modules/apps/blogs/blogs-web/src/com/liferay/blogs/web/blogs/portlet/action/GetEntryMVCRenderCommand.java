@@ -65,7 +65,7 @@ public abstract class GetEntryMVCRenderCommand implements MVCRenderCommand {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/blogs/error.jsp";
+				return "/blogs/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
@@ -76,7 +76,7 @@ public abstract class GetEntryMVCRenderCommand implements MVCRenderCommand {
 		String assetCategoryName = ParamUtil.getString(renderRequest, "tag");
 
 		if ((assetCategoryId > 0) || Validator.isNotNull(assetCategoryName)) {
-			return "/html/portlet/blogs/view.jsp";
+			return "/blogs/view.jsp";
 		}
 
 		return getPath();

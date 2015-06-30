@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/blogs/init.jsp" %>
+<%@ include file="/blogs/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -56,7 +56,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 </c:if>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL">
-	<portlet:param name="mvcPath" value="/html/portlet/blogs/edit_entry.jsp" />
+	<portlet:param name="mvcPath" value="/blogs/edit_entry.jsp" />
 </portlet:actionURL>
 
 <div class="edit-entry">

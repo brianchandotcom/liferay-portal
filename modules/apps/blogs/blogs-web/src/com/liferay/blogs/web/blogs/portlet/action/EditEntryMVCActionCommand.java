@@ -330,7 +330,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionRequest.setAttribute(
-					MVCPortlet.MVC_PATH, "/html/portlet/blogs/error.jsp");
+					MVCPortlet.MVC_PATH, "/blogs/error.jsp");
 			}
 			else if (e instanceof EntryContentException ||
 					 e instanceof EntryDescriptionException ||
@@ -363,8 +363,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable t) {
 			_log.error(t, t);
 
-			actionRequest.setAttribute(
-				MVCPortlet.MVC_PATH, "/html/portlet/blogs/error.jsp");
+			actionRequest.setAttribute(MVCPortlet.MVC_PATH, "/blogs/error.jsp");
 		}
 	}
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/recent_bloggers/init.jsp" %>
+<%@ include file="/recent_bloggers/init.jsp" %>
 
 <%
 List statsUsers = null;
@@ -98,7 +98,7 @@ else {
 
 						// User display
 
-						row.addJSP("/html/portlet/recent_bloggers/user_display.jsp");
+						row.addJSP("/recent_bloggers/user_display.jsp", application, request, response);
 					}
 
 					// Add result row

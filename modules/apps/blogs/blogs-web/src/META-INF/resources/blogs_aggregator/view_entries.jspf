@@ -33,7 +33,7 @@
 			}
 		%>
 
-			<%@ include file="/html/portlet/blogs_aggregator/view_entry_content.jspf" %>
+			<%@ include file="/blogs_aggregator/view_entry_content.jspf" %>
 
 		<%
 		}

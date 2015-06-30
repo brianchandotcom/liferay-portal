@@ -14,11 +14,54 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page import="com.liferay.portlet.blogs.service.BlogsEntryServiceUtil" %><%@
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.RSSUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.portal.model.Group" %><%@
+page import="com.liferay.portal.model.Organization" %><%@
+page import="com.liferay.portal.model.User" %><%@
+page import="com.liferay.portal.model.UserConstants" %><%@
+page import="com.liferay.portal.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.OrganizationLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
+page import="com.liferay.portlet.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" %><%@
 page import="com.liferay.portlet.blogs.util.BlogsUtil" %>
+
+<%@ page import="java.text.Format" %>
+
+<%@ page import="java.util.Date" %><%@
+page import="java.util.List" %>
+
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
+
+<portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 String selectionMethod = portletPreferences.getValue("selectionMethod", "users");
@@ -39,8 +82,9 @@ if (organizationId == 0) {
 		organizationId = group.getOrganizationId();
 	}
 }
+WindowState windowState = liferayPortletRequest.getWindowState();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<%@ include file="/html/portlet/blogs_aggregator/init-ext.jsp" %>
+<%@ include file="/blogs_aggregator/init-ext.jsp" %>

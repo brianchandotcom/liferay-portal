@@ -1,11 +1,11 @@
 ;(function() {
-	var PATH_PORTLET = Liferay.AUI.getPortletRootPath();
+	var PATH_BLOGS_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferayblogsweb';
 
 	AUI().applyConfig(
 		{
 			groups: {
 				blogs: {
-					base: PATH_PORTLET + '/blogs/js/',
+					base: PATH_BLOGS_WEB + '/blogs/js/',
 					modules: {
 						'liferay-blogs': {
 							path: 'blogs.js',
@@ -16,7 +16,7 @@
 							]
 						}
 					},
-					root: PATH_PORTLET + '/blogs/js/'
+					root: PATH_BLOGS_WEB + '/blogs/js/'
 				}
 			}
 		}

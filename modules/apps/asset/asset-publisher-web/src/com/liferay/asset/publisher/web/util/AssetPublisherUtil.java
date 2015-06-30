@@ -620,6 +620,8 @@ public class AssetPublisherUtil {
 			allAssetCategoryIds = overrideAllAssetCategoryIds;
 		}
 
+		allAssetCategoryIds = _checkAssetCategories(allAssetCategoryIds);
+
 		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
 
 		if (overrideAllAssetTagNames != null) {
@@ -1302,6 +1304,26 @@ public class AssetPublisherUtil {
 		AssetEntryQueryProcessor assetEntryQueryProcessor) {
 
 		_assetEntryQueryProcessors.remove(assetEntryQueryProcessor);
+	}
+
+	private static long[] _checkAssetCategories(long[] assetCategoryIds) {
+		List<Long> assetCategoryIdsList = new ArrayList<>();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			AssetCategory category =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					assetCategoryId);
+
+			if (category == null) {
+				continue;
+			}
+
+			assetCategoryIdsList.add(assetCategoryId);
+		}
+
+		return ArrayUtil.toArray(
+			assetCategoryIdsList.toArray(
+				new Long[assetCategoryIdsList.size()]));
 	}
 
 	private static void _checkAssetEntries(

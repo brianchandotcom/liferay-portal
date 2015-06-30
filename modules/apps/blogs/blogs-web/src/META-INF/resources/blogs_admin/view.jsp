@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/blogs_admin/init.jsp" %>
+<%@ include file="/blogs_admin/init.jsp" %>
 
 <%
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
@@ -34,7 +34,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 />
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/html/portlet/blogs/search.jsp" />
+	<portlet:param name="mvcPath" value="/blogs/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL.toString() %>" method="get" name="fm">
@@ -43,7 +43,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteEntryIds" type="hidden" />
 
-	<liferay-util:include page="/html/portlet/blogs_admin/toolbar.jsp" />
+	<liferay-util:include page="/blogs_admin/toolbar.jsp" servletContext="<%= application %>" />
 
 	<liferay-ui:categorization-filter
 		assetType="entries"
@@ -60,7 +60,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 		%>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/blogs_admin/entry_search_results.jspf" %>
+			<%@ include file="/blogs_admin/entry_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
@@ -76,12 +76,12 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 				<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 			</liferay-portlet:renderURL>
 
-			<%@ include file="/html/portlet/blogs_admin/search_columns.jspf" %>
+			<%@ include file="/blogs_admin/search_columns.jspf" %>
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/blogs_admin/entry_action.jsp"
+				path="/blogs_admin/entry_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

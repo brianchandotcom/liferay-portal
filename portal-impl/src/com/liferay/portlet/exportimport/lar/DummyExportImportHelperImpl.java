@@ -87,9 +87,7 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
-	public Layout getExportableLayout(ThemeDisplay themeDisplay)
-		throws PortalException {
-
+	public Layout getExportableLayout(ThemeDisplay themeDisplay) {
 		return new LayoutImpl();
 	}
 
@@ -188,9 +186,7 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
-	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
-		throws PortalException {
-
+	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest) {
 		return Collections.<Long, Boolean>emptyMap();
 	}
 
@@ -200,31 +196,25 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
-	public long[] getLayoutIds(Map<Long, Boolean> layoutIdMap)
-		throws PortalException {
-
+	public long[] getLayoutIds(Map<Long, Boolean> layoutIdMap) {
 		return new long[0];
 	}
 
 	@Override
 	public long[] getLayoutIds(
-			Map<Long, Boolean> layoutIdMap, long targetGroupId)
-		throws PortalException {
+		Map<Long, Boolean> layoutIdMap, long targetGroupId) {
 
 		return new long[0];
 	}
 
 	@Override
-	public long[] getLayoutIds(PortletRequest portletRequest)
-		throws PortalException {
-
+	public long[] getLayoutIds(PortletRequest portletRequest) {
 		return new long[0];
 	}
 
 	@Override
 	public long[] getLayoutIds(
-			PortletRequest portletRequest, long targetGroupId)
-		throws PortalException {
+		PortletRequest portletRequest, long targetGroupId) {
 
 		return new long[0];
 	}
@@ -266,17 +256,16 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
-	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
-		throws PortalException {
+	public List<Layout> getMissingParentLayouts(
+		Layout layout, long liveGroupId) {
 
 		return Collections.<Layout>emptyList();
 	}
 
 	@Override
 	public long getModelDeletionCount(
-			PortletDataContext portletDataContext,
-			StagedModelType stagedModelType)
-		throws PortalException {
+		PortletDataContext portletDataContext,
+		StagedModelType stagedModelType) {
 
 		return 0L;
 	}

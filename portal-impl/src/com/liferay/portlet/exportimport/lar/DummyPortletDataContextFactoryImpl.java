@@ -16,7 +16,6 @@ package com.liferay.portlet.exportimport.lar;
 
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -63,34 +62,30 @@ public class DummyPortletDataContextFactoryImpl
 
 	@Override
 	public PortletDataContext createExportPortletDataContext(
-			long companyId, long groupId, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate, ZipWriter zipWriter)
-		throws PortletDataException {
+		long companyId, long groupId, Map<String, String[]> parameterMap,
+		Date startDate, Date endDate, ZipWriter zipWriter) {
 
 		return _dummyPortletDataContext;
 	}
 
 	@Override
 	public PortletDataContext createImportPortletDataContext(
-			long companyId, long groupId, Map<String, String[]> parameterMap,
-			UserIdStrategy userIdStrategy, ZipReader zipReader)
-		throws PortletDataException {
+		long companyId, long groupId, Map<String, String[]> parameterMap,
+		UserIdStrategy userIdStrategy, ZipReader zipReader) {
 
 		return _dummyPortletDataContext;
 	}
 
 	@Override
 	public PortletDataContext createPreparePortletDataContext(
-			long companyId, long groupId, Date startDate, Date endDate)
-		throws PortletDataException {
+		long companyId, long groupId, Date startDate, Date endDate) {
 
 		return _dummyPortletDataContext;
 	}
 
 	@Override
 	public PortletDataContext createPreparePortletDataContext(
-			ThemeDisplay themeDisplay, Date startDate, Date endDate)
-		throws PortletDataException {
+		ThemeDisplay themeDisplay, Date startDate, Date endDate) {
 
 		return _dummyPortletDataContext;
 	}
@@ -118,29 +113,25 @@ public class DummyPortletDataContextFactoryImpl
 
 			@Override
 			public void addClassedModel(
-					Element element, String path, ClassedModel classedModel)
-				throws PortalException {
+				Element element, String path, ClassedModel classedModel) {
 			}
 
 			@Override
 			public void addClassedModel(
-					Element element, String path, ClassedModel classedModel,
-					Class<?> clazz)
-				throws PortalException {
+				Element element, String path, ClassedModel classedModel,
+				Class<?> clazz) {
 			}
 
 			@Override
 			public void addClassedModel(
-					Element element, String path, ClassedModel classedModel,
-					Class<?> clazz, String namespace)
-				throws PortalException {
+				Element element, String path, ClassedModel classedModel,
+				Class<?> clazz, String namespace) {
 			}
 
 			@Override
 			public void addClassedModel(
-					Element element, String path, ClassedModel classedModel,
-					String namespace)
-				throws PortalException {
+				Element element, String path, ClassedModel classedModel,
+				String namespace) {
 			}
 
 			@Override
@@ -164,13 +155,11 @@ public class DummyPortletDataContextFactoryImpl
 
 			@Override
 			public void addExpando(
-					Element element, String path, ClassedModel classedModel)
-				throws PortalException {
+				Element element, String path, ClassedModel classedModel) {
 			}
 
 			@Override
-			public void addLocks(Class<?> clazz, String key)
-				throws PortalException {
+			public void addLocks(Class<?> clazz, String key) {
 			}
 
 			@Override
@@ -178,13 +167,11 @@ public class DummyPortletDataContextFactoryImpl
 			}
 
 			@Override
-			public void addPermissions(Class<?> clazz, long classPK)
-				throws PortalException {
+			public void addPermissions(Class<?> clazz, long classPK) {
 			}
 
 			@Override
-			public void addPermissions(String resourceName, long resourcePK)
-				throws PortalException {
+			public void addPermissions(String resourceName, long resourcePK) {
 			}
 
 			@Override
@@ -194,12 +181,11 @@ public class DummyPortletDataContextFactoryImpl
 			}
 
 			@Override
-			public void addPortalPermissions() throws PortalException {
+			public void addPortalPermissions() {
 			}
 
 			@Override
-			public void addPortletPermissions(String resourceName)
-				throws PortalException {
+			public void addPortletPermissions(String resourceName) {
 			}
 
 			@Override
@@ -834,67 +820,57 @@ public class DummyPortletDataContextFactoryImpl
 
 			@Override
 			public void importClassedModel(
-					ClassedModel classedModel, ClassedModel newClassedModel)
-				throws PortalException {
+				ClassedModel classedModel, ClassedModel newClassedModel) {
 			}
 
 			@Override
 			public void importClassedModel(
-					ClassedModel classedModel, ClassedModel newClassedModel,
-					Class<?> clazz)
-				throws PortalException {
+				ClassedModel classedModel, ClassedModel newClassedModel,
+				Class<?> clazz) {
 			}
 
 			@Override
 			public void importClassedModel(
-					ClassedModel classedModel, ClassedModel newClassedModel,
-					Class<?> clazz, String namespace)
-				throws PortalException {
+				ClassedModel classedModel, ClassedModel newClassedModel,
+				Class<?> clazz, String namespace) {
 			}
 
 			@Override
 			public void importClassedModel(
-					ClassedModel classedModel, ClassedModel newClassedModel,
-					String namespace)
-				throws PortalException {
+				ClassedModel classedModel, ClassedModel newClassedModel,
+				String namespace) {
 			}
 
 			@Override
 			public void importComments(
-					Class<?> clazz, long classPK, long newClassPK, long groupId)
-				throws PortalException {
+				Class<?> clazz, long classPK, long newClassPK, long groupId) {
 			}
 
 			@Override
-			public void importLocks(Class<?> clazz, String key, String newKey)
-				throws PortalException {
-			}
-
-			@Override
-			public void importPermissions(
-					Class<?> clazz, long classPK, long newClassPK)
-				throws PortalException {
+			public void importLocks(Class<?> clazz, String key, String newKey) {
 			}
 
 			@Override
 			public void importPermissions(
-					String resourceName, long resourcePK, long newResourcePK)
-				throws PortalException {
+				Class<?> clazz, long classPK, long newClassPK) {
 			}
 
 			@Override
-			public void importPortalPermissions() throws PortalException {
+			public void importPermissions(
+				String resourceName, long resourcePK, long newResourcePK) {
 			}
 
 			@Override
-			public void importPortletPermissions(String resourceName)
-				throws PortalException {
+			public void importPortalPermissions() {
+			}
+
+			@Override
+			public void importPortletPermissions(String resourceName) {
 			}
 
 			@Override
 			public void importRatingsEntries(
-					Class<?> clazz, long classPK, long newClassPK)
-				throws PortalException {
+				Class<?> clazz, long classPK, long newClassPK) {
 			}
 
 			@Override

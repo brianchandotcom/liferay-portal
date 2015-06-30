@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.exportimport.staging;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -72,20 +71,17 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void checkDefaultLayoutSetBranches(
-			long userId, Group liveGroup, boolean branchingPublic,
-			boolean branchingPrivate, boolean remote,
-			ServiceContext serviceContext)
-		throws PortalException {
+		long userId, Group liveGroup, boolean branchingPublic,
+		boolean branchingPrivate, boolean remote,
+		ServiceContext serviceContext) {
 	}
 
 	@Override
-	public void copyFromLive(PortletRequest PortletRequest)
-		throws PortalException {
+	public void copyFromLive(PortletRequest PortletRequest) {
 	}
 
 	@Override
-	public void copyFromLive(PortletRequest PortletRequest, Portlet portlet)
-		throws PortalException {
+	public void copyFromLive(PortletRequest PortletRequest, Portlet portlet) {
 	}
 
 	/**
@@ -95,31 +91,26 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void copyPortlet(
-			PortletRequest PortletRequest, long sourceGroupId,
-			long targetGroupId, long sourcePlid, long targetPlid,
-			String portletId)
-		throws PortalException {
+		PortletRequest PortletRequest, long sourceGroupId, long targetGroupId,
+		long sourcePlid, long targetPlid, String portletId) {
 	}
 
 	@Override
 	public void copyRemoteLayouts(
-			ExportImportConfiguration exportImportConfiguration)
-		throws PortalException {
+		ExportImportConfiguration exportImportConfiguration) {
 	}
 
 	@Override
-	public void copyRemoteLayouts(long exportImportConfigurationId)
-		throws PortalException {
+	public void copyRemoteLayouts(long exportImportConfigurationId) {
 	}
 
 	@Override
 	public void copyRemoteLayouts(
-			long sourceGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId,
-			boolean remotePrivateLayout)
-		throws PortalException {
+		long sourceGroupId, boolean privateLayout,
+		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId,
+		boolean remotePrivateLayout) {
 	}
 
 	/**
@@ -130,17 +121,16 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void copyRemoteLayouts(
-			long sourceGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId,
-			boolean remotePrivateLayout, Date startDate, Date endDate)
-		throws PortalException {
+		long sourceGroupId, boolean privateLayout,
+		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId,
+		boolean remotePrivateLayout, Date startDate, Date endDate) {
 	}
 
 	@Override
-	public void deleteLastImportSettings(Group liveGroup, boolean privateLayout)
-		throws PortalException {
+	public void deleteLastImportSettings(
+		Group liveGroup, boolean privateLayout) {
 	}
 
 	@Override
@@ -275,24 +265,22 @@ public class DummyStagingImpl implements Staging {
 	 */
 	@Deprecated
 	@Override
-	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
-		throws PortalException {
+	public List<Layout> getMissingParentLayouts(
+		Layout layout, long liveGroupId) {
 
 		return Collections.<Layout>emptyList();
 	}
 
 	@Override
 	public long getRecentLayoutRevisionId(
-			HttpServletRequest request, long layoutSetBranchId, long plid)
-		throws PortalException {
+		HttpServletRequest request, long layoutSetBranchId, long plid) {
 
 		return 0L;
 	}
 
 	@Override
 	public long getRecentLayoutRevisionId(
-			User user, long layoutSetBranchId, long plid)
-		throws PortalException {
+		User user, long layoutSetBranchId, long plid) {
 
 		return 0L;
 	}
@@ -358,16 +346,13 @@ public class DummyStagingImpl implements Staging {
 
 	@Override
 	public WorkflowTask getWorkflowTask(
-			long userId, LayoutRevision layoutRevision)
-		throws PortalException {
+		long userId, LayoutRevision layoutRevision) {
 
 		return null;
 	}
 
 	@Override
-	public boolean hasWorkflowTask(long userId, LayoutRevision layoutRevision)
-		throws PortalException {
-
+	public boolean hasWorkflowTask(long userId, LayoutRevision layoutRevision) {
 		return false;
 	}
 
@@ -383,32 +368,28 @@ public class DummyStagingImpl implements Staging {
 	 */
 	@Deprecated
 	@Override
-	public void lockGroup(long userId, long groupId) throws PortalException {
+	public void lockGroup(long userId, long groupId) {
 	}
 
 	@Override
 	public void publishLayout(
-			long userId, long plid, long liveGroupId, boolean includeChildren)
-		throws PortalException {
+		long userId, long plid, long liveGroupId, boolean includeChildren) {
 	}
 
 	@Override
 	public void publishLayouts(
-			long userId, ExportImportConfiguration exportImportConfiguration)
-		throws PortalException {
+		long userId, ExportImportConfiguration exportImportConfiguration) {
 	}
 
 	@Override
-	public void publishLayouts(long userId, long exportImportConfigurationId)
-		throws PortalException {
+	public void publishLayouts(long userId, long exportImportConfigurationId) {
 	}
 
 	@Override
 	public void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap)
-		throws PortalException {
+		long userId, long sourceGroupId, long targetGroupId,
+		boolean privateLayout, long[] layoutIds,
+		Map<String, String[]> parameterMap) {
 	}
 
 	/**
@@ -418,10 +399,9 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws PortalException {
+		long userId, long sourceGroupId, long targetGroupId,
+		boolean privateLayout, long[] layoutIds,
+		Map<String, String[]> parameterMap, Date startDate, Date endDate) {
 	}
 
 	/**
@@ -431,17 +411,15 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, Map<Long, Boolean> layoutIdMap,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws PortalException {
+		long userId, long sourceGroupId, long targetGroupId,
+		boolean privateLayout, Map<Long, Boolean> layoutIdMap,
+		Map<String, String[]> parameterMap, Date startDate, Date endDate) {
 	}
 
 	@Override
 	public void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, Map<String, String[]> parameterMap)
-		throws PortalException {
+		long userId, long sourceGroupId, long targetGroupId,
+		boolean privateLayout, Map<String, String[]> parameterMap) {
 	}
 
 	/**
@@ -451,59 +429,49 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate)
-		throws PortalException {
+		long userId, long sourceGroupId, long targetGroupId,
+		boolean privateLayout, Map<String, String[]> parameterMap,
+		Date startDate, Date endDate) {
 	}
 
 	@Override
 	public void publishPortlet(
-			long userId, ExportImportConfiguration exportImportConfiguration)
-		throws PortalException {
+		long userId, ExportImportConfiguration exportImportConfiguration) {
 	}
 
 	@Override
-	public void publishPortlet(long userId, long exportImportConfigurationId)
-		throws PortalException {
+	public void publishPortlet(long userId, long exportImportConfigurationId) {
 	}
 
 	@Override
 	public void publishPortlet(
-			long userId, long sourceGroupId, long targetGroupId,
-			long sourcePlid, long targetPlid, String portletId,
-			Map<String, String[]> parameterMap)
-		throws PortalException {
+		long userId, long sourceGroupId, long targetGroupId, long sourcePlid,
+		long targetPlid, String portletId,
+		Map<String, String[]> parameterMap) {
 	}
 
 	@Override
-	public void publishToLive(PortletRequest PortletRequest)
-		throws PortalException {
+	public void publishToLive(PortletRequest PortletRequest) {
 	}
 
 	@Override
-	public void publishToLive(PortletRequest PortletRequest, Portlet portlet)
-		throws PortalException {
+	public void publishToLive(PortletRequest PortletRequest, Portlet portlet) {
 	}
 
 	@Override
-	public void publishToRemote(PortletRequest PortletRequest)
-		throws PortalException {
+	public void publishToRemote(PortletRequest PortletRequest) {
 	}
 
 	@Override
-	public void scheduleCopyFromLive(PortletRequest PortletRequest)
-		throws PortalException {
+	public void scheduleCopyFromLive(PortletRequest PortletRequest) {
 	}
 
 	@Override
-	public void schedulePublishToLive(PortletRequest PortletRequest)
-		throws PortalException {
+	public void schedulePublishToLive(PortletRequest PortletRequest) {
 	}
 
 	@Override
-	public void schedulePublishToRemote(PortletRequest PortletRequest)
-		throws PortalException {
+	public void schedulePublishToRemote(PortletRequest PortletRequest) {
 	}
 
 	@Override
@@ -554,25 +522,21 @@ public class DummyStagingImpl implements Staging {
 	}
 
 	@Override
-	public void unscheduleCopyFromLive(PortletRequest PortletRequest)
-		throws PortalException {
+	public void unscheduleCopyFromLive(PortletRequest PortletRequest) {
 	}
 
 	@Override
-	public void unschedulePublishToLive(PortletRequest PortletRequest)
-		throws PortalException {
+	public void unschedulePublishToLive(PortletRequest PortletRequest) {
 	}
 
 	@Override
-	public void unschedulePublishToRemote(PortletRequest PortletRequest)
-		throws PortalException {
+	public void unschedulePublishToRemote(PortletRequest PortletRequest) {
 	}
 
 	@Override
 	public void updateLastImportSettings(
-			Element layoutElement, Layout layout,
-			PortletDataContext portletDataContext)
-		throws PortalException {
+		Element layoutElement, Layout layout,
+		PortletDataContext portletDataContext) {
 	}
 
 	/**
@@ -584,8 +548,7 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void updateLastPublishDate(
-			long sourceGroupId, boolean privateLayout, Date lastPublishDate)
-		throws PortalException {
+		long sourceGroupId, boolean privateLayout, Date lastPublishDate) {
 	}
 
 	/**
@@ -597,22 +560,19 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void updateLastPublishDate(
-			String portletId, PortletPreferences portletPreferences,
-			Date lastPublishDate)
-		throws PortalException {
+		String portletId, PortletPreferences portletPreferences,
+		Date lastPublishDate) {
 	}
 
 	@Override
-	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)
-		throws PortalException {
+	public void updateStaging(PortletRequest PortletRequest, Group liveGroup) {
 	}
 
 	@Override
 	public void validateRemote(
-			long groupId, String remoteAddress, int remotePort,
-			String remotePathContext, boolean secureConnection,
-			long remoteGroupId)
-		throws PortalException {
+		long groupId, String remoteAddress, int remotePort,
+		String remotePathContext, boolean secureConnection,
+		long remoteGroupId) {
 	}
 
 	/**
@@ -622,9 +582,8 @@ public class DummyStagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void validateRemote(
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId)
-		throws PortalException {
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId) {
 	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -155,11 +156,9 @@ public class UserDisplayTag extends TagSupport {
 
 	protected String getEndPage() {
 		if (Validator.isNull(_endPage)) {
-			if (Validator.isNull(_view)) {
-				return "/html/taglib/ui/user_display/end.jsp";
-			}
-
-			return "/html/taglib/ui/user_display/" + _view + "/end.jsp";
+			return _BASE_PAGE +
+				(Validator.isNotNull(_view) ? _view : StringPool.BLANK) +
+				_END_PAGE;
 		}
 		else {
 			return _endPage;
@@ -168,16 +167,20 @@ public class UserDisplayTag extends TagSupport {
 
 	protected String getStartPage() {
 		if (Validator.isNull(_startPage)) {
-			if (Validator.isNull(_view)) {
-				return "/html/taglib/ui/user_display/start.jsp";
-			}
-
-			return "/html/taglib/ui/user_display/" + _view + "/start.jsp";
+			return _BASE_PAGE +
+				(Validator.isNotNull(_view) ? _view : StringPool.BLANK) +
+				_START_PAGE;
 		}
 		else {
 			return _startPage;
 		}
 	}
+
+	private static final String _BASE_PAGE = "/html/taglib/ui/user_display/";
+
+	private static final String _END_PAGE = "/end.jsp";
+
+	private static final String _START_PAGE = "/start.jsp";
 
 	private boolean _author;
 	private int _displayStyle = 1;

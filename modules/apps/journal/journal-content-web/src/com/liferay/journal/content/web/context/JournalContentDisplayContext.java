@@ -23,8 +23,12 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalPermission;
+import com.liferay.journal.util.JournalContentUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,7 +48,10 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -60,8 +67,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -69,10 +76,12 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalContentDisplayContext {
 
 	public JournalContentDisplayContext(
-			HttpServletRequest request, PortletPreferences portletPreferences)
+			PortletRequest request, PortletResponse response,
+			PortletPreferences portletPreferences)
 		throws PortalException {
 
 		_request = request;
+		_response = response;
 		_portletPreferences = portletPreferences;
 
 		String portletId = PortalUtil.getPortletId(request);
@@ -104,8 +113,18 @@ public class JournalContentDisplayContext {
 			return _article;
 		}
 
-		_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-			getArticleGroupId(), getArticleId(), WorkflowConstants.STATUS_ANY);
+		long articleResourcePrimKey = ParamUtil.getLong(
+			_request, "articleResourcePrimKey");
+
+		if (articleResourcePrimKey > 0) {
+			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true);
+		}
+		else {
+			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				getArticleGroupId(), getArticleId(),
+				WorkflowConstants.STATUS_ANY);
+		}
 
 		return _article;
 	}
@@ -117,6 +136,37 @@ public class JournalContentDisplayContext {
 
 		_articleDisplay = (JournalArticleDisplay)_request.getAttribute(
 			WebKeys.JOURNAL_ARTICLE_DISPLAY);
+
+		if (_articleDisplay != null) {
+			return _articleDisplay;
+		}
+
+		JournalArticle article = getArticle();
+
+		if (article == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (article.isApproved()) {
+			_articleDisplay = JournalContentUtil.getDisplay(
+				article.getGroupId(), article.getArticleId(), null, null,
+				themeDisplay.getLanguageId(), 1,
+				new PortletRequestModel(_request, _response), themeDisplay);
+		}
+		else {
+			try {
+				_articleDisplay =
+					JournalArticleLocalServiceUtil.getArticleDisplay(
+						article, null, null, themeDisplay.getLanguageId(), 1,
+					new PortletRequestModel(_request, _response), themeDisplay);
+			}
+			catch (PortalException e) {
+				_log.error(e);
+			}
+		}
 
 		return _articleDisplay;
 	}
@@ -162,6 +212,35 @@ public class JournalContentDisplayContext {
 		return assetEntry.getEntryId();
 	}
 
+	public AssetRenderer getAssetRenderer() throws PortalException {
+		JournalArticle article = getArticle();
+
+		if (article == null) {
+			return null;
+		}
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		return assetRendererFactory.getAssetRenderer(
+			JournalArticleAssetRenderer.getClassPK(article));
+	}
+
+	public DDMStructure getDDMStructure() throws PortalException {
+		JournalArticle article = getArticle();
+
+		if (article == null) {
+			return null;
+		}
+
+		return article.getDDMStructure();
+	}
+
 	public DDMTemplate getDDMTemplate() throws PortalException {
 		if (_ddmTemplate != null) {
 			return _ddmTemplate;
@@ -177,8 +256,8 @@ public class JournalContentDisplayContext {
 
 		_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 			articleDisplay.getGroupId(),
-			PortalUtil.getClassNameId(DDMStructure.class),
-			articleDisplay.getDDMTemplateKey(), true);
+			PortalUtil.getClassNameId(DDMStructure.class), getDDMTemplateKey(),
+			true);
 
 		return _ddmTemplate;
 	}
@@ -582,6 +661,9 @@ public class JournalContentDisplayContext {
 		return _showSelectArticleIcon;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalContentDisplayContext.class);
+
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
 	private Long _articleGroupId;
@@ -598,7 +680,8 @@ public class JournalContentDisplayContext {
 	private final PortletPreferences _portletPreferences;
 	private String _portletResource;
 	private Boolean _print;
-	private final HttpServletRequest _request;
+	private final PortletRequest _request;
+	private final PortletResponse _response;
 	private Boolean _showAddArticleIcon;
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;

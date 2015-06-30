@@ -1154,6 +1154,7 @@
 			var dialog = event.dialog;
 
 			iframeBody.addClass('dialog-iframe-popup');
+			iframeBody.addClass(dialog.iframeConfig.bodyCssClass);
 
 			var detachEventHandles = function() {
 				AArray.invoke(eventHandles, 'detach');

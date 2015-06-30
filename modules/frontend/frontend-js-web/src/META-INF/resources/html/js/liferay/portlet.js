@@ -674,7 +674,7 @@
 	Liferay.provide(
 		Portlet,
 		'openWindow',
-		function(portlet, portletId, url, namespacedId, windowTitle, windowSubtitle) {
+		function(portlet, portletId, url, namespacedId, windowTitle, windowSubtitle, iframeBodyCssClass) {
 			var instance = this;
 
 			portlet = A.one(portlet);
@@ -701,6 +701,7 @@
 					{
 						cache: false,
 						dialogIframe: {
+							bodyCssClass: iframeBodyCssClass,
 							id: namespacedId + 'configurationIframe',
 							uri: url
 						},

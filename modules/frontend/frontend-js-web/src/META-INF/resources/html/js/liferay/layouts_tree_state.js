@@ -84,6 +84,21 @@ AUI.add(
 						);
 					},
 
+					_matchParentNode: function(node) {
+						var instance = this;
+
+						var host = instance.get(STR_HOST);
+
+						var plid = host.extractPlid(node);
+
+						if (CURRENT_CHECKED_NODES.indexOf(plid) > -1) {
+							instance._updateCheckedNodes(node, true);
+						}
+						else if (CURRENT_UNCHECKED_NODES.indexOf(plid) > -1) {
+							instance._updateCheckedNodes(node, false);
+						}
+					},
+
 					_onCheckContentDisplayTreeAppend: function(event) {
 						var instance = this;
 
@@ -119,8 +134,6 @@ AUI.add(
 
 						var target = event.target;
 
-						var plid = host.extractPlid(target);
-
 						if (target === host.getChildren()[0]) {
 							Liferay.Store(treeId + 'RootNode', expanded);
 						}
@@ -130,16 +143,13 @@ AUI.add(
 							instance._updateSessionTreeOpenedState(treeId, layoutId, expanded);
 						}
 
-						if (CURRENT_CHECKED_NODES.indexOf(plid) > -1) {
-							instance._updateCheckedNodes(target, true);
-						}
-						else if (CURRENT_UNCHECKED_NODES.indexOf(plid) > -1) {
-							instance._updateCheckedNodes(target, false);
-						}
+						instance._matchParentNode(target);
 					},
 
 					_onNodeIOSuccess: function(event) {
 						var instance = this;
+
+						var target = event.target;
 
 						var host = instance.get(STR_HOST);
 
@@ -163,6 +173,8 @@ AUI.add(
 
 						var key = treeId + ':' + root.groupId + ':' + root.privateLayout + ':Pagination';
 
+						instance._matchParentNode(target);
+
 						instance._invokeSessionClick(
 							{
 								cmd: 'get',
@@ -175,9 +187,9 @@ AUI.add(
 								catch (e) {
 								}
 
-								updatePaginationMap(paginationMap, event.target);
+								updatePaginationMap(paginationMap, target);
 
-								event.target.eachParent(
+								target.eachParent(
 									function(parent) {
 										updatePaginationMap(paginationMap, parent);
 									}
@@ -296,7 +308,7 @@ AUI.add(
 							}
 						}
 
-						node.set('checked', state)
+						node.set('checked', state);
 
 						if (children.length) {
 							A.each(

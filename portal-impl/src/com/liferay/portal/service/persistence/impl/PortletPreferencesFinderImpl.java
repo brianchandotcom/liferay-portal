@@ -343,7 +343,7 @@ public class PortletPreferencesFinderImpl
 		"OR (PortletPreferences.portletId LIKE ?)";
 
 	private static final String _PREFERENCES_SQL =
-		"AND (PortletPreferences.preferences != " +
+		"AND (PortletPreferences.preferences NOT LIKE " +
 			"'[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]')";
 
 }

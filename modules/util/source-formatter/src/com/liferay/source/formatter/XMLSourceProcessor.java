@@ -413,7 +413,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = new String[] {
 			"**/.bnd/**", "**/.idea/**", "**/.ivy/**", "**/bin/**",
-			"**/logs/**", "**/portal-impl/**/*.action",
+			"**/javadocs-*.xml", "**/logs/**", "**/portal-impl/**/*.action",
 			"**/portal-impl/**/*.function", "**/portal-impl/**/*.macro",
 			"**/portal-impl/**/*.testcase", "**/test-classes/unit/**",
 			"**/test-results/**", "**/test/unit/**"

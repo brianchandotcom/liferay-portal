@@ -25,6 +25,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -73,6 +74,15 @@ public class DDMUtil {
 		DDMStructureVersion ddmStructureVersion, String script) {
 
 		return getDDM().getDDMFormFieldsJSONArray(ddmStructureVersion, script);
+	}
+
+	public static DDMFormValues getDDMFormValues(
+			DDMStructure ddmStructure, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getDDM().getDDMFormValues(
+			ddmStructure, fieldNamespace, serviceContext);
 	}
 
 	public static DDMPermissionHandler getDDMPermissionHandler(

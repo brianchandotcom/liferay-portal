@@ -1172,6 +1172,8 @@ public class PoshiRunnerValidation {
 			validateRequiredChildElementName(element, "command", filePath);
 		}
 
+		_validateHasRequiredPropertyElements(element, filePath);
+
 		List<String> possibleTagElementNames = Arrays.asList(
 			"command", "property", "set-up", "tear-down", "var");
 

@@ -28,10 +28,15 @@
 	</tear-down>
 
 	<command name="SolrSmokeTest" priority="4">
-		<description message="This smoke test is to ensure that Solr is successfully deployed and running within Liferay. By default, the Lucene search engine is invoked when any search is performed in portal. This test will assert two things. First, that the Solr server is running by hitting the Solr Admin Dashboard. Second, that Liferay is using Solr by asserting the Solr logs in the console output when a search is performed in the Search portlet." />
+		<description message="This smoke test is to ensure that Solr has successfully deployed in Liferay by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
 		<execute macro="Solr#viewAdminDashboard">
-			<var name="solrVersion" value="4.10.3" />
+			<var name="solrVersion" value="5.2.1" />
+		</execute>
+
+		<execute macro="Solr#viewLiferayCoreAdminDashboard">
+			<var name="coreName" value="liferay" />
+			<var name="solrVersion" value="5.2.1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

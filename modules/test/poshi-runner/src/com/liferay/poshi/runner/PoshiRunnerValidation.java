@@ -15,7 +15,9 @@
 package com.liferay.poshi.runner;
 
 import com.liferay.poshi.runner.util.OSDetector;
+import com.liferay.poshi.runner.util.PropsUtil;
 import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.util.ArrayList;
@@ -680,6 +682,44 @@ public class PoshiRunnerValidation {
 
 		validateHasPrimaryAttributeName(
 			element, null, primaryAttributeNames, filePath);
+	}
+
+	private static void _validateHasRequiredPropertyElements(
+		Element element, String filePath) {
+
+		List<String> requiredPropertyNames = new ArrayList(
+			PoshiRunnerContext.getTestCaseRequiredPropertyNames());
+
+		List<Element> propertyElements = element.elements("property");
+
+		for (Element propertyElement : propertyElements) {
+			_validatePropertyElement(propertyElement, filePath);
+
+			String propertyName = propertyElement.attributeValue("name");
+
+			if (requiredPropertyNames.contains(propertyName)) {
+				String testCaseAvailablePropertyValues = PropsUtil.get(
+					"test.case.available.property.values[" + propertyName +
+						"]");
+
+				requiredPropertyNames.remove(propertyName);
+
+				if (Validator.isNotNull(testCaseAvailablePropertyValues)) {
+					List<String> possiblePropertyValues = Arrays.asList(
+						StringUtil.split(testCaseAvailablePropertyValues));
+
+					_validatePossiblePropertyValues(
+						propertyElement, possiblePropertyValues, filePath);
+				}
+			}
+		}
+
+		if (!requiredPropertyNames.isEmpty()) {
+			_exceptions.add(
+				new Exception(
+					"Missing required properties " +
+						requiredPropertyNames + "\n" + filePath));
+		}
 	}
 
 	protected static void validateIfElement(Element element, String filePath) {

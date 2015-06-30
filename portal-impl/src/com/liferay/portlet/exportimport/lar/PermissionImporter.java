@@ -31,6 +31,7 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
@@ -112,11 +113,13 @@ public class PermissionImporter {
 		int type = GetterUtil.getInteger(roleElement.attributeValue("type"));
 		String subtype = roleElement.attributeValue("subtype");
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setUuid(uuid);
+
 		role = RoleLocalServiceUtil.addRole(
 			userId, null, 0, name, titleMap, descriptionMap, type, subtype,
-			null);
-
-		role.setUuid(uuid);
+			serviceContext);
 
 		return role;
 	}

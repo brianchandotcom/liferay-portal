@@ -107,6 +107,8 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 					PortalUtil.getPortletId(actionRequest) +
 						SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
 					PortletKeys.DOCUMENT_LIBRARY);
+
+				forceSendRedirect(actionRequest);
 			}
 		}
 		catch (Exception e) {
@@ -221,11 +223,6 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 				fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
 				serviceContext);
 		}
-
-		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
 	}
 
 }

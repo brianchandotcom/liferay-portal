@@ -54,6 +54,13 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 
+	protected void forceSendRedirect(PortletRequest portletRequest) {
+		SessionMessages.add(
+			portletRequest,
+			PortalUtil.getPortletId(portletRequest) +
+				SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
+	}
+
 	protected PortletConfig getPortletConfig(PortletRequest portletRequest) {
 		String portletId = PortalUtil.getPortletId(portletRequest);
 

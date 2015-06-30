@@ -10,6 +10,8 @@ CKEDITOR.dialog.add(
 		var handleAddress = function(val) {
 			var address = val.toString().trim();
 
+			address = address.replace(/[\u200B-\u200D\uFEFF]/g, '');
+
 			if (address.startsWith('/')) {
 				return address;
 			}

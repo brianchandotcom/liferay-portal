@@ -5,7 +5,7 @@
 
 	<macrodef name="prepare-solr">
 		<sequential>
-			<copy overwrite="true" todir="${app.server.parent.dir}/solr-${solr.version}/example/solr/collection1/conf">
+			<copy overwrite="true" todir="${solr.dir}/example/solr/collection1/conf">
 				<fileset dir="${lp.plugins.dir}/webs/solr4-web/docroot/WEB-INF/conf/">
 					<include name="schema.xml" />
 					<include name="solrconfig.xml" />
@@ -16,7 +16,7 @@
 
 	<macrodef name="unzip-solr">
 		<sequential>
-			<delete dir="${app.server.parent.dir}/solr-${solr.version}" />
+			<delete dir="${solr.dir}" />
 
 			<if>
 				<not>
@@ -62,7 +62,7 @@
 		<parallel>
 			<daemons>
 				<exec
-					dir="${app.server.parent.dir}/solr-${solr.version}/example"
+					dir="${solr.dir}/example"
 					executable="java"
 					failonerror="true"
 				>

@@ -352,52 +352,15 @@ public class JournalConverterImpl implements JournalConverter {
 		return StringUtil.merge(languageIds);
 	}
 
-	protected FileEntry getDLFileEntryFromDLURL(String url)
-		throws PortalException {
-
-		int x = url.indexOf("/documents/");
-		int y = url.indexOf(StringPool.QUESTION);
-
-		if (y == -1) {
-			y = url.length();
-		}
-
-		url = url.substring(x, y);
-
-		String[] parts = StringUtil.split(url, CharPool.SLASH);
-
-		long groupId = GetterUtil.getLong(parts[2]);
-
-		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-			parts[5], groupId);
-	}
-
-	protected FileEntry getDLFileEntryFromIGURL(String url)
-		throws PortalException {
-
-		Matcher m = _imageGalleryURLPattern.matcher(url);
-
-		if (!m.find()) {
-			return null;
-		}
-
-		long groupId = GetterUtil.getLong(m.group(2));
-
-		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-			m.group(1), groupId);
-	}
-
 	protected Serializable getDocumentLibraryValue(String url) {
 		try {
 			FileEntry fileEntry = null;
 
 			if (url.contains("/documents/")) {
-				fileEntry = getDLFileEntryFromDLURL(url);
+				fileEntry = getFileEntryByDocumentLibraryURL(url);
 			}
-			else {
-				if (url.contains("/image/image_gallery?")) {
-					fileEntry = getDLFileEntryFromIGURL(url);
-				}
+			else if (url.contains("/image/image_gallery?")) {
+				fileEntry = getFileEntryByImageGalleryURL(url);
 			}
 
 			if (fileEntry == null) {
@@ -555,6 +518,41 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return serializable;
+	}
+
+	protected FileEntry getFileEntryByDocumentLibraryURL(String url)
+		throws PortalException {
+
+		int x = url.indexOf("/documents/");
+		int y = url.indexOf(StringPool.QUESTION);
+
+		if (y == -1) {
+			y = url.length();
+		}
+
+		url = url.substring(x, y);
+
+		String[] parts = StringUtil.split(url, CharPool.SLASH);
+
+		long groupId = GetterUtil.getLong(parts[2]);
+
+		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			parts[5], groupId);
+	}
+
+	protected FileEntry getFileEntryByImageGalleryURL(String url)
+		throws PortalException {
+
+		Matcher matcher = _imageGalleryURLPattern.matcher(url);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		long groupId = GetterUtil.getLong(matcher.group(2));
+
+		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			matcher.group(1), groupId);
 	}
 
 	protected void getJournalMetadataElement(Element metadataElement) {

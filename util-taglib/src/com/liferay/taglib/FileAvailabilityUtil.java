@@ -15,8 +15,10 @@
 package com.liferay.taglib;
 
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 
 import java.net.URL;
 
@@ -32,6 +34,22 @@ import javax.servlet.ServletContext;
  * @author Shuyang Zhou
  */
 public class FileAvailabilityUtil {
+
+	public static void clearAvailabilities() {
+		String servletContextName = PortalUtil.getServletContextName();
+
+		ServletContext servletContext = ServletContextPool.get(
+			servletContextName);
+
+		Map<String, Boolean> availabilities =
+			(Map<String, Boolean>)servletContext.getAttribute(
+				FileAvailabilityUtil.class.getName());
+
+		if (availabilities != null) {
+			servletContext.removeAttribute(
+				FileAvailabilityUtil.class.getName());
+		}
+	}
 
 	public static boolean isAvailable(
 		ServletContext servletContext, String path) {

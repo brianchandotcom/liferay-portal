@@ -12,37 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.action;
+package com.liferay.exportimport.web.portlet.action;
 
+import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationFactory;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.sites.action.ActionUtil;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Levente Hudák
+ * @author Daniel Kocsis
  */
-public class ConfirmationExportImportConfigurationAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
+		"mvc.command.name=confirmation"
+	},
+	service = MVCRenderCommand.class
+)
+public class ConfirmationExportImportConfigurationMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		try {
 			long exportImportConfigurationId = ParamUtil.getLong(
@@ -60,15 +65,14 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward("portlet.export_import.error");
+				return "/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.export_import.confirmation"));
+		return "/confirmation.jsp";
 	}
 
 	protected void createExportImportConfiguration(RenderRequest renderRequest)

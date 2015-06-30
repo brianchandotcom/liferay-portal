@@ -222,7 +222,12 @@ AUI.add(
 							uri = Liferay.Util.addParams(A.guid() + '=' + Date.now(), uri);
 						}
 
+						var defaultDialogIframeConfig = {
+							bodyCssClass: ''
+						};
+
 						dialogIframeConfig = A.merge(
+							defaultDialogIframeConfig,
 							config.dialogIframe,
 							{
 								bindLoadHandler: function() {
@@ -328,6 +333,7 @@ AUI.add(
 					}
 
 					if (dialogIframeConfig) {
+						modal.iframeConfig = dialogIframeConfig;
 						modal.plug(A.Plugin.DialogIframe, dialogIframeConfig);
 
 						modal.get('boundingBox').addClass('dialog-iframe-modal');

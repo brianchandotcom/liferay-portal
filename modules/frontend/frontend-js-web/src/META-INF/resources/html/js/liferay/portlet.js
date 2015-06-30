@@ -674,39 +674,48 @@
 	Liferay.provide(
 		Portlet,
 		'openWindow',
-		function(portlet, portletId, url, namespacedId, windowTitle, windowSubtitle) {
+		function(options) {
 			var instance = this;
+
+			var portlet = options.portlet;
+			var portletId = options.portletId;
+			var uri = options.uri;
+			var namespace = options.namespace;
+			var title = options.title;
+			var subTitle = options.subTitle;
+			var bodyCssClass = options.bodyCssClass;
 
 			portlet = A.one(portlet);
 
-			if (portlet && url) {
-				var title = portlet.one('.portlet-title') || portlet.one('.portlet-title-default');
+			if (portlet && uri) {
+				var portletTitle = portlet.one('.portlet-title') || portlet.one('.portlet-title-default');
 
-				var titleHtml = windowTitle;
+				var titleHtml = title;
 
-				if (title) {
+				if (portletTitle) {
 					if (portlet.one('#cpPortletTitle')) {
-						titleHtml = title.one('.portlet-title-text').outerHTML() + ' - ' + titleHtml;
+						titleHtml = portletTitle.one('.portlet-title-text').outerHTML() + ' - ' + titleHtml;
 					}
 					else {
-						titleHtml = title.text() + ' - ' + titleHtml;
+						titleHtml = portletTitle.text() + ' - ' + titleHtml;
 					}
 				}
 
-				if (windowSubtitle) {
-					titleHtml += '<div class="portlet-configuration-subtitle small"><span class="portlet-configuration-subtitle-text">' + windowSubtitle + '</span></div>';
+				if (subTitle) {
+					titleHtml += '<div class="portlet-configuration-subtitle small"><span class="portlet-configuration-subtitle-text">' + subTitle + '</span></div>';
 				}
 
 				Liferay.Util.openWindow(
 					{
 						cache: false,
 						dialogIframe: {
-							id: namespacedId + 'configurationIframe',
-							uri: url
+							bodyCssClass: bodyCssClass,
+							id: namespace + 'configurationIframe',
+							uri: uri
 						},
-						id: namespacedId + 'configurationIframeDialog',
+						id: namespace + 'configurationIframeDialog',
 						title: titleHtml,
-						uri: url
+						uri: uri
 					},
 					function(dialog) {
 						dialog.once(

@@ -54,3 +54,7 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 #macro (silently $foo)
 	#set ($foo = $foo)
 #end
+
+#macro (user_personal_bar)
+	$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
+#end

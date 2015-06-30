@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,20 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.user.personal.bar.web.contants;
 
-<%@ page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
-page import="com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType" %><%@
-page import="com.liferay.portlet.layoutsadmin.context.GroupDisplayContextHelper" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class UserPersonalBarPortletKeys {
 
-<%@ page import="java.util.regex.Matcher" %><%@
-page import="java.util.regex.Pattern" %>
+	public static final String USER_PERSONAL_BAR =
+		"com_liferay_user_personal_bar_web_portlet_UserPersonalBarPortlet";
 
-<%
-GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
-%>
-
-<%@ include file="/html/portlet/dockbar/init-ext.jsp" %>
+}

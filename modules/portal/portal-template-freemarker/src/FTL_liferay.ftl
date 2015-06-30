@@ -94,3 +94,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 >
 	<#assign foo = foo />
 </#macro>
+
+<#macro user_personal_bar>
+	${theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", portletProviderAction.VIEW)}
+</#macro>

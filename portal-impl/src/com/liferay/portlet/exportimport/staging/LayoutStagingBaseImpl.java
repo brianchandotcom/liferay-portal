@@ -34,14 +34,14 @@ public class LayoutStagingBaseImpl implements LayoutStaging {
 		this(new DummyLayoutStagingImpl());
 	}
 
-	public LayoutStagingBaseImpl(LayoutStaging defaultExportImportHelper) {
+	public LayoutStagingBaseImpl(LayoutStaging defaultLayoutStaging) {
+		_defaultLayoutStaging = defaultLayoutStaging;
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(LayoutStaging.class);
 
 		_serviceTracker.open();
-
-		_defaultLayoutStaging = defaultExportImportHelper;
 	}
 
 	@Override

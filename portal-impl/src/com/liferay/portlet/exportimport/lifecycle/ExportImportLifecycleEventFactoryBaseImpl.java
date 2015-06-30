@@ -34,15 +34,15 @@ public class ExportImportLifecycleEventFactoryBaseImpl
 		ExportImportLifecycleEventFactory
 			defaultExportImportLifecycleEventFactory) {
 
+		_defaultExportImportLifecycleEventFactory =
+			defaultExportImportLifecycleEventFactory;
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
 			ExportImportLifecycleEventFactory.class);
 
 		_serviceTracker.open();
-
-		_defaultExportImportLifecycleEventFactory =
-			defaultExportImportLifecycleEventFactory;
 	}
 
 	@Override

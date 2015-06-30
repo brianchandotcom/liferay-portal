@@ -20,6 +20,11 @@
 	</aop:config>
 	<bean id="com.liferay.portlet.asset.model.adapter.builder.StagedAssetTagModelAdapterBuilder" class="com.liferay.portlet.asset.model.adapter.builder.StagedAssetTagModelAdapterBuilder" />
 	<bean id="com.liferay.portlet.documentlibrary.lar.lifecycle.DLIndexingExportImportLifecycleListener" class="com.liferay.portlet.documentlibrary.lar.lifecycle.DLIndexingExportImportLifecycleListener" />
+	<bean id="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" class="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil">
+		<property name="exportImportHelper">
+			<bean class="com.liferay.portlet.exportimport.lar.BridgeExportImportHelperImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil" class="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil">
 		<property name="exportImportProcessCallbackRegistry">
 			<bean class="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryBaseImpl" />
@@ -39,11 +44,6 @@
 					</bean>
 				</property>
 			</bean>
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" class="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil">
-		<property name="exportImportHelper">
-			<bean class="com.liferay.portlet.exportimport.lar.ExportImportHelperBaseImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFactoryUtil" class="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFactoryUtil">

@@ -32,13 +32,13 @@ public class StagingPermissionBaseImpl implements StagingPermission {
 	public StagingPermissionBaseImpl(
 		StagingPermission defaultStagingPermission) {
 
+		_defaultStagingPermission = defaultStagingPermission;
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(StagingPermission.class);
 
 		_serviceTracker.open();
-
-		_defaultStagingPermission = defaultStagingPermission;
 	}
 
 	@Override

@@ -55,13 +55,13 @@ public class StagingBaseImpl implements Staging {
 	}
 
 	public StagingBaseImpl(Staging defaultStaging) {
+		_defaultStaging = defaultStaging;
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(Staging.class);
 
 		_serviceTracker.open();
-
-		_defaultStaging = defaultStaging;
 	}
 
 	@Override

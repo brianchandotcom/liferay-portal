@@ -37,14 +37,14 @@ public class PortletDataContextFactoryBaseImpl
 	public PortletDataContextFactoryBaseImpl(
 		PortletDataContextFactory defaultPortletDataContextFactory) {
 
+		_defaultPortletDataContextFactory = defaultPortletDataContextFactory;
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
 			PortletDataContextFactory.class);
 
 		_serviceTracker.open();
-
-		_defaultPortletDataContextFactory = defaultPortletDataContextFactory;
 	}
 
 	@Override

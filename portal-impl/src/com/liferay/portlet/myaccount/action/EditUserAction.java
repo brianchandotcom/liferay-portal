@@ -57,28 +57,6 @@ public class EditUserAction
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		User user = PortalUtil.getUser(renderRequest);
-
-		RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
-
-		DynamicServletRequest dynamicRequest =
-			(DynamicServletRequest)renderRequestImpl.getHttpServletRequest();
-
-		dynamicRequest.setParameter(
-			"p_u_i_d", String.valueOf(user.getUserId()));
-
-		return super.render(
-			actionMapping, actionForm, portletConfig, renderRequest,
-			renderResponse);
-	}
-
-	@Override
 	protected Object[] updateUser(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

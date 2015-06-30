@@ -2053,6 +2053,19 @@ This affects developers using the `liferay-ui:journal-article` tag.
 
 Use the `liferay-ui:asset-display` taglib instead.
 
+Old code:
+    
+    <liferay-ui:journal-article
+        articleId="<%= article.getArticleId() %>"
+    />
+
+New code:
+
+    <liferay-ui:asset-display
+        className="<%= JournalArticleResource.class.getName() %>"
+        template="<%= article.getResourcePrimKey() %>"
+    />
+
 #### Why was this change made?
 
 The `liferay-ui:asset-display` is a generic way to display any type of asset.

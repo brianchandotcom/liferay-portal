@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
@@ -114,6 +115,101 @@ public class DLAppLocalServiceTest {
 			Folder folder = addFolder(_group.getGroupId(), true);
 
 			Assert.assertTrue(folder != null);
+		}
+
+		@DeleteAfterTestRun
+		private Group _group;
+
+	}
+
+	@Sync
+	public static class WhenDeletingAllRepositoriesInAGroup {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				SynchronousDestinationTestRule.INSTANCE);
+
+		@Before
+		public void setUp() throws Exception {
+			_group = GroupTestUtil.addGroup();
+		}
+
+		@Test
+		public void shouldDeleteAllGroupRepositoryFileEntries()
+			throws Exception {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			addFileEntry(serviceContext);
+
+			Folder folder = addFolder(_group.getGroupId(), true);
+
+			DLAppLocalServiceUtil.addFileEntry(
+				serviceContext.getUserId(), _group.getGroupId(),
+				folder.getFolderId(), StringUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM, new byte[0],
+				serviceContext);
+
+			DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
+
+			LocalRepository localRepository =
+				RepositoryProviderUtil.getLocalRepository(_group.getGroupId());
+
+			int rootFolderFileEntriesCount =
+				localRepository.getFileEntriesCount(
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			Assert.assertEquals(0, rootFolderFileEntriesCount);
+
+			int subfolderFileEntriesCount = localRepository.getFileEntriesCount(
+				folder.getFolderId());
+
+			Assert.assertEquals(0, subfolderFileEntriesCount);
+		}
+
+		@Test
+		public void shouldDeleteAllGroupRepositoryFolders() throws Exception {
+			Folder folder = addFolder(_group.getGroupId(), true);
+
+			Folder subfolder = addFolder(
+				_group.getGroupId(), folder.getFolderId(),
+				StringUtil.randomString());
+
+			DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
+
+			try {
+				DLAppLocalServiceUtil.getFolder(folder.getFolderId());
+				Assert.fail();
+			}
+			catch (NoSuchFolderException nsfe) {
+			}
+
+			try {
+				DLAppLocalServiceUtil.getFolder(subfolder.getFolderId());
+				Assert.fail();
+			}
+			catch (NoSuchFolderException nsfe) {
+			}
+		}
+
+		@Test
+		public void shouldDeleteTrashedFolders() throws Exception {
+			Folder folder = addFolder(_group.getGroupId(), true);
+
+			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+
+			DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
+
+			try {
+				DLAppLocalServiceUtil.getFolder(folder.getFolderId());
+				Assert.fail();
+			}
+			catch (NoSuchFolderException nsfe) {
+			}
 		}
 
 		@DeleteAfterTestRun

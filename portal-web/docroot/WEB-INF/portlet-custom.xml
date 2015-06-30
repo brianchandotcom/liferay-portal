@@ -459,10 +459,6 @@
 			<name>template-path</name>
 			<value>/html/portlet/users_admin/</value>
 		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/users_admin/view</value>
-		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

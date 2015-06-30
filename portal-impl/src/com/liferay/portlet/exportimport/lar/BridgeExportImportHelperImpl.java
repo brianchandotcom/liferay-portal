@@ -40,13 +40,13 @@ import javax.portlet.PortletRequest;
 /**
  * @author Daniel Kocsis
  */
-public class ExportImportHelperBaseImpl implements ExportImportHelper {
+public class BridgeExportImportHelperImpl implements ExportImportHelper {
 
-	public ExportImportHelperBaseImpl() {
+	public BridgeExportImportHelperImpl() {
 		this(new DummyExportImportHelperImpl());
 	}
 
-	public ExportImportHelperBaseImpl(
+	public BridgeExportImportHelperImpl(
 		ExportImportHelper defaultExportImportHelper) {
 
 		Registry registry = RegistryUtil.getRegistry();

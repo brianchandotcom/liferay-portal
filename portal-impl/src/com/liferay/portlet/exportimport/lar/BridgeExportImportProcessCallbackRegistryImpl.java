@@ -23,14 +23,14 @@ import java.util.concurrent.Callable;
 /**
  * @author Daniel Kocsis
  */
-public class ExportImportProcessCallbackRegistryBaseImpl
+public class BridgeExportImportProcessCallbackRegistryImpl
 	implements ExportImportProcessCallbackRegistry {
 
-	public ExportImportProcessCallbackRegistryBaseImpl() {
+	public BridgeExportImportProcessCallbackRegistryImpl() {
 		this(new DummyExportImportProcessCallbackRegistryImpl());
 	}
 
-	public ExportImportProcessCallbackRegistryBaseImpl(
+	public BridgeExportImportProcessCallbackRegistryImpl(
 		ExportImportProcessCallbackRegistry
 			defaultExportImportProcessCallbackRegistry) {
 

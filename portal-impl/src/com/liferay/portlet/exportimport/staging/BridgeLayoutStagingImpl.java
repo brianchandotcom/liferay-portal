@@ -28,13 +28,13 @@ import com.liferay.registry.ServiceTracker;
 /**
  * @author Daniel Kocsis
  */
-public class LayoutStagingBaseImpl implements LayoutStaging {
+public class BridgeLayoutStagingImpl implements LayoutStaging {
 
-	public LayoutStagingBaseImpl() {
+	public BridgeLayoutStagingImpl() {
 		this(new DummyLayoutStagingImpl());
 	}
 
-	public LayoutStagingBaseImpl(LayoutStaging defaultLayoutStaging) {
+	public BridgeLayoutStagingImpl(LayoutStaging defaultLayoutStaging) {
 		_defaultLayoutStaging = defaultLayoutStaging;
 
 		Registry registry = RegistryUtil.getRegistry();

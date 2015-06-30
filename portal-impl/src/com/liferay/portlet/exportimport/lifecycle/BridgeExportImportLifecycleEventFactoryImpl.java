@@ -23,14 +23,14 @@ import java.io.Serializable;
 /**
  * @author Daniel Kocsis
  */
-public class ExportImportLifecycleEventFactoryBaseImpl
+public class BridgeExportImportLifecycleEventFactoryImpl
 	implements ExportImportLifecycleEventFactory {
 
-	public ExportImportLifecycleEventFactoryBaseImpl() {
+	public BridgeExportImportLifecycleEventFactoryImpl() {
 		this(new DummyExportImportLifecycleEventFactoryImpl());
 	}
 
-	public ExportImportLifecycleEventFactoryBaseImpl(
+	public BridgeExportImportLifecycleEventFactoryImpl(
 		ExportImportLifecycleEventFactory
 			defaultExportImportLifecycleEventFactory) {
 

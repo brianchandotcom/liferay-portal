@@ -23,13 +23,13 @@ import com.liferay.registry.ServiceTracker;
 /**
  * @author Daniel Kocsis
  */
-public class StagingPermissionBaseImpl implements StagingPermission {
+public class BridgeStagingPermissionImpl implements StagingPermission {
 
-	public StagingPermissionBaseImpl() {
+	public BridgeStagingPermissionImpl() {
 		this(new DummyStagingPermissionImpl());
 	}
 
-	public StagingPermissionBaseImpl(
+	public BridgeStagingPermissionImpl(
 		StagingPermission defaultStagingPermission) {
 
 		_defaultStagingPermission = defaultStagingPermission;

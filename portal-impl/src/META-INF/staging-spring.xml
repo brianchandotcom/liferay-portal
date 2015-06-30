@@ -27,12 +27,12 @@
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil" class="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil">
 		<property name="exportImportProcessCallbackRegistry">
-			<bean class="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryBaseImpl" />
+			<bean class="com.liferay.portlet.exportimport.lar.BridgeExportImportProcessCallbackRegistryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil" class="com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil">
 		<property name="portletDataContextFactory">
-			<bean class="com.liferay.portlet.exportimport.lar.PortletDataContextFactoryBaseImpl" />
+			<bean class="com.liferay.portlet.exportimport.lar.BridgePortletDataContextFactoryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil" class="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil">
@@ -48,22 +48,22 @@
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFactoryUtil" class="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFactoryUtil">
 		<property name="exportImportLifecycleEventFactory">
-			<bean class="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFactoryBaseImpl" />
+			<bean class="com.liferay.portlet.exportimport.lifecycle.BridgeExportImportLifecycleEventFactoryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" class="com.liferay.portlet.exportimport.staging.LayoutStagingUtil">
 		<property name="layoutStaging">
-			<bean class="com.liferay.portlet.exportimport.staging.LayoutStagingBaseImpl" />
+			<bean class="com.liferay.portlet.exportimport.staging.BridgeLayoutStagingImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.staging.StagingUtil" class="com.liferay.portlet.exportimport.staging.StagingUtil">
 		<property name="staging">
-			<bean class="com.liferay.portlet.exportimport.staging.StagingBaseImpl" />
+			<bean class="com.liferay.portlet.exportimport.staging.BridgeStagingImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil" class="com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil">
 		<property name="stagingPermission">
-			<bean class="com.liferay.portlet.exportimport.staging.permission.StagingPermissionBaseImpl" />
+			<bean class="com.liferay.portlet.exportimport.staging.permission.BridgeStagingPermissionImpl" />
 		</property>
 	</bean>
 </beans>

@@ -27,14 +27,14 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  */
-public class PortletDataContextFactoryBaseImpl
+public class BridgePortletDataContextFactoryImpl
 	implements PortletDataContextFactory {
 
-	public PortletDataContextFactoryBaseImpl() {
+	public BridgePortletDataContextFactoryImpl() {
 		this(new DummyPortletDataContextFactoryImpl());
 	}
 
-	public PortletDataContextFactoryBaseImpl(
+	public BridgePortletDataContextFactoryImpl(
 		PortletDataContextFactory defaultPortletDataContextFactory) {
 
 		_defaultPortletDataContextFactory = defaultPortletDataContextFactory;

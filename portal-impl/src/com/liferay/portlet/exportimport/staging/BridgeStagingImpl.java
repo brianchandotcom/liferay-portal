@@ -48,13 +48,13 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Daniel Kocsis
  */
-public class StagingBaseImpl implements Staging {
+public class BridgeStagingImpl implements Staging {
 
-	public StagingBaseImpl() {
+	public BridgeStagingImpl() {
 		this(new DummyStagingImpl());
 	}
 
-	public StagingBaseImpl(Staging defaultStaging) {
+	public BridgeStagingImpl(Staging defaultStaging) {
 		_defaultStaging = defaultStaging;
 
 		Registry registry = RegistryUtil.getRegistry();

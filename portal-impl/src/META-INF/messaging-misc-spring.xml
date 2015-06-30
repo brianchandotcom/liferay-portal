@@ -22,23 +22,8 @@
 	<bean id="messageListener.document_library_pdf_processor" class="com.liferay.portlet.documentlibrary.messaging.PDFProcessorMessageListener" />
 	<bean id="messageListener.document_library_raw_metadata_processor" class="com.liferay.portlet.documentlibrary.messaging.RawMetadataProcessorMessageListener" />
 	<bean id="messageListener.document_library_video_processor" class="com.liferay.portlet.documentlibrary.messaging.VideoProcessorMessageListener" />
-	<bean id="messageListener.export_import_lifecycle_event" class="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleMessageListener" />
 	<bean id="messageListener.flags" class="com.liferay.portlet.flags.messaging.FlagsRequestMessageListener" />
 	<bean id="messageListener.hot_deploy" class="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" />
-	<bean id="messageListener.layouts_local_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
-		<property name="messageListener">
-			<bean class="com.liferay.portlet.exportimport.messaging.LayoutsLocalPublisherMessageListener">
-				<property name="destinationName" value="liferay/message_bus/message_status" />
-			</bean>
-		</property>
-	</bean>
-	<bean id="messageListener.layouts_remote_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
-		<property name="messageListener">
-			<bean class="com.liferay.portlet.exportimport.messaging.LayoutsRemotePublisherMessageListener">
-				<property name="destinationName" value="liferay/message_bus/message_status" />
-			</bean>
-		</property>
-	</bean>
 	<bean id="messageListener.live_users" class="com.liferay.portal.liveusers.messaging.LiveUsersMessageListener" />
 	<bean id="messageListener.live_users_cluster" class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener">
 		<property name="priority">
@@ -251,16 +236,6 @@
 						<ref bean="messageListener.document_library_video_processor" />
 					</list>
 				</entry>
-				<entry key="liferay/export_import_lifecycle_event_async">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.export_import_lifecycle_event" />
-					</list>
-				</entry>
-				<entry key="liferay/export_import_lifecycle_event_sync">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.export_import_lifecycle_event" />
-					</list>
-				</entry>
 				<entry key="liferay/flags">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.flags" />
@@ -269,16 +244,6 @@
 				<entry key="liferay/hot_deploy">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.hot_deploy" />
-					</list>
-				</entry>
-				<entry key="liferay/layouts_local_publisher">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.layouts_local_publisher" />
-					</list>
-				</entry>
-				<entry key="liferay/layouts_remote_publisher">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.layouts_remote_publisher" />
 					</list>
 				</entry>
 				<entry key="liferay/live_users">

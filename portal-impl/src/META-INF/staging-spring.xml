@@ -20,14 +20,19 @@
 	</aop:config>
 	<bean id="com.liferay.portlet.asset.model.adapter.builder.StagedAssetTagModelAdapterBuilder" class="com.liferay.portlet.asset.model.adapter.builder.StagedAssetTagModelAdapterBuilder" />
 	<bean id="com.liferay.portlet.documentlibrary.lar.lifecycle.DLIndexingExportImportLifecycleListener" class="com.liferay.portlet.documentlibrary.lar.lifecycle.DLIndexingExportImportLifecycleListener" />
+	<bean id="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" class="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil">
+		<property name="exportImportHelper">
+			<bean class="com.liferay.portlet.exportimport.lar.BridgeExportImportHelperImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil" class="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil">
 		<property name="exportImportProcessCallbackRegistry">
-			<bean class="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryImpl" />
+			<bean class="com.liferay.portlet.exportimport.lar.BridgeExportImportProcessCallbackRegistryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil" class="com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil">
 		<property name="portletDataContextFactory">
-			<bean class="com.liferay.portlet.exportimport.lar.PortletDataContextFactoryImpl" />
+			<bean class="com.liferay.portlet.exportimport.lar.BridgePortletDataContextFactoryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil" class="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil">
@@ -43,26 +48,22 @@
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFactoryUtil" class="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFactoryUtil">
 		<property name="exportImportLifecycleEventFactory">
-			<bean class="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventFactoryImpl" />
+			<bean class="com.liferay.portlet.exportimport.lifecycle.BridgeExportImportLifecycleEventFactoryImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" class="com.liferay.portlet.exportimport.staging.LayoutStagingUtil">
 		<property name="layoutStaging">
-			<bean class="com.liferay.portlet.exportimport.staging.LayoutStagingImpl" />
+			<bean class="com.liferay.portlet.exportimport.staging.BridgeLayoutStagingImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.staging.StagingUtil" class="com.liferay.portlet.exportimport.staging.StagingUtil">
 		<property name="staging">
-			<bean class="com.liferay.portlet.exportimport.staging.StagingImpl" />
+			<bean class="com.liferay.portlet.exportimport.staging.BridgeStagingImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil" class="com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil">
 		<property name="stagingPermission">
-			<bean class="com.liferay.portlet.exportimport.staging.permission.StagingPermissionImpl" />
+			<bean class="com.liferay.portlet.exportimport.staging.permission.BridgeStagingPermissionImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.exportimport.lifecycle.CacheExportImportLifecycleListener" class="com.liferay.portlet.exportimport.lifecycle.CacheExportImportLifecycleListener" />
-	<bean id="com.liferay.portlet.exportimport.lifecycle.IndexingExportImportLifecycleListener" class="com.liferay.portlet.exportimport.lifecycle.IndexingExportImportLifecycleListener" />
-	<bean id="com.liferay.portlet.exportimport.lifecycle.LoggerExportImportLifecycleListener" class="com.liferay.portlet.exportimport.lifecycle.LoggerExportImportLifecycleListener" />
-	<bean id="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackLifecycleListener" class="com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackLifecycleListener" />
 </beans>

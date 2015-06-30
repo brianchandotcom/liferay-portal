@@ -17,44 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Long liveGroupId = (Long)request.getAttribute("site.liveGroupId");
+String virtualHostName = PortalUtil.getVirtualHostname(layoutsAdminDisplayContext.getSelLayoutSet());
 
-LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, false);
+String defaultRobots = RobotsUtil.getRobots(layoutsAdminDisplayContext.getSelLayoutSet());
 
-String publicVirtualHostName = PortalUtil.getVirtualHostname(publicLayoutSet);
-
-String defaultPublicRobots = RobotsUtil.getRobots(publicLayoutSet);
-
-String publicRobots = ParamUtil.getString(request, "robots", defaultPublicRobots);
-
-LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, true);
-
-String defaultPrivateRobots = RobotsUtil.getRobots(privateLayoutSet);
-
-String privateRobots = ParamUtil.getString(request, "robots", defaultPrivateRobots);
+String robots = ParamUtil.getString(request, "robots", defaultRobots);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="robots" />
 
 <h3><liferay-ui:message key="robots" /></h3>
 
-<aui:fieldset label="public-pages">
+<aui:fieldset>
 	<c:choose>
-		<c:when test="<%= Validator.isNotNull(publicVirtualHostName) %>">
-			<aui:input cols="60" label="set-the-robots-txt-for-public-pages" name="publicRobots" rows="15" type="textarea" value="<%= publicRobots %>" />
-		</c:when>
-		<c:otherwise>
-			<div class="alert alert-info">
-				<liferay-ui:message key="please-set-the-virtual-host-before-you-set-the-robots-txt" />
-			</div>
-		</c:otherwise>
-	</c:choose>
-</aui:fieldset>
-
-<aui:fieldset label="private-pages">
-	<c:choose>
-		<c:when test="<%= Validator.isNotNull(privateLayoutSet.getVirtualHostname()) %>">
-			<aui:input cols="60" label="set-the-robots-txt-for-private-pages" name="privateRobots" rows="15" type="textarea" value="<%= privateRobots %>" />
+		<c:when test="<%= Validator.isNotNull(virtualHostName) %>">
+			<aui:input cols="60" label="set-the-robots-txt" name="robots" rows="15" type="textarea" value="<%= robots %>" />
 		</c:when>
 		<c:otherwise>
 			<div class="alert alert-info">

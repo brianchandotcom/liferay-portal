@@ -488,6 +488,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		updateMergePages(actionRequest, liveGroupId);
 
+		updateRobots(actionRequest, liveGroupId, privateLayout);
+
 		updateSettings(
 			actionRequest, liveGroupId, stagingGroupId, privateLayout,
 			layoutSet.getSettingsProperties());
@@ -949,6 +951,32 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			"mergeGuestPublicPages", String.valueOf(mergeGuestPublicPages));
 
 		GroupServiceUtil.updateGroup(liveGroupId, liveGroup.getTypeSettings());
+	}
+
+	protected void updateRobots(
+			ActionRequest actionRequest, long liveGroupId,
+			boolean privateLayout)
+		throws Exception {
+
+		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+		UnicodeProperties typeSettingsProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		String propertyName = "false-robots.txt";
+
+		if (privateLayout) {
+			propertyName = "true-robots.txt";
+		}
+
+		String publicRobots = ParamUtil.getString(
+			actionRequest, "robots",
+			liveGroup.getTypeSettingsProperty(propertyName));
+
+		typeSettingsProperties.setProperty(propertyName, publicRobots);
+
+		GroupServiceUtil.updateGroup(
+			liveGroup.getGroupId(), typeSettingsProperties.toString());
 	}
 
 	protected void updateSettings(

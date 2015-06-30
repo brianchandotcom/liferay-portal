@@ -286,7 +286,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource) {
-			File file = getFile("portal-impl/src/portal.properties", 4);
+			File file = getFile("portal-impl/src/portal.properties", 5);
 
 			_portalPortalPropertiesContent = FileUtil.read(file);
 

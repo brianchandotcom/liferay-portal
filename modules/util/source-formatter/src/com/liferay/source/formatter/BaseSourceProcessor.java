@@ -377,7 +377,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			_portalLanguageProperties = new Properties();
 
 			File portalLanguagePropertiesFile = new File(
-				getFile("portal-impl", 4), "src/content/Language.properties");
+				getFile("portal-impl", 5), "src/content/Language.properties");
 
 			InputStream inputStream = new FileInputStream(
 				portalLanguagePropertiesFile);
@@ -1683,7 +1683,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private boolean _isPortalSource() {
-		if (getFile("portal-impl", 4) != null) {
+		if (getFile("portal-impl", 5) != null) {
 			return true;
 		}
 		else {

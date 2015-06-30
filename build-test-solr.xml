@@ -62,16 +62,34 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 
 		<antcall target="configure-solr-osgi-bundle-properties" />
 
-		<parallel>
-			<daemons>
-				<exec
-					dir="${solr.dir}/example"
-					executable="java"
-					failonerror="true"
-				>
-					<arg line="-jar start.jar" />
+		<local name="solr.server.not.started" />
+
+		<if>
+			<os family="unix" />
+			<then>
+				<exec executable="/bin/bash" os="${os.unix}">
+					<arg value="-c" />
+					<arg value="${solr.dir}/bin/solr -V" />
 				</exec>
-			</daemons>
-		</parallel>
+
+				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+					<http url="http://localhost:8983/solr" />
+				</waitfor>
+
+				<fail message="Solr server failed to initialized." if="solr.server.not.started" />
+			</then>
+			<else>
+				<exec executable="cmd" spawn="true">
+					<arg value="/c" />
+					<arg value="${solr.dir}/bin/solr -V" />
+				</exec>
+
+				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+					<http url="http://localhost:8983/solr" />
+				</waitfor>
+
+				<fail message="Solr server failed to initialized." if="solr.server.not.started" />
+			</else>
+		</if>
 	</target>
 </project>

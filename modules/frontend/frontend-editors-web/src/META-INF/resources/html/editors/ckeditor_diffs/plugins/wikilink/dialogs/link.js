@@ -44,6 +44,8 @@ CKEDITOR.dialog.add(
 				data.address = selection.getSelectedText();
 			}
 
+			data.address = handleAddress(data.address);
+
 			instance._.selectedElement = element;
 
 			return data;

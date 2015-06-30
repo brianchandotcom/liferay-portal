@@ -2,10 +2,13 @@ Bundle-Name: Liferay Document Library Repository CMIS Implementation
 Bundle-SymbolicName: com.liferay.document.library.repository.cmis.impl
 Bundle-Version: 1.0.0
 Import-Package:\
+	!com.ctc.wstx.*,\
 	!com.sun.istack,\
 	!com.sun.net.httpserver,\
 	!com.sun.org.apache.xml.internal.resolver.*,\
 	!com.sun.xml.*,\
+	!org.apache.cxf.frontend,\
+	!org.apache.http.*,\
 	!org.json.simple.*,\
 	!org.jvnet.*,\
 	*

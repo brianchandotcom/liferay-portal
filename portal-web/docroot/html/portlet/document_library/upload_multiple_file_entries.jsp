@@ -21,18 +21,16 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
-
-long repositoryId = BeanParamUtil.getLong(fileEntry, request, "repositoryId");
+long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
 if (repositoryId <= 0) {
 
 	// <liferay-ui:asset_add_button /> only passes in groupId
 
-	repositoryId = BeanParamUtil.getLong(fileEntry, request, "groupId");
+	repositoryId = ParamUtil.getLong(request, "groupId");
 }
 
-long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
+long folderId = ParamUtil.getLong(request, "folderId");
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">

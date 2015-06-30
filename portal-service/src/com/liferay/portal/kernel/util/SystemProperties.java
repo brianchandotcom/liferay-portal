@@ -75,9 +75,8 @@ public class SystemProperties {
 	public static Properties getProperties(
 		String prefix, boolean removePrefix) {
 
-		Properties properties = getProperties();
-
-		return PropertiesUtil.getProperties(properties, prefix, removePrefix);
+		return PropertiesUtil.getProperties(
+			getProperties(), prefix, removePrefix);
 	}
 
 	public static void reload() {

@@ -29,7 +29,9 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 <div class="article-preview row row-spacing">
 	<div class="col-md-4 col-xs-12">
 		<p class="text-muted"><liferay-ui:message key="layout.types.article" /></p>
+
 		<div class="hidden loading-animation"></div>
+
 		<div class="alert alert-danger hidden">
 			<liferay-ui:message key="an-unexpected-error-occurred" />
 		</div>
@@ -51,7 +53,9 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 <div class="row row-spacing template-preview <%= article == null ? "hidden" : "" %>">
 	<div class="col-md-4 col-xs-12">
 		<p class="text-muted"><liferay-ui:message key="template" /></p>
+
 		<div class="hidden loading-animation"></div>
+
 		<div class="alert alert-danger hidden">
 			<liferay-ui:message key="an-unexpected-error-occurred" />
 		</div>
@@ -147,6 +151,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 	var showTemplateError = function() {
 		templatePreviewNode.removeClass(STR_HIDDEN);
+
 		showError(templatePreviewNode);
 	};
 
@@ -178,7 +183,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					eventName: 'selectContent',
 					id: 'selectContent',
 					title: '<liferay-ui:message key="select-web-content" />',
-					uri: baseSelectWebContentURI.replace(escape('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), form.fm('assetEntryId').val())
+					uri: baseSelectWebContentURI.replace(encodeURIComponent('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), form.fm('assetEntryId').val())
 				},
 				function(event) {
 					<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" var="journalArticleResource">
@@ -200,7 +205,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					templatePreviewNode.find('.template-preview-content-container').html('');
 
 					$.ajax(
-						baseJournalArticleResourceUrl.replace(escape('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
+						baseJournalArticleResourceUrl.replace(encodeURIComponent('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
 						{
 							error: function() {
 								hideLoading(articlePreviewNode);
@@ -223,13 +228,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 									if (templatePreviewContent.length > 0) {
 										var templatePreviewContentNode = templatePreviewNode.find('.template-preview-content');
 
-										if (templatePreviewContentNode.attr('data-change-enabled') === 'false') {
-											templatePreviewNode.find('.button-container').addClass(STR_HIDDEN);
-										}
-										else {
-											templatePreviewNode.find('.button-container').removeClass(STR_HIDDEN);
-										}
-
+										templatePreviewNode.find('.button-container').toggleClass(STR_HIDDEN, templatePreviewContentNode.attr('data-change-enabled') === 'false');
 										templatePreviewNode.removeClass(STR_HIDDEN);
 
 										form.fm('ddmTemplateKey').val(templatePreviewContentNode.attr('data-template-key'));

@@ -26,7 +26,7 @@ AssetRenderer assetRenderer = journalContentDisplayContext.getAssetRenderer();
 	<div class="card-horizontal">
 		<div class="card-row">
 			<div class="card-col-5">
-				<div class="square-thumbnail" style="background-image: url('<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>');"></div>
+				<div class="card-media-primary" style="background-image: url('<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>');"></div>
 			</div>
 
 			<div class="card-col-7 card-col-gutters">

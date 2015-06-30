@@ -449,25 +449,27 @@ urlConfiguration.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimar
 
 portletDisplay.setURLConfiguration(urlConfiguration.toString() + "&" + PortalUtil.getPortletNamespace(PortletKeys.PORTLET_CONFIGURATION));
 
-StringBuilder urlConfigurationJSSB = new StringBuilder(13);
+StringBuilder urlConfigurationJSSB = new StringBuilder(15);
 
-urlConfigurationJSSB.append("Liferay.Portlet.openWindow('#p_p_id_");
+urlConfigurationJSSB.append("Liferay.Portlet.openWindow({portlet: '#p_p_id_");
 urlConfigurationJSSB.append(portletDisplay.getId());
-urlConfigurationJSSB.append("_', '");
+urlConfigurationJSSB.append("_', portletId: '");
 urlConfigurationJSSB.append(portletDisplay.getId());
-urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append("', uri: '");
 urlConfigurationJSSB.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
-urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append("', namespace: '");
 urlConfigurationJSSB.append(portletDisplay.getNamespace());
-urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append("', title: '");
 urlConfigurationJSSB.append(UnicodeLanguageUtil.get(request, "configuration"));
-urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append("', ");
 
 if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
+	urlConfigurationJSSB.append("subTitle: '");
 	urlConfigurationJSSB.append(portletDisplay.getId());
+	urlConfigurationJSSB.append("',");
 }
 
-urlConfigurationJSSB.append("', 'dialog-with-footer'); return false;");
+urlConfigurationJSSB.append("bodyCssClass: 'dialog-with-footer'}); return false;");
 
 portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
 

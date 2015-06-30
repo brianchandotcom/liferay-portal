@@ -175,12 +175,12 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 						parentMessageIdProperty.gt(
 							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID));
 
-					Property workflowStatusProperty =
-						PropertyFactoryUtil.forName("status");
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
 
 					if (portletDataContext.isInitialPublication()) {
 						dynamicQuery.add(
-							workflowStatusProperty.ne(
+							statusProperty.ne(
 								WorkflowConstants.STATUS_IN_TRASH));
 					}
 					else {
@@ -190,7 +190,7 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 									MBMessage.class.getName());
 
 						dynamicQuery.add(
-							workflowStatusProperty.in(
+							statusProperty.in(
 								stagedModelDataHandler.
 									getExportableStatuses()));
 					}

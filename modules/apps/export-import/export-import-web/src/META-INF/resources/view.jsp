@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
@@ -33,7 +33,7 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/export_import/view" />
+	<portlet:param name="mvcPath" value="/view.jsp" />
 </liferay-portlet:renderURL>
 
 <liferay-ui:tabs
@@ -46,7 +46,7 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/export_import/export_layouts" />
+			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 			<portlet:param name="liveGroupId" value="<%= String.valueOf(groupDisplayContextHelper.getLiveGroupId()) %>" />
@@ -58,7 +58,7 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 		<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" useDialog="<%= true %>" />
 
 		<liferay-portlet:renderURL var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/export_import/import_layouts" />
+			<portlet:param name="mvcRenderCommandName" value="importLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

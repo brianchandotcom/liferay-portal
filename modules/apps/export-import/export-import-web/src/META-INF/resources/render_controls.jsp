@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String action = (String)request.getAttribute("render_controls.jsp-action");
@@ -68,7 +68,7 @@ for (int i = 0; i < controls.length; i++) {
 						request.setAttribute("render_controls.jsp-controls", children);
 						%>
 
-						<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+						<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 					</ul>
 
 					<aui:script>

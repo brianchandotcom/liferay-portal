@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 boolean validate = ParamUtil.getBoolean(request, "validate", true);
@@ -35,17 +35,17 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 			%>
 
 			<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-				<liferay-util:include page="/html/portlet/export_import/incomplete_processes_message.jsp">
+				<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 				</liferay-util:include>
 			</div>
 
 			<c:choose>
 				<c:when test="<%= (tempFileNames.length > 0) && !validate %>">
-					<liferay-util:include page="/html/portlet/export_import/import_portlet_resources.jsp" />
+					<liferay-util:include page="/import_portlet_resources.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/html/portlet/export_import/import_portlet_validation.jsp" />
+					<liferay-util:include page="/import_portlet_validation.jsp" servletContext="<%= application %>" />
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -53,14 +53,13 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 
 	<liferay-ui:section>
 		<div class="process-list" id="<portlet:namespace />importProcesses">
-			<liferay-util:include page="/html/portlet/export_import/import_portlet_processes.jsp" />
+			<liferay-util:include page="/import_portlet_processes.jsp" servletContext="<%= application %>" />
 		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 
 <aui:script use="liferay-export-import">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importProcessesURL">
-		<portlet:param name="struts_action" value="/export_import/export_import" />
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="importProcessesURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 		<portlet:param name="tabs2" value="import" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />

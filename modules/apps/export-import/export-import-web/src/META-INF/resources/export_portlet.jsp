@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
@@ -36,13 +36,13 @@ portletURL.setParameter("tabs3", "current-and-previous");
 		%>
 
 		<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-			<liferay-util:include page="/html/portlet/export_import/incomplete_processes_message.jsp">
+			<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 			</liferay-util:include>
 		</div>
 
-		<portlet:actionURL var="exportPortletURL">
-			<portlet:param name="struts_action" value="/export_import/export_import" />
+		<portlet:actionURL name="exportImport" var="exportPortletURL">
+			<portlet:param name="mvcRenderCommandName" value="exportImport" />
 		</portlet:actionURL>
 
 		<aui:form action='<%= exportPortletURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
@@ -86,7 +86,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 															request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 															%>
 
-															<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+															<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 														</ul>
 													</aui:fieldset>
 												</li>
@@ -294,7 +294,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 																		<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
 																			<ul class="lfr-tree list-unstyled">
-																				<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+																				<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																			</ul>
 																		</aui:field-wrapper>
 																	</c:if>
@@ -313,7 +313,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 																				<aui:field-wrapper label="content-metadata">
 																					<ul class="lfr-tree list-unstyled">
-																						<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
+																						<liferay-util:include page="/render_controls.jsp" servletContext="<%= application %>" />
 																					</ul>
 																				</aui:field-wrapper>
 
@@ -392,7 +392,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 						Map<String, String[]> parameterMap = Collections.emptyMap();
 						%>
 
-						<%@ include file="/html/portlet/export_import/permissions.jspf" %>
+						<%@ include file="/permissions.jspf" %>
 					</aui:fieldset>
 				</c:if>
 
@@ -407,14 +407,13 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 	<liferay-ui:section>
 		<div class="process-list" id="<portlet:namespace />exportProcesses">
-			<liferay-util:include page="/html/portlet/export_import/export_portlet_processes.jsp" />
+			<liferay-util:include page="/export_portlet_processes.jsp" servletContext="<%= application %>" />
 		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 
 <aui:script use="liferay-export-import">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportProcessesURL">
-		<portlet:param name="struts_action" value="/export_import/export_import" />
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="exportProcessesURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 		<portlet:param name="tabs2" value="export" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />

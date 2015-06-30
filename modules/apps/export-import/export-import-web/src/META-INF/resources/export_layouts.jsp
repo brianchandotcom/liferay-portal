@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-staging:defineObjects />
 
@@ -90,7 +90,7 @@ if (!cmd.equals(Constants.UPDATE)) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/export_import/export_layouts");
+portletURL.setParameter("mvcRenderCommandName", "exportLayouts");
 portletURL.setParameter(Constants.CMD, Constants.EXPORT);
 
 if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
@@ -114,8 +114,8 @@ if (!cmd.equals(Constants.ADD)) {
 }
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/export_import/edit_export_configuration" />
+<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
+	<portlet:param name="mvcPath" value="/export_layouts.jsp" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -140,7 +140,7 @@ if (!cmd.equals(Constants.ADD)) {
 	%>
 
 	<div class='<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>' id="<portlet:namespace />incompleteProcessMessage">
-		<liferay-util:include page="/html/portlet/export_import/incomplete_processes_message.jsp">
+		<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 		</liferay-util:include>
 	</div>
@@ -165,12 +165,12 @@ if (!cmd.equals(Constants.ADD)) {
 		</div>
 
 		<div <%= exportConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
-			<portlet:actionURL var="updateExportConfigurationURL">
-				<portlet:param name="struts_action" value="/export_import/edit_export_configuration" />
+			<portlet:actionURL name="editExportConfiguration" var="updateExportConfigurationURL">
+				<portlet:param name="mvcPath" value="/export_layouts.jsp" />
 			</portlet:actionURL>
 
-			<portlet:actionURL var="exportPagesURL">
-				<portlet:param name="struts_action" value="/export_import/export_layouts" />
+			<portlet:actionURL name="exportLayouts" var="exportPagesURL">
+				<portlet:param name="mvcPath" value="/export_layouts.jsp" />
 				<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:actionURL>
 
@@ -201,7 +201,7 @@ if (!cmd.equals(Constants.ADD)) {
 							request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
 							%>
 
-							<liferay-util:include page="/html/portlet/export_import/select_pages.jsp">
+							<liferay-util:include page="/select_pages.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 								<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 								<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -214,7 +214,7 @@ if (!cmd.equals(Constants.ADD)) {
 					<liferay-staging:content cmd="<%= cmd %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
 
 					<aui:fieldset cssClass="options-group" label="permissions">
-						<%@ include file="/html/portlet/export_import/permissions.jspf" %>
+						<%@ include file="/permissions.jspf" %>
 					</aui:fieldset>
 				</div>
 
@@ -237,7 +237,7 @@ if (!cmd.equals(Constants.ADD)) {
 
 		<c:if test="<%= !cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE) %>">
 			<div <%= exportConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
-				<liferay-util:include page="/html/portlet/export_import/export_layouts_configurations.jsp">
+				<liferay-util:include page="/export_layouts_configurations.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -250,7 +250,7 @@ if (!cmd.equals(Constants.ADD)) {
 	<c:if test="<%= !cmd.equals(Constants.ADD) %>">
 		<liferay-ui:section>
 			<div class="process-list" id="<portlet:namespace />exportProcesses">
-				<liferay-util:include page="/html/portlet/export_import/export_layouts_processes.jsp">
+				<liferay-util:include page="/export_layouts_processes.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 				</liferay-util:include>
 			</div>
@@ -259,8 +259,7 @@ if (!cmd.equals(Constants.ADD)) {
 </liferay-ui:tabs>
 
 <aui:script use="liferay-export-import">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportProcessesURL">
-		<portlet:param name="struts_action" value="/export_import/export_layouts" />
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportLayouts" var="exportProcessesURL">
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/export_import/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -29,7 +29,7 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 %>
 
 <portlet:renderURL var="deleteRedirectURL">
-	<portlet:param name="struts_action" value="/export_import/publish_layouts" />
+	<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 	<portlet:param name="tabs2" value="new-publication-process" />
 	<portlet:param name="publishConfigurationButtons" value="saved" />
@@ -39,15 +39,15 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </portlet:renderURL>
 
-<portlet:actionURL var="deletePublishConfigurationURL">
-	<portlet:param name="struts_action" value="/export_import/edit_publish_configuration" />
+<portlet:actionURL name="editPublishConfiguration" var="deletePublishConfigurationURL">
+	<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(groupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 	<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 </portlet:actionURL>
 
 <portlet:renderURL var="publishRedirectURL">
-	<portlet:param name="struts_action" value="/export_import/publish_layouts" />
+	<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
 	<portlet:param name="tabs2" value="current-and-previous" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -57,7 +57,7 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 </portlet:renderURL>
 
 <portlet:renderURL var="publishByExportImportConfigurationURL">
-	<portlet:param name="struts_action" value="/export_import/confirmation" />
+	<portlet:param name="mvcRenderCommandName" value="confirmation" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 	<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
 	<portlet:param name="backURL" value="<%= deleteRedirectURL %>" />

@@ -758,12 +758,12 @@ AUI.add(
 							portletURL.setParameter('cmd', cmdNode.val());
 
 							if (instance._exportLAR) {
-								portletURL.setParameter('struts_action', '/export_import/edit_export_configuration');
+								portletURL.setParameter('mvcRenderCommandName', 'editExportConfiguration');
 								portletURL.setParameter('tabs2', 'new-export-process');
 								portletURL.setParameter('exportConfigurationButtons', 'custom');
 							}
 							else {
-								portletURL.setParameter('struts_action', '/export_import/edit_publish_configuration');
+								portletURL.setParameter('mvcRenderCommandName', 'editPublishConfiguration');
 								portletURL.setParameter('tabs2', 'new-publication-process');
 								portletURL.setParameter('publishConfigurationButtons', 'custom');
 							}

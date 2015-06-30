@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -338,6 +340,13 @@ public class RepositoryProviderImpl
 			return dlFileEntry.getRepositoryId();
 		}
 
+		RepositoryEntry repositoryEntry =
+			_repositoryEntryLocalService.fetchRepositoryEntry(fileEntryId);
+
+		if (repositoryEntry != null) {
+			return repositoryEntry.getRepositoryId();
+		}
+
 		throw new InvalidRepositoryIdException(
 			"No repository associated with file entry " + fileEntryId);
 	}
@@ -362,6 +371,13 @@ public class RepositoryProviderImpl
 			return dlFileVersion.getRepositoryId();
 		}
 
+		RepositoryEntry repositoryEntry =
+			_repositoryEntryLocalService.fetchRepositoryEntry(fileVersionId);
+
+		if (repositoryEntry != null) {
+			return repositoryEntry.getRepositoryId();
+		}
+
 		throw new InvalidRepositoryIdException(
 			"No repository associated with file version " + fileVersionId);
 	}
@@ -376,6 +392,13 @@ public class RepositoryProviderImpl
 			else {
 				return dlFolder.getRepositoryId();
 			}
+		}
+
+		RepositoryEntry repositoryEntry =
+			_repositoryEntryLocalService.fetchRepositoryEntry(folderId);
+
+		if (repositoryEntry != null) {
+			return repositoryEntry.getRepositoryId();
 		}
 
 		throw new InvalidRepositoryIdException(
@@ -423,6 +446,9 @@ public class RepositoryProviderImpl
 
 	@BeanReference(type = GroupLocalService.class)
 	protected GroupLocalService _groupLocalService;
+
+	@BeanReference(type = RepositoryEntryLocalService.class)
+	protected RepositoryEntryLocalService _repositoryEntryLocalService;
 
 	@BeanReference(type = RepositoryFactory.class)
 	protected RepositoryFactory _repositoryFactory;

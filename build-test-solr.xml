@@ -42,6 +42,11 @@
 		</sequential>
 	</macrodef>
 
+	<target name="configure-solr-osgi-bundle-properties">
+		<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
+writeURL=http://localhost:8983/solr/liferay</echo>
+	</target>
+
 	<target name="prepare-solr-web-properties">
 		<if>
 			<available file="${lp.plugins.dir}/shared/solr4-shared/src/solr.properties" />
@@ -62,6 +67,10 @@
 		<unzip-solr />
 
 		<prepare-solr />
+
+		<ant dir="modules/portal/portal-search-solr" target="all" />
+
+		<antcall target="configure-solr-osgi-bundle-properties" />
 
 		<parallel>
 			<daemons>

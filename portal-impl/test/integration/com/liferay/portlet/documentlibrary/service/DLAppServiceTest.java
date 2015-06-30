@@ -931,13 +931,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
-			AtomicInteger addCounter =
+			AtomicInteger moveCounter =
 				registerDLSyncEventProcessorMessageListener(
-					DLSyncConstants.EVENT_ADD);
-
-			AtomicInteger deleteCounter =
-				registerDLSyncEventProcessorMessageListener(
-					DLSyncConstants.EVENT_DELETE);
+					DLSyncConstants.EVENT_MOVE);
 
 			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -950,8 +946,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				fileEntry.getFileEntryId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-			Assert.assertEquals(2, addCounter.get());
-			Assert.assertEquals(1, deleteCounter.get());
+			Assert.assertEquals(1, moveCounter.get());
 		}
 
 	}
@@ -968,13 +963,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
-			AtomicInteger addCounter =
+			AtomicInteger moveCounter =
 				registerDLSyncEventProcessorMessageListener(
-					DLSyncConstants.EVENT_ADD);
-
-			AtomicInteger deleteCounter =
-				registerDLSyncEventProcessorMessageListener(
-					DLSyncConstants.EVENT_DELETE);
+					DLSyncConstants.EVENT_MOVE);
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -988,8 +979,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				folder.getFolderId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-			Assert.assertEquals(2, addCounter.get());
-			Assert.assertEquals(1, deleteCounter.get());
+			Assert.assertEquals(1, moveCounter.get());
 		}
 
 	}

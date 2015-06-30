@@ -95,6 +95,7 @@ import java.util.TreeSet;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -280,7 +281,8 @@ public class DLImpl implements DL {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(
+		String strutsAction = ParamUtil.getString(request, "strutsAction");
+		String mvcRenderCommandName = ParamUtil.getString(
 			request, "mvcRenderCommandName");
 
 		long groupId = ParamUtil.getLong(request, "groupId");
@@ -289,23 +291,22 @@ public class DLImpl implements DL {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (strutsAction.equals("/document_library/select_file_entry") ||
-			strutsAction.equals("/document_library/select_folder") ||
-			strutsAction.equals("/document_library_display/select_folder") ||
-			strutsAction.equals("/image_gallery_display/select_folder") ||
-			strutsAction.equals("/item_selector/view")) {
+		if (mvcRenderCommandName.equals(
+				"/document_library/select_file_entry") ||
+			mvcRenderCommandName.equals("/document_library/select_folder") ||
+			mvcRenderCommandName.equals(
+				"/document_library_display/select_folder") ||
+			mvcRenderCommandName.equals(
+				"/image_gallery_display/select_folder")) {
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			portletURL.setParameter("mvcRenderCommandName", strutsAction);
-			portletURL.setParameter("groupId", String.valueOf(groupId));
-			portletURL.setParameter(
-				"ignoreRootFolder", String.valueOf(ignoreRootFolder));
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString());
+			_addPortletBreadcrumbEntry(
+				request, "mvcRenderCommandName", mvcRenderCommandName, groupId,
+				ignoreRootFolder, portletURL);
+		}
+		else if (strutsAction.equals("/item_selector/view")) {
+			_addPortletBreadcrumbEntry(
+				request, "strutsAction", strutsAction, groupId,
+				ignoreRootFolder, portletURL);
 		}
 		else {
 			portletURL.setParameter(
@@ -1414,6 +1415,25 @@ public class DLImpl implements DL {
 		for (String extension : extensions) {
 			_genericNames.put(extension, genericName);
 		}
+	}
+
+	private void _addPortletBreadcrumbEntry(
+			HttpServletRequest request, String parameterName,
+			String parameterValue, long groupId, boolean ignoreRootFolder,
+			PortletURL portletURL)
+		throws WindowStateException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		portletURL.setParameter(parameterName, parameterValue);
+		portletURL.setParameter("groupId", String.valueOf(groupId));
+		portletURL.setParameter(
+			"ignoreRootFolder", String.valueOf(ignoreRootFolder));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, themeDisplay.translate("home"), portletURL.toString());
 	}
 
 	private static final String _DEFAULT_FILE_ICON = "page";

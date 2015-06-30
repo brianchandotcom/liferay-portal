@@ -68,7 +68,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 			PortletURL searchExternalRepositoryURL = renderResponse.createRenderURL();
 
-			searchExternalRepositoryURL.setParameter("struts_action", "/document_library_display/search");
+			searchExternalRepositoryURL.setParameter("mvcPath", "/html/portlet/document_library_display/search.jsp");
 			searchExternalRepositoryURL.setParameter("redirect", redirect);
 			searchExternalRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 			searchExternalRepositoryURL.setParameter("folderId", String.valueOf(mountFolder.getFolderId()));
@@ -96,7 +96,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("mvcRenderCommandName", "/document_library_display/search");
+	portletURL.setParameter("mvcPath", "/html/portlet/document_library_display/search.jsp");
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 	portletURL.setParameter("folderId", String.valueOf(folderId));

@@ -267,7 +267,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 <%
 PortletURL embeddedPlayerURL = renderResponse.createRenderURL();
 
-embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded_player");
+embeddedPlayerURL.setParameter("mvcPath", "/html/portlet/image_gallery_display/embedded_player.jsp");
 embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 

@@ -74,7 +74,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 				<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
 					<liferay-portlet:renderURL varImpl="searchURL">
-						<portlet:param name="mvcRenderCommandName" value="/document_library_display/search" />
+						<portlet:param name="mvcPath" value="/html/portlet/document_library_display/search.jsp" />
 					</liferay-portlet:renderURL>
 
 					<aui:nav-bar-search>

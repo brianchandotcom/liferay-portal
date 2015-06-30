@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.lists.form.web.context;
 
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
-import com.liferay.dynamic.data.lists.web.constants.DDLWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -60,7 +60,7 @@ public class DDLFormDisplayContext {
 		}
 
 		_recordSet = (DDLRecordSet)_renderRequest.getAttribute(
-			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+			DDLFormWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 		if (_recordSet != null) {
 			return _recordSet;

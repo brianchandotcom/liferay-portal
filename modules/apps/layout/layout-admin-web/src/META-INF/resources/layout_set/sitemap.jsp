@@ -17,27 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-Long liveGroupId = (Long)request.getAttribute("site.liveGroupId");
-
 String host = PortalUtil.getHost(request);
 
 String sitemapUrl = PortalUtil.getPortalURL(request) + themeDisplay.getPathContext() + "/sitemap.xml";
 
-String publicSitemapUrl = sitemapUrl;
+LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
-LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, false);
-
-if (!host.equals(publicLayoutSet.getVirtualHostname())) {
-	publicSitemapUrl += "?groupId=" + liveGroup.getGroupId() + "&privateLayout=" + false;
-}
-
-String privateSitemapUrl = sitemapUrl;
-
-LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, true);
-
-if (!host.equals(privateLayoutSet.getVirtualHostname())) {
-	privateSitemapUrl += "?groupId=" + liveGroup.getGroupId() + "&privateLayout=" + true;
+if (!host.equals(layoutSet.getVirtualHostname())) {
+	sitemapUrl += "?groupId=" + layoutsAdminDisplayContext.getLiveGroupId() + "&privateLayout=" + layoutsAdminDisplayContext.isPrivateLayout();
 }
 %>
 
@@ -53,28 +40,15 @@ if (!host.equals(privateLayoutSet.getVirtualHostname())) {
 
 <br /><br />
 
-<aui:fieldset label="public-pages">
-	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(publicSitemapUrl) + "\">", "</a>"}, false) %>
+<aui:fieldset>
+	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">", "</a>"}, false) %>
 
 	<ul>
 		<li>
-			<aui:a href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(publicSitemapUrl) %>' target="_blank">Google</aui:a>
+			<aui:a href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Google</aui:a>
 		</li>
 		<li>
-			<aui:a href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(publicSitemapUrl) %>' target="_blank">Yahoo!</aui:a> (<liferay-ui:message key="requires-login" />)
-		</li>
-	</ul>
-</aui:fieldset>
-
-<aui:fieldset label="private-pages">
-	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(privateSitemapUrl) + "\">", "</a>"}, false) %>
-
-	<ul>
-		<li>
-			<aui:a href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(privateSitemapUrl) %>' target="_blank">Google</aui:a>
-		</li>
-		<li>
-			<aui:a href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(privateSitemapUrl) %>' target="_blank">Yahoo!</aui:a> (<liferay-ui:message key="requires-login" />)
+			<aui:a href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Yahoo!</aui:a> (<liferay-ui:message key="requires-login" />)
 		</li>
 	</ul>
 </aui:fieldset>

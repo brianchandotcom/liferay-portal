@@ -347,7 +347,7 @@ YUI.add(
 						xmlLog.delegate(
 							'click',
 							A.bind('handleCurrentScopeSelect', instance),
-							'.function > .line-container, .macro > .line-container, .test-group > .line-container'
+							'.conditional-function > .line-container, .function > .line-container, .macro > .line-container, .test-group > .line-container'
 						);
 
 						xmlLog.delegate(

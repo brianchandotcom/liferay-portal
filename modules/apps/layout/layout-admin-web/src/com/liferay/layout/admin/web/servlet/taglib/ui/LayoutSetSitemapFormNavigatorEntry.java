@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.admin.web.servlet.taglib.ui;
+package com.liferay.layout.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"service.ranking:Integer=20"},
 	service = FormNavigatorEntry.class
 )
-public class SiteSitemapFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
+public class LayoutSetSitemapFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {

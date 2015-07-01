@@ -33,13 +33,9 @@ public interface SearchFacet {
 
 	public String getClassName();
 
-	public String getConfigurationView();
-
 	public JSONObject getData();
 
 	public FacetConfiguration getDefaultConfiguration();
-
-	public String getDisplayView();
 
 	public Facet getFacet();
 

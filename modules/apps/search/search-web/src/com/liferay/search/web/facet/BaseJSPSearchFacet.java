@@ -31,6 +31,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 
+	public abstract String getConfigurationView();
+
+	public abstract String getDisplayView();
+
 	@Override
 	public void includeConfiguration(
 			HttpServletRequest request, HttpServletResponse response)

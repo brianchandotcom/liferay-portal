@@ -167,7 +167,7 @@ public class ConvertDocumentLibrary
 
 		migratePortlets();
 
-		storeFactory.setStoreInstance(_targetStore);
+		storeFactory.setStoreInstance(targetStoreClassName);
 
 		MaintenanceUtil.appendStatus(
 			"Please set " + PropsKeys.DL_STORE_IMPL +

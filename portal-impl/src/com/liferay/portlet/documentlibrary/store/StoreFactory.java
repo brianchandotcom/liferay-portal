@@ -16,7 +16,6 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -106,7 +105,7 @@ public class StoreFactory {
 
 	public Store getStoreInstance() {
 		if (_store == null) {
-			_store = getStoreInstance(PropsValues.DL_STORE_IMPL);
+			setStoreInstance(PropsValues.DL_STORE_IMPL);
 		}
 
 		if (_store == null) {
@@ -135,12 +134,18 @@ public class StoreFactory {
 		return keySet.toArray(new String[keySet.size()]);
 	}
 
-	public void setStoreInstance(Store store) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(store));
+	public void setStoreInstance(String key) {
+		if (key == null) {
+			_store = null;
+
+			return;
 		}
 
-		_store = store;
+		if (_log.isDebugEnabled()) {
+			_log.debug("Set " + key);
+		}
+
+		_store = getStoreInstance(key);
 	}
 
 	private StoreFactory() {
@@ -154,12 +159,12 @@ public class StoreFactory {
 	private static StoreFactory _instance;
 	private static boolean _warned;
 
+	private volatile Store _store = null;
+	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap =
+		ServiceTrackerCollections.singleValueMap(Store.class, "store.type");
 	private final ServiceTrackerMap<String, StoreWrapper>
 		_storeWrapperServiceTrackerMap =
 			ServiceTrackerCollections.singleValueMap(
 				StoreWrapper.class, "store.type");
-	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap =
-		ServiceTrackerCollections.singleValueMap(Store.class, "store.type");
-	private volatile Store _store = null;
 
 }

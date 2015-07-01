@@ -93,7 +93,7 @@ public class ConvertDocumentLibraryTest {
 		_sourceStore = _storeFactory.getStoreInstance(
 			PropsValues.DL_STORE_IMPL);
 
-		_storeFactory.setStoreInstance(_sourceStore);
+		_storeFactory.setStoreInstance(PropsValues.DL_STORE_IMPL);
 
 		_group = GroupTestUtil.addGroup();
 
@@ -113,9 +113,7 @@ public class ConvertDocumentLibraryTest {
 	public void tearDown() throws Exception {
 		PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
-		Store store = _storeFactory.getStoreInstance(PropsValues.DL_STORE_IMPL);
-
-		_storeFactory.setStoreInstance(store);
+		_storeFactory.setStoreInstance(PropsValues.DL_STORE_IMPL);
 	}
 
 	@Test
@@ -314,7 +312,6 @@ public class ConvertDocumentLibraryTest {
 	private static StoreFactory _storeFactory;
 
 	private ConvertProcess _convertProcess;
-	
 	private String _dbStoreClassName;
 
 	@DeleteAfterTestRun

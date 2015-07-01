@@ -24,10 +24,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 if (Validator.isNull(redirect) || (mvcRenderCommandName.equals("/blogs/view_entry") && !portletId.equals(BlogsPortletKeys.BLOGS))) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	if (portletId.equals(PortletKeys.BLOGS_ADMIN)) {
+	if (portletId.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
 		portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	}
-	else if (portletId.equals(PortletKeys.BLOGS_AGGREGATOR)) {
+	else if (portletId.equals(BlogsPortletKeys.BLOGS_AGGREGATOR)) {
 		portletURL.setParameter("mvcRenderCommandName", "/blogs_aggregator/view");
 	}
 	else {
@@ -56,7 +56,7 @@ request.setAttribute("view_entry_content.jsp-entry", entry);
 request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 %>
 
-<c:if test="<%= portletId.equals(PortletKeys.BLOGS_ADMIN) %>">
+<c:if test="<%= portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) %>">
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= false %>"
@@ -73,7 +73,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
 </aui:form>
 
-<c:if test="<%= !portletId.equals(PortletKeys.BLOGS_ADMIN) && PropsValues.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
+<c:if test="<%= !portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) && PropsValues.BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED %>">
 
 	<%
 	BlogsEntry[] prevAndNext = BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(entryId);
@@ -196,7 +196,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 <c:if test="<%= blogsPortletInstanceSettings.isEnableComments() %>">
 	<liferay-ui:panel-container extended="<%= false %>" id="blogsCommentsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" id="blogsCommentsPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(request, "x-comments", MBMessageLocalServiceUtil.getDiscussionMessagesCount(BlogsEntry.class.getName(), entry.getEntryId(), WorkflowConstants.STATUS_APPROVED)) %>'>
-			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(PortletKeys.BLOGS_ADMIN) %>">
+			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) %>">
 				<aui:input inlineLabel="left" name="trackbackURL" type="resource" value='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
 			</c:if>
 

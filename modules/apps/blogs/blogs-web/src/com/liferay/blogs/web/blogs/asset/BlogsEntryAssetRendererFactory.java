@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
@@ -58,7 +57,9 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	public static final String TYPE = "blog";
 
 	public BlogsEntryAssetRendererFactory() {
+		setClassName(BlogsEntry.class.getName());
 		setLinkable(true);
+		setPortletId(BlogsPortletKeys.BLOGS);
 	}
 
 	@Override
@@ -105,7 +106,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
-			PortletKeys.BLOGS);
+			BlogsPortletKeys.BLOGS);
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
 
@@ -119,7 +120,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				PortletKeys.BLOGS, PortletRequest.RENDER_PHASE);
+				BlogsPortletKeys.BLOGS, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);

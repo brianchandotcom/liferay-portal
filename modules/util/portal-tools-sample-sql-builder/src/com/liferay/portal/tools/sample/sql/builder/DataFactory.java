@@ -37,6 +37,7 @@ import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -1115,7 +1116,8 @@ public class DataFactory {
 
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid, PortletKeys.BLOGS, PortletConstants.DEFAULT_PREFERENCES));
+				plid, BlogsPortletKeys.BLOGS,
+				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
 				plid, PortletKeys.DOCKBAR,

@@ -324,10 +324,6 @@
 		<put name="portlet_content" value="/portlet/monitoring/view.jsp" />
 	</definition>
 
-	<!-- My Account -->
-
-	<definition name="portlet.my_account" extends="portlet" />
-
 	<!-- News -->
 
 	<definition name="portlet.news" extends="portlet" />
@@ -544,13 +540,5 @@
 
 	<definition name="portlet.user_statistics.add_activity_counter" extends="portlet.user_statistics">
 		<put name="portlet_content" value="/portlet/user_statistics/add_activity_counter.jsp" />
-	</definition>
-
-	<!-- Users Admin -->
-
-	<definition name="portlet.users_admin" extends="portlet" />
-
-	<definition name="portlet.users_admin.error" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/error.jsp" />
 	</definition>
 </tiles-definitions>

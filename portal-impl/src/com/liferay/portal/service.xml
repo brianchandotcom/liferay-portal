@@ -2412,7 +2412,7 @@
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
-	<entity name="Team" local-service="true" remote-service="true">
+	<entity name="Team" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

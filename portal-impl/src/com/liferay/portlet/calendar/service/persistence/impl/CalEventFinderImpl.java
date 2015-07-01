@@ -39,8 +39,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Zsolt Balogh
+ * @author     Brian Wing Shun Chan
+ * @author     Zsolt Balogh
+ * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated
 public class CalEventFinderImpl

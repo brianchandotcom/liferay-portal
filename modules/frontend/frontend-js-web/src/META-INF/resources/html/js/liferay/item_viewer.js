@@ -43,9 +43,9 @@ AUI.add(
 
 		var TPL_INFO_LAYER = '<div class="tab-group"><ul class="nav nav-tabs"></ul><div class="tab-content"></div></div>';
 
-		var TPL_INFO_LAYER_TAB_TITLE = '<li class="{className}"><a href="#{tabId}" data-toggle="tab" aria-expanded="false">{tabTitle}</a></li>';
+		var TPL_INFO_LAYER_TAB_TITLE = '<li class="{className}"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
 
-		var TPL_INFO_LAYER_TAB_SECTION = '<div id="{tabId}" class="{className} fade in tab-pane"><dl>{content}</dl></div>';
+		var TPL_INFO_LAYER_TAB_SECTION = '<div class="{className} fade in tab-pane" id="{tabId}"><dl>{content}</dl></div>';
 
 		var TPL_INFO_LAYER_TAB_SECTION_CONTENT = '<dt>{dt}</dt><dd>{dd}</dd>';
 
@@ -90,11 +90,11 @@ AUI.add(
 				NS: 'lfr-item-viewer',
 
 				prototype: {
-					TPL_CONTROL_LEFT: '<a href="#" class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_LEFT_BASE + ' ' + CSS_FOOTER_CONTROL_LEFT + '">' +
+					TPL_CONTROL_LEFT: '<a class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_LEFT_BASE + ' ' + CSS_FOOTER_CONTROL_LEFT + '" href="javascript:;">' +
 						'<span class="glyphicon glyphicon-chevron-left"></span>' +
 					'</a>',
 
-					TPL_CONTROL_RIGHT: '<a href="#" class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_RIGHT_BASE + ' ' + CSS_FOOTER_CONTROL_RIGHT + '">' +
+					TPL_CONTROL_RIGHT: '<a class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_RIGHT_BASE + ' ' + CSS_FOOTER_CONTROL_RIGHT + '" href="javascript:;">' +
 						'<span class="glyphicon glyphicon-chevron-right"></span>' +
 					'</a>',
 

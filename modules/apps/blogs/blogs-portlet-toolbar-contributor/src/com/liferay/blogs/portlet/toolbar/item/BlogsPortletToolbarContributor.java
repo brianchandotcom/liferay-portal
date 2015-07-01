@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.portlet.toolbar.item;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -39,7 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(property = {"javax.portlet.name=33", "struts.action=-"})
+@Component(
+	property = {
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS, "struts.action=-"
+	}
+)
 public class BlogsPortletToolbarContributor
 	implements PortletToolbarContributor {
 

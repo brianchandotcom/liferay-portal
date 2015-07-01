@@ -33,7 +33,7 @@ public class CalendarImpl extends CalendarBaseImpl {
 	}
 
 	@Override
-	public TimeZone getTimeZone() throws PortalException {
+	public TimeZone getTimeZone() {
 		return TimeZoneUtil.getTimeZone(getTimeZoneId());
 	}
 

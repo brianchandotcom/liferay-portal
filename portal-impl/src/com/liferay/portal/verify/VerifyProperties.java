@@ -616,12 +616,14 @@ public class VerifyProperties extends VerifyProcess {
 		// Dynamic Data List
 		
 		new String[] {
-				"dynamic.data.lists.error.template", "dynamic.data.lists.error.template",
-				"com.liferay.dynamic.data.lists.web"
+			"dynamic.data.lists.error.template", 
+			"dynamic.data.lists.error.template",
+			"com.liferay.dynamic.data.lists.web"
 		},
 		new String[] {
-				"dynamic.data.lists.storage.type", "dynamic.data.lists.storage.type",
-				"com.liferay.dynamic.data.lists.web"
+			"dynamic.data.lists.storage.type", 
+			"dynamic.data.lists.storage.type",
+			"com.liferay.dynamic.data.lists.web"
 		},
 
 		// Facebook Connect

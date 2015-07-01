@@ -58,7 +58,7 @@ public class CalendarServiceUpgrade {
 		upgradeProcesses.add(new UpgradeCalendarBooking());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.calendar.service", upgradeProcesses, 4, 4, false);
+			"com.liferay.calendar.service", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

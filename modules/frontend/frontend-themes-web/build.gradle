@@ -73,12 +73,10 @@ buildAlloyTheme {
 		delete alloyThemeDestinationDir
 	}
 
-	filesMatching "build/aui-*/assets/skins/sam/**", new StripPathSegmentsAction(5)
 	filesMatching "build/aui-skin-deprecated/images/**", new StripPathSegmentsAction(3)
 
 	from zipTree(new File(thirdPartyDir, "alloy-${alloyVersion}.zip"))
 
-	include "build/aui-*/assets/skins/sam/**.gif", "build/aui-*/assets/skins/sam/**.jpg", "build/aui-*/assets/skins/sam/**.png"
 	include "build/aui-skin-deprecated/images/**"
 
 	includeEmptyDirs = false

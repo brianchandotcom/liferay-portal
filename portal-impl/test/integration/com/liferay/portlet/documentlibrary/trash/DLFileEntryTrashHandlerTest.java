@@ -16,11 +16,16 @@ package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -87,6 +92,21 @@ public class DLFileEntryTrashHandlerTest
 		return DLAppServiceUtil.getGroupFileEntriesCount(
 			groupId, 0, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
 			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public int searchBaseModelsCount(Class<?> clazz, long groupId)
+		throws Exception {
+
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+
+		searchContext.setGroupIds(new long[] {groupId});
+
+		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
 	}
 
 	@Test

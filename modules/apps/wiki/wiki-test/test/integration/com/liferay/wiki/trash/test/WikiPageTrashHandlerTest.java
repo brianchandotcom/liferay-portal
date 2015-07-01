@@ -15,9 +15,14 @@
 package com.liferay.wiki.trash.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.model.BaseModel;
@@ -58,6 +63,21 @@ public class WikiPageTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public int searchBaseModelsCount(Class<?> clazz, long groupId)
+		throws Exception {
+
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+
+		searchContext.setGroupIds(new long[] {groupId});
+
+		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
+	}
 
 	@Before
 	@Override

@@ -78,13 +78,10 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 							String title = DLUtil.getTitleWithExtension(fileEntry);
 
-							JSONObject itemMedatada =
-								ItemSelectorBrowserUtil.getItemMetadataJSONObject(
-										request, fileEntry, latestFileVersion, title);
+							JSONObject itemMedatada = ItemSelectorBrowserUtil.getItemMetadataJSONObject(request, fileEntry, latestFileVersion, title);
 							%>
 
 							<liferay-ui:search-container-column-text name="title">
-
 								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatada.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 
 									<%
@@ -99,7 +96,6 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 										<%= HtmlUtil.escape(title) %>
 									</span>
 								</a>
-
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />
@@ -127,9 +123,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 					String title = DLUtil.getTitleWithExtension(fileEntry);
 
-					JSONObject itemMedatada =
-						ItemSelectorBrowserUtil.getItemMetadataJSONObject(
-								request, fileEntry, latestFileVersion, title);
+					JSONObject itemMedatada = ItemSelectorBrowserUtil.getItemMetadataJSONObject(request, fileEntry, latestFileVersion, title);
 				%>
 
 					<li class="list-group-item list-group-item-default">

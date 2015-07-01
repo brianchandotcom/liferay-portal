@@ -888,24 +888,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Document document = readXML(content);
 
-		Element rootElement = document.getRootElement();
-
-		List<Element> definitionElements = rootElement.elements("definition");
-
-		String previousName = StringPool.BLANK;
-
-		for (Element definitionElement : definitionElements) {
-			String name = definitionElement.attributeValue("name");
-
-			if (Validator.isNotNull(previousName) &&
-				(previousName.compareTo(name) > 0) &&
-				!previousName.equals("portlet")) {
-
-				processErrorMessage(fileName, "sort: " + fileName + " " + name);
-			}
-
-			previousName = name;
-		}
+		checkOrder(
+			fileName, document.getRootElement(), "definition", null,
+			new TilesDefinitionElementComparator());
 	}
 
 	protected String formatWebXML(String fileName, String content)
@@ -1498,6 +1483,23 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		private static final String _NAME_ATTRIBUTE = "path";
+
+	}
+
+	private class TilesDefinitionElementComparator extends ElementComparator {
+
+		@Override
+		public int compare(
+			Element definitionElement1, Element definitionElement2) {
+
+			String definitionName1 = getElementName(definitionElement1);
+
+			if (definitionName1.equals("portlet")) {
+				return -1;
+			}
+
+			return super.compare(definitionElement1, definitionElement2);
+		}
 
 	}
 

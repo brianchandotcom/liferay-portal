@@ -17,7 +17,6 @@ package com.liferay.blogs.web.blogs.portlet.action;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.struts.FindActionHelper;
-import com.liferay.portlet.blogs.util.BlogsFindEntryHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

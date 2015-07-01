@@ -293,7 +293,7 @@
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 	</entity>
-	<entity name="AssetTag" local-service="true" remote-service="true">
+	<entity name="AssetTag" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

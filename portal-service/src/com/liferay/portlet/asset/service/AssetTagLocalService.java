@@ -308,6 +308,17 @@ public interface AssetTagLocalService extends BaseLocalService,
 	public com.liferay.portlet.asset.model.AssetTag fetchAssetTag(long tagId);
 
 	/**
+	* Returns the asset tag matching the UUID and group.
+	*
+	* @param uuid the asset tag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetTag fetchAssetTagByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
 	* Returns the asset tag with the name in the group.
 	*
 	* @param groupId the primary key of the group
@@ -359,6 +370,18 @@ public interface AssetTagLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Returns the asset tag matching the UUID and group.
+	*
+	* @param uuid the asset tag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching asset tag
+	* @throws PortalException if a matching asset tag could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetTag getAssetTagByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	/**
 	* Returns a range of all the asset tags.
 	*
 	* <p>
@@ -372,6 +395,32 @@ public interface AssetTagLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetTags(
 		int start, int end);
+
+	/**
+	* Returns all the asset tags matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset tags
+	* @param companyId the primary key of the company
+	* @return the matching asset tags, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetTagsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of asset tags matching the UUID and company.
+	*
+	* @param uuid the UUID of the asset tags
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching asset tags, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetTagsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> orderByComparator);
 
 	/**
 	* Returns the number of asset tags.
@@ -397,6 +446,10 @@ public interface AssetTagLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getEntryTags(
 		long entryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
 
 	/**
 	* Returns the asset tags in the group.

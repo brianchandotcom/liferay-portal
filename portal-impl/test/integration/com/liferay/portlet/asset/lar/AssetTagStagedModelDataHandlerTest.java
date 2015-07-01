@@ -19,11 +19,9 @@ import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetTag;
-import com.liferay.portlet.asset.model.adapter.StagedAssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
 
@@ -36,7 +34,7 @@ import org.junit.Rule;
 /**
  * @author Daniel Kocsis
  */
-public class StagedAssetTagStagedModelDataHandlerTest
+public class AssetTagStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -52,20 +50,14 @@ public class StagedAssetTagStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		AssetTag tag = AssetTestUtil.addTag(group.getGroupId());
-
-		return ModelAdapterUtil.adapt(
-			tag, AssetTag.class, StagedAssetTag.class);
+		return AssetTestUtil.addTag(group.getGroupId());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			AssetTag assetTag = AssetTagLocalServiceUtil.getTag(
-				group.getGroupId(), uuid);
-
-			return ModelAdapterUtil.adapt(
-				assetTag, AssetTag.class, StagedAssetTag.class);
+			return AssetTagLocalServiceUtil.getAssetTagByUuidAndGroupId(
+				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
 			return null;
@@ -74,7 +66,7 @@ public class StagedAssetTagStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return StagedAssetTag.class;
+		return AssetTag.class;
 	}
 
 }

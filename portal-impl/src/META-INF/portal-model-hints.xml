@@ -1294,6 +1294,7 @@
 		<field name="weight" type="int" />
 	</model>
 	<model name="com.liferay.portlet.asset.model.AssetTag">
+		<field name="uuid" type="String" />
 		<field name="tagId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

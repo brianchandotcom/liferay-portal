@@ -19,7 +19,8 @@ import com.liferay.portlet.asset.model.AssetTag;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetTagVerifiableModel implements VerifiableResourcedModel {
+public class AssetTagVerifiableModel
+	implements VerifiableResourcedModel, VerifiableUUIDModel {
 
 	@Override
 	public String getModelName() {

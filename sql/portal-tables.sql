@@ -164,6 +164,7 @@ create table AssetLink (
 );
 
 create table AssetTag (
+	uuid_ VARCHAR(75) null,
 	tagId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

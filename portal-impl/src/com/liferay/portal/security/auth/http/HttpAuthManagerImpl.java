@@ -17,6 +17,7 @@ package com.liferay.portal.security.auth.http;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManager;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
+import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.servlet.filters.secure.NonceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
@@ -197,6 +199,32 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			HttpServletRequest request,
 			HttpAuthorizationHeader authorizationHeader)
 		throws PortalException {
+
+		String login = authorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_USERID);
+
+		String password = authorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_PASSWORD);
+
+		// Strip @uid and @sn for backwards compatibility
+
+		if (login.endsWith("@uid")) {
+			int pos = login.indexOf("@uid");
+
+			login = login.substring(0, pos);
+		}
+		else if (login.endsWith("@sn")) {
+			int pos = login.indexOf("@sn");
+
+			login = login.substring(0, pos);
+		}
+
+		try {
+			return AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
+				request, login, password, null);
+		}
+		catch (AuthException ae) {
+		}
 
 		return 0;
 	}

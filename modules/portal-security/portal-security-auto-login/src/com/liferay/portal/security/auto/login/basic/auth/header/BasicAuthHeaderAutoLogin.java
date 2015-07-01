@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
-import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.basic.auth.header.constants.BasicAuthHeaderAutoLoginConstants;
 import com.liferay.portal.util.PortalUtil;
@@ -98,18 +98,19 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		String login = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_USERID);
-		String password = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_PASSWORD);
+		long userId = HttpAuthManagerUtil.getUserId(
+			request, httpAuthorizationHeader);
 
-		long userId = AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
-			request, login, password, null);
+		if (userId <= 0) {
+			throw new AuthException();
+		}
 
 		String[] credentials = new String[3];
 
 		credentials[0] = String.valueOf(userId);
-		credentials[1] = password;
+		credentials[1] = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_PASSWORD);
+
 		credentials[2] = Boolean.TRUE.toString();
 
 		return credentials;

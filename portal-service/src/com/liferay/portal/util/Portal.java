@@ -348,29 +348,18 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * Returns the user's ID from the HTTP authentication headers after
-	 * validating their credentials.
-	 *
-	 * @param  request the servlet request from which to retrieve the HTTP
-	 *         authentication headers
-	 * @return the user's ID if HTTP authentication headers are present and
-	 *         their credentials are valid; 0 otherwise
-	 * @throws PortalException if an authentication exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
 	 */
+	@Deprecated
 	public long getBasicAuthUserId(HttpServletRequest request)
 		throws PortalException;
 
 	/**
-	 * Returns the user's ID from the HTTP authentication headers after
-	 * validation their credentials.
-	 *
-	 * @param  request the servlet request to retrieve the HTTP authentication
-	 *         headers from
-	 * @param  companyId unused
-	 * @return the user's ID if HTTP authentication headers are present and
-	 *         their credentials are valid; 0 otherwise
-	 * @throws PortalException if an authentication exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
 	 */
+	@Deprecated
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
 		throws PortalException;
 

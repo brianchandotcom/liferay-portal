@@ -196,12 +196,6 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashMyBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashParent() throws Exception {
 	}
 

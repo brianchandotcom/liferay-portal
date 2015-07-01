@@ -212,7 +212,7 @@
 	<command name="Unquote" priority="4">
 		<var name="stringUnquote"><![CDATA["HELP"]]></var>
 
-		<var method="StringUtil#unquote(''${stringUnquote}'')" name="string" />
+		<var method="StringUtil#unquote('${stringUnquote}')" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />

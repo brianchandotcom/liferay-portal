@@ -51,6 +51,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -68,7 +70,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -1261,34 +1262,22 @@ public class PortalImpl implements Portal {
 
 		long userId = 0;
 
-		String authorizationHeader = request.getHeader(
-			HttpHeaders.AUTHORIZATION);
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			HttpAuthManagerUtil.parse(request);
 
-		if (Validator.isNull(authorizationHeader)) {
-			return userId;
-		}
-
-		String[] authorizationArray = authorizationHeader.split("\\s+");
-
-		String authorization = authorizationArray[0];
-		String credentials = new String(Base64.decode(authorizationArray[1]));
+		String scheme = httpAuthorizationHeader.getScheme();
 
 		if (!StringUtil.equalsIgnoreCase(
-				authorization, HttpServletRequest.BASIC_AUTH)) {
+				scheme, HttpAuthorizationHeader.SCHEME_BASIC)) {
 
 			return userId;
 		}
 
-		String[] loginAndPassword = StringUtil.split(
-			credentials, CharPool.COLON);
+		String login = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_USERID);
 
-		String login = HttpUtil.decodeURL(loginAndPassword[0].trim());
-
-		String password = null;
-
-		if (loginAndPassword.length > 1) {
-			password = loginAndPassword[1].trim();
-		}
+		String password = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_PASSWORD);
 
 		// Strip @uid and @sn for backwards compatibility
 

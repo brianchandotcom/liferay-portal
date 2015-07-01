@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManager;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.secure.NonceUtil;
@@ -207,7 +210,30 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		HttpServletRequest request, String authorizationHeader,
 		String[] authorizationHeaderParts) {
 
-		return null;
+		String credentials = new String(
+			Base64.decode(authorizationHeaderParts[1]));
+
+		String[] loginAndPassword = StringUtil.split(
+			credentials, CharPool.COLON);
+
+		String login = HttpUtil.decodeURL(loginAndPassword[0].trim());
+
+		String password = null;
+
+		if (loginAndPassword.length > 1) {
+			password = loginAndPassword[1].trim();
+		}
+
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			new HttpAuthorizationHeader(HttpAuthorizationHeader.SCHEME_BASIC);
+
+		httpAuthorizationHeader.setAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_USERID, login);
+
+		httpAuthorizationHeader.setAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_PASSWORD, password);
+
+		return httpAuthorizationHeader;
 	}
 
 	protected HttpAuthorizationHeader parseDigest(

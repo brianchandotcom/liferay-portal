@@ -16,21 +16,18 @@ package com.liferay.portal.security.auto.login.basic.auth.header;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.basic.auth.header.constants.BasicAuthHeaderAutoLoginConstants;
 import com.liferay.portal.util.PortalUtil;
-
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -88,52 +85,23 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		// Get the Authorization header, if one was supplied
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			HttpAuthManagerUtil.parse(request);
 
-		String authorization = request.getHeader("Authorization");
-
-		if (authorization == null) {
-			return null;
-		}
-
-		StringTokenizer st = new StringTokenizer(authorization);
-
-		if (!st.hasMoreTokens()) {
-			return null;
-		}
-
-		String basic = st.nextToken();
+		String scheme = httpAuthorizationHeader.getScheme();
 
 		// We only handle HTTP Basic authentication
 
 		if (!StringUtil.equalsIgnoreCase(
-				basic, HttpServletRequest.BASIC_AUTH)) {
+				scheme, HttpAuthorizationHeader.SCHEME_BASIC)) {
 
 			return null;
 		}
 
-		String encodedCredentials = st.nextToken();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Encoded credentials are " + encodedCredentials);
-		}
-
-		String decodedCredentials = new String(
-			Base64.decode(encodedCredentials));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Decoded credentials are " + decodedCredentials);
-		}
-
-		int pos = decodedCredentials.indexOf(CharPool.COLON);
-
-		if (pos == -1) {
-			return null;
-		}
-
-		String login = GetterUtil.getString(
-			decodedCredentials.substring(0, pos));
-		String password = decodedCredentials.substring(pos + 1);
+		String login = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_USERID);
+		String password = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_PASSWORD);
 
 		long userId = AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
 			request, login, password, null);

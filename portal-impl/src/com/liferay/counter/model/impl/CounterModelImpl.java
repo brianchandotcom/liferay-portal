@@ -60,6 +60,13 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 			{ "name", Types.VARCHAR },
 			{ "currentId", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("currentId", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table Counter (name VARCHAR(75) not null primary key,currentId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Counter";
 	public static final String ORDER_BY_JPQL = " ORDER BY counter.name ASC";

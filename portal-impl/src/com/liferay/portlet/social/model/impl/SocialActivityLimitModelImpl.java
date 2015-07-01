@@ -75,6 +75,20 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 			{ "activityCounterName", Types.VARCHAR },
 			{ "value", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("activityLimitId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("activityType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("activityCounterName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityLimit";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityLimit.activityLimitId ASC";

@@ -2847,6 +2847,18 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = DLContentModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + DLContentModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the document library content persistence.
 	 */

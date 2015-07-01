@@ -74,6 +74,20 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 			{ "type_", Types.INTEGER },
 			{ "weight", Types.INTEGER }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("entryId1", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("entryId2", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("weight", Types.INTEGER);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table AssetLink (linkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetLink.weight ASC";

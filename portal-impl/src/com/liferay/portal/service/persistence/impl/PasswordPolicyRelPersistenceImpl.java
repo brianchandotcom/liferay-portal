@@ -1495,6 +1495,19 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		return count.intValue();
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = PasswordPolicyRelModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				PasswordPolicyRelModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the password policy rel persistence.
 	 */

@@ -5611,6 +5611,19 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = LayoutFriendlyURLModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				LayoutFriendlyURLModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the layout friendly u r l persistence.
 	 */

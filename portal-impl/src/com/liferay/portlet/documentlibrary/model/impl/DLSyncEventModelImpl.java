@@ -66,6 +66,16 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 			{ "type_", Types.VARCHAR },
 			{ "typePK", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("syncEventId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("event", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typePK", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table DLSyncEvent (syncEventId LONG not null primary key,modifiedTime LONG,event VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLSyncEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlSyncEvent.modifiedTime ASC";

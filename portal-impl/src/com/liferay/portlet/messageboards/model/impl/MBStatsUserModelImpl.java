@@ -70,6 +70,16 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 			{ "messageCount", Types.INTEGER },
 			{ "lastPostDate", Types.TIMESTAMP }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("statsUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("messageCount", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBStatsUser";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbStatsUser.messageCount DESC";

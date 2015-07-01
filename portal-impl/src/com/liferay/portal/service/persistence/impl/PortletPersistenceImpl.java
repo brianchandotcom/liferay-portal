@@ -1494,6 +1494,18 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = PortletModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + PortletModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the portlet persistence.
 	 */

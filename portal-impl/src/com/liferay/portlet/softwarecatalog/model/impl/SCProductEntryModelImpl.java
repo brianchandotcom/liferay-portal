@@ -87,6 +87,27 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 			{ "repoGroupId", Types.VARCHAR },
 			{ "repoArtifactId", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("productEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("tags", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("shortDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("longDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("pageURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("author", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("repoGroupId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("repoArtifactId", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table SCProductEntry (productEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ VARCHAR(75) null,tags VARCHAR(255) null,shortDescription STRING null,longDescription STRING null,pageURL STRING null,author VARCHAR(75) null,repoGroupId VARCHAR(75) null,repoArtifactId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SCProductEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY scProductEntry.modifiedDate DESC, scProductEntry.name DESC";

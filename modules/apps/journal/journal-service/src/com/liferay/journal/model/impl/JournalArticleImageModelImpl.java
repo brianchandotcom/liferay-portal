@@ -70,6 +70,19 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 			{ "languageId", Types.VARCHAR },
 			{ "tempImage", Types.BOOLEAN }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("articleImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("articleId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("version", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("elInstanceId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("elName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("tempImage", Types.BOOLEAN);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table JournalArticleImage (articleImageId LONG not null primary key,groupId LONG,articleId VARCHAR(75) null,version DOUBLE,elInstanceId VARCHAR(75) null,elName VARCHAR(75) null,languageId VARCHAR(75) null,tempImage BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticleImage";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticleImage.articleImageId ASC";

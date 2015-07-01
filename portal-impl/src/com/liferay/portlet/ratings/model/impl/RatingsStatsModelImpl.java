@@ -69,6 +69,17 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 			{ "totalScore", Types.DOUBLE },
 			{ "averageScore", Types.DOUBLE }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("statsId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("totalEntries", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("totalScore", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("averageScore", Types.DOUBLE);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table RatingsStats (statsId LONG not null primary key,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
 	public static final String ORDER_BY_JPQL = " ORDER BY ratingsStats.statsId ASC";

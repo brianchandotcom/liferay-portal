@@ -67,6 +67,17 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 			{ "fileEntryId", Types.BIGINT },
 			{ "fileVersionId", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fileEntryMetadataId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("DDMStorageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("DDMStructureId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fileVersionId", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table DLFileEntryMetadata (uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null primary key,DDMStorageId LONG,DDMStructureId LONG,fileEntryId LONG,fileVersionId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryMetadata";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntryMetadata.fileEntryMetadataId ASC";

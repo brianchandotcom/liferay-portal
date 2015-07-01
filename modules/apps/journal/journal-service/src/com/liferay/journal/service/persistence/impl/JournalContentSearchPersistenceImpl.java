@@ -5281,6 +5281,19 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		return count.intValue();
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = JournalContentSearchModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				JournalContentSearchModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the journal content search persistence.
 	 */

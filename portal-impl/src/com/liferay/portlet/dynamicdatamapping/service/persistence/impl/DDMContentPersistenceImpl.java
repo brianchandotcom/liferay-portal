@@ -3150,6 +3150,18 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = DDMContentModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + DDMContentModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the d d m content persistence.
 	 */

@@ -12028,6 +12028,18 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = DLFolderModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + DLFolderModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the document library folder persistence.
 	 */

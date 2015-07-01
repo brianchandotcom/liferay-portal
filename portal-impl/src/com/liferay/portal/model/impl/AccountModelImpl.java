@@ -86,6 +86,28 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 			{ "type_", Types.VARCHAR },
 			{ "size_", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("parentAccountId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("legalName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("legalId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("legalType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("sicCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("tickerSymbol", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("industry", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("size_", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table Account_ (mvccVersion LONG default 0,accountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountId LONG,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Account_";
 	public static final String ORDER_BY_JPQL = " ORDER BY account.accountId ASC";

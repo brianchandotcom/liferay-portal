@@ -74,6 +74,20 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 			{ "deliveryType", Types.INTEGER },
 			{ "deliver", Types.BOOLEAN }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userNotificationDeliveryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("notificationType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("deliveryType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("deliver", Types.BOOLEAN);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (mvccVersion LONG default 0,userNotificationDeliveryId LONG not null primary key,companyId LONG,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationDelivery";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationDelivery.userNotificationDeliveryId ASC";

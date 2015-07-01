@@ -67,6 +67,18 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 			{ "roleId", Types.BIGINT },
 			{ "actionIds", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("resourceTypePermissionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("actionIds", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table ResourceTypePermission (mvccVersion LONG default 0,resourceTypePermissionId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,roleId LONG,actionIds LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceTypePermission";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourceTypePermission.resourceTypePermissionId ASC";

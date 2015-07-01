@@ -70,6 +70,14 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 			{ "classNameId", Types.BIGINT },
 			{ "value", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table ClassName_ (mvccVersion LONG default 0,classNameId LONG not null primary key,value VARCHAR(200) null)";
 	public static final String TABLE_SQL_DROP = "drop table ClassName_";
 	public static final String ORDER_BY_JPQL = " ORDER BY className.classNameId ASC";

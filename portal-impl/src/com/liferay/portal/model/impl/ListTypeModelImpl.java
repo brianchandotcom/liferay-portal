@@ -69,6 +69,15 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 			{ "name", Types.VARCHAR },
 			{ "type_", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("listTypeId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table ListType (mvccVersion LONG default 0,listTypeId LONG not null primary key,name VARCHAR(75) null,type_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table ListType";
 	public static final String ORDER_BY_JPQL = " ORDER BY listType.name ASC";

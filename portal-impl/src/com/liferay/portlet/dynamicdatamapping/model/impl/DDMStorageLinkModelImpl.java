@@ -68,6 +68,16 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 			{ "classPK", Types.BIGINT },
 			{ "structureId", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("storageLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("structureId", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table DDMStorageLink (uuid_ VARCHAR(75) null,storageLinkId LONG not null primary key,classNameId LONG,classPK LONG,structureId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStorageLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStorageLink.storageLinkId ASC";

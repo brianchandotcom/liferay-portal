@@ -1576,6 +1576,18 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = PluginSettingModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + PluginSettingModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the plugin setting persistence.
 	 */

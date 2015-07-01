@@ -76,6 +76,18 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 			{ "sms", Types.BOOLEAN },
 			{ "website", Types.BOOLEAN }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("deliveryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("email", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("sms", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("website", Types.BOOLEAN);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table AnnouncementsDelivery (deliveryId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsDelivery";
 	public static final String ORDER_BY_JPQL = " ORDER BY announcementsDelivery.deliveryId ASC";

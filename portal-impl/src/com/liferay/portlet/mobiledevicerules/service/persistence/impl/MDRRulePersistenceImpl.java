@@ -2645,6 +2645,18 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = MDRRuleModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + MDRRuleModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the m d r rule persistence.
 	 */

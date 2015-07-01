@@ -1571,6 +1571,19 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		return count.intValue();
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = ResourceActionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				ResourceActionModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the resource action persistence.
 	 */

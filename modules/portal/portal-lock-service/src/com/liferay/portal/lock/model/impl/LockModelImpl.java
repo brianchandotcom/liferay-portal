@@ -76,6 +76,23 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			{ "inheritable", Types.BOOLEAN },
 			{ "expirationDate", Types.TIMESTAMP }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lockId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("owner", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("inheritable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table Lock_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,lockId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,className VARCHAR(75) null,key_ VARCHAR(200) null,owner VARCHAR(1024) null,inheritable BOOLEAN,expirationDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Lock_";
 	public static final String ORDER_BY_JPQL = " ORDER BY lock.lockId ASC";

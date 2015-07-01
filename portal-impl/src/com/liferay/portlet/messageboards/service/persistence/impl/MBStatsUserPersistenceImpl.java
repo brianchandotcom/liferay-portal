@@ -2491,6 +2491,18 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		return count.intValue();
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = MBStatsUserModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + MBStatsUserModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the message boards stats user persistence.
 	 */

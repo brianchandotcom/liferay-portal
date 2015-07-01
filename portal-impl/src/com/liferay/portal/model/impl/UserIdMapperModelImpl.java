@@ -69,6 +69,17 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 			{ "description", Types.VARCHAR },
 			{ "externalUserId", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userIdMapperId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalUserId", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table UserIdMapper (mvccVersion LONG default 0,userIdMapperId LONG not null primary key,userId LONG,type_ VARCHAR(75) null,description VARCHAR(75) null,externalUserId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table UserIdMapper";
 	public static final String ORDER_BY_JPQL = " ORDER BY userIdMapper.userIdMapperId ASC";

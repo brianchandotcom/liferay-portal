@@ -104,6 +104,36 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			{ "smallImageId", Types.BIGINT },
 			{ "smallImageURL", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("versionUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("versionUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("resourceClassNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("templateKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("mode_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("language", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("script", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("cacheable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("smallImage", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("smallImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("smallImageURL", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplate.templateId ASC";

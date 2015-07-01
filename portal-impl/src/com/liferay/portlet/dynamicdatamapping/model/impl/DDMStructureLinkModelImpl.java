@@ -67,6 +67,15 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 			{ "classPK", Types.BIGINT },
 			{ "structureId", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("structureLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("structureId", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table DDMStructureLink (structureLinkId LONG not null primary key,classNameId LONG,classPK LONG,structureId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructureLink.structureLinkId ASC";

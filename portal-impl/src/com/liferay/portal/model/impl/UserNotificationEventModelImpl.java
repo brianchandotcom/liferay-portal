@@ -76,6 +76,24 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			{ "actionRequired", Types.BOOLEAN },
 			{ "archived", Types.BOOLEAN }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("userNotificationEventId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("timestamp", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("deliveryType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("deliverBy", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("delivered", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("payload", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("actionRequired", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("archived", Types.BOOLEAN);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,actionRequired BOOLEAN,archived BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationEvent.timestamp DESC";

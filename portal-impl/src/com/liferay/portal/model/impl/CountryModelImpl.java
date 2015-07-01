@@ -74,6 +74,20 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			{ "zipRequired", Types.BOOLEAN },
 			{ "active_", Types.BOOLEAN }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("a2", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("a3", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("number_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("idd_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("zipRequired", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table Country (mvccVersion LONG default 0,countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,zipRequired BOOLEAN,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Country";
 	public static final String ORDER_BY_JPQL = " ORDER BY country.name ASC";

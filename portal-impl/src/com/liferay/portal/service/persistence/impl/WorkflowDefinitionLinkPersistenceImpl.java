@@ -2872,6 +2872,19 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		return count.intValue();
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = WorkflowDefinitionLinkModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				WorkflowDefinitionLinkModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the workflow definition link persistence.
 	 */

@@ -109,6 +109,42 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN },
 			{ "sourcePrototypeLayoutUuid", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("parentLayoutId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("keywords", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("robots", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("hidden_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("friendlyURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("iconImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("themeId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("colorSchemeId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("wapThemeId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("wapColorSchemeId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("layoutPrototypeUuid", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("layoutPrototypeLinkEnabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("sourcePrototypeLayoutUuid", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";

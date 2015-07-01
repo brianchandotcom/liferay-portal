@@ -2390,6 +2390,19 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = JournalArticleResourceModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				JournalArticleResourceModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the journal article resource persistence.
 	 */

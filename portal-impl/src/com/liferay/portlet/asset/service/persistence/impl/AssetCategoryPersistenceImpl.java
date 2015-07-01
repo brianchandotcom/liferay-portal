@@ -11523,6 +11523,18 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	}
 
 	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = AssetCategoryModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + AssetCategoryModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
+	@Override
 	public long countAncestors(AssetCategory assetCategory) {
 		Object[] finderArgs = new Object[] {
 				assetCategory.getGroupId(), assetCategory.getLeftCategoryId(),

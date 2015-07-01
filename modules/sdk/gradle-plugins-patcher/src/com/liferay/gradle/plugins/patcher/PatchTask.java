@@ -314,7 +314,7 @@ public class PatchTask extends DefaultTask {
 	public void setFileNames(Iterable<Object> fileNames) {
 		_fileNames.clear();
 
-		GUtil.addToCollection(_fileNames, fileNames);
+		fileNames(fileNames);
 	}
 
 	public void setOriginalLibConfigurationName(
@@ -346,7 +346,7 @@ public class PatchTask extends DefaultTask {
 	public void setPatchFiles(Iterable<Object> patchFiles) {
 		_patchFiles.clear();
 
-		GUtil.addToCollection(_patchFiles, patchFiles);
+		patchFiles(patchFiles);
 	}
 
 	protected Dependency getOriginalLibDependency() {

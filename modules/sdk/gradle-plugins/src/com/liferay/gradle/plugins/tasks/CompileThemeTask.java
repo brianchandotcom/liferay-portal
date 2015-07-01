@@ -60,19 +60,19 @@ public class CompileThemeTask extends DefaultTask {
 	@InputDirectory
 	@Optional
 	public File getDiffsDir() {
-		return _diffsDir;
+		return GradleUtil.toFile(_project, _diffsDir);
 	}
 
 	@InputDirectory
 	@Optional
 	public File getFrontendThemesWebDir() {
-		return _frontendThemesWebDir;
+		return GradleUtil.toFile(_project, _frontendThemesWebDir);
 	}
 
 	@InputFile
 	@Optional
 	public File getFrontendThemesWebFile() {
-		return _frontendThemesWebFile;
+		return GradleUtil.toFile(_project, _frontendThemesWebFile);
 	}
 
 	@OutputDirectories
@@ -97,7 +97,7 @@ public class CompileThemeTask extends DefaultTask {
 	@Input
 	@Optional
 	public String getThemeParent() {
-		return _themeParent;
+		return GradleUtil.toString(_themeParent);
 	}
 
 	public Project getThemeParentProject() {
@@ -128,27 +128,27 @@ public class CompileThemeTask extends DefaultTask {
 
 	@Input
 	public String getThemeType() {
-		return _themeType;
+		return GradleUtil.toString(_themeType);
 	}
 
-	public void setDiffsDir(File diffsDir) {
+	public void setDiffsDir(Object diffsDir) {
 		_diffsDir = diffsDir;
 	}
 
-	public void setFrontendThemesWebDir(File frontendThemesWebDir) {
+	public void setFrontendThemesWebDir(Object frontendThemesWebDir) {
 		_frontendThemesWebDir = frontendThemesWebDir;
 	}
 
-	public void setFrontendThemesWebFile(File frontendThemesWebFile) {
+	public void setFrontendThemesWebFile(Object frontendThemesWebFile) {
 		_frontendThemesWebFile = frontendThemesWebFile;
 	}
 
-	public void setThemeParent(String themeParent) {
+	public void setThemeParent(Object themeParent) {
 		_themeParent = themeParent;
 		_themeParentProject = null;
 	}
 
-	public void setThemeType(String themeType) {
+	public void setThemeType(Object themeType) {
 		_themeType = themeType;
 	}
 
@@ -319,12 +319,12 @@ public class CompileThemeTask extends DefaultTask {
 		"css", "images", "js", "templates"
 	};
 
-	private File _diffsDir;
-	private File _frontendThemesWebDir;
-	private File _frontendThemesWebFile;
+	private Object _diffsDir;
+	private Object _frontendThemesWebDir;
+	private Object _frontendThemesWebFile;
 	private final Project _project;
-	private String _themeParent;
+	private Object _themeParent;
 	private Project _themeParentProject;
-	private String _themeType;
+	private Object _themeType;
 
 }

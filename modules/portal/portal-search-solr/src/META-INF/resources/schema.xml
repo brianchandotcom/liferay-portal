@@ -465,32 +465,33 @@
 		<fieldType class="solr.PointType" dimension="2" name="point" subFieldSuffix="_d" />
 	</types>
 	<fields>
+		<field indexed="true" multiValued="false" name="_version_" stored="true" type="long" />
 		<field indexed="true" multiValued="true" name="ancestorOrganizationIds" stored="true" type="string" />
 		<field indexed="true" name="articleId" stored="true" type="string_keyword_lowercase" />
 		<field indexed="true" name="assetCategoryId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetCategoryIds" stored="true" type="string" />
+		<field indexed="true" name="assetCategoryTitle" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="assetTagId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetTagIds" stored="true" type="string" />
-		<field indexed="true" name="assetCategoryTitle" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" multiValued="true" name="assetTagNames" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="assetVocabularyId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetVocabularyIds" stored="true" type="string" />
 		<field indexed="true" name="classTypeId" stored="true" type="string" />
-		<field indexed="true" name="companyId" stored="true" type="long" />
 		<field indexed="true" name="comments" stored="true" type="text" />
+		<field indexed="true" name="companyId" stored="true" type="long" />
 		<field indexed="true" name="content" stored="true" termPositions="true" termVectors="true" type="text" />
-		<field indexed="true" name="description" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="createDate" stored="true" type="string" />
 		<field indexed="true" name="dataRepositoryId" stored="true" type="string" />
 		<field indexed="true" name="ddmContent" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="ddmStructureKey" stored="true" type="string" />
 		<field indexed="true" name="ddmTemplateKey" stored="true" type="string" />
+		<field indexed="true" name="description" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="discussion" stored="true" type="string" />
 		<field indexed="true" name="displayDate" stored="true" type="string" />
 		<field indexed="true" name="emailAddress" stored="true" type="string" />
 		<field indexed="true" name="endTime" stored="true" type="string" />
-		<field indexed="true" name="entryClassPK" stored="true" type="string" />
 		<field indexed="true" name="entryClassName" stored="true" type="string" />
+		<field indexed="true" name="entryClassPK" stored="true" type="string" />
 		<field indexed="true" name="expirationDate" stored="true" type="string" />
 		<field indexed="true" name="extension" stored="true" type="string" />
 		<field indexed="true" name="fileEntryTypeId" stored="true" type="string" />
@@ -520,8 +521,8 @@
 		<field indexed="true" name="publishDate" stored="true" type="string" />
 		<field indexed="true" name="readCount" stored="true" type="string" />
 		<field indexed="true" name="recordSetId" stored="true" type="string" />
-		<field indexed="true" name="removedDate" stored="true" type="string" />
 		<field indexed="true" name="removedByUser" stored="true" type="string" />
+		<field indexed="true" name="removedDate" stored="true" type="string" />
 		<field indexed="true" name="rightOrganizationId" stored="true" type="tlong" />
 		<field indexed="true" multiValued="true" name="roleId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="roleIds" stored="true" type="string" />
@@ -532,9 +533,9 @@
 		<field indexed="true" name="size" stored="true" type="string" />
 		<field indexed="true" name="spellCheckWeight" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="spellCheckWord" stored="true" type="textSpell" />
-		<field indexed="true" name="subtitle" stored="true" type="text" />
-		<field indexed="true" name="status" stored="true" type="string" />
 		<field indexed="true" name="startTime" stored="true" type="long" />
+		<field indexed="true" name="status" stored="true" type="string" />
+		<field indexed="true" name="subtitle" stored="true" type="text" />
 		<field indexed="true" multiValued="true" name="teamIds" stored="true" type="string" />
 		<field indexed="true" name="threadId" stored="true" type="string" />
 		<field indexed="true" name="title" stored="true" termPositions="true" termVectors="true" type="text" />
@@ -547,7 +548,6 @@
 		<field indexed="true" name="userName" stored="true" type="string" />
 		<field indexed="true" name="version" stored="true" type="string" />
 		<field indexed="true" name="visible" stored="true" type="string" />
-		<field indexed="true" multiValued="false" name="_version_" stored="true" type="long" />
 		<dynamicField indexed="true" name="*_coordinate" stored="false" type="double" />
 		<dynamicField indexed="true" multiValued="false" name="*Date_sortable" stored="true" type="long" />
 		<dynamicField indexed="true" multiValued="false" name="*Number_sortable" stored="true" type="double" />

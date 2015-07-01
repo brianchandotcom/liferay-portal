@@ -271,29 +271,31 @@ public class PoshiRunnerGetterUtil {
 
 		String[] parameters = null;
 
-		if (y > (x + 1)) {
+		if ((x + 1) < y) {
 			String parameterString = classCommandName.substring(x + 1, y);
 
-			if (parameterString.contains("#")) {
-				parameters = new String[] {
-					PoshiRunnerContext.getPathLocator(parameterString)
-				};
-			}
-			else {
-				parameters = parameterString.split(",");
+			Matcher matcher = _parameterPattern.matcher(parameterString);
 
-				if (parameterString.endsWith(",")) {
-					List<String> params = new ArrayList<>();
+			List<String> params = new ArrayList<>();
 
-					for (String parameter : parameters) {
-						params.add(parameter);
-					}
+			while (matcher.find()) {
+				String parameterValue = matcher.group();
 
-					params.add("");
+				if (parameterValue.startsWith("'") &&
+					parameterValue.endsWith("'")) {
 
-					parameters = params.toArray(new String[params.size()]);
+					parameterValue = parameterValue.substring(
+						1, parameterValue.length() - 1);
 				}
+				else if (parameterValue.contains("#")) {
+					parameterValue = PoshiRunnerContext.getPathLocator(
+						parameterValue);
+				}
+
+				params.add(parameterValue);
 			}
+
+			parameters = params.toArray(new String[params.size()]);
 		}
 
 		String className = getClassNameFromClassCommandName(classCommandName);
@@ -304,9 +306,6 @@ public class PoshiRunnerGetterUtil {
 			Integer[] integers = new Integer[parameters.length];
 
 			for (int i = 0; i < parameters.length; i++) {
-				parameters[i] = parameters[i].replaceAll("\"", "");
-				parameters[i] = parameters[i].replaceAll("'", "");
-
 				integers[i] = Integer.parseInt(parameters[i].trim());
 			}
 
@@ -338,13 +337,6 @@ public class PoshiRunnerGetterUtil {
 
 			if (parameters != null) {
 				for (int i = 0; i < parameters.length; i++) {
-					if (parameters[i].length() != 1) {
-						parameters[i] = parameters[i].trim();
-					}
-
-					parameters[i] = parameters[i].replaceAll("\"", "");
-					parameters[i] = parameters[i].replaceAll("'", "");
-
 					parameterClasses.add(String.class);
 				}
 			}
@@ -380,6 +372,8 @@ public class PoshiRunnerGetterUtil {
 		return null;
 	}
 
+	private static final Pattern _parameterPattern = Pattern.compile(
+		"('([^'\\\\]|\\\\.)*'|[^',\\s]+)");
 	private static final List<String> _reservedTags = Arrays.asList(
 		new String[] {
 			"and", "body", "case", "command", "condition", "contains",

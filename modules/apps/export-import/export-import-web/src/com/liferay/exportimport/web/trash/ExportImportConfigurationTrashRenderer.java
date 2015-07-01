@@ -14,10 +14,10 @@
 
 package com.liferay.exportimport.web.trash;
 
+import com.liferay.exportimport.web.constants.ExportImportWebKeys;
 import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 
 import java.util.Locale;
@@ -91,7 +91,7 @@ public class ExportImportConfigurationTrashRenderer
 		throws Exception {
 
 		request.setAttribute(
-			WebKeys.EXPORT_IMPORT_CONFIGURATION_ID,
+			ExportImportWebKeys.EXPORT_IMPORT_CONFIGURATION_ID,
 			_exportImportConfiguration.getExportImportConfigurationId());
 
 		return super.include(request, response, template);

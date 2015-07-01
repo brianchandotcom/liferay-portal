@@ -202,7 +202,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		throws PortalException {
 
 		String login = authorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_USERID);
+			HttpAuthorizationHeader.AUTHPARAM_USERNAME);
 
 		String password = authorizationHeader.getAuthParameter(
 			HttpAuthorizationHeader.AUTHPARAM_PASSWORD);
@@ -296,7 +296,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			new HttpAuthorizationHeader(HttpAuthorizationHeader.SCHEME_BASIC);
 
 		httpAuthorizationHeader.setAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_USERID, login);
+			HttpAuthorizationHeader.AUTHPARAM_USERNAME, login);
 
 		httpAuthorizationHeader.setAuthParameter(
 			HttpAuthorizationHeader.AUTHPARAM_PASSWORD, password);

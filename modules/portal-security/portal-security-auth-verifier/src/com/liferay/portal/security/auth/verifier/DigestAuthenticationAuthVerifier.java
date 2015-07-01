@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
 
@@ -61,19 +60,7 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 
 			HttpServletRequest request = accessControlContext.getRequest();
 
-			HttpAuthorizationHeader httpAuthorizationHeader =
-				HttpAuthManagerUtil.parse(request);
-
-			String scheme = httpAuthorizationHeader.getScheme();
-
-			long userId = 0;
-
-			if (StringUtil.equalsIgnoreCase(
-					scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
-
-				userId = HttpAuthManagerUtil.getUserId(
-					request, httpAuthorizationHeader);
-			}
+			long userId = HttpAuthManagerUtil.getDigestUserId(request);
 
 			if (userId == 0) {
 
@@ -86,8 +73,9 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 					HttpServletResponse response =
 						accessControlContext.getResponse();
 
-					httpAuthorizationHeader = new HttpAuthorizationHeader(
-						HttpAuthorizationHeader.SCHEME_DIGEST);
+					HttpAuthorizationHeader httpAuthorizationHeader =
+						new HttpAuthorizationHeader(
+							HttpAuthorizationHeader.SCHEME_DIGEST);
 
 					HttpAuthManagerUtil.generateChallenge(
 						request, response, httpAuthorizationHeader);

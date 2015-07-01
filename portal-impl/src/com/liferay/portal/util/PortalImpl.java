@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
-import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -1246,7 +1245,7 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
+	 * 		HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	@Override
@@ -1260,25 +1259,14 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
+	 * 		HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	@Override
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
 		throws PortalException {
 
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(request);
-
-		String scheme = httpAuthorizationHeader.getScheme();
-
-		if (!StringUtil.equalsIgnoreCase(
-				scheme, HttpAuthorizationHeader.SCHEME_BASIC)) {
-
-			return 0;
-		}
-
-		return HttpAuthManagerUtil.getUserId(request, httpAuthorizationHeader);
+		return HttpAuthManagerUtil.getBasicUserId(request);
 	}
 
 	@Override
@@ -2113,25 +2101,14 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
+	 * 		HttpAuthManagerUtil#getDigestUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	@Override
 	public long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException {
 
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(request);
-
-		String scheme = httpAuthorizationHeader.getScheme();
-
-		if (!StringUtil.equalsIgnoreCase(
-				scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
-
-			return 0;
-		}
-
-		return HttpAuthManagerUtil.getUserId(request, httpAuthorizationHeader);
+		return HttpAuthManagerUtil.getDigestUserId(request);
 	}
 
 	@Override

@@ -349,7 +349,7 @@ public interface Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
+	 * 		com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	public long getBasicAuthUserId(HttpServletRequest request)
@@ -357,7 +357,7 @@ public interface Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
+	 * 		com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
@@ -650,7 +650,7 @@ public interface Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
+	 * 		com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getDigestUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	public long getDigestAuthUserId(HttpServletRequest request)

@@ -35,8 +35,6 @@ public class HttpAuthorizationHeader {
 
 	public static final String AUTHPARAM_URI = "uri";
 
-	public static final String AUTHPARAM_USERID = "userid";
-
 	public static final String AUTHPARAM_USERNAME = "username";
 
 	public static final String SCHEME_BASIC = "Basic";

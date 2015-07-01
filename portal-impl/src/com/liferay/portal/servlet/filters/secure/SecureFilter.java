@@ -109,17 +109,7 @@ public class SecureFilter extends BasePortalFilter {
 		}
 		else {
 			try {
-				HttpAuthorizationHeader httpAuthorizationHeader =
-					HttpAuthManagerUtil.parse(request);
-
-				String scheme = httpAuthorizationHeader.getScheme();
-
-				if (StringUtil.equalsIgnoreCase(
-					scheme, HttpAuthorizationHeader.SCHEME_BASIC)) {
-
-					userId = HttpAuthManagerUtil.getUserId(
-						request, httpAuthorizationHeader);
-				}
+				userId = HttpAuthManagerUtil.getBasicUserId(request);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -162,17 +152,7 @@ public class SecureFilter extends BasePortalFilter {
 		}
 		else {
 			try {
-				HttpAuthorizationHeader httpAuthorizationHeader =
-					HttpAuthManagerUtil.parse(request);
-
-				String scheme = httpAuthorizationHeader.getScheme();
-
-				if (StringUtil.equalsIgnoreCase(
-					scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
-
-					userId = HttpAuthManagerUtil.getUserId(
-						request, httpAuthorizationHeader);
-				}
+				userId = HttpAuthManagerUtil.getDigestUserId(request);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

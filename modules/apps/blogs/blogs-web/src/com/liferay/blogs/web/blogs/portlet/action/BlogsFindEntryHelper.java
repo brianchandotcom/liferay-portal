@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.blogs.web.blogs.portlet.action;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -47,8 +47,8 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 		// Order is important. See LPS-23770.
 
 		return new String[] {
-			PortletKeys.BLOGS_ADMIN, PortletKeys.BLOGS,
-			PortletKeys.BLOGS_AGGREGATOR
+			BlogsPortletKeys.BLOGS_ADMIN, BlogsPortletKeys.BLOGS,
+			BlogsPortletKeys.BLOGS_AGGREGATOR
 		};
 	}
 
@@ -77,12 +77,12 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 			request, "showAllEntries");
 
 		if (showAllEntries) {
-			String mvcPath = "/html/portlet";
+			String mvcPath = null;
 
-			if (portletId.equals(PortletKeys.BLOGS)) {
+			if (portletId.equals(BlogsPortletKeys.BLOGS)) {
 				mvcPath += "/blogs/view.jsp";
 			}
-			else if (portletId.equals(PortletKeys.BLOGS_ADMIN)) {
+			else if (portletId.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
 				mvcPath += "/blogs_admin/view.jsp";
 			}
 			else {
@@ -94,11 +94,11 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 		else {
 			String mvcRenderCommandName = null;
 
-			if (portletId.equals(PortletKeys.BLOGS)) {
-				mvcRenderCommandName = "/blogs/view";
+			if (portletId.equals(BlogsPortletKeys.BLOGS)) {
+				mvcRenderCommandName = "/blogs/view_entry";
 			}
-			else if (portletId.equals(PortletKeys.BLOGS_ADMIN)) {
-				mvcRenderCommandName = "/blogs_admin/view";
+			else if (portletId.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
+				mvcRenderCommandName = "/blogs_admin/view_entry";
 			}
 			else {
 				mvcRenderCommandName = "/blogs_aggregator/view";

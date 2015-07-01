@@ -16,12 +16,12 @@ package com.liferay.site.navigation.breadcrumb.web.context;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,8 +54,9 @@ public class BreadcrumbDisplayContext {
 		String displayStyle = getDisplayStyle();
 
 		if (displayStyle != null) {
-			_ddmTemplateKey = PortletDisplayTemplateUtil.getDDMTemplateKey(
-				displayStyle);
+			_ddmTemplateKey = 
+				PortletDisplayTemplateManagerUtil.getDDMTemplateKey(
+					displayStyle);
 		}
 
 		return _ddmTemplateKey;

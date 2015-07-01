@@ -16,6 +16,8 @@ package com.liferay.portlet.exportimport.lar;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -34,11 +36,8 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -657,7 +656,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		if (Validator.isNull(displayStyle) ||
 			!displayStyle.startsWith(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
 
 			return;
 		}
@@ -672,9 +671,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		DDMTemplate ddmTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
-				portletDataContext.getGroupId(),
-				getClassNameId(portletDataContext, portletId), displayStyle);
+	PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateDDMTemplate(
+		portletDataContext.getGroupId(), 
+		getClassNameId(portletDataContext, portletId), displayStyle, false);
 
 		if (ddmTemplate != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -815,7 +814,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		if (Validator.isNull(displayStyle) ||
 			!displayStyle.startsWith(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
 
 			return;
 		}
@@ -834,9 +833,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			groupIds, displayStyleGroupId, displayStyleGroupId);
 
 		DDMTemplate ddmTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
-				groupId, getClassNameId(portletDataContext, portletId),
-				displayStyle);
+	PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateDDMTemplate(
+		groupId, getClassNameId(portletDataContext, portletId), displayStyle, 
+		false);
 
 		if (ddmTemplate != null) {
 			portletPreferences.setValue(

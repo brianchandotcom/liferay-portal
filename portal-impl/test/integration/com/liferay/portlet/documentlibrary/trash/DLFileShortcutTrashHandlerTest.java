@@ -311,11 +311,6 @@ public class DLFileShortcutTrashHandlerTest
 	}
 
 	@Override
-	protected String getSearchKeywords() {
-		return "Title";
-	}
-
-	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
 	}

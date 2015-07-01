@@ -30,6 +30,11 @@ public class DefaultWhenIsIndexableBaseModel
 	implements WhenIsIndexableBaseModel {
 
 	@Override
+	public String getSearchKeywords() {
+		return "Title";
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 

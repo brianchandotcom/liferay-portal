@@ -55,6 +55,11 @@ public class BlogsEntryTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getSearchKeywords() {
+		return _whenIsIndexableBaseModel.getSearchKeywords();
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -388,11 +393,6 @@ public class BlogsEntryTrashHandlerTest
 
 		return BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			(Long)parentBaseModel.getPrimaryKeyObj(), queryDefinition);
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return "Title";
 	}
 
 	@Override

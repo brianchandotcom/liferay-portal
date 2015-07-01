@@ -21,6 +21,8 @@ import com.liferay.portal.service.ServiceContext;
  */
 public interface WhenIsIndexableBaseModel {
 
+	public String getSearchKeywords();
+
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception;
 

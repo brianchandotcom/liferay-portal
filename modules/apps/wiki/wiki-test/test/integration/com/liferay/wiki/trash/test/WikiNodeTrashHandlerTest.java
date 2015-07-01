@@ -387,7 +387,7 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), getSearchKeywords(),
+			TestPropsValues.getUserId(), _NODE_NAME,
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
@@ -415,11 +415,6 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return WikiNodeLocalServiceUtil.getNodesCount(
 			(Long)parentBaseModel.getPrimaryKeyObj(),
 			WorkflowConstants.STATUS_APPROVED);
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return _NODE_NAME;
 	}
 
 	@Override

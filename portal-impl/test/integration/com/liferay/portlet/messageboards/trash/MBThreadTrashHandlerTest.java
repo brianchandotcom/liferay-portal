@@ -86,6 +86,11 @@ public class MBThreadTrashHandlerTest
 	}
 
 	@Override
+	public String getSearchKeywords() {
+		return _SUBJECT;
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -387,11 +392,6 @@ public class MBThreadTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return MBCategory.class;
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return _SUBJECT;
 	}
 
 	@Override

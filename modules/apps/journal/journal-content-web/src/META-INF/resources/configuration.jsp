@@ -46,7 +46,7 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 	</div>
 
 	<div class="col-md-12">
-		<aui:button name="webContentSelector" value="change" />
+		<aui:button cssClass="web-content-selector" name="webContentSelector" value="select" />
 	</div>
 </div>
 
@@ -206,6 +206,8 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					articlePreviewNode.find('.article-preview-content-container').html('');
 					templatePreviewNode.find('.template-preview-content-container').html('');
 
+					articlePreviewNode.find('.web-content-selector').html('<liferay-ui:message key="change" />');
+
 					$.ajax(
 						baseJournalArticleResourceUrl.replace(encodeURIComponent('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
 						{
@@ -283,8 +285,16 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 					var templateImage = templatePreviewContent.find('.template-image');
 
-					templateImage.attr('src', event.imageurl);
-					templateImage.attr('alt', event.name);
+					if (event.imageurl !== 'null') {
+						templateImage.attr('src', event.imageurl);
+						templateImage.attr('alt', event.name);
+						templateImage.removeClass('hidden');
+					}
+					else {
+						templateImage.attr('src', '');
+						templateImage.attr('alt', '');
+						templateImage.addClass('hidden');
+					}
 
 					form.fm('ddmTemplateKey').val(event.ddmtemplatekey);
 				}

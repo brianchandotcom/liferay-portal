@@ -613,7 +613,7 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.currency.converter.web"
 		},
 
-		// Dynamic Data List
+		// Dynamic Data Lists
 
 		new String[] {
 			"dynamic.data.lists.error.template",

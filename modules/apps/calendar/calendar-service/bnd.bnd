@@ -1,0 +1,32 @@
+Bundle-Name: Liferay Calendar Service
+Bundle-SymbolicName: com.liferay.calendar.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.calendar.model.impl,\
+	com.liferay.calendar.notification.impl,\
+	com.liferay.calendar.service.configuration,\
+	com.liferay.calendar.service.configuration.configurator,\
+	com.liferay.calendar.service.permission,\
+	com.liferay.calendar.upgrade.*,\
+	com.liferay.calendar.util,\
+	com.liferay.calendar.workflow
+Include-Resource:\
+	classes,\
+	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
+	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@lib/ical4j.jar
+Import-Package:\
+	!edu.emory.*,\
+	!groovy.*,\
+	!net.fortuna.*,\
+	!org.codehaus.*,\
+	*
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/*-spring.xml;timeout:=${spring.extender.time.to.wait}

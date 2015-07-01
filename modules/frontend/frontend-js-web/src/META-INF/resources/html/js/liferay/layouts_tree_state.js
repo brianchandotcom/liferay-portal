@@ -11,9 +11,9 @@ AUI.add(
 
 		var STR_HOST = 'host';
 
-		var STR_SESSION_CHECKED_NODES = 'sessionCheckedNodes';
+		var STR_LOCAL_CHECKED_NODES = 'localCheckedNodes';
 
-		var STR_SESSION_UNCHECKED_NODES = 'sessionUncheckedNodes';
+		var STR_LOCAL_UNCHECKED_NODES = 'localUncheckedNodes';
 
 		var LayoutsTreeState = A.Component.create(
 			{
@@ -22,17 +22,17 @@ AUI.add(
 						validator: Lang.isObject
 					},
 
+					localCheckedNodes: {
+						validator: Lang.isArray
+					},
+
+					localUncheckedNodes: {
+						validator: Lang.isArray
+					},
+
 					rootNodeExpanded: {
 						validator: Lang.isBoolean,
 						value: true
-					},
-
-					sessionCheckedNodes: {
-						validator: Lang.isArray
-					},
-
-					sessionUncheckedNodes: {
-						validator: Lang.isArray
 					}
 				},
 
@@ -96,17 +96,17 @@ AUI.add(
 						var instance = this;
 
 						var host = instance.get(STR_HOST);
-						var sessionCheckedNodes = instance.get(STR_SESSION_CHECKED_NODES);
-						var sessionUncheckedNodes = instance.get(STR_SESSION_UNCHECKED_NODES);
+						var localCheckedNodes = instance.get(STR_LOCAL_CHECKED_NODES);
+						var localUncheckedNodes = instance.get(STR_LOCAL_UNCHECKED_NODES);
 
 						var plid = host.extractPlid(node);
 
 						var checked;
 
-						if (sessionCheckedNodes.indexOf(plid) > -1) {
+						if (localCheckedNodes.indexOf(plid) > -1) {
 							checked = true;
 						}
-						else if (sessionUncheckedNodes.indexOf(plid) > -1) {
+						else if (localUncheckedNodes.indexOf(plid) > -1) {
 							checked = false;
 						}
 
@@ -292,33 +292,33 @@ AUI.add(
 						var plid = instance.get(STR_HOST).extractPlid(node);
 
 						var checkedNodes = instance.get(STR_CHECKED_NODES);
-						var sessionCheckedNodes = instance.get(STR_SESSION_CHECKED_NODES);
-						var sessionUncheckedNodes = instance.get(STR_SESSION_UNCHECKED_NODES);
+						var localCheckedNodes = instance.get(STR_LOCAL_CHECKED_NODES);
+						var localUncheckedNodes = instance.get(STR_LOCAL_UNCHECKED_NODES);
 
 						var checkedIndex = checkedNodes.indexOf(plid);
-						var sessionCheckedIndex = sessionCheckedNodes.indexOf(plid);
-						var sessionUncheckedIndex = sessionUncheckedNodes.indexOf(plid);
+						var localCheckedIndex = localCheckedNodes.indexOf(plid);
+						var localUncheckedIndex = localUncheckedNodes.indexOf(plid);
 
 						if (state) {
 							if (checkedIndex === -1) {
 								checkedNodes.push(plid);
 							}
 
-							if (sessionCheckedIndex == -1) {
-								sessionCheckedNodes.push(plid);
+							if (localCheckedIndex == -1) {
+								localCheckedNodes.push(plid);
 							}
 
-							if (sessionUncheckedIndex > -1) {
-								AArray.remove(sessionCheckedNodes, sessionUncheckedIndex);
+							if (localUncheckedIndex > -1) {
+								AArray.remove(localCheckedNodes, localUncheckedIndex);
 							}
 						}
 						else if (checkedIndex > -1) {
 							AArray.remove(checkedNodes, checkedIndex);
 
-							sessionCheckedNodes.push(plid);
+							localCheckedNodes.push(plid);
 
-							if (sessionCheckedIndex > -1) {
-								AArray.remove(sessionCheckedNodes, sessionCheckedIndex);
+							if (localCheckedIndex > -1) {
+								AArray.remove(localCheckedNodes, localCheckedIndex);
 							}
 						}
 

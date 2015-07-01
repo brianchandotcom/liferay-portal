@@ -5206,7 +5206,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
-						<exec executable="${db2.executable}">
+						<exec executable="${db2.executable}" failonerror="true">
 							<arg value="-fcreate.sql" />
 							<arg value="-t" />
 						</exec>
@@ -5253,7 +5253,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								</else>
 							</if>
 
-							<exec executable="${mysql.executable}" input="create.sql">
+							<exec executable="${mysql.executable}" input="create.sql" failonerror="true">
 								<arg line="${mysql.arg.line}" />
 							</exec>
 						</then>
@@ -5264,7 +5264,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<get-database-property property.name="database.password" />
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${oracle.sqlplus.executable}">
+							<exec executable="${oracle.sqlplus.executable}" failonerror="true">
 								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
 								<arg value="@create.sql" />
 								<arg value="${database.username}" />
@@ -5277,7 +5277,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<then>
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${postgresql.executable}">
+							<exec executable="${postgresql.executable}" failonerror="true">
 								<arg value="-f" />
 								<arg value="create.sql" />
 								<arg value="-U" />
@@ -5292,7 +5292,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<get-database-property property.name="database.schema" />
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${sybase.executable}">
+							<exec executable="${sybase.executable}" failonerror="true">
 								<arg value="-i" />
 								<arg value="create.sql" />
 								<arg value="-P" />

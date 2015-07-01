@@ -2123,6 +2123,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeFalse(this instanceof WhenIsMoveableFromTrashBaseModel);
+		Assume.assumeTrue(
+			this instanceof WhenIsRestorableParentBaseModelFromTrash);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -2163,8 +2165,13 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		restoreParentBaseModelFromTrash(
-			(Long)parentBaseModel.getPrimaryKeyObj());
+		WhenIsRestorableParentBaseModelFromTrash
+			whenIsRestorableParentBaseModelFromTrash =
+				(WhenIsRestorableParentBaseModelFromTrash)this;
+
+		whenIsRestorableParentBaseModelFromTrash.
+			restoreParentBaseModelFromTrash(
+				(Long)parentBaseModel.getPrimaryKeyObj());
 
 		List<? extends WorkflowedModel> childrenWorkflowedModels =
 			getChildrenWorkflowedModels(parentBaseModel);
@@ -2694,10 +2701,6 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception;
 
 	protected void moveParentBaseModelToTrash(long primaryKey)
-		throws Exception {
-	}
-
-	protected void restoreParentBaseModelFromTrash(long primaryKey)
 		throws Exception {
 	}
 

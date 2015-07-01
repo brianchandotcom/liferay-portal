@@ -11,11 +11,23 @@ AUI.add(
 
 		var STR_HOST = 'host';
 
+		var STR_LOCAL_CHECKED_NODES = 'localCheckedNodes';
+
+		var STR_LOCAL_UNCHECKED_NODES = 'localUncheckedNodes';
+
 		var LayoutsTreeState = A.Component.create(
 			{
 				ATTRS: {
 					checkedNodes: {
 						validator: Lang.isObject
+					},
+
+					localCheckedNodes: {
+						validator: Lang.isArray
+					},
+
+					localUncheckedNodes: {
+						validator: Lang.isArray
 					},
 
 					rootNodeExpanded: {
@@ -80,6 +92,29 @@ AUI.add(
 						);
 					},
 
+					_matchParentNode: function(node) {
+						var instance = this;
+
+						var host = instance.get(STR_HOST);
+						var localCheckedNodes = instance.get(STR_LOCAL_CHECKED_NODES);
+						var localUncheckedNodes = instance.get(STR_LOCAL_UNCHECKED_NODES);
+
+						var plid = host.extractPlid(node);
+
+						var checked;
+
+						if (localCheckedNodes.indexOf(plid) > -1) {
+							checked = true;
+						}
+						else if (localUncheckedNodes.indexOf(plid) > -1) {
+							checked = false;
+						}
+
+						if (!Lang.isUndefined(checked)) {
+							instance._updateCheckedNodes(node, checked);
+						}
+					},
+
 					_onCheckContentDisplayTreeAppend: function(event) {
 						var instance = this;
 
@@ -112,15 +147,18 @@ AUI.add(
 						var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
 
 						var expanded = event.newVal;
+						var target = event.target;
 
-						if (event.target === host.getChildren()[0]) {
+						if (target === host.getChildren()[0]) {
 							Liferay.Store(treeId + 'RootNode', expanded);
 						}
 						else {
-							var layoutId = host.extractLayoutId(event.target);
+							var layoutId = host.extractLayoutId(target);
 
 							instance._updateSessionTreeOpenedState(treeId, layoutId, expanded);
 						}
+
+						instance._matchParentNode(target);
 					},
 
 					_onNodeIOSuccess: function(event) {
@@ -142,6 +180,10 @@ AUI.add(
 							}
 						};
 
+						var target = event.target;
+
+						instance._matchParentNode(target);
+
 						var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
 
 						var root = host.get('root');
@@ -160,9 +202,9 @@ AUI.add(
 								catch (e) {
 								}
 
-								updatePaginationMap(paginationMap, event.target);
+								updatePaginationMap(paginationMap, target);
 
-								event.target.eachParent(
+								target.eachParent(
 									function(parent) {
 										updatePaginationMap(paginationMap, parent);
 									}
@@ -250,16 +292,47 @@ AUI.add(
 						var plid = instance.get(STR_HOST).extractPlid(node);
 
 						var checkedNodes = instance.get(STR_CHECKED_NODES);
+						var localCheckedNodes = instance.get(STR_LOCAL_CHECKED_NODES);
+						var localUncheckedNodes = instance.get(STR_LOCAL_UNCHECKED_NODES);
 
-						var index = checkedNodes.indexOf(plid);
+						var checkedIndex = checkedNodes.indexOf(plid);
+						var localCheckedIndex = localCheckedNodes.indexOf(plid);
+						var localUncheckedIndex = localUncheckedNodes.indexOf(plid);
 
 						if (state) {
-							if (index === -1) {
+							if (checkedIndex === -1) {
 								checkedNodes.push(plid);
 							}
+
+							if (localCheckedIndex == -1) {
+								localCheckedNodes.push(plid);
+							}
+
+							if (localUncheckedIndex > -1) {
+								AArray.remove(localCheckedNodes, localUncheckedIndex);
+							}
 						}
-						else if (index > -1) {
-							AArray.remove(checkedNodes, index);
+						else if (checkedIndex > -1) {
+							AArray.remove(checkedNodes, checkedIndex);
+
+							localCheckedNodes.push(plid);
+
+							if (localCheckedIndex > -1) {
+								AArray.remove(localCheckedNodes, localCheckedIndex);
+							}
+						}
+
+						node.set('checked', state);
+
+						var children = node.get('children');
+
+						if (children.length) {
+							A.each(
+								children,
+								function(child) {
+									instance._updateCheckedNodes(child, state);
+								}
+							);
 						}
 					},
 

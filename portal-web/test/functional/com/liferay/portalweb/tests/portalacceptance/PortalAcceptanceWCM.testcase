@@ -233,17 +233,17 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<for list="tag1,tag2,tag3" param="tagName">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Tags" />
+				<var name="siteName" value="Site Name" />
+				<var name="siteURL" value="true" />
+			</execute>
 
-		<execute macro="Tag#addTagsCP">
-			<var name="tagName1" value="tag name 1" />
-			<var name="tagName2" value="tag name 2" />
-			<var name="tagName3" value="tag name 3" />
-		</execute>
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Page Name" />
@@ -264,7 +264,7 @@
 		<execute macro="Tag#addSelectTagMultipleViaBlogsPG">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
-			<var name="tagNameList" value="tag name 1,tag name 3" />
+			<var name="tagNameList" value="tag1,tag3" />
 		</execute>
 	</command>
 
@@ -2011,15 +2011,15 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
-		</execute>
+		<for list="first tag,second tag,third tag" param="tagName">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Tags" />
+			</execute>
 
-		<execute macro="Tag#addTagsCP">
-			<var name="tagName1" value="first tag" />
-			<var name="tagName2" value="second tag" />
-			<var name="tagName3" value="third tag" />
-		</execute>
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -3278,15 +3278,15 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
-		</execute>
+		<for list="first tag,second tag,third tag" param="tagName">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Tags" />
+			</execute>
 
-		<execute macro="Tag#addTagsCP">
-			<var name="tagName1" value="first tag" />
-			<var name="tagName2" value="second tag" />
-			<var name="tagName3" value="third tag" />
-		</execute>
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

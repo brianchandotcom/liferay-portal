@@ -66,6 +66,11 @@ public class JournalFolderTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getSearchKeywords() {
+		return _FOLDER_NAME;
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -324,11 +329,6 @@ public class JournalFolderTrashHandlerTest
 		return getParentBaseModel(
 			group, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			serviceContext);
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return _FOLDER_NAME;
 	}
 
 	@Override

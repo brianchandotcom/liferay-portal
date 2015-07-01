@@ -363,11 +363,6 @@ public class ExportImportConfigurationTrashHandlerTest
 	}
 
 	@Override
-	protected String getSearchKeywords() {
-		return null;
-	}
-
-	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
 	}

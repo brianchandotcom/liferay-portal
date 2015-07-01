@@ -94,6 +94,11 @@ public class JournalArticleTrashHandlerTest
 	}
 
 	@Override
+	public String getSearchKeywords() {
+		return "Article";
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -326,11 +331,6 @@ public class JournalArticleTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return JournalFolder.class;
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return "Article";
 	}
 
 	@Override

@@ -75,6 +75,11 @@ public class BookmarksEntryTrashHandlerTest
 	}
 
 	@Override
+	public String getSearchKeywords() {
+		return _whenIsIndexableBaseModel.getSearchKeywords();
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -353,11 +358,6 @@ public class BookmarksEntryTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return BookmarksFolder.class;
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return "Title";
 	}
 
 	@Override

@@ -61,6 +61,11 @@ public class WikiPageTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getSearchKeywords() {
+		return WikiPageTrashHandlerTestUtil.getSearchKeywords();
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -344,11 +349,6 @@ public class WikiPageTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return WikiNode.class;
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return WikiPageTrashHandlerTestUtil.getSearchKeywords();
 	}
 
 	@Override

@@ -65,6 +65,11 @@ public class BookmarksFolderTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getSearchKeywords() {
+		return _whenIsIndexableBaseModel.getSearchKeywords();
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -330,11 +335,6 @@ public class BookmarksFolderTrashHandlerTest
 		return getParentBaseModel(
 			group, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			serviceContext);
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return "Title";
 	}
 
 	@Override

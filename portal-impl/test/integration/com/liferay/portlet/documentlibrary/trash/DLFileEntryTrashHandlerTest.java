@@ -92,6 +92,11 @@ public class DLFileEntryTrashHandlerTest
 	}
 
 	@Override
+	public String getSearchKeywords() {
+		return _FILE_ENTRY_TITLE;
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -321,11 +326,6 @@ public class DLFileEntryTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return DLFolder.class;
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return _FILE_ENTRY_TITLE;
 	}
 
 	@Override

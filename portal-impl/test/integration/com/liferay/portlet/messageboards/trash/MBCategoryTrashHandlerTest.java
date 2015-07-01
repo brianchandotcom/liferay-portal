@@ -205,8 +205,8 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		MBCategory parentCategory = (MBCategory)parentBaseModel;
 
 		return MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentCategory.getCategoryId(),
-			getSearchKeywords(), StringPool.BLANK, serviceContext);
+			TestPropsValues.getUserId(), parentCategory.getCategoryId(), _TITLE,
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Override
@@ -216,7 +216,7 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return MBCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, getSearchKeywords(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, _TITLE,
 			StringPool.BLANK, serviceContext);
 	}
 
@@ -264,7 +264,7 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		return MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), parentBaseModelId, getSearchKeywords(),
+			TestPropsValues.getUserId(), parentBaseModelId, _TITLE,
 			StringPool.BLANK, serviceContext);
 	}
 
@@ -276,11 +276,6 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return getParentBaseModel(
 			group, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			serviceContext);
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return "Title";
 	}
 
 	@Override
@@ -336,5 +331,7 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return category;
 	}
+
+	private static final String _TITLE = "Title";
 
 }

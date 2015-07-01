@@ -76,6 +76,7 @@ public class CalendarIndexer extends BaseIndexer {
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
+	@Deprecated
 	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, SearchContext searchContext)

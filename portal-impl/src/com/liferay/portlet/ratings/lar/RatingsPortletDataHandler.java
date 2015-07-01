@@ -69,10 +69,10 @@ public class RatingsPortletDataHandler extends BasePortletDataHandler {
 			return getExportDataRootElementString(rootElement);
 		}
 
-		ActionableDynamicQuery exportActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery(portletDataContext);
 
-		exportActionableDynamicQuery.performActions();
+		actionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -95,26 +95,26 @@ public class RatingsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery exportActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery(portletDataContext);
 
-		exportActionableDynamicQuery.performCount();
+		actionableDynamicQuery.performCount();
 	}
 
 	protected ActionableDynamicQuery getActionableDynamicQuery(
 			final PortletDataContext portletDataContext)
 		throws Exception {
 
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
+		ExportActionableDynamicQuery actionableDynamicQuery =
 			RatingsEntryLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		exportActionableDynamicQuery.setStagedModelType(
+		actionableDynamicQuery.setStagedModelType(
 			new StagedModelType(
 				PortalUtil.getClassNameId(RatingsEntry.class.getName()),
 				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
 
-		return exportActionableDynamicQuery;
+		return actionableDynamicQuery;
 	}
 
 	private class ImportRatingsCallable implements Callable<Void> {

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.upgrade;
 
+import com.liferay.dynamic.data.lists.service.configuration.configurator.DDLServiceConfigurator;
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.DDLClassNamesUpgradeProcess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -25,22 +26,15 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import org.springframework.context.ApplicationContext;
-
 /**
  * @author Marcellus Tavares
  */
 @Component(immediate = true, service = DDLServiceUpgrade.class)
 public class DDLServiceUpgrade {
 
-	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.dynamic.data.lists.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
+	@Reference(unbind = "-")
+	protected void setDDLServiceConfigurator(
+		DDLServiceConfigurator ddlServiceConfigurator) {
 	}
 
 	@Reference(unbind = "-")

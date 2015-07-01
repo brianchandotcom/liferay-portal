@@ -14,10 +14,11 @@
 
 package com.liferay.marketplace.service.configuration.configurator;
 
-import com.liferay.marketplace.upgrade.MarketplaceServiceUpgrade;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -56,15 +57,14 @@ public class MarketplaceServiceConfigurator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setMarketplaceServiceUpgrade(
-		MarketplaceServiceUpgrade marketplaceServicesUpgrade) {
-	}
-
-	@Reference(unbind = "-")
 	protected void setServiceConfigurator(
 		ServiceConfigurator serviceConfigurator) {
 
 		_serviceConfigurator = serviceConfigurator;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private ServiceConfigurator _serviceConfigurator;

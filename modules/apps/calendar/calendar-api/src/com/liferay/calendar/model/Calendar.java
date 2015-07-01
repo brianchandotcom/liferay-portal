@@ -37,6 +37,5 @@ public interface Calendar extends CalendarModel, PermissionedModel {
 	public com.liferay.calendar.model.CalendarResource getCalendarResource()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.TimeZone getTimeZone()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public java.util.TimeZone getTimeZone();
 }

@@ -23,7 +23,6 @@ import com.liferay.calendar.model.CalendarNotificationTemplateSoap;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
-import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -37,6 +36,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -85,22 +85,41 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 			{ "notificationTypeSettings", Types.VARCHAR },
 			{ "notificationTemplateType", Types.VARCHAR },
 			{ "subject", Types.VARCHAR },
-			{ "body", Types.VARCHAR }
+			{ "body", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CalendarNotificationTemplate (uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body VARCHAR(75) null)";
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("calendarNotificationTemplateId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("calendarId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("notificationType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("notificationTypeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("notificationTemplateType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
+	}
+
+	public static final String TABLE_SQL_CREATE = "create table CalendarNotificationTemplate (uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CalendarNotificationTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY calendarNotificationTemplate.calendarNotificationTemplateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CalendarNotificationTemplate.calendarNotificationTemplateId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.calendar.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.calendar.model.CalendarNotificationTemplate"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.calendar.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.calendar.model.CalendarNotificationTemplate"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.calendar.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.calendar.model.CalendarNotificationTemplate"),
 			true);
 	public static final long CALENDARID_COLUMN_BITMASK = 1L;
@@ -164,7 +183,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.calendar.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.calendar.model.CalendarNotificationTemplate"));
 
 	public CalendarNotificationTemplateModelImpl() {

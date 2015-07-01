@@ -31,14 +31,14 @@ create table CalendarBooking (
 	calendarId LONG,
 	calendarResourceId LONG,
 	parentCalendarBookingId LONG,
-	vEventUid VARCHAR(75) null,
+	vEventUid VARCHAR(255) null,
 	title STRING null,
-	description STRING null,
-	location VARCHAR(75) null,
+	description TEXT null,
+	location STRING null,
 	startTime LONG,
 	endTime LONG,
 	allDay BOOLEAN,
-	recurrence VARCHAR(75) null,
+	recurrence STRING null,
 	firstReminder LONG,
 	firstReminderType VARCHAR(75) null,
 	secondReminder LONG,
@@ -63,7 +63,7 @@ create table CalendarNotificationTemplate (
 	notificationTypeSettings VARCHAR(75) null,
 	notificationTemplateType VARCHAR(75) null,
 	subject VARCHAR(75) null,
-	body VARCHAR(75) null
+	body TEXT null
 );
 
 create table CalendarResource (

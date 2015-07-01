@@ -148,29 +148,6 @@ public final class CommandLoggerHandler {
 		return loggerElement;
 	}
 
-	private static LoggerElement _getCauseHeaderLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("cause-header");
-		loggerElement.setName("h4");
-		loggerElement.setText("Cause:");
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getCauseLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("cause");
-
-		loggerElement.addChildLoggerElement(_getCauseHeaderLoggerElement());
-
-		loggerElement.addChildLoggerElement(
-			SummaryLoggerHandler.getCauseBodyLoggerElement());
-
-		return loggerElement;
-	}
-
 	private static LoggerElement _getChildContainerLoggerElement(
 		int btnLinkId) {
 
@@ -190,19 +167,8 @@ public final class CommandLoggerHandler {
 			"data-errorlinkid", "console-" + errorLinkId);
 		loggerElement.setClassName("console errorPanel toggle");
 
-		loggerElement.addChildLoggerElement(_getConsoleLogLoggerElement());
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getConsoleLogLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("console-log");
-
-		loggerElement.addChildLoggerElement(_getStepsLoggerElement());
-
-		loggerElement.addChildLoggerElement(_getCauseLoggerElement());
+		loggerElement.addChildLoggerElement(
+			SummaryLoggerHandler.getSummaryLogLoggerElement());
 
 		return loggerElement;
 	}
@@ -424,34 +390,12 @@ public final class CommandLoggerHandler {
 		return loggerElement;
 	}
 
-	private static LoggerElement _getStepsHeaderLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("steps-header");
-		loggerElement.setName("h4");
-		loggerElement.setText("Steps:");
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getStepsLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("steps");
-
-		loggerElement.addChildLoggerElement(_getStepsHeaderLoggerElement());
-
-		loggerElement.addChildLoggerElement(
-			SummaryLoggerHandler.getMajorStepsLoggerElement());
-
-		return loggerElement;
-	}
-
 	private static LoggerElement _getSummaryLogElement() {
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.addClassName("fail");
-		loggerElement.addChildLoggerElement(_getConsoleLogLoggerElement());
+		loggerElement.addChildLoggerElement(
+			SummaryLoggerHandler.getSummaryLogLoggerElement());
 
 		return loggerElement;
 	}

@@ -30,6 +30,7 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 
 import org.junit.ClassRule;
@@ -42,7 +43,8 @@ import org.junit.Test;
  */
 @Sync
 public class MBCategoryTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsUpdatableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenIsMoveableFromTrashBaseModel, WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule

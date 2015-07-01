@@ -16,6 +16,7 @@ package com.liferay.portal.lock.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.lock.service.configuration.configurator.LockServiceConfigurator;
 import com.liferay.portal.lock.upgrade.v1_0_0.UpgradeLock;
 import com.liferay.portal.service.ReleaseLocalService;
 
@@ -26,22 +27,15 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import org.springframework.context.ApplicationContext;
-
 /**
  * @author Miguel Pastor
  */
 @Component(immediate = true, service = LockServiceUpgrade.class)
 public class LockServiceUpgrade {
 
-	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.portal.lock.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
+	@Reference(unbind = "-")
+	protected void setLockServiceConfigurator(
+		LockServiceConfigurator lockServiceConfigurator) {
 	}
 
 	@Reference(unbind = "-")

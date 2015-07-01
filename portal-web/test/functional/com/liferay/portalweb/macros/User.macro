@@ -1368,7 +1368,15 @@
 			</then>
 		</if>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<if>
 			<isset var="loginViaDockbar" />
@@ -1424,7 +1432,15 @@
 				<execute function="Open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<else>
-				<execute macro="Page#openURL" />
+				<execute macro="Page#openURL">
+					<var name="friendlyURL" value="${friendlyURL}" />
+					<var name="pageAccess" value="${pageAccess}" />
+					<var name="pageStaging" value="${pageStaging}" />
+					<var name="siteNameURL" value="${siteNameURL}" />
+					<var name="siteURL" value="${siteURL}" />
+					<var name="specificURL" value="${specificURL}" />
+					<var name="virtualHostsURL" value="${virtualHostsURL}" />
+				</execute>
 			</else>
 		</if>
 
@@ -1502,7 +1518,15 @@
 	</command>
 
 	<command name="loginUserInvalidPG">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Type" locator1="PGLogin#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="PGLogin#PASSWORD_FIELD" value1="${password}" />
@@ -1515,7 +1539,15 @@
 	<command name="loginUserPG">
 		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Type" locator1="PGLogin#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="PGLogin#PASSWORD_FIELD" value1="${password}" />
@@ -1523,7 +1555,15 @@
 	</command>
 
 	<command name="logoutAndLoginPG">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<if>
 			<condition function="IsTextNotEqual" locator1="Dockbar#USER_NAME" value1="${userLoginFullName}" />
@@ -1548,7 +1588,15 @@
 				<execute function="Open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<else>
-				<execute macro="Page#openURL" />
+				<execute macro="Page#openURL">
+					<var name="friendlyURL" value="${friendlyURL}" />
+					<var name="pageAccess" value="${pageAccess}" />
+					<var name="pageStaging" value="${pageStaging}" />
+					<var name="siteNameURL" value="${siteNameURL}" />
+					<var name="siteURL" value="${siteURL}" />
+					<var name="specificURL" value="${specificURL}" />
+					<var name="virtualHostsURL" value="${virtualHostsURL}" />
+				</execute>
 			</else>
 		</if>
 
@@ -1564,7 +1612,15 @@
 	<command name="logoutUserPG">
 		<description message="Log out of Liferay Portal." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<if>
 			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />

@@ -133,7 +133,15 @@
 	</command>
 
 	<command name="viewNonSORole">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="SOUserBar#USER_BAR" />
 		<execute function="AssertTextNotPresent" value1="Dashboard" />
@@ -169,7 +177,15 @@
 	</command>
 
 	<command name="viewSORole">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="SOUserBar#USER_BAR" />
 		<execute function="AssertTextEquals" locator1="SOUserBar#DASHBOARD" value1="Dashboard" />

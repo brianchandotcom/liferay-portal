@@ -106,7 +106,15 @@
 					</and>
 				</not>
 				<then>
-					<execute macro="Page#openURL" />
+					<execute macro="Page#openURL">
+						<var name="friendlyURL" value="${friendlyURL}" />
+						<var name="pageAccess" value="${pageAccess}" />
+						<var name="pageStaging" value="${pageStaging}" />
+						<var name="siteNameURL" value="${siteNameURL}" />
+						<var name="siteURL" value="${siteURL}" />
+						<var name="specificURL" value="${specificURL}" />
+						<var name="virtualHostsURL" value="${virtualHostsURL}" />
+					</execute>
 				</then>
 			</elseif>
 		</if>
@@ -125,7 +133,15 @@
 	</command>
 
 	<command name="addWithWorkflowPG">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
 
@@ -238,7 +254,15 @@
 				<execute function="Open" locator1="http://localhost:${nodePort}" />
 			</then>
 			<else>
-				<execute macro="Page#openURL" />
+				<execute macro="Page#openURL">
+					<var name="friendlyURL" value="${friendlyURL}" />
+					<var name="pageAccess" value="${pageAccess}" />
+					<var name="pageStaging" value="${pageStaging}" />
+					<var name="siteNameURL" value="${siteNameURL}" />
+					<var name="siteURL" value="${siteURL}" />
+					<var name="specificURL" value="${specificURL}" />
+					<var name="virtualHostsURL" value="${virtualHostsURL}" />
+				</execute>
 			</else>
 		</if>
 
@@ -286,7 +310,15 @@
 	</command>
 
 	<command name="gotoCmdLocalizedCP">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<var name="key_localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
 
@@ -366,7 +398,15 @@
 	<command name="gotoCP">
 		<description message="Navigate to Control Panel > ${portletName}." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
 		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
@@ -384,7 +424,15 @@
 	<command name="gotoCPLocalized">
 		<description message="Navigate to Control Panel > ${portletName}." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<var name="key_localizedControlPanel" value="${localizedControlPanel}" />
 
@@ -403,7 +451,15 @@
 	<command name="gotoMyAccount">
 		<description message="Navigate to My Account > ${portletName}." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click" locator1="Dockbar#USER_NAME" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
@@ -416,7 +472,15 @@
 	<command name="gotoMyDashboard">
 		<description message="Navigate to My Dashboard." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click" locator1="Dockbar#USER_NAME" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
@@ -425,7 +489,15 @@
 	<command name="gotoMyProfile">
 		<description message="Navigate to My Profile." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click" locator1="Dockbar#USER_NAME" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
@@ -457,7 +529,15 @@
 					</and>
 				</not>
 				<then>
-					<execute macro="Page#openURL" />
+					<execute macro="Page#openURL">
+						<var name="friendlyURL" value="${friendlyURL}" />
+						<var name="pageAccess" value="${pageAccess}" />
+						<var name="pageStaging" value="${pageStaging}" />
+						<var name="siteNameURL" value="${siteNameURL}" />
+						<var name="siteURL" value="${siteURL}" />
+						<var name="specificURL" value="${specificURL}" />
+						<var name="virtualHostsURL" value="${virtualHostsURL}" />
+					</execute>
 				</then>
 			</elseif>
 		</if>
@@ -498,7 +578,15 @@
 	</command>
 
 	<command name="gotoSALocalizedCP">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="${adminLocalized}" />
 
@@ -524,7 +612,15 @@
 	</command>
 
 	<command name="isPresent">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<var name="key_pageName" value="${pageName}" />
 
@@ -639,7 +735,15 @@
 	</command>
 
 	<command name="tearDownPG" summary="Delete all pages except the Welcome Page">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<while>
 			<condition function="IsElementPresent#isElementPresentClickNavigation" locator1="Home#PAGE_2" />
@@ -856,7 +960,15 @@
 	</command>
 
 	<command name="viewUserPageLayoutPG">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click" locator1="Dockbar#USER_NAME" />
 		<execute function="AssertTextNotPresent" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />

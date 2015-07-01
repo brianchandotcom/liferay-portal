@@ -68,6 +68,17 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 			{ "bundleVersion", Types.VARCHAR },
 			{ "contextName", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("moduleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("appId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("bundleSymbolicName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("bundleVersion", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("contextName", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table Marketplace_Module (uuid_ VARCHAR(75) null,moduleId LONG not null primary key,appId LONG,bundleSymbolicName VARCHAR(500) null,bundleVersion VARCHAR(75) null,contextName VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_Module";
 	public static final String ORDER_BY_JPQL = " ORDER BY module.moduleId ASC";

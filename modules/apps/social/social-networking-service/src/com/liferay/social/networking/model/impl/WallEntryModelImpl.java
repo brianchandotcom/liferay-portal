@@ -75,6 +75,19 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "comments", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("wallEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table WallEntry (wallEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,comments VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table WallEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY wallEntry.createDate DESC";

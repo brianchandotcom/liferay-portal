@@ -2064,6 +2064,18 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = LayoutSetModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + LayoutSetModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the layout set persistence.
 	 */

@@ -76,6 +76,24 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 			{ "endPeriod", Types.INTEGER },
 			{ "active_", Types.BOOLEAN }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("activityCounterId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("ownerType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("currentValue", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("totalValue", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("graceValue", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("startPeriod", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("endPeriod", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityCounter";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityCounter.activityCounterId ASC";

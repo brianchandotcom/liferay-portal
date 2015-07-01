@@ -19398,6 +19398,18 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = MBMessageModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + MBMessageModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the message-boards message persistence.
 	 */

@@ -1579,6 +1579,19 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = ServiceComponentModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				ServiceComponentModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the service component persistence.
 	 */

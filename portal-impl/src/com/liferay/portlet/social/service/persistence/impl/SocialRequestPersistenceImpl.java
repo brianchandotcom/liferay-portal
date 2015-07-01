@@ -6949,6 +6949,18 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = SocialRequestModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + SocialRequestModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the social request persistence.
 	 */

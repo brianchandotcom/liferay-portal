@@ -2012,6 +2012,19 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		return count.intValue();
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = SCProductScreenshotModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				SCProductScreenshotModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the s c product screenshot persistence.
 	 */

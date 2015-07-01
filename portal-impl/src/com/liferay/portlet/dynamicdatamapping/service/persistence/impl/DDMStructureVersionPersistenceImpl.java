@@ -2085,6 +2085,19 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = DDMStructureVersionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				DDMStructureVersionModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the d d m structure version persistence.
 	 */

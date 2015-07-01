@@ -5498,6 +5498,19 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = AnnouncementsEntryModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " +
+				AnnouncementsEntryModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the announcements entry persistence.
 	 */

@@ -3833,6 +3833,18 @@ public class SACPEntryPersistenceImpl extends BasePersistenceImpl<SACPEntry>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected int getColumnType(String columnName) {
+		Integer type = SACPEntryModelImpl.TABLE_COLUMNS_MAP.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException("Unknown column name " +
+				columnName + " for table " + SACPEntryModelImpl.TABLE_NAME);
+		}
+
+		return type;
+	}
+
 	/**
 	 * Initializes the s a c p entry persistence.
 	 */

@@ -69,6 +69,18 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 			{ "portletId", Types.VARCHAR },
 			{ "articleId", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("contentSearchId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("articleId", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table JournalContentSearch (contentSearchId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalContentSearch";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalContentSearch.contentSearchId ASC";

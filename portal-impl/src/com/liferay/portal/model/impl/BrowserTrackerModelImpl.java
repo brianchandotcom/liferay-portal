@@ -67,6 +67,15 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 			{ "userId", Types.BIGINT },
 			{ "browserKey", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("browserTrackerId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("browserKey", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table BrowserTracker (mvccVersion LONG default 0,browserTrackerId LONG not null primary key,userId LONG,browserKey LONG)";
 	public static final String TABLE_SQL_DROP = "drop table BrowserTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY browserTracker.browserTrackerId ASC";

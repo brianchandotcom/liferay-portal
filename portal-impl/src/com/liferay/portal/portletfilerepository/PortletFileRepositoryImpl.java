@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -636,6 +638,17 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		FileEntry fileEntry = localRepository.getFileEntry(folderId, fileName);
 
 		restorePortletFileEntryFromTrash(userId, fileEntry.getFileEntryId());
+	}
+
+	@Override
+	public Hits searchPortletFileEntries(
+			long groupId, SearchContext searchContext)
+		throws PortalException {
+
+		com.liferay.portal.kernel.repository.Repository repository =
+			RepositoryProviderUtil.getRepository(groupId);
+
+		return repository.search(searchContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

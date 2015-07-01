@@ -14,10 +14,11 @@
 
 package com.liferay.portal.security.auth.verifier.basic.auth.header;
 
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
@@ -77,13 +78,18 @@ public class BasicAuthHeaderAuthVerifier
 					accessControlContext.getSettings(), "basic_auth");
 
 				if (forcedBasicAuth) {
+					HttpServletRequest request =
+						accessControlContext.getRequest();
+
 					HttpServletResponse response =
 						accessControlContext.getResponse();
 
-					response.setHeader(
-						HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
+					HttpAuthorizationHeader httpAuthorizationHeader =
+						new HttpAuthorizationHeader(
+							HttpAuthorizationHeader.SCHEME_BASIC);
 
-					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+					HttpAuthManagerUtil.generateChallenge(
+						request, response, httpAuthorizationHeader);
 
 					authVerifierResult.setState(
 						AuthVerifierResult.State.INVALID_CREDENTIALS);

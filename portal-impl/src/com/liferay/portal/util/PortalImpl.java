@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
-import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -135,7 +134,6 @@ import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.model.impl.CookieRemotePreference;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.plugin.PluginPackageUtil;
-import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -171,7 +169,6 @@ import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
-import com.liferay.portal.servlet.filters.secure.NonceUtil;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.theme.PortletDisplay;
@@ -1246,6 +1243,11 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * 		HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
+	 */
+	@Deprecated
 	@Override
 	public long getBasicAuthUserId(HttpServletRequest request)
 		throws PortalException {
@@ -1255,62 +1257,16 @@ public class PortalImpl implements Portal {
 		return getBasicAuthUserId(request, companyId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * 		HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
+	 */
+	@Deprecated
 	@Override
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
 		throws PortalException {
 
-		long userId = 0;
-
-		String authorizationHeader = request.getHeader(
-			HttpHeaders.AUTHORIZATION);
-
-		if (Validator.isNull(authorizationHeader)) {
-			return userId;
-		}
-
-		String[] authorizationArray = authorizationHeader.split("\\s+");
-
-		String authorization = authorizationArray[0];
-		String credentials = new String(Base64.decode(authorizationArray[1]));
-
-		if (!StringUtil.equalsIgnoreCase(
-				authorization, HttpServletRequest.BASIC_AUTH)) {
-
-			return userId;
-		}
-
-		String[] loginAndPassword = StringUtil.split(
-			credentials, CharPool.COLON);
-
-		String login = HttpUtil.decodeURL(loginAndPassword[0].trim());
-
-		String password = null;
-
-		if (loginAndPassword.length > 1) {
-			password = loginAndPassword[1].trim();
-		}
-
-		// Strip @uid and @sn for backwards compatibility
-
-		if (login.endsWith("@uid")) {
-			int pos = login.indexOf("@uid");
-
-			login = login.substring(0, pos);
-		}
-		else if (login.endsWith("@sn")) {
-			int pos = login.indexOf("@sn");
-
-			login = login.substring(0, pos);
-		}
-
-		try {
-			userId = AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
-				request, login, password, null);
-		}
-		catch (AuthException ae) {
-		}
-
-		return userId;
+		return HttpAuthManagerUtil.getBasicUserId(request);
 	}
 
 	@Override
@@ -2143,64 +2099,16 @@ public class PortalImpl implements Portal {
 		return PortalInstances.getDefaultCompanyId();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * 		HttpAuthManagerUtil#getDigestUserId(HttpServletRequest)}
+	 */
+	@Deprecated
 	@Override
 	public long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException {
 
-		long userId = 0;
-
-		String authorizationHeader = request.getHeader(
-			HttpHeaders.AUTHORIZATION);
-
-		if (Validator.isNull(authorizationHeader) ||
-			!authorizationHeader.startsWith("Digest ")) {
-
-			return userId;
-		}
-
-		authorizationHeader = authorizationHeader.substring("Digest ".length());
-		authorizationHeader = StringUtil.replace(
-			authorizationHeader, CharPool.COMMA, CharPool.NEW_LINE);
-
-		UnicodeProperties authorizationProperties = new UnicodeProperties();
-
-		authorizationProperties.fastLoad(authorizationHeader);
-
-		String username = StringUtil.unquote(
-			authorizationProperties.getProperty("username"));
-		String realm = StringUtil.unquote(
-			authorizationProperties.getProperty("realm"));
-		String nonce = StringUtil.unquote(
-			authorizationProperties.getProperty("nonce"));
-		String uri = StringUtil.unquote(
-			authorizationProperties.getProperty("uri"));
-		String response = StringUtil.unquote(
-			authorizationProperties.getProperty("response"));
-
-		if (Validator.isNull(username) || Validator.isNull(realm) ||
-			Validator.isNull(nonce) || Validator.isNull(uri) ||
-			Validator.isNull(response)) {
-
-			return userId;
-		}
-
-		if (!realm.equals(PORTAL_REALM) ||
-			!uri.equals(request.getRequestURI())) {
-
-			return userId;
-		}
-
-		if (!NonceUtil.verify(nonce)) {
-			return userId;
-		}
-
-		long companyId = PortalInstances.getCompanyId(request);
-
-		userId = UserLocalServiceUtil.authenticateForDigest(
-			companyId, username, realm, nonce, request.getMethod(), uri,
-			response);
-
-		return userId;
+		return HttpAuthManagerUtil.getDigestUserId(request);
 	}
 
 	@Override
@@ -8572,4 +8480,5 @@ public class PortalImpl implements Portal {
 
 	private static final Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<>();
+
 }

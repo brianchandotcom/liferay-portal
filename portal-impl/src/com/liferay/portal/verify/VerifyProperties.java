@@ -613,6 +613,17 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.currency.converter.web"
 		},
 
+		// Dynamic Data List
+		
+		new String[] {
+				"dynamic.data.lists.error.template", "dynamic.data.lists.error.template",
+				"com.liferay.dynamic.data.lists.web"
+		},
+		new String[] {
+				"dynamic.data.lists.storage.type", "dynamic.data.lists.storage.type",
+				"com.liferay.dynamic.data.lists.web"
+		},
+
 		// Facebook Connect
 
 		new String[] {
@@ -1440,6 +1451,7 @@ public class VerifyProperties extends VerifyProcess {
 		"company.settings.form.miscellaneous", "company.settings.form.social",
 		"convert.processes", "discussion.thread.view",
 		"dl.file.entry.read.count.enabled",
+		"dynamic.data.lists.record.set.force.autogenerate.key",
 		"dynamic.data.lists.template.language.parser[ftl]",
 		"dynamic.data.lists.template.language.parser[vm]",
 		"dynamic.data.lists.template.language.parser[xsl]",

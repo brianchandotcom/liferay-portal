@@ -2,7 +2,15 @@
 	<command name="addPG">
 		<description message="Add a page called ${pageName}." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click#waitForNavigationInteractionTouchScriptTap" locator1="Mobiledockbar#PENCIL_ICON" />
 		<execute function="AssertClick#waitForNodeScriptAssertTextEqualsClick" locator1="Mobiledockbar#ADD" value1="Add" />
@@ -17,7 +25,15 @@
 	</command>
 
 	<command name="gotoCmdCP">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click" locator1="Mobiledockbar#COG_ICON" />
 		<execute function="AssertClick" locator1="Mobiledockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
@@ -57,7 +73,15 @@
 	<command name="gotoCP">
 		<description message="Navigate to Control Panel > ${portletName}." />
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="Click" locator1="Mobiledockbar#COG_ICON" />
 		<execute function="AssertClick" locator1="Mobiledockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
@@ -88,7 +112,15 @@
 				<equals arg1="${mobilePreview}" arg2="true" />
 			</not>
 			<then>
-				<execute macro="Page#openURL" />
+				<execute macro="Page#openURL">
+					<var name="friendlyURL" value="${friendlyURL}" />
+					<var name="pageAccess" value="${pageAccess}" />
+					<var name="pageStaging" value="${pageStaging}" />
+					<var name="siteNameURL" value="${siteNameURL}" />
+					<var name="siteURL" value="${siteURL}" />
+					<var name="specificURL" value="${specificURL}" />
+					<var name="virtualHostsURL" value="${virtualHostsURL}" />
+				</execute>
 			</then>
 		</if>
 
@@ -122,7 +154,15 @@
 				<equals arg1="${mobilePreview}" arg2="true" />
 			</not>
 			<then>
-				<execute macro="Page#openURL" />
+				<execute macro="Page#openURL">
+					<var name="friendlyURL" value="${friendlyURL}" />
+					<var name="pageAccess" value="${pageAccess}" />
+					<var name="pageStaging" value="${pageStaging}" />
+					<var name="siteNameURL" value="${siteNameURL}" />
+					<var name="siteURL" value="${siteURL}" />
+					<var name="specificURL" value="${specificURL}" />
+					<var name="virtualHostsURL" value="${virtualHostsURL}" />
+				</execute>
 			</then>
 		</if>
 

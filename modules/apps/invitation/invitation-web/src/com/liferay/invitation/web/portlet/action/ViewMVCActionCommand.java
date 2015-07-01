@@ -20,6 +20,7 @@ import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -158,12 +158,12 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 			MailMessage message = new MailMessage(
 				from, to, subject, body, true);
 
-			Date date = new Date();
+			int id = 100000 + RandomUtil.nextInt(900000);
 
 			message.setMessageId(
 				PortalUtil.getMailId(
 					company.getMx(), InvitationUtil.MESSAGE_POP_PORTLET_PREFIX,
-					date.getTime()));
+					id));
 
 			MailServiceUtil.sendEmail(message);
 		}

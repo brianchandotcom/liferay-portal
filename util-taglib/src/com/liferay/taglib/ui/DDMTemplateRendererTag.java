@@ -14,11 +14,11 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.HashMap;
@@ -42,9 +42,9 @@ public class DDMTemplateRendererTag extends IncludeTag {
 		}
 
 		_portletDisplayDDMTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
-				_displayStyleGroupId, PortalUtil.getClassNameId(_className),
-				_displayStyle, true);
+	PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateDDMTemplate(
+		_displayStyleGroupId, PortalUtil.getClassNameId(_className),
+		_displayStyle, true);
 
 		if (_portletDisplayDDMTemplate != null) {
 			return SKIP_BODY;

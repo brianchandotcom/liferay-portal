@@ -30,7 +30,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -207,7 +206,8 @@ public class TemplateHandlerRegistryUtil {
 
 				DDMTemplateLocalServiceUtil.addTemplate(
 					userId, group.getGroupId(), classNameId, 0,
-					PortalUtil.getClassNameId(PortletDisplayTemplate.class),
+					PortalUtil.getClassNameId(
+		"com.liferay.portlet.display.template.service.PortletDisplayTemplate"),
 					templateKey, nameMap, descriptionMap,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language,
 					script, cacheable, false, null, null, serviceContext);

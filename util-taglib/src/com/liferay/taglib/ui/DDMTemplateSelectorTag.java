@@ -14,13 +14,14 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -93,8 +94,8 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		if (Validator.isNull(displayStyle) &&
 			(portletDisplayDDMTemplate != null)) {
 
-			displayStyle = PortletDisplayTemplateUtil.getDisplayStyle(
-				portletDisplayDDMTemplate.getTemplateKey());
+			displayStyle = PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
+				portletDisplayDDMTemplate.getTemplateKey();
 		}
 
 		return displayStyle;
@@ -124,9 +125,9 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		}
 
 		DDMTemplate portletDisplayDDMTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
-				getDisplayStyleGroupId(), PortalUtil.getClassNameId(_className),
-				displayStyle, true);
+	PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateDDMTemplate(
+		getDisplayStyleGroupId(), PortalUtil.getClassNameId(_className),
+		displayStyle, true);
 
 		return portletDisplayDDMTemplate;
 	}

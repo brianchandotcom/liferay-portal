@@ -615,28 +615,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Document document = readXML(content);
 
-		Element rootElement = document.getRootElement();
-
-		String previousName = StringPool.BLANK;
-
-		List<Element> targetElements = rootElement.elements("target");
-
-		for (Element targetElement : targetElements) {
-			String name = targetElement.attributeValue("name");
-
-			if (name.equals("Test")) {
-				name = StringUtil.toLowerCase(name);
-			}
-
-			if (name.compareTo(previousName) < -1) {
-				processErrorMessage(
-					fileName, fileName + " has an unordered target " + name);
-
-				break;
-			}
-
-			previousName = name;
-		}
+		checkOrder(
+			fileName, document.getRootElement(), "target", null,
+			new ElementComparator());
 
 		return newContent;
 	}

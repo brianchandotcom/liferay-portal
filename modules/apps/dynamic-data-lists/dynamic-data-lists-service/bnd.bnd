@@ -8,7 +8,6 @@ Export-Package:\
 	com.liferay.dynamic.data.lists.model.impl,\
 	com.liferay.dynamic.data.lists.service.configuration.configurator,\
 	com.liferay.dynamic.data.lists.service.permission,\
-	com.liferay.dynamic.data.lists.util,\
 	com.liferay.dynamic.data.lists.workflow
 Include-Resource:\
 	classes,\

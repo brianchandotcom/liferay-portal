@@ -322,7 +322,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatDDLStructuresXML(newContent);
 		}
 		else if (fileName.endsWith("routes.xml")) {
-			newContent = formatFriendlyURLRoutesXML(newContent);
+			newContent = formatFriendlyURLRoutesXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
 				 (portalSource && fileName.endsWith("/portlet-custom.xml")) ||
@@ -685,7 +685,23 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return Dom4jUtil.toString(document);
 	}
 
-	protected String formatFriendlyURLRoutesXML(String content) {
+	protected String formatFriendlyURLRoutesXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> routeElements = rootElement.elements("route");
+
+		ElementComparator elementComparator = new ElementComparator();
+
+		for (Element routeElement : routeElements) {
+			checkOrder(
+				fileName, routeElement, "implicit-parameter", null,
+				elementComparator);
+		}
+
 		int pos = content.indexOf("<routes>\n");
 
 		if (pos == -1) {

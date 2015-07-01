@@ -14,8 +14,19 @@
 
 package com.liferay.portlet.trash.test;
 
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
+
 /**
  * @author Cristina González
  */
 public interface WhenIsMoveableFromTrashBaseModel {
+
+	public BaseModel<?> moveBaseModelFromTrash(
+			ClassedModel classedModel, Group group,
+			ServiceContext serviceContext)
+		throws Exception;
+
 }

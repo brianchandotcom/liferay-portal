@@ -94,6 +94,22 @@ public class MBThreadTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> moveBaseModelFromTrash(
+			ClassedModel classedModel, Group group,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		MBThreadServiceUtil.moveThreadFromTrash(
+			(Long)parentBaseModel.getPrimaryKeyObj(),
+			(Long)classedModel.getPrimaryKeyObj());
+
+		return parentBaseModel;
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -433,22 +449,6 @@ public class MBThreadTrashHandlerTest
 	@Override
 	protected boolean isBaseModelContainerModel() {
 		return false;
-	}
-
-	@Override
-	protected BaseModel<?> moveBaseModelFromTrash(
-			ClassedModel classedModel, Group group,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		MBThreadServiceUtil.moveThreadFromTrash(
-			(Long)parentBaseModel.getPrimaryKeyObj(),
-			(Long)classedModel.getPrimaryKeyObj());
-
-		return parentBaseModel;
 	}
 
 	@Override

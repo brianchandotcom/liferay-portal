@@ -53,6 +53,22 @@ public class MBCategoryTrashHandlerTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
+	public BaseModel<?> moveBaseModelFromTrash(
+			ClassedModel classedModel, Group group,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		MBCategoryLocalServiceUtil.moveCategoryFromTrash(
+			TestPropsValues.getUserId(), (Long)classedModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj());
+
+		return parentBaseModel;
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -304,22 +320,6 @@ public class MBCategoryTrashHandlerTest
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected BaseModel<?> moveBaseModelFromTrash(
-			ClassedModel classedModel, Group group,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		MBCategoryLocalServiceUtil.moveCategoryFromTrash(
-			TestPropsValues.getUserId(), (Long)classedModel.getPrimaryKeyObj(),
-			(Long)parentBaseModel.getPrimaryKeyObj());
-
-		return parentBaseModel;
 	}
 
 	@Override

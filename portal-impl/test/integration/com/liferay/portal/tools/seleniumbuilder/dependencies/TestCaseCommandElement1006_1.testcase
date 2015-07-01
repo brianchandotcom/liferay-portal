@@ -1,5 +1,5 @@
 <definition component-name="portal-collaboration">
-	<property name="testray.main.component.name" value="Collaboration" />
+	<property name="testray.main.component.name" value="Blogs" />
 
 	<command name="" priority="5">
 		<execute macro="macro" />

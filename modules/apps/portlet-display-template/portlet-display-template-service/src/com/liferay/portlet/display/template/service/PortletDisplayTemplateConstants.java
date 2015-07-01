@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 public class PortletDisplayTemplateConstants {
 
 	public static final String CURRENT_URL = "currentURL";
-
+	
 	public static final String ENTRIES = "entries";
 
 	public static final String ENTRY = "entry";

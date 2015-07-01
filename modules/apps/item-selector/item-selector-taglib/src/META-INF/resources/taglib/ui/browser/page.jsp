@@ -78,7 +78,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 							String title = DLUtil.getTitleWithExtension(fileEntry);
 
-							JSONObject itemMedatada = ItemSelectorBrowserUtil.getItemMetadataJSONObject(request, fileEntry, latestFileVersion, title);
+							JSONObject itemMedatada = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 							%>
 
 							<liferay-ui:search-container-column-text name="title">
@@ -123,7 +123,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 					String title = DLUtil.getTitleWithExtension(fileEntry);
 
-					JSONObject itemMedatada = ItemSelectorBrowserUtil.getItemMetadataJSONObject(request, fileEntry, latestFileVersion, title);
+					JSONObject itemMedatada = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 				%>
 
 					<li class="list-group-item list-group-item-default">

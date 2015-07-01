@@ -14,6 +14,7 @@
 
 package com.liferay.item.selector.taglib.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,8 +27,9 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 /**
  * @author Ambrin Chaudhary
@@ -35,58 +37,70 @@ import javax.servlet.http.HttpServletRequest;
 public class ItemSelectorBrowserUtil {
 
 	public static JSONObject getItemMetadataJSONObject(
-		HttpServletRequest request, FileEntry fileEntry,
-		FileVersion latestFileVersion, String title) {
+			FileEntry fileEntry, Locale locale)
+		throws PortalException {
+
+		String title = DLUtil.getTitleWithExtension(fileEntry);
+		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
 		JSONObject firstTabJSONObject = JSONFactoryUtil.createJSONObject();
-		firstTabJSONObject.put("title", LanguageUtil.get(request, "file-info"));
+
+		firstTabJSONObject.put("title", LanguageUtil.get(locale, "file-info"));
 
 		JSONArray firstTabDataJSONArray = JSONFactoryUtil.createJSONArray();
+
 		firstTabDataJSONArray.put(
 			getDataJSONObject(
-				LanguageUtil.get(request, "format"),
+				LanguageUtil.get(locale, "format"),
 				HtmlUtil.escape(latestFileVersion.getExtension())));
 		firstTabDataJSONArray.put(
 			getDataJSONObject(
-				LanguageUtil.get(request, "size"),
-				TextFormatter.formatStorageSize(
-					fileEntry.getSize(), request.getLocale())));
+				LanguageUtil.get(locale, "size"),
+				TextFormatter.formatStorageSize(fileEntry.getSize(), locale)));
 		firstTabDataJSONArray.put(
 			getDataJSONObject(
-				LanguageUtil.get(request, "name"), HtmlUtil.escape(title)));
+				LanguageUtil.get(locale, "name"), HtmlUtil.escape(title)));
 		firstTabDataJSONArray.put(
 			getDataJSONObject(
-				LanguageUtil.get(request, "modified"),
-				LanguageUtil.format(request, "x-ago-by-x", new Object[] {
-					LanguageUtil.getTimeDescription(
-						request.getLocale(), System.currentTimeMillis() -
-							fileEntry.getModifiedDate().getTime(),
-						true),
-					HtmlUtil.escape(fileEntry.getUserName())
-				})));
+				LanguageUtil.get(locale, "modified"),
+				LanguageUtil.format(
+					locale, "x-ago-by-x",
+					new Object[] {
+						LanguageUtil.getTimeDescription(
+							locale, System.currentTimeMillis() -
+								fileEntry.getModifiedDate().getTime(),
+							true),
+						HtmlUtil.escape(fileEntry.getUserName())
+					}
+				)));
 
 		firstTabJSONObject.put("data", firstTabDataJSONArray);
 
 		JSONObject secondTabJSONObject = JSONFactoryUtil.createJSONObject();
-		secondTabJSONObject.put("title", LanguageUtil.get(request, "version"));
+
+		secondTabJSONObject.put("title", LanguageUtil.get(locale, "version"));
 
 		JSONArray secondTabDataJSONArray = JSONFactoryUtil.createJSONArray();
+
 		secondTabDataJSONArray.put(
-			getDataJSONObject(LanguageUtil.get(request, "version"),
+			getDataJSONObject(
+				LanguageUtil.get(locale, "version"),
 				HtmlUtil.escape(latestFileVersion.getVersion())));
 		secondTabDataJSONArray.put(
 			getDataJSONObject(
-				LanguageUtil.get(request, "status"),
+				LanguageUtil.get(locale, "status"),
 				WorkflowConstants.getStatusLabel(
 					latestFileVersion.getStatus())));
 
 		secondTabJSONObject.put("data", secondTabDataJSONArray);
 
 		JSONArray groupsJSONArray = JSONFactoryUtil.createJSONArray();
+
 		groupsJSONArray.put(firstTabJSONObject);
 		groupsJSONArray.put(secondTabJSONObject);
 
 		JSONObject itemMetadataJSONObject = JSONFactoryUtil.createJSONObject();
+
 		itemMetadataJSONObject.put("groups", groupsJSONArray);
 
 		return itemMetadataJSONObject;

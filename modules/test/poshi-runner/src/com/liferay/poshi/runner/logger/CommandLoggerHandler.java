@@ -40,8 +40,6 @@ public final class CommandLoggerHandler {
 
 		_failLineGroupLoggerElement(_lineGroupLoggerElement);
 
-		_summaryLogElement = _getSummaryLogElement();
-
 		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
 			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
 
@@ -50,10 +48,6 @@ public final class CommandLoggerHandler {
 
 	public static String getCommandLogText() {
 		return _commandLogLoggerElement.toString();
-	}
-
-	public static String getSummaryLogText() {
-		return _summaryLogElement.toString();
 	}
 
 	public static void logClassCommandName(String classCommandName) {
@@ -80,8 +74,6 @@ public final class CommandLoggerHandler {
 		}
 
 		_commandElement = null;
-
-		_summaryLogElement = _getSummaryLogElement();
 
 		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
 			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
@@ -390,16 +382,6 @@ public final class CommandLoggerHandler {
 		return loggerElement;
 	}
 
-	private static LoggerElement _getSummaryLogElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.addClassName("fail");
-		loggerElement.addChildLoggerElement(
-			SummaryLoggerHandler.getSummaryLogLoggerElement());
-
-		return loggerElement;
-	}
-
 	private static boolean _isCommand(Element element) {
 		if (!Validator.equals(element.getName(), "condition") &&
 			!Validator.equals(element.getName(), "execute")) {
@@ -473,8 +455,6 @@ public final class CommandLoggerHandler {
 	private static int _errorLinkId;
 	private static int _functionLinkId;
 	private static LoggerElement _lineGroupLoggerElement;
-	private static LoggerElement _summaryLogElement = new LoggerElement(
-		"summary-log");
 	private static final LoggerElement _xmlLogLoggerElement = new LoggerElement(
 		"xml-log");
 

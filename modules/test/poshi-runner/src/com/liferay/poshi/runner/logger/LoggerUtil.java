@@ -106,7 +106,7 @@ public final class LoggerUtil {
 
 	public static void createSummary() throws Exception {
 		FileUtil.write(
-			_getSummaryLogFilePath(), CommandLoggerHandler.getSummaryLogText());
+			_getSummaryLogFilePath(), SummaryLoggerHandler.getSummaryLogText());
 	}
 
 	public static void executeJavaScript(String script) {

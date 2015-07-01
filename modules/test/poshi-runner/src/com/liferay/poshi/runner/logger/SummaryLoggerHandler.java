@@ -52,6 +52,10 @@ public final class SummaryLoggerHandler {
 		return _summaryLogLoggerElement;
 	}
 
+	public static String getSummaryLogText() {
+		return _summaryLogLoggerElement.toString();
+	}
+
 	public static void passSummary(Element element) {
 		if (_isCurrentMajorStep(element)) {
 			_passStepLoggerElement(_majorStepLoggerElement);

@@ -28,10 +28,21 @@
 
 </aui:select>
 
-<portlet:renderURL var="userDetailsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="<%= detailsLanguageStrutsAction %>" />
+<%
+String portletKey = portletName.equals(PortletKeys.MY_ACCOUNT) ? PortletKeys.USERS_ADMIN : portletName;
+%>
+
+<liferay-portlet:renderURL portletName="<%= portletKey %>" var="userDetailsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<c:choose>
+		<c:when test="<%= portletKey.equals(PortletKeys.LOGIN) %>">
+			<portlet:param name="struts_action" value="/login/create_account" />
+		</c:when>
+		<c:otherwise>
+			<portlet:param name="mvcPath" value="/html/portlet/users_admin/user/details.jsp" />
+		</c:otherwise>
+	</c:choose>
 	<portlet:param name="p_u_i_d" value="<%= Validator.isNotNull(selUser) ? String.valueOf(selUser.getUserId()) : String.valueOf(0) %>" />
-</portlet:renderURL>
+</liferay-portlet:renderURL>
 
 <aui:script sandbox="<%= true %>" use="liferay-portlet-url">
 	var formData = {};
@@ -77,7 +88,7 @@
 						);
 					},
 					success: function(responseData) {
-						var responseUserNameFields = $(responseData).find('#<portlet:namespace />userNameFields').html();
+						var responseUserNameFields = $(responseData).find('#<%= PortalUtil.getPortletNamespace(portletKey) %>userNameFields').html();
 
 						userNameFields.html(responseUserNameFields);
 					},

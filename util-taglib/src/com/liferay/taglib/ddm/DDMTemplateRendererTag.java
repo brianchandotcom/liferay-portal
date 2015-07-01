@@ -100,7 +100,7 @@ public class DDMTemplateRendererTag extends IncludeTag {
 	}
 
 	private static final String _PAGE =
-		"/html/taglib/ui/ddm_template_renderer/page.jsp";
+		"/html/taglib/ddm/ddm_template_renderer/page.jsp";
 
 	private String _className;
 	private Map<String, Object> _contextObjects = new HashMap<>();

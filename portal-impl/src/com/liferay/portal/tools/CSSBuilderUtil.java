@@ -43,6 +43,10 @@ public class CSSBuilderUtil {
 		int x = cacheFileName.lastIndexOf(StringPool.SLASH);
 		int y = cacheFileName.lastIndexOf(StringPool.PERIOD);
 
+		if (cacheFileName.endsWith(".scss")) {
+			cacheFileName = cacheFileName.substring(0, y + 1) + "css";
+		}
+
 		return cacheFileName.substring(0, x + 1) + ".sass-cache/" +
 			cacheFileName.substring(x + 1, y) + suffix +
 			cacheFileName.substring(y);

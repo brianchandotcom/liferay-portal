@@ -74,14 +74,6 @@
 			property="mx"
 		/>
 
-		<c:if test="<%= showShardSelector %>">
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="shard"
-				value="<%= LanguageUtil.get(request, curCompany.getShardName()) %>"
-			/>
-		</c:if>
-
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="num-of-users"

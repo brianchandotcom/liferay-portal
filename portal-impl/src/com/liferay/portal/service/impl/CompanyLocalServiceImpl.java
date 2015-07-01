@@ -19,7 +19,6 @@ import com.liferay.portal.CompanyMxException;
 import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.RequiredCompanyException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -67,7 +66,6 @@ import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -113,7 +111,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @param  webId the the company's web domain
 	 * @param  virtualHostname the company's virtual host name
 	 * @param  mx the company's mail domain
-	 * @param  shardName the company's shard
 	 * @param  system whether the company is the very first company (i.e., the
 	 *         super company)
 	 * @param  maxUsers the max number of company users (optionally
@@ -125,8 +122,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 */
 	@Override
 	public Company addCompany(
-			String webId, String virtualHostname, String mx, String shardName,
-			boolean system, int maxUsers, boolean active)
+			String webId, String virtualHostname, String mx, boolean system,
+			int maxUsers, boolean active)
 		throws PortalException {
 
 		// Company
@@ -143,7 +140,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		validateVirtualHost(webId, virtualHostname);
 		validateMx(mx);
 
-		Company company = checkCompany(webId, mx, shardName);
+		Company company = checkCompany(webId, mx);
 
 		company.setMx(mx);
 		company.setSystem(system);
@@ -162,8 +159,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	/**
 	 * Returns the company with the web domain.
 	 *
-	 * The method sets mail domain to the web domain, and the shard name to
-	 * the default name set in portal.properties
+	 * The method sets mail domain to the web domain to the default name set in
+	 * portal.properties
 	 *
 	 * @param  webId the company's web domain
 	 * @return the company with the web domain
@@ -173,25 +170,23 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company checkCompany(String webId) throws PortalException {
 		String mx = webId;
 
-		return companyLocalService.checkCompany(
-			webId, mx, PropsValues.SHARD_DEFAULT_NAME);
+		return companyLocalService.checkCompany(webId, mx);
 	}
 
 	/**
-	 * Returns the company with the web domain, mail domain, and shard. If no
-	 * such company exits, the method will create a new company.
+	 * Returns the company with the web domain and mail domain. If no such
+	 * company exits, the method will create a new company.
 	 *
 	 * The method goes through a series of checks to ensure that the company
 	 * contains default users, groups, etc.
 	 *
 	 * @param  webId the company's web domain
 	 * @param  mx the company's mail domain
-	 * @param  shardName the company's shard
-	 * @return the company with the web domain, mail domain, and shard
+	 * @return the company with the web domain and mail domain
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	public Company checkCompany(String webId, String mx, String shardName)
+	public Company checkCompany(String webId, String mx)
 		throws PortalException {
 
 		// Company
@@ -217,11 +212,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company.setActive(true);
 
 			companyPersistence.update(company);
-
-			// Shard
-
-			shardLocalService.addShard(
-				Company.class.getName(), companyId, shardName);
 
 			// Account
 
@@ -278,16 +268,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				catch (PortletException pe) {
 					throw new SystemException(pe);
 				}
-			}
-		}
-		else {
-			try {
-				shardLocalService.getShard(
-					Company.class.getName(), company.getCompanyId());
-			}
-			catch (NoSuchShardException nsse) {
-				shardLocalService.addShard(
-					Company.class.getName(), company.getCompanyId(), shardName);
 			}
 		}
 
@@ -1356,13 +1336,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		portletLocalService.removeCompanyPortletsPool(companyId);
-
-		// Shard
-
-		Shard shard = shardLocalService.getShard(
-			Company.class.getName(), company.getCompanyId());
-
-		shardLocalService.deleteShard(shard);
 
 		// Users
 

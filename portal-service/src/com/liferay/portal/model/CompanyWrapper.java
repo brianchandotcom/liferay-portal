@@ -322,12 +322,6 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public java.lang.String getShardName()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getShardName();
-	}
-
-	@Override
 	public java.lang.String getShortName()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _company.getShortName();

@@ -25,22 +25,16 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.io.Serializable;
 
 import java.util.Map;
@@ -344,20 +338,11 @@ public class EntityCacheImpl
 	}
 
 	private Serializable _encodeCacheKey(Serializable primaryKey) {
-		if (ShardUtil.isEnabled()) {
-			return new CacheKey(ShardUtil.getCurrentShardName(), primaryKey);
-		}
-
 		return primaryKey;
 	}
 
 	private Serializable _encodeLocalCacheKey(
 		Class<?> clazz, Serializable primaryKey) {
-
-		if (ShardUtil.isEnabled()) {
-			return new ShardLocalCacheKey(
-				ShardUtil.getCurrentShardName(), clazz.getName(), primaryKey);
-		}
 
 		return new LocalCacheKey(clazz.getName(), primaryKey);
 	}
@@ -442,57 +427,6 @@ public class EntityCacheImpl
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches = new ConcurrentHashMap<>();
 
-	private static class CacheKey implements Externalizable {
-
-		public CacheKey() {
-		}
-
-		public CacheKey(String shardName, Serializable primaryKey) {
-			_shardName = shardName;
-			_primaryKey = primaryKey;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			CacheKey cacheKey = (CacheKey)obj;
-
-			if (cacheKey._shardName.equals(_shardName) &&
-				cacheKey._primaryKey.equals(_primaryKey)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			return _shardName.hashCode() * 11 + _primaryKey.hashCode();
-		}
-
-		@Override
-		public void readExternal(ObjectInput objectInput)
-			throws ClassNotFoundException, IOException {
-
-			_primaryKey = (Serializable)objectInput.readObject();
-			_shardName = objectInput.readUTF();
-		}
-
-		@Override
-		public void writeExternal(ObjectOutput objectOutput)
-			throws IOException {
-
-			objectOutput.writeObject(_primaryKey);
-			objectOutput.writeUTF(_shardName);
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private Serializable _primaryKey;
-		private String _shardName;
-
-	}
-
 	private static class LocalCacheKey implements Serializable {
 
 		public LocalCacheKey(String className, Serializable primaryKey) {
@@ -522,48 +456,6 @@ public class EntityCacheImpl
 
 		private final String _className;
 		private final Serializable _primaryKey;
-
-	}
-
-	private static class ShardLocalCacheKey implements Serializable {
-
-		public ShardLocalCacheKey(
-			String shardName, String className, Serializable primaryKey) {
-
-			_shardName = shardName;
-			_className = className;
-			_primaryKey = primaryKey;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			ShardLocalCacheKey shardLocalCacheKey = (ShardLocalCacheKey)obj;
-
-			if (shardLocalCacheKey._shardName.equals(_shardName) &&
-				shardLocalCacheKey._className.equals(_className) &&
-				shardLocalCacheKey._primaryKey.equals(_primaryKey)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			int hashCode = HashUtil.hash(0, _shardName);
-
-			hashCode = HashUtil.hash(hashCode, _className);
-			hashCode = HashUtil.hash(hashCode, _primaryKey);
-
-			return hashCode;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final String _className;
-		private final Serializable _primaryKey;
-		private final String _shardName;
 
 	}
 

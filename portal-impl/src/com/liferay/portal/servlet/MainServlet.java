@@ -20,7 +20,6 @@ import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
-import com.liferay.portal.kernel.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -801,15 +799,6 @@ public class MainServlet extends ActionServlet {
 						finally {
 							CompanyThreadLocal.setCompanyId(
 								PortalInstances.getDefaultCompanyId());
-
-							ShardDataSourceTargetSource
-								shardDataSourceTargetSource =
-									InfrastructureUtil.
-										getShardDataSourceTargetSource();
-
-							if (shardDataSourceTargetSource != null) {
-								shardDataSourceTargetSource.resetDataSource();
-							}
 						}
 					}
 					catch (Exception e) {

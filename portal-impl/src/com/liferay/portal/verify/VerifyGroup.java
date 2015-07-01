@@ -15,12 +15,10 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.GroupFriendlyURLException;
-import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -33,16 +31,13 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ShardLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
 
 import java.sql.Connection;
@@ -110,27 +105,10 @@ public class VerifyGroup extends VerifyProcess {
 	protected void verifyCompanyGroups() throws Exception {
 		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
 
-		String currentShardName = ShardUtil.getCurrentShardName();
-
 		for (Company company : companies) {
-			String shardName = null;
+			GroupLocalServiceUtil.checkCompanyGroup(company.getCompanyId());
 
-			try {
-				shardName = company.getShardName();
-			}
-			catch (NoSuchShardException nsse) {
-				Shard shard = ShardLocalServiceUtil.addShard(
-					Company.class.getName(), company.getCompanyId(),
-					PropsValues.SHARD_DEFAULT_NAME);
-
-				shardName = shard.getName();
-			}
-
-			if (!ShardUtil.isEnabled() || shardName.equals(currentShardName)) {
-				GroupLocalServiceUtil.checkCompanyGroup(company.getCompanyId());
-
-				GroupLocalServiceUtil.checkSystemGroups(company.getCompanyId());
-			}
+			GroupLocalServiceUtil.checkSystemGroups(company.getCompanyId());
 		}
 	}
 

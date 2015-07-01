@@ -289,7 +289,7 @@
 				/>
 			</delete>
 
-			<delete dir="${liferay.home}/osgi" />
+			<delete dir="${liferay.home}/osgi" failonerror="false" />
 
 			<delete dir="test-coverage" />
 			<delete dir="test-results" />

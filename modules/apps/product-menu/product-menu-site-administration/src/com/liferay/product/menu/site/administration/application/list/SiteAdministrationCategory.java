@@ -45,7 +45,7 @@ public class SiteAdministrationCategory extends BaseJSPPanelCategory {
 	}
 
 	@Override
-	public String getJSPPath() {
+	public String getJspPath() {
 		return _JSP_PATH;
 	}
 

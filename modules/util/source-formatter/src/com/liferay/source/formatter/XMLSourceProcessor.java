@@ -821,10 +821,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		List<Element> entityElements = rootElement.elements("entity");
 
-		FinderElementComparator finderElementComparator =
-			new FinderElementComparator();
-		ReferenceElementComparator referenceElementComparator =
-			new ReferenceElementComparator();
+		ServiceFinderElementComparator serviceFinderElementComparator =
+			new ServiceFinderElementComparator();
+		ServiceReferenceElementComparator serviceReferenceElementComparator =
+			new ServiceReferenceElementComparator();
 
 		for (Element entityElement : entityElements) {
 			String entityName = entityElement.attributeValue("name");
@@ -833,17 +833,17 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			checkOrder(
 				fileName, entityElement, "finder", entityName,
-				finderElementComparator);
+				serviceFinderElementComparator);
 			checkOrder(
 				fileName, entityElement, "reference", entityName,
-				referenceElementComparator);
+				serviceReferenceElementComparator);
 		}
 
 		checkOrder(
 			fileName, rootElement, "entity", null, new ElementComparator());
 		checkOrder(
 			fileName, rootElement.element("exceptions"), "exception", null,
-			new ExceptionElementComparator());
+			new ServiceExceptionElementComparator());
 	}
 
 	protected void formatSolrSchema(String fileName, String content)
@@ -880,7 +880,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkOrder(
 			fileName, rootElement.element("action-mappings"), "action", null,
-			new ActionElementComparator());
+			new StrutsActionElementComparator());
 	}
 
 	protected void formatTilesDefsXML(String fileName, String content)
@@ -1309,7 +1309,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 	private List<String> _xmlExclusionFiles;
 
-	private class ActionElementComparator extends ElementComparator {
+	private class StrutsActionElementComparator extends ElementComparator {
 
 		@Override
 		public int compare(Element actionElement1, Element actionElement2) {
@@ -1358,7 +1358,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ExceptionElementComparator extends ElementComparator {
+	private class ServiceExceptionElementComparator extends ElementComparator {
 
 		@Override
 		protected String getElementName(Element exceptionElement) {
@@ -1367,7 +1367,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class FinderElementComparator extends ElementComparator {
+	private class ServiceFinderElementComparator extends ElementComparator {
 
 		@Override
 		public int compare(Element finderElement1, Element finderElement2) {
@@ -1433,7 +1433,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ReferenceElementComparator extends ElementComparator {
+	private class ServiceReferenceElementComparator extends ElementComparator {
 
 		@Override
 		public int compare(

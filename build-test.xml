@@ -4726,6 +4726,10 @@ module.framework.properties.osgi.console=11312</echo>
 		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" />
 	</target>
 
+	<target name="prepare-system-ext-properties">
+		<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
+	</target>
+
 	<target name="prepare-test-build">
 		<record-git-commit-portal />
 
@@ -4967,10 +4971,6 @@ module.framework.properties.osgi.console=11312</echo>
 		<antcall target="record-test-class-file-names" inheritAll="false" />
 
 		<antcall target="record-test-plugin-names" inheritAll="false" />
-	</target>
-
-	<target name="prepare-system-ext-properties">
-		<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="prepare-test-build-tomcat-dependents">

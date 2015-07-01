@@ -704,7 +704,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		for (Element routeElement : routeElements) {
 			checkOrder(
+				fileName, routeElement, "ignored-parameter", null,
+				elementComparator);
+			checkOrder(
 				fileName, routeElement, "implicit-parameter", null,
+				elementComparator);
+			checkOrder(
+				fileName, routeElement, "overridden-parameter", null,
 				elementComparator);
 		}
 

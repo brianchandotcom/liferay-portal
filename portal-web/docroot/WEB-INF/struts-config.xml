@@ -482,8 +482,6 @@
 
 		<action path="/users_admin/edit_user_details" forward="portlet.users_admin.edit_user_details" />
 
-		<action path="/users_admin/select_organization" forward="portlet.users_admin.select_organization" />
-
 		<action path="/users_admin/select_organization_role" forward="portlet.roles_admin.select_organization_role" />
 
 		<action path="/users_admin/select_regular_role" forward="portlet.roles_admin.select_regular_role" />

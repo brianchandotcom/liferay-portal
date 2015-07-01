@@ -66,9 +66,9 @@ if (organizationId > 0) {
 									constrain: true,
 									modal: true
 								},
-								id: '<portlet:namespace />selectOrganization',
+								id: '<%= PortalUtil.getPortletNamespace(PortletKeys.USERS_ADMIN) %>selectOrganization',
 								title: '<liferay-ui:message arguments="organization" key="select-x" />',
-								uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="tabs1" value="organizations" /></portlet:renderURL>'
+								uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.USERS_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/users_admin/select_organization.jsp" /></liferay-portlet:renderURL>'
 							},
 							function(event) {
 								var form = AUI.$(document.<portlet:namespace />fm);

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
-	public String getConfigurationView() {
+	public String getConfigurationJspPath() {
 		return _JSP_CONFIGURATION_PATH;
 	}
 
@@ -76,7 +76,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
-	public String getDisplayView() {
+	public String getDisplayJspPath() {
 		return _JSP_VIEW_PATH;
 	}
 

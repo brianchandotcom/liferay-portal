@@ -31,21 +31,21 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 
-	public abstract String getConfigurationView();
+	public abstract String getConfigurationJspPath();
 
-	public abstract String getDisplayView();
+	public abstract String getDisplayJspPath();
 
 	@Override
 	public void includeConfiguration(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		if (Validator.isNull(getConfigurationView())) {
+		if (Validator.isNull(getConfigurationJspPath())) {
 			return;
 		}
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getConfigurationView());
+			_servletContext.getRequestDispatcher(getConfigurationJspPath());
 
 		try {
 			requestDispatcher.include(request, response);
@@ -55,7 +55,8 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 				_log.error("Unable to include JSP", se);
 			}
 
-			throw new IOException("Unable to include " + getDisplayView(), se);
+			throw new IOException(
+				"Unable to include " + getDisplayJspPath(), se);
 		}
 	}
 
@@ -64,12 +65,12 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		if (Validator.isNull(getDisplayView())) {
+		if (Validator.isNull(getDisplayJspPath())) {
 			return;
 		}
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getDisplayView());
+			_servletContext.getRequestDispatcher(getDisplayJspPath());
 
 		try {
 			requestDispatcher.include(request, response);
@@ -79,7 +80,8 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 				_log.error("Unable to include JSP", se);
 			}
 
-			throw new IOException("Unable to include " + getDisplayView(), se);
+			throw new IOException(
+				"Unable to include " + getDisplayJspPath(), se);
 		}
 	}
 

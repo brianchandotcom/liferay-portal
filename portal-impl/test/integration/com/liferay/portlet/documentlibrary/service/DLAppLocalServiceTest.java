@@ -183,6 +183,7 @@ public class DLAppLocalServiceTest {
 
 			try {
 				DLAppLocalServiceUtil.getFolder(folder.getFolderId());
+
 				Assert.fail();
 			}
 			catch (NoSuchFolderException nsfe) {
@@ -190,6 +191,7 @@ public class DLAppLocalServiceTest {
 
 			try {
 				DLAppLocalServiceUtil.getFolder(subfolder.getFolderId());
+
 				Assert.fail();
 			}
 			catch (NoSuchFolderException nsfe) {
@@ -206,6 +208,7 @@ public class DLAppLocalServiceTest {
 
 			try {
 				DLAppLocalServiceUtil.getFolder(folder.getFolderId());
+
 				Assert.fail();
 			}
 			catch (NoSuchFolderException nsfe) {

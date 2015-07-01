@@ -183,6 +183,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<ant dir="../portal-web" target="build-css" />
 	</target>
 
+	<target name="build-db">
+		<ant dir="../sql" target="build-db" />
+	</target>
+
 	<target name="build-ehcache-xsd">
 		<mirrors-get dest="ehcache.xsd" src="http://ehcache.org/ehcache.xsd" />
 
@@ -201,10 +205,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</replace>
 
 		<delete file="ehcache.xsd" />
-	</target>
-
-	<target name="build-db">
-		<ant dir="../sql" target="build-db" />
 	</target>
 
 	<target name="build-iw">

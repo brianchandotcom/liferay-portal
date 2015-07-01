@@ -615,28 +615,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Document document = readXML(content);
 
-		Element rootElement = document.getRootElement();
-
-		String previousName = StringPool.BLANK;
-
-		List<Element> targetElements = rootElement.elements("target");
-
-		for (Element targetElement : targetElements) {
-			String name = targetElement.attributeValue("name");
-
-			if (name.equals("Test")) {
-				name = StringUtil.toLowerCase(name);
-			}
-
-			if (name.compareTo(previousName) < -1) {
-				processErrorMessage(
-					fileName, fileName + " has an unordered target " + name);
-
-				break;
-			}
-
-			previousName = name;
-		}
+		checkOrder(
+			fileName, document.getRootElement(), "target", null,
+			new ElementComparator());
 
 		return newContent;
 	}
@@ -704,7 +685,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		for (Element routeElement : routeElements) {
 			checkOrder(
+				fileName, routeElement, "ignored-parameter", null,
+				elementComparator);
+			checkOrder(
 				fileName, routeElement, "implicit-parameter", null,
+				elementComparator);
+			checkOrder(
+				fileName, routeElement, "overridden-parameter", null,
 				elementComparator);
 		}
 
@@ -815,10 +802,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		List<Element> entityElements = rootElement.elements("entity");
 
-		FinderElementComparator finderElementComparator =
-			new FinderElementComparator();
-		ReferenceElementComparator referenceElementComparator =
-			new ReferenceElementComparator();
+		ServiceFinderElementComparator serviceFinderElementComparator =
+			new ServiceFinderElementComparator();
+		ServiceReferenceElementComparator serviceReferenceElementComparator =
+			new ServiceReferenceElementComparator();
 
 		for (Element entityElement : entityElements) {
 			String entityName = entityElement.attributeValue("name");
@@ -827,17 +814,17 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			checkOrder(
 				fileName, entityElement, "finder", entityName,
-				finderElementComparator);
+				serviceFinderElementComparator);
 			checkOrder(
 				fileName, entityElement, "reference", entityName,
-				referenceElementComparator);
+				serviceReferenceElementComparator);
 		}
 
 		checkOrder(
 			fileName, rootElement, "entity", null, new ElementComparator());
 		checkOrder(
 			fileName, rootElement.element("exceptions"), "exception", null,
-			new ExceptionElementComparator());
+			new ServiceExceptionElementComparator());
 	}
 
 	protected void formatSolrSchema(String fileName, String content)
@@ -874,7 +861,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkOrder(
 			fileName, rootElement.element("action-mappings"), "action", null,
-			new ActionElementComparator());
+			new StrutsActionElementComparator());
 	}
 
 	protected void formatTilesDefsXML(String fileName, String content)
@@ -882,24 +869,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Document document = readXML(content);
 
-		Element rootElement = document.getRootElement();
-
-		List<Element> definitionElements = rootElement.elements("definition");
-
-		String previousName = StringPool.BLANK;
-
-		for (Element definitionElement : definitionElements) {
-			String name = definitionElement.attributeValue("name");
-
-			if (Validator.isNotNull(previousName) &&
-				(previousName.compareTo(name) > 0) &&
-				!previousName.equals("portlet")) {
-
-				processErrorMessage(fileName, "sort: " + fileName + " " + name);
-			}
-
-			previousName = name;
-		}
+		checkOrder(
+			fileName, document.getRootElement(), "definition", null,
+			new TilesDefinitionElementComparator());
 	}
 
 	protected String formatWebXML(String fileName, String content)
@@ -1303,33 +1275,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 	private List<String> _xmlExclusionFiles;
 
-	private class ActionElementComparator extends ElementComparator {
-
-		@Override
-		public int compare(Element actionElement1, Element actionElement2) {
-			String path1 = actionElement1.attributeValue("path");
-			String path2 = actionElement2.attributeValue("path");
-
-			if (!path1.startsWith("/portal/") && path2.startsWith("/portal/")) {
-				return 1;
-			}
-
-			if (path1.startsWith("/portal/") && !path2.startsWith("/portal/")) {
-				return -1;
-			}
-
-			return path1.compareTo(path2);
-		}
-
-		@Override
-		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
-		}
-
-		private static final String _NAME_ATTRIBUTE = "path";
-
-	}
-
 	private class ElementComparator implements Comparator<Element> {
 
 		@Override
@@ -1352,7 +1297,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ExceptionElementComparator extends ElementComparator {
+	private class ServiceExceptionElementComparator extends ElementComparator {
 
 		@Override
 		protected String getElementName(Element exceptionElement) {
@@ -1361,7 +1306,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class FinderElementComparator extends ElementComparator {
+	private class ServiceFinderElementComparator extends ElementComparator {
 
 		@Override
 		public int compare(Element finderElement1, Element finderElement2) {
@@ -1427,7 +1372,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private class ReferenceElementComparator extends ElementComparator {
+	private class ServiceReferenceElementComparator extends ElementComparator {
 
 		@Override
 		public int compare(
@@ -1491,6 +1436,50 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			}
 
 			return 1;
+		}
+
+	}
+
+	private class StrutsActionElementComparator extends ElementComparator {
+
+		@Override
+		public int compare(Element actionElement1, Element actionElement2) {
+			String path1 = actionElement1.attributeValue("path");
+			String path2 = actionElement2.attributeValue("path");
+
+			if (!path1.startsWith("/portal/") && path2.startsWith("/portal/")) {
+				return 1;
+			}
+
+			if (path1.startsWith("/portal/") && !path2.startsWith("/portal/")) {
+				return -1;
+			}
+
+			return path1.compareTo(path2);
+		}
+
+		@Override
+		protected String getNameAttribute() {
+			return _NAME_ATTRIBUTE;
+		}
+
+		private static final String _NAME_ATTRIBUTE = "path";
+
+	}
+
+	private class TilesDefinitionElementComparator extends ElementComparator {
+
+		@Override
+		public int compare(
+			Element definitionElement1, Element definitionElement2) {
+
+			String definitionName1 = getElementName(definitionElement1);
+
+			if (definitionName1.equals("portlet")) {
+				return -1;
+			}
+
+			return super.compare(definitionElement1, definitionElement2);
 		}
 
 	}

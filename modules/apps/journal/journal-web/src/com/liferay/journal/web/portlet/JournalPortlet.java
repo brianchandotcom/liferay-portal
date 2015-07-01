@@ -15,6 +15,7 @@
 package com.liferay.journal.web.portlet;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.exception.ArticleContentSizeException;
 import com.liferay.journal.exception.ArticleDisplayDateException;
@@ -49,7 +50,6 @@ import com.liferay.journal.service.configuration.configurator.JournalServiceConf
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.constants.JournalPortletKeys;
-import com.liferay.journal.web.constants.JournalWebKeys;
 import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.journal.web.upgrade.JournalWebUpgrade;
 import com.liferay.journal.web.util.JournalRSSUtil;
@@ -105,7 +105,6 @@ import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -128,7 +127,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

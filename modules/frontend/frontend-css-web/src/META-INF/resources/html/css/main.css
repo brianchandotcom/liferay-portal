@@ -4,4 +4,4 @@
 
 @import url(taglib.css);
 
-@import url(portal/accessibility.css);
+@import 'portal/accessibility';

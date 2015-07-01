@@ -25,13 +25,13 @@ import com.liferay.portal.service.ServiceContext;
  */
 public class CommentManagerUtil {
 
-	public static void addComment(
+	public static long addComment(
 			long userId, long groupId, String className, long classPK,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		getCommentManager().addComment(
+		return getCommentManager().addComment(
 			userId, groupId, className, classPK, body, serviceContextFunction);
 	}
 

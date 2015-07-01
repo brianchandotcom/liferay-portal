@@ -24,7 +24,7 @@ import com.liferay.portal.service.ServiceContext;
  */
 public interface CommentManager {
 
-	public void addComment(
+	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)

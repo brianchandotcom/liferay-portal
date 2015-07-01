@@ -28,6 +28,10 @@ public interface DiscussionPermission {
 
 	public void checkDeletePermission(long commentId) throws PortalException;
 
+	public void checkSubscribePermission(
+			long companyId, long groupId, String className, long classPK)
+		throws PortalException;
+
 	public void checkUpdatePermission(long commentId) throws PortalException;
 
 	public void checkViewPermission(
@@ -39,6 +43,10 @@ public interface DiscussionPermission {
 		throws PortalException;
 
 	public boolean hasDeletePermission(long commentId) throws PortalException;
+
+	public boolean hasSubscribePermission(
+			long companyId, long groupId, String className, long classPK)
+		throws PortalException;
 
 	public boolean hasUpdatePermission(long commentId) throws PortalException;
 

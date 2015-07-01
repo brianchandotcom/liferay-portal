@@ -44,6 +44,16 @@ public abstract class BaseDiscussionPermission implements DiscussionPermission {
 	}
 
 	@Override
+	public void checkSubscribePermission(
+			long companyId, long groupId, String className, long classPK)
+		throws PortalException {
+
+		if (!hasSubscribePermission(companyId, groupId, className, classPK)) {
+			throw new PrincipalException();
+		}
+	}
+
+	@Override
 	public void checkUpdatePermission(long commentId) throws PortalException {
 		if (!hasUpdatePermission(commentId)) {
 			throw new PrincipalException.MustHavePermission(

@@ -117,6 +117,7 @@ public class CommentServiceTest {
 				getAlwaysAllowingPermissionCheckerReplacer()) {
 
 			int commentsCount = getCommentsCount();
+
 			long commentId = addComment();
 
 			_commentService.deleteComment(commentId);
@@ -131,6 +132,7 @@ public class CommentServiceTest {
 				getAlwaysAllowingPermissionCheckerReplacer()) {
 
 			addComment();
+
 			addComment();
 		}
 
@@ -147,6 +149,7 @@ public class CommentServiceTest {
 				getAlwaysAllowingPermissionCheckerReplacer()) {
 
 			addComment();
+
 			addComment();
 
 			List<Comment> comments = getComments(
@@ -162,7 +165,9 @@ public class CommentServiceTest {
 				getAlwaysAllowingPermissionCheckerReplacer()) {
 
 			addComment();
+
 			long commentId = addComment();
+
 			addComment();
 
 			List<Comment> comments = getComments(1, 2);

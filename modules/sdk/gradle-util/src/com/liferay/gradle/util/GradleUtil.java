@@ -337,6 +337,17 @@ public class GradleUtil {
 		}
 	}
 
+	public static void setProperty(
+		ExtensionAware extensionAware, String name, Object value) {
+
+		ExtensionContainer extensionContainer = extensionAware.getExtensions();
+
+		ExtraPropertiesExtension extraPropertiesExtension =
+			extensionContainer.getExtraProperties();
+
+		extraPropertiesExtension.set(name, value);
+	}
+
 	public static File toFile(Project project, Object object) {
 		if (object == null) {
 			return null;

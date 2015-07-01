@@ -14,7 +14,9 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -30,6 +32,7 @@ import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.process.internal.streams.SafeStreams;
 import org.gradle.util.GUtil;
@@ -38,6 +41,11 @@ import org.gradle.util.GUtil;
  * @author Andrea Di Giorgi
  */
 public class BuildThumbnailsTask extends BasePortalToolsTask {
+
+	public BuildThumbnailsTask() {
+		GradleUtil.setProperty(
+			this, LiferayJavaPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
+	}
 
 	@Override
 	public void exec() {
@@ -93,6 +101,20 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		}
 
 		return project.files(fileTrees.toArray());
+	}
+
+	@OutputFiles
+	public FileCollection getThumbnailFiles() {
+		List<File> thumbnailFiles = new ArrayList<>();
+
+		for (File screenshotFile : getScreenshotFiles()) {
+			File thumbnailFile = new File(
+				screenshotFile.getParentFile(), "thumbnail.png");
+
+			thumbnailFiles.add(thumbnailFile);
+		}
+
+		return project.files(thumbnailFiles);
 	}
 
 	@Input

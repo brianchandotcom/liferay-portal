@@ -16,16 +16,11 @@ package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -55,6 +50,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
@@ -64,6 +60,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -98,15 +95,14 @@ public class DLFileEntryTrashHandlerTest
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
+		return _whenIsIndexableBaseModel.searchBaseModelsCount(clazz, groupId);
+	}
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+	@Before
+	public void setUp() throws Exception {
+		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
 
-		searchContext.setGroupIds(new long[] {groupId});
-
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
+		super.setUp();
 	}
 
 	@Test
@@ -441,5 +437,7 @@ public class DLFileEntryTrashHandlerTest
 		255);
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
+
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
 
 }

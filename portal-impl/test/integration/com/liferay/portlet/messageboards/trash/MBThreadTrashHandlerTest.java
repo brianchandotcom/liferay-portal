@@ -293,6 +293,24 @@ public class MBThreadTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			thread = MBThreadLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), primaryKey,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		return thread;
+	}
+
+	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
@@ -457,24 +475,6 @@ public class MBThreadTrashHandlerTest
 			RandomTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
 			Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 			false, 0.0, false, serviceContext);
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		MBThread thread = MBThreadLocalServiceUtil.getThread(primaryKey);
-
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-			thread = MBThreadLocalServiceUtil.updateStatus(
-				TestPropsValues.getUserId(), primaryKey,
-				WorkflowConstants.STATUS_DRAFT);
-		}
-
-		return thread;
 	}
 
 	private static final String _SUBJECT = "Subject";

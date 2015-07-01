@@ -202,6 +202,26 @@ public class DLFileEntryTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			primaryKey);
+
+		String content = "Content: Enterprise. Open Source. For Life.";
+
+		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
+			primaryKey, RandomTestUtil.randomString() + ".txt",
+			ContentTypes.TEXT_PLAIN, dlFileEntry.getTitle(), StringPool.BLANK,
+			StringPool.BLANK, false, content.getBytes(), serviceContext);
+
+		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+
+		return liferayFileEntry.getDLFileEntry();
+	}
+
+	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
@@ -422,26 +442,6 @@ public class DLFileEntryTrashHandlerTest
 			1,
 			getActiveDLFileRanksCount(
 				group.getGroupId(), (Long)baseModel.getPrimaryKeyObj()));
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
-			primaryKey);
-
-		String content = "Content: Enterprise. Open Source. For Life.";
-
-		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
-			primaryKey, RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, dlFileEntry.getTitle(), StringPool.BLANK,
-			StringPool.BLANK, false, content.getBytes(), serviceContext);
-
-		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
-
-		return liferayFileEntry.getDLFileEntry();
 	}
 
 	private static final String _FILE_ENTRY_TITLE = RandomTestUtil.randomString(

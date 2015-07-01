@@ -219,6 +219,25 @@ public class DLFileShortcutTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		DLFileShortcut dlFileShortcut =
+			DLFileShortcutLocalServiceUtil.getFileShortcut(primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			DLFileShortcutLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), primaryKey,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+		}
+
+		return dlFileShortcut;
+	}
+
+	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
@@ -386,25 +405,6 @@ public class DLFileShortcutTrashHandlerTest
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
 			getNotInTrashBaseModelsCount(parentBaseModel));
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		DLFileShortcut dlFileShortcut =
-			DLFileShortcutLocalServiceUtil.getFileShortcut(primaryKey);
-
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-			DLFileShortcutLocalServiceUtil.updateStatus(
-				TestPropsValues.getUserId(), primaryKey,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
-		}
-
-		return dlFileShortcut;
 	}
 
 }

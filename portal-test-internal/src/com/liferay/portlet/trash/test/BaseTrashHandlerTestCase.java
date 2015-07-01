@@ -69,6 +69,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testDeleteTrashVersions() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -82,7 +84,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
@@ -1719,6 +1724,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionBaseModel() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1731,7 +1738,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -1746,6 +1756,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1758,7 +1770,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -1778,6 +1793,7 @@ public abstract class BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1798,7 +1814,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -1824,6 +1843,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1833,7 +1853,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -1848,6 +1871,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1860,7 +1885,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -1883,6 +1911,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1903,7 +1932,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -1930,6 +1962,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1939,7 +1972,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -1956,6 +1992,7 @@ public abstract class BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionBaseModelIndexable() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1976,7 +2013,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -1995,6 +2035,7 @@ public abstract class BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionBaseModelIsNotVisible() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -2004,7 +2045,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
@@ -2014,6 +2058,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionParentBaseModel() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2034,7 +2080,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2043,7 +2092,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		baseModel = updateBaseModel(
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2061,6 +2110,8 @@ public abstract class BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionParentBaseModelAndCustomRestore()
 		throws Exception {
+
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -2080,7 +2131,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2089,7 +2143,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		baseModel = updateBaseModel(
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2120,6 +2174,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2142,7 +2198,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2151,7 +2210,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		baseModel = updateBaseModel(
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2179,6 +2238,8 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
 		throws Exception {
 
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2197,7 +2258,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2206,7 +2270,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		baseModel = updateBaseModel(
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2229,6 +2293,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -2248,7 +2313,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2257,7 +2325,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		baseModel = updateBaseModel(
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2278,6 +2346,7 @@ public abstract class BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionParentBaseModelIndexable() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -2308,7 +2377,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2317,7 +2389,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		baseModel = updateBaseModel(
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2338,6 +2410,7 @@ public abstract class BaseTrashHandlerTestCase {
 	@Test
 	public void testTrashVersionParentBaseModelIsNotVisible() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -2357,7 +2430,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		baseModel = updateBaseModel(
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2366,7 +2442,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		baseModel = updateBaseModel(
+		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		workflowedModel = getWorkflowedModel(baseModel);
@@ -2617,13 +2693,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 	protected void restoreParentBaseModelFromTrash(long primaryKey)
 		throws Exception {
-	}
-
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		return getBaseModel(primaryKey);
 	}
 
 	protected BaseModel<?> baseModel;

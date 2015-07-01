@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.secure.NonceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -240,7 +243,30 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		HttpServletRequest request, String authorizationHeader,
 		String[] authorizationHeaderParts) {
 
-		return null;
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			new HttpAuthorizationHeader(HttpAuthorizationHeader.SCHEME_DIGEST);
+
+		authorizationHeader = authorizationHeader.substring(
+			HttpAuthorizationHeader.SCHEME_DIGEST.length() + 1);
+
+		authorizationHeader = StringUtil.replace(
+			authorizationHeader, CharPool.COMMA, CharPool.NEW_LINE);
+
+		UnicodeProperties authorizationProperties = new UnicodeProperties();
+
+		authorizationProperties.fastLoad(authorizationHeader);
+
+		for (Map.Entry<String, String> authorizationProperty :
+				authorizationProperties.entrySet()) {
+
+			String key = authorizationProperty.getKey();
+			String value = StringUtil.unquote(
+				authorizationProperties.getProperty(key));
+
+			httpAuthorizationHeader.setAuthParameter(key, value);
+		}
+
+		return httpAuthorizationHeader;
 	}
 
 }

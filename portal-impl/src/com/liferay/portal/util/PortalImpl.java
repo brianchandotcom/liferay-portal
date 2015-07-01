@@ -2138,33 +2138,19 @@ public class PortalImpl implements Portal {
 
 		long userId = 0;
 
-		String authorizationHeader = request.getHeader(
-			HttpHeaders.AUTHORIZATION);
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			HttpAuthManagerUtil.parse(request);
 
-		if (Validator.isNull(authorizationHeader) ||
-			!authorizationHeader.startsWith("Digest ")) {
-
-			return userId;
-		}
-
-		authorizationHeader = authorizationHeader.substring("Digest ".length());
-		authorizationHeader = StringUtil.replace(
-			authorizationHeader, CharPool.COMMA, CharPool.NEW_LINE);
-
-		UnicodeProperties authorizationProperties = new UnicodeProperties();
-
-		authorizationProperties.fastLoad(authorizationHeader);
-
-		String username = StringUtil.unquote(
-			authorizationProperties.getProperty("username"));
-		String realm = StringUtil.unquote(
-			authorizationProperties.getProperty("realm"));
-		String nonce = StringUtil.unquote(
-			authorizationProperties.getProperty("nonce"));
-		String uri = StringUtil.unquote(
-			authorizationProperties.getProperty("uri"));
-		String response = StringUtil.unquote(
-			authorizationProperties.getProperty("response"));
+		String username = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_USERNAME);
+		String realm = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_REALM);
+		String nonce = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_NONCE);
+		String uri = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_URI);
+		String response = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_RESPONSE);
 
 		if (Validator.isNull(username) || Validator.isNull(realm) ||
 			Validator.isNull(nonce) || Validator.isNull(uri) ||

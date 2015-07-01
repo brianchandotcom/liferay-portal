@@ -291,34 +291,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkServiceXMLExceptions(
-		String fileName, Element exceptionsElement) {
-
-		checkOrder(
-			fileName, exceptionsElement, "exception", null,
-			new ExceptionElementComparator());
-	}
-
-	protected void checkServiceXMLFinders(
-			String fileName, String absolutePath, Element entityElement,
-			String entityName)
-		throws Exception {
-
-		_columnNames = getColumnNames(fileName, absolutePath, entityName);
-
-		checkOrder(
-			fileName, entityElement, "finder", entityName,
-			new FinderElementComparator());
-	}
-
-	protected void checkServiceXMLReferences(
-		String fileName, Element entityElement, String entityName) {
-
-		checkOrder(
-			fileName, entityElement, "reference", entityName,
-			new ReferenceElementComparator());
-	}
-
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -821,18 +793,29 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		List<Element> entityElements = rootElement.elements("entity");
 
+		FinderElementComparator finderElementComparator =
+			new FinderElementComparator();
+		ReferenceElementComparator referenceElementComparator =
+			new ReferenceElementComparator();
+
 		for (Element entityElement : entityElements) {
 			String entityName = entityElement.attributeValue("name");
 
-			checkServiceXMLFinders(
-				fileName, absolutePath, entityElement, entityName);
-			checkServiceXMLReferences(fileName, entityElement, entityName);
+			_columnNames = getColumnNames(fileName, absolutePath, entityName);
+
+			checkOrder(
+				fileName, entityElement, "finder", entityName,
+				finderElementComparator);
+			checkOrder(
+				fileName, entityElement, "reference", entityName,
+				referenceElementComparator);
 		}
 
 		checkOrder(
 			fileName, rootElement, "entity", null, new ElementComparator());
-
-		checkServiceXMLExceptions(fileName, rootElement.element("exceptions"));
+		checkOrder(
+			fileName, rootElement.element("exceptions"), "exception", null,
+			new ExceptionElementComparator());
 	}
 
 	protected void formatStrutsConfigXML(String fileName, String content)

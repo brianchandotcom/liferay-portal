@@ -31,28 +31,28 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 
-	public abstract String getJSPPath();
+	public abstract String getJspPath();
 
 	@Override
 	public boolean include(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		String jspPath = getJSPPath();
+		String jspPath = getJspPath();
 
 		if (Validator.isNull(jspPath)) {
 			return false;
 		}
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getJSPPath());
+			_servletContext.getRequestDispatcher(getJspPath());
 
 		try {
 			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
 			if (_log.isErrorEnabled()) {
-				_log.error("Unable to include JSP", se);
+				_log.error("Unable to include " + getJspPath(), se);
 			}
 
 			return false;

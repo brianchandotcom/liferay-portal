@@ -159,6 +159,11 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 	protected void generateBasicChallenge(
 		HttpServletRequest request, HttpServletResponse response,
 		HttpAuthorizationHeader authorizationHeader) {
+
+		response.setHeader(
+			HttpHeaders.WWW_AUTHENTICATE, authorizationHeader.toString());
+
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 
 	protected void generateDigestChallenge(

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -121,8 +120,12 @@ public class SecureFilter extends BasePortalFilter {
 					request, session, userId, HttpServletRequest.BASIC_AUTH);
 			}
 			else {
-				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				HttpAuthorizationHeader httpAuthorizationHeader =
+					new HttpAuthorizationHeader(
+						HttpAuthorizationHeader.SCHEME_BASIC);
+
+				HttpAuthManagerUtil.generateChallenge(
+					request, response, httpAuthorizationHeader);
 
 				return null;
 			}

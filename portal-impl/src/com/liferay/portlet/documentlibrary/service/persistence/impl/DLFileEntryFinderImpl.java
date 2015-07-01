@@ -702,7 +702,7 @@ public class DLFileEntryFinderImpl
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < ddmStructureIds.length; i++) {
-			sb.append("DLFileEntryTypes_DDMStructures.structureId = ?");
+			sb.append("DDMStructureLink.structureId = ?");
 
 			if ((i + 1) != ddmStructureIds.length) {
 				sb.append(WHERE_OR);

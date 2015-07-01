@@ -14,15 +14,10 @@
 
 package com.liferay.portlet.messageboards.trash;
 
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -46,6 +41,7 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
@@ -56,6 +52,7 @@ import java.util.Calendar;
 import java.util.Collections;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -92,15 +89,15 @@ public class MBThreadTrashHandlerTest
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+		return _whenIsIndexableBaseModel.searchBaseModelsCount(
+			MBMessage.class, groupId);
+	}
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+	@Before
+	public void setUp() throws Exception {
+		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
 
-		searchContext.setGroupIds(new long[] {groupId});
-
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
+		super.setUp();
 	}
 
 	@Test
@@ -471,5 +468,7 @@ public class MBThreadTrashHandlerTest
 	}
 
 	private static final String _SUBJECT = "Subject";
+
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
 
 }

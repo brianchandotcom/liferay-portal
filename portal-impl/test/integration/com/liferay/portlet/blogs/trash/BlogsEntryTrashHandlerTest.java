@@ -15,14 +15,9 @@
 package com.liferay.portlet.blogs.trash;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
@@ -33,9 +28,11 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -61,15 +58,14 @@ public class BlogsEntryTrashHandlerTest
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
+		return _whenIsIndexableBaseModel.searchBaseModelsCount(clazz, groupId);
+	}
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+	@Before
+	public void setUp() throws Exception {
+		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
 
-		searchContext.setGroupIds(new long[] {groupId});
-
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
+		super.setUp();
 	}
 
 	@Ignore
@@ -400,5 +396,7 @@ public class BlogsEntryTrashHandlerTest
 		BlogsEntryLocalServiceUtil.moveEntryToTrash(
 			TestPropsValues.getUserId(), primaryKey);
 	}
+
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
 
 }

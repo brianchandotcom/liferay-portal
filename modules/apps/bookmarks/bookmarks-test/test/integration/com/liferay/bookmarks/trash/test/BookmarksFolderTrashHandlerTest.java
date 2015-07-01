@@ -19,15 +19,10 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,6 +34,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
@@ -72,20 +68,14 @@ public class BookmarksFolderTrashHandlerTest
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
-
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
-
-		searchContext.setGroupIds(new long[] {groupId});
-
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
+		return _whenIsIndexableBaseModel.searchBaseModelsCount(clazz, groupId);
 	}
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
+
 		_testMode = PortalRunMode.isTestMode();
 
 		PortalRunMode.setTestMode(true);
@@ -391,5 +381,6 @@ public class BookmarksFolderTrashHandlerTest
 	}
 
 	private boolean _testMode;
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
 
 }

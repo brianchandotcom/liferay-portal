@@ -15,15 +15,10 @@
 package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -38,11 +33,13 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -69,15 +66,14 @@ public class DLFolderTrashHandlerTest
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
+		return _whenIsIndexableBaseModel.searchBaseModelsCount(clazz, groupId);
+	}
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+	@Before
+	public void setUp() throws Exception {
+		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
 
-		searchContext.setGroupIds(new long[] {groupId});
-
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
+		super.setUp();
 	}
 
 	@Ignore
@@ -380,5 +376,7 @@ public class DLFolderTrashHandlerTest
 	private static final String _FOLDER_NAME = RandomTestUtil.randomString(100);
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
+
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
 
 }

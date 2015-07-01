@@ -26,7 +26,10 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
@@ -39,6 +42,7 @@ import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -123,8 +127,8 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	@Input
-	public String getThemeType() {
-		return GradleUtil.toString(_themeType);
+	public Set<String> getThemeTypes() {
+		return _themeTypes;
 	}
 
 	public void setDiffsDir(Object diffsDir) {
@@ -148,8 +152,20 @@ public class CompileThemeTask extends DefaultTask {
 		_themeRootDir = themeRootDir;
 	}
 
-	public void setThemeType(Object themeType) {
-		_themeType = themeType;
+	public void setThemeTypes(Iterable<String> themeTypes) {
+		_themeTypes.clear();
+
+		themeTypes(themeTypes);
+	}
+
+	public CompileThemeTask themeTypes(Iterable<String> themeTypes) {
+		GUtil.addToCollection(_themeTypes, themeTypes);
+
+		return this;
+	}
+
+	public CompileThemeTask themeTypes(String ... themeTypes) {
+		return themeTypes(Arrays.asList(themeTypes));
 	}
 
 	protected void copyDiffs() {
@@ -173,7 +189,13 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	protected void copyPortalThemeDir(
-		String theme, final String[] excludes, final String include) {
+		String theme, String[] excludes, String include) {
+
+		copyPortalThemeDir(theme, excludes, new String[] {include});
+	}
+
+	protected void copyPortalThemeDir(
+		String theme, final String[] excludes, final String[] includes) {
 
 		final String prefix = "html/themes/" + theme + "/";
 
@@ -192,7 +214,7 @@ public class CompileThemeTask extends DefaultTask {
 						copySpec.exclude(excludes);
 					}
 
-					copySpec.include(include);
+					copySpec.include(includes);
 					copySpec.into(themeRootDir);
 				}
 
@@ -205,7 +227,8 @@ public class CompileThemeTask extends DefaultTask {
 
 			final String[] prefixedExcludes = StringUtil.prepend(
 				excludes, jarPrefix);
-			final String prefixedInclude = jarPrefix + include;
+			final String[] prefixedIncludes = StringUtil.prepend(
+				includes, jarPrefix);
 
 			Closure<Void> closure = new Closure<Void>(null) {
 
@@ -218,7 +241,7 @@ public class CompileThemeTask extends DefaultTask {
 					}
 
 					copySpec.from(_project.zipTree(frontendThemesWebFile));
-					copySpec.include(prefixedInclude);
+					copySpec.include(prefixedIncludes);
 					copySpec.into(themeRootDir);
 					copySpec.setIncludeEmptyDirs(false);
 				}
@@ -258,7 +281,6 @@ public class CompileThemeTask extends DefaultTask {
 
 	protected void copyThemeParentPortal() {
 		String themeParent = getThemeParent();
-		String themeType = getThemeType();
 
 		copyPortalThemeDir(
 			themeParent, new String[] {
@@ -266,7 +288,12 @@ public class CompileThemeTask extends DefaultTask {
 			},
 			"**");
 
-		copyPortalThemeDir(themeParent, null, "templates/*." + themeType);
+		Set<String> themeTypes = getThemeTypes();
+
+		String[] includes = StringUtil.prepend(
+			themeTypes.toArray(new String[themeTypes.size()]), "templates/*.");
+
+		copyPortalThemeDir(themeParent, null, includes);
 	}
 
 	protected void copyThemeParentProject() {
@@ -302,13 +329,19 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	protected void copyThemeParentUnstyled() {
-		String themeType = getThemeType();
-
 		copyPortalThemeDir("_unstyled", new String[] {"templates/**"}, "**");
 
-		copyPortalThemeDir(
-			"_unstyled", new String[] {"templates/init." + themeType},
-			"templates/**/*." + themeType);
+		Set<String> themeTypes = getThemeTypes();
+
+		String[] themeTypesArray = themeTypes.toArray(
+			new String[themeTypes.size()]);
+
+		String[] excludes = StringUtil.prepend(
+			themeTypesArray, "templates/init.");
+		String[] includes = StringUtil.prepend(
+			themeTypesArray, "templates/**/*.");
+
+		copyPortalThemeDir("_unstyled", excludes, includes);
 	}
 
 	private static final String[] _PORTAL_THEMES = {
@@ -326,6 +359,6 @@ public class CompileThemeTask extends DefaultTask {
 	private Object _themeParent;
 	private Project _themeParentProject;
 	private Object _themeRootDir;
-	private Object _themeType;
+	private final Set<String> _themeTypes = new HashSet<>();
 
 }

@@ -27,6 +27,7 @@ import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
@@ -322,8 +323,10 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		CompileThemeTask compileThemeTask,
 		LiferayThemeExtension liferayThemeExtension) {
 
-		if (Validator.isNull(compileThemeTask.getThemeType())) {
-			compileThemeTask.setThemeType(liferayThemeExtension.getThemeType());
+		Set<String> themeTypes = compileThemeTask.getThemeTypes();
+
+		if (themeTypes.isEmpty()) {
+			compileThemeTask.themeTypes(liferayThemeExtension.getThemeType());
 		}
 	}
 

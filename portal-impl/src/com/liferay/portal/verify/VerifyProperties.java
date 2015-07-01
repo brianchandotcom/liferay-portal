@@ -1556,6 +1556,7 @@ public class VerifyProperties extends VerifyProcess {
 		"ratings.max.score", "ratings.min.score", "scheduler.classes",
 		"schema.run.minimal", "search.container.page.iterator.page.values",
 		"service.builder.service.read.only.prefixes", "shard.available.names",
+		"shard.default.name", "shard.selector",
 		"siteminder.auth.enabled", "siteminder.import.from.ldap",
 		"siteminder.user.header", "sites.form.add.advanced",
 		"sites.form.add.main", "sites.form.add.miscellaneous",

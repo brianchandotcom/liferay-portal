@@ -224,8 +224,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 					thread.getCategoryId());
 
-				MBUtil.updateCategoryStatistics(
-					category.getCompanyId(), category.getCategoryId());
+				MBUtil.updateCategoryStatistics(category.getCategoryId());
 			}
 			catch (NoSuchCategoryException nsce) {
 				if (!thread.isInTrash()) {
@@ -772,13 +771,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		// Category
 
 		if ((oldCategory != null) && (categoryId != oldCategoryId)) {
-			MBUtil.updateCategoryStatistics(
-				oldCategory.getCompanyId(), oldCategory.getCategoryId());
+			MBUtil.updateCategoryStatistics(oldCategory.getCategoryId());
 		}
 
 		if ((category != null) && (categoryId != oldCategoryId)) {
-			MBUtil.updateCategoryStatistics(
-				category.getCompanyId(), category.getCategoryId());
+			MBUtil.updateCategoryStatistics(category.getCategoryId());
 		}
 
 		// Indexer
@@ -1155,13 +1152,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Update new thread
 
-		MBUtil.updateThreadMessageCount(
-			thread.getCompanyId(), thread.getThreadId());
+		MBUtil.updateThreadMessageCount(thread.getThreadId());
 
 		// Update old thread
 
-		MBUtil.updateThreadMessageCount(
-			oldThread.getCompanyId(), oldThread.getThreadId());
+		MBUtil.updateThreadMessageCount(oldThread.getThreadId());
 
 		// Category
 
@@ -1170,8 +1165,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			(message.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			MBUtil.updateCategoryThreadCount(
-				category.getCompanyId(), category.getCategoryId());
+			MBUtil.updateCategoryThreadCount(category.getCategoryId());
 		}
 
 		// Indexer
@@ -1236,8 +1230,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				thread.getCategoryId());
 
 			if (category != null) {
-				MBUtil.updateCategoryStatistics(
-					category.getCompanyId(), category.getCategoryId());
+				MBUtil.updateCategoryStatistics(category.getCategoryId());
 			}
 		}
 

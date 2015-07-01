@@ -15,18 +15,14 @@
 package com.liferay.portal.kernel.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -467,12 +463,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String currentShardName = null;
-
 		try {
-			currentShardName = ShardUtil.setTargetSource(
-				PropsUtil.get(PropsKeys.SHARD_DEFAULT_NAME));
-
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
@@ -497,10 +488,6 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return bitwiseValues;
 		}
 		finally {
-			if (Validator.isNotNull(currentShardName)) {
-				ShardUtil.setTargetSource(currentShardName);
-			}
-
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}

@@ -101,8 +101,8 @@ public interface MBMessageService extends BaseService {
 		java.io.File file, java.lang.String mimeType) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	long)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#deleteDiscussionMessage(long)}
 	*/
 	@java.lang.Deprecated
 	public void deleteDiscussionMessage(long groupId,

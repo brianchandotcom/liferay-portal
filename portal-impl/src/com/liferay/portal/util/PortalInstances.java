@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -257,17 +256,8 @@ public class PortalInstances {
 			}
 
 			if (virtualHost.getLayoutSetId() != 0) {
-				LayoutSet layoutSet = null;
-
-				try {
-					ShardUtil.pushCompanyService(virtualHost.getCompanyId());
-
-					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-						virtualHost.getLayoutSetId());
-				}
-				finally {
-					ShardUtil.popCompanyService();
-				}
+				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					virtualHost.getLayoutSetId());
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -296,13 +286,6 @@ public class PortalInstances {
 	private long[] _getCompanyIdsBySQL() throws SQLException {
 		List<Long> companyIds = new ArrayList<>();
 
-		String currentShardName = ShardUtil.setTargetSource(
-			PropsValues.SHARD_DEFAULT_NAME);
-
-		if (Validator.isNotNull(currentShardName)) {
-			ShardUtil.pushCompanyService(PropsValues.SHARD_DEFAULT_NAME);
-		}
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -311,13 +294,6 @@ public class PortalInstances {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(_GET_COMPANY_IDS);
-
-			if (Validator.isNotNull(currentShardName)) {
-				ps.setString(1, currentShardName);
-			}
-			else {
-				ps.setString(1, PropsValues.SHARD_DEFAULT_NAME);
-			}
 
 			rs = ps.executeQuery();
 
@@ -328,12 +304,6 @@ public class PortalInstances {
 			}
 		}
 		finally {
-			if (Validator.isNotNull(currentShardName)) {
-				ShardUtil.popCompanyService();
-
-				ShardUtil.setTargetSource(currentShardName);
-			}
-
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
@@ -567,8 +537,7 @@ public class PortalInstances {
 	}
 
 	private static final String _GET_COMPANY_IDS =
-		"select companyId from Company, Shard where Company.companyId = " +
-			"Shard.classPK and Shard.name = ?";
+		"select companyId from Company";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstances.class);

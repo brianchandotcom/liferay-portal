@@ -16,7 +16,6 @@ package com.liferay.portal.spring.hibernate;
 
 import com.liferay.portal.dao.orm.hibernate.event.MVCCSynchronizerPostUpdateEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.NestableAutoFlushEventListener;
-import com.liferay.portal.dao.shard.ShardSpringSessionContext;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -85,10 +84,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		_mvccEnabled = mvccEnabled;
 	}
 
-	public void setShardEnabled(boolean shardEnabled) {
-		_shardEnabled = shardEnabled;
-	}
-
 	protected static Map<String, Class<?>> getPreloadClassLoaderClasses() {
 		try {
 			Map<String, Class<?>> classes = new HashMap<>();
@@ -146,12 +141,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			Class<?> clazz = dialect.getClass();
 
 			properties.setProperty("hibernate.dialect", clazz.getName());
-		}
-
-		if (_shardEnabled) {
-			properties.setProperty(
-				Environment.CURRENT_SESSION_CONTEXT_CLASS,
-				ShardSpringSessionContext.class.getName());
 		}
 
 		properties.setProperty("hibernate.cache.use_query_cache", "false");
@@ -316,6 +305,5 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 	private Converter<String> _hibernateConfigurationConverter;
 	private boolean _mvccEnabled = true;
-	private boolean _shardEnabled;
 
 }

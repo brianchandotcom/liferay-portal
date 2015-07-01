@@ -70,29 +70,6 @@ catch (Exception e) {
 
 		<aui:input label="mail-domain" name="mx" />
 
-		<c:if test="<%= showShardSelector %>">
-			<c:choose>
-				<c:when test="<%= selCompany != null %>">
-					<%= selCompany.getShardName() %>
-				</c:when>
-				<c:otherwise>
-					<aui:select name="shardName">
-
-						<%
-						for (String shardName : ShardUtil.getAvailableShardNames()) {
-						%>
-
-							<aui:option label="<%= shardName %>" selected="<%= shardName.equals(PropsValues.SHARD_DEFAULT_NAME) %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-
 		<aui:input name="maxUsers" />
 
 		<aui:input disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstances.getDefaultCompanyId()) %>" name="active" type="checkbox" value="<%= (selCompany != null) ? selCompany.isActive() : true %>" />

@@ -15,8 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
-import com.liferay.portal.kernel.dao.shard.ShardDataSourceTargetSource;
-import com.liferay.portal.kernel.dao.shard.ShardSessionFactoryTargetSource;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
@@ -54,22 +52,6 @@ public class InfrastructureUtil {
 		return _mailSession;
 	}
 
-	public static ShardDataSourceTargetSource getShardDataSourceTargetSource() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, "shardDataSourceTargetSource");
-
-		return _shardDataSourceTargetSource;
-	}
-
-	public static ShardSessionFactoryTargetSource
-		getShardSessionFactoryTargetSource() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, "shardSessionFactoryTargetSource");
-
-		return _shardSessionFactoryTargetSource;
-	}
-
 	public static Object getTransactionManager() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			InfrastructureUtil.class, "transactionManager");
@@ -98,24 +80,6 @@ public class InfrastructureUtil {
 		_mailSession = mailSession;
 	}
 
-	public void setShardDataSourceTargetSource(
-		ShardDataSourceTargetSource shardDataSourceTargetSource) {
-
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "shardDataSourceTargetSource");
-
-		_shardDataSourceTargetSource = shardDataSourceTargetSource;
-	}
-
-	public void setShardSessionFactoryTargetSource(
-		ShardSessionFactoryTargetSource shardSessionFactoryTargetSource) {
-
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "shardSessionFactoryTargetSource");
-
-		_shardSessionFactoryTargetSource = shardSessionFactoryTargetSource;
-	}
-
 	public void setTransactionManager(Object transactionManager) {
 		PortalRuntimePermission.checkSetBeanProperty(
 			getClass(), "transactionManager");
@@ -126,9 +90,6 @@ public class InfrastructureUtil {
 	private static DataSource _dataSource;
 	private static DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
 	private static Session _mailSession;
-	private static ShardDataSourceTargetSource _shardDataSourceTargetSource;
-	private static ShardSessionFactoryTargetSource
-		_shardSessionFactoryTargetSource;
 	private static Object _transactionManager;
 
 }

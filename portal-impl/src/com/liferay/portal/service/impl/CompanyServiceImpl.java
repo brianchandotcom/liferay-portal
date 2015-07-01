@@ -55,7 +55,6 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param  webId the company's web domain
 	 * @param  virtualHost the company's virtual host name
 	 * @param  mx the company's mail domain
-	 * @param  shardName the company's shard
 	 * @param  system whether the company is the very first company (i.e., the
 	 * @param  maxUsers the max number of company users (optionally
 	 *         <code>0</code>)
@@ -68,8 +67,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public Company addCompany(
-			String webId, String virtualHost, String mx, String shardName,
-			boolean system, int maxUsers, boolean active)
+			String webId, String virtualHost, String mx, boolean system,
+			int maxUsers, boolean active)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -79,7 +78,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			webId, virtualHost, mx, shardName, system, maxUsers, active);
+			webId, virtualHost, mx, system, maxUsers, active);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

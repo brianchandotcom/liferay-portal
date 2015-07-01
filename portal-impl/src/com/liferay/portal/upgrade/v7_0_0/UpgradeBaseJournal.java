@@ -15,16 +15,12 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -118,12 +114,7 @@ public abstract class UpgradeBaseJournal extends UpgradeDynamicDataMapping {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String currentShardName = null;
-
 		try {
-			currentShardName = ShardUtil.setTargetSource(
-				PropsUtil.get(PropsKeys.SHARD_DEFAULT_NAME));
-
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
@@ -148,10 +139,6 @@ public abstract class UpgradeBaseJournal extends UpgradeDynamicDataMapping {
 			return bitwiseValues;
 		}
 		finally {
-			if (Validator.isNotNull(currentShardName)) {
-				ShardUtil.setTargetSource(currentShardName);
-			}
-
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}

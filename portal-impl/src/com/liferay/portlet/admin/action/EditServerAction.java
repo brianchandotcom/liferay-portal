@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -397,8 +396,6 @@ public class EditServerAction extends PortletAction {
 			}
 
 			for (long companyId : companyIds) {
-				ShardUtil.pushCompanyService(companyId);
-
 				try {
 					indexer.reindex(new String[] {String.valueOf(companyId)});
 
@@ -406,9 +403,6 @@ public class EditServerAction extends PortletAction {
 				}
 				catch (Exception e) {
 					_log.error(e, e);
-				}
-				finally {
-					ShardUtil.popCompanyService();
 				}
 			}
 		}

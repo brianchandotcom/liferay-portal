@@ -51,6 +51,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
+import com.liferay.portlet.trash.test.WhenHasMyBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
@@ -76,9 +77,9 @@ import org.junit.Test;
 @Sync
 public class DLFileEntryTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
-			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
-			   WhenIsMoveableFromTrashBaseModel,
+	implements WhenHasMyBaseModel, WhenHasRecentBaseModelCount,
+			   WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
+			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
 			   WhenIsUpdatableBaseModel {
 
 	@ClassRule
@@ -87,6 +88,15 @@ public class DLFileEntryTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public int getMineBaseModelsCount(long groupId, long userId)
+		throws Exception {
+
+		return DLAppServiceUtil.getGroupFileEntriesCount(
+			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
+			WorkflowConstants.STATUS_APPROVED);
+	}
 
 	@Override
 	public int getRecentBaseModelsCount(long groupId) throws Exception {
@@ -312,15 +322,6 @@ public class DLFileEntryTrashHandlerTest
 		DLFileEntry dlFileEntry = (DLFileEntry)classedModel;
 
 		return dlFileEntry.getTitle();
-	}
-
-	@Override
-	protected int getMineBaseModelsCount(long groupId, long userId)
-		throws Exception {
-
-		return DLAppServiceUtil.getGroupFileEntriesCount(
-			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
-			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

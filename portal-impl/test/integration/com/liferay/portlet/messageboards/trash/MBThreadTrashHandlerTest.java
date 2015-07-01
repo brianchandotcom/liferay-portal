@@ -42,6 +42,7 @@ import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
+import com.liferay.portlet.trash.test.WhenHasMyBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
@@ -67,9 +68,9 @@ import org.junit.Test;
 @Sync
 public class MBThreadTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
-			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
-			   WhenIsUpdatableBaseModel {
+	implements WhenHasMyBaseModel, WhenHasRecentBaseModelCount,
+			   WhenIsAssetableBaseModel, WhenIsIndexableBaseModel,
+			   WhenIsMoveableFromTrashBaseModel, WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -77,6 +78,14 @@ public class MBThreadTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public int getMineBaseModelsCount(long groupId, long userId)
+		throws Exception {
+
+		return MBThreadServiceUtil.getGroupThreadsCount(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED);
+	}
 
 	@Override
 	public int getRecentBaseModelsCount(long groupId) throws Exception {
@@ -377,14 +386,6 @@ public class MBThreadTrashHandlerTest
 			categoryId);
 
 		return category.getMessageCount();
-	}
-
-	@Override
-	protected int getMineBaseModelsCount(long groupId, long userId)
-		throws Exception {
-
-		return MBThreadServiceUtil.getGroupThreadsCount(
-			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

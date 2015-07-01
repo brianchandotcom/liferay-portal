@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.web.util.SearchFacet;
 
@@ -32,8 +31,10 @@ import com.liferay.search.web.util.SearchFacet;
 public abstract class BaseSearchFacet implements SearchFacet {
 
 	@Override
-	public String getConfigurationView() {
-		return StringPool.BLANK;
+	public String getClassName() {
+		Class<?> clazz = getClass();
+
+		return clazz.getName();
 	}
 
 	@Override
@@ -52,8 +53,18 @@ public abstract class BaseSearchFacet implements SearchFacet {
 	}
 
 	@Override
+	public String getId() {
+		return getClassName();
+	}
+
+	@Override
 	public String getOrder() {
 		return "OrderHitsDesc";
+	}
+
+	@Override
+	public String getTitle() {
+		return getLabel();
 	}
 
 	@Override

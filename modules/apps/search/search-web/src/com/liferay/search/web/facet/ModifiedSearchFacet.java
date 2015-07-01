@@ -26,22 +26,20 @@ import com.liferay.search.web.util.SearchFacet;
 
 import javax.portlet.ActionRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class ModifiedSearchFacet extends BaseSearchFacet {
+public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
-	public String getClassName() {
-		return ModifiedSearchFacet.class.getName();
-	}
-
-	@Override
-	public String getConfigurationView() {
-		return "/facets/configuration/modified.jsp";
+	public String getConfigurationJspPath() {
+		return _JSP_CONFIGURATION_PATH;
 	}
 
 	@Override
@@ -78,8 +76,8 @@ public class ModifiedSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
-	public String getDisplayView() {
-		return "/facets/view/modified.jsp";
+	public String getDisplayJspPath() {
+		return _JSP_VIEW_PATH;
 	}
 
 	public String getFacetClassName() {
@@ -89,11 +87,6 @@ public class ModifiedSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getFieldName() {
 		return Field.MODIFIED_DATE;
-	}
-
-	@Override
-	public String getId() {
-		return ModifiedSearchFacet.class.getName();
 	}
 
 	@Override
@@ -139,6 +132,20 @@ public class ModifiedSearchFacet extends BaseSearchFacet {
 	public String getTitle() {
 		return "modified-date";
 	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final String _JSP_CONFIGURATION_PATH =
+		"/META-INF/resources/facets/configuration/modified.jsp";
+
+	private static final String _JSP_VIEW_PATH =
+		"/META-INF/resources/facets/view/modified.jsp";
 
 	private static final String[] _LABELS = new String[] {
 		"past-hour", "past-24-hours", "past-week", "past-month", "past-year"

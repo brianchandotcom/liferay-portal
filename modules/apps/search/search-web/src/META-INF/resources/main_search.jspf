@@ -82,11 +82,8 @@ Hits hits = indexer.search(searchContext);
 				}
 
 				request.setAttribute("search.jsp-facet", searchFacet.getFacet());
-			%>
 
-				<liferay-util:include page="<%= searchFacet.getDisplayView() %>" servletContext="<%= application %>"  />
-
-			<%
+				searchFacet.includeView(request, response);
 			}
 			%>
 

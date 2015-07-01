@@ -27,6 +27,7 @@ import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
@@ -34,10 +35,12 @@ import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.bundling.War;
 
@@ -209,7 +212,9 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		BuildThumbnailsTask buildThumbnailsTask,
 		LiferayThemeExtension liferayThemeExtension) {
 
-		if (buildThumbnailsTask.getImagesDir() != null) {
+		FileCollection imageDirs = buildThumbnailsTask.getImageDirs();
+
+		if (!imageDirs.isEmpty()) {
 			return;
 		}
 
@@ -220,7 +225,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 			File imagesDir = new File(
 				liferayThemeExtension.getDiffsDir(), "images");
 
-			buildThumbnailsTask.setImagesDir(imagesDir);
+			buildThumbnailsTask.imageDirs(imagesDir);
 		}
 	}
 
@@ -243,6 +248,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		configureTaskCompileThemeFrontendThemesWebFile(compileThemeTask);
 		configureTaskCompileThemeParent(
 			compileThemeTask, liferayThemeExtension);
+		configureTaskCompileThemeRootDir(compileThemeTask);
 		configureTaskCompileThemeType(compileThemeTask, liferayThemeExtension);
 
 		configureTaskCompileThemeDependsOn(compileThemeTask);
@@ -300,12 +306,27 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		}
 	}
 
+	protected void configureTaskCompileThemeRootDir(
+		CompileThemeTask compileThemeTask) {
+
+		if (compileThemeTask.getThemeRootDir() != null) {
+			return;
+		}
+
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			compileThemeTask.getProject(), WarPluginConvention.class);
+
+		compileThemeTask.setThemeRootDir(warPluginConvention.getWebAppDir());
+	}
+
 	protected void configureTaskCompileThemeType(
 		CompileThemeTask compileThemeTask,
 		LiferayThemeExtension liferayThemeExtension) {
 
-		if (Validator.isNull(compileThemeTask.getThemeType())) {
-			compileThemeTask.setThemeType(liferayThemeExtension.getThemeType());
+		Set<String> themeTypes = compileThemeTask.getThemeTypes();
+
+		if (themeTypes.isEmpty()) {
+			compileThemeTask.themeTypes(liferayThemeExtension.getThemeType());
 		}
 	}
 

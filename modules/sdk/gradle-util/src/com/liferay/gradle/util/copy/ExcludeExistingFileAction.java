@@ -12,28 +12,31 @@
  * details.
  */
 
-package com.liferay.gradle.util;
+package com.liferay.gradle.util.copy;
 
-import groovy.lang.Closure;
-import groovy.lang.Script;
+import java.io.File;
+
+import org.gradle.api.Action;
+import org.gradle.api.file.FileCopyDetails;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class ClosureBackedScript extends Script {
+public class ExcludeExistingFileAction implements Action<FileCopyDetails> {
 
-	public ClosureBackedScript(Closure<?> closure) {
-		_closure = closure;
+	public ExcludeExistingFileAction(File destinationDir) {
+		_destinationDir = destinationDir;
 	}
 
 	@Override
-	public Object run() {
-		_closure.setDelegate(this);
-		_closure.setResolveStrategy(Closure.DELEGATE_FIRST);
+	public void execute(FileCopyDetails fileCopyDetails) {
+		File file = new File(_destinationDir, fileCopyDetails.getPath());
 
-		return _closure.call();
+		if (file.exists()) {
+			fileCopyDetails.exclude();
+		}
 	}
 
-	private final Closure<?> _closure;
+	private final File _destinationDir;
 
 }

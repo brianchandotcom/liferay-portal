@@ -1,0 +1,10 @@
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile group: "org.quartz-scheduler", name: "quartz", version: "2.1.7"
+	compile project(":portal:portal-scheduler")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

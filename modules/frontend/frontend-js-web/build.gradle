@@ -1,0 +1,81 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}
+
+ext.alloyBootstrapVersion = "3.2.0-2"
+ext.alloyVersion = "3.0.1"
+
+File jsDestinationDir = file("tmp/META-INF/resources/html/js")
+File thirdPartyDir = file("../../../portal-web/third-party")
+
+task buildAlloy(type: Copy)
+task buildAlloyBootstrap(type: Copy)
+
+buildAlloy {
+	File alloyDestinationDir = new File(jsDestinationDir, "aui")
+
+	eachFile new StripPathSegmentsAction(1)
+
+	doFirst {
+		delete alloyDestinationDir
+	}
+
+	doLast {
+		File auiDeprecatedCssFile = new File(alloyDestinationDir, "aui_deprecated.css")
+
+		File auiSkinDeprecatedCssFile = new File(alloyDestinationDir, "aui-skin-deprecated/css/aui-skin-deprecated.css")
+		FileTree cssFileTree = fileTree(dir: alloyDestinationDir, include: "*-deprecated/assets/skins/sam/*-deprecated.css")
+
+		FileUtil.concatenate(auiDeprecatedCssFile, files(auiSkinDeprecatedCssFile, cssFileTree))
+
+		ant.replaceregexp(file: auiDeprecatedCssFile, flags: "g", match: "url\\(([^)]+)\\)", replace: "url(@theme_image_path@/aui/\\1)")
+
+		ant.replace(file: auiDeprecatedCssFile) {
+			ant.replacefilter token: "../images/", value: ""
+			ant.replacefilter token: "../../../../../build/aui-skin-base/images/", value: ""
+			ant.replacefilter token: "../../../../../build/aui-skin-classic/images/", value: ""
+			ant.replacefilter token: "../../../../../build/aui-skin-deprecated/images/", value: ""
+		}
+	}
+
+	from zipTree(new File(thirdPartyDir, "alloy-${alloyVersion}.zip"))
+
+	include "build/**"
+
+	includeEmptyDirs = false
+
+	into alloyDestinationDir
+}
+
+buildAlloyBootstrap {
+	File alloyBootstrapDestinationDir = new File(jsDestinationDir, "bootstrap")
+
+	doFirst {
+		delete alloyBootstrapDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(3)
+
+	exclude "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/bootstrap-*.js"
+
+	from zipTree(new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip"))
+
+	include "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/**"
+
+	includeEmptyDirs = false
+
+	into alloyBootstrapDestinationDir
+}
+
+classes {
+	dependsOn buildAlloy
+	dependsOn buildAlloyBootstrap
+}

@@ -14,6 +14,7 @@
 
 package com.liferay.microblogs.upgrade;
 
+import com.liferay.microblogs.service.configuration.configurator.MicroblogsServiceConfigurator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -25,22 +26,15 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import org.springframework.context.ApplicationContext;
-
 /**
  * @author Ryan Park
  */
 @Component(immediate = true, service = MicroblogsServiceUpgrade.class)
 public class MicroblogsServiceUpgrade {
 
-	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.microblogs.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
+	@Reference(unbind = "-")
+	protected void setMicroblogsServiceConfigurator(
+		MicroblogsServiceConfigurator microblogsServiceConfigurator) {
 	}
 
 	@Reference(unbind = "-")

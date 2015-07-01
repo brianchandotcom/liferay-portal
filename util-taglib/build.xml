@@ -12,7 +12,7 @@
 		<sequential>
 			<clean-cmd>
 				<clean-post>
-					<delete file="${liferay.home}/osgi/portal/${jar.file}.jar" />
+					<delete file="${liferay.home}/osgi/portal/${jar.file}.jar" failonerror="false" />
 				</clean-post>
 			</clean-cmd>
 		</sequential>

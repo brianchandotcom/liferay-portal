@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.security.auth.http;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +25,11 @@ import java.util.Map;
  */
 public class HttpAuthorizationHeader {
 
+	public static final String AUTHPARAM_NONCE = "nonce";
+
 	public static final String AUTHPARAM_PASSWORD = "password";
+
+	public static final String AUTHPARAM_REALM = "realm";
 
 	public static final String AUTHPARAM_USERID = "userid";
 
@@ -55,6 +62,30 @@ public class HttpAuthorizationHeader {
 
 	public void setScheme(String scheme) {
 		this._scheme = scheme;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 1);
+
+		sb.append(_scheme);
+
+		sb.append(StringPool.SPACE);
+
+		for (Map.Entry<String, String> parameterEntry :
+				_authParameters.entrySet()) {
+
+			sb.append(parameterEntry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(StringPool.QUOTE);
+			sb.append(parameterEntry.getValue());
+			sb.append(StringPool.QUOTE);
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private final Map<String, String> _authParameters = new HashMap<>();

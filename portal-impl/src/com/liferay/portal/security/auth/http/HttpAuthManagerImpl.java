@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.servlet.filters.secure.NonceUtil;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalInstances;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +52,14 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 
 			throw new IllegalArgumentException(
 				"AuthorizationHeader scheme is mandatory");
+		}
+
+		String realm = authorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_REALM);
+
+		if (Validator.isBlank(realm)) {
+			authorizationHeader.setAuthParameter(
+				HttpAuthorizationHeader.AUTHPARAM_REALM, Portal.PORTAL_REALM);
 		}
 
 		String authorizationScheme = authorizationHeader.getScheme();
@@ -153,6 +164,22 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 	protected void generateDigestChallenge(
 		HttpServletRequest request, HttpServletResponse response,
 		HttpAuthorizationHeader authorizationHeader) {
+
+		// Must generate a new nonce for each 401 (RFC2617, 3.2.1)
+
+		long companyId = PortalInstances.getCompanyId(request);
+
+		String remoteAddress = request.getRemoteAddr();
+
+		String nonce = NonceUtil.generate(companyId, remoteAddress);
+
+		authorizationHeader.setAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_NONCE, nonce);
+
+		response.setHeader(
+			HttpHeaders.WWW_AUTHENTICATE, authorizationHeader.toString());
+
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 
 	protected long getBasicUserId(

@@ -17,6 +17,8 @@ package com.liferay.portal.servlet.filters.secure;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -35,7 +37,6 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.WebKeys;
@@ -159,24 +160,12 @@ public class SecureFilter extends BasePortalFilter {
 					request, session, userId, HttpServletRequest.DIGEST_AUTH);
 			}
 			else {
+				HttpAuthorizationHeader httpAuthorizationHeader =
+					new HttpAuthorizationHeader(
+						HttpAuthorizationHeader.SCHEME_DIGEST);
 
-				// Must generate a new nonce for each 401 (RFC2617, 3.2.1)
-
-				long companyId = PortalInstances.getCompanyId(request);
-
-				String remoteAddress = request.getRemoteAddr();
-
-				String nonce = NonceUtil.generate(companyId, remoteAddress);
-
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_DIGEST_REALM);
-				sb.append(", nonce=\"");
-				sb.append(nonce);
-				sb.append("\"");
-
-				response.setHeader(HttpHeaders.WWW_AUTHENTICATE, sb.toString());
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				HttpAuthManagerUtil.generateChallenge(
+					request, response, httpAuthorizationHeader);
 
 				return null;
 			}
@@ -340,9 +329,6 @@ public class SecureFilter extends BasePortalFilter {
 
 	private static final String _BASIC_REALM =
 		"Basic realm=\"" + Portal.PORTAL_REALM + "\"";
-
-	private static final String _DIGEST_REALM =
-		"Digest realm=\"" + Portal.PORTAL_REALM + "\"";
 
 	private static final Log _log = LogFactoryUtil.getLog(SecureFilter.class);
 

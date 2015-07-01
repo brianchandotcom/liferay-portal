@@ -16,16 +16,13 @@ package com.liferay.portal.security.auth.verifier;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.servlet.filters.secure.NonceUtil;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Properties;
@@ -77,25 +74,12 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 					HttpServletResponse response =
 						accessControlContext.getResponse();
 
-					// Must generate a new nonce for each 401 (RFC2617, 3.2.1)
+					HttpAuthorizationHeader httpAuthorizationHeader =
+						new HttpAuthorizationHeader(
+							HttpAuthorizationHeader.SCHEME_DIGEST);
 
-					long companyId = PortalInstances.getCompanyId(request);
-
-					String remoteAddress = request.getRemoteAddr();
-
-					String nonce = NonceUtil.generate(companyId, remoteAddress);
-
-					StringBundler sb = new StringBundler(4);
-
-					sb.append(_DIGEST_REALM);
-					sb.append(", nonce=\"");
-					sb.append(nonce);
-					sb.append("\"");
-
-					response.setHeader(
-						HttpHeaders.WWW_AUTHENTICATE, sb.toString());
-
-					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+					HttpAuthManagerUtil.generateChallenge(
+						request, response, httpAuthorizationHeader);
 
 					authVerifierResult.setState(
 						AuthVerifierResult.State.INVALID_CREDENTIALS);
@@ -116,8 +100,5 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 			throw new AuthException(se);
 		}
 	}
-
-	private static final String _DIGEST_REALM =
-		"Digest realm=\"" + Portal.PORTAL_REALM + "\"";
 
 }

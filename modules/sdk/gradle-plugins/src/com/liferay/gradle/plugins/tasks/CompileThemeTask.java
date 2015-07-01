@@ -33,7 +33,6 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
@@ -120,10 +119,7 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	public File getThemeRootDir() {
-		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
-			_project, WarPluginConvention.class);
-
-		return warPluginConvention.getWebAppDir();
+		return GradleUtil.toFile(_project, _themeRootDir);
 	}
 
 	@Input
@@ -146,6 +142,10 @@ public class CompileThemeTask extends DefaultTask {
 	public void setThemeParent(Object themeParent) {
 		_themeParent = themeParent;
 		_themeParentProject = null;
+	}
+
+	public void setThemeRootDir(Object themeRootDir) {
+		_themeRootDir = themeRootDir;
 	}
 
 	public void setThemeType(Object themeType) {
@@ -325,6 +325,7 @@ public class CompileThemeTask extends DefaultTask {
 	private final Project _project;
 	private Object _themeParent;
 	private Project _themeParentProject;
+	private Object _themeRootDir;
 	private Object _themeType;
 
 }

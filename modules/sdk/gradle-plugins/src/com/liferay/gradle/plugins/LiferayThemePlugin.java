@@ -39,6 +39,7 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.bundling.War;
 
@@ -246,6 +247,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		configureTaskCompileThemeFrontendThemesWebFile(compileThemeTask);
 		configureTaskCompileThemeParent(
 			compileThemeTask, liferayThemeExtension);
+		configureTaskCompileThemeRootDir(compileThemeTask);
 		configureTaskCompileThemeType(compileThemeTask, liferayThemeExtension);
 
 		configureTaskCompileThemeDependsOn(compileThemeTask);
@@ -301,6 +303,19 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 			compileThemeTask.setThemeParent(
 				liferayThemeExtension.getThemeParent());
 		}
+	}
+
+	protected void configureTaskCompileThemeRootDir(
+		CompileThemeTask compileThemeTask) {
+
+		if (compileThemeTask.getThemeRootDir() != null) {
+			return;
+		}
+
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			compileThemeTask.getProject(), WarPluginConvention.class);
+
+		compileThemeTask.setThemeRootDir(warPluginConvention.getWebAppDir());
 	}
 
 	protected void configureTaskCompileThemeType(

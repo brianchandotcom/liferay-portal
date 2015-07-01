@@ -17,6 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -340,6 +341,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 		else if (fileName.endsWith("/service.xml")) {
 			formatServiceXML(fileName, absolutePath, newContent);
+		}
+		else if (fileName.endsWith("/schema.xml") &&
+				 absolutePath.contains("solr")) {
+
+			formatSolrSchema(fileName, newContent);
 		}
 		else if (portalSource && fileName.endsWith("/struts-config.xml")) {
 			formatStrutsConfigXML(fileName, newContent);
@@ -834,6 +840,24 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			new ExceptionElementComparator());
 	}
 
+	protected void formatSolrSchema(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		Element typesElement = rootElement.element("types");
+
+		_solrElementsContent = typesElement.asXML();
+
+		SolrElementComparator solrElementComparator =
+			new SolrElementComparator();
+
+		checkOrder(
+			fileName, typesElement, "fieldType", null, solrElementComparator);
+	}
+
 	protected void formatStrutsConfigXML(String fileName, String content)
 		throws Exception {
 
@@ -1265,6 +1289,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 	private final Pattern _poshiWholeTagPattern = Pattern.compile(
 		"<[^\\>^/]*\\/>");
+	private String _solrElementsContent;
 	private String _tablesContent;
 	private final Map<String, String> _tablesContentMap = new HashMap<>();
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
@@ -1422,6 +1447,44 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		private static final String _NAME_ATTRIBUTE = "entity";
+
+	}
+
+	private class SolrElementComparator extends ElementComparator {
+
+		@Override
+		public int compare(Element solrElement1, Element solrElement2) {
+			NaturalOrderStringComparator naturalOrderStringComparator =
+				new NaturalOrderStringComparator(true, false);
+
+			int value = naturalOrderStringComparator.compare(
+				getElementName(solrElement1), getElementName(solrElement2));
+
+			if (value <= 0) {
+				return value;
+			}
+
+			String solrElementContent1 = solrElement1.asXML();
+			String solrElementContent2 = solrElement2.asXML();
+
+			int x =
+				_solrElementsContent.indexOf(solrElementContent1) +
+					solrElementContent1.length();
+			int y = _solrElementsContent.indexOf(solrElementContent2);
+
+			if (x > y) {
+				return -1;
+			}
+
+			String betweenElementsContent = _solrElementsContent.substring(
+				x, y);
+
+			if (betweenElementsContent.contains("<!--")) {
+				return -1;
+			}
+
+			return 1;
+		}
 
 	}
 

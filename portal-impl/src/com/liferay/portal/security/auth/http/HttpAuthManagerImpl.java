@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.secure.NonceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
@@ -234,7 +235,43 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			HttpAuthorizationHeader authorizationHeader)
 		throws PortalException {
 
-		return 0;
+		long userId = 0;
+
+		String username = authorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_USERNAME);
+		String realm = authorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_REALM);
+		String nonce = authorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_NONCE);
+		String uri = authorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_URI);
+		String response = authorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTHPARAM_RESPONSE);
+
+		if (Validator.isNull(username) || Validator.isNull(realm) ||
+			Validator.isNull(nonce) || Validator.isNull(uri) ||
+			Validator.isNull(response)) {
+
+			return userId;
+		}
+
+		if (!realm.equals(Portal.PORTAL_REALM) ||
+			!uri.equals(request.getRequestURI())) {
+
+			return userId;
+		}
+
+		if (!NonceUtil.verify(nonce)) {
+			return userId;
+		}
+
+		long companyId = PortalInstances.getCompanyId(request);
+
+		userId = UserLocalServiceUtil.authenticateForDigest(
+			companyId, username, realm, nonce, request.getMethod(), uri,
+			response);
+
+		return userId;
 	}
 
 	protected HttpAuthorizationHeader parseBasic(

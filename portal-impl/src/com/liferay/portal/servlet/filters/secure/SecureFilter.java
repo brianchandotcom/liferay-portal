@@ -162,7 +162,17 @@ public class SecureFilter extends BasePortalFilter {
 		}
 		else {
 			try {
-				userId = PortalUtil.getDigestAuthUserId(request);
+				HttpAuthorizationHeader httpAuthorizationHeader =
+					HttpAuthManagerUtil.parse(request);
+
+				String scheme = httpAuthorizationHeader.getScheme();
+
+				if (StringUtil.equalsIgnoreCase(
+					scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
+
+					userId = HttpAuthManagerUtil.getUserId(
+						request, httpAuthorizationHeader);
+				}
 			}
 			catch (Exception e) {
 				_log.error(e, e);

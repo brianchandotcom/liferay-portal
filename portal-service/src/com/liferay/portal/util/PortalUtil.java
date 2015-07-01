@@ -885,6 +885,11 @@ public class PortalUtil {
 		return getPortal().getDefaultCompanyId();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
+	 */
+	@Deprecated
 	public static long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException {
 

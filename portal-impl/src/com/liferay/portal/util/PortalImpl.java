@@ -170,7 +170,6 @@ import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
-import com.liferay.portal.servlet.filters.secure.NonceUtil;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.theme.PortletDisplay;
@@ -2112,50 +2111,27 @@ public class PortalImpl implements Portal {
 		return PortalInstances.getDefaultCompanyId();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * 		HttpAuthManagerUtil#getUserId(HttpServletRequest, HttpAuthorizationHeader)}
+	 */
+	@Deprecated
 	@Override
 	public long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException {
 
-		long userId = 0;
-
 		HttpAuthorizationHeader httpAuthorizationHeader =
 			HttpAuthManagerUtil.parse(request);
 
-		String username = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_USERNAME);
-		String realm = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_REALM);
-		String nonce = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_NONCE);
-		String uri = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_URI);
-		String response = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTHPARAM_RESPONSE);
+		String scheme = httpAuthorizationHeader.getScheme();
 
-		if (Validator.isNull(username) || Validator.isNull(realm) ||
-			Validator.isNull(nonce) || Validator.isNull(uri) ||
-			Validator.isNull(response)) {
+		if (!StringUtil.equalsIgnoreCase(
+				scheme, HttpAuthorizationHeader.SCHEME_DIGEST)) {
 
-			return userId;
+			return 0;
 		}
 
-		if (!realm.equals(PORTAL_REALM) ||
-			!uri.equals(request.getRequestURI())) {
-
-			return userId;
-		}
-
-		if (!NonceUtil.verify(nonce)) {
-			return userId;
-		}
-
-		long companyId = PortalInstances.getCompanyId(request);
-
-		userId = UserLocalServiceUtil.authenticateForDigest(
-			companyId, username, realm, nonce, request.getMethod(), uri,
-			response);
-
-		return userId;
+		return HttpAuthManagerUtil.getUserId(request, httpAuthorizationHeader);
 	}
 
 	@Override
@@ -8527,4 +8503,5 @@ public class PortalImpl implements Portal {
 
 	private static final Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<>();
+
 }

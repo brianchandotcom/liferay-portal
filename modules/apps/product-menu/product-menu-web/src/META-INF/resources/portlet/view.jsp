@@ -21,4 +21,4 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.MY_SPACE);
 %>
 
-<application-list-ui:panel panelCategory="<%= panelCategory %>" />
+<application-list-ui:panel-category-content panelCategory="<%= panelCategory %>" />

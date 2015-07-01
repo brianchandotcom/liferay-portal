@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,23 +12,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.application.list;
+<%@ include file="/init.jsp" %>
 
-import java.io.IOException;
+<%
+PanelCategory panelCategory = (PanelCategory)request.getAttribute("panelCategory");
+%>
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * @author Adolfo Pérez
- */
-public interface PanelCategory extends PanelEntry {
-
-	public String getIconCssClass();
-
-	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
-
-}
+<application-list-ui:panel panelCategory="<%= panelCategory %>" />

@@ -38,6 +38,7 @@ import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
+import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -56,7 +57,7 @@ public class DLFolderTrashHandlerTest
 	extends BaseTrashHandlerTestCase
 	implements WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
 			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
-			   WhenIsUpdatableBaseModel {
+			   WhenIsRestorableBaseModel, WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule

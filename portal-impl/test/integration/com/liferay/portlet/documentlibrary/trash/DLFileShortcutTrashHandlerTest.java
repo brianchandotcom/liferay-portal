@@ -68,6 +68,22 @@ public class DLFileShortcutTrashHandlerTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
+	public BaseModel<?> moveBaseModelFromTrash(
+			ClassedModel classedModel, Group group,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		DLAppServiceUtil.moveFileShortcutFromTrash(
+			(Long)classedModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
+
+		return parentBaseModel;
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -336,22 +352,6 @@ public class DLFileShortcutTrashHandlerTest
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected BaseModel<?> moveBaseModelFromTrash(
-			ClassedModel classedModel, Group group,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		DLAppServiceUtil.moveFileShortcutFromTrash(
-			(Long)classedModel.getPrimaryKeyObj(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
-
-		return parentBaseModel;
 	}
 
 	@Override

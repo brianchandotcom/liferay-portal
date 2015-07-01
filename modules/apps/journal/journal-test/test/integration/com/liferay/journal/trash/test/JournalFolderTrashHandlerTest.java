@@ -74,6 +74,22 @@ public class JournalFolderTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> moveBaseModelFromTrash(
+			ClassedModel classedModel, Group group,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		JournalFolderServiceUtil.moveFolderFromTrash(
+			(Long)classedModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
+
+		return parentBaseModel;
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -360,22 +376,6 @@ public class JournalFolderTrashHandlerTest
 		String name = folder.getName();
 
 		return TrashUtil.getOriginalTitle(name);
-	}
-
-	@Override
-	protected BaseModel<?> moveBaseModelFromTrash(
-			ClassedModel classedModel, Group group,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		JournalFolderServiceUtil.moveFolderFromTrash(
-			(Long)classedModel.getPrimaryKeyObj(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
-
-		return parentBaseModel;
 	}
 
 	@Override

@@ -71,6 +71,22 @@ public class DLFolderTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> moveBaseModelFromTrash(
+			ClassedModel classedModel, Group group,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		DLAppServiceUtil.moveFolderFromTrash(
+			(Long)classedModel.getPrimaryKeyObj(),
+			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
+
+		return parentBaseModel;
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -355,22 +371,6 @@ public class DLFolderTrashHandlerTest
 		String name = dlFolder.getName();
 
 		return TrashUtil.getOriginalTitle(name);
-	}
-
-	@Override
-	protected BaseModel<?> moveBaseModelFromTrash(
-			ClassedModel classedModel, Group group,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		DLAppServiceUtil.moveFolderFromTrash(
-			(Long)classedModel.getPrimaryKeyObj(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
-
-		return parentBaseModel;
 	}
 
 	@Override

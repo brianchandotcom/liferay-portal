@@ -971,8 +971,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
-			baseModel, group, serviceContext);
+		WhenIsMoveableFromTrashBaseModel whenIsMoveableFromTrashBaseModel =
+			(WhenIsMoveableFromTrashBaseModel)this;
+
+		BaseModel<?> newParentBaseModel =
+			whenIsMoveableFromTrashBaseModel.moveBaseModelFromTrash(
+				baseModel, group, serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
@@ -1001,7 +1005,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		moveBaseModelFromTrash(baseModel, group, serviceContext);
+		WhenIsMoveableFromTrashBaseModel whenIsMoveableFromTrashBaseModel =
+			(WhenIsMoveableFromTrashBaseModel)this;
+
+		whenIsMoveableFromTrashBaseModel.moveBaseModelFromTrash(
+			baseModel, group, serviceContext);
 
 		Assert.assertTrue(isAssetEntryVisible(baseModel));
 	}
@@ -1563,7 +1571,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		moveBaseModelFromTrash(baseModel, group, serviceContext);
+		WhenIsMoveableFromTrashBaseModel whenIsMoveableFromTrashBaseModel =
+			(WhenIsMoveableFromTrashBaseModel)this;
+
+		whenIsMoveableFromTrashBaseModel.moveBaseModelFromTrash(
+			baseModel, group, serviceContext);
 
 		Assert.assertTrue(isAssetEntryVisible(baseModel));
 	}
@@ -1590,7 +1602,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		moveBaseModelFromTrash(baseModel, group, serviceContext);
+		WhenIsMoveableFromTrashBaseModel whenIsMoveableFromTrashBaseModel =
+			(WhenIsMoveableFromTrashBaseModel)this;
+
+		whenIsMoveableFromTrashBaseModel.moveBaseModelFromTrash(
+			baseModel, group, serviceContext);
 
 		if (isBaseModelContainerModel()) {
 			Assert.assertEquals(
@@ -2213,8 +2229,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
-			baseModel, group, serviceContext);
+		WhenIsMoveableFromTrashBaseModel whenIsMoveableFromTrashBaseModel =
+			(WhenIsMoveableFromTrashBaseModel)this;
+
+		BaseModel<?> newParentBaseModel =
+			whenIsMoveableFromTrashBaseModel.moveBaseModelFromTrash(
+				baseModel, group, serviceContext);
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -2272,7 +2292,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		moveBaseModelFromTrash(baseModel, group, serviceContext);
+		WhenIsMoveableFromTrashBaseModel whenIsMoveableFromTrashBaseModel =
+			(WhenIsMoveableFromTrashBaseModel)this;
+
+		whenIsMoveableFromTrashBaseModel.moveBaseModelFromTrash(
+			baseModel, group, serviceContext);
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -2326,7 +2350,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		moveBaseModelFromTrash(baseModel, group, serviceContext);
+		WhenIsMoveableFromTrashBaseModel whenIsMoveableFromTrashBaseModel =
+			(WhenIsMoveableFromTrashBaseModel)this;
+
+		whenIsMoveableFromTrashBaseModel.moveBaseModelFromTrash(
+			baseModel, group, serviceContext);
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -2660,14 +2688,6 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 
 		return false;
-	}
-
-	protected BaseModel<?> moveBaseModelFromTrash(
-			ClassedModel classedModel, Group group,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return getParentBaseModel(group, serviceContext);
 	}
 
 	protected abstract void moveBaseModelToTrash(long primaryKey)

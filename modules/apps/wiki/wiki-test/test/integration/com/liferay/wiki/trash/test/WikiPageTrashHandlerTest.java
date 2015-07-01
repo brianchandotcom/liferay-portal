@@ -302,6 +302,15 @@ public class WikiPageTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		return WikiPageTrashHandlerTestUtil.updateBaseModel(
+			primaryKey, serviceContext);
+	}
+
+	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
@@ -378,15 +387,6 @@ public class WikiPageTrashHandlerTest
 		throws Exception {
 
 		WikiPageTrashHandlerTestUtil.moveParentBaseModelToTrash(primaryKey);
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		return WikiPageTrashHandlerTestUtil.updateBaseModel(
-			primaryKey, serviceContext);
 	}
 
 	private boolean _testMode;

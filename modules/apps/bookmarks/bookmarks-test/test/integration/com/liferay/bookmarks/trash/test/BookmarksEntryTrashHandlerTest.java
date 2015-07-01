@@ -258,6 +258,25 @@ public class BookmarksEntryTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			entry = BookmarksEntryLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), entry,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		return entry;
+	}
+
+	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
@@ -402,25 +421,6 @@ public class BookmarksEntryTrashHandlerTest
 		throws Exception {
 
 		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			primaryKey);
-
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-			entry = BookmarksEntryLocalServiceUtil.updateStatus(
-				TestPropsValues.getUserId(), entry,
-				WorkflowConstants.STATUS_DRAFT);
-		}
-
-		return entry;
 	}
 
 	private boolean _testMode;

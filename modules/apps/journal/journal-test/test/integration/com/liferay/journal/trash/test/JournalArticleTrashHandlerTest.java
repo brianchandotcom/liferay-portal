@@ -198,6 +198,19 @@ public class JournalArticleTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+			primaryKey);
+
+		return JournalTestUtil.updateArticle(
+			article, "Content: Enterprise. Open Source. For Life.",
+			article.getContent(), false, true, serviceContext);
+	}
+
+	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,
 			ServiceContext serviceContext)
@@ -388,19 +401,6 @@ public class JournalArticleTrashHandlerTest
 		throws Exception {
 
 		JournalFolderServiceUtil.restoreFolderFromTrash(primaryKey);
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-			primaryKey);
-
-		return JournalTestUtil.updateArticle(
-			article, "Content: Enterprise. Open Source. For Life.",
-			article.getContent(), false, true, serviceContext);
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

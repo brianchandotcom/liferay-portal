@@ -31,7 +31,6 @@ import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
-import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -46,8 +45,7 @@ import org.junit.Test;
 @Sync
 public class BlogsEntryTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenIsAssetableBaseModel, WhenIsIndexableBaseModel,
-			   WhenIsUpdatableBaseModel {
+	implements WhenIsAssetableBaseModel, WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule

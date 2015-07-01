@@ -124,7 +124,6 @@ import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
-import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
@@ -1706,12 +1705,9 @@ public class HookHotDeployListener
 			String storeClassName = portalProperties.getProperty(
 				PropsKeys.DL_STORE_IMPL);
 
-			Store store = (Store)newInstance(
-				portletClassLoader, Store.class, storeClassName);
-
 			StoreFactory storeFactory = StoreFactory.getInstance();
 
-			storeFactory.setStoreInstance(store);
+			storeFactory.setStoreInstance(storeClassName);
 		}
 
 		if (portalProperties.containsKey(

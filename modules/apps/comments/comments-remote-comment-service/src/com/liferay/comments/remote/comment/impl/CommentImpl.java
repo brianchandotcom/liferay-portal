@@ -16,12 +16,14 @@ package com.liferay.comments.remote.comment.impl;
 
 import com.liferay.comments.remote.comment.Comment;
 import com.liferay.portal.kernel.comment.DiscussionComment;
+import com.liferay.portal.kernel.json.JSON;
 
 import java.util.Date;
 
 /**
  * @author Adolfo Pérez
  */
+@JSON(strict = true)
 public class CommentImpl implements Comment {
 
 	public CommentImpl() {
@@ -36,31 +38,37 @@ public class CommentImpl implements Comment {
 		setUserName(discussionComment.getUserName());
 	}
 
+	@JSON
 	@Override
 	public String getBody() {
 		return _body;
 	}
 
+	@JSON
 	@Override
 	public long getCommentId() {
 		return _commentId;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		return _userName;

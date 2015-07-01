@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.comment.DiscussionCommentIterator;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -43,7 +45,16 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = CommentService.class)
+@AccessControlled
+@Component(
+	immediate = true,
+	property = {
+		"json.web.service.context.name=comments",
+		"json.web.service.context.path=Comment"
+	},
+	service = CommentService.class
+)
+@JSONWebService
 public class CommentServiceImpl
 	extends BaseServiceImpl implements CommentService {
 

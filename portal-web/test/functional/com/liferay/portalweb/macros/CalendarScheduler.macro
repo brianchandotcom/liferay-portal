@@ -513,7 +513,7 @@
 	</command>
 
 	<command name="viewSelectedView">
-		<var method="StringUtil#upperCase(${view})" name="viewUppercase" />
+		<var method="StringUtil#upperCase('${view}')" name="viewUppercase" />
 
 		<execute function="AssertElementPresent" locator1="PGCalendar#VIEW_${viewUppercase}_BUTTON_ACTIVE" />
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendar#SCHEDULER_VIEW_${viewUppercase}" />

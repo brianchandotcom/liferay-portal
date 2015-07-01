@@ -95,16 +95,14 @@ public class ItemSelectorBrowserReturnTypeUtil
 		Iterator<ItemSelectorReturnType> iterator =
 			desiredItemSelectorReturnTypes.iterator();
 
-		if (!iterator.hasNext()) {
-			return null;
-		}
+		while (iterator.hasNext()) {
+			ItemSelectorReturnType itemSelectorReturnType = iterator.next();
 
-		ItemSelectorReturnType itemSelectorReturnType = iterator.next();
+			String className = ClassUtil.getClassName(itemSelectorReturnType);
 
-		String className = ClassUtil.getClassName(itemSelectorReturnType);
-
-		if (itemSelectorReturnTypeTypes.contains(className)) {
-			return itemSelectorReturnType;
+			if (itemSelectorReturnTypeTypes.contains(className)) {
+				return itemSelectorReturnType;
+			}
 		}
 
 		return null;

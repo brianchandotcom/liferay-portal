@@ -204,7 +204,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
 		AUI.$.ajax(
-			'<%= themeDisplay.getPathMain() %>/users_admin/get_users_count',
+			'<liferay-portlet:resourceURL id="/users_admin/get_users_count" />',
 			{
 				data: {
 					className: className,

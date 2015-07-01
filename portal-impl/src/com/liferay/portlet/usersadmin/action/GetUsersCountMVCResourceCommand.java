@@ -14,49 +14,51 @@
 
 package com.liferay.portlet.usersadmin.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.struts.AJAXAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 
 import java.util.LinkedHashMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Gavin Wan
+ * @author Pei-Jung Lan
  */
-public class GetUsersCountAction extends AJAXAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"mvc.command.name=/users_admin/get_users_count"
+	},
+	service = MVCResourceCommand.class
+)
+public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
-	public String getText(
-			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
 
-		long companyId = PortalUtil.getCompanyId(request);
+		try {
+			resourceResponse.getWriter().write(
+				getText(resourceRequest, resourceResponse));
 
-		String className = ParamUtil.getString(request, "className");
-		long[] ids = StringUtil.split(ParamUtil.getString(request, "ids"), 0L);
-		int status = ParamUtil.getInteger(request, "status");
-
-		int count = 0;
-
-		if (className.equals(Organization.class.getName())) {
-			count = getOrganizationUsersCount(companyId, ids, status);
+			return true;
 		}
-		else if (className.equals(UserGroup.class.getName())) {
-			count = getUserGroupUsersCount(companyId, ids, status);
+		catch (Exception e) {
+			throw new PortletException(e);
 		}
-
-		return String.valueOf(count);
 	}
 
 	protected int getOrganizationUsersCount(
@@ -75,6 +77,31 @@ public class GetUsersCountAction extends AJAXAction {
 		}
 
 		return count;
+	}
+
+	protected String getText(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		long companyId = PortalUtil.getCompanyId(resourceRequest);
+
+		HttpServletRequest request = PortalUtil.getOriginalServletRequest(
+			PortalUtil.getHttpServletRequest(resourceRequest));
+
+		String className = ParamUtil.getString(request, "className");
+		long[] ids = StringUtil.split(ParamUtil.getString(request, "ids"), 0L);
+		int status = ParamUtil.getInteger(request, "status");
+
+		int count = 0;
+
+		if (className.equals(Organization.class.getName())) {
+			count = getOrganizationUsersCount(companyId, ids, status);
+		}
+		else if (className.equals(UserGroup.class.getName())) {
+			count = getUserGroupUsersCount(companyId, ids, status);
+		}
+
+		return String.valueOf(count);
 	}
 
 	protected int getUserGroupUsersCount(

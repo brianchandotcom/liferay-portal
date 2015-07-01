@@ -57,6 +57,7 @@ import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
+import com.liferay.portlet.trash.test.WhenIsRestorableParentBaseModelFromTrash;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -81,7 +82,9 @@ public class JournalArticleTrashHandlerTest
 	extends BaseTrashHandlerTestCase
 	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
 			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
-			   WhenIsMoveableFromTrashBaseModel, WhenIsUpdatableBaseModel {
+			   WhenIsMoveableFromTrashBaseModel,
+			   WhenIsRestorableParentBaseModelFromTrash,
+			   WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -115,6 +118,13 @@ public class JournalArticleTrashHandlerTest
 			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
 
 		return parentBaseModel;
+	}
+
+	@Override
+	public void restoreParentBaseModelFromTrash(long primaryKey)
+		throws Exception {
+
+		JournalFolderServiceUtil.restoreFolderFromTrash(primaryKey);
 	}
 
 	@Override
@@ -395,13 +405,6 @@ public class JournalArticleTrashHandlerTest
 		throws Exception {
 
 		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
-	}
-
-	@Override
-	protected void restoreParentBaseModelFromTrash(long primaryKey)
-		throws Exception {
-
-		JournalFolderServiceUtil.restoreFolderFromTrash(primaryKey);
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

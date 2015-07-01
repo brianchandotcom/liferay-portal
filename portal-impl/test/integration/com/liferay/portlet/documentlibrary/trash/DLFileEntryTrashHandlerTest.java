@@ -56,6 +56,7 @@ import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
+import com.liferay.portlet.trash.test.WhenIsRestorableParentBaseModelFromTrash;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -78,7 +79,9 @@ public class DLFileEntryTrashHandlerTest
 	extends BaseTrashHandlerTestCase
 	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
 			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
-			   WhenIsMoveableFromTrashBaseModel, WhenIsUpdatableBaseModel {
+			   WhenIsMoveableFromTrashBaseModel,
+			   WhenIsRestorableParentBaseModelFromTrash,
+			   WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -113,6 +116,13 @@ public class DLFileEntryTrashHandlerTest
 			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
 
 		return parentBaseModel;
+	}
+
+	@Override
+	public void restoreParentBaseModelFromTrash(long primaryKey)
+		throws Exception {
+
+		DLAppServiceUtil.restoreFolderFromTrash(primaryKey);
 	}
 
 	@Override
@@ -395,13 +405,6 @@ public class DLFileEntryTrashHandlerTest
 		throws Exception {
 
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
-	}
-
-	@Override
-	protected void restoreParentBaseModelFromTrash(long primaryKey)
-		throws Exception {
-
-		DLAppServiceUtil.restoreFolderFromTrash(primaryKey);
 	}
 
 	protected void trashDLFileRank() throws Exception {

@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_WEB_CONTENT_BUTTON</td>
+	<td>//button[contains(@id,'webContentSelector')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
+	<td>//input[contains(@id,'enableViewCountIncrement')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -72,6 +82,48 @@
 <tr>
 	<td>WEB_CONTENT_CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_TOOLS-->
+<tr>
+	<td>USER_TOOLS_SELECT_BUTTON</td>
+	<td>//div[contains(@id,'userTools')]/button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TOOLS_TOGGLE</td>
+	<td>//div[@class='toggle-card-label' and contains(.,'${key_userToolName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TOOLS_TOGGLE_OFF</td>
+	<td>//input[contains(@data-label,'${key_userToolName}')]/following-sibling::div//span[contains(@class,'toggle-card-off')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_METADATA-->
+<tr>
+	<td>CONTENT_METADATA_SELECT</td>
+	<td>//div[contains(@id,'contentMetadata')]/button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_METADATA_TOGGLE</td>
+	<td>//div[@class='toggle-card-label' and contains(.,'${metadataName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_METADATA_TOGGLE_OFF</td>
+	<td>//input[contains(@data-key,'${metadataNameToggleOff}')]/following-sibling::div//span[contains(@class,'toggle-card-off')]</td>
 	<td></td>
 </tr>
 </tbody>

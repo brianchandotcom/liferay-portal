@@ -193,9 +193,10 @@ public class CSSBuilder {
 			new String[] {
 				"**\\_diffs\\**", "**\\.sass-cache*\\**",
 				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
-				"**\\_styled\\**", "**\\_unstyled\\**", "**\\tmp\\**"
+				"**\\_styled\\**", "**\\_unstyled\\**", "**\\tmp\\**",
+				"**\\_*.scss"
 			});
-		directoryScanner.setIncludes(new String[] {"**\\*.css"});
+		directoryScanner.setIncludes(new String[] {"**\\*.css", "**\\*.scss"});
 
 		directoryScanner.scan();
 

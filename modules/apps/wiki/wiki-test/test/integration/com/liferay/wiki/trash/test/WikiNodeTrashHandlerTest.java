@@ -26,7 +26,6 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -42,9 +41,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class WikiNodeTrashHandlerTest
-	extends BaseTrashHandlerTestCase
-	implements WhenIsMoveableFromTrashBaseModel {
+public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -127,26 +124,7 @@ public class WikiNodeTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashBaseModelAndParentAndDeleteParent() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashBaseModelAndParentAndDeleteParentNoMoveableFromTrash()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndParentAndRestoreModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndParentAndRestoreModelIsVisible()
 		throws Exception {
 	}
 
@@ -250,18 +228,6 @@ public class WikiNodeTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashParentAndDeleteParent() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashParentAndRestoreIndexable() throws Exception {
 	}
 
 	@Ignore

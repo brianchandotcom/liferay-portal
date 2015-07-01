@@ -31,7 +31,6 @@ import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
-import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -46,8 +45,7 @@ import org.junit.Test;
 @Sync
 public class BlogsEntryTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenIsAssetableBaseModel, WhenIsIndexableBaseModel,
-			   WhenIsMoveableFromTrashBaseModel {
+	implements WhenIsAssetableBaseModel, WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -107,26 +105,7 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashBaseModelAndParentAndDeleteParent() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashBaseModelAndParentAndDeleteParentNoMoveableFromTrash()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndParentAndRestoreModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndParentAndRestoreModelIsVisible()
 		throws Exception {
 	}
 
@@ -236,18 +215,6 @@ public class BlogsEntryTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashParentAndDeleteParent() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashParentAndRestoreIndexable() throws Exception {
 	}
 
 	@Ignore

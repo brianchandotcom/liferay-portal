@@ -85,13 +85,6 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashBaseModelAndDeleteWithParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashBaseModelAndParent() throws Exception {
 	}
 
@@ -125,27 +118,7 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashBaseModelAndTrashParentAndDeleteParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndTrashParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashBaseModelIsInTrashContainer() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelWithParentIsRestorable() throws Exception {
 	}
 
 	@Ignore
@@ -185,12 +158,6 @@ public class BlogsEntryTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashGrandparentBaseModelIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModel() throws Exception {
 	}
 
 	@Ignore

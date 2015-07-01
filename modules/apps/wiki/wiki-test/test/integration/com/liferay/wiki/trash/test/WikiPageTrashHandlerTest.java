@@ -156,33 +156,6 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashBaseModelAndDeleteWithParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndTrashParentAndDeleteParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndTrashParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelWithParentIsRestorable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashGrandparentBaseModel() throws Exception {
 	}
 
@@ -211,12 +184,6 @@ public class WikiPageTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashGrandparentBaseModelIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModel() throws Exception {
 	}
 
 	@Ignore

@@ -12,38 +12,42 @@
  * details.
  */
 
-package com.liferay.site.admin.web.servlet.taglib.ui;
+package com.liferay.layout.admin.web.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
-import java.util.Locale;
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=30"},
-	service = FormNavigatorCategory.class
+	property = {"service.ranking:Integer=140"},
+	service = FormNavigatorEntry.class
 )
-public class SitesSEOFormNavigatorCategory implements FormNavigatorCategory {
-
-	@Override
-	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
-	}
+public class LayoutSetSitemapFormNavigatorEntry
+	extends BaseLayoutSetFormNavigatorEntry {
 
 	@Override
 	public String getKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
+		return "sitemap";
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "search-engine-optimization");
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/layout_set/sitemap.jsp";
 	}
 
 }

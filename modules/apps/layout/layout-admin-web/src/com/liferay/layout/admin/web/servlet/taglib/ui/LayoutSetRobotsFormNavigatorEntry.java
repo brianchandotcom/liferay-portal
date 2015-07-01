@@ -12,15 +12,9 @@
  * details.
  */
 
-package com.liferay.site.admin.web.servlet.taglib.ui;
+package com.liferay.layout.admin.web.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
-
-import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
@@ -31,38 +25,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=20"},
+	property = {"service.ranking:Integer=150"},
 	service = FormNavigatorEntry.class
 )
-public class SiteSitemapFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
-
-	@Override
-	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_SEO;
-	}
+public class LayoutSetRobotsFormNavigatorEntry
+	extends BaseLayoutSetFormNavigatorEntry {
 
 	@Override
 	public String getKey() {
-		return "sitemap";
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "sitemap");
-	}
-
-	@Override
-	public boolean isVisible(User user, Group group) {
-		if ((group == null) || group.isCompany()) {
-			return false;
-		}
-
-		return true;
+		return "robots";
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -71,7 +47,7 @@ public class SiteSitemapFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/site/sitemap.jsp";
+		return "/layout_set/robots.jsp";
 	}
 
 }

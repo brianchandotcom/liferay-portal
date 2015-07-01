@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=30"},
+	property = {"service.ranking:Integer=180"},
 	service = FormNavigatorEntry.class
 )
 public class LayoutSetJavaScriptFormNavigatorEntry

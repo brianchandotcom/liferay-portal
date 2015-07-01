@@ -840,6 +840,8 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-counter" />
 		<antcall target="build-service-portal" />
 		<antcall target="build-service-portlets" />
+
+		<ant dir="../modules" target="build-service" />
 	</target>
 
 	<target name="build-themes">

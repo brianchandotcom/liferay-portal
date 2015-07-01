@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-item-viewer',
 	function(A) {
+		var Do = A.Do;
+
 		var Lang = A.Lang;
 
 		var CSS_ACTIVE = 'active';
@@ -26,6 +28,10 @@ AUI.add(
 		var CSS_IMAGE_INFO = A.getClassName(CSS_IMAGE_VIEWER_BASE, 'image', 'info');
 
 		var CSS_LOADING_ICON = A.getClassName(CSS_IMAGE_VIEWER_BASE, 'loading', 'icon');
+
+		var STR_BLANK = '';
+
+		var STR_DATA_METADATA_RENDERED = 'data-metadata-rendered';
 
 		var STR_DOT = '.';
 
@@ -104,17 +110,23 @@ AUI.add(
 							TPL_CLOSE,
 							[instance.get('btnCloseCaption')]
 						);
+
+						instance._displacedMethodHandles = [
+							Do.after('_afterBindUI', instance, 'bindUI', instance),
+							Do.after('_afterShowCurrentImage', instance, '_showCurrentImage', instance),
+							Do.before('_beforeOnClickControl', instance, '_onClickControl', instance),
+							Do.before('_beforeSyncInfoUI', instance, '_syncInfoUI', instance)
+						];
 					},
 
-					bindUI: function() {
+					_afterBindUI: function() {
 						var instance = this;
 
-						LiferayItemViewer.superclass.bindUI.apply(this, arguments);
-
 						instance._eventHandles.push(
-							instance._infoIconEl.on('click', instance._onClickInfoIcon, instance),
-							A.Do.after(instance._afterShowCurrentImage, instance, '_showCurrentImage', instance)
+							instance._infoIconEl.on('click', instance._onClickInfoIcon, instance)
 						);
+
+						instance._eventHandles = instance._eventHandles.concat(instance._displacedMethodHandles);
 					},
 
 					_afterShowCurrentImage: function() {
@@ -126,10 +138,22 @@ AUI.add(
 
 						var image = this._getCurrentImage();
 
-						if (!image.getData('metadata-rendered') && metadata) {
+						if (metadata && !image.attr(STR_DATA_METADATA_RENDERED)) {
 							instance._populateImageMetadata(image, metadata);
 
-							image.setData('metadata-rendered', true);
+							image.attr(STR_DATA_METADATA_RENDERED, true);
+						}
+					},
+
+					_beforeOnClickControl: function(event) {
+						event.stopImmediatePropagation();
+					},
+
+					_beforeSyncInfoUI: function() {
+						var instance = this;
+
+						if (!instance.get(STR_RENDER_CONTROLS)) {
+							return Do.Halt();
 						}
 					},
 
@@ -143,14 +167,6 @@ AUI.add(
 						return instance._imageInfoNodes;
 					},
 
-					_onClickControl: function(event) {
-						var instance = this;
-
-						event.stopImmediatePropagation();
-
-						LiferayItemViewer.superclass._onClickControl.apply(instance, arguments);
-					},
-
 					_onClickInfoIcon: function(event) {
 						var instance = this;
 
@@ -162,51 +178,53 @@ AUI.add(
 
 						imageInfoNode.setHTML(A.Node.create(TPL_INFO_LAYER));
 
+						var imageInfoNodeTabContent = imageInfoNode.one('.tab-content');
+						var imageInfoNodeTabList = imageInfoNode.one('ul');
+
 						metadata = JSON.parse(metadata);
 
 						metadata.groups.forEach(
-							function(tab, index) {
-								var tabId = A.guid();
+							function(group, index) {
+								var groupId = A.guid();
 
 								var tabTitleNode = A.Node.create(
 									Lang.sub(
 										TPL_INFO_LAYER_TAB_TITLE,
 										{
-											className: index === 0 ? CSS_ACTIVE : '',
-											tabId: tabId,
-											tabTitle: tab.title
+											className: index === 0 ? CSS_ACTIVE : STR_BLANK,
+											tabId: groupId,
+											tabTitle: group.title
 										}
 									)
 								);
 
-								imageInfoNode.one('ul').append(tabTitleNode);
+								imageInfoNodeTabList.append(tabTitleNode);
 
-								var dataStr = '';
-
-								tab.data.forEach(
-									function(data) {
-										dataStr += Lang.sub(
+								var dataStr = group.data.reduce(
+									function(previousValue, currentValue) {
+										return previousValue + Lang.sub(
 											TPL_INFO_LAYER_TAB_SECTION_CONTENT,
-											{
-												dd: data.value,
-												dt: data.key
-											}
-										);
-									}
+												{
+													dd: currentValue.value,
+													dt: currentValue.key
+												}
+											);
+									},
+									STR_BLANK
 								);
 
 								var tabContentNode = A.Node.create(
 									Lang.sub(
 										TPL_INFO_LAYER_TAB_SECTION,
 										{
-											className: index === 0 ? CSS_ACTIVE : '',
+											className: index === 0 ? CSS_ACTIVE : STR_BLANK,
 											content: dataStr,
-											tabId: tabId
+											tabId: groupId
 										}
 									)
 								);
 
-								imageInfoNode.one(STR_DOT + 'tab-content').append(tabContentNode);
+								imageInfoNodeTabContent.append(tabContentNode);
 							}
 						);
 					},
@@ -245,14 +263,6 @@ AUI.add(
 						container.append(infoIconEl);
 
 						instance._infoIconEl = infoIconEl;
-					},
-
-					_syncInfoUI: function() {
-						var instance = this;
-
-						if (instance.get(STR_RENDER_CONTROLS)) {
-							LiferayItemViewer.superclass._syncInfoUI.apply(instance, arguments);
-						}
 					}
 				}
 			}

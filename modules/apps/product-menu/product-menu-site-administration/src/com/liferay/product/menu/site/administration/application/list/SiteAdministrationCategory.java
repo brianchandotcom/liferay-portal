@@ -46,7 +46,7 @@ public class SiteAdministrationCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getJspPath() {
-		return _JSP_PATH;
+		return "/META-INF/resources/site_administration.jsp";
 	}
 
 	@Override
@@ -72,8 +72,5 @@ public class SiteAdministrationCategory extends BaseJSPPanelCategory {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH =
-		"/META-INF/resources/site_administration.jsp";
 
 }

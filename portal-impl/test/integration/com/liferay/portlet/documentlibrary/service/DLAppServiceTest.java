@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -294,8 +293,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			String fileName = RandomTestUtil.randomString();
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), fileName,
@@ -531,8 +529,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				DLSyncConstants.EVENT_ADD);
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -782,8 +779,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				group.getGroupId(), parentFolder.getFolderId());
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -811,8 +807,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				DLSyncConstants.EVENT_DELETE);
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -827,8 +822,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Test
 		public void shouldSkipExplicitlyTrashedChildFolder() throws Exception {
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -869,8 +863,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				group.getGroupId(), parentFolder.getFolderId());
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -899,8 +892,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		@Test
 		public void shouldSkipExplicitlyTrashedChildFolder() throws Exception {
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -939,25 +931,22 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
-			AtomicInteger addCounter =
+			AtomicInteger moveCounter =
 				registerDLSyncEventProcessorMessageListener(
-					DLSyncConstants.EVENT_ADD);
-
-			AtomicInteger deleteCounter =
-				registerDLSyncEventProcessorMessageListener(
-					DLSyncConstants.EVENT_DELETE);
+					DLSyncConstants.EVENT_MOVE);
 
 			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(),
 				RandomTestUtil.randomString());
 
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 			DLAppServiceUtil.moveFileEntry(
 				fileEntry.getFileEntryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				ServiceContextTestUtil.getServiceContext());
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-			Assert.assertEquals(2, addCounter.get());
-			Assert.assertEquals(1, deleteCounter.get());
+			Assert.assertEquals(1, moveCounter.get());
 		}
 
 	}
@@ -974,17 +963,12 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
-			AtomicInteger addCounter =
+			AtomicInteger moveCounter =
 				registerDLSyncEventProcessorMessageListener(
-					DLSyncConstants.EVENT_ADD);
-
-			AtomicInteger deleteCounter =
-				registerDLSyncEventProcessorMessageListener(
-					DLSyncConstants.EVENT_DELETE);
+					DLSyncConstants.EVENT_MOVE);
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -993,11 +977,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.moveFolder(
 				folder.getFolderId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				ServiceContextTestUtil.getServiceContext());
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-			Assert.assertEquals(2, addCounter.get());
-			Assert.assertEquals(1, deleteCounter.get());
+			Assert.assertEquals(1, moveCounter.get());
 		}
 
 	}
@@ -1392,8 +1374,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				DLSyncConstants.EVENT_UPDATE);
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			Folder folder = DLAppServiceUtil.addFolder(
 				group.getGroupId(), parentFolder.getFolderId(),
@@ -1402,7 +1383,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFolder(
 				folder.getFolderId(), folder.getName(), folder.getDescription(),
-				ServiceContextTestUtil.getServiceContext());
+				serviceContext);
 
 			Assert.assertEquals(1, counter.get());
 		}
@@ -1439,8 +1420,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId());
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		serviceContext.setAssetTagNames(assetTagNames);
 
@@ -1577,8 +1557,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId());
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName,

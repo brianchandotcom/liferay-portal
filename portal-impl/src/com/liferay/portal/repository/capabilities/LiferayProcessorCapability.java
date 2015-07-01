@@ -18,8 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.repository.liferayrepository.LiferayProcessorLocalRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.LiferayProcessorRepositoryWrapper;
@@ -32,7 +36,8 @@ import java.util.concurrent.Callable;
  * @author Adolfo Pérez
  */
 public class LiferayProcessorCapability
-	implements ProcessorCapability, RepositoryWrapperAware {
+	implements ProcessorCapability, RepositoryEventAware,
+		RepositoryWrapperAware {
 
 	@Override
 	public void cleanUp(FileEntry fileEntry) {
@@ -52,6 +57,23 @@ public class LiferayProcessorCapability
 	@Override
 	public void generateNew(FileEntry fileEntry) {
 		registerDLProcessorCallback(fileEntry, null);
+	}
+
+	@Override
+	public void registerRepositoryEventListeners(
+		RepositoryEventRegistry repositoryEventRegistry) {
+
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, FileEntry.class,
+			new RepositoryEventListener
+				<RepositoryEventType.Delete, FileEntry>() {
+
+				@Override
+				public void execute(FileEntry fileEntry) {
+					cleanUp(fileEntry);
+				}
+
+			});
 	}
 
 	@Override

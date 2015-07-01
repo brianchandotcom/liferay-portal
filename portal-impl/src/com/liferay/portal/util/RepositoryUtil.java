@@ -14,13 +14,29 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 
 /**
  * @author Adolfo Pérez
  */
 public class RepositoryUtil {
+
+	public static RepositoryEventTrigger getFolderRepositoryEventTrigger(
+			long folderId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getFolderLocalRepository(folderId);
+
+		return getRepositoryEventTrigger(localRepository);
+	}
 
 	public static long getRepositoryEntryId(
 			long folderId, long fileEntryId, long fileVersionId)
@@ -45,5 +61,39 @@ public class RepositoryUtil {
 
 		return repositoryEntryId;
 	}
+
+	public static RepositoryEventTrigger getRepositoryEventTrigger(
+			long repositoryId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
+
+		return getRepositoryEventTrigger(localRepository);
+	}
+
+	protected static RepositoryEventTrigger getRepositoryEventTrigger(
+		LocalRepository localRepository) {
+
+		if (localRepository.isCapabilityProvided(
+				RepositoryEventTriggerCapability.class)) {
+
+			return localRepository.getCapability(
+				RepositoryEventTriggerCapability.class);
+		}
+
+		return _dummyRepositoryEventTrigger;
+	}
+
+	private static final RepositoryEventTrigger _dummyRepositoryEventTrigger =
+		new RepositoryEventTrigger() {
+
+			@Override
+			public <S extends RepositoryEventType, T> void trigger(
+				Class<S> repositoryEventTypeClass, Class<T> modelClass,
+				T model) {
+			}
+
+		};
 
 }

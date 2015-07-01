@@ -102,8 +102,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class, _processorCapability);
 		capabilityRegistry.addSupportedCapability(
-			SyncCapability.class,
-			new LiferaySyncCapability(bulkOperationCapability));
+			SyncCapability.class, _syncCapability);
 	}
 
 	@Override
@@ -123,6 +122,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	private final ProcessorCapability _processorCapability =
 		new LiferayProcessorCapability();
 	private RepositoryFactory _repositoryFactory;
+	private final SyncCapability _syncCapability = new LiferaySyncCapability();
 	private final TrashCapability _trashCapability =
 		new LiferayTrashCapability();
 	private final WorkflowCapability _workflowCapability =

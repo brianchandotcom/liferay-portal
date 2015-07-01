@@ -69,6 +69,15 @@ public class DLFolderTrashHandlerTest
 		return _whenIsIndexableBaseModel.searchBaseModelsCount(clazz, groupId);
 	}
 
+	@Override
+	public int searchTrashEntriesCount(
+			String keywords, ServiceContext serviceContext)
+		throws Exception {
+
+		return _whenIsIndexableBaseModel.searchTrashEntriesCount(
+			keywords, serviceContext);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();

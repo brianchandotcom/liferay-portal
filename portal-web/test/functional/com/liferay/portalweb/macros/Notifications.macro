@@ -27,7 +27,7 @@
 				<execute function="AssertClick" locator1="PGNotificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" value1="Notifications (${notificationCount})" />
 			</then>
 			<else>
-				<execute function="Click#clickAtAndWait" locator1="PGNotificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" />
+				<execute function="Click" locator1="PGNotificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" />
 			</else>
 		</if>
 	</command>

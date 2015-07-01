@@ -1309,33 +1309,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 	private List<String> _xmlExclusionFiles;
 
-	private class StrutsActionElementComparator extends ElementComparator {
-
-		@Override
-		public int compare(Element actionElement1, Element actionElement2) {
-			String path1 = actionElement1.attributeValue("path");
-			String path2 = actionElement2.attributeValue("path");
-
-			if (!path1.startsWith("/portal/") && path2.startsWith("/portal/")) {
-				return 1;
-			}
-
-			if (path1.startsWith("/portal/") && !path2.startsWith("/portal/")) {
-				return -1;
-			}
-
-			return path1.compareTo(path2);
-		}
-
-		@Override
-		protected String getNameAttribute() {
-			return _NAME_ATTRIBUTE;
-		}
-
-		private static final String _NAME_ATTRIBUTE = "path";
-
-	}
-
 	private class ElementComparator implements Comparator<Element> {
 
 		@Override
@@ -1498,6 +1471,33 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return 1;
 		}
+
+	}
+
+	private class StrutsActionElementComparator extends ElementComparator {
+
+		@Override
+		public int compare(Element actionElement1, Element actionElement2) {
+			String path1 = actionElement1.attributeValue("path");
+			String path2 = actionElement2.attributeValue("path");
+
+			if (!path1.startsWith("/portal/") && path2.startsWith("/portal/")) {
+				return 1;
+			}
+
+			if (path1.startsWith("/portal/") && !path2.startsWith("/portal/")) {
+				return -1;
+			}
+
+			return path1.compareTo(path2);
+		}
+
+		@Override
+		protected String getNameAttribute() {
+			return _NAME_ATTRIBUTE;
+		}
+
+		private static final String _NAME_ATTRIBUTE = "path";
 
 	}
 

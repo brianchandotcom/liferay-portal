@@ -34,6 +34,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -209,7 +210,9 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		BuildThumbnailsTask buildThumbnailsTask,
 		LiferayThemeExtension liferayThemeExtension) {
 
-		if (buildThumbnailsTask.getImagesDir() != null) {
+		FileCollection imageDirs = buildThumbnailsTask.getImageDirs();
+
+		if (!imageDirs.isEmpty()) {
 			return;
 		}
 
@@ -220,7 +223,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 			File imagesDir = new File(
 				liferayThemeExtension.getDiffsDir(), "images");
 
-			buildThumbnailsTask.setImagesDir(imagesDir);
+			buildThumbnailsTask.imageDirs(imagesDir);
 		}
 	}
 

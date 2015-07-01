@@ -20,16 +20,19 @@ import java.io.File;
 import java.io.OutputStream;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.process.internal.streams.SafeStreams;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -64,8 +67,8 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		return _height;
 	}
 
-	public File getImagesDir() {
-		return _imagesDir;
+	public FileCollection getImageDirs() {
+		return project.files(_imageDirs);
 	}
 
 	@Override
@@ -75,24 +78,36 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 
 	@InputFiles
 	@SkipWhenEmpty
-	public Iterable<File> getScreenshotFiles() {
-		File imagesDir = getImagesDir();
+	public FileCollection getScreenshotFiles() {
+		List<FileTree> fileTrees = new ArrayList<>();
 
-		if (imagesDir == null) {
-			return Collections.emptyList();
+		for (File imagesDir : getImageDirs()) {
+			Map<String, Object> args = new HashMap<>();
+
+			args.put("dir", imagesDir);
+			args.put("include", "**/screenshot.png");
+
+			FileTree fileTree = project.fileTree(args);
+
+			fileTrees.add(fileTree);
 		}
 
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("dir", imagesDir);
-		args.put("include", "**/screenshot.png");
-
-		return project.fileTree(args);
+		return project.files(fileTrees.toArray());
 	}
 
 	@Input
 	public int getWidth() {
 		return _width;
+	}
+
+	public BuildThumbnailsTask imageDirs(Iterable<Object> imageDirs) {
+		GUtil.addToCollection(_imageDirs, imageDirs);
+
+		return this;
+	}
+
+	public BuildThumbnailsTask imageDirs(Object ... imageDirs) {
+		return imageDirs(Arrays.asList(imageDirs));
 	}
 
 	@Input
@@ -109,8 +124,10 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		_height = height;
 	}
 
-	public void setImagesDir(File imagesDir) {
-		_imagesDir = imagesDir;
+	public void setImageDirs(Iterable<Object> imageDirs) {
+		_imageDirs.clear();
+
+		imageDirs(imageDirs);
 	}
 
 	public void setOverwrite(boolean overwrite) {
@@ -156,7 +173,7 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 	}
 
 	private int _height = 120;
-	private File _imagesDir;
+	private final List<Object> _imageDirs = new ArrayList<>();
 	private boolean _overwrite;
 	private int _width = 160;
 

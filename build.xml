@@ -251,6 +251,7 @@
 			<ant dir="util-bridges" target="clean" inheritAll="false" />
 			<ant dir="util-java" target="clean" inheritAll="false" />
 			<ant dir="util-slf4j" target="clean" inheritAll="false" />
+			<ant dir="util-taglib" target="clean" inheritAll="false" />
 
 			<ant dir="portal-impl" target="clean" inheritAll="false" />
 			<ant dir="portal-test" target="clean" inheritAll="false" />
@@ -288,11 +289,7 @@
 				/>
 			</delete>
 
-			<sequential>
-				<ant dir="util-taglib" target="clean" inheritAll="false" />
-
-				<delete dir="${liferay.home}/osgi" />
-			</sequential>
+			<delete dir="${liferay.home}/osgi" />
 
 			<delete dir="test-coverage" />
 			<delete dir="test-results" />

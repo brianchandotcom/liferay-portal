@@ -1418,27 +1418,31 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashMyBaseModel() throws Exception {
+		Assume.assumeTrue(this instanceof WhenHasMyBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsCount = getMineBaseModelsCount(
+		WhenHasMyBaseModel whenHasMyBaseModel = (WhenHasMyBaseModel)this;
+
+		int initialBaseModelsCount = whenHasMyBaseModel.getMineBaseModelsCount(
 			group.getGroupId(), TestPropsValues.getUserId());
 
 		addBaseModel(parentBaseModel, true, serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
-			getMineBaseModelsCount(
+			whenHasMyBaseModel.getMineBaseModelsCount(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
-			getMineBaseModelsCount(
+			whenHasMyBaseModel.getMineBaseModelsCount(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
@@ -2599,12 +2603,6 @@ public abstract class BaseTrashHandlerTestCase {
 		actionableDynamicQuery.setGroupId(group.getGroupId());
 
 		return actionableDynamicQuery.performCount();
-	}
-
-	protected int getMineBaseModelsCount(long groupId, long userId)
-		throws Exception {
-
-		return 0;
 	}
 
 	protected abstract int getNotInTrashBaseModelsCount(

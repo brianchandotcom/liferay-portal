@@ -52,6 +52,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
+import com.liferay.portlet.trash.test.WhenHasMyBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
@@ -80,9 +81,9 @@ import org.junit.runner.RunWith;
 @Sync
 public class JournalArticleTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
-			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
-			   WhenIsMoveableFromTrashBaseModel,
+	implements WhenHasMyBaseModel, WhenHasRecentBaseModelCount,
+			   WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
+			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
 			   WhenIsRestorableParentBaseModelFromTrash,
 			   WhenIsUpdatableBaseModel {
 
@@ -102,6 +103,14 @@ public class JournalArticleTrashHandlerTest
 
 		return JournalArticleLocalServiceUtil.getArticles(
 			folder.getGroupId(), folder.getFolderId());
+	}
+
+	@Override
+	public int getMineBaseModelsCount(long groupId, long userId)
+		throws Exception {
+
+		return JournalArticleServiceUtil.getGroupArticlesCount(
+			groupId, userId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override
@@ -330,14 +339,6 @@ public class JournalArticleTrashHandlerTest
 		JournalArticle article = (JournalArticle)classedModel;
 
 		return article.getArticleId();
-	}
-
-	@Override
-	protected int getMineBaseModelsCount(long groupId, long userId)
-		throws Exception {
-
-		return JournalArticleServiceUtil.getGroupArticlesCount(
-			groupId, userId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override

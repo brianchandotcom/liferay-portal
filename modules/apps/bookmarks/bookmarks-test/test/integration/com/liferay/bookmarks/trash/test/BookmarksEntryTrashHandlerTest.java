@@ -39,6 +39,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
+import com.liferay.portlet.trash.test.WhenHasMyBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
@@ -61,9 +62,10 @@ import org.junit.runner.RunWith;
 @Sync
 public class BookmarksEntryTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
-			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
-			   WhenIsMoveableFromTrashBaseModel, WhenIsUpdatableBaseModel {
+	implements WhenHasMyBaseModel, WhenHasRecentBaseModelCount,
+			   WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
+			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
+			   WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -71,6 +73,13 @@ public class BookmarksEntryTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public int getMineBaseModelsCount(long groupId, long userId)
+		throws Exception {
+
+		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, userId);
+	}
 
 	@Override
 	public int getRecentBaseModelsCount(long groupId) throws Exception {
@@ -347,13 +356,6 @@ public class BookmarksEntryTrashHandlerTest
 		BookmarksEntry entry = (BookmarksEntry)classedModel;
 
 		return entry.getName();
-	}
-
-	@Override
-	protected int getMineBaseModelsCount(long groupId, long userId)
-		throws Exception {
-
-		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, userId);
 	}
 
 	@Override

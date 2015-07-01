@@ -28,7 +28,3 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects/>
-
-<%
-ResourceBundle resourceBundle = ResourceBundle.getBundle("content/Language", locale);
-%>

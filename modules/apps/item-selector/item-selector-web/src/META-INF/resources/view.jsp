@@ -35,10 +35,6 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 		<div class="alert alert-info">
 
-			<%
-			ResourceBundle resourceBundle = ResourceBundle.getBundle("content/Language", locale);
-			%>
-
 			<%= LanguageUtil.get(resourceBundle, "selection-is-not-available") %>
 		</div>
 	</c:when>

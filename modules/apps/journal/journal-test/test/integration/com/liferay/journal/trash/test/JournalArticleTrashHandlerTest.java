@@ -56,6 +56,7 @@ import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
+import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -80,7 +81,7 @@ public class JournalArticleTrashHandlerTest
 	extends BaseTrashHandlerTestCase
 	implements WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
 			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
-			   WhenIsUpdatableBaseModel {
+			   WhenIsMoveableFromTrashBaseModel, WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule

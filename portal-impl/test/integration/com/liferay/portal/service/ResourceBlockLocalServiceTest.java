@@ -90,6 +90,11 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_ORACLE,
+				expectedLog ="ORA-00001: unique constraint",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_POSTGRESQL,
 				expectedLog = "Batch entry 0 insert into ResourceBlock ",
 				expectedType = ExpectedType.PREFIX
@@ -98,11 +103,6 @@ public class ResourceBlockLocalServiceTest {
 				dbType = DB.TYPE_POSTGRESQL,
 				expectedLog =
 					"ERROR: duplicate key value violates unique constraint ",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				dbType = DB.TYPE_ORACLE,
-				expectedLog ="ORA-00001: unique constraint",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -197,6 +197,11 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_ORACLE,
+				expectedLog ="ORA-00001: unique constraint",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_POSTGRESQL,
 				expectedLog = "Batch entry 0 insert into ResourceBlock ",
 				expectedType = ExpectedType.PREFIX
@@ -205,11 +210,6 @@ public class ResourceBlockLocalServiceTest {
 				dbType = DB.TYPE_POSTGRESQL,
 				expectedLog =
 					"ERROR: duplicate key value violates unique constraint ",
-				expectedType = ExpectedType.PREFIX
-			),
-			@ExpectedLog(
-				dbType = DB.TYPE_ORACLE,
-				expectedLog ="ORA-00001: unique constraint",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

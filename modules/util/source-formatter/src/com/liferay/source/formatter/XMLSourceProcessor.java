@@ -847,15 +847,22 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Element rootElement = document.getRootElement();
 
+		SolrElementComparator solrElementComparator =
+			new SolrElementComparator();
+
 		Element typesElement = rootElement.element("types");
 
 		_solrElementsContent = typesElement.asXML();
 
-		SolrElementComparator solrElementComparator =
-			new SolrElementComparator();
-
 		checkOrder(
 			fileName, typesElement, "fieldType", null, solrElementComparator);
+
+		Element fieldsElement = rootElement.element("fields");
+
+		_solrElementsContent = fieldsElement.asXML();
+
+		checkOrder(
+			fileName, fieldsElement, "field", null, solrElementComparator);
 	}
 
 	protected void formatStrutsConfigXML(String fileName, String content)

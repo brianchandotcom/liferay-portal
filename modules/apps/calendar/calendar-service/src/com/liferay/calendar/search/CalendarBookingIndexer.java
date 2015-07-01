@@ -234,26 +234,26 @@ public class CalendarBookingIndexer extends BaseIndexer {
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
 
-			@Override
-			public void performAction(Object object) {
-				CalendarBooking calendarBooking = (CalendarBooking)object;
+				@Override
+				public void performAction(Object object) {
+					CalendarBooking calendarBooking = (CalendarBooking)object;
 
-				try {
-					Document document = getDocument(calendarBooking);
+					try {
+						Document document = getDocument(calendarBooking);
 
-					documents.add(document);
-				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index calendar booking " +
-								calendarBooking.getCalendarBookingId(),
-							pe);
+						documents.add(document);
+					}
+					catch (PortalException pe) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index calendar booking " +
+									calendarBooking.getCalendarBookingId(),
+								pe);
+						}
 					}
 				}
-			}
 
-		});
+			});
 
 		actionableDynamicQuery.setCompanyId(companyId);
 

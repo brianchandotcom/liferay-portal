@@ -183,12 +183,6 @@ public class BookmarksFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashMyBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
 	}
 

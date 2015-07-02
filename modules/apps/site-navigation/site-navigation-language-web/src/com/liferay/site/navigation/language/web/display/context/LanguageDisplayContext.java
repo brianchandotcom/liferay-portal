@@ -162,7 +162,7 @@ public class LanguageDisplayContext {
 
 		return _languagePortletInstanceConfiguration;
 	}
-	
+
 	protected PortletDisplayTemplate getPortletDisplayTemplate() {
 		return RegistryUtil.getRegistry().getService(
 			PortletDisplayTemplate.class);

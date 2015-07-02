@@ -114,8 +114,8 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		fieldsTemplateVariableGroup.empty();
 
 		fieldsTemplateVariableGroup.addCollectionVariable(
-			"asset-entries", List.class, 
-			PortletDisplayTemplateConstants.ENTRIES, "asset-entry", 
+			"asset-entries", List.class,
+			PortletDisplayTemplateConstants.ENTRIES, "asset-entry",
 			AssetEntry.class, "curEntry", "getTitle(locale)");
 		fieldsTemplateVariableGroup.addVariable(
 			"asset-entry", AssetEntry.class,

@@ -81,8 +81,8 @@ public class SiteMapPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addCollectionVariable(
-			"pages", List.class, PortletDisplayTemplateConstants.ENTRIES, "page",
-			Layout.class, "curPage", "getName(locale)");
+			"pages", List.class, PortletDisplayTemplateConstants.ENTRIES,
+			"page", Layout.class, "curPage", "getName(locale)");
 		templateVariableGroup.addVariable(
 			"site-map-display-context", SiteMapDisplayContext.class,
 			"siteMapDisplayContext");

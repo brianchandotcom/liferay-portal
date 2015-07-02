@@ -156,13 +156,14 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "application-display-templates");
 	}
-	
+
 	@Reference
 	protected void setPortletDisplayTemplate(
 		PortletDisplayTemplate portletDisplayTemplate) {
+
 		_portletDisplayTemplate = portletDisplayTemplate;
 	}
-	
+
 	protected PortletDisplayTemplate _portletDisplayTemplate;
 
 	private static final Set<String> _viewTemplateExcludedColumnNames =

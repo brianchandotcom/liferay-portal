@@ -72,7 +72,7 @@ public class PortletDisplayTemplateManagerImpl
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getDDMTemplate(
 			templateId);
-		
+
 		return _portletDisplayTemplate.renderDDMTemplate(
 			request, response, ddmTemplate, entries, contextObjects);
 	}

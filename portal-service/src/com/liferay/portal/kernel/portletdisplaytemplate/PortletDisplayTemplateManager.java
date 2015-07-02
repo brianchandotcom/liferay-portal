@@ -46,7 +46,7 @@ public interface PortletDisplayTemplateManager {
 
 	public String renderDDMTemplate(
 			HttpServletRequest request, HttpServletResponse response,
-			long templateId, List<?> entries, 
+			long templateId, List<?> entries,
 			Map<String, Object> contextObjects)
 		throws Exception;
 

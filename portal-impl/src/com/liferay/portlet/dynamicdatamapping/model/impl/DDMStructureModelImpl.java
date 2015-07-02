@@ -93,7 +93,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			{ "structureKey", Types.VARCHAR },
 			{ "version", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description", Types.CLOB },
 			{ "definition", Types.CLOB },
 			{ "storageType", Types.VARCHAR },
 			{ "type_", Types.INTEGER }
@@ -116,13 +116,13 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		TABLE_COLUMNS_MAP.put("structureKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("definition", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("storageType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructure.structureId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructure.structureId ASC";

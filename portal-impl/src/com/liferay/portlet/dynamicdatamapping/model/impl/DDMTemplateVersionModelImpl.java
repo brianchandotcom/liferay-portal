@@ -89,7 +89,7 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 			{ "templateId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
+			{ "description", Types.CLOB },
 			{ "language", Types.VARCHAR },
 			{ "script", Types.CLOB },
 			{ "status", Types.INTEGER },
@@ -111,7 +111,7 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("language", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("script", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
@@ -120,7 +120,7 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplateVersion (templateVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name STRING null,description STRING null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplateVersion (templateVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name STRING null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplateVersion.templateVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplateVersion.templateVersionId ASC";

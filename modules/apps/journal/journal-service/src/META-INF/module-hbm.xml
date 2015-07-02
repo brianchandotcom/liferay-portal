@@ -28,8 +28,8 @@
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="layoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />

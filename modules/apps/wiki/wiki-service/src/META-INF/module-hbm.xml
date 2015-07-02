@@ -40,7 +40,7 @@
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="minorEdit" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="summary" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="format" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />

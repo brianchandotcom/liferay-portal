@@ -33,7 +33,7 @@ import com.liferay.portlet.asset.service.AssetTagService;
 import com.liferay.portlet.asset.service.AssetTagStatsLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyService;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.portlet.display.template.service.PortletDisplayTemplateConstants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -114,8 +114,8 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		fieldsTemplateVariableGroup.empty();
 
 		fieldsTemplateVariableGroup.addCollectionVariable(
-			"asset-entries", List.class,
-			PortletDisplayTemplateConstants.ENTRIES, "asset-entry",
+			"asset-entries", List.class, 
+			PortletDisplayTemplateConstants.ENTRIES, "asset-entry", 
 			AssetEntry.class, "curEntry", "getTitle(locale)");
 		fieldsTemplateVariableGroup.addVariable(
 			"asset-entry", AssetEntry.class,

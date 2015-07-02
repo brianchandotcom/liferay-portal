@@ -207,7 +207,8 @@ public class TemplateHandlerRegistryUtil {
 				DDMTemplateLocalServiceUtil.addTemplate(
 					userId, group.getGroupId(), classNameId, 0,
 					PortalUtil.getClassNameId(
-		"com.liferay.portlet.display.template.service.PortletDisplayTemplate"),
+						"com.liferay.portlet.display" +
+						".template.service.PortletDisplayTemplate"),
 					templateKey, nameMap, descriptionMap,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language,
 					script, cacheable, false, null, null, serviceContext);

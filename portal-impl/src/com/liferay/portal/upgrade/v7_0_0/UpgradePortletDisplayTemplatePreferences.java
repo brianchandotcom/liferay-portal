@@ -98,7 +98,7 @@ public class UpgradePortletDisplayTemplatePreferences
 		if (templateKey != null) {
 			portletPreferences.setValue(
 				"displayStyle",
-				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX + 
+				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
 					templateKey);
 		}
 	}

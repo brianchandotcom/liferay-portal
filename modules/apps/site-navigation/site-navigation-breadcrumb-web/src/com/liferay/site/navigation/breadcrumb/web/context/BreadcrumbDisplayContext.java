@@ -54,7 +54,7 @@ public class BreadcrumbDisplayContext {
 		String displayStyle = getDisplayStyle();
 
 		if (displayStyle != null) {
-			_ddmTemplateKey = 
+			_ddmTemplateKey =
 				PortletDisplayTemplateManagerUtil.getDDMTemplateKey(
 					displayStyle);
 		}

@@ -119,7 +119,7 @@ public class LanguageDisplayContext {
 			_languagePortletInstanceConfiguration.displayStyle();
 
 		if (displayStyle != null) {
-			_ddmTemplateKey = 
+			_ddmTemplateKey =
 				PortletDisplayTemplateManagerUtil.getDDMTemplateKey(
 					displayStyle);
 		}

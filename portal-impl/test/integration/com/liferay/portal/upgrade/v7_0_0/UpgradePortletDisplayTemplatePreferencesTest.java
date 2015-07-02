@@ -102,5 +102,5 @@ public class UpgradePortletDisplayTemplatePreferencesTest
 	private Group _group;
 
 	private Layout _layout;
-	
+
 }

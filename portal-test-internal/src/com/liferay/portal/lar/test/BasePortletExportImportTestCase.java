@@ -55,6 +55,7 @@ import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalSe
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 
 import java.io.Serializable;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -554,8 +555,8 @@ public abstract class BasePortletExportImportTestCase
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
-		String displayStyle = 
-			PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX + 
+		String displayStyle =
+			PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
 				ddmTemplate.getTemplateKey();
 
 		preferenceMap.put("displayStyle", new String[] {displayStyle});

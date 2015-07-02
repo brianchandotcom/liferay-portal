@@ -1,5 +1,5 @@
 <definition component-name="portal-collaboration">
-	<property name="testray.main.component.name" value="Collaboration" />
+	<property name="testray.main.component.name" value="Blogs" />
 
 	<command name="test" priority="5">
 		<execute fuction="AssertTextEquals#assertTextEquals" path1="CPBlogs" locator-key1="INFO_MESSAGE" value1="No entries were found." />

@@ -10,7 +10,7 @@
 	</tear-down>
 
 	<command description="Ensure that a user can add multiple Blogs Entries." name="AddBlogsEntries" priority="4">
-		<property name="testray.component.names" value="Blogs,Collaboration" />
+		<property name="testray.component.names" value="Blogs" />
 		<property name="testray.main.component.name" value="Blogs" />
 
 		<var name="entryContent1" value="Blogs Entry1 Content" />

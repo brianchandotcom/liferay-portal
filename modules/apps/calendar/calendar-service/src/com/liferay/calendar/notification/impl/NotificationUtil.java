@@ -21,9 +21,9 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationField;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationKeys;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationUtil;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
-import com.liferay.calendar.service.configuration.PortletPropsKeys;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.StringPool;
@@ -76,8 +76,8 @@ public class NotificationUtil {
 			notificationType.toString(), notificationTemplateType.toString());
 
 		String propertyName =
-			PortletPropsKeys.CALENDAR_NOTIFICATION_PREFIX + StringPool.PERIOD +
-			notificationField.toString();
+			CalendarServiceConfigurationKeys.CALENDAR_NOTIFICATION_PREFIX +
+				StringPool.PERIOD + notificationField.toString();
 
 		String templatePath = CalendarServiceConfigurationUtil.get(
 			propertyName, filter);

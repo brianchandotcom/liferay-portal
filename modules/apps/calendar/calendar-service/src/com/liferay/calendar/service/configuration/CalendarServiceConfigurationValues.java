@@ -25,7 +25,8 @@ public class CalendarServiceConfigurationValues {
 	public static final boolean CALENDAR_AUTO_APPROVE_GROUP_EVENT =
 		GetterUtil.getBoolean(
 			CalendarServiceConfigurationUtil.get(
-				PortletPropsKeys.CALENDAR_AUTO_APPROVE_GROUP_EVENT));
+				CalendarServiceConfigurationKeys.
+					CALENDAR_AUTO_APPROVE_GROUP_EVENT));
 
 	public static final int CALENDAR_COLOR_DEFAULT = Integer.decode(
 		CalendarServiceConfigurationUtil.get("calendar.color.default"));

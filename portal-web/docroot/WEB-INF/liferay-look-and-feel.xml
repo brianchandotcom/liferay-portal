@@ -10,7 +10,7 @@
 		<company-excludes />
 	</company-limit>
 	<theme id="classic" name="Classic">
-		<root-path>/html/themes/classic</root-path>
+		<root-path>/classic</root-path>
 		<templates-path>${root-path}/templates</templates-path>
 		<images-path>${root-path}/images</images-path>
 		<template-extension>vm</template-extension>
@@ -25,12 +25,12 @@
 		</roles>
 	</theme>
 	<theme id="admin" name="Admin">
-		<root-path>/html/themes/admin</root-path>
+		<root-path>/admin</root-path>
 		<control-panel-theme>true</control-panel-theme>
 		<page-theme>false</page-theme>
 	</theme>
 	<theme id="control-panel" name="Control Panel">
-		<root-path>/html/themes/control_panel</root-path>
+		<root-path>/control_panel</root-path>
 		<settings>
 			<setting configurable="true" key="footer-text" type="textarea" value="Powered by Liferay" />
 		</settings>

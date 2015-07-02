@@ -31,14 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SystemProperties {
 
-	public static final String SYSTEM_PROPERTIES_FINAL =
-		"system.properties.final";
-
-	public static final String SYSTEM_PROPERTIES_LOAD =
-		"system.properties.load";
-
 	public static final String SYSTEM_PROPERTIES_QUIET =
 		"system.properties.quiet";
+
+	public static final String SYSTEM_PROPERTIES_SET = "system.properties.set";
+
+	public static final String SYSTEM_PROPERTIES_SET_OVERRIDE =
+		"system.properties.set.override";
 
 	public static final String TMP_DIR = "java.io.tmpdir";
 
@@ -141,20 +140,20 @@ public class SystemProperties {
 
 		// Set system properties
 
-		boolean systemPropertiesLoad = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_LOAD), true);
+		boolean systemPropertiesSet = GetterUtil.getBoolean(
+			System.getProperty(SYSTEM_PROPERTIES_SET), true);
 
-		boolean systemPropertiesFinal = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_FINAL), true);
+		boolean systemPropertiesSetOverride = GetterUtil.getBoolean(
+			System.getProperty(SYSTEM_PROPERTIES_SET_OVERRIDE), true);
 
-		if (systemPropertiesLoad) {
+		if (systemPropertiesSet) {
 			Enumeration<String> enu =
 				(Enumeration<String>)properties.propertyNames();
 
 			while (enu.hasMoreElements()) {
 				String key = enu.nextElement();
 
-				if (systemPropertiesFinal ||
+				if (systemPropertiesSetOverride ||
 					Validator.isNull(System.getProperty(key))) {
 
 					System.setProperty(key, properties.getProperty(key));

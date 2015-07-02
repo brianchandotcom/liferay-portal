@@ -15,6 +15,7 @@
 package com.liferay.calendar.service.impl;
 
 import com.liferay.calendar.exception.CalendarBookingDurationException;
+import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
 import com.liferay.calendar.exception.CalendarBookingTitleException;
 import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
@@ -138,7 +139,16 @@ public class CalendarBookingLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(titleMap, startTimeJCalendar, endTimeJCalendar);
+		if (Validator.isNull(recurrence)) {
+			validate(titleMap, startTimeJCalendar, endTimeJCalendar);
+		}
+		else {
+			java.util.Calendar untilJCalendar =
+				RecurrenceSerializer.deserialize(recurrence).getUntilJCalendar();
+
+			validate(
+				titleMap, startTimeJCalendar, endTimeJCalendar, untilJCalendar);
+		}
 
 		CalendarBooking calendarBooking = calendarBookingPersistence.create(
 			calendarBookingId);
@@ -787,7 +797,16 @@ public class CalendarBookingLocalServiceImpl
 			firstReminder = originalSecondReminder;
 		}
 
-		validate(titleMap, startTimeJCalendar, endTimeJCalendar);
+		if (Validator.isNull(recurrence)) {
+			validate(titleMap, startTimeJCalendar, endTimeJCalendar);
+		}
+		else {
+			java.util.Calendar untilJCalendar =
+				RecurrenceSerializer.deserialize(recurrence).getUntilJCalendar();
+
+			validate(
+				titleMap, startTimeJCalendar, endTimeJCalendar, untilJCalendar);
+		}
 
 		calendarBooking.setGroupId(calendar.getGroupId());
 		calendarBooking.setModifiedDate(serviceContext.getModifiedDate(null));
@@ -1188,12 +1207,26 @@ public class CalendarBookingLocalServiceImpl
 			java.util.Calendar endTimeJCalendar)
 		throws PortalException {
 
+		validate(titleMap, startTimeJCalendar, endTimeJCalendar, null);
+	}
+
+	protected void validate(
+			Map<Locale, String> titleMap, java.util.Calendar startTimeJCalendar,
+			java.util.Calendar endTimeJCalendar,
+			java.util.Calendar untilJCalendar)
+		throws PortalException {
+
 		if (Validator.isNull(titleMap) || titleMap.isEmpty()) {
 			throw new CalendarBookingTitleException();
 		}
 
 		if (startTimeJCalendar.after(endTimeJCalendar)) {
 			throw new CalendarBookingDurationException();
+		}
+
+		if (Validator.isNotNull(untilJCalendar) &&
+			startTimeJCalendar.after(untilJCalendar)) {
+				throw new CalendarBookingRecurrenceException();
 		}
 	}
 

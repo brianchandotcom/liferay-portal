@@ -14,11 +14,11 @@
 
 package com.liferay.calendar.service.impl;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.base.CalendarResourceServiceBaseImpl;
 import com.liferay.calendar.service.permission.CalendarPortletPermission;
 import com.liferay.calendar.service.permission.CalendarResourcePermission;
-import com.liferay.calendar.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
@@ -44,7 +44,7 @@ public class CalendarResourceServiceImpl
 		throws PortalException {
 
 		CalendarPortletPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.ADD_RESOURCE);
+			getPermissionChecker(), groupId, CalendarActionKeys.ADD_RESOURCE);
 
 		return calendarResourceLocalService.addCalendarResource(
 			getUserId(), groupId, classNameId, classPK, classUuid, code,
@@ -56,7 +56,8 @@ public class CalendarResourceServiceImpl
 		throws PortalException {
 
 		CalendarResourcePermission.check(
-			getPermissionChecker(), calendarResourceId, ActionKeys.DELETE);
+			getPermissionChecker(), calendarResourceId,
+			CalendarActionKeys.DELETE);
 
 		return calendarResourceLocalService.deleteCalendarResource(
 			calendarResourceId);
@@ -75,7 +76,7 @@ public class CalendarResourceServiceImpl
 		}
 
 		CalendarResourcePermission.check(
-			getPermissionChecker(), calendarResource, ActionKeys.VIEW);
+			getPermissionChecker(), calendarResource, CalendarActionKeys.VIEW);
 
 		return calendarResource;
 	}
@@ -85,7 +86,8 @@ public class CalendarResourceServiceImpl
 		throws PortalException {
 
 		CalendarResourcePermission.check(
-			getPermissionChecker(), calendarResourceId, ActionKeys.VIEW);
+			getPermissionChecker(), calendarResourceId,
+			CalendarActionKeys.VIEW);
 
 		return calendarResourcePersistence.findByPrimaryKey(calendarResourceId);
 	}
@@ -140,7 +142,8 @@ public class CalendarResourceServiceImpl
 		throws PortalException {
 
 		CalendarResourcePermission.check(
-			getPermissionChecker(), calendarResourceId, ActionKeys.UPDATE);
+			getPermissionChecker(), calendarResourceId,
+			CalendarActionKeys.UPDATE);
 
 		return calendarResourceLocalService.updateCalendarResource(
 			calendarResourceId, nameMap, descriptionMap, active,

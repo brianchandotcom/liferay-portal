@@ -14,10 +14,10 @@
 
 package com.liferay.calendar.trash;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.permission.CalendarPermission;
-import com.liferay.calendar.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -79,7 +79,7 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 
 		return CalendarPermission.contains(
 			permissionChecker, calendarBooking.getCalendar(),
-			ActionKeys.MANAGE_BOOKINGS);
+			CalendarActionKeys.MANAGE_BOOKINGS);
 	}
 
 }

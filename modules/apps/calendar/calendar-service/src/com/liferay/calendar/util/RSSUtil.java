@@ -15,6 +15,7 @@
 package com.liferay.calendar.util;
 
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.service.configuration.PortletPropsKeys;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;

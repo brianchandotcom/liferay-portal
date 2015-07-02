@@ -128,7 +128,7 @@ else if (calendar != null) {
 	}
 }
 
-List<Calendar> manageableCalendars = CalendarServiceUtil.search(themeDisplay.getCompanyId(), new long[] {user.getGroupId(), scopeGroupId}, null, null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new CalendarNameComparator(true), ActionKeys.MANAGE_BOOKINGS);
+List<Calendar> manageableCalendars = CalendarServiceUtil.search(themeDisplay.getCompanyId(), new long[] {user.getGroupId(), scopeGroupId}, null, null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new CalendarNameComparator(true), CalendarActionKeys.MANAGE_BOOKINGS);
 
 long[] otherCalendarIds = StringUtil.split(SessionClicks.get(request, "calendar-portlet-other-calendars", StringPool.BLANK), 0L);
 
@@ -141,7 +141,7 @@ for (long otherCalendarId : otherCalendarIds) {
 
 	CalendarResource otherCalendarResource = otherCalendar.getCalendarResource();
 
-	if (otherCalendarResource.isActive() && !manageableCalendars.contains(otherCalendar) && CalendarPermission.contains(themeDisplay.getPermissionChecker(), otherCalendar, ActionKeys.MANAGE_BOOKINGS)) {
+	if (otherCalendarResource.isActive() && !manageableCalendars.contains(otherCalendar) && CalendarPermission.contains(themeDisplay.getPermissionChecker(), otherCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) {
 		manageableCalendars.add(otherCalendar);
 	}
 }

@@ -14,12 +14,12 @@
 
 package com.liferay.calendar.workflow;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.service.permission.CalendarPermission;
-import com.liferay.calendar.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -53,7 +53,7 @@ public class CalendarBookingApprovalWorkflowImpl
 
 			if (CalendarPermission.contains(
 					permissionChecker, calendarBooking.getCalendarId(),
-					ActionKeys.MANAGE_BOOKINGS)) {
+					CalendarActionKeys.MANAGE_BOOKINGS)) {
 
 				if (calendarBooking.getStatus() !=
 						CalendarBookingWorkflowConstants.STATUS_APPROVED) {
@@ -125,7 +125,7 @@ public class CalendarBookingApprovalWorkflowImpl
 			calendarResource.isGroup() &&
 			CalendarPermission.contains(
 				permissionChecker, calendarBooking.getCalendar(),
-				ActionKeys.MANAGE_BOOKINGS)) {
+				CalendarActionKeys.MANAGE_BOOKINGS)) {
 
 			return true;
 		}

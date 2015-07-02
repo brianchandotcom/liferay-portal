@@ -14,18 +14,18 @@
 
 package com.liferay.calendar.web.asset;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.permission.CalendarPermission;
-import com.liferay.calendar.util.ActionKeys;
 import com.liferay.calendar.util.CalendarResourceUtil;
-import com.liferay.calendar.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -142,7 +142,7 @@ public class CalendarBookingAssetRendererFactory
 
 		return CalendarPermission.contains(
 			permissionChecker, calendar.getCalendarId(),
-			ActionKeys.MANAGE_BOOKINGS);
+			CalendarActionKeys.MANAGE_BOOKINGS);
 	}
 
 	@Override
@@ -153,10 +153,10 @@ public class CalendarBookingAssetRendererFactory
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.getCalendarBooking(classPK);
 
-		if (actionId.equals(ActionKeys.DELETE) ||
-			actionId.equals(ActionKeys.UPDATE)) {
+		if (actionId.equals(CalendarActionKeys.DELETE) ||
+			actionId.equals(CalendarActionKeys.UPDATE)) {
 
-			actionId = ActionKeys.MANAGE_BOOKINGS;
+			actionId = CalendarActionKeys.MANAGE_BOOKINGS;
 		}
 
 		return CalendarPermission.contains(

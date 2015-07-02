@@ -23,7 +23,7 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, ActionKeys.UPDATE) %>">
+	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, CalendarActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_calendar_resource.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -37,7 +37,7 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, CalendarActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= CalendarResource.class.getName() %>"
 			modelResourceDescription="<%= calendarResource.getName(locale) %>"
@@ -68,7 +68,7 @@ CalendarResource calendarResource = (CalendarResource)row.getObject();
 		url="<%= calendarsURL %>"
 	/>
 
-	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, ActionKeys.DELETE) %>">
+	<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, CalendarActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteCalendarResource" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

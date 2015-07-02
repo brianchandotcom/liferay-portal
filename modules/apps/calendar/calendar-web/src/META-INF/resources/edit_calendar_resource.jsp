@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-CalendarResource calendarResource = (CalendarResource)request.getAttribute(WebKeys.CALENDAR_RESOURCE);
+CalendarResource calendarResource = (CalendarResource)request.getAttribute(CalendarWebKeys.CALENDAR_RESOURCE);
 
 long calendarResourceId = 0;
 

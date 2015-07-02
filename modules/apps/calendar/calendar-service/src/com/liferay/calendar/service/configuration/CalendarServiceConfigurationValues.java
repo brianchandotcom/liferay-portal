@@ -15,7 +15,6 @@
 package com.liferay.calendar.service.configuration;
 
 import com.liferay.calendar.notification.NotificationType;
-import com.liferay.calendar.util.PortletPropsKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 /**

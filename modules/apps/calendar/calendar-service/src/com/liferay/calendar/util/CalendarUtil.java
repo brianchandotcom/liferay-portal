@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.util;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
@@ -403,34 +404,36 @@ public class CalendarUtil {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			ActionKeys.DELETE,
+			CalendarActionKeys.DELETE,
 			CalendarPermission.contains(
-				permissionChecker, calendar, ActionKeys.DELETE));
+				permissionChecker, calendar, CalendarActionKeys.DELETE));
 
 		jsonObject.put(
-			ActionKeys.MANAGE_BOOKINGS,
+			CalendarActionKeys.MANAGE_BOOKINGS,
 			CalendarPermission.contains(
-				permissionChecker, calendar, ActionKeys.MANAGE_BOOKINGS));
+				permissionChecker, calendar,
+				CalendarActionKeys.MANAGE_BOOKINGS));
 
 		jsonObject.put(
-			ActionKeys.PERMISSIONS,
+			CalendarActionKeys.PERMISSIONS,
 			CalendarPermission.contains(
-				permissionChecker, calendar, ActionKeys.PERMISSIONS));
+				permissionChecker, calendar, CalendarActionKeys.PERMISSIONS));
 
 		jsonObject.put(
-			ActionKeys.UPDATE,
+			CalendarActionKeys.UPDATE,
 			CalendarPermission.contains(
-				permissionChecker, calendar, ActionKeys.UPDATE));
+				permissionChecker, calendar, CalendarActionKeys.UPDATE));
 
 		jsonObject.put(
-			ActionKeys.VIEW,
+			CalendarActionKeys.VIEW,
 			CalendarPermission.contains(
-				permissionChecker, calendar, ActionKeys.VIEW));
+				permissionChecker, calendar, CalendarActionKeys.VIEW));
 
 		jsonObject.put(
-			ActionKeys.VIEW_BOOKING_DETAILS,
+			CalendarActionKeys.VIEW_BOOKING_DETAILS,
 			CalendarPermission.contains(
-				permissionChecker, calendar, ActionKeys.VIEW_BOOKING_DETAILS));
+				permissionChecker, calendar,
+				CalendarActionKeys.VIEW_BOOKING_DETAILS));
 
 		return jsonObject;
 	}

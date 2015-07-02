@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-CalendarResource calendarResource = (CalendarResource)request.getAttribute(WebKeys.CALENDAR_RESOURCE);
+CalendarResource calendarResource = (CalendarResource)request.getAttribute(CalendarWebKeys.CALENDAR_RESOURCE);
 %>
 
 <liferay-ui:header
@@ -27,7 +27,7 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(WebKe
 	title='<%= LanguageUtil.format(request, "x-calendars", calendarResource.getName(locale), false) %>'
 />
 
-<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, ActionKeys.ADD_CALENDAR) %>">
+<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, calendarResource, CalendarActionKeys.ADD_CALENDAR) %>">
 	<aui:button-row>
 		<liferay-portlet:renderURL var="editCalendarURL">
 			<liferay-portlet:param name="mvcPath" value="/edit_calendar.jsp" />

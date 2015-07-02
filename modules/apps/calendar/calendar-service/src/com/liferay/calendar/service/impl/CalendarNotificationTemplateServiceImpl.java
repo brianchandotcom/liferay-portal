@@ -14,12 +14,12 @@
 
 package com.liferay.calendar.service.impl;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.base.CalendarNotificationTemplateServiceBaseImpl;
 import com.liferay.calendar.service.permission.CalendarPermission;
-import com.liferay.calendar.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 
@@ -38,7 +38,7 @@ public class CalendarNotificationTemplateServiceImpl
 		throws PortalException {
 
 		CalendarPermission.check(
-			getPermissionChecker(), calendarId, ActionKeys.UPDATE);
+			getPermissionChecker(), calendarId, CalendarActionKeys.UPDATE);
 
 		return calendarNotificationTemplateLocalService.
 			addCalendarNotificationTemplate(
@@ -60,7 +60,8 @@ public class CalendarNotificationTemplateServiceImpl
 
 		CalendarPermission.check(
 			getPermissionChecker(),
-			calendarNotificationTemplate.getCalendarId(), ActionKeys.UPDATE);
+			calendarNotificationTemplate.getCalendarId(),
+			CalendarActionKeys.UPDATE);
 
 		return calendarNotificationTemplateLocalService.
 			updateCalendarNotificationTemplate(

@@ -180,7 +180,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		<aui:button-row>
 
 			<%
-			boolean hasManageBookingsPermission = CalendarPermission.contains(permissionChecker, calendar, ActionKeys.MANAGE_BOOKINGS);
+			boolean hasManageBookingsPermission = CalendarPermission.contains(permissionChecker, calendar, CalendarActionKeys.MANAGE_BOOKINGS);
 			%>
 
 			<c:if test="<%= hasManageBookingsPermission && (calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_APPROVED) %>">

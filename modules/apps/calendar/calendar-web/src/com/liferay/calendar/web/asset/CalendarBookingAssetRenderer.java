@@ -14,12 +14,12 @@
 
 package com.liferay.calendar.web.asset;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.constants.CalendarPortletKeys;
+import com.liferay.calendar.constants.CalendarWebKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.permission.CalendarPermission;
-import com.liferay.calendar.util.ActionKeys;
-import com.liferay.calendar.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -168,7 +168,7 @@ public class CalendarBookingAssetRenderer
 		}
 
 		return CalendarPermission.contains(
-			permissionChecker, calendar, ActionKeys.MANAGE_BOOKINGS);
+			permissionChecker, calendar, CalendarActionKeys.MANAGE_BOOKINGS);
 	}
 
 	@Override
@@ -183,7 +183,7 @@ public class CalendarBookingAssetRenderer
 		}
 
 		return CalendarPermission.contains(
-			permissionChecker, calendar, ActionKeys.VIEW);
+			permissionChecker, calendar, CalendarActionKeys.VIEW);
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public class CalendarBookingAssetRenderer
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
 			portletRequest.setAttribute(
-				WebKeys.CALENDAR_BOOKING, _calendarBooking);
+				CalendarWebKeys.CALENDAR_BOOKING, _calendarBooking);
 
 			return "/asset/" + template + ".jsp";
 		}

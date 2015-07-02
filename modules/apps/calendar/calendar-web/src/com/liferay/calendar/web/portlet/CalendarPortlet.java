@@ -14,7 +14,9 @@
 
 package com.liferay.calendar.web.portlet;
 
+import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.constants.CalendarPortletKeys;
+import com.liferay.calendar.constants.CalendarWebKeys;
 import com.liferay.calendar.exception.CalendarBookingDurationException;
 import com.liferay.calendar.exception.CalendarNameException;
 import com.liferay.calendar.exception.CalendarResourceCodeException;
@@ -45,13 +47,11 @@ import com.liferay.calendar.service.CalendarNotificationTemplateServiceUtil;
 import com.liferay.calendar.service.CalendarResourceServiceUtil;
 import com.liferay.calendar.service.CalendarServiceUtil;
 import com.liferay.calendar.service.permission.CalendarPermission;
-import com.liferay.calendar.util.ActionKeys;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.calendar.util.CalendarSearcher;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
-import com.liferay.calendar.util.WebKeys;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -549,7 +550,7 @@ public class CalendarPortlet extends MVCPortlet {
 
 		for (Calendar calendar : calendars) {
 			if (!CalendarPermission.contains(
-					permissionChecker, calendar, ActionKeys.VIEW)) {
+					permissionChecker, calendar, CalendarActionKeys.VIEW)) {
 
 				continue;
 			}
@@ -603,13 +604,15 @@ public class CalendarPortlet extends MVCPortlet {
 
 		Calendar calendar = CalendarServiceUtil.getCalendar(calendarId);
 
-		portletRequest.setAttribute(WebKeys.CALENDAR, calendar);
+		portletRequest.setAttribute(CalendarWebKeys.CALENDAR, calendar);
 	}
 
 	protected void getCalendarBooking(PortletRequest portletRequest)
 		throws Exception {
 
-		if (portletRequest.getAttribute(WebKeys.CALENDAR_BOOKING) != null) {
+		if (portletRequest.getAttribute(CalendarWebKeys.CALENDAR_BOOKING)
+				!= null) {
+
 			return;
 		}
 
@@ -623,7 +626,8 @@ public class CalendarPortlet extends MVCPortlet {
 		CalendarBooking calendarBooking =
 			CalendarBookingServiceUtil.getCalendarBooking(calendarBookingId);
 
-		portletRequest.setAttribute(WebKeys.CALENDAR_BOOKING, calendarBooking);
+		portletRequest.setAttribute(
+			CalendarWebKeys.CALENDAR_BOOKING, calendarBooking);
 	}
 
 	protected void getCalendarResource(PortletRequest portletRequest)
@@ -647,7 +651,7 @@ public class CalendarPortlet extends MVCPortlet {
 		}
 
 		portletRequest.setAttribute(
-			WebKeys.CALENDAR_RESOURCE, calendarResource);
+			CalendarWebKeys.CALENDAR_RESOURCE, calendarResource);
 	}
 
 	protected String getEditCalendarURL(

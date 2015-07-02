@@ -27,9 +27,9 @@ if (Validator.isNull(redirect)) {
 
 String backURL = ParamUtil.getString(request, "backURL");
 
-Calendar calendar = (Calendar)request.getAttribute(WebKeys.CALENDAR);
+Calendar calendar = (Calendar)request.getAttribute(CalendarWebKeys.CALENDAR);
 
-CalendarResource calendarResource = (CalendarResource)request.getAttribute(WebKeys.CALENDAR_RESOURCE);
+CalendarResource calendarResource = (CalendarResource)request.getAttribute(CalendarWebKeys.CALENDAR_RESOURCE);
 %>
 
 <liferay-portlet:renderURL var="portletURL">

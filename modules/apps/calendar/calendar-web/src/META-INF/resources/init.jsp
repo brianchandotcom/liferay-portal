@@ -25,7 +25,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.calendar.exception.CalendarBookingDurationException" %><%@
+<%@ page import="com.liferay.calendar.constants.CalendarActionKeys" %><%@
+page import="com.liferay.calendar.constants.CalendarWebKeys" %><%@
+page import="com.liferay.calendar.exception.CalendarBookingDurationException" %><%@
 page import="com.liferay.calendar.exception.CalendarNameException" %><%@
 page import="com.liferay.calendar.exception.CalendarResourceCodeException" %><%@
 page import="com.liferay.calendar.exception.CalendarResourceNameException" %><%@
@@ -53,13 +55,11 @@ page import="com.liferay.calendar.service.configuration.CalendarServiceConfigura
 page import="com.liferay.calendar.service.permission.CalendarPermission" %><%@
 page import="com.liferay.calendar.service.permission.CalendarPortletPermission" %><%@
 page import="com.liferay.calendar.service.permission.CalendarResourcePermission" %><%@
-page import="com.liferay.calendar.util.ActionKeys" %><%@
 page import="com.liferay.calendar.util.CalendarResourceUtil" %><%@
 page import="com.liferay.calendar.util.CalendarUtil" %><%@
 page import="com.liferay.calendar.util.ColorUtil" %><%@
 page import="com.liferay.calendar.util.JCalendarUtil" %><%@
 page import="com.liferay.calendar.util.RecurrenceUtil" %><%@
-page import="com.liferay.calendar.util.WebKeys" %><%@
 page import="com.liferay.calendar.util.comparator.CalendarNameComparator" %><%@
 page import="com.liferay.calendar.web.search.CalendarResourceDisplayTerms" %><%@
 page import="com.liferay.calendar.web.search.CalendarResourceSearch" %><%@
@@ -90,6 +90,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.User" %><%@
@@ -122,7 +123,7 @@ page import="java.util.TimeZone" %>
 <%
 String currentURL = PortalUtil.getCurrentURL(request);
 
-CalendarBooking calendarBooking = (CalendarBooking)request.getAttribute(WebKeys.CALENDAR_BOOKING);
+CalendarBooking calendarBooking = (CalendarBooking)request.getAttribute(CalendarWebKeys.CALENDAR_BOOKING);
 
 CalendarResource groupCalendarResource = CalendarResourceUtil.getGroupCalendarResource(liferayPortletRequest, scopeGroupId);
 CalendarResource userCalendarResource = CalendarResourceUtil.getUserCalendarResource(liferayPortletRequest, themeDisplay.getUserId());

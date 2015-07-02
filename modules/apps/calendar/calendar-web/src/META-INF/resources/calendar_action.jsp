@@ -23,7 +23,7 @@ Calendar calendar = (Calendar)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.UPDATE) %>">
+	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, CalendarActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_calendar.jsp" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -38,7 +38,7 @@ Calendar calendar = (Calendar)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.VIEW) %>">
+	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, CalendarActionKeys.VIEW) %>">
 		<liferay-portlet:resourceURL id="exportCalendar" var="exportURL">
 			<portlet:param name="calendarId" value="<%= String.valueOf(calendar.getCalendarId()) %>" />
 		</liferay-portlet:resourceURL>
@@ -50,7 +50,7 @@ Calendar calendar = (Calendar)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.UPDATE) %>">
+	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, CalendarActionKeys.UPDATE) %>">
 		<liferay-portlet:resourceURL id="importCalendar" var="importURL">
 			<portlet:param name="calendarId" value="<%= String.valueOf(calendar.getCalendarId()) %>" />
 		</liferay-portlet:resourceURL>
@@ -73,7 +73,7 @@ Calendar calendar = (Calendar)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, CalendarActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Calendar.class.getName() %>"
 			modelResourceDescription="<%= calendar.getName(locale) %>"
@@ -102,7 +102,7 @@ Calendar calendar = (Calendar)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, ActionKeys.DELETE) && !calendar.isDefaultCalendar() %>">
+	<c:if test="<%= CalendarPermission.contains(permissionChecker, calendar, CalendarActionKeys.DELETE) && !calendar.isDefaultCalendar() %>">
 		<portlet:actionURL name="deleteCalendar" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

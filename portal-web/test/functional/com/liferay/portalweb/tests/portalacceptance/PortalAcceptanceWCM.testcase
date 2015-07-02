@@ -18,6 +18,15 @@
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#viewCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
 	</command>
 
 	<command name="AddChildSite" priority="5">

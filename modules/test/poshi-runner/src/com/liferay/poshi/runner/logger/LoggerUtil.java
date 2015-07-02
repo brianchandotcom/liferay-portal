@@ -104,6 +104,11 @@ public final class LoggerUtil {
 			"addChildLoggerElement(" + parentSB + ", " + childSB + ");");
 	}
 
+	public static void createSummary() throws Exception {
+		FileUtil.write(
+			_getSummaryLogFilePath(), SummaryLoggerHandler.getSummaryLogText());
+	}
+
 	public static void executeJavaScript(String script) {
 		if (!isLoggerStarted()) {
 			return;
@@ -345,6 +350,19 @@ public final class LoggerUtil {
 			StringUtil.replace(
 				PoshiRunnerContext.getTestCaseCommandName(), "#", "_"));
 		sb.append("/index.html");
+
+		return sb.toString();
+	}
+
+	private static String _getSummaryLogFilePath() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_CURRENT_DIR_NAME);
+		sb.append("/test-results/");
+		sb.append(
+			StringUtil.replace(
+				PoshiRunnerContext.getTestCaseCommandName(), "#", "_"));
+		sb.append("/summary.html");
 
 		return sb.toString();
 	}

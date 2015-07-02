@@ -107,6 +107,8 @@ public class PoshiRunner {
 			throw new Exception(e.getMessage(), e);
 		}
 		finally {
+			LoggerUtil.createSummary();
+
 			try {
 				if (!PropsValues.TEST_SKIP_TEAR_DOWN) {
 					_runTearDown();

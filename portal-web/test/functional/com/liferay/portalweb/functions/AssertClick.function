@@ -36,7 +36,7 @@
 	</command>
 
 	<command name="assertPartialTextClickAtCPNavigation">
-		<execute argument1="//script[contains(@src,'/html/js/liferay/message.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/message.js')]" selenium="waitForElementPresent" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" />
 
@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="assertTextClickAtAddApplication">
-		<execute argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')] | //script[contains(@src,'/html/js/liferay/dockbar_add_page.js')] | //script[contains(@src,'js/control_menu_add_content.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(@src,'/liferay/dockbar_add_page.js')] | //script[contains(@src,'js/control_menu_add_content.js')]" selenium="waitForElementPresent" />
 
 		<execute argument1="1000" selenium="pause" />
 
@@ -122,7 +122,7 @@
 
 		<execute selenium="mouseOver" />
 
-		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 
@@ -139,7 +139,7 @@
 			<then>
 				<execute argument1="//nav[@id='navigation']" selenium="clickAt" />
 
-				<execute argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
+				<execute argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
 
 				<execute selenium="mouseOver" />
 
@@ -298,7 +298,7 @@
 	</command>
 
 	<command name="waitForNodeScriptAssertTextEqualsClick">
-		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 

@@ -140,10 +140,12 @@
 					<available file="${alloy.dir}/${dir.name}/assets/skins/sam" />
 					<then>
 						<copy todir="${themes.dir}/_unstyled/images/aui" preservelastmodified="true">
-							<fileset dir="{alloy.dir}/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
+							<fileset dir="${alloy.dir}/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
 						</copy>
 					</then>
 				</if>
+
+				<var name="dir.name" unset="true" />
 			</sequential>
 		</for>
 

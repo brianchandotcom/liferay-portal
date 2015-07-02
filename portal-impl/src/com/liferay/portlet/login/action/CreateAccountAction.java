@@ -357,7 +357,8 @@ public class CreateAccountAction extends PortletAction {
 			themeDisplay.getCompanyId(), emailAddress);
 
 		if (anonymousUser.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeAuthenticated(
+				String.valueOf(anonymousUser.getUserId()));
 		}
 
 		UserLocalServiceUtil.deleteUser(anonymousUser.getUserId());

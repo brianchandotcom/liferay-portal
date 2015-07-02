@@ -142,7 +142,8 @@ public class TunnelUtil {
 			if ((ioeMessage != null) &&
 				ioeMessage.contains("HTTP response code: 401")) {
 
-				throw new PrincipalException(ioeMessage);
+				throw new PrincipalException.MustBeAuthenticated(
+					httpPrincipal.getLogin());
 			}
 			else {
 				throw ioe;

@@ -2122,17 +2122,15 @@ public class CMISRepository extends BaseCmisRepository {
 			 e.getMessage().contains("authorized")) ||
 			(e instanceof CmisPermissionDeniedException)) {
 
-			String message = e.getMessage();
+			String login = null;
 
 			try {
-				message =
-					"Unable to login with user " +
-						_cmisRepositoryHandler.getLogin();
+				login = _cmisRepositoryHandler.getLogin();
 			}
 			catch (Exception e2) {
 			}
 
-			throw new PrincipalException(message, e);
+			throw new PrincipalException.MustBeAuthenticated(login);
 		}
 	}
 

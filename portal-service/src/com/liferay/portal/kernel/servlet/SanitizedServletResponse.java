@@ -196,8 +196,9 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			true);
 
 	private static final String[] _X_CONTENT_TYPE_OPTIONS_URLS_EXCLUDES =
-		SystemProperties.getArray(
-			"http.header.secure.x.content.type.options.urls.excludes");
+		StringUtil.split(
+			SystemProperties.get(
+				"http.header.secure.x.content.type.options.urls.excludes"));
 
 	private static final boolean _X_FRAME_OPTIONS;
 

@@ -58,10 +58,6 @@ public class SystemProperties {
 		return value;
 	}
 
-	public static String[] getArray(String key) {
-		return StringUtil.split(get(key));
-	}
-
 	public static Properties getProperties() {
 		return PropertiesUtil.fromMap(_properties);
 	}

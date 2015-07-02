@@ -2102,3 +2102,28 @@ Package names have been adapted to the new condition of Liferay portlets as
 OSGi services.
 
 ---------------------------------------
+
+### DLFileEntryTypes_DDMStructures is no longer available
+- **Date:** 2015-Jul-1
+- **JIRA Ticket:** LPS-56660 and others
+
+#### What changed?
+
+DLFileEntryTypes_DDMStructures mapping table is not longer available.
+
+#### Who is affected?
+
+This might affect developers using the Document Library File Entry Type Local
+Service API.
+
+#### How should I update my code?
+
+Update the calls to addDDMStructureLinks deleteDDMStructureLinks 
+updateDDMStructureLinks if you want
+to add/remove or update references between DLFileEntryType and DDMStructures.
+
+#### Why was this change made?
+
+This change was made to reduce the coupling between the two applications.
+
+---------------------------------------

@@ -746,20 +746,6 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	/**
-	 * Returns all the structures for the document library file entry type.
-	 *
-	 * @param  dlFileEntryTypeId the primary key of the document library file
-	 *         entry type
-	 * @return the structures for the document library file entry type
-	 */
-	@Override
-	public List<DDMStructure> getDLFileEntryTypeStructures(
-		long dlFileEntryTypeId) {
-
-		return dlFileEntryTypePersistence.getDDMStructures(dlFileEntryTypeId);
-	}
-
-	/**
 	 * Returns the structure with the ID.
 	 *
 	 * @param  structureId the primary key of the structure

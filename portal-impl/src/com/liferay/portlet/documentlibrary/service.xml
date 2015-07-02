@@ -228,7 +228,6 @@
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileVersion" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFolder" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoTable" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
@@ -267,7 +266,6 @@
 
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 	</entity>
 	<entity name="DLFileEntryType" human-name="document library file entry type" uuid="true" local-service="true" remote-service="true">
 
@@ -296,7 +294,6 @@
 		<!-- Relationships -->
 
 		<column name="folders" type="Collection" entity="DLFolder" mapping-table="DLFileEntryTypes_DLFolders" />
-		<column name="ddmStructure" type="Collection" entity="com.liferay.portlet.dynamicdatamapping.DDMStructure" mapping-table="DLFileEntryTypes_DDMStructures" />
 
 		<!-- Finder methods -->
 
@@ -319,7 +316,6 @@
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntry" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileVersion" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFolder" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
 	<entity name="DLFileRank" human-name="document library file rank" local-service="true" remote-service="false">
 

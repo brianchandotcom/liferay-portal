@@ -35,6 +35,8 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -160,7 +162,9 @@ public class BookmarksServiceVerifyProcessTest
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new BookmarksServiceVerifyProcess();
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(BookmarksServiceVerifyProcess.class);
 	}
 
 	@DeleteAfterTestRun

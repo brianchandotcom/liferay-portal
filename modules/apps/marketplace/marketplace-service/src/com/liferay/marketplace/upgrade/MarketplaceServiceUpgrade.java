@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.upgrade;
 
+import com.liferay.marketplace.service.configuration.configurator.MarketplaceServiceConfigurator;
 import com.liferay.marketplace.upgrade.v1_0_0.UpgradeExpando;
 import com.liferay.marketplace.upgrade.v1_0_1.UpgradeModule;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,22 +28,15 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import org.springframework.context.ApplicationContext;
-
 /**
  * @author Joan Kim
  */
 @Component(immediate = true, service = MarketplaceServiceUpgrade.class)
 public class MarketplaceServiceUpgrade {
 
-	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.marketplace.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
+	@Reference(unbind = "-")
+	protected void setMarketplaceServiceConfigurator(
+		MarketplaceServiceConfigurator marketplaceServiceConfigurator) {
 	}
 
 	@Reference(unbind = "-")

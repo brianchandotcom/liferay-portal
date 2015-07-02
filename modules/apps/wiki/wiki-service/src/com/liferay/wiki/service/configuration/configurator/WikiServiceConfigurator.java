@@ -17,7 +17,8 @@ package com.liferay.wiki.service.configuration.configurator;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
-import com.liferay.wiki.upgrade.WikiServiceUpgrade;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -62,9 +63,8 @@ public class WikiServiceConfigurator {
 		_serviceConfigurator = serviceConfigurator;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiServiceUpgrade(
-		WikiServiceUpgrade wikiServiceUpgrade) {
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private ServiceConfigurator _serviceConfigurator;

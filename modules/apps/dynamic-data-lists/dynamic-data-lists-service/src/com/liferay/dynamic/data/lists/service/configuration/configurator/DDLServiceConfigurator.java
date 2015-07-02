@@ -14,10 +14,11 @@
 
 package com.liferay.dynamic.data.lists.service.configuration.configurator;
 
-import com.liferay.dynamic.data.lists.upgrade.DDLServiceUpgrade;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -56,14 +57,14 @@ public class DDLServiceConfigurator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDLServiceUpgrade(DDLServiceUpgrade ddlServiceUpgrade) {
-	}
-
-	@Reference(unbind = "-")
 	protected void setServiceConfigurator(
 		ServiceConfigurator serviceConfigurator) {
 
 		_serviceConfigurator = serviceConfigurator;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private ServiceConfigurator _serviceConfigurator;

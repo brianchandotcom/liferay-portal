@@ -6,7 +6,6 @@ task jar(type: Jar, overwrite: true)
 
 jar {
 	destinationDir = sdkDestinationDir
-
 	exclude "OSGI-INF/permissions.perm"
 
 	from zipTree(

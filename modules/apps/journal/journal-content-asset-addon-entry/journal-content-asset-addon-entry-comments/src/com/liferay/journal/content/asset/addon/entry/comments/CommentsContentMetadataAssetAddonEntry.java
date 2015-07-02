@@ -47,7 +47,7 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getJSPPath() {
-		return _JSP_PATH;
+		return "/META-INF/resources/comments.jsp";
 	}
 
 	@Override
@@ -120,8 +120,6 @@ public class CommentsContentMetadataAssetAddonEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/comments.jsp";
 
 	private CommentRatingsContentMetadataAssetAddonEntry
 		_commentRatingsContentMetadataAssetAddonEntry;

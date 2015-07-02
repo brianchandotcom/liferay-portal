@@ -39,7 +39,7 @@ public class RatingsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getJSPPath() {
-		return _JSP_PATH;
+		return "/META-INF/resources/ratings.jsp";
 	}
 
 	@Override
@@ -65,7 +65,5 @@ public class RatingsContentMetadataAssetAddonEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/ratings.jsp";
 
 }

@@ -21,6 +21,8 @@ public class ApplicationListWebKeys {
 
 	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";
 
+	public static final String PANEL_CATEGORY = "PANEL_CATEGORY";
+
 	public static final String PANEL_CATEGORY_REGISTRY =
 		"PANEL_CATEGORY_REGISTRY";
 

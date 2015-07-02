@@ -60,6 +60,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>panel-category-content</name>
+		<tag-class>com.liferay.application.list.taglib.servlet.taglib.ui.PanelCategoryContentTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>panelCategory</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>panel-content</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.ui.PanelContentTag</tag-class>
 		<body-content>empty</body-content>

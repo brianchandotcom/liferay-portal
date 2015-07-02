@@ -165,7 +165,7 @@ public class BreadcrumbDisplayContext {
 
 		return _showPortletBreadcrumb;
 	}
-	
+
 	protected PortletDisplayTemplate getPortletDisplayTemplate() {
 		return RegistryUtil.getRegistry().getService(
 			PortletDisplayTemplate.class);

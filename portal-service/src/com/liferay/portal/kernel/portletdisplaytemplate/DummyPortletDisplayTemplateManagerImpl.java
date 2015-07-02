@@ -14,25 +14,27 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-
 /**
  * @author Leonardo Barros
  */
-public class DummyPortletDisplayTemplateManagerImpl 
+public class DummyPortletDisplayTemplateManagerImpl
 	implements PortletDisplayTemplateManager {
 
 	@Override
-	public DDMTemplate getDDMTemplate(long groupId, long classNameId,
-			String displayStyle, boolean useDefault) {
+	public DDMTemplate getDDMTemplate(
+		long groupId, long classNameId, String displayStyle,
+		boolean useDefault) {
+
 		return null;
 	}
 
@@ -48,14 +50,18 @@ public class DummyPortletDisplayTemplateManagerImpl
 
 	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
-			String language) {
+		String language) {
+
 		return null;
 	}
 
 	@Override
-	public String renderDDMTemplate(HttpServletRequest request,
-			HttpServletResponse response, long templateId, List<?> entries,
-			Map<String, Object> contextObjects) throws Exception {
+	public String renderDDMTemplate(
+			HttpServletRequest request, HttpServletResponse response,
+			long templateId, List<?> entries,
+			Map<String, Object> contextObjects)
+		throws Exception {
+
 		return null;
 	}
 

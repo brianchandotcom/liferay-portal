@@ -169,39 +169,6 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashGrandparentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashGrandparentBaseModelAndRestoreParentModel()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashGrandparentBaseModelAndRestoreParentModelIsNotInTrashContainer()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashGrandparentBaseModelAndRestoreParentModelIsVisible()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashGrandparentBaseModelIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
 	}
 

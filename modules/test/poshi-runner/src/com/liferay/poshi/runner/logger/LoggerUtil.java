@@ -329,6 +329,9 @@ public final class LoggerUtil {
 
 		FileUtil.write(_getHtmlFilePath(), indexHTMLContent);
 
+		FileUtil.write(
+			_getSummaryLogFilePath(), SummaryLoggerHandler.getSummaryLogText());
+
 		if (isLoggerStarted()) {
 			_webDriver.quit();
 
@@ -345,6 +348,19 @@ public final class LoggerUtil {
 			StringUtil.replace(
 				PoshiRunnerContext.getTestCaseCommandName(), "#", "_"));
 		sb.append("/index.html");
+
+		return sb.toString();
+	}
+
+	private static String _getSummaryLogFilePath() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_CURRENT_DIR_NAME);
+		sb.append("/test-results/");
+		sb.append(
+			StringUtil.replace(
+				PoshiRunnerContext.getTestCaseCommandName(), "#", "_"));
+		sb.append("/summary.html");
 
 		return sb.toString();
 	}

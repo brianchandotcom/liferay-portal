@@ -20,13 +20,13 @@ import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -158,12 +158,10 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 			MailMessage message = new MailMessage(
 				from, to, subject, body, true);
 
-			int id = 100000 + RandomUtil.nextInt(900000);
-
 			message.setMessageId(
 				PortalUtil.getMailId(
 					company.getMx(), InvitationUtil.MESSAGE_POP_PORTLET_PREFIX,
-					id));
+					PortalUUIDUtil.generate()));
 
 			MailServiceUtil.sendEmail(message);
 		}

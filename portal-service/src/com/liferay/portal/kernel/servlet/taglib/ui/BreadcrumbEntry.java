@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.model.BaseModel;
 
 import java.util.HashMap;
@@ -38,7 +37,7 @@ public class BreadcrumbEntry {
 	}
 
 	public String getTitle() {
-		return HtmlUtil.escape(_title);
+		return _title;
 	}
 
 	public String getURL() {

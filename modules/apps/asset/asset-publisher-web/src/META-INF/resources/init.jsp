@@ -30,6 +30,7 @@ page import="com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys
 page import="com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherHelper" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherUtil" %><%@
+page import="com.liferay.portal.NoSuchGroupException" %><%@
 page import="com.liferay.portal.NoSuchModelException" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

@@ -16,7 +16,7 @@ buildAlloyTheme {
 		autoClean = false
 	}
 
-	from "../frontend-js-web/tmp/META-INF/resources/html/js/aui/aui_deprecated.css"
+	from "../frontend-js-web/tmp/META-INF/resources/aui/aui_deprecated.css"
 	into "src/META-INF/resources/html/css/portal"
 }
 

@@ -36,7 +36,7 @@
 	</command>
 
 	<command name="clickAtAndWaitCPNavigation">
-		<execute argument1="//script[contains(@src,'/html/js/liferay/message.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/message.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAtAndWait" />
 
@@ -50,7 +50,7 @@
 
 		<execute argument1="//div[@id='_145_dockbar']" selenium="click" />
 
-		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAt" />
 
@@ -62,7 +62,7 @@
 	<command name="clickAtNavigation">
 		<execute function="Click#clickAtNonLiferayNavigation" />
 
-		<execute argument1="//script[contains(@src,'/html/js/aui/aui-url/aui-url-min.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/aui/aui-url/aui-url-min.js')]" selenium="waitForElementPresent" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -77,7 +77,7 @@
 			<then>
 				<execute argument1="//nav[@id='navigation']" selenium="clickAt" />
 
-				<execute argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
+				<execute argument1="//script[contains(@src,'/aui/sortable/sortable-min.js')]" selenium="waitForElementPresent" />
 
 				<execute selenium="mouseOver" />
 
@@ -99,7 +99,7 @@
 
 		<execute argument1="//ul[@class='control-menu']" selenium="clickAt" />
 
-		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute argument1="1000" selenium="pause" />
 
@@ -117,13 +117,13 @@
 
 		<execute selenium="mouseOver" />
 
-		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')] | //script[contains(@src,'/js/control_menu.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/node.js')] | //script[contains(@src,'/js/control_menu.js')]" selenium="waitForElementPresent" />
 
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#clickAt" />
 
-		<execute argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')] | //script[contains(	@src,'/js/control_menu_add_content.js')] | //script[contains(@src,'js/control_menu_add_application.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(	@src,'/js/control_menu_add_content.js')] | //script[contains(@src,'js/control_menu_add_application.js')]" selenium="waitForElementPresent" />
 	</command>
 
 	<command name="clickNoMouseOver">
@@ -303,7 +303,7 @@
 	<command name="textClickAtClickDockbar">
 		<execute argument1="//div[@id='_145_dockbar']" selenium="click" />
 
-		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#textClickAt" />
 
@@ -347,7 +347,7 @@
 	</command>
 
 	<command name="waitForNavigationInteractionTouchScriptTap">
-		<execute argument1="//script[contains(@src,'html/js/liferay/dockbar_keyboard_interaction.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'liferay/dockbar_keyboard_interaction.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAt" />
 

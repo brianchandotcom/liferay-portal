@@ -102,8 +102,7 @@ public class NetvibesServlet extends HttpServlet {
 			portalURL + PortalUtil.getPathContext() + portlet.getIcon();
 
 		String widgetJsURL =
-			portalURL + PortalUtil.getPathContext() +
-				"/html/js/liferay/widget.js";
+			portalURL + PortalUtil.getPathContext() + "/liferay/widget.js";
 
 		String widgetURL = request.getRequestURL().toString();
 

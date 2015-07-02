@@ -116,7 +116,7 @@
 
 			<basename file="${alloy.zip.path}" property="alloy.file" />
 
-			<property name="alloy.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/js/aui" />
+			<property name="alloy.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/aui" />
 
 			<if>
 				<not>

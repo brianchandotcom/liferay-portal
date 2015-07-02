@@ -248,6 +248,8 @@ cobertura.ser
 
 /tools/liferay-doclet
 
+/tools/node*
+
 /tools/sdk
 
 /tools/selenium/*.exe

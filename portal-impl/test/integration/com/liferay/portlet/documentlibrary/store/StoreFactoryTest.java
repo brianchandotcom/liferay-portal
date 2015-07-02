@@ -44,7 +44,7 @@ public class StoreFactoryTest {
 		Store testStore = storeFactory.getStoreInstance("test");
 
 		Assert.assertNotNull(testStore);
-		Assert.assertEquals(TestStore.class.getName(), testStore.getType());
+		Assert.assertTrue(testStore instanceof TestStore);
 
 		String[] fileNames = testStore.getFileNames(0, 0);
 

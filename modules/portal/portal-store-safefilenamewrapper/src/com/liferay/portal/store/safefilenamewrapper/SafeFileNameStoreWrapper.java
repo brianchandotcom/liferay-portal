@@ -346,11 +346,6 @@ public class SafeFileNameStoreWrapper implements StoreWrapper {
 		}
 
 		@Override
-		public String getType() {
-			return getClass().getName();
-		}
-
-		@Override
 		public boolean hasDirectory(
 			long companyId, long repositoryId, String dirName) {
 

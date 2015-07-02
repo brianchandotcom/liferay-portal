@@ -72,11 +72,15 @@ public class SystemProperties {
 		return PropertiesUtil.fromMap(_properties);
 	}
 
-	public static void reload() {
-		if (_loaded) {
-			return;
-		}
+	public static void set(String key, String value) {
+		System.setProperty(key, value);
 
+		_properties.put(key, value);
+	}
+
+	private static final Map<String, String> _properties;
+
+	static {
 		Properties properties = new Properties();
 
 		Thread currentThread = Thread.currentThread();
@@ -116,8 +120,6 @@ public class SystemProperties {
 
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
-
-				_loaded = true;
 
 				try (InputStream inputStream = url.openStream()) {
 					properties.load(inputStream);
@@ -165,19 +167,6 @@ public class SystemProperties {
 		// java.util.Properties
 
 		PropertiesUtil.fromProperties(properties, _properties);
-	}
-
-	public static void set(String key, String value) {
-		System.setProperty(key, value);
-
-		_properties.put(key, value);
-	}
-
-	private static boolean _loaded;
-	private static Map<String, String> _properties;
-
-	static {
-		reload();
 	}
 
 }

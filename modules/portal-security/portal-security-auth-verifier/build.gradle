@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":portal-security:portal-security-auto-login")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

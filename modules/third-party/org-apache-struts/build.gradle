@@ -17,5 +17,6 @@ task patch(type: PatchTask)
 
 patch {
 	fileNames "org/apache/struts/tiles/xmlDefinition/I18nFactorySet.java"
+
 	originalLibModuleName = "struts"
 }

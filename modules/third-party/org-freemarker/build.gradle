@@ -23,5 +23,6 @@ patch {
 	fileNames "**/RmiDebuggedEnvironmentImpl.java"
 	fileNames "**/RmiDebuggerImpl.java"
 	fileNames "**/RmiDebuggerService.java"
+
 	originalLibModuleName = "freemarker"
 }

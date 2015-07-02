@@ -20,5 +20,6 @@ patch {
 	fileNames "**/DocComparatorSource.java"
 	fileNames "**/ReverseDocComparatorSource.java"
 	fileNames "**/SortCollector.java"
+
 	originalLibModuleName = "bobo-browse"
 }

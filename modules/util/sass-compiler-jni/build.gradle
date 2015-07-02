@@ -1,4 +1,5 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
 	jnaerator
@@ -16,10 +17,13 @@ dependencies {
 	testCompile group: "junit", name: "junit", version: "4.12"
 }
 
-ext.libSassVersion = "3.2.5"
+ext {
+	libSassVersion = "3.2.5"
+	sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
 
-ext.libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
-ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/f34eb8b4e6c9ba192fc37231a252af1ab79972fd.zip"
+	libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
+	sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
+}
 
 task buildLibSass_Darwin(type: BuildLibSassTask)
 task buildLibSass_Linux_x86(type: BuildLibSassTask)
@@ -45,37 +49,53 @@ make -j5""")
 	}
 
 	inputDirName = ".libs"
+
 	inputFileName = "libsass.dylib"
+
 	makeExecutable = "./build.sh"
+
 	outputFileName = "libliferaysass.dylib"
+
 	resourcesDirName = "darwin"
 }
 
 buildLibSass_Linux_x86 {
 	inputFileName = "libsass.so"
+
 	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
+
 	outputFileName = "libliferaysass.so"
+
 	resourcesDirName = "linux-x86"
 }
 
 buildLibSass_Linux_x86_64 {
 	inputFileName = "libsass.so"
+
 	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
+
 	outputFileName = "libliferaysass.so"
+
 	resourcesDirName = "linux-x86-64"
 }
 
 buildLibSass_Win32_x86 {
 	inputFileName = "sass.dll"
+
 	makeExecutable = "mingw32-make.exe shared"
+
 	outputFileName = "liferaysass.dll"
+
 	resourcesDirName = "win32-x86"
 }
 
 buildLibSass_Win32_x86_64 {
 	inputFileName = "sass.dll"
+
 	makeExecutable = "mingw32-make.exe shared"
+
 	outputFileName = "liferaysass.dll"
+
 	resourcesDirName = "win32-x86-64"
 }
 
@@ -84,24 +104,21 @@ compileJava {
 }
 
 downloadSassSpec {
-	File sassSpecFile = project.file("test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
+	File sassSpecDir = project.file("test/unit/com/liferay/sass/compiler/jni/internal/dependencies/sass-spec")
 
-	eachFile {
-		String[] segments = relativePath.segments
+	eachFile new StripPathSegmentsAction(3)
 
-		relativePath = new RelativePath(true, *segments[3 .. segments.length - 1])
-	}
-
-	from zipTree({
-		FileUtil.get(project, sassSpecUrl)
-	})
+	from zipTree(
+		{
+			FileUtil.get(project, sassSpecUrl)
+		})
 
 	include "**/spec/basic/**"
 
-	into sassSpecFile
+	into sassSpecDir
 
 	onlyIf {
-		!sassSpecFile.exists()
+		!sassSpecDir.exists()
 	}
 }
 
@@ -173,6 +190,7 @@ class BuildLibSassTask extends DefaultTask {
 	void buildLibSass() {
 		project.copy {
 			from project.zipTree(FileUtil.get(project, project.libSassUrl))
+
 			into temporaryDir
 		}
 
@@ -186,20 +204,21 @@ class BuildLibSassTask extends DefaultTask {
 
 		String[] makeExecutableArgs = makeExecutable.split(" ")
 
-		println makeExecutableArgs
-
 		project.exec {
 			if (makeExecutableArgs.length > 1) {
 				args makeExecutableArgs[1 .. makeExecutableArgs.length - 1]
 			}
 
 			executable = makeExecutableArgs[0]
+
 			workingDir = libSassDir
 		}
 
 		project.copy {
 			from new File(libSassDir, inputDirName + "/" + inputFileName)
+
 			into resourcesDir
+
 			rename {
 				outputFileName
 			}

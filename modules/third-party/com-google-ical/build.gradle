@@ -5,9 +5,15 @@ dependencies {
 	compile group: "joda-time", name: "joda-time", version: "1.5.2"
 }
 
+ext {
+	srcUrl = "http://google-rfc-2445.googlecode.com/svn/trunk/src@36"
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
+
+ext.srcUrl = "http://google-rfc-2445.googlecode.com/svn/trunk/src@36"
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
@@ -30,7 +36,7 @@ downloadSrc {
 		args "-c"
 	}
 
-	args "\"svn export http://google-rfc-2445.googlecode.com/svn/trunk/src@36 src\""
+	args "\"svn export ${srcUrl} src\""
 
 	doFirst {
 		delete "src"

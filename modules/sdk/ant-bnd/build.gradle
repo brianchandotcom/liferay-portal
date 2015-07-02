@@ -1,0 +1,21 @@
+dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+}
+
+deploy {
+	into("../../../lib/development") {
+		from jar.outputs
+
+		rename {
+			project.name + ".jar"
+		}
+	}
+}
+
+liferay {
+	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"

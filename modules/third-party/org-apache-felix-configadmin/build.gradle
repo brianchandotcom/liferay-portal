@@ -9,15 +9,18 @@ jar {
 
 	exclude "OSGI-INF/permissions.perm"
 
-	from zipTree({
-		configurations.compile.singleFile
-	})
+	from zipTree(
+		{
+			configurations.compile.singleFile
+		})
 
 	manifest {
 		from {
 			copy {
 				from zipTree(configurations.compile.singleFile)
+
 				include "META-INF/MANIFEST.MF"
+
 				into temporaryDir
 			}
 

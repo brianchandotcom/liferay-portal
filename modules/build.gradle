@@ -24,3 +24,27 @@ gradle.beforeProject {
 		project.apply from: rootProject.file("build-module.gradle")
 	}
 }
+
+task initMissingGradle
+
+initMissingGradle {
+	dependsOn {
+		FileTree buildGradleFileTree = fileTree(dir: rootDir, include: "*/**/build.gradle")
+
+		URI rootURI = rootDir.toURI()
+
+		buildGradleFileTree.findResults {
+			File buildGradleFile ->
+
+			if (buildGradleFile.length() > 0) {
+				return null
+			}
+
+			String moduleDirName = rootURI.relativize(buildGradleFile.toURI())
+
+			moduleDirName = moduleDirName.replaceFirst("/build.gradle", "")
+
+			return ":" + moduleDirName.replaceAll("[\\/]", ":") + ":initGradle"
+		}
+	}
+}

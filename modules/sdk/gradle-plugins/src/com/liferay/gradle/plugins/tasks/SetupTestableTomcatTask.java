@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.Validator;
+import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.lang.Closure;
 
@@ -60,6 +61,10 @@ import org.w3c.dom.NodeList;
  */
 public class SetupTestableTomcatTask
 	extends DefaultTask implements AppServerTask {
+
+	public SetupTestableTomcatTask() {
+		_project = getProject();
+	}
 
 	@Override
 	public String getAppServerType() {
@@ -271,20 +276,26 @@ public class SetupTestableTomcatTask
 	}
 
 	protected void setupManager() throws Exception {
-		Project project = getProject();
-
-		File managerDir = new File(getTomcatDir(), "webapps/manager");
+		final File managerDir = new File(getTomcatDir(), "webapps/manager");
 
 		if (!managerDir.exists()) {
-			File tomcatZipFile = new File(getTemporaryDir(), "tomcat.zip");
+			final File tomcatZipFile = FileUtil.get(
+				_project, getTomcatZipUrl());
 
-			FileUtil.get(project, getTomcatZipUrl(), tomcatZipFile);
+			Closure<Void> closure = new Closure<Void>(null) {
 
-			FileUtil.unzip(
-				project, tomcatZipFile, managerDir.getParentFile(), 2, null,
-				new String[] {"apache-tomcat-*/webapps/manager/**/*"});
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(new StripPathSegmentsAction(2));
+					copySpec.from(_project.zipTree(tomcatZipFile));
+					copySpec.include("apache-tomcat-*/webapps/manager/**/*");
+					copySpec.into(managerDir.getParentFile());
+					copySpec.setIncludeEmptyDirs(false);
+				}
 
-			project.delete(tomcatZipFile);
+			};
+
+			_project.copy(closure);
 		}
 
 		Document document = null;
@@ -375,8 +386,6 @@ public class SetupTestableTomcatTask
 	}
 
 	protected void setupOsgiModules() {
-		Project project = getProject();
-
 		Closure<Void> closure = new Closure<Void>(null) {
 
 			@SuppressWarnings("unused")
@@ -389,7 +398,7 @@ public class SetupTestableTomcatTask
 
 		};
 
-		project.copy(closure);
+		_project.copy(closure);
 	}
 
 	private static final String[] _TOMCAT_USERS_ROLE_NAMES = {
@@ -402,6 +411,7 @@ public class SetupTestableTomcatTask
 	private int _jmxRemotePort;
 	private boolean _jmxRemoteSsl;
 	private File _moduleFrameworkBaseDir;
+	private final Project _project;
 	private final DateFormat _timestampDateFormat = new SimpleDateFormat(
 		"yyyyMMddkkmmssSSS");
 	private final TomcatAppServer _tomcatAppServer = new TomcatAppServer(

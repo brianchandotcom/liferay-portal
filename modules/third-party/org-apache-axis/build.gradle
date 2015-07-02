@@ -22,5 +22,6 @@ patch {
 	fileNames "org/apache/axis/EngineConfiguration.java"
 	fileNames "org/apache/axis/session/Session.java"
 	fileNames "org/apache/axis/wsdl/fromJava/Types.java"
+
 	originalLibModuleName = "axis"
 }

@@ -1,0 +1,8 @@
+dependencies {
+	compile group: "org.jasig.cas.client", name: "cas-client-core", transitive: false, version: "3.1.12"
+	compile group: "org.opensaml", name: "opensaml", transitive: false, version: "1.1"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

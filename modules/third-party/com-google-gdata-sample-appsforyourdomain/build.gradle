@@ -1,4 +1,5 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 
 dependencies {
 	compile fileTree(dir: "lib", include: "*.jar")
@@ -18,17 +19,11 @@ compileJava {
 }
 
 downloadSrc {
-	eachFile {
-		String relativePathString = relativePath.pathString
+	eachFile new ReplaceLeadingPathAction("gdata/java/lib": "lib", "gdata/java/sample/util/lib": "lib", "gdata/java": "src/com/google/gdata")
 
-		relativePathString = relativePathString.replaceFirst("^gdata/java/lib/", "lib/");
-		relativePathString = relativePathString.replaceFirst("^gdata/java/sample/util/lib/", "lib/")
-		relativePathString = relativePathString.replaceFirst("^gdata/java/", "src/com/google/gdata/");
-
-		relativePath = RelativePath.parse(true, relativePathString)
+	ext {
+		autoClean = false
 	}
-
-	ext.autoClean = false
 
 	filesMatching("**/*.java") {
 		filter {

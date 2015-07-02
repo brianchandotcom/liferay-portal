@@ -1,0 +1,17 @@
+dependencies {
+	compile group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+}
+
+deploy {
+	into("../../../lib/development") {
+		from jar.outputs
+
+		rename {
+			project.name + ".jar"
+		}
+	}
+}
+
+liferay {
+	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
+}

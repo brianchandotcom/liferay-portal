@@ -89,8 +89,6 @@ import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.ExtensionContainer;
-import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
@@ -264,14 +262,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
 
-		ExtensionContainer extensionContainer = copy.getExtensions();
-
-		ExtraPropertiesExtension extraPropertiesExtension =
-			extensionContainer.getExtraProperties();
-
-		extraPropertiesExtension.set(AUTO_CLEAN_PROPERTY_NAME, false);
-
-		copy.setProperty(AUTO_CLEAN_PROPERTY_NAME, false);
+		GradleUtil.setProperty(copy, AUTO_CLEAN_PROPERTY_NAME, false);
 
 		return copy;
 	}

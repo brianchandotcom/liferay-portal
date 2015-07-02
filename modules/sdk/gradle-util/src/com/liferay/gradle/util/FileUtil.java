@@ -29,8 +29,8 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,7 +133,9 @@ public class FileUtil {
 
 		Files.createDirectories(destinationPath.getParent());
 
-		Files.copy(mirrorsCacheArtifactFile.toPath(), destinationPath);
+		Files.copy(
+			mirrorsCacheArtifactFile.toPath(), destinationPath,
+			StandardCopyOption.REPLACE_EXISTING);
 
 		return destinationPath.toFile();
 	}
@@ -252,24 +254,6 @@ public class FileUtil {
 		return fileName;
 	}
 
-	public static void unzip(
-		Project project, final File sourceFile, final File destinationFile,
-		final int cutDirs, final String[] excludes, final String[] includes) {
-
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public void doCall(AntBuilder antBuilder) {
-				_invokeAntMethodUnzip(
-					antBuilder, sourceFile, destinationFile, cutDirs, excludes,
-					includes);
-			}
-
-		};
-
-		project.ant(closure);
-	}
-
 	public static void write(File file, List<String> lines) throws IOException {
 		try (PrintWriter printWriter = new PrintWriter(
 				new OutputStreamWriter(
@@ -317,16 +301,6 @@ public class FileUtil {
 		return new File(userHome, ".liferay/mirrors");
 	}
 
-	private static void _invokeAntMethod(
-		AntBuilder antBuilder, String method, String paramName,
-		Object paramValue) {
-
-		Map<String, Object> args = Collections.singletonMap(
-			paramName, paramValue);
-
-		antBuilder.invokeMethod(method, args);
-	}
-
 	private static void _invokeAntMethodFileset(
 		AntBuilder antBuilder, String[] fileset) {
 
@@ -360,60 +334,6 @@ public class FileUtil {
 		};
 
 		antBuilder.invokeMethod("jar", new Object[] {args, closure});
-	}
-
-	private static void _invokeAntMethodPatternset(
-		final AntBuilder antBuilder, final String[] excludes,
-		final String[] includes) {
-
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public void doCall() {
-				if (ArrayUtil.isNotEmpty(excludes)) {
-					for (String exclude : excludes) {
-						_invokeAntMethod(
-							antBuilder, "exclude", "name", exclude);
-					}
-				}
-
-				if (ArrayUtil.isNotEmpty(includes)) {
-					for (String include : includes) {
-						_invokeAntMethod(
-							antBuilder, "include", "name", include);
-					}
-				}
-			}
-
-		};
-
-		antBuilder.invokeMethod("patternset", closure);
-	}
-
-	private static void _invokeAntMethodUnzip(
-		final AntBuilder antBuilder, File sourceFile, File destinationFile,
-		final int cutDirs, final String[] excludes, final String[] includes) {
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("dest", destinationFile);
-		args.put("src", sourceFile);
-
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public void doCall() {
-				if (cutDirs > 0) {
-					_invokeAntMethod(
-						antBuilder, "cutdirsmapper", "dirs", cutDirs);
-				}
-
-				_invokeAntMethodPatternset(antBuilder, excludes, includes);
-			}
-
-		};
-
-		antBuilder.invokeMethod("unzip", new Object[] {args, closure});
 	}
 
 }

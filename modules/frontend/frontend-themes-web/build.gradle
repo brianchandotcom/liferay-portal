@@ -1,0 +1,183 @@
+import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask
+import com.liferay.gradle.plugins.tasks.CompileThemeTask
+import com.liferay.gradle.util.GradleUtil
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+ext {
+	alloyBootstrapVersion = "3.2.0-2"
+	alloyFontAwesomeVersion = "2.0.0"
+	alloyVersion = "3.0.1"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}
+
+File themesDestinationDir = file("src/META-INF/resources/html/themes");
+File thirdPartyDir = file("../../../portal-web/third-party")
+
+task buildAlloyBootstrapTheme(type: Copy)
+task buildAlloyFontAwesome(type: Copy)
+task buildAlloyTheme(type: Copy)
+task buildLexicon(type: Copy)
+task buildThemes
+task copyFavicon(type: Copy)
+
+buildAlloyBootstrapTheme {
+	File alloyBootstrapDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui")
+
+	doFirst {
+		delete alloyBootstrapDestinationDir
+	}
+
+	eachFile new ReplaceLeadingPathAction("bootstrap-sass-${alloyBootstrapVersion}/assets/fonts/bootstrap": "glyphicons/font", "bootstrap-sass-${alloyBootstrapVersion}/assets/stylesheets": "")
+
+	exclude "bootstrap-sass-${alloyBootstrapVersion}/assets/stylesheets/_bootstrap-*.scss"
+
+	from zipTree(new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip"))
+
+	includeEmptyDirs = false
+
+	into alloyBootstrapDestinationDir
+}
+
+buildAlloyFontAwesome {
+	File alloyFontAwesomeDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui/alloy-font-awesome")
+
+	dependsOn buildAlloyBootstrapTheme
+
+	doFirst {
+		delete alloyFontAwesomeDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(1)
+
+	exclude "alloy-font-awesome/css/**"
+	exclude "alloy-font-awesome/less/**"
+
+	from zipTree(new File(thirdPartyDir, "alloy-font-awesome-${alloyFontAwesomeVersion}.zip"))
+
+	includeEmptyDirs = false
+
+	into alloyFontAwesomeDestinationDir
+}
+
+buildAlloyTheme {
+	File alloyThemeDestinationDir = new File(themesDestinationDir, "_unstyled/images/aui")
+
+	doFirst {
+		delete alloyThemeDestinationDir
+	}
+
+	filesMatching "build/aui-*/assets/skins/sam/**", new StripPathSegmentsAction(5)
+	filesMatching "build/aui-skin-deprecated/images/**", new StripPathSegmentsAction(3)
+
+	from zipTree(new File(thirdPartyDir, "alloy-${alloyVersion}.zip"))
+
+	include "build/aui-*/assets/skins/sam/**.gif", "build/aui-*/assets/skins/sam/**.jpg", "build/aui-*/assets/skins/sam/**.png"
+	include "build/aui-skin-deprecated/images/**"
+
+	includeEmptyDirs = false
+
+	into alloyThemeDestinationDir
+}
+
+buildCSS {
+	dependsOn buildThemes
+}
+
+buildLexicon {
+	File lexiconDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui/lexicon")
+
+	dependsOn buildAlloyBootstrapTheme
+
+	doFirst {
+		delete lexiconDestinationDir
+	}
+
+	eachFile {
+		if (path in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
+			filter {
+				String line ->
+
+				if (line == "// INSERT CUSTOM EXTENSIONS") {
+					line = """\
+@import \"../../aui_custom\";
+@import \"../../liferay_custom\";
+@import \"../alloy-font-awesome/scss/font-awesome\";"""
+				}
+				else if (line == "// INSERT CUSTOM VARS") {
+					return "@import \"../../aui_variables\";"
+				}
+
+				return line
+			}
+		}
+	}
+
+	from zipTree(
+		{
+			FileTree lexiconFileTree = fileTree(dir: thirdPartyDir, include: "lexicon*.zip")
+
+			lexiconFileTree.singleFile
+		})
+
+	into lexiconDestinationDir
+}
+
+buildThemes {
+	dependsOn buildAlloyBootstrapTheme, buildAlloyFontAwesome, buildAlloyTheme, buildLexicon, copyFavicon
+}
+
+classes {
+	dependsOn buildThemes
+}
+
+copyFavicon {
+	ext {
+		autoClean = false
+	}
+
+	from new File(themesDestinationDir, "_unstyled/images/favicon.ico")
+
+	into "src/META-INF/resources"
+}
+
+themesDestinationDir.eachDir {
+	File themeDir ->
+
+	if (themeDir.name in ["_styled", "_unstyled"]) {
+		return
+	}
+
+	String buildThemeThumbnailsTaskName = GradleUtil.getTaskName("buildThumbnails", themeDir)
+	String compileThemeTaskName = GradleUtil.getTaskName("compileTheme", themeDir)
+
+	task(compileThemeTaskName, type: CompileThemeTask) {
+		dependsOn buildThemeThumbnailsTaskName
+
+		diffsDir = new File(themeDir, "_diffs")
+
+		frontendThemesWebDir = "src/META-INF/resources"
+
+		themeParent = "_styled"
+
+		themeRootDir = themeDir
+
+		themeTypes "ftl", "vm"
+	}
+
+	task(buildThemeThumbnailsTaskName, type: BuildThumbnailsTask) {
+		imageDirs themeDir
+	}
+
+	buildThemes {
+		dependsOn compileThemeTaskName
+	}
+}

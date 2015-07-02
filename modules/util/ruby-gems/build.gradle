@@ -4,11 +4,15 @@ configurations {
 	jruby
 }
 
+ext {
+	compassVersion = "1.0.1"
+
+	compassUrl = "http://rubygems.org/gems/compass-${compassVersion}.gem"
+}
+
 dependencies {
 	jruby group: "org.jruby", name: "jruby-complete", version: "1.6.5"
 }
-
-ext.compassUrl = "http://rubygems.org/gems/compass-1.0.1.gem"
 
 task downloadGems
 
@@ -33,8 +37,8 @@ downloadGems {
 		}
 
 		ant.replace(dir: "classes/bin") {
-			ant.replacetoken "#! jruby"
-			ant.replacevalue "#!/usr/bin/env jruby"
+			replacetoken "#! jruby"
+			replacevalue "#!/usr/bin/env jruby"
 		}
 	}
 

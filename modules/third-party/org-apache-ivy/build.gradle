@@ -17,5 +17,6 @@ task patch(type: PatchTask)
 
 patch {
 	fileNames "org/apache/ivy/util/PropertiesFile.java"
+
 	originalLibModuleName = "ivy"
 }

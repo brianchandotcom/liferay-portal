@@ -22,5 +22,6 @@ task patch(type: PatchTask)
 patch {
 	fileNames "org/apache/commons/fileupload/FileUploadBase.java"
 	fileNames "org/apache/commons/fileupload/MultipartStream.java"
+
 	originalLibModuleName = "commons-fileupload"
 }

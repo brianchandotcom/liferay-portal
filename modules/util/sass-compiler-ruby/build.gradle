@@ -1,4 +1,5 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "1.0.0"
@@ -9,22 +10,23 @@ dependencies {
 	testCompile group: "junit", name: "junit", version: "4.12"
 }
 
-ext.sassSpecUrl = "https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
+ext {
+	sassSpecVersion = "3818b9d686765461add05e996d990b085e15a348"
+
+	sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
+}
 
 task downloadSassSpec(type: Copy)
 
 downloadSassSpec {
 	File sassSpecFile = project.file("test/unit/com/liferay/sass/compiler/ruby/internal/dependencies/sass-spec")
 
-	eachFile {
-		String[] segments = relativePath.segments
+	eachFile new StripPathSegmentsAction(3)
 
-		relativePath = new RelativePath(true, *segments[3 .. segments.length - 1])
-	}
-
-	from zipTree({
-		FileUtil.get(project, sassSpecUrl)
-	})
+	from zipTree(
+		{
+			FileUtil.get(project, sassSpecUrl)
+		})
 
 	include "**/spec/basic/**"
 

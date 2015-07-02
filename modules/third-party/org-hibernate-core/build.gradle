@@ -18,6 +18,7 @@ task patch(type: PatchTask)
 deploy {
 	into("../../../lib/portal") {
 		from jar.outputs
+
 		rename {
 			"hibernate-core.jar"
 		}
@@ -27,5 +28,6 @@ deploy {
 patch {
 	fileNames "org/hibernate/cache/UpdateTimestampsCache.java"
 	fileNames "org/hibernate/intercept/FieldInterceptionHelper.java"
+
 	originalLibModuleName = "hibernate-core"
 }

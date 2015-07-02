@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.constants;
 
 /**
  * @author Eduardo Lundgren
@@ -20,14 +20,21 @@ package com.liferay.calendar.util;
  * @author Fabio Pezzutto
  * @author Andrea Di Giorgi
  */
-public class ActionKeys
-	extends com.liferay.portal.security.permission.ActionKeys {
+public class CalendarActionKeys {
 
 	public static final String ADD_CALENDAR = "ADD_CALENDAR";
 
 	public static final String ADD_RESOURCE = "ADD_RESOURCE";
 
+	public static final String DELETE = "DELETE";
+
 	public static final String MANAGE_BOOKINGS = "MANAGE_BOOKINGS";
+
+	public static final String PERMISSIONS = "PERMISSIONS";
+
+	public static final String UPDATE = "UPDATE";
+
+	public static final String VIEW = "VIEW";
 
 	public static final String VIEW_BOOKING_DETAILS = "VIEW_BOOKING_DETAILS";
 

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.constants;
 
 /**
  * @author Eduardo Lundgren
  * @author Andrea Di Giorgi
  */
-public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
+public class CalendarWebKeys {
 
 	public static final String CALENDAR = "CALENDAR";
 

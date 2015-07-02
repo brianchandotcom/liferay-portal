@@ -59,14 +59,7 @@ public class SystemProperties {
 	}
 
 	public static String[] getArray(String key) {
-		String value = get(key);
-
-		if (value == null) {
-			return new String[0];
-		}
-		else {
-			return StringUtil.split(value);
-		}
+		return StringUtil.split(get(key));
 	}
 
 	public static Properties getProperties() {

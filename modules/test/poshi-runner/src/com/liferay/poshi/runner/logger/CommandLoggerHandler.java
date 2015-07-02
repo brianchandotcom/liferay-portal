@@ -97,9 +97,9 @@ public final class CommandLoggerHandler {
 		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
 			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
 
-		_updateStatus(xmlLoggerElement, "pending");
-
 		_linkLoggerElements(xmlLoggerElement);
+
+		_updateStatus(xmlLoggerElement, "pending");
 	}
 
 	public static void startRunning() throws Exception {

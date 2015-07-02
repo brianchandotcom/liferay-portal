@@ -122,6 +122,11 @@ public class MBThreadTrashHandlerTest
 	}
 
 	@Override
+	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
+		MBCategoryServiceUtil.moveCategoryToTrash(primaryKey);
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -451,13 +456,6 @@ public class MBThreadTrashHandlerTest
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		MBThreadServiceUtil.moveThreadToTrash(primaryKey);
-	}
-
-	@Override
-	protected void moveParentBaseModelToTrash(long primaryKey)
-		throws Exception {
-
-		MBCategoryServiceUtil.moveCategoryToTrash(primaryKey);
 	}
 
 	protected void replyMessage(BaseModel<?> baseModel) throws Exception {

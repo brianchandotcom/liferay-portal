@@ -18,4 +18,7 @@ package com.liferay.portlet.trash.test;
  * @author Cristina González
  */
 public interface WhenHasParent {
+
+	public void moveParentBaseModelToTrash(long primaryKey) throws Exception;
+
 }

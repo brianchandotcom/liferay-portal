@@ -69,6 +69,11 @@ public class WikiPageTrashHandlerTest
 	}
 
 	@Override
+	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
+		WikiPageTrashHandlerTestUtil.moveParentBaseModelToTrash(primaryKey);
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -330,13 +335,6 @@ public class WikiPageTrashHandlerTest
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		WikiPageTrashHandlerTestUtil.moveBaseModelToTrash(primaryKey);
-	}
-
-	@Override
-	protected void moveParentBaseModelToTrash(long primaryKey)
-		throws Exception {
-
-		WikiPageTrashHandlerTestUtil.moveParentBaseModelToTrash(primaryKey);
 	}
 
 	private boolean _testMode;

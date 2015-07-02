@@ -144,6 +144,11 @@ public class JournalArticleTrashHandlerTest
 	}
 
 	@Override
+	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
+		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
 	public void restoreParentBaseModelFromTrash(long primaryKey)
 		throws Exception {
 
@@ -402,13 +407,6 @@ public class JournalArticleTrashHandlerTest
 
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
 			TestPropsValues.getUserId(), article);
-	}
-
-	@Override
-	protected void moveParentBaseModelToTrash(long primaryKey)
-		throws Exception {
-
-		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

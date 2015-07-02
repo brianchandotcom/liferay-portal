@@ -18,6 +18,6 @@
 	],
 	"license": "LGPL",
 	"name": "liferay-theme-styled",
-	"repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-themes-web/src/META-INF/resources/html/themes/_styled",
+	"repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-themes-web/src/META-INF/resources/_styled",
 	"version": "7.0.3"
 }

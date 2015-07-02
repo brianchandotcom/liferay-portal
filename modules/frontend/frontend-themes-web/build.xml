@@ -8,7 +8,7 @@
 	<property name="css.dir" value="../frontend-css-web/src/META-INF/resources/html/css" />
 	<property name="frontend.js.web.dir" value="../frontend-js-web" />
 	<property name="lexicon.version" value="0.1.10" />
-	<property name="themes.dir" value="src/META-INF/resources/html/themes" />
+	<property name="themes.dir" value="src/META-INF/resources" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
@@ -27,7 +27,7 @@
 
 			<basename file="${alloy.bootstrap.zip.path}" property="alloy.bootstrap.file" />
 
-			<property name="alloy.bootstrap.assets.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/bootstrap-assets" />
+			<property name="alloy.bootstrap.assets.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/bootstrap-assets" />
 
 			<if>
 				<not>
@@ -180,7 +180,7 @@
 
 			<basename file="${lexicon.zip.path}" property="lexicon.file" />
 
-			<property name="lexicon.assets.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/lexicon-assets" />
+			<property name="lexicon.assets.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/lexicon-assets" />
 
 			<if>
 				<not>

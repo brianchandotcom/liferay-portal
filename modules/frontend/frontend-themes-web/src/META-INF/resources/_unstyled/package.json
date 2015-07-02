@@ -18,7 +18,7 @@
 	],
 	"license": "LGPL",
 	"name": "liferay-theme-unstyled",
-	"repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-themes-web/src/META-INF/resources/html/themes/_unstyled",
+	"repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-themes-web/src/META-INF/resources/_unstyled",
 	"scripts": {
 		"prepublish": "node ../../../publish.js"
 	},

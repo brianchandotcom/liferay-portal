@@ -26,7 +26,6 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 
 import java.util.Dictionary;
 import java.util.Locale;
@@ -63,7 +62,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmForm.addAvailableLocale(_enLocale);
 		ddmForm.setDefaultLocale(_enLocale);
 
-		DDMFormField booleanDDMFormField = DDMFormTestUtil.createDDMFormField(
+		DDMFormField booleanDDMFormField = createDDMFormField(
 			"Boolean", "Boolean", DDMFormFieldType.CHECKBOX, "boolean", false,
 			true, false);
 
@@ -122,7 +121,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmForm.addAvailableLocale(_enLocale);
 		ddmForm.setDefaultLocale(_enLocale);
 
-		DDMFormField booleanDDMFormField = DDMFormTestUtil.createDDMFormField(
+		DDMFormField booleanDDMFormField = createDDMFormField(
 			"Boolean", "Boolean", DDMFormFieldType.CHECKBOX, "boolean", false,
 			false, false);
 
@@ -171,7 +170,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmForm.addAvailableLocale(_enLocale);
 		ddmForm.setDefaultLocale(_enLocale);
 
-		DDMFormField integerDDMFormField = DDMFormTestUtil.createDDMFormField(
+		DDMFormField integerDDMFormField = createDDMFormField(
 			"Integer", "Integer", DDMFormFieldType.TEXT, "integer", false,
 			false, false);
 
@@ -220,7 +219,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmForm.addAvailableLocale(_enLocale);
 		ddmForm.setDefaultLocale(_enLocale);
 
-		DDMFormField integerDDMFormField = DDMFormTestUtil.createDDMFormField(
+		DDMFormField integerDDMFormField = createDDMFormField(
 			"Select", "Select", DDMFormFieldType.SELECT, "integer", false,
 			false, false);
 
@@ -270,7 +269,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmForm.addAvailableLocale(_enLocale);
 		ddmForm.setDefaultLocale(_enLocale);
 
-		DDMFormField booleanDDMFormField = DDMFormTestUtil.createDDMFormField(
+		DDMFormField booleanDDMFormField = createDDMFormField(
 			"Boolean", "Boolean", DDMFormFieldType.CHECKBOX, "boolean", false,
 			true, false);
 
@@ -320,6 +319,24 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		Assert.assertEquals(true, booleanValues.get(0));
 		Assert.assertEquals(false, booleanValues.get(1));
 		Assert.assertEquals(true, booleanValues.get(2));
+	}
+
+	protected DDMFormField createDDMFormField(
+		String name, String label, String type, String dataType,
+		boolean localizable, boolean repeatable, boolean required) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, type);
+
+		ddmFormField.setDataType(dataType);
+		ddmFormField.setLocalizable(localizable);
+		ddmFormField.setRepeatable(repeatable);
+		ddmFormField.setRequired(required);
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		localizedValue.addString(LocaleUtil.US, label);
+
+		return ddmFormField;
 	}
 
 	protected DDMFormFieldValue createDDMFormFieldValue(

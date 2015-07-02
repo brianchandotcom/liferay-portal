@@ -6,6 +6,7 @@ Export-Package:\
        com.google.ical.iter,\
        com.google.ical.util,\
        com.google.ical.values,\
+       com.liferay.calendar.constants,\
        com.liferay.calendar.exception,\
        com.liferay.calendar.exporter,\
        com.liferay.calendar.model,\

@@ -21,6 +21,7 @@ import java.net.URL;
 
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -140,23 +141,19 @@ public class SystemProperties {
 
 		// Set system properties
 
-		boolean systemPropertiesSet = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_SET), true);
+		if (GetterUtil.getBoolean(
+				System.getProperty(SYSTEM_PROPERTIES_SET), true)) {
 
-		boolean systemPropertiesSetOverride = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_SET_OVERRIDE), true);
+			boolean systemPropertiesSetOverride = GetterUtil.getBoolean(
+				System.getProperty(SYSTEM_PROPERTIES_SET_OVERRIDE), true);
 
-		if (systemPropertiesSet) {
-			Enumeration<String> enu =
-				(Enumeration<String>)properties.propertyNames();
-
-			while (enu.hasMoreElements()) {
-				String key = enu.nextElement();
+			for (Entry<Object, Object> entry : properties.entrySet()) {
+				String key = String.valueOf(entry.getKey());
 
 				if (systemPropertiesSetOverride ||
 					Validator.isNull(System.getProperty(key))) {
 
-					System.setProperty(key, properties.getProperty(key));
+					System.setProperty(key, String.valueOf(entry.getValue()));
 				}
 			}
 		}

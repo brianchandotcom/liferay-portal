@@ -73,16 +73,7 @@ public final class SummaryLoggerHandler {
 	public static void startMajorSteps() throws Exception {
 		_causeBodyLoggerElement = _getCauseBodyLoggerElement();
 		_majorStepsLoggerElement = _getMajorStepsLoggerElement();
-
-		_summaryLogLoggerElement = new LoggerElement();
-
-		_summaryLogLoggerElement.setClassName("summary-log");
-		_summaryLogLoggerElement.setName("div");
-
-		_summaryLogLoggerElement.addChildLoggerElement(
-			_getStepsLoggerElement());
-		_summaryLogLoggerElement.addChildLoggerElement(
-			_getCauseLoggerElement());
+		_summaryLogLoggerElement = _getSummaryLogLoggerElement();
 	}
 
 	public static void startSummary(Element element) throws Exception {
@@ -281,6 +272,18 @@ public final class SummaryLoggerHandler {
 		}
 
 		return null;
+	}
+
+	private static LoggerElement _getSummaryLogLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("summary-log");
+		loggerElement.setName("div");
+
+		loggerElement.addChildLoggerElement(_getStepsLoggerElement());
+		loggerElement.addChildLoggerElement(_getCauseLoggerElement());
+
+		return loggerElement;
 	}
 
 	private static boolean _isCurrentMajorStep(Element element) {

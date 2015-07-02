@@ -12,20 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.ddm;
+package com.liferay.document.library.ddm;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
+import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	service = DDMDisplay.class
+)
 public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override

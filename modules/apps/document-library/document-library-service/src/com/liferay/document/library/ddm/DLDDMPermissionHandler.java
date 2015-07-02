@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.ddm;
+package com.liferay.document.library.ddm;
 
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.security.permission.ActionKeys;

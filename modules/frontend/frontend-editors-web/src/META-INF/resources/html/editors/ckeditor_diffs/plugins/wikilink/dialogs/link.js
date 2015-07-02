@@ -141,6 +141,7 @@ CKEDITOR.dialog.add(
 
 				if (!instance._.selectedElement) {
 					var selection = editor.getSelection();
+
 					var ranges = selection.getRanges(true);
 
 					if (ranges.length == 1 && ranges[0].collapsed) {
@@ -182,7 +183,9 @@ CKEDITOR.dialog.add(
 				instance.fakeObj = false;
 
 				var editor = instance.getParentEditor();
+
 				var selection = editor.getSelection();
+
 				var element = PLUGIN.getSelectedLink(editor) || null;
 
 				if (element) {

@@ -5880,7 +5880,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<and>
 						<or>
 							<available file="portal-web/test-results/functional/screenshots" />
-							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
+							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
 						</or>
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
@@ -5888,18 +5888,14 @@ jdbc.default.password=${database.mysql.password}</echo>
 						<if>
 							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 							<then>
-								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
-
-								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshot" />
+								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
 							</then>
 							<else>
 								<property name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
-
-								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots" />
 							</else>
 						</if>
 
-						<copy todir="${screenshot.dest.dir}">
+						<copy todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
 							<fileset dir="${screenshot.dir}" erroronmissingdir="false" />
 						</copy>
 					</then>

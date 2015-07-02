@@ -19,7 +19,9 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -29,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @author Mirco Tamburini
  * @author Brett Randall
+ * @author Shuyang Zhou
  */
 public class SystemProperties {
 
@@ -77,8 +80,13 @@ public class SystemProperties {
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
-		boolean systemPropertiesQuiet = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_QUIET));
+		List<URL> urls = null;
+
+		if (!GetterUtil.getBoolean(
+				System.getProperty(SYSTEM_PROPERTIES_QUIET))) {
+
+			urls = new ArrayList<>();
+		}
 
 		// system.properties
 
@@ -93,8 +101,8 @@ public class SystemProperties {
 					properties.load(inputStream);
 				}
 
-				if (!systemPropertiesQuiet) {
-					System.out.println("Loading " + url);
+				if (urls != null) {
+					urls.add(url);
 				}
 			}
 		}
@@ -115,8 +123,8 @@ public class SystemProperties {
 					properties.load(inputStream);
 				}
 
-				if (!systemPropertiesQuiet) {
-					System.out.println("Loading " + url);
+				if (urls != null) {
+					urls.add(url);
 				}
 			}
 		}
@@ -153,6 +161,12 @@ public class SystemProperties {
 		// java.util.Properties
 
 		PropertiesUtil.fromProperties(properties, _properties);
+
+		if (urls != null) {
+			for (URL url : urls) {
+				System.out.println("Loading " + url);
+			}
+		}
 	}
 
 }

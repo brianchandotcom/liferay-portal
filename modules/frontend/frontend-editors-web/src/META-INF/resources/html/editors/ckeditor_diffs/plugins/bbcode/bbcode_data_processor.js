@@ -302,20 +302,23 @@
 			else if (sizeValue <= 12) {
 				sizeValue = '2';
 			}
-			else if (sizeValue <= 16) {
+			else if (sizeValue <= 14) {
 				sizeValue = '3';
 			}
-			else if (sizeValue <= 18) {
+			else if (sizeValue <= 16) {
 				sizeValue = '4';
 			}
-			else if (sizeValue <= 24) {
+			else if (sizeValue <= 18) {
 				sizeValue = '5';
 			}
-			else if (sizeValue <= 32) {
+			else if (sizeValue <= 24) {
 				sizeValue = '6';
 			}
-			else {
+			else if (sizeValue <= 32) {
 				sizeValue = '7';
+			}
+			else {
+				sizeValue = '8';
 			}
 
 			return sizeValue;

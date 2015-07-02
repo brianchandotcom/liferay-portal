@@ -774,7 +774,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	private final String[] _emoticonFiles = new String[_EMOTICONS.length];
 	private final String[] _emoticonSymbols = new String[_EMOTICONS.length];
 	private final Map<String, Integer> _excludeNewLineTypes;
-	private final int[] _fontSizes = {10, 12, 16, 18, 24, 32, 48};
+	private final int[] _fontSizes = {10, 12, 14, 16, 18, 24, 32, 48};
 	private final Set<String> _imageAttributes;
 	private final Pattern _imagePattern = Pattern.compile(
 		"^(?:https?://|/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$",

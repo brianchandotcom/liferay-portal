@@ -80,13 +80,14 @@ public class CreateAnonymousAccountAction extends PortletAction {
 		Company company = themeDisplay.getCompany();
 
 		if (!company.isStrangers()) {
-			throw new PrincipalException();
+			throw new PrincipalException(
+				"Strangers are not allowed to access the portal");
 		}
 
 		String portletName = portletConfig.getPortletName();
 
 		if (!portletName.equals(PortletKeys.FAST_LOGIN)) {
-			throw new PrincipalException();
+			throw new PrincipalException("Unable to create anonymous account");
 		}
 
 		if (actionRequest.getRemoteUser() != null) {

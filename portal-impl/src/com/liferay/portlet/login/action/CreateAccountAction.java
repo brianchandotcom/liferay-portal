@@ -106,7 +106,8 @@ public class CreateAccountAction extends PortletAction {
 		Company company = themeDisplay.getCompany();
 
 		if (!company.isStrangers()) {
-			throw new PrincipalException();
+			throw new PrincipalException(
+				"Strangers are not allowed to access the portal");
 		}
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -357,7 +358,8 @@ public class CreateAccountAction extends PortletAction {
 			themeDisplay.getCompanyId(), emailAddress);
 
 		if (anonymousUser.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-			throw new PrincipalException();
+			throw new PrincipalException(
+				"User {uuid=" + anonymousUser.getUuid() + "} cannot be reset");
 		}
 
 		UserLocalServiceUtil.deleteUser(anonymousUser.getUserId());

@@ -71,7 +71,7 @@ public class ForgotPasswordAction extends PortletAction {
 		Company company = themeDisplay.getCompany();
 
 		if (!company.isSendPassword() && !company.isSendPasswordResetLink()) {
-			throw new PrincipalException();
+			throw new PrincipalException("Unable to reset password");
 		}
 
 		try {
@@ -219,12 +219,13 @@ public class ForgotPasswordAction extends PortletAction {
 				user = UserLocalServiceUtil.getUserById(userId);
 			}
 			else {
-				throw new NoSuchUserException();
+				throw new NoSuchUserException("User does not exist");
 			}
 		}
 
 		if (!user.isActive()) {
-			throw new UserActiveException();
+			throw new UserActiveException(
+				"User {uuid=" + user.getUuid() +"} is not active");
 		}
 
 		UserLocalServiceUtil.checkLockout(user);
@@ -260,7 +261,8 @@ public class ForgotPasswordAction extends PortletAction {
 			String answer = ParamUtil.getString(actionRequest, "answer");
 
 			if (!user.getReminderQueryAnswer().equals(answer)) {
-				throw new UserReminderQueryException();
+				throw new UserReminderQueryException(
+					"Reminder query answer provided does not match answer");
 			}
 		}
 

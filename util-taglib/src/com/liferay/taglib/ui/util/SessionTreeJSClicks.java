@@ -26,6 +26,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,12 +62,29 @@ public class SessionTreeJSClicks {
 		HttpServletRequest request, String treeId, String nodeId) {
 
 		try {
-			String openNodesString = get(request, treeId);
+			PortalPreferences preferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			openNodesString = StringUtil.removeFromList(
-				openNodesString, nodeId);
+			Callable<String> modifyOperation =
+					new SessionTreeJSClicksOperation(request, treeId,
+							new String[] {nodeId}) {
 
-			put(request, treeId, openNodesString);
+				@Override
+				public String call() throws Exception {
+					PortalPreferences preferences =
+							PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+					String openNodesString = preferences.getValue(
+							SessionTreeJSClicks.class.getName(), _treeId);
+
+					openNodesString = StringUtil.removeFromList(openNodesString, _nodeIds[0]);
+
+					return openNodesString;
+				}
+			};
+
+			preferences.getAndUpdateValue(SessionTreeJSClicks.class.getName(),
+					treeId, modifyOperation);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -88,14 +106,31 @@ public class SessionTreeJSClicks {
 		HttpServletRequest request, String treeId, String[] nodeIds) {
 
 		try {
-			String openNodesString = get(request, treeId);
+			PortalPreferences preferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.removeFromList(
-					openNodesString, nodeId);
-			}
+			Callable<String> modifyOperation =
+					new SessionTreeJSClicksOperation(request, treeId,
+							nodeIds) {
 
-			put(request, treeId, openNodesString);
+				@Override
+				public String call() throws Exception {
+					PortalPreferences preferences =
+							PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+					String openNodesString = preferences.getValue(
+							SessionTreeJSClicks.class.getName(), _treeId);
+
+					for (String nodeId : _nodeIds) {
+						openNodesString = StringUtil.removeFromList(openNodesString, nodeId);
+					}
+
+					return openNodesString;
+				}
+			};
+
+			preferences.getAndUpdateValue(SessionTreeJSClicks.class.getName(),
+					treeId, modifyOperation);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -120,7 +155,7 @@ public class SessionTreeJSClicks {
 		long layoutId, boolean recursive) {
 
 		try {
-			List<String> layoutIds = new ArrayList<>();
+			List<String> layoutIds = new ArrayList<String>();
 
 			layoutIds.add(String.valueOf(layoutId));
 
@@ -141,11 +176,29 @@ public class SessionTreeJSClicks {
 		HttpServletRequest request, String treeId, String nodeId) {
 
 		try {
-			String openNodesString = get(request, treeId);
+			PortalPreferences preferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			openNodesString = StringUtil.add(openNodesString, nodeId);
+			Callable<String> modifyOperation =
+					new SessionTreeJSClicksOperation(request, treeId, new String[]{nodeId}) {
 
-			put(request, treeId, openNodesString);
+				@Override
+				public String call() throws Exception {
+					PortalPreferences preferences =
+							PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+					String openNodesString = preferences.getValue(
+							SessionTreeJSClicks.class.getName(), _treeId);
+
+					openNodesString = StringUtil.add(openNodesString, _nodeIds[0]);
+
+					return openNodesString;
+				}
+			};
+
+			preferences.getAndUpdateValue(SessionTreeJSClicks.class.getName(),
+					treeId, modifyOperation);
+
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -156,13 +209,30 @@ public class SessionTreeJSClicks {
 		HttpServletRequest request, String treeId, String[] nodeIds) {
 
 		try {
-			String openNodesString = get(request, treeId);
+			PortalPreferences preferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.add(openNodesString, nodeId);
-			}
+			Callable<String> modifyOperation =
+					new SessionTreeJSClicksOperation(request, treeId, nodeIds) {
 
-			put(request, treeId, openNodesString);
+				@Override
+				public String call() throws Exception {
+					PortalPreferences preferences =
+							PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+					String openNodesString = preferences.getValue(
+							SessionTreeJSClicks.class.getName(), _treeId);
+
+					for (String nodeId : _nodeIds) {
+						openNodesString = StringUtil.add(openNodesString, nodeId);
+					}
+
+					return openNodesString;
+				}
+			};
+
+			preferences.getAndUpdateValue(SessionTreeJSClicks.class.getName(),
+					treeId, modifyOperation);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -217,6 +287,21 @@ public class SessionTreeJSClicks {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	private abstract static class SessionTreeJSClicksOperation
+		implements Callable<String> {
+
+		public SessionTreeJSClicksOperation(HttpServletRequest request,
+				String treeId, String[] nodeIds) {
+			this._request = request;
+			this._treeId = treeId;
+			this._nodeIds = nodeIds;
+		}
+
+		protected HttpServletRequest _request;
+		protected String _treeId;
+		protected String[] _nodeIds;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

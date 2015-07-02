@@ -34,7 +34,6 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
@@ -69,7 +68,6 @@ import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
 import org.gradle.api.tasks.bundling.Zip;
-import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.internal.Factory;
 
@@ -96,7 +94,12 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 				@Override
 				public void execute(Project project) {
-					configureBundleExtensionDefaults(project);
+					LiferayOSGiExtension liferayOSGiExtension =
+						GradleUtil.getExtension(
+							project, LiferayOSGiExtension.class);
+
+					configureBundleExtensionDefaults(
+						project, liferayOSGiExtension);
 				}
 
 			});
@@ -268,8 +271,12 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 					jarBuilder.withBase(BundleUtils.getBase(project));
 
+					LiferayOSGiExtension liferayOSGiExtension =
+						GradleUtil.getExtension(
+							project, LiferayOSGiExtension.class);
+
 					Map<String, String> properties =
-						getBundleDefaultInstructions(project);
+						liferayOSGiExtension.getBundleDefaultInstructions();
 
 					String bundleName = getBundleInstruction(
 						project, Constants.BUNDLE_NAME);
@@ -500,11 +507,13 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 	}
 
-	protected void configureBundleExtensionDefaults(Project project) {
+	protected void configureBundleExtensionDefaults(
+		Project project, LiferayOSGiExtension liferayOSGiExtension) {
+
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
 		Map<String, String> bundleDefaultInstructions =
-			getBundleDefaultInstructions(project);
+			liferayOSGiExtension.getBundleDefaultInstructions();
 
 		for (Map.Entry<String, String> entry :
 				bundleDefaultInstructions.entrySet()) {
@@ -710,43 +719,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.configureVersion(project, liferayExtension);
 	}
 
-	protected Map<String, String> getBundleDefaultInstructions(
-		Project project) {
-
-		Map<String, String> map = new HashMap<>();
-
-		map.put(Constants.BUNDLE_SYMBOLICNAME, project.getName());
-		map.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
-
-		map.put(
-			"Git-Descriptor",
-			"${system-allow-fail;git describe --dirty --always}");
-		map.put("Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
-
-		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
-			project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
-
-		CompileOptions compileOptions = javaCompile.getOptions();
-
-		map.put("Javac-Debug", getOnOffValue(compileOptions.isDebug()));
-		map.put(
-			"Javac-Deprecation", getOnOffValue(compileOptions.isDeprecation()));
-
-		String encoding = compileOptions.getEncoding();
-
-		if (Validator.isNull(encoding)) {
-			encoding = System.getProperty("file.encoding");
-		}
-
-		map.put("Javac-Encoding", encoding);
-
-		map.put(Constants.DONOTCOPY, "(.touch)");
-		map.put(Constants.DSANNOTATIONS, "*");
-		map.put(Constants.SOURCES, "false");
-
-		return map;
-	}
-
 	protected String getBundleInstruction(Project project, String key) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
@@ -769,14 +741,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 
 		return new File(docrootDir, "WEB-INF/lib");
-	}
-
-	protected String getOnOffValue(boolean b) {
-		if (b) {
-			return "on";
-		}
-
-		return "off";
 	}
 
 	@Override

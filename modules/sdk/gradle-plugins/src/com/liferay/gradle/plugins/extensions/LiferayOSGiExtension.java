@@ -14,7 +14,18 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import aQute.bnd.osgi.Constants;
+
+import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.gradle.api.Project;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.compile.CompileOptions;
+import org.gradle.api.tasks.compile.JavaCompile;
 
 /**
  * @author Andrea Di Giorgi
@@ -25,12 +36,56 @@ public class LiferayOSGiExtension extends LiferayExtension {
 		super(project);
 	}
 
+	public Map<String, String> getBundleDefaultInstructions() {
+		Map<String, String> map = new HashMap<>();
+
+		map.put(Constants.BUNDLE_SYMBOLICNAME, project.getName());
+		map.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
+
+		map.put(
+			"Git-Descriptor",
+			"${system-allow-fail;git describe --dirty --always}");
+		map.put("Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
+
+		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+			project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
+
+		CompileOptions compileOptions = javaCompile.getOptions();
+
+		map.put("Javac-Debug", _getOnOffValue(compileOptions.isDebug()));
+		map.put(
+			"Javac-Deprecation",
+			_getOnOffValue(compileOptions.isDeprecation()));
+
+		String encoding = compileOptions.getEncoding();
+
+		if (Validator.isNull(encoding)) {
+			encoding = System.getProperty("file.encoding");
+		}
+
+		map.put("Javac-Encoding", encoding);
+
+		map.put(Constants.DONOTCOPY, "(.touch)");
+		map.put(Constants.DSANNOTATIONS, "*");
+		map.put(Constants.SOURCES, "false");
+
+		return map;
+	}
+
 	public boolean isAutoUpdateXml() {
 		return _autoUpdateXml;
 	}
 
 	public void setAutoUpdateXml(boolean autoUpdateXml) {
 		_autoUpdateXml = autoUpdateXml;
+	}
+
+	private String _getOnOffValue(boolean b) {
+		if (b) {
+			return "on";
+		}
+
+		return "off";
 	}
 
 	private boolean _autoUpdateXml = true;

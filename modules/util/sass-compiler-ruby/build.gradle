@@ -29,7 +29,6 @@ downloadSassSpec {
 		})
 
 	include "**/spec/basic/**"
-
 	into sassSpecFile
 
 	onlyIf {

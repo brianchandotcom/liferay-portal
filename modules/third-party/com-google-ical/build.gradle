@@ -13,8 +13,6 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
-ext.srcUrl = "http://google-rfc-2445.googlecode.com/svn/trunk/src@36"
-
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 

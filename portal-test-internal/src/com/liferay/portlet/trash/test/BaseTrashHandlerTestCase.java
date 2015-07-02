@@ -1219,7 +1219,9 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
-		Assert.assertTrue(isBaseModelTrashName(baseModel));
+		String baseModelName = getBaseModelName(baseModel);
+
+		Assert.assertTrue(baseModelName.startsWith(StringPool.SLASH));
 
 		BaseModel<?> duplicateBaseModel = addBaseModel(
 			parentBaseModel, true, serviceContext);
@@ -1236,7 +1238,9 @@ public abstract class BaseTrashHandlerTestCase {
 			initialTrashEntriesCount + 2,
 			getTrashEntriesCount(group.getGroupId()));
 
-		Assert.assertTrue(isBaseModelTrashName(duplicateBaseModel));
+		String duplicateBaseModelName = getBaseModelName(duplicateBaseModel);
+
+		Assert.assertTrue(duplicateBaseModelName.startsWith(StringPool.SLASH));
 	}
 
 	@Test
@@ -2809,16 +2813,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 	protected boolean isBaseModelContainerModel() {
 		if (baseModel instanceof ContainerModel) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isBaseModelTrashName(ClassedModel classedModel) {
-		String baseModelName = getBaseModelName(classedModel);
-
-		if (baseModelName.startsWith(StringPool.SLASH)) {
 			return true;
 		}
 

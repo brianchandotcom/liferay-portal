@@ -688,6 +688,202 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
+	<command name="UpdateDocumentTypeWithPermissions" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#addPG">
+			<var name="dmDocumentTypeDescription" value="Images" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box,Date" />
+			<var name="dmDocumentTypeName" value="Photos" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Clean Up Permissions" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleDescription" value="This is the technical writer role" />
+			<var name="roleName" value="Writer" />
+			<var name="roleTitle" value="Technical Writer" />
+			<var name="roleType" value="Regular Role" />
+		</execute>
+
+		<execute macro="Role#definePermissionsCP">
+			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_DELETE_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_UPDATE_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_VIEW_CHECKBOX" />
+			<var name="roleName" value="Technical Writer" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionsCP">
+			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_FOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_ADD_DOCUMENT_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_ADD_SUBFOLDER_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_FOLDER_UPDATE_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_DELETE_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_UPDATE_CHECKBOX" />
+			<var name="roleName" value="Site Member" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete" />
+			<var name="permissionNavigationValue" value="Document" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationValue" value="Document" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Document" />
+			<var name="permissionNavigationValue" value="Documents" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Folder" />
+			<var name="permissionNavigationValue" value="Documents" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Document" />
+			<var name="permissionNavigationValue" value="Documents Folder" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Subfolder" />
+			<var name="permissionNavigationValue" value="Documents Folder" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationValue" value="Documents Folder" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleName" value="Technical Writer" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#unassignRegularRoleCP">
+			<var name="roleName" value="Power User" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#assignUserSitesCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute macro="DMDocumentType#editPG">
+			<var name="dmDocumentTypeFieldNames" value="Radio" />
+			<var name="dmDocumentTypeName" value="Photos" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#viewCannotAddRepository" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocumentType#viewNoAvailableActionsViaDocumentTypesPG" />
+	</command>
+
 	<command name="ViewFileCategoryAndTags" priority="4">
 		<var name="categoryDescription" value="Category Description" />
 		<var name="categoryName" value="Category Name" />

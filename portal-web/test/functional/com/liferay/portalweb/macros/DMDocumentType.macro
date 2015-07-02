@@ -216,6 +216,12 @@
 		</while>
 	</command>
 
+	<command name="viewNoAvailableActionsViaDocumentTypesPG">
+		<execute macro="DMDocumentType#gotoPG" />
+
+		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmediaManageDocumenttypes#DOCUMENT_TYPES_TABLE_ACTIONS_1" />
+	</command>
+
 	<command name="viewPGAddMenulist">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 

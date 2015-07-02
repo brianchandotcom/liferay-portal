@@ -92,6 +92,11 @@ public class BookmarksFolderTrashHandlerTest
 	}
 
 	@Override
+	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
+		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -372,13 +377,6 @@ public class BookmarksFolderTrashHandlerTest
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
-	}
-
-	@Override
-	protected void moveParentBaseModelToTrash(long primaryKey)
-		throws Exception {
-
 		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
 	}
 

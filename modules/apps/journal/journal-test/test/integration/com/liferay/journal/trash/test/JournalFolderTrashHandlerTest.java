@@ -93,6 +93,11 @@ public class JournalFolderTrashHandlerTest
 	}
 
 	@Override
+	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
+		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
 	public int searchBaseModelsCount(Class<?> clazz, long groupId)
 		throws Exception {
 
@@ -370,13 +375,6 @@ public class JournalFolderTrashHandlerTest
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
-	}
-
-	@Override
-	protected void moveParentBaseModelToTrash(long primaryKey)
-		throws Exception {
-
 		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
 	}
 

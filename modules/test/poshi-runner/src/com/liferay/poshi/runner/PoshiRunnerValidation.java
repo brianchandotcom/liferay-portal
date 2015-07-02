@@ -698,11 +698,11 @@ public class PoshiRunnerValidation {
 			String propertyName = propertyElement.attributeValue("name");
 
 			if (requiredPropertyNames.contains(propertyName)) {
+				requiredPropertyNames.remove(propertyName);
+
 				String testCaseAvailablePropertyValues = PropsUtil.get(
 					"test.case.available.property.values[" + propertyName +
 						"]");
-
-				requiredPropertyNames.remove(propertyName);
 
 				if (Validator.isNotNull(testCaseAvailablePropertyValues)) {
 					List<String> possiblePropertyValues = Arrays.asList(

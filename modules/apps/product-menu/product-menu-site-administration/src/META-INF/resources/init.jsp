@@ -19,7 +19,8 @@
 <%@ taglib uri="http://liferay.com/tld/application-list/ui" prefix="application-list-ui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.application.list.PanelCategory" %>
+<%@ page import="com.liferay.application.list.PanelCategory" %><%@
+page import="com.liferay.application.list.taglib.constants.ApplicationListWebKeys" %>
 
 <portlet:defineObjects />
 

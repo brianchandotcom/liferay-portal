@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PanelCategory panelCategory = (PanelCategory)request.getAttribute("panelCategory");
+PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 %>
 
 <application-list-ui:panel panelCategory="<%= panelCategory %>" />

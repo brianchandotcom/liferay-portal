@@ -19,7 +19,7 @@
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("application-list-ui:panel-category-content:panelCategory");
 
-request.setAttribute("panelCategory", panelCategory);
+request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, panelCategory);
 
 boolean include = panelCategory.include(request, response);
 %>

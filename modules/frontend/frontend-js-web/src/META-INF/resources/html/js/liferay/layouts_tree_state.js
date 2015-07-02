@@ -23,11 +23,13 @@ AUI.add(
 					},
 
 					localCheckedNodes: {
-						validator: Lang.isArray
+						validator: Lang.isArray,
+						value: []
 					},
 
 					localUncheckedNodes: {
-						validator: Lang.isArray
+						validator: Lang.isArray,
+						value: []
 					},
 
 					rootNodeExpanded: {
@@ -309,13 +311,13 @@ AUI.add(
 							}
 
 							if (localUncheckedIndex > -1) {
-								AArray.remove(localCheckedNodes, localUncheckedIndex);
+								AArray.remove(localUncheckedNodes, localUncheckedIndex);
 							}
 						}
 						else if (checkedIndex > -1) {
 							AArray.remove(checkedNodes, checkedIndex);
 
-							localCheckedNodes.push(plid);
+							localUncheckedNodes.push(plid);
 
 							if (localCheckedIndex > -1) {
 								AArray.remove(localCheckedNodes, localCheckedIndex);

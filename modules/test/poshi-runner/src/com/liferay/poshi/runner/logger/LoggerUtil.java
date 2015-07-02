@@ -104,11 +104,6 @@ public final class LoggerUtil {
 			"addChildLoggerElement(" + parentSB + ", " + childSB + ");");
 	}
 
-	public static void createSummary() throws Exception {
-		FileUtil.write(
-			_getSummaryLogFilePath(), SummaryLoggerHandler.getSummaryLogText());
-	}
-
 	public static void executeJavaScript(String script) {
 		if (!isLoggerStarted()) {
 			return;
@@ -333,6 +328,9 @@ public final class LoggerUtil {
 		}
 
 		FileUtil.write(_getHtmlFilePath(), indexHTMLContent);
+
+		FileUtil.write(
+			_getSummaryLogFilePath(), SummaryLoggerHandler.getSummaryLogText());
 
 		if (isLoggerStarted()) {
 			_webDriver.quit();

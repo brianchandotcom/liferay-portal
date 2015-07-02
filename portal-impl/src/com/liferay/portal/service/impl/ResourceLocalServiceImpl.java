@@ -789,7 +789,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 			PermissionCacheUtil.clearResourceBlockCache(
 				companyId, groupId, name);
-			PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
+			PermissionCacheUtil.clearResourcePermissionCache(
+				ResourceConstants.SCOPE_INDIVIDUAL, name, primKey);
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
@@ -914,7 +915,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 			PermissionCacheUtil.clearResourceBlockCache(
 				companyId, groupId, name);
-			PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
+			PermissionCacheUtil.clearResourcePermissionCache(
+				ResourceConstants.SCOPE_INDIVIDUAL, name, primKey);
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}

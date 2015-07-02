@@ -20,7 +20,7 @@ import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.index.IndexedCacheKey;
+import com.liferay.portal.kernel.cache.index.IndexEncoder;
 import com.liferay.portal.kernel.cache.index.PortalCacheIndexer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,6 +36,8 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
+
+import java.io.Serializable;
 
 import javax.portlet.RenderRequest;
 
@@ -66,8 +68,9 @@ public class JournalContentImpl implements JournalContent {
 	public void clearCache(
 		long groupId, String articleId, String ddmTemplateKey) {
 
-		_getPortalCacheIndexer().removeIndexedCacheKeys(
-			JournalContentKey.getIndex(groupId, articleId, ddmTemplateKey));
+		_getPortalCacheIndexer().removeKeys(
+			JournalContentKeyIndexEncoder.encode(
+				groupId, articleId, ddmTemplateKey));
 	}
 
 	@Override
@@ -309,7 +312,8 @@ public class JournalContentImpl implements JournalContent {
 		_getPortalCacheIndexer() {
 
 		if (_portalCacheIndexer == null) {
-			_portalCacheIndexer = new PortalCacheIndexer<>(_getPortalCache());
+			_portalCacheIndexer = new PortalCacheIndexer<>(
+				new JournalContentKeyIndexEncoder(), _getPortalCache());
 		}
 
 		return _portalCacheIndexer;
@@ -325,21 +329,7 @@ public class JournalContentImpl implements JournalContent {
 
 	private JournalArticleLocalService _journalArticleLocalService;
 
-	private static class JournalContentKey implements IndexedCacheKey<String> {
-
-		public static String getIndex(
-			long groupId, String articleId, String ddmTemplateKey) {
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(groupId);
-			sb.append(StringPool.UNDERLINE);
-			sb.append(articleId);
-			sb.append(StringPool.UNDERLINE);
-			sb.append(ddmTemplateKey);
-
-			return sb.toString();
-		}
+	private static class JournalContentKey implements Serializable {
 
 		@Override
 		public boolean equals(Object obj) {
@@ -360,11 +350,6 @@ public class JournalContentImpl implements JournalContent {
 			}
 
 			return false;
-		}
-
-		@Override
-		public String getIndex() {
-			return getIndex(_groupId, _articleId, _ddmTemplateKey);
 		}
 
 		@Override
@@ -409,6 +394,32 @@ public class JournalContentImpl implements JournalContent {
 		private final boolean _secure;
 		private final double _version;
 		private final String _viewMode;
+
+	}
+
+	private static class JournalContentKeyIndexEncoder
+		implements IndexEncoder<String, JournalContentKey> {
+
+		public static String encode(
+			long groupId, String articleId, String ddmTemplateKey) {
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(groupId);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(articleId);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(ddmTemplateKey);
+
+			return sb.toString();
+		}
+
+		@Override
+		public String encode(JournalContentKey journalContentKey) {
+			return encode(
+				journalContentKey._groupId, journalContentKey._articleId,
+				journalContentKey._ddmTemplateKey);
+		}
 
 	}
 

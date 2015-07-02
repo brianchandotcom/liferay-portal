@@ -16,22 +16,24 @@ package com.liferay.portal.kernel.cache.index;
 
 import com.liferay.portal.kernel.util.HashUtil;
 
+import java.io.Serializable;
+
 /**
  * @author Preston Crary
  */
-public class TestIndexedCacheKey implements IndexedCacheKey<Long> {
+public class TestKey implements Serializable {
 
-	public TestIndexedCacheKey(long indexedLong, long unindexedLong) {
+	public TestKey(long indexedLong, long unindexedLong) {
 		_indexedLong = indexedLong;
 		_unindexedLong = unindexedLong;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		TestIndexedCacheKey testIndexedCacheKey = (TestIndexedCacheKey)obj;
+		TestKey testKey = (TestKey)obj;
 
-		if ((testIndexedCacheKey._indexedLong == _indexedLong) &&
-			(testIndexedCacheKey._unindexedLong == _unindexedLong)) {
+		if ((testKey._indexedLong == _indexedLong) &&
+			(testKey._unindexedLong == _unindexedLong)) {
 
 			return true;
 		}
@@ -39,8 +41,7 @@ public class TestIndexedCacheKey implements IndexedCacheKey<Long> {
 		return false;
 	}
 
-	@Override
-	public Long getIndex() {
+	public Long getIndexedLong() {
 		return _indexedLong;
 	}
 

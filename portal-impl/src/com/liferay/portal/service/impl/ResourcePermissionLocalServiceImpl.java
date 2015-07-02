@@ -242,7 +242,7 @@ public class ResourcePermissionLocalServiceImpl
 				session.save(resourcePermission);
 
 				PermissionCacheUtil.clearResourcePermissionCache(
-					resourcePermission.getName(),
+					resourcePermission.getScope(), resourcePermission.getName(),
 					resourcePermission.getPrimKey());
 			}
 		}
@@ -1318,7 +1318,8 @@ public class ResourcePermissionLocalServiceImpl
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
 				name, primKey, flushResourcePermissionEnabled);
 
-			PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
+			PermissionCacheUtil.clearResourcePermissionCache(
+				scope, name, primKey);
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}

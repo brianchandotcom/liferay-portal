@@ -14,13 +14,14 @@
 
 package com.liferay.portal.kernel.cache.index;
 
-import java.io.Serializable;
-
 /**
- * @author Shuyang Zhou
+ * @author Preston Crary
  */
-public interface IndexedCacheKey<I> extends Serializable {
+public class TestKeyIndexEncoder implements IndexEncoder<Long, TestKey> {
 
-	public I getIndex();
+	@Override
+	public Long encode(TestKey testKey) {
+		return testKey.getIndexedLong();
+	}
 
 }

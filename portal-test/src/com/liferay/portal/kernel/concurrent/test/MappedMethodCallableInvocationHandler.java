@@ -25,10 +25,10 @@ import java.util.concurrent.Callable;
 /**
  * @author Preston Crary
  */
-public class MappedMethodNameCallableInvocationHandler
+public class MappedMethodCallableInvocationHandler
 	implements InvocationHandler {
 
-	public MappedMethodNameCallableInvocationHandler(
+	public MappedMethodCallableInvocationHandler(
 		Object instance, boolean removeOnCall) {
 
 		_instance = instance;

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 
+import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,9 +29,13 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Shuyang Zhou
  */
-public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
+public class PortalCacheIndexer<I, K extends Serializable, V> {
 
-	public PortalCacheIndexer(PortalCache<K, V> portalCache) {
+	public PortalCacheIndexer(
+		IndexEncoder<I, K> indexEncoder, PortalCache<K, V> portalCache) {
+
+		_indexEncoder = indexEncoder;
+
 		_portalCache = portalCache;
 
 		_portalCache.registerCacheListener(new IndexerCacheListener());
@@ -39,64 +45,61 @@ public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
 		}
 	}
 
-	public Set<K> getIndexedCacheKeys(I index) {
-		Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
+	public Set<K> getKeys(I index) {
+		Set<K> keys = _indexedCacheKeys.get(index);
 
-		if (indexedCacheKeys == null) {
+		if (keys == null) {
 			return Collections.emptySet();
 		}
 
-		return new HashSet<>(indexedCacheKeys);
+		return new HashSet<>(keys);
 	}
 
-	public void removeIndexedCacheKeys(I index) {
-		Set<K> indexedCacheKeys = _indexedCacheKeys.remove(index);
+	public void removeKeys(I index) {
+		Set<K> keys = _indexedCacheKeys.remove(index);
 
-		if (indexedCacheKeys == null) {
+		if (keys == null) {
 			return;
 		}
 
-		for (K indexedCacheKey : indexedCacheKeys) {
-			_portalCache.remove(indexedCacheKey);
+		for (K key : keys) {
+			_portalCache.remove(key);
 		}
 	}
 
-	private void _addIndexedCacheKey(K indexedCacheKey) {
-		I index = indexedCacheKey.getIndex();
+	private void _addIndexedCacheKey(K key) {
+		I index = _indexEncoder.encode(key);
 
-		Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
+		Set<K> keys = _indexedCacheKeys.get(index);
 
-		if (indexedCacheKeys == null) {
-			Set<K> newIndexedCacheKeys = new ConcurrentHashSet<>();
+		if (keys == null) {
+			Set<K> newKeys = new ConcurrentHashSet<>();
 
-			newIndexedCacheKeys.add(indexedCacheKey);
+			newKeys.add(key);
 
-			indexedCacheKeys = _indexedCacheKeys.putIfAbsent(
-				index, newIndexedCacheKeys);
+			keys = _indexedCacheKeys.putIfAbsent(index, newKeys);
 
-			if (indexedCacheKeys == null) {
+			if (keys == null) {
 				return;
 			}
 		}
 
-		indexedCacheKeys.add(indexedCacheKey);
+		keys.add(key);
 	}
 
-	private void _removeIndexedCacheKey(K indexedCacheKey) {
-		I index = indexedCacheKey.getIndex();
+	private void _removeIndexedCacheKey(K key) {
+		I index = _indexEncoder.encode(key);
 
-		Set<K> indexedCacheKeys = _indexedCacheKeys.get(index);
+		Set<K> keys = _indexedCacheKeys.get(index);
 
-		if (indexedCacheKeys == null) {
+		if (keys == null) {
 			return;
 		}
 
-		indexedCacheKeys.remove(indexedCacheKey);
+		keys.remove(key);
 
-		if (indexedCacheKeys.isEmpty() &&
-			_indexedCacheKeys.remove(index, indexedCacheKeys)) {
-
-			for (K victimIndexedCacheKey : indexedCacheKeys) {
+		if (keys.isEmpty() && _indexedCacheKeys.remove(index, keys)) {
+			for (K victimIndexedCacheKey : keys) {
 				_addIndexedCacheKey(victimIndexedCacheKey);
 			}
 		}
@@ -104,6 +107,7 @@ public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
 
 	private final ConcurrentMap<I, Set<K>> _indexedCacheKeys =
 		new ConcurrentHashMap<>();
+	private final IndexEncoder<I, K> _indexEncoder;
 	private final PortalCache<K, V> _portalCache;
 
 	private class IndexerCacheListener implements CacheListener<K, V> {
@@ -115,40 +119,35 @@ public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
 
 		@Override
 		public void notifyEntryEvicted(
-			PortalCache<K, V> portalCache, K indexedCacheKey, V value,
-			int timeToLive) {
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 
-			_removeIndexedCacheKey(indexedCacheKey);
+			_removeIndexedCacheKey(key);
 		}
 
 		@Override
 		public void notifyEntryExpired(
-			PortalCache<K, V> portalCache, K indexedCacheKey, V value,
-			int timeToLive) {
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 
-			_removeIndexedCacheKey(indexedCacheKey);
+			_removeIndexedCacheKey(key);
 		}
 
 		@Override
 		public void notifyEntryPut(
-			PortalCache<K, V> portalCache, K indexedCacheKey, V value,
-			int timeToLive) {
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 
-			_addIndexedCacheKey(indexedCacheKey);
+			_addIndexedCacheKey(key);
 		}
 
 		@Override
 		public void notifyEntryRemoved(
-			PortalCache<K, V> portalCache, K indexedCacheKey, V value,
-			int timeToLive) {
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 
-			_removeIndexedCacheKey(indexedCacheKey);
+			_removeIndexedCacheKey(key);
 		}
 
 		@Override
 		public void notifyEntryUpdated(
-			PortalCache<K, V> portalCache, K indexedCacheKey, V value,
-			int timeToLive) {
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 		}
 
 		@Override

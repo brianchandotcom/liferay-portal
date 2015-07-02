@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringPool;
@@ -219,8 +220,9 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 				}
 
 			},
-			SystemProperties.getProperties(
-				httpHeaderSecureXFrameOptions + StringPool.PERIOD, true));
+			PropertiesUtil.getProperties(
+				SystemProperties.getProperties(),
+				httpHeaderSecureXFrameOptions.concat(StringPool.PERIOD), true));
 
 		List<KeyValuePair> xFrameOptionKVPs = new ArrayList<>(
 			properties.size());

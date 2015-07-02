@@ -12,20 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.constants;
+package com.liferay.journal.constants;
 
 /**
- * @author Rafael Praxedes
+ * @author Brian Wing Shun Chan
  */
-public class DDLWebKeys {
+public class JournalWebKeys {
 
-	public static final String DYNAMIC_DATA_LISTS_RECORD =
-		"DYNAMIC_DATA_LISTS_RECORD";
-
-	public static final String DYNAMIC_DATA_LISTS_RECORD_SET =
-		"DYNAMIC_DATA_LISTS_RECORD_SET";
-
-	public static final String DYNAMIC_DATA_LISTS_RECORD_VERSION =
-		"DYNAMIC_DATA_LISTS_RECORD_VERSION";
+	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 }

@@ -1,7 +1,7 @@
 @import url(portal/aui_deprecated.css);
 
-@import url(portal.css);
+@import 'portal';
 
-@import url(taglib.css);
+@import 'taglib';
 
 @import 'portal/accessibility';

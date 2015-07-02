@@ -276,7 +276,7 @@ public class JournalArticleIndexer
 				ddmStructureKeys[i] = ddmStructure.getStructureKey();
 			}
 
-			ActionableDynamicQuery actionableDynamicQuery =
+			final ActionableDynamicQuery actionableDynamicQuery =
 				_journalArticleLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setAddCriteriaMethod(
@@ -286,6 +286,20 @@ public class JournalArticleIndexer
 					public void addCriteria(DynamicQuery dynamicQuery) {
 						Property ddmStructureKey = PropertyFactoryUtil.forName(
 							"DDMStructureKey");
+
+						if (!JournalServiceConfigurationValues.
+								JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+
+							Property statusProperty =
+								PropertyFactoryUtil.forName("status");
+
+							Integer[] statuses = {
+								WorkflowConstants.STATUS_APPROVED,
+								WorkflowConstants.STATUS_IN_TRASH
+							};
+
+							dynamicQuery.add(statusProperty.in(statuses));
+						}
 
 						dynamicQuery.add(ddmStructureKey.in(ddmStructureKeys));
 					}
@@ -299,6 +313,14 @@ public class JournalArticleIndexer
 						throws PortalException {
 
 						JournalArticle article = (JournalArticle)object;
+
+						if (!JournalServiceConfigurationValues.
+								JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+
+							article =
+								_journalArticleLocalService.getLatestArticle(
+									article.getResourcePrimKey());
+						}
 
 						try {
 							doReindex(article, false);

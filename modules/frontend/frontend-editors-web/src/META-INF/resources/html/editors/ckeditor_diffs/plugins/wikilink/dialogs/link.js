@@ -12,16 +12,14 @@ CKEDITOR.dialog.add(
 
 			address = address.replace(/[\u200B-\u200D\uFEFF]/g, '');
 
-			if (address.indexOf('/') === 0) {
-				return address;
+			var prefix = '';
+
+			if (address.indexOf('/') !== 0 && address.indexOf('://') === -1) {
+				prefix = 'http://';
 			}
 
-			if (address.indexOf('://') === -1) {
-				address = 'http://' + address;
-			}
-
-			return address;
-		}
+			return prefix + address;
+		};
 
 		var parseLink = function(editor, element) {
 			var instance = this;

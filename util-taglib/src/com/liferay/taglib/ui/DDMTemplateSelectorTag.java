@@ -94,8 +94,9 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		if (Validator.isNull(displayStyle) &&
 			(portletDisplayDDMTemplate != null)) {
 
-			displayStyle = PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
-				portletDisplayDDMTemplate.getTemplateKey();
+			displayStyle =
+				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
+					portletDisplayDDMTemplate.getTemplateKey();
 		}
 
 		return displayStyle;
@@ -125,9 +126,9 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		}
 
 		DDMTemplate portletDisplayDDMTemplate =
-	PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateDDMTemplate(
-		getDisplayStyleGroupId(), PortalUtil.getClassNameId(_className),
-		displayStyle, true);
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+				getDisplayStyleGroupId(), PortalUtil.getClassNameId(_className),
+				displayStyle, true);
 
 		return portletDisplayDDMTemplate;
 	}

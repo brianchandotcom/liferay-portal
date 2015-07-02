@@ -38,6 +38,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -671,9 +672,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		DDMTemplate ddmTemplate =
-	PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateDDMTemplate(
-		portletDataContext.getGroupId(), 
-		getClassNameId(portletDataContext, portletId), displayStyle, false);
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+				portletDataContext.getGroupId(),
+				getClassNameId(portletDataContext, portletId), displayStyle,
+				false);
 
 		if (ddmTemplate != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -833,9 +835,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			groupIds, displayStyleGroupId, displayStyleGroupId);
 
 		DDMTemplate ddmTemplate =
-	PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateDDMTemplate(
-		groupId, getClassNameId(portletDataContext, portletId), displayStyle, 
-		false);
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+				groupId, getClassNameId(portletDataContext, portletId),
+				displayStyle, false);
 
 		if (ddmTemplate != null) {
 			portletPreferences.setValue(

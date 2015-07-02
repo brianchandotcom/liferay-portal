@@ -42,9 +42,9 @@ public class DDMTemplateRendererTag extends IncludeTag {
 		}
 
 		_portletDisplayDDMTemplate =
-	PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateDDMTemplate(
-		_displayStyleGroupId, PortalUtil.getClassNameId(_className),
-		_displayStyle, true);
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+				_displayStyleGroupId, PortalUtil.getClassNameId(_className),
+				_displayStyle, true);
 
 		if (_portletDisplayDDMTemplate != null) {
 			return SKIP_BODY;

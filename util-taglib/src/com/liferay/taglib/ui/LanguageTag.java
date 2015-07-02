@@ -40,6 +40,7 @@ import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -98,7 +99,7 @@ public class LanguageTag extends IncludeTag {
 
 	protected String getDisplayStyle() {
 		if (Validator.isNotNull(_ddmTemplateKey)) {
-			return PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX + 
+			return PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
 				_ddmTemplateKey;
 		}
 

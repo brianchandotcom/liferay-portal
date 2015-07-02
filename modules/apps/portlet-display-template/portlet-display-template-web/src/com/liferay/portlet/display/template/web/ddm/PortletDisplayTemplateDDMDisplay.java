@@ -17,7 +17,6 @@ package com.liferay.portlet.display.template.web.ddm;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.display.template.service.PortletDisplayTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
@@ -38,6 +38,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -96,7 +97,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 		}
 
 		return new long[] {
-			PortletDisplayTemplateManagerUtil.getDDMTemplateGroupId(
+			_portletDisplayTemplate.getDDMTemplateGroupId(
 				themeDisplay.getScopeGroupId())
 			};
 	}
@@ -155,6 +156,14 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	protected String getDefaultViewTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "application-display-templates");
 	}
+	
+	@Reference
+	protected void setPortletDisplayTemplate(
+		PortletDisplayTemplate portletDisplayTemplate) {
+		_portletDisplayTemplate = portletDisplayTemplate;
+	}
+	
+	protected PortletDisplayTemplate _portletDisplayTemplate;
 
 	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"language", "mode", "structure"});

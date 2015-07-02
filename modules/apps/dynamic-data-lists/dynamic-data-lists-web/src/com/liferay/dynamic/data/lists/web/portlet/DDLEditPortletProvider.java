@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.portlet;
 
-import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 

@@ -15,12 +15,12 @@
 package com.liferay.dynamic.data.lists.web.asset;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
-import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

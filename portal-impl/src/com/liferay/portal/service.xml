@@ -3302,6 +3302,7 @@
 		<exception>PortletDefaultPreferences</exception>
 		<exception>PortletId</exception>
 		<exception>PortletItemName</exception>
+		<exception>PortletPreferences</exception>
 		<exception>PwdEncryptor</exception>
 		<exception>RegionCode</exception>
 		<exception>RegionName</exception>

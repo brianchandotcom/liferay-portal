@@ -121,6 +121,10 @@ public class PoshiRunnerContext {
 	}
 
 	public static int getFunctionLocatorCount(String className) {
+		if (_functionLocatorCounts.get(className) == null) {
+			return 0;
+		}
+
 		return _functionLocatorCounts.get(className);
 	}
 

@@ -53,6 +53,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenCanBeDuplicatedInTrash;
+import com.liferay.portlet.trash.test.WhenHasDraftStatus;
 import com.liferay.portlet.trash.test.WhenHasGrandParent;
 import com.liferay.portlet.trash.test.WhenHasMyBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
@@ -84,11 +85,11 @@ import org.junit.runner.RunWith;
 @Sync
 public class JournalArticleTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenCanBeDuplicatedInTrash, WhenHasGrandParent,
-			   WhenHasMyBaseModel, WhenHasRecentBaseModelCount,
-			   WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
-			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
-			   WhenIsRestorableBaseModel,
+	implements WhenCanBeDuplicatedInTrash, WhenHasDraftStatus,
+			   WhenHasGrandParent, WhenHasMyBaseModel,
+			   WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
+			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
+			   WhenIsMoveableFromTrashBaseModel, WhenIsRestorableBaseModel,
 			   WhenIsRestorableParentBaseModelFromTrash,
 			   WhenIsUpdatableBaseModel {
 

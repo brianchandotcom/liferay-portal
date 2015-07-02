@@ -436,25 +436,25 @@
 
 			<if>
 				<not>
-					<condition function="IsElementPresent" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
+					<condition function="IsElementPresent" locator1="RolesPermissions#${permissionDefinitionKey}" />
 				</not>
 				<then>
 					<execute function="Type" locator1="CPRolesDefinepermissions#SEARCH_FIELD" value1="${permissionNavigationValue}" />
 					<execute function="AssertClick" locator1="CPRolesDefinepermissions#${permissionNavigationKey}" value1="${permissionNavigationValue}" />
 
-					<execute function="AssertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#PERMISSION_HEADER" value1="${permissionNavigationValue}" />
+					<execute function="AssertTextEquals" locator1="RolesPermissions#PERMISSION_HEADER" value1="${permissionNavigationValue}" />
 				</then>
 			</if>
 
 			<if>
 				<equals arg1="${define}" arg2="true" />
 				<then>
-					<execute function="Check" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
+					<execute function="Check" locator1="RolesPermissions#${permissionDefinitionKey}" />
 				</then>
 				<elseif>
 					<equals arg1="${remove}" arg2="true" />
 					<then>
-						<execute function="Uncheck" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKey}" />
+						<execute function="Uncheck" locator1="RolesPermissions#${permissionDefinitionKey}" />
 					</then>
 				</elseif>
 			</if>
@@ -464,7 +464,7 @@
 				<then>
 					<var method="StringUtil#replace('${permissionDefinitionKey}', 'CHECKBOX', 'CHANGE_LINK')" name="permissionDefinitionKeyChange" />
 
-					<execute function="AssertClick" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeyChange}" value1="Change" />
+					<execute function="AssertClick" locator1="RolesPermissions#${permissionDefinitionKeyChange}" value1="Change" />
 
 					<var name="key_siteNameScope" value="${siteNameScope}" />
 
@@ -476,14 +476,14 @@
 					<var method="StringUtil#replace('${permissionDefinitionKey}', 'CHECKBOX', 'SITE_SCOPE')" name="permissionDefinitionKeySiteScope" />
 
 					<execute function="SelectFrame" value1="relative=top" />
-					<execute function="AssertTextEquals" locator1="CPRolesDefinepermissionsAllpermissions#${permissionDefinitionKeySiteScope}" value1="${siteNameScope}" />
+					<execute function="AssertTextEquals" locator1="RolesPermissions#${permissionDefinitionKeySiteScope}" value1="${siteNameScope}" />
 				</then>
 			</if>
 		</for>
 
-		<execute function="AssertClick" locator1="CPRolesDefinepermissionsAllpermissions#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPRolesDefinepermissions#SUCCESS_MESSAGE" value1="The role permissions were updated." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="The role permissions were updated." />
 	</command>
 
 	<command name="localizeRoleDescriptionCmd">

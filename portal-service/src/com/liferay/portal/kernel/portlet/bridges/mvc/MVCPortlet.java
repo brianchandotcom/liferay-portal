@@ -258,14 +258,13 @@ public class MVCPortlet extends LiferayPortlet {
 			(MVCRenderCommand)_mvcRenderCommandCache.getMVCCommand(
 				mvcRenderCommandName);
 
-		if (mvcRenderCommand != MVCRenderCommand.EMPTY) {
-			String mvcPath = mvcRenderCommand.render(
-				renderRequest, renderResponse);
+		String mvcPath = null;
 
-			if (Validator.isNotNull(mvcPath)) {
-				renderRequest.setAttribute(MVC_PATH, mvcPath);
-			}
+		if (mvcRenderCommand != MVCRenderCommand.EMPTY) {
+			mvcPath = mvcRenderCommand.render(renderRequest, renderResponse);
 		}
+
+		renderRequest.setAttribute(MVC_PATH, mvcPath);
 
 		super.render(renderRequest, renderResponse);
 	}

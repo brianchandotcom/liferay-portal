@@ -226,6 +226,11 @@
 			<os family="unix" />
 			<then>
 				<mirrors-get
+					dest="lib/opencv-linux-x86.jar"
+					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86.jar"
+				/>
+
+				<mirrors-get
 					dest="lib/opencv-linux-x86_64.jar"
 					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86_64.jar"
 				/>
@@ -234,6 +239,11 @@
 				<if>
 					<os family="windows" />
 					<then>
+						<mirrors-get
+							dest="lib/opencv-windows-x86.jar"
+							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86.jar"
+						/>
+
 						<mirrors-get
 							dest="lib/opencv-windows-x86_64.jar"
 							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86_64.jar"

@@ -49,48 +49,60 @@
 	</command>
 
 	<command name="configureSetupPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
 
 		<if>
-			<isset var="wcdConfigurationSettings" />
+			<isset var="userToolNameList" />
 			<then>
-				<for list="${wcdConfigurationSettings}" param="wcdConfigurationSetting">
-					<var name="key_configurationSetting" value="${wcdConfigurationSetting}" />
+				<execute function="Click" locator1="WCDConfiguration#USER_TOOLS_SELECT_BUTTON" />
 
-					<execute function="Check" locator1="PGWebcontentdisplayConfiguration#SETTING_CHECKBOX" />
+				<for list="${userToolNameList}" param="userToolName">
+					<var name="key_userToolName" value="${userToolName}" />
+
+					<if>
+						<condition function="IsElementPresent#isVisible" locator1="WCDConfiguration#USER_TOOLS_TOGGLE_OFF" />
+						<then>
+							<execute function="Click" locator1="WCDConfiguration#USER_TOOLS_TOGGLE" />
+						</then>
+					</if>
 				</for>
 
-				<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-
-				<for list="${wcdConfigurationSettings}" param="wcdConfigurationSetting">
-					<var name="key_configurationSetting" value="${wcdConfigurationSetting}" />
-
-					<execute function="AssertChecked" locator1="PGWebcontentdisplayConfiguration#SETTING_CHECKBOX" />
-				</for>
+				<execute function="Click" locator1="Button#DONE" />
 			</then>
 		</if>
 
 		<if>
-			<isset var="enableFileTypes" />
+			<isset var="metadataNameList" />
 			<then>
-				<for list="${enableFileTypes}" param="fileType">
-					<var name="key_fileType" value="${fileType}" />
+				<execute function="Click" locator1="WCDConfiguration#CONTENT_METADATA_SELECT" />
 
-					<execute function="Select" locator1="PGWebcontentdisplayConfiguration#AVAILABLE_FILE_TYPES_SELECT" value1="${fileType}" />
-					<execute function="Click" locator1="PGWebcontentdisplayConfiguration#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplayConfiguration#CURRENT_FILE_TYPES_SELECT" value1="${fileType}" />
+				<for list="${metadataNameList}" param="metadataName">
+					<var name="key_metadataName" value="${metadataName}" />
+
+					<var name="key_metadataNameToggleOff" value="${metadataNameToggleOff}" />
+					<var method="StringUtil#replace('${metadataName}', ' ', '')" name="metadataNameToggleOff" />
+
+					<execute function="Pause" locator1="1000" />
+
+					<if>
+						<condition function="IsElementPresent#isVisible" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE_OFF" />
+						<then>
+							<execute function="Click" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE" />
+						</then>
+					</if>
 				</for>
+
+				<execute function="Click" locator1="Button#DONE" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<if>
+			<equals arg1="${enableViewCountIncrement}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="WCDConfiguration#ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX" />
+			</then>
+		</if>
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -150,6 +162,16 @@
 				<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="saveConfiguration">
+		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="searchWebContent">
@@ -227,7 +249,8 @@
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
+		<execute function="AssertClick" locator1="WCDConfiguration#CHANGE_WEB_CONTENT_BUTTON" value1="Change" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
 
@@ -250,16 +273,16 @@
 
 	<command name="viewAllSettingsEnabledPG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#PRINT_WEB_CONTENT" value1="Print" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#NO_COMMENTS_MESSAGE" value1="No comments yet" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#SUBCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
 
 		<var name="key_assetTitle" value="${relatedAssetTitle}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#RELATED_ASSETS" value1="${relatedAssetTitle}" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGWebcontentdisplay#BE_THE_FIRST" value1="Be the first" />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#COMMENT_LABEL" value1="Comment" />
-		<execute function="Type" locator1="PGWebcontentdisplay#COMMENT_FIELD" value1="Hello World!" />
+
+		<execute function="Type#typeCKEditor" locator1="PGWebcontentdisplay#COMMENT_EDITOR" value1="Hello!" />
+
 		<execute function="AssertClick" locator1="PGWebcontentdisplay#COMMENT_REPLY_BUTTON" value1="Reply" />
+
 		<execute function="AssertElementPresent" locator1="PGWebcontentdisplay#COMMENT_THUMBS_UP" />
 		<execute function="AssertElementPresent" locator1="PGWebcontentdisplay#COMMENT_THUMBS_DOWN" />
 	</command>

@@ -94,13 +94,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NO_COMMENTS_MESSAGE</td>
-	<td>//div[contains(.,'No comments yet')]</td>
+	<td>BE_THE_FIRST</td>
+	<td>//a[contains(.,'Be the first')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>BE_THE_FIRST</td>
-	<td>//a[contains(.,'Be the first')]</td>
+	<td>COMMENT_EDITOR</td>
+	<td>//div[contains(@title,'Rich Text Editor')]</td>
 	<td></td>
 </tr>
 <tr>

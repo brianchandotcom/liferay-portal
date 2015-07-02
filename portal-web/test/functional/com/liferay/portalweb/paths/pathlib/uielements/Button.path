@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DONE</td>
+	<td>//button[contains(.,'Done')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
 	<td>//a[contains(@id,'edit') and contains(@class,'btn')]</td>
 	<td></td>

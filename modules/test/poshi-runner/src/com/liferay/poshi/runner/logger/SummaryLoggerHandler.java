@@ -49,14 +49,7 @@ public final class SummaryLoggerHandler {
 	}
 
 	public static LoggerElement getSummaryLogLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("summary-log");
-
-		loggerElement.addChildLoggerElement(_getStepsLoggerElement());
-		loggerElement.addChildLoggerElement(_getCauseLoggerElement());
-
-		return loggerElement;
+		return _summaryLogLoggerElement;
 	}
 
 	public static void passSummary(Element element) {

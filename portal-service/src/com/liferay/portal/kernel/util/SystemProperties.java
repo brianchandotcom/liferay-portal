@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -108,8 +109,8 @@ public class SystemProperties {
 				}
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
 		}
 
 		// system-ext.properties
@@ -130,8 +131,8 @@ public class SystemProperties {
 				}
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
 		}
 
 		// Set environment properties

@@ -399,11 +399,6 @@ public abstract class BaseStore implements Store {
 			long companyId, long repositoryId, String fileName)
 		throws PortalException;
 
-	@Override
-	public String getType() {
-		return getClass().getName();
-	}
-
 	/**
 	 * Returns <code>true</code> if the directory exists.
 	 *

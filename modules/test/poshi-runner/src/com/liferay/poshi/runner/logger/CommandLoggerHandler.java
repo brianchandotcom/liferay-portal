@@ -405,8 +405,6 @@ public final class CommandLoggerHandler {
 	}
 
 	private static void _linkLoggerElements(LoggerElement xmlLoggerElement) {
-		xmlLoggerElement.setAttribute("data-status01", "pending");
-
 		String functionLinkID = xmlLoggerElement.getAttributeValue(
 			"data-functionlinkid");
 

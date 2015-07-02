@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -27,13 +28,13 @@ import javax.portlet.PortletResponse;
  * @author Raymond Augé
  * @author Ryan Park
  */
-public interface Indexer {
+public interface Indexer<T> {
 
 	public static final int DEFAULT_INTERVAL = 10000;
 
 	public void delete(long companyId, String uid) throws SearchException;
 
-	public void delete(Object obj) throws SearchException;
+	public void delete(T object) throws SearchException;
 
 	public String getClassName();
 
@@ -43,7 +44,7 @@ public interface Indexer {
 	@Deprecated
 	public String[] getClassNames();
 
-	public Document getDocument(Object obj) throws SearchException;
+	public Document getDocument(T object) throws SearchException;
 
 	public BooleanFilter getFacetBooleanFilter(
 			String className, SearchContext searchContext)
@@ -129,11 +130,13 @@ public interface Indexer {
 	public void registerIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor);
 
-	public void reindex(Object obj) throws SearchException;
+	public void reindex(Collection<T> objects) throws SearchException;
 
 	public void reindex(String className, long classPK) throws SearchException;
 
 	public void reindex(String[] ids) throws SearchException;
+
+	public void reindex(T object) throws SearchException;
 
 	public Hits search(SearchContext searchContext) throws SearchException;
 

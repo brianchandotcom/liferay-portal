@@ -65,7 +65,7 @@ public class SearchResultUtilJournalArticleTest
 
 	@Test
 	public void testJournalArticleWithDefectiveIndexer() throws Exception {
-		Indexer indexer = Mockito.mock(Indexer.class);
+		Indexer<JournalArticle> indexer = Mockito.mock(Indexer.class);
 
 		Mockito.doThrow(
 			IllegalArgumentException.class

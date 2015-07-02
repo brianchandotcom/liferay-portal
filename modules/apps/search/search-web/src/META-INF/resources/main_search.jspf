@@ -64,7 +64,7 @@ for (SearchFacet searchFacet : searchFacets) {
 	searchContext.addFacet(facet);
 }
 
-Indexer indexer = FacetedSearcher.getInstance();
+Indexer<?> indexer = FacetedSearcher.getInstance();
 
 Hits hits = indexer.search(searchContext);
 %>

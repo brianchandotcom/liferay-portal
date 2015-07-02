@@ -100,11 +100,11 @@ public class SearchEngineInitializer implements Runnable {
 
 			SearchEngineUtil.initialize(_companyId);
 
-			List<Indexer> indexers = IndexerRegistryUtil.getIndexers();
+			List<Indexer<?>> indexers = IndexerRegistryUtil.getIndexers();
 
 			Set<String> searchEngineIds = new HashSet<>();
 
-			for (Indexer indexer : indexers) {
+			for (Indexer<?> indexer : indexers) {
 				String searchEngineId = indexer.getSearchEngineId();
 
 				if (searchEngineIds.add(searchEngineId)) {
@@ -133,7 +133,7 @@ public class SearchEngineInitializer implements Runnable {
 		_finished = true;
 	}
 
-	protected void reindex(Indexer indexer) throws Exception {
+	protected void reindex(Indexer<?> indexer) throws Exception {
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();

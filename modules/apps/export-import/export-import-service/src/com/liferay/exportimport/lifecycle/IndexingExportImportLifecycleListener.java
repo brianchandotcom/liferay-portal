@@ -21,6 +21,7 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEvent;
@@ -104,11 +106,15 @@ public class IndexingExportImportLifecycleListener
 
 		if (importPermissions) {
 			if (userId > 0) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					User.class);
 
 				try {
-					indexer.reindex(userId);
+					User user = _userLocalService.fetchUser(userId);
+
+					if (user != null) {
+						indexer.reindex(user);
+					}
 				}
 				catch (SearchException se) {
 					if (_log.isDebugEnabled()) {
@@ -118,8 +124,8 @@ public class IndexingExportImportLifecycleListener
 			}
 		}
 
-		Indexer portletDataContextIndexer = IndexerRegistryUtil.getIndexer(
-			PortletDataContext.class);
+		Indexer<PortletDataContext> portletDataContextIndexer =
+			IndexerRegistryUtil.getIndexer(PortletDataContext.class);
 
 		try {
 			portletDataContextIndexer.reindex(portletDataContext);
@@ -133,5 +139,8 @@ public class IndexingExportImportLifecycleListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexingExportImportLifecycleListener.class);
+
+	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

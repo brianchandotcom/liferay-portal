@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -33,14 +34,14 @@ import javax.portlet.PortletResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DummyIndexer implements Indexer {
+public class DummyIndexer implements Indexer<Object> {
 
 	@Override
 	public void delete(long companyId, String uid) {
 	}
 
 	@Override
-	public void delete(Object obj) {
+	public void delete(Object object) {
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
-	public Document getDocument(Object obj) {
+	public Document getDocument(Object object) {
 		return null;
 	}
 
@@ -205,6 +206,10 @@ public class DummyIndexer implements Indexer {
 	@Override
 	public void registerIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
+	}
+
+	@Override
+	public void reindex(Collection<Object> objects) {
 	}
 
 	@Override

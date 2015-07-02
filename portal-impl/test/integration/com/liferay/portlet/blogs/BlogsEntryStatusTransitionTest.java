@@ -407,7 +407,8 @@ public class BlogsEntryStatusTransitionTest {
 	}
 
 	protected int searchBlogsEntriesCount(long groupId) throws Exception {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+		Indexer<BlogsEntry> indexer = IndexerRegistryUtil.getIndexer(
+			BlogsEntry.class);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 

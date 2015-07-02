@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.asset.service;
+package com.liferay.portal.kernel.search;
 
-import com.liferay.portlet.blogs.util.BlogsIndexer;
-
-import org.junit.Assert;
+import java.util.List;
 
 /**
  * @author Michael C. Han
  */
-public class AssetTestIndexer extends BlogsIndexer {
+public interface IndexerRegistry {
 
-	@Override
-	public void reindex(String className, long classPK) {
-		Assert.assertEquals(_className, className);
-		Assert.assertEquals(_classPK, classPK);
-	}
+	public <T> Indexer<T> getIndexer(Class<T> clazz);
 
-	public void setExpectedValues(String className, long classPK) {
-		_className = className;
-		_classPK = classPK;
-	}
+	public <T> Indexer<T> getIndexer(String className);
 
-	private String _className;
-	private long _classPK;
+	public List<Indexer<?>> getIndexers();
+
+	public <T> Indexer<T> nullSafeGetIndexer(Class<T> clazz);
+
+	public <T> Indexer<T> nullSafeGetIndexer(String className);
+
+	public void register(Indexer<?> indexer);
+
+	public void unregister(Indexer<?> indexer);
+
+	public void unregister(String className);
 
 }

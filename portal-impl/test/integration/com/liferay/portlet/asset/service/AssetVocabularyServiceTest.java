@@ -188,7 +188,8 @@ public class AssetVocabularyServiceTest {
 	}
 
 	protected int searchCount() throws Exception {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(AssetCategory.class);
+		Indexer<AssetCategory> indexer = IndexerRegistryUtil.getIndexer(
+			AssetCategory.class);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 

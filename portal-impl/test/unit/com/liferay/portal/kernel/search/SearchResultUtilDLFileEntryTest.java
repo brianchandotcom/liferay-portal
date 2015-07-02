@@ -136,7 +136,7 @@ public class SearchResultUtilDLFileEntryTest
 			_fileEntry
 		);
 
-		final Indexer indexer = Mockito.mock(Indexer.class);
+		final Indexer<?> indexer = Mockito.mock(Indexer.class);
 
 		replace(
 			method(IndexerRegistryUtil.class, "getIndexer", String.class)
@@ -144,7 +144,7 @@ public class SearchResultUtilDLFileEntryTest
 			new InvocationHandler() {
 
 				@Override
-				public Indexer invoke(
+				public Indexer<?> invoke(
 						Object proxy, Method method, Object[] args)
 					throws Throwable {
 
@@ -270,7 +270,7 @@ public class SearchResultUtilDLFileEntryTest
 			_fileEntry
 		);
 
-		Indexer indexer = Mockito.mock(Indexer.class);
+		Indexer<?> indexer = Mockito.mock(Indexer.class);
 
 		Mockito.doThrow(
 			IllegalArgumentException.class

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -226,10 +227,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				role.getRoleId(), false, false, false);
 
 			if (!ExportImportThreadLocal.isImportInProcess()) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					User.class);
-
-				indexer.reindex(userId);
+				reindex(userId);
 			}
 		}
 
@@ -252,9 +250,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		userPersistence.addRoles(userId, roleIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userId);
+		reindex(userId);
 
 		PermissionCacheUtil.clearCache(userId);
 	}
@@ -1343,9 +1339,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		userPersistence.setRoles(userId, roleIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userId);
+		reindex(userId);
 
 		PermissionCacheUtil.clearCache(userId);
 	}
@@ -1367,9 +1361,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		userPersistence.removeRoles(userId, roleIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
-
-		indexer.reindex(userId);
+		reindex(userId);
 
 		PermissionCacheUtil.clearCache(userId);
 	}
@@ -1519,6 +1511,15 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				role, portletId,
 				new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
 		}
+	}
+
+	protected void reindex(long userId) throws SearchException {
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
+
+		User user = userLocalService.fetchUser(userId);
+
+		indexer.reindex(user);
 	}
 
 	protected void setRolePermissions(

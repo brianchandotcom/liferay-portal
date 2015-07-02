@@ -128,7 +128,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 				<%
 				SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-				Indexer indexer = null;
+				Indexer<?> indexer = null;
 
 				if (searchTerms.isAdvancedSearch()) {
 					indexer = IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);

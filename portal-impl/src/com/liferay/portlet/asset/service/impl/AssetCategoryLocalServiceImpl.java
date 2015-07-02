@@ -373,7 +373,7 @@ public class AssetCategoryLocalServiceImpl
 			if (category == null) {
 				categories = null;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<AssetCategory> indexer = IndexerRegistryUtil.getIndexer(
 					AssetCategory.class);
 
 				long companyId = GetterUtil.getLong(
@@ -805,7 +805,7 @@ public class AssetCategoryLocalServiceImpl
 			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<AssetCategory> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			AssetCategory.class);
 
 		for (int i = 0; i < 10; i++) {

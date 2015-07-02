@@ -102,7 +102,8 @@ import javax.portlet.PortletResponse;
  */
 @OSGiBeanProperties
 public class DLFileEntryIndexer
-	extends BaseIndexer implements DDMStructureIndexer, RelatedEntryIndexer {
+	extends BaseIndexer<DLFileEntry>
+	implements DDMStructureIndexer, RelatedEntryIndexer {
 
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
 
@@ -185,7 +186,7 @@ public class DLFileEntryIndexer
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 			if (dlFileEntry.isInHiddenFolder()) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					dlFileEntry.getClassName());
 
 				return indexer.isVisible(dlFileEntry.getClassPK(), status);
@@ -359,9 +360,7 @@ public class DLFileEntryIndexer
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		DLFileEntry dlFileEntry = (DLFileEntry)obj;
-
+	protected void doDelete(DLFileEntry dlFileEntry) throws Exception {
 		Document document = new DocumentImpl();
 
 		document.addUID(CLASS_NAME, dlFileEntry.getFileEntryId());
@@ -372,9 +371,7 @@ public class DLFileEntryIndexer
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		DLFileEntry dlFileEntry = (DLFileEntry)obj;
-
+	protected Document doGetDocument(DLFileEntry dlFileEntry) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing document " + dlFileEntry);
 		}
@@ -399,6 +396,9 @@ public class DLFileEntryIndexer
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error retrieving document stream", e);
+			}
 		}
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
@@ -465,7 +465,7 @@ public class DLFileEntryIndexer
 			addFileEntryTypeAttributes(document, dlFileVersion);
 
 			if (dlFileEntry.isInHiddenFolder()) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					dlFileEntry.getClassName());
 
 				if ((indexer != null) &&
@@ -518,9 +518,7 @@ public class DLFileEntryIndexer
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		DLFileEntry dlFileEntry = (DLFileEntry)obj;
-
+	protected void doReindex(DLFileEntry dlFileEntry) throws Exception {
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		if (!dlFileVersion.isApproved() && !dlFileEntry.isInTrash()) {

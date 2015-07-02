@@ -74,7 +74,8 @@ public class IndexableAdvice
 			return;
 		}
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(returnType.getName());
+		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(
+			returnType.getName());
 
 		if (indexer == null) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(

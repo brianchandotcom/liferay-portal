@@ -193,7 +193,7 @@ public class DDLImpl implements DDL {
 						nsre);
 				}
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<DDLRecord> indexer = IndexerRegistryUtil.getIndexer(
 					DDLRecord.class);
 
 				long companyId = GetterUtil.getLong(

@@ -109,7 +109,7 @@ import javax.portlet.PortletResponse;
  * @author Ryan Park
  * @author Raymond Augé
  */
-public abstract class BaseIndexer implements Indexer {
+public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void delete(long companyId, String uid) throws SearchException {
@@ -126,9 +126,13 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void delete(Object obj) throws SearchException {
+	public void delete(T object) throws SearchException {
+		if (object == null) {
+			return;
+		}
+
 		try {
-			doDelete(obj);
+			doDelete(object);
 		}
 		catch (SearchException se) {
 			throw se;
@@ -148,14 +152,14 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public Document getDocument(Object obj) throws SearchException {
+	public Document getDocument(T object) throws SearchException {
 		try {
-			Document document = doGetDocument(obj);
+			Document document = doGetDocument(object);
 
 			for (IndexerPostProcessor indexerPostProcessor :
 					_indexerPostProcessors) {
 
-				indexerPostProcessor.postProcessDocument(document, obj);
+				indexerPostProcessor.postProcessDocument(document, object);
 			}
 
 			if (document == null) {
@@ -485,22 +489,29 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void reindex(Object obj) throws SearchException {
+	public void reindex(Collection<T> collection) throws SearchException {
 		try {
-			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+				collection.isEmpty()) {
+
 				return;
 			}
 
-			if (obj instanceof List<?>) {
-				List<?> list = (List<?>)obj;
+			List<Document> documents = new ArrayList<>();
 
-				for (Object element : list) {
-					doReindex(element);
-				}
+			for (T element : collection) {
+				Document document = getDocument(element);
+
+				documents.add(document);
 			}
-			else {
-				doReindex(obj);
-			}
+
+			Document document = documents.get(0);
+
+			long companyId = Long.parseLong(document.get(Field.COMPANY_ID));
+
+			SearchEngineUtil.updateDocuments(
+				getSearchEngineId(), companyId, documents,
+				isCommitImmediately());
 		}
 		catch (SearchException se) {
 			throw se;
@@ -542,6 +553,27 @@ public abstract class BaseIndexer implements Indexer {
 			}
 
 			doReindex(ids);
+		}
+		catch (SearchException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
+	@Override
+	public void reindex(T object) throws SearchException {
+		try {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+				return;
+			}
+
+			if (object == null) {
+				return;
+			}
+
+			doReindex(object);
 		}
 		catch (SearchException se) {
 			throw se;
@@ -1372,9 +1404,9 @@ public abstract class BaseIndexer implements Indexer {
 			_commitImmediately);
 	}
 
-	protected abstract void doDelete(Object obj) throws Exception;
+	protected abstract void doDelete(T object) throws Exception;
 
-	protected abstract Document doGetDocument(Object obj) throws Exception;
+	protected abstract Document doGetDocument(T object) throws Exception;
 
 	protected String doGetSortField(String orderByCol) {
 		return orderByCol;
@@ -1406,12 +1438,12 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
-	protected abstract void doReindex(Object obj) throws Exception;
-
 	protected abstract void doReindex(String className, long classPK)
 		throws Exception;
 
 	protected abstract void doReindex(String[] ids) throws Exception;
+
+	protected abstract void doReindex(T object) throws Exception;
 
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {
@@ -1798,7 +1830,7 @@ public abstract class BaseIndexer implements Indexer {
 	protected void resetFullQuery(SearchContext searchContext) {
 		searchContext.clearFullQueryEntryClassNames();
 
-		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+		for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
 			if (indexer instanceof RelatedEntryIndexer) {
 				RelatedEntryIndexer relatedEntryIndexer =
 					(RelatedEntryIndexer)indexer;

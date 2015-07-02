@@ -35,7 +35,7 @@ public class MBOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public Indexer getIndexer() {
+	public Indexer<MBMessage> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(MBMessage.class);
 	}
 

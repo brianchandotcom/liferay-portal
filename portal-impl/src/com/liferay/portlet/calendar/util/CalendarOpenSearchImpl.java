@@ -33,7 +33,7 @@ public class CalendarOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public Indexer getIndexer() {
+	public Indexer<CalEvent> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(CalEvent.class);
 	}
 

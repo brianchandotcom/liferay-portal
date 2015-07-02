@@ -61,7 +61,7 @@ public class AlternateKeywordQueryHitsProcessor implements HitsProcessor {
 
 		queryConfig.setHitsProcessingEnabled(false);
 
-		Indexer indexer = FacetedSearcher.getInstance();
+		Indexer<?> indexer = FacetedSearcher.getInstance();
 
 		Hits alternateResults = indexer.search(searchContext);
 

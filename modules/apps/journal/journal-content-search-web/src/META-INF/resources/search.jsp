@@ -62,7 +62,7 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, renderURL, headerNames, LanguageUtil.format(request, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
 
 	try {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 

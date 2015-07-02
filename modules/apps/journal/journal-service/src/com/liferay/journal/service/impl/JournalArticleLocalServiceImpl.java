@@ -4262,8 +4262,8 @@ public class JournalArticleLocalServiceImpl
 		int end, Sort sort) {
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
+			Indexer<JournalArticle> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, groupId, folderIds, classNameId, articleId, title,
@@ -4335,7 +4335,7 @@ public class JournalArticleLocalServiceImpl
 			int start, int end)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class.getName());
 
 		SearchContext searchContext = buildSearchContext(
@@ -4783,7 +4783,7 @@ public class JournalArticleLocalServiceImpl
 			final long folderId, final String treePath, final boolean reindex)
 		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		final ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
@@ -4804,7 +4804,7 @@ public class JournalArticleLocalServiceImpl
 
 			});
 
-		final Indexer indexer = IndexerRegistryUtil.getIndexer(
+		final Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class.getName());
 
 		actionableDynamicQuery.setPerformActionMethod(
@@ -4824,7 +4824,10 @@ public class JournalArticleLocalServiceImpl
 						return;
 					}
 
-					indexer.reindex(article);
+					com.liferay.portal.kernel.search.Document document =
+						indexer.getDocument(article);
+
+					actionableDynamicQuery.addDocument(document);
 				}
 
 			});
@@ -6156,8 +6159,8 @@ public class JournalArticleLocalServiceImpl
 
 			updatePreviousApprovedArticle(article);
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
+			Indexer<JournalArticle> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
 
 			indexer.reindex(article);
 
@@ -7240,8 +7243,8 @@ public class JournalArticleLocalServiceImpl
 			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			JournalArticle.class);
+		Indexer<JournalArticle> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
 
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(

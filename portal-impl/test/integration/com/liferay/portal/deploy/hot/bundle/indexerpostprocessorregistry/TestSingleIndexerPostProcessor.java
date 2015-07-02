@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"indexer.class.name=com.liferay.portlet.blogs.util.BlogsIndexer"
+		"indexer.class.name=com.liferay.portlet.blogs.util.BlogsEntryIndexer"
 	},
 	service = IndexerPostProcessor.class
 )

@@ -379,7 +379,7 @@ public class EditServerAction extends PortletAction {
 			}
 		}
 		else {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
 
 			if (indexer == null) {
 				return;

@@ -52,7 +52,7 @@ import javax.portlet.PortletResponse;
  * @author Eudaldo Alonso
  */
 @OSGiBeanProperties
-public class MBThreadIndexer extends BaseIndexer {
+public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 	public static final String CLASS_NAME = MBThread.class.getName();
 
@@ -110,31 +110,27 @@ public class MBThreadIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
+	protected void doDelete(MBThread mbThread) throws Exception {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setSearchEngineId(getSearchEngineId());
 
-		MBThread thread = (MBThread)obj;
-
 		Document document = new DocumentImpl();
 
-		document.addUID(CLASS_NAME, thread.getThreadId());
+		document.addUID(CLASS_NAME, mbThread.getThreadId());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), thread.getCompanyId(), document.get(Field.UID),
-			isCommitImmediately());
+			getSearchEngineId(), mbThread.getCompanyId(),
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		MBThread thread = (MBThread)obj;
-
-		Document document = getBaseModelDocument(CLASS_NAME, thread);
+	protected Document doGetDocument(MBThread mbThread) throws Exception {
+		Document document = getBaseModelDocument(CLASS_NAME, mbThread);
 
 		MBDiscussion discussion =
 			MBDiscussionLocalServiceUtil.fetchThreadDiscussion(
-				thread.getThreadId());
+				mbThread.getThreadId());
 
 		if (discussion == null) {
 			document.addKeyword("discussion", false);
@@ -143,9 +139,10 @@ public class MBThreadIndexer extends BaseIndexer {
 			document.addKeyword("discussion", true);
 		}
 
-		document.addKeyword("lastPostDate", thread.getLastPostDate().getTime());
 		document.addKeyword(
-			"participantUserIds", thread.getParticipantUserIds());
+			"lastPostDate", mbThread.getLastPostDate().getTime());
+		document.addKeyword(
+			"participantUserIds", mbThread.getParticipantUserIds());
 
 		return document;
 	}
@@ -159,13 +156,11 @@ public class MBThreadIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		MBThread thread = (MBThread)obj;
-
-		Document document = getDocument(thread);
+	protected void doReindex(MBThread mbThread) throws Exception {
+		Document document = getDocument(mbThread);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), thread.getCompanyId(), document,
+			getSearchEngineId(), mbThread.getCompanyId(), document,
 			isCommitImmediately());
 	}
 

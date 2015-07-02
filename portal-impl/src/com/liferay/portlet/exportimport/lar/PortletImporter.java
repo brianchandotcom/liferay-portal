@@ -570,10 +570,12 @@ public class PortletImporter {
 				portletDataContext.getPortletId());
 
 			if (userId > 0) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					User.class);
 
-				indexer.reindex(userId);
+				User user = UserLocalServiceUtil.fetchUser(userId);
+
+				indexer.reindex(user);
 			}
 		}
 

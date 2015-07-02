@@ -53,7 +53,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Akos Thurzo
  */
 @Component(immediate = true, service = Indexer.class)
-public class ExportImportConfigurationIndexer extends BaseIndexer {
+public class ExportImportConfigurationIndexer
+	extends BaseIndexer<ExportImportConfiguration> {
 
 	public static final String CLASS_NAME =
 		ExportImportConfiguration.class.getName();
@@ -102,9 +103,8 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		ExportImportConfiguration exportImportConfiguration =
-			(ExportImportConfiguration)obj;
+	protected void doDelete(ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
 
 		deleteDocument(
 			exportImportConfiguration.getCompanyId(),
@@ -112,9 +112,9 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		ExportImportConfiguration exportImportConfiguration =
-			(ExportImportConfiguration)obj;
+	protected Document doGetDocument(
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
 
 		Document document = getBaseModelDocument(
 			CLASS_NAME, exportImportConfiguration);
@@ -157,9 +157,9 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		ExportImportConfiguration exportImportConfiguration =
-			(ExportImportConfiguration)obj;
+	protected void doReindex(
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
 
 		Document document = getDocument(exportImportConfiguration);
 

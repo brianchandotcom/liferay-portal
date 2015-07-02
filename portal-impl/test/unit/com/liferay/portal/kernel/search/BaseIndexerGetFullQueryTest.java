@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.search.IndexerRegistryImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -59,6 +60,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		setUpJSONFactoryUtil();
 		setUpPropsUtil();
 		setUpRegistryUtil();
+		setUpIndexerRegistry();
 		setUpSearchEngineUtil();
 
 		_indexer = new TestIndexer();
@@ -137,6 +139,13 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 			expectedEntryClassNames, actualEntryClassNames);
 	}
 
+	protected void setUpIndexerRegistry() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(
+			IndexerRegistry.class, new IndexerRegistryImpl());
+	}
+
 	protected void setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -188,10 +197,10 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 
-	private Indexer _indexer;
+	private Indexer<Object> _indexer;
 	private final SearchContext _searchContext = new SearchContext();
 
-	private class TestIndexer extends BaseIndexer {
+	private class TestIndexer extends BaseIndexer<Object> {
 
 		@Override
 		public String getClassName() {
@@ -199,11 +208,11 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		}
 
 		@Override
-		protected void doDelete(Object obj) throws Exception {
+		protected void doDelete(Object object) throws Exception {
 		}
 
 		@Override
-		protected Document doGetDocument(Object obj) throws Exception {
+		protected Document doGetDocument(Object object) throws Exception {
 			return null;
 		}
 
@@ -217,7 +226,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		}
 
 		@Override
-		protected void doReindex(Object obj) throws Exception {
+		protected void doReindex(Object object) throws Exception {
 		}
 
 		@Override

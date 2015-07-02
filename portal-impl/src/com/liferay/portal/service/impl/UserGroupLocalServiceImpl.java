@@ -205,7 +205,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
 		indexer.reindex(userGroup);
@@ -663,7 +663,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		int end, Sort sort) {
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				UserGroup.class);
 
 			SearchContext searchContext = buildSearchContext(
@@ -717,7 +717,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				UserGroup.class);
 
 			SearchContext searchContext = buildSearchContext(
@@ -760,7 +760,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		try {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				UserGroup.class);
 
 			SearchContext searchContext = buildSearchContext(
@@ -808,7 +808,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			int end, Sort sort)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
 		SearchContext searchContext = buildSearchContext(
@@ -848,9 +848,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		userPersistence.setUserGroups(userId, userGroupIds);
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
 
-		indexer.reindex(userId);
+		User user = userLocalService.fetchUser(userId);
+
+		indexer.reindex(user);
 
 		PermissionCacheUtil.clearCache(userId);
 	}
@@ -947,7 +950,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<UserGroup> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
 		indexer.reindex(userGroup);

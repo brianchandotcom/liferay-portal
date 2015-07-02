@@ -70,7 +70,7 @@ import javax.portlet.PortletResponse;
  */
 @OSGiBeanProperties
 public class MBMessageIndexer
-	extends BaseIndexer implements RelatedEntryIndexer {
+	extends BaseIndexer<MBMessage> implements RelatedEntryIndexer {
 
 	public static final String CLASS_NAME = MBMessage.class.getName();
 
@@ -125,7 +125,7 @@ public class MBMessageIndexer
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(entryClassPK);
 
 		if (message.isDiscussion()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				message.getClassName());
 
 			return indexer.hasPermission(
@@ -151,7 +151,7 @@ public class MBMessageIndexer
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
 
 		if (message.isDiscussion()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				message.getClassName());
 
 			return indexer.isVisible(message.getClassPK(), status);
@@ -227,30 +227,26 @@ public class MBMessageIndexer
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		MBMessage message = (MBMessage)obj;
-
-		deleteDocument(message.getCompanyId(), message.getMessageId());
+	protected void doDelete(MBMessage mbMessage) throws Exception {
+		deleteDocument(mbMessage.getCompanyId(), mbMessage.getMessageId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		MBMessage message = (MBMessage)obj;
+	protected Document doGetDocument(MBMessage mbMessage) throws Exception {
+		Document document = getBaseModelDocument(CLASS_NAME, mbMessage);
 
-		Document document = getBaseModelDocument(CLASS_NAME, message);
+		document.addKeyword(Field.CATEGORY_ID, mbMessage.getCategoryId());
+		document.addText(Field.CONTENT, processContent(mbMessage));
+		document.addKeyword(Field.ENTRY_CLASS_PK, mbMessage.getRootMessageId());
+		document.addText(Field.TITLE, mbMessage.getSubject());
 
-		document.addKeyword(Field.CATEGORY_ID, message.getCategoryId());
-		document.addText(Field.CONTENT, processContent(message));
-		document.addKeyword(Field.ENTRY_CLASS_PK, message.getRootMessageId());
-		document.addText(Field.TITLE, message.getSubject());
-
-		if (message.isAnonymous()) {
+		if (mbMessage.isAnonymous()) {
 			document.remove(Field.USER_NAME);
 		}
 
 		MBDiscussion discussion =
 			MBDiscussionLocalServiceUtil.fetchThreadDiscussion(
-				message.getThreadId());
+				mbMessage.getThreadId());
 
 		if (discussion == null) {
 			document.addKeyword("discussion", false);
@@ -259,18 +255,18 @@ public class MBMessageIndexer
 			document.addKeyword("discussion", true);
 		}
 
-		document.addKeyword("threadId", message.getThreadId());
+		document.addKeyword("threadId", mbMessage.getThreadId());
 
-		if (message.isDiscussion()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				message.getClassName());
+		if (mbMessage.isDiscussion()) {
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+				mbMessage.getClassName());
 
 			if ((indexer != null) && (indexer instanceof RelatedEntryIndexer)) {
 				RelatedEntryIndexer relatedEntryIndexer =
 					(RelatedEntryIndexer)indexer;
 
 				Comment comment = CommentManagerUtil.fetchComment(
-					message.getMessageId());
+					mbMessage.getMessageId());
 
 				if (comment != null) {
 					relatedEntryIndexer.addRelatedEntryFields(
@@ -297,21 +293,19 @@ public class MBMessageIndexer
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		MBMessage message = (MBMessage)obj;
-
-		if (!message.isApproved() && !message.isInTrash()) {
+	protected void doReindex(MBMessage mbMessage) throws Exception {
+		if (!mbMessage.isApproved() && !mbMessage.isInTrash()) {
 			return;
 		}
 
-		if (message.isDiscussion() && message.isRoot()) {
+		if (mbMessage.isDiscussion() && mbMessage.isRoot()) {
 			return;
 		}
 
-		Document document = getDocument(message);
+		Document document = getDocument(mbMessage);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), message.getCompanyId(), document,
+			getSearchEngineId(), mbMessage.getCompanyId(), document,
 			isCommitImmediately());
 	}
 

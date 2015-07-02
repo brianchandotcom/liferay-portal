@@ -153,7 +153,8 @@ public class LocalPluginPackageRepository {
 
 		_pluginPackages.remove(pluginPackage.getContext());
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(PluginPackage.class);
+		Indexer<PluginPackage> indexer = IndexerRegistryUtil.getIndexer(
+			PluginPackage.class);
 
 		indexer.delete(pluginPackage);
 	}

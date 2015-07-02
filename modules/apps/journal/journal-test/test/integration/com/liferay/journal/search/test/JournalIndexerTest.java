@@ -759,7 +759,8 @@ public class JournalIndexerTest {
 			long groupId, boolean head, int status, SearchContext searchContext)
 		throws Exception {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
+			JournalArticle.class);
 
 		searchContext.setAttribute("head", head);
 		searchContext.setAttribute("status", status);

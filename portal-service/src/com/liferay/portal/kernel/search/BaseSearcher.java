@@ -52,7 +52,7 @@ public abstract class BaseSearcher extends BaseIndexer {
 		}
 
 		for (String className : classNames) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
 
 			if (indexer == null) {
 				continue;

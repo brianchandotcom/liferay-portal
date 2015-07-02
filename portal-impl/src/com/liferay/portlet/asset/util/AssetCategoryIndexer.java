@@ -51,7 +51,7 @@ import javax.portlet.PortletResponse;
  * @author Istvan Andras Dezsi
  */
 @OSGiBeanProperties
-public class AssetCategoryIndexer extends BaseIndexer {
+public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 
 	public static final String CLASS_NAME = AssetCategory.class.getName();
 
@@ -140,9 +140,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		AssetCategory assetCategory = (AssetCategory)obj;
-
+	protected void doDelete(AssetCategory assetCategory) throws Exception {
 		Document document = new DocumentImpl();
 
 		document.addUID(CLASS_NAME, assetCategory.getCategoryId());
@@ -153,35 +151,37 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		AssetCategory category = (AssetCategory)obj;
+	protected Document doGetDocument(AssetCategory assetCategory)
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing category " + category);
+			_log.debug("Indexing asset category " + assetCategory);
 		}
 
-		Document document = getBaseModelDocument(CLASS_NAME, category);
+		Document document = getBaseModelDocument(CLASS_NAME, assetCategory);
 
-		document.addKeyword(Field.ASSET_CATEGORY_ID, category.getCategoryId());
+		document.addKeyword(
+			Field.ASSET_CATEGORY_ID, assetCategory.getCategoryId());
 
 		List<AssetCategory> categories = new ArrayList<>(1);
 
-		categories.add(category);
+		categories.add(assetCategory);
 
 		addSearchAssetCategoryTitles(
 			document, Field.ASSET_CATEGORY_TITLE, categories);
 
 		document.addKeyword(
-			Field.ASSET_PARENT_CATEGORY_ID, category.getParentCategoryId());
+			Field.ASSET_PARENT_CATEGORY_ID,
+			assetCategory.getParentCategoryId());
 		document.addKeyword(
-			Field.ASSET_VOCABULARY_ID, category.getVocabularyId());
+			Field.ASSET_VOCABULARY_ID, assetCategory.getVocabularyId());
 		document.addLocalizedText(
-			Field.DESCRIPTION, category.getDescriptionMap());
-		document.addText(Field.NAME, category.getName());
-		document.addLocalizedText(Field.TITLE, category.getTitleMap());
+			Field.DESCRIPTION, assetCategory.getDescriptionMap());
+		document.addText(Field.NAME, assetCategory.getName());
+		document.addLocalizedText(Field.TITLE, assetCategory.getTitleMap());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + category + " indexed successfully");
+			_log.debug("Document " + assetCategory + " indexed successfully");
 		}
 
 		return document;
@@ -196,14 +196,12 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		AssetCategory category = (AssetCategory)obj;
-
-		Document document = getDocument(category);
+	protected void doReindex(AssetCategory assetCategory) throws Exception {
+		Document document = getDocument(assetCategory);
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), category.getCompanyId(), document,
+				getSearchEngineId(), assetCategory.getCompanyId(), document,
 				isCommitImmediately());
 		}
 	}

@@ -665,7 +665,8 @@ public class JournalTestUtil {
 	public static int getSearchArticlesCount(long companyId, long groupId)
 		throws Exception {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
+			JournalArticle.class);
 
 		SearchContext searchContext = new SearchContext();
 

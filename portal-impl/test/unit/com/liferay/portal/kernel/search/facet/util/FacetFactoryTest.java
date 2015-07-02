@@ -16,12 +16,14 @@ package com.liferay.portal.kernel.search.facet.util;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.search.IndexerRegistryImpl;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
@@ -46,6 +48,11 @@ public class FacetFactoryTest {
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
 		PropsUtil.setProps(new PropsImpl());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(
+			IndexerRegistry.class, new IndexerRegistryImpl());
 	}
 
 	@Test(expected = NullPointerException.class)

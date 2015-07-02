@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.util.AssetIndexer;
+import com.liferay.portlet.asset.util.AssetEntryIndexer;
 import com.liferay.portlet.blogs.asset.BlogsEntryAssetRendererFactory;
 import com.liferay.portlet.blogs.trash.BlogsEntryTrashHandler;
-import com.liferay.portlet.blogs.util.BlogsIndexer;
+import com.liferay.portlet.blogs.util.BlogsEntryIndexer;
 import com.liferay.portlet.blogs.workflow.BlogsEntryWorkflowHandler;
 import com.liferay.portlet.directory.asset.UserAssetRendererFactory;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
@@ -84,8 +84,8 @@ public class PortalRegisterTestUtil {
 			return;
 		}
 
-		IndexerRegistryUtil.register(new AssetIndexer());
-		IndexerRegistryUtil.register(new BlogsIndexer());
+		IndexerRegistryUtil.register(new AssetEntryIndexer());
+		IndexerRegistryUtil.register(new BlogsEntryIndexer());
 		IndexerRegistryUtil.register(new ContactIndexer());
 		IndexerRegistryUtil.register(new DLFileEntryIndexer());
 		IndexerRegistryUtil.register(new DLFolderIndexer());

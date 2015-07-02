@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Indexer.class)
-public class WikiNodeIndexer extends BaseIndexer {
+public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	public static final String CLASS_NAME = WikiNode.class.getName();
 
@@ -77,28 +77,24 @@ public class WikiNodeIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		WikiNode node = (WikiNode)obj;
-
+	protected void doDelete(WikiNode wikiNode) throws Exception {
 		Document document = new DocumentImpl();
 
-		document.addUID(CLASS_NAME, node.getNodeId(), node.getName());
+		document.addUID(CLASS_NAME, wikiNode.getNodeId(), wikiNode.getName());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), node.getCompanyId(), document.get(Field.UID),
-			isCommitImmediately());
+			getSearchEngineId(), wikiNode.getCompanyId(),
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		WikiNode node = (WikiNode)obj;
+	protected Document doGetDocument(WikiNode wikiNode) throws Exception {
+		Document document = getBaseModelDocument(CLASS_NAME, wikiNode);
 
-		Document document = getBaseModelDocument(CLASS_NAME, node);
+		document.addUID(CLASS_NAME, wikiNode.getNodeId(), wikiNode.getName());
 
-		document.addUID(CLASS_NAME, node.getNodeId(), node.getName());
-
-		document.addText(Field.DESCRIPTION, node.getDescription());
-		document.addText(Field.TITLE, node.getName());
+		document.addText(Field.DESCRIPTION, wikiNode.getDescription());
+		document.addText(Field.TITLE, wikiNode.getName());
 
 		return document;
 	}
@@ -113,25 +109,6 @@ public class WikiNodeIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		WikiNode node = (WikiNode)obj;
-
-		Document document = getDocument(obj);
-
-		if (!node.isInTrash()) {
-			SearchEngineUtil.deleteDocument(
-				getSearchEngineId(), node.getCompanyId(),
-				document.get(Field.UID), isCommitImmediately());
-
-			return;
-		}
-
-		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), node.getCompanyId(), document,
-			isCommitImmediately());
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
 
@@ -143,6 +120,23 @@ public class WikiNodeIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexEntries(companyId);
+	}
+
+	@Override
+	protected void doReindex(WikiNode wikiNode) throws Exception {
+		Document document = getDocument(wikiNode);
+
+		if (!wikiNode.isInTrash()) {
+			SearchEngineUtil.deleteDocument(
+				getSearchEngineId(), wikiNode.getCompanyId(),
+				document.get(Field.UID), isCommitImmediately());
+
+			return;
+		}
+
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), wikiNode.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	protected void reindexEntries(long companyId) throws PortalException {

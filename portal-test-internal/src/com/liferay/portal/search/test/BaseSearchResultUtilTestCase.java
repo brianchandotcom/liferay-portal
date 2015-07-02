@@ -17,6 +17,7 @@ package com.liferay.portal.search.test;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.ClassName;
+import com.liferay.portal.search.IndexerRegistryImpl;
 import com.liferay.portal.search.SearchResultManagerImpl;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.util.Portal;
@@ -37,6 +39,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -62,11 +65,13 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
+		setUpRegistryUtil();
+
 		setUpClassNameLocalService();
 		setUpFastDateFormatFactoryUtil();
+		setUpIndexerRegistry();
 		setUpPortalUtil();
 		setUpPropsUtil();
-		setUpRegistryUtil();
 		setUpServiceTrackerMap();
 		setUpSearchResultManagerUtil();
 	}
@@ -125,6 +130,13 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			mock(FastDateFormatFactory.class));
+	}
+
+	protected void setUpIndexerRegistry() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(
+			IndexerRegistry.class, new IndexerRegistryImpl());
 	}
 
 	protected void setUpPortalUtil() {

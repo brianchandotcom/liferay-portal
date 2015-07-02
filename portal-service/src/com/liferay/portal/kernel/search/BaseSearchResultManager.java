@@ -94,7 +94,7 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
 
 		if (indexer != null) {
 			String snippet = document.get(Field.SNIPPET);

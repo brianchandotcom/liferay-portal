@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegi
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerLifecycle;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -107,8 +108,26 @@ public class StartupAction extends SimpleAction {
 
 		// Indexers
 
-		IndexerRegistryUtil.register(new MBMessageIndexer());
-		IndexerRegistryUtil.register(new PluginPackageIndexer());
+		ServiceDependencyManager indexerRegistryServiceDependencyManager =
+			new ServiceDependencyManager();
+
+		indexerRegistryServiceDependencyManager.registerDependencies(
+			IndexerRegistry.class);
+
+		indexerRegistryServiceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					IndexerRegistryUtil.register(new MBMessageIndexer());
+					IndexerRegistryUtil.register(new PluginPackageIndexer());
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
 
 		// Upgrade
 

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -1730,7 +1731,7 @@ public class DLFileEntryLocalServiceImpl
 			String[] mimeTypes, int status, int start, int end)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
 			DLFileEntryConstants.getClassName());
 
 		SearchContext searchContext = new SearchContext();
@@ -1771,7 +1772,7 @@ public class DLFileEntryLocalServiceImpl
 			throw new IllegalArgumentException("Tree path is null");
 		}
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		final ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
@@ -1795,7 +1796,7 @@ public class DLFileEntryLocalServiceImpl
 
 			});
 
-		final Indexer indexer = IndexerRegistryUtil.getIndexer(
+		final Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
 			DLFileEntry.class.getName());
 
 		actionableDynamicQuery.setPerformActionMethod(
@@ -1815,7 +1816,9 @@ public class DLFileEntryLocalServiceImpl
 						return;
 					}
 
-					indexer.reindex(dlFileEntry);
+					Document document = indexer.getDocument(dlFileEntry);
+
+					actionableDynamicQuery.addDocument(document);
 				}
 
 			});
@@ -2005,8 +2008,8 @@ public class DLFileEntryLocalServiceImpl
 					dlFileVersion.getVersion(),
 					DLFileEntryConstants.VERSION_DEFAULT)) {
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					DLFileEntry.class);
+				Indexer<DLFileEntry> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
 
 				indexer.delete(dlFileEntry);
 			}
@@ -2565,7 +2568,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected void reindex(DLFileEntry dlFileEntry) throws SearchException {
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DLFileEntry.class);
 
 		indexer.reindex(dlFileEntry);

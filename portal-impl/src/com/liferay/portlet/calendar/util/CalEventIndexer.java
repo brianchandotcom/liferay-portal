@@ -38,11 +38,11 @@ import javax.portlet.PortletResponse;
  * @author Brett Swaim
  */
 @OSGiBeanProperties
-public class CalIndexer extends BaseIndexer {
+public class CalEventIndexer extends BaseIndexer<CalEvent> {
 
 	public static final String CLASS_NAME = CalEvent.class.getName();
 
-	public CalIndexer() {
+	public CalEventIndexer() {
 		setPermissionAware(true);
 	}
 
@@ -52,22 +52,18 @@ public class CalIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		CalEvent event = (CalEvent)obj;
-
-		deleteDocument(event.getCompanyId(), event.getEventId());
+	protected void doDelete(CalEvent calEvent) throws Exception {
+		deleteDocument(calEvent.getCompanyId(), calEvent.getEventId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		CalEvent event = (CalEvent)obj;
-
-		Document document = getBaseModelDocument(CLASS_NAME, event);
+	protected Document doGetDocument(CalEvent calEvent) throws Exception {
+		Document document = getBaseModelDocument(CLASS_NAME, calEvent);
 
 		document.addText(
-			Field.DESCRIPTION, HtmlUtil.extractText(event.getDescription()));
-		document.addText(Field.TITLE, event.getTitle());
-		document.addKeyword(Field.TYPE, event.getType());
+			Field.DESCRIPTION, HtmlUtil.extractText(calEvent.getDescription()));
+		document.addText(Field.TITLE, calEvent.getTitle());
+		document.addKeyword(Field.TYPE, calEvent.getType());
 
 		return document;
 	}
@@ -86,13 +82,11 @@ public class CalIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		CalEvent event = (CalEvent)obj;
-
-		Document document = getDocument(event);
+	protected void doReindex(CalEvent calEvent) throws Exception {
+		Document document = getDocument(calEvent);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), event.getCompanyId(), document,
+			getSearchEngineId(), calEvent.getCompanyId(), document,
 			isCommitImmediately());
 	}
 
@@ -143,6 +137,7 @@ public class CalIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(CalIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CalEventIndexer.class);
 
 }

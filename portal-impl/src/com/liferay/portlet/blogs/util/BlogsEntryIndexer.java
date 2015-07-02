@@ -51,11 +51,11 @@ import javax.portlet.PortletResponse;
  * @author Raymond Augé
  */
 @OSGiBeanProperties
-public class BlogsIndexer extends BaseIndexer {
+public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 
 	public static final String CLASS_NAME = BlogsEntry.class.getName();
 
-	public BlogsIndexer() {
+	public BlogsEntryIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.ASSET_TAG_NAMES, Field.COMPANY_ID, Field.CONTENT,
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID,
@@ -95,25 +95,21 @@ public class BlogsIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		BlogsEntry entry = (BlogsEntry)obj;
-
-		deleteDocument(entry.getCompanyId(), entry.getEntryId());
+	protected void doDelete(BlogsEntry blogsEntry) throws Exception {
+		deleteDocument(blogsEntry.getCompanyId(), blogsEntry.getEntryId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		BlogsEntry entry = (BlogsEntry)obj;
+	protected Document doGetDocument(BlogsEntry blogsEntry) throws Exception {
+		Document document = getBaseModelDocument(CLASS_NAME, blogsEntry);
 
-		Document document = getBaseModelDocument(CLASS_NAME, entry);
-
-		document.addText(Field.CAPTION, entry.getCoverImageCaption());
+		document.addText(Field.CAPTION, blogsEntry.getCoverImageCaption());
 		document.addText(
-			Field.CONTENT, HtmlUtil.extractText(entry.getContent()));
-		document.addText(Field.DESCRIPTION, entry.getDescription());
-		document.addDate(Field.MODIFIED_DATE, entry.getModifiedDate());
-		document.addText(Field.SUBTITLE, entry.getSubtitle());
-		document.addText(Field.TITLE, entry.getTitle());
+			Field.CONTENT, HtmlUtil.extractText(blogsEntry.getContent()));
+		document.addText(Field.DESCRIPTION, blogsEntry.getDescription());
+		document.addDate(Field.MODIFIED_DATE, blogsEntry.getModifiedDate());
+		document.addText(Field.SUBTITLE, blogsEntry.getSubtitle());
+		document.addText(Field.TITLE, blogsEntry.getTitle());
 
 		return document;
 	}
@@ -131,13 +127,11 @@ public class BlogsIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		BlogsEntry entry = (BlogsEntry)obj;
-
-		Document document = getDocument(entry);
+	protected void doReindex(BlogsEntry blogsEntry) throws Exception {
+		Document document = getDocument(blogsEntry);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), entry.getCompanyId(), document,
+			getSearchEngineId(), blogsEntry.getCompanyId(), document,
 			isCommitImmediately());
 	}
 
@@ -210,6 +204,7 @@ public class BlogsIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(BlogsIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsEntryIndexer.class);
 
 }

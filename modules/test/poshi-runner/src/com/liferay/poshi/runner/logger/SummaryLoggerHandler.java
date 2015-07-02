@@ -76,6 +76,16 @@ public final class SummaryLoggerHandler {
 	public static void startMajorSteps() throws Exception {
 		_causeBodyLoggerElement = _getCauseBodyLoggerElement();
 		_majorStepsLoggerElement = _getMajorStepsLoggerElement();
+
+		_summaryLogLoggerElement = new LoggerElement();
+
+		_summaryLogLoggerElement.setClassName("summary-log");
+		_summaryLogLoggerElement.setName("div");
+
+		_summaryLogLoggerElement.addChildLoggerElement(
+			_getStepsLoggerElement());
+		_summaryLogLoggerElement.addChildLoggerElement(
+			_getCauseLoggerElement());
 	}
 
 	public static void startSummary(Element element) throws Exception {
@@ -427,5 +437,6 @@ public final class SummaryLoggerHandler {
 	private static LoggerElement _minorStepLoggerElement;
 	private static LoggerElement _minorStepsLoggerElement;
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
+	private static LoggerElement _summaryLogLoggerElement;
 
 }

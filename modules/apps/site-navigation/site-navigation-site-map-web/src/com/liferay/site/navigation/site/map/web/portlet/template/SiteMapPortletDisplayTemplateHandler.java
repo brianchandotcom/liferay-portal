@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.portlet.display.template.service.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.site.map.web.configuration.SiteMapWebConfigurationValues;
 import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
 import com.liferay.site.navigation.site.map.web.display.context.SiteMapDisplayContext;
@@ -81,8 +81,8 @@ public class SiteMapPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addCollectionVariable(
-			"pages", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"page", Layout.class, "curPage", "getName(locale)");
+			"pages", List.class, PortletDisplayTemplateConstants.ENTRIES, "page",
+			Layout.class, "curPage", "getName(locale)");
 		templateVariableGroup.addVariable(
 			"site-map-display-context", SiteMapDisplayContext.class,
 			"siteMapDisplayContext");

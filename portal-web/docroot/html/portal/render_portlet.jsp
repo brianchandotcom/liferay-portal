@@ -164,19 +164,15 @@ String responseContentType = renderRequestImpl.getResponseContentType();
 
 String currentURL = PortalUtil.getCurrentURL(request);
 
-String portletResource = StringPool.BLANK;
+String portletResource = ParamUtil.getString(request, "portletResource");
 Portlet portletResourcePortlet = null;
 
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletResource = ParamUtil.getString(request, "portletResource");
+if (Validator.isNull(portletResource)) {
+	portletResource = ParamUtil.getString(renderRequestImpl, "portletResource");
+}
 
-	if (Validator.isNull(portletResource)) {
-		portletResource = ParamUtil.getString(renderRequestImpl, "portletResource");
-	}
-
-	if (Validator.isNotNull(portletResource)) {
-		portletResourcePortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
-	}
+if (Validator.isNotNull(portletResource)) {
+	portletResourcePortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 }
 
 boolean showCloseIcon = true;
@@ -201,32 +197,30 @@ if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == 
 	showRefreshIcon = false;
 }
 
-if (!portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
+Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
-	if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
-		(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
+if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
+	(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
 
-		showConfigurationIcon = true;
+	showConfigurationIcon = true;
 
-		boolean supportsConfigurationLAR = portlet.getConfigurationActionInstance() != null;
-		boolean supportsDataLAR = !(portlet.getPortletDataHandlerInstance() instanceof DefaultConfigurationPortletDataHandler);
+	boolean supportsConfigurationLAR = portlet.getConfigurationActionInstance() != null;
+	boolean supportsDataLAR = !(portlet.getPortletDataHandlerInstance() instanceof DefaultConfigurationPortletDataHandler);
 
-		if (supportsConfigurationLAR || supportsDataLAR || (!group.isControlPanel() && !group.isUserPersonalPanel())) {
-			showExportImportIcon = true;
-		}
-
-		if (PropsValues.PORTLET_CSS_ENABLED) {
-			showPortletCssIcon = true;
-		}
+	if (supportsConfigurationLAR || supportsDataLAR || (!group.isControlPanel() && !group.isUserPersonalPanel())) {
+		showExportImportIcon = true;
 	}
 
-	if (layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
-		showConfigurationIcon = true;
+	if (PropsValues.PORTLET_CSS_ENABLED) {
+		showPortletCssIcon = true;
+	}
+}
 
-		if (PropsValues.PORTLET_CSS_ENABLED) {
-			showPortletCssIcon = true;
-		}
+if (layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+	showConfigurationIcon = true;
+
+	if (PropsValues.PORTLET_CSS_ENABLED) {
+		showPortletCssIcon = true;
 	}
 }
 
@@ -323,12 +317,7 @@ if (layout.isLayoutPrototypeLinkActive()) {
 
 long previousScopeGroupId = themeDisplay.getScopeGroupId();
 
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION) && (portletResourcePortlet != null)) {
-	themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, portletResourcePortlet.getPortletId()));
-}
-else {
-	themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, portletId));
-}
+themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, (Validator.isNotNull(portletResource) ? portletResourcePortlet.getPortletId() : portletId)));
 
 long previousSiteGroupId = themeDisplay.getSiteGroupId();
 
@@ -447,7 +436,7 @@ urlConfiguration.setParameter("returnToFullPageURL", currentURL);
 urlConfiguration.setParameter("portletResource", portletDisplay.getId());
 urlConfiguration.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimaryKey(plid, portlet.getPortletId()));
 
-portletDisplay.setURLConfiguration(urlConfiguration.toString() + "&" + PortalUtil.getPortletNamespace(PortletKeys.PORTLET_CONFIGURATION));
+portletDisplay.setURLConfiguration(urlConfiguration.toString());
 
 StringBuilder urlConfigurationJSSB = new StringBuilder(14);
 
@@ -701,18 +690,6 @@ else if (portletDisplay.isModePrint()) {
 	urlBack = urlPrint.toString();
 }
 else if (portletDisplay.isStateMax()) {
-	//if (portletDisplay.getId().equals(PortletKeys.PORTLET_CONFIGURATION)) {
-		/*String portletResource = ParamUtil.getString(request, "portletResource");
-
-		urlMax.setAnchor(false);
-
-		urlBack = urlMax.toString() + "#p_" + portletResource;*/
-
-		//urlBack = ParamUtil.getString(renderRequestImpl, "returnToFullPageURL");
-	//}
-	//else {
-	//	urlBack = urlMax.toString();
-	//}
 
 	if (portletDisplay.getId().startsWith("WSRP_")) {
 		urlBack = portletDisplay.getURLBack();

@@ -15,15 +15,6 @@ afterEvaluate {
 	project.ext.set("plugin.full.version", project.version.toString())
 }
 
-bundle {
-	instruction "-jsp", "*.jsp"
-	instruction "-jsp", "*.jspf"
-	instruction "-metatype", "*"
-	instruction "-plugin", "com.liferay.ant.bnd.plugin.JspAnalyzerPlugin"
-	instruction "-plugin", "com.liferay.ant.bnd.plugin.SassAnalyzerPlugin"
-	instruction "-sass", "*"
-}
-
 compileJava {
 	options.encoding = "ISO-8859-1"
 	options.warnings = false

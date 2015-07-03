@@ -53,10 +53,6 @@ Group group = themeDisplay.getSiteGroup();
 <liferay-ui:success key='<%= LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
 
 <c:if test="<%= !group.isLayoutSetPrototype() %>">
-	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="toolbarItem" value='<%= layoutSetPrototype.isNew() ? "add" : StringPool.BLANK %>' />
-	</liferay-util:include>
-
 	<liferay-ui:header
 		backURL="<%= backURL %>"
 		localizeTitle="<%= layoutSetPrototype.isNew() %>"

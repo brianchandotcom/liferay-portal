@@ -457,32 +457,45 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	protected void handleList(
 		StringBundler sb, Stack<String> tags, BBCodeItem bbCodeItem) {
 
-		String listStyle = null;
+		String tag = "ul";
 
-		String tag = null;
+		StringBundler listAttributes = new StringBundler();
 
-		String listAttribute = bbCodeItem.getAttribute();
+		Matcher matcher = _attributesPattern.matcher(bbCodeItem.getAttribute());
 
-		if (_listStyles.get(listAttribute) != null) {
-			listStyle = _listStyles.get(listAttribute);
+		while (matcher.find()) {
+			String listStyle = null;
 
-			tag = "ol";
-		}
-		else {
-			listStyle = _listBulletedStyles.get(listAttribute);
+			String attributeName = matcher.group(1);
+			String attributeValue = matcher.group(2);
 
-			tag = "ul";
+			if (Validator.equals(attributeName, "type")) {
+				if (_listBulletedStyles.get(attributeValue) != null) {
+					listStyle = _listBulletedStyles.get(attributeValue);
+
+					tag = "ol";
+				}
+				else {
+					listStyle = _listStyles.get(attributeValue);
+				}
+
+				if (Validator.isNotNull(listStyle)) {
+					listAttributes.append(" style=\"");
+					listAttributes.append(listStyle);
+					listAttributes.append("\"");
+				}
+			}
+			else if (Validator.equals(attributeName, "start") &&
+					 Validator.isNumber(attributeValue)) {
+				listAttributes.append(" start=\"");
+				listAttributes.append(attributeValue);
+				listAttributes.append("\"");
+			}
 		}
 
 		sb.append("<");
 		sb.append(tag);
-
-		if (Validator.isNotNull(listStyle)) {
-			sb.append(" style=\"");
-			sb.append(listStyle);
-			sb.append("\"");
-		}
-
+		sb.append(listAttributes);
 		sb.append(">");
 
 		tags.push("</" + tag + ">");

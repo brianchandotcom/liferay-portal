@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.tunnel.TunnelAuthenticationManager;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -90,7 +91,7 @@ public class TunnelAuthenticationManagerImpl
 			throw authException;
 		}
 		catch (AuthException ae) {
-			AuthException authException = new RemoteAuthException();
+			AuthException authException = new RemoteAuthException(ae);
 
 			authException.setType(ae.getType());
 
@@ -159,7 +160,14 @@ public class TunnelAuthenticationManagerImpl
 			PropsValues.TUNNELING_SERVLET_SHARED_SECRET_HEX;
 
 		if (Validator.isNull(sharedSecret)) {
-			AuthException authException = new AuthException();
+			String message =
+				"Please configure " + PropsKeys.TUNNELING_SERVLET_SHARED_SECRET;
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(message);
+			}
+
+			AuthException authException = new AuthException(message);
 
 			authException.setType(AuthException.NO_SHARED_SECRET);
 
@@ -189,7 +197,33 @@ public class TunnelAuthenticationManagerImpl
 		}
 
 		if (key.length < 8) {
-			AuthException authException = new AuthException();
+			String message =
+				PropsKeys.TUNNELING_SERVLET_SHARED_SECRET + " is too short";
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(message);
+			}
+
+			AuthException authException = new AuthException(message);
+
+			authException.setType(AuthException.INVALID_SHARED_SECRET);
+
+			throw authException;
+		}
+
+		if (StringUtil.equalsIgnoreCase(
+				PropsValues.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM, "AES") &&
+			(key.length != 16) && (key.length != 32)) {
+
+			String message =
+				PropsKeys.TUNNELING_SERVLET_SHARED_SECRET +
+					" must have 16 or 32 bytes when used with AES";
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(message);
+			}
+
+			AuthException authException = new AuthException(message);
 
 			authException.setType(AuthException.INVALID_SHARED_SECRET);
 

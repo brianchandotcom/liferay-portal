@@ -25,8 +25,15 @@ import java.util.Map;
  *
  * @author ${author}
  * @see ${entity.name}
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
 
 @ProviderType
 public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${entity.name}> {

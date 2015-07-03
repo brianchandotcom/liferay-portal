@@ -49,8 +49,15 @@ import java.util.Map;
  * @see ${entity.name}
  * @see ${packagePath}.model.impl.${entity.name}Impl
  * @see ${packagePath}.model.impl.${entity.name}ModelImpl
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
 
 @ProviderType
 public interface ${entity.name}Model extends

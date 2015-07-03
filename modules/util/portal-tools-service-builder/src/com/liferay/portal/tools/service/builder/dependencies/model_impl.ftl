@@ -86,8 +86,15 @@ import java.util.TreeSet;
  * @see ${entity.name}Impl
  * @see ${packagePath}.model.${entity.name}
  * @see ${packagePath}.model.${entity.name}Model
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
 
 <#if entity.jsonEnabled>
 	@JSON(strict = true)

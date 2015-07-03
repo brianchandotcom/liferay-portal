@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.blogs.util;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -36,11 +39,13 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.BlogsUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.IOException;
 
@@ -70,7 +75,8 @@ import org.powermock.reflect.Whitebox;
 @PrepareForTest( {
 	BlogsEntryLocalServiceUtil.class, BlogsUtil.class,
 	PortalSocketPermission.class, PortletLocalServiceUtil.class,
-	PropsValues.class, UserLocalServiceUtil.class
+	PortletProviderUtil.class, PropsValues.class,
+	ServiceTrackerCollections.class, UserLocalServiceUtil.class
 })
 @RunWith(PowerMockRunner.class)
 public class PingbackMethodImplTest extends PowerMockito {
@@ -85,6 +91,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		setUpLanguageUtil();
 		setUpPortalUtil();
 		setUpPortletLocalServiceUtil();
+		setUpPortletProviderUtil();
 		setUpUserLocalServiceUtil();
 		setUpXmlRpcUtil();
 	}
@@ -186,7 +193,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		String namespace = RandomTestUtil.randomString() + ".";
 
 		when(
-			_portal.getPortletNamespace(PortletKeys.BLOGS)
+			_portal.getPortletNamespace(BlogsPortletKeys.BLOGS)
 		).thenReturn(
 			namespace
 		);
@@ -426,7 +433,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 	protected void setUpPortalUtil() throws Exception {
 		when(
 			_portal.getLayoutFullURL(
-				Matchers.anyLong(), Matchers.eq(PortletKeys.BLOGS))
+				Matchers.anyLong(), Matchers.eq(BlogsPortletKeys.BLOGS))
 		).thenReturn(
 			_LAYOUT_FULL_URL
 		);
@@ -468,14 +475,14 @@ public class PingbackMethodImplTest extends PowerMockito {
 			PortletLocalService.class);
 
 		when(
-			portletLocalService.getPortletById(PortletKeys.BLOGS)
+			portletLocalService.getPortletById(BlogsPortletKeys.BLOGS)
 		).thenReturn(
 			portlet
 		);
 
 		when(
 			portletLocalService.getPortletById(
-				Matchers.anyLong(), Matchers.eq(PortletKeys.BLOGS))
+				Matchers.anyLong(), Matchers.eq(BlogsPortletKeys.BLOGS))
 		).thenReturn(
 			portlet
 		);
@@ -486,6 +493,26 @@ public class PingbackMethodImplTest extends PowerMockito {
 			method(PortletLocalServiceUtil.class, "getService")
 		).toReturn(
 			portletLocalService
+		);
+	}
+
+	protected void setUpPortletProviderUtil() {
+		mockStatic(ServiceTrackerCollections.class, Mockito.RETURNS_MOCKS);
+
+		stub(
+			method(
+				ServiceTrackerCollections.class, "singleValueMap", Class.class,
+				String.class)
+		).toReturn(_serviceTrackerMap);
+
+		mockStatic(PortletProviderUtil.class, Mockito.CALLS_REAL_METHODS);
+
+		stub(
+			method(
+				PortletProviderUtil.class, "getPortletId", String.class,
+				PortletProvider.Action.class)
+		).toReturn(
+			BlogsPortletKeys.BLOGS
 		);
 	}
 
@@ -676,6 +703,9 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	@Mock
 	private Portal _portal;
+
+	@Mock
+	private ServiceTrackerMap<String, PortletProvider> _serviceTrackerMap;
 
 	@Mock
 	private XmlRpc _xmlRpc;

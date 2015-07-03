@@ -393,13 +393,13 @@
 					var attrValue = listAttribute[2];
 
 					if (attrName == STR_TYPE) {
-						if (MAP_UNORDERED_LIST_STYLES[attrValue]) {
-							styleAttr = MAP_UNORDERED_LIST_STYLES[attrValue];
+						if (MAP_ORDERED_LIST_STYLES[attrValue]) {
+							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
+
+							tag = 'ol';
 						}
 						else {
-							tag = 'ol';
-
-							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
+							styleAttr = MAP_UNORDERED_LIST_STYLES[attrValue];
 						}
 
 						if (styleAttr) {

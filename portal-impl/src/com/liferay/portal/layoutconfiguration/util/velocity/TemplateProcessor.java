@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletJSONUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
@@ -255,6 +257,18 @@ public class TemplateProcessor implements ColumnProcessor {
 		}
 
 		modifiableSettings.store();
+
+		return processPortlet(portletId);
+	}
+
+	@Override
+	public String processPortlet(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction)
+		throws Exception {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			portletProviderClassName, portletProviderAction);
 
 		return processPortlet(portletId);
 	}

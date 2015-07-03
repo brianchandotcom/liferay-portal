@@ -18,7 +18,7 @@
 
 <%@ page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.BlogsGroupServiceSettings" %><%@
-page import="com.liferay.portlet.blogs.BlogsPortletInstanceSettings" %><%@
+page import="com.liferay.blogs.web.blogs.settings.internal.BlogsPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.blogs.EntryContentException" %><%@
 page import="com.liferay.portlet.blogs.EntryDescriptionException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageNameException" %><%@

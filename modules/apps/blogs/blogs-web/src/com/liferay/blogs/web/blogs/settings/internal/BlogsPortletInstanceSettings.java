@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
+package com.liferay.blogs.web.blogs.settings.internal;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.FallbackKeys;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
@@ -24,14 +25,15 @@ import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.Map;
 
 /**
  * @author Iván Zaera
  */
-@Settings.Config(settingsIds = {PortletKeys.BLOGS, PortletKeys.BLOGS_ADMIN})
+@Settings.Config(
+	settingsIds = {BlogsPortletKeys.BLOGS, BlogsPortletKeys.BLOGS_ADMIN}
+)
 public class BlogsPortletInstanceSettings {
 
 	public static BlogsPortletInstanceSettings getInstance(

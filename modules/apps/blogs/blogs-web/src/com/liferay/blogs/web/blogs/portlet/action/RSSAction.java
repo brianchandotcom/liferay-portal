@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.blogs.portlet.action;
 
+import com.liferay.blogs.web.blogs.settings.internal.BlogsPortletInstanceSettings;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.blogs.BlogsPortletInstanceSettings;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 
 import java.util.Date;

@@ -14,12 +14,34 @@
 
 package com.liferay.portal.security.auth.tunnel;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.tunnel.TunnelAuthenticationManager;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.security.auth.RemoteAuthException;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.util.Encryptor;
+import com.liferay.util.EncryptorException;
 
 import java.net.HttpURLConnection;
 
+import java.security.Key;
+
+import javax.crypto.spec.SecretKeySpec;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * @author Tomas Polesovsky
@@ -31,12 +53,154 @@ public class TunnelAuthenticationManagerImpl
 	public long getUserId(HttpServletRequest httpServletRequest)
 		throws AuthException {
 
-		return 0;
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			HttpAuthManagerUtil.parse(httpServletRequest);
+
+		String scheme = httpAuthorizationHeader.getScheme();
+
+		if (!StringUtil.equalsIgnoreCase(
+				scheme, HttpAuthorizationHeader.SCHEME_BASIC)) {
+
+			AuthException authException = new RemoteAuthException(
+				"Invalid scheme " + scheme);
+
+			authException.setType(AuthException.INTERNAL_SERVER_ERROR);
+
+			throw authException;
+		}
+
+		String login = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME);
+
+		String password = httpAuthorizationHeader.getAuthParameter(
+			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD);
+
+		long companyId = PortalInstances.getCompanyId(httpServletRequest);
+
+		String expectedPassword = null;
+
+		try {
+			expectedPassword = Encryptor.encrypt(getSharedSecretKey(), login);
+		}
+		catch (EncryptorException ee) {
+			AuthException authException = new RemoteAuthException(ee);
+
+			authException.setType(AuthException.INTERNAL_SERVER_ERROR);
+
+			throw authException;
+		}
+		catch (AuthException ae) {
+			AuthException authException = new RemoteAuthException();
+
+			authException.setType(ae.getType());
+
+			throw authException;
+		}
+
+		if (!password.equals(expectedPassword)) {
+			AuthException authException = new RemoteAuthException();
+
+			authException.setType(RemoteAuthException.WRONG_SHARED_SECRET);
+
+			throw authException;
+		}
+
+		User user = UserLocalServiceUtil.fetchUser(GetterUtil.getLong(login));
+
+		if (user == null) {
+			user = UserLocalServiceUtil.fetchUserByEmailAddress(
+				companyId, login);
+
+			if (user == null) {
+				user = UserLocalServiceUtil.fetchUserByScreenName(
+					companyId, login);
+			}
+		}
+
+		if (user == null) {
+			AuthException authException = new RemoteAuthException(
+				"Unable to find user " + login);
+
+			authException.setType(AuthException.INTERNAL_SERVER_ERROR);
+
+			throw authException;
+		}
+
+		return user.getUserId();
 	}
 
 	@Override
-	public void setCredentials(long userId, HttpURLConnection connection)
+	public void setCredentials(
+			String login, HttpURLConnection httpURLConnection)
 		throws Exception {
+
+		if (Validator.isBlank(login)) {
+			throw new IllegalArgumentException("Login is null");
+		}
+
+		String password = Encryptor.encrypt(getSharedSecretKey(), login);
+
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			new HttpAuthorizationHeader(HttpAuthorizationHeader.SCHEME_BASIC);
+
+		httpAuthorizationHeader.setAuthParameter(
+			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME, login);
+
+		httpAuthorizationHeader.setAuthParameter(
+			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD, password);
+
+		httpURLConnection.setRequestProperty(
+			HttpHeaders.AUTHORIZATION, httpAuthorizationHeader.toString());
 	}
+
+	protected Key getSharedSecretKey() throws AuthException {
+		String sharedSecret = PropsValues.TUNNELING_SERVLET_SHARED_SECRET;
+		boolean sharedSecretHex =
+			PropsValues.TUNNELING_SERVLET_SHARED_SECRET_HEX;
+
+		if (Validator.isNull(sharedSecret)) {
+			AuthException authException = new AuthException();
+
+			authException.setType(AuthException.NO_SHARED_SECRET);
+
+			throw authException;
+		}
+
+		byte[] key = null;
+
+		if (sharedSecretHex) {
+			try {
+				key = Hex.decodeHex(sharedSecret.toCharArray());
+			}
+			catch (DecoderException e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
+
+				AuthException authException = new AuthException();
+
+				authException.setType(AuthException.INVALID_SHARED_SECRET);
+
+				throw authException;
+			}
+		}
+		else {
+			key = sharedSecret.getBytes();
+		}
+
+		if (key.length < 8) {
+			AuthException authException = new AuthException();
+
+			authException.setType(AuthException.INVALID_SHARED_SECRET);
+
+			throw authException;
+		}
+
+		return new SecretKeySpec(
+			key, PropsValues.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TunnelAuthenticationManagerImpl.class);
 
 }

@@ -895,7 +895,11 @@ public class ServiceBuilder {
 								_createPersistenceTest(entity);
 							}
 
-							_createModelImpl(entity);
+							JavaClass modelImplJavaClass = _getJavaClass(
+								_outputPath + "/model/impl/" +
+									entity.getName() + "Impl.java");
+
+							_createModelImpl(entity, modelImplJavaClass);
 							_createExtendedModelBaseImpl(entity);
 							_createExtendedModelImpl(entity);
 
@@ -904,10 +908,10 @@ public class ServiceBuilder {
 								_getTransients(entity, true));
 
 							_createModel(entity);
-							_createExtendedModel(entity);
+							_createExtendedModel(entity, modelImplJavaClass);
 
-							_createModelCache(entity);
-							_createModelClp(entity);
+							_createModelCache(entity, modelImplJavaClass);
+							_createModelClp(entity, modelImplJavaClass);
 							_createModelWrapper(entity);
 
 							_createModelSoap(entity);
@@ -2315,9 +2319,9 @@ public class ServiceBuilder {
 		writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createExtendedModel(Entity entity) throws Exception {
-		JavaClass modelImplJavaClass = _getJavaClass(
-			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+	private void _createExtendedModel(
+			Entity entity, JavaClass modelImplJavaClass)
+		throws Exception {
 
 		List<JavaMethod> methods = ListUtil.fromArray(
 			_getMethods(modelImplJavaClass));
@@ -2587,14 +2591,13 @@ public class ServiceBuilder {
 		writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createModelCache(Entity entity) throws Exception {
-		JavaClass javaClass = _getJavaClass(
-			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+	private void _createModelCache(Entity entity, JavaClass modelImplJavaClass)
+		throws Exception {
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("cacheFields", _getCacheFields(javaClass));
+		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
 
 		// Content
 
@@ -2609,21 +2612,20 @@ public class ServiceBuilder {
 		writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createModelClp(Entity entity) throws Exception {
+	private void _createModelClp(Entity entity, JavaClass modelImplJavaClass)
+		throws Exception {
+
 		if (Validator.isNull(_pluginName)) {
 			return;
 		}
 
-		JavaClass javaClass = _getJavaClass(
-			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
-
 		Map<String, JavaMethod> methods = new HashMap<>();
 
-		for (JavaMethod method : javaClass.getMethods()) {
+		for (JavaMethod method : modelImplJavaClass.getMethods()) {
 			methods.put(method.getDeclarationSignature(false), method);
 		}
 
-		Type superClass = javaClass.getSuperClass();
+		Type superClass = modelImplJavaClass.getSuperClass();
 
 		String superClassValue = superClass.getValue();
 
@@ -2634,7 +2636,7 @@ public class ServiceBuilder {
 				superClassValue = superClassValue.substring(pos + 1);
 			}
 
-			javaClass = _getJavaClass(
+			JavaClass javaClass = _getJavaClass(
 				_outputPath + "/model/impl/" + superClassValue + ".java");
 
 			for (JavaMethod method : _getMethods(javaClass)) {
@@ -2709,14 +2711,13 @@ public class ServiceBuilder {
 		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
-	private void _createModelImpl(Entity entity) throws Exception {
-		JavaClass javaClass = _getJavaClass(
-			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+	private void _createModelImpl(Entity entity, JavaClass modelImplJavaClass)
+		throws Exception {
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("cacheFields", _getCacheFields(javaClass));
+		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
 
 		// Content
 

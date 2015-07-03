@@ -28,10 +28,15 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -54,14 +59,15 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -588,8 +594,7 @@ public class LayoutSetPrototypePropagationTest
 			Assert.assertEquals(localization, importedLocalization);
 		}
 
-		String newContent = DDMStructureTestUtil.getSampleStructuredContent(
-			"New Test Content");
+		String newContent = getSampleStructuredContent("New Test Content");
 
 		JournalTestUtil.updateArticle(
 			_layoutSetPrototypeJournalArticle, "New Test Title", newContent);
@@ -618,6 +623,63 @@ public class LayoutSetPrototypePropagationTest
 
 	protected int getGroupLayoutCount() throws Exception {
 		return LayoutLocalServiceUtil.getLayoutsCount(group, false);
+	}
+
+	protected String getSampleStructuredContent(String keywords) {
+		Map<Locale, String> contents = new HashMap<>();
+
+		contents.put(Locale.US, keywords);
+
+		return getSampleStructuredContent(
+			"name", Collections.singletonList(contents), "en_US");
+	}
+
+	protected String getSampleStructuredContent(
+		String name, List<Map<Locale, String>> contents, String defaultLocale) {
+
+		StringBundler availableLocales = new StringBundler(2 * contents.size());
+
+		for (Map<Locale, String> map : contents) {
+			StringBundler sb = new StringBundler(2 * map.size());
+
+			for (Locale locale : map.keySet()) {
+				sb.append(LocaleUtil.toLanguageId(locale));
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			availableLocales.append(sb);
+		}
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		rootElement.addAttribute(
+			"available-locales", availableLocales.toString());
+		rootElement.addAttribute("default-locale", defaultLocale);
+		rootElement.addElement("request");
+
+		for (Map<Locale, String> map : contents) {
+			Element dynamicElementElement = rootElement.addElement(
+				"dynamic-element");
+
+			dynamicElementElement.addAttribute("index-type", "keyword");
+			dynamicElementElement.addAttribute("name", name);
+			dynamicElementElement.addAttribute("type", "text");
+
+			for (Map.Entry<Locale, String> entry : map.entrySet()) {
+				Element element = dynamicElementElement.addElement(
+					"dynamic-content");
+
+				element.addAttribute(
+					"language-id", LocaleUtil.toLanguageId(entry.getKey()));
+				element.addCDATA(entry.getValue());
+			}
+		}
+
+		return document.asXML();
 	}
 
 	protected void propagateChanges(Group group) throws Exception {

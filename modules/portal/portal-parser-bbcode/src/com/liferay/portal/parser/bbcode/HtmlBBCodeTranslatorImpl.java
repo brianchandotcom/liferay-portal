@@ -49,19 +49,19 @@ import org.osgi.service.component.annotations.Component;
 public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 	public HtmlBBCodeTranslatorImpl() {
-		_listStyles = new HashMap<>();
+		_orderedListStyles = new HashMap<>();
 
-		_listStyles.put("a", "list-style: lower-alpha outside;");
-		_listStyles.put("A", "list-style: upper-alpha outside;");
-		_listStyles.put("1", "list-style: decimal outside;");
-		_listStyles.put("i", "list-style: lower-roman outside;");
-		_listStyles.put("I", "list-style: upper-roman outside;");
+		_orderedListStyles.put("a", "list-style: lower-alpha outside;");
+		_orderedListStyles.put("A", "list-style: upper-alpha outside;");
+		_orderedListStyles.put("1", "list-style: decimal outside;");
+		_orderedListStyles.put("i", "list-style: lower-roman outside;");
+		_orderedListStyles.put("I", "list-style: upper-roman outside;");
 
-		_listBulletedStyles = new HashMap<>();
+		_unorderedListStyles = new HashMap<>();
 
-		_listBulletedStyles.put("circle", "list-style: circle outside;");
-		_listBulletedStyles.put("disc", "list-style: disc outside;");
-		_listBulletedStyles.put("square", "list-style: square outside;");
+		_unorderedListStyles.put("circle", "list-style: circle outside;");
+		_unorderedListStyles.put("disc", "list-style: disc outside;");
+		_unorderedListStyles.put("square", "list-style: square outside;");
 
 		_excludeNewLineTypes = new HashMap<>();
 
@@ -470,13 +470,13 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			String attributeValue = matcher.group(2);
 
 			if (Validator.equals(attributeName, "type")) {
-				if (_listBulletedStyles.get(attributeValue) != null) {
-					listStyle = _listBulletedStyles.get(attributeValue);
+				if (_orderedListStyles.get(attributeValue) != null) {
+					listStyle = _orderedListStyles.get(attributeValue);
 
 					tag = "ol";
 				}
 				else {
-					listStyle = _listStyles.get(attributeValue);
+					listStyle = _unorderedListStyles.get(attributeValue);
 				}
 
 				if (Validator.isNotNull(listStyle)) {
@@ -487,6 +487,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			}
 			else if (Validator.equals(attributeName, "start") &&
 					 Validator.isNumber(attributeValue)) {
+
 				listAttributes.append(" start=\"");
 				listAttributes.append(attributeValue);
 				listAttributes.append("\"");
@@ -792,12 +793,12 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	private final Pattern _imagePattern = Pattern.compile(
 		"^(?:https?://|/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$",
 		Pattern.CASE_INSENSITIVE);
-	private final Map<String, String> _listBulletedStyles;
-	private final Map<String, String> _listStyles;
+	private final Map<String, String> _orderedListStyles;
 	private final Pattern _tagPattern = Pattern.compile(
 		"^/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|" +
 			"right|\\*|s|size|table|tr|th|td|li|list|font|u|url)$",
 		Pattern.CASE_INSENSITIVE);
+	private final Map<String, String> _unorderedListStyles;
 	private final Pattern _urlPattern = Pattern.compile(
 		"^[-;/?:@&=+$,_.!~*'()%0-9a-z#]{1,2048}$", Pattern.CASE_INSENSITIVE);
 

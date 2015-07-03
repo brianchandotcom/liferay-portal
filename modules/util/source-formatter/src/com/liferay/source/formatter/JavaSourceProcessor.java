@@ -1713,6 +1713,33 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
+					if (strippedQuotesLine.endsWith(StringPool.PLUS)) {
+						int x = -1;
+
+						while (true) {
+							x = strippedQuotesLine.indexOf(
+								StringPool.COMMA, x + 1);
+
+							if (x == -1) {
+								break;
+							}
+
+							int closeParenthesisCount = StringUtil.count(
+								strippedQuotesLine.substring(x),
+								StringPool.CLOSE_PARENTHESIS);
+							int openParenthesisCount = StringUtil.count(
+								strippedQuotesLine.substring(x),
+								StringPool.OPEN_PARENTHESIS);
+
+							if (openParenthesisCount >= closeParenthesisCount) {
+								processErrorMessage(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
+							}
+						}
+					}
+
 					int x = strippedQuotesLine.indexOf(", ");
 
 					if (x != -1) {

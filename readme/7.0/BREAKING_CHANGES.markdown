@@ -2127,3 +2127,38 @@ to add/remove or update references between DLFileEntryType and DDMStructures.
 This change was made to reduce the coupling between the two applications.
 
 ---------------------------------------
+
+### Removed render Method from AssetRenderer API and WorkflowHandler API
+- **Date:** 2015-Jul-3
+- **JIRA Ticket:** LPS-56705
+
+#### What changed?
+
+The method `render` has been removed from the interface `AssetRenderer` and
+`WorkflowHandler`.
+
+#### Who is affected?
+
+This affects any Java code calling the method `render` on an
+`AssetRenderer` or `WorkflowHandler` class, or Java classes overriding the 
+`render` method of this classes.
+
+#### How should I update my code?
+
+The method `render` was used to return the path of a JSP, including the
+configuration of a portlet. That method is now available for the same 
+AssetRender API extending the `BaseJSPAssetRenderer` class, and is called
+`getJspPath`.
+
+If any logic was added to override the `render` method, it can now be added in
+the `include` method.
+
+#### Why was this change made?
+
+This change was part of needed modifications to support adding asset renderers
+and workflow handlers for portlets based on other technology different than JSP
+(e.g., FreeMarker). The method `include` can now be used to create asset 
+renderers or workflow handlers with UIs written in FreeMarker or any other
+framework.
+
+---------------------------------------

@@ -168,7 +168,7 @@ public interface PortletFileRepository {
 		throws PortalException;
 
 	public Hits searchPortletFileEntries(
-			long groupId, SearchContext searchContext)
+			long repositoryId, SearchContext searchContext)
 		throws PortalException;
 
 }

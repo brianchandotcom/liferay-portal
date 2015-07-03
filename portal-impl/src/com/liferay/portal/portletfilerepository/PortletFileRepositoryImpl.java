@@ -642,11 +642,11 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public Hits searchPortletFileEntries(
-			long groupId, SearchContext searchContext)
+			long repositoryId, SearchContext searchContext)
 		throws PortalException {
 
 		com.liferay.portal.kernel.repository.Repository repository =
-			RepositoryProviderUtil.getRepository(groupId);
+			RepositoryProviderUtil.getRepository(repositoryId);
 
 		return repository.search(searchContext);
 	}

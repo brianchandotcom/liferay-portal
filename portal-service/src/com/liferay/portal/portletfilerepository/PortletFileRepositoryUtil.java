@@ -315,11 +315,11 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static Hits searchPortletFileEntries(
-			long groupId, SearchContext searchContext)
+			long repositoryId, SearchContext searchContext)
 		throws PortalException {
 
 		return getPortletFileRepository().searchPortletFileEntries(
-			groupId, searchContext);
+			repositoryId, searchContext);
 	}
 
 	public void setPortletFileRepository(

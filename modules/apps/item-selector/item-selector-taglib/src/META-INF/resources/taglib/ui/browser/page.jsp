@@ -46,6 +46,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 					<div class="form-search">
 						<aui:form action="<%= searchURL %>" method="get" name="searchFm">
 							<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
+
 							<liferay-ui:input-search />
 						</aui:form>
 					</div>

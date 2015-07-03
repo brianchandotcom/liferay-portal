@@ -21,8 +21,15 @@ import java.util.Date;
  * @author ${author}
  * @see ${packagePath}.service.persistence.impl.${entity.name}PersistenceImpl
  * @see ${entity.name}Util
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
 
 @ProviderType
 public interface ${entity.name}Persistence extends BasePersistence<${entity.name}> {

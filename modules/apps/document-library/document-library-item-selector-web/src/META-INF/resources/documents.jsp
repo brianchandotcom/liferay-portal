@@ -40,7 +40,6 @@ if (Validator.isNotNull(keywords)) {
 	searchContext.setAttribute("mimeTypes", mimeTypes);
 
 	searchContext.setEnd(searchContainer.getEnd());
-
 	searchContext.setStart(searchContainer.getStart());
 
 	Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);

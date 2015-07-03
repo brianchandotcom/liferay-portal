@@ -27,6 +27,8 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 
 WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 
+Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
+
 int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();
 
@@ -36,11 +38,7 @@ if (Validator.isNotNull(keywords)) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setEnd(searchContainer.getEnd());
-
-	Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
-
 	searchContext.setFolderIds(new long[] {folder.getFolderId()});
-
 	searchContext.setStart(searchContainer.getStart());
 
 	Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
@@ -61,7 +59,7 @@ if (Validator.isNotNull(keywords)) {
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Wiki attachments search index is stale and contains file entry {" + fileEntryId + "}");
+				_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
 			}
 
 			continue;

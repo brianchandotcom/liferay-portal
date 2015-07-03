@@ -16,7 +16,11 @@ package com.liferay.gradle.plugins.extensions;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.ant.bnd.plugin.BowerAnalyzerPlugin;
+import com.liferay.ant.bnd.plugin.JspAnalyzerPlugin;
+import com.liferay.ant.bnd.plugin.SassAnalyzerPlugin;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.util.HashMap;
@@ -67,7 +71,13 @@ public class LiferayOSGiExtension extends LiferayExtension {
 
 		map.put(Constants.DONOTCOPY, "(.touch)");
 		map.put(Constants.DSANNOTATIONS, "*");
+		map.put(Constants.METATYPE, "*");
+		map.put(
+			Constants.PLUGIN, StringUtil.merge(_BND_PLUGIN_CLASS_NAMES, ","));
 		map.put(Constants.SOURCES, "false");
+
+		map.put("-jsp", "*.jsp,*.jspf");
+		map.put("-sass", "*");
 
 		return map;
 	}
@@ -87,6 +97,11 @@ public class LiferayOSGiExtension extends LiferayExtension {
 
 		return "off";
 	}
+
+	private static final String[] _BND_PLUGIN_CLASS_NAMES = {
+		BowerAnalyzerPlugin.class.getName(), JspAnalyzerPlugin.class.getName(),
+		SassAnalyzerPlugin.class.getName()
+	};
 
 	private boolean _autoUpdateXml = true;
 

@@ -8,6 +8,16 @@
 <tr><td rowspan="1" colspan="3">Ratings</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>THUMBS_UP</td>
+	<td>//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THUMBS_DOWN</td>
+	<td>//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-down')]</td>
+	<td></td>
+</tr>
 <!--YOUR_RATING-->
 <tr>
 	<td>YOUR_RATING_LABEL</td>

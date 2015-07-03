@@ -312,6 +312,20 @@ public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
 	 */
 	public void setPrimary(boolean primary);
 
+	/**
+	 * Returns the last publish date of this phone.
+	 *
+	 * @return the last publish date of this phone
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this phone.
+	 *
+	 * @param lastPublishDate the last publish date of this phone
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

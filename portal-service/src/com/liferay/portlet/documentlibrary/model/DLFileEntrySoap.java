@@ -63,6 +63,7 @@ public class DLFileEntrySoap implements Serializable {
 		soapModel.setCustom1ImageId(model.getCustom1ImageId());
 		soapModel.setCustom2ImageId(model.getCustom2ImageId());
 		soapModel.setManualCheckInRequired(model.getManualCheckInRequired());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -351,6 +352,14 @@ public class DLFileEntrySoap implements Serializable {
 		_manualCheckInRequired = manualCheckInRequired;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _fileEntryId;
 	private long _groupId;
@@ -380,4 +389,5 @@ public class DLFileEntrySoap implements Serializable {
 	private long _custom1ImageId;
 	private long _custom2ImageId;
 	private boolean _manualCheckInRequired;
+	private Date _lastPublishDate;
 }

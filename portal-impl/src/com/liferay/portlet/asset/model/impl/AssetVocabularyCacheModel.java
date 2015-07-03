@@ -66,7 +66,7 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -92,6 +92,8 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		sb.append(description);
 		sb.append(", settings=");
 		sb.append(settings);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -162,6 +164,13 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 			assetVocabularyImpl.setSettings(settings);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			assetVocabularyImpl.setLastPublishDate(null);
+		}
+		else {
+			assetVocabularyImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		assetVocabularyImpl.resetOriginalValues();
 
 		return assetVocabularyImpl;
@@ -181,6 +190,7 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		settings = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -235,6 +245,8 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		else {
 			objectOutput.writeUTF(settings);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -249,4 +261,5 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 	public String title;
 	public String description;
 	public String settings;
+	public long lastPublishDate;
 }

@@ -457,6 +457,20 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the last publish date of this message boards thread.
+	 *
+	 * @return the last publish date of this message boards thread
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this message boards thread.
+	 *
+	 * @param lastPublishDate the last publish date of this message boards thread
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the trash entry created when this message boards thread was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards thread.
 	 *
 	 * @return the trash entry created when this message boards thread was moved to the Recycle Bin

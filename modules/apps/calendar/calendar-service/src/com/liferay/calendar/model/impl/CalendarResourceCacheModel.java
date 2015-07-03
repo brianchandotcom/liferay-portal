@@ -66,7 +66,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -100,6 +100,8 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		sb.append(description);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -176,6 +178,13 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 
 		calendarResourceImpl.setActive(active);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			calendarResourceImpl.setLastPublishDate(null);
+		}
+		else {
+			calendarResourceImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		calendarResourceImpl.resetOriginalValues();
 
 		return calendarResourceImpl;
@@ -199,6 +208,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		active = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -258,6 +268,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		}
 
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -276,4 +287,5 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 	public String name;
 	public String description;
 	public boolean active;
+	public long lastPublishDate;
 }

@@ -59,6 +59,7 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setSmallImage(model.getSmallImage());
 		soapModel.setSmallImageId(model.getSmallImageId());
 		soapModel.setSmallImageURL(model.getSmallImageURL());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -319,6 +320,14 @@ public class DDMTemplateSoap implements Serializable {
 		_smallImageURL = smallImageURL;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _templateId;
 	private long _groupId;
@@ -344,4 +353,5 @@ public class DDMTemplateSoap implements Serializable {
 	private boolean _smallImage;
 	private long _smallImageId;
 	private String _smallImageURL;
+	private Date _lastPublishDate;
 }

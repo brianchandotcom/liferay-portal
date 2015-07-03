@@ -4087,6 +4087,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		calendarImpl.setDefaultCalendar(calendar.isDefaultCalendar());
 		calendarImpl.setEnableComments(calendar.isEnableComments());
 		calendarImpl.setEnableRatings(calendar.isEnableRatings());
+		calendarImpl.setLastPublishDate(calendar.getLastPublishDate());
 
 		return calendarImpl;
 	}

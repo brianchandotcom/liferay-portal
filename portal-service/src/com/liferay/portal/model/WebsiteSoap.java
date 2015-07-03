@@ -47,6 +47,7 @@ public class WebsiteSoap implements Serializable {
 		soapModel.setUrl(model.getUrl());
 		soapModel.setTypeId(model.getTypeId());
 		soapModel.setPrimary(model.getPrimary());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -207,6 +208,14 @@ public class WebsiteSoap implements Serializable {
 		_primary = primary;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _websiteId;
@@ -220,4 +229,5 @@ public class WebsiteSoap implements Serializable {
 	private String _url;
 	private long _typeId;
 	private boolean _primary;
+	private Date _lastPublishDate;
 }

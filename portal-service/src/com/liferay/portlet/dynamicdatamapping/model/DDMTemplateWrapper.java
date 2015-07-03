@@ -80,6 +80,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("smallImage", getSmallImage());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -234,6 +235,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		if (smallImageURL != null) {
 			setSmallImageURL(smallImageURL);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -419,6 +426,16 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public java.lang.String getLanguage() {
 		return _ddmTemplate.getLanguage();
+	}
+
+	/**
+	* Returns the last publish date of this d d m template.
+	*
+	* @return the last publish date of this d d m template
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _ddmTemplate.getLastPublishDate();
 	}
 
 	/**
@@ -945,6 +962,16 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public void setLanguage(java.lang.String language) {
 		_ddmTemplate.setLanguage(language);
+	}
+
+	/**
+	* Sets the last publish date of this d d m template.
+	*
+	* @param lastPublishDate the last publish date of this d d m template
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddmTemplate.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

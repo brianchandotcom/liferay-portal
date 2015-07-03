@@ -44,6 +44,7 @@ public class MBDiscussionSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setThreadId(model.getThreadId());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -184,6 +185,14 @@ public class MBDiscussionSoap implements Serializable {
 		_threadId = threadId;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _discussionId;
 	private long _groupId;
@@ -195,4 +204,5 @@ public class MBDiscussionSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private long _threadId;
+	private Date _lastPublishDate;
 }

@@ -145,6 +145,8 @@ public class MDRActionPersistenceTest {
 
 		newMDRAction.setTypeSettings(RandomTestUtil.randomString());
 
+		newMDRAction.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_mdrActions.add(_persistence.update(newMDRAction));
 
 		MDRAction existingMDRAction = _persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
@@ -178,6 +180,9 @@ public class MDRActionPersistenceTest {
 		Assert.assertEquals(existingMDRAction.getType(), newMDRAction.getType());
 		Assert.assertEquals(existingMDRAction.getTypeSettings(),
 			newMDRAction.getTypeSettings());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRAction.getLastPublishDate()),
+			Time.getShortTimestamp(newMDRAction.getLastPublishDate()));
 	}
 
 	@Test
@@ -242,7 +247,7 @@ public class MDRActionPersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "ruleGroupInstanceId", true,
 			"name", true, "description", true, "type", true, "typeSettings",
-			true);
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -487,6 +492,8 @@ public class MDRActionPersistenceTest {
 		mdrAction.setType(RandomTestUtil.randomString());
 
 		mdrAction.setTypeSettings(RandomTestUtil.randomString());
+
+		mdrAction.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_mdrActions.add(_persistence.update(mdrAction));
 

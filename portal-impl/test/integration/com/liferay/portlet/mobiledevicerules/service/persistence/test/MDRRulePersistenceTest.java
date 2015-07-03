@@ -141,6 +141,8 @@ public class MDRRulePersistenceTest {
 
 		newMDRRule.setTypeSettings(RandomTestUtil.randomString());
 
+		newMDRRule.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_mdrRules.add(_persistence.update(newMDRRule));
 
 		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
@@ -168,6 +170,9 @@ public class MDRRulePersistenceTest {
 		Assert.assertEquals(existingMDRRule.getType(), newMDRRule.getType());
 		Assert.assertEquals(existingMDRRule.getTypeSettings(),
 			newMDRRule.getTypeSettings());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRule.getLastPublishDate()),
+			Time.getShortTimestamp(newMDRRule.getLastPublishDate()));
 	}
 
 	@Test
@@ -231,7 +236,7 @@ public class MDRRulePersistenceTest {
 			"ruleId", true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"ruleGroupId", true, "name", true, "description", true, "type",
-			true, "typeSettings", true);
+			true, "typeSettings", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -470,6 +475,8 @@ public class MDRRulePersistenceTest {
 		mdrRule.setType(RandomTestUtil.randomString());
 
 		mdrRule.setTypeSettings(RandomTestUtil.randomString());
+
+		mdrRule.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_mdrRules.add(_persistence.update(mdrRule));
 

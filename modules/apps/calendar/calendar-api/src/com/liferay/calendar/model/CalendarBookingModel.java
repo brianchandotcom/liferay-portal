@@ -707,6 +707,20 @@ public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the last publish date of this calendar booking.
+	 *
+	 * @return the last publish date of this calendar booking
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this calendar booking.
+	 *
+	 * @param lastPublishDate the last publish date of this calendar booking
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the trash entry created when this calendar booking was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this calendar booking.
 	 *
 	 * @return the trash entry created when this calendar booking was moved to the Recycle Bin

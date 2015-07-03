@@ -79,6 +79,7 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 		attributes.put("remindBy", getRemindBy());
 		attributes.put("firstReminder", getFirstReminder());
 		attributes.put("secondReminder", getSecondReminder());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -222,6 +223,12 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 		if (secondReminder != null) {
 			setSecondReminder(secondReminder);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -337,6 +344,16 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 	@Override
 	public long getGroupId() {
 		return _calEvent.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this cal event.
+	*
+	* @return the last publish date of this cal event
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _calEvent.getLastPublishDate();
 	}
 
 	/**
@@ -675,6 +692,16 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 	@Override
 	public void setGroupId(long groupId) {
 		_calEvent.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this cal event.
+	*
+	* @param lastPublishDate the last publish date of this cal event
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_calEvent.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

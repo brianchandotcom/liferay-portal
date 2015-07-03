@@ -72,6 +72,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("priority", getPriority());
 		attributes.put("alert", getAlert());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -178,6 +179,12 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 
 		if (alert != null) {
 			setAlert(alert);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -301,6 +308,16 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsEntry.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this announcements entry.
+	*
+	* @return the last publish date of this announcements entry
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _announcementsEntry.getLastPublishDate();
 	}
 
 	/**
@@ -559,6 +576,16 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		_announcementsEntry.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Sets the last publish date of this announcements entry.
+	*
+	* @param lastPublishDate the last publish date of this announcements entry
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_announcementsEntry.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

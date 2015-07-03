@@ -341,6 +341,20 @@ public interface DDMContentModel extends BaseModel<DDMContent>, LocalizedModel,
 	 */
 	public void setData(String data);
 
+	/**
+	 * Returns the last publish date of this d d m content.
+	 *
+	 * @return the last publish date of this d d m content
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this d d m content.
+	 *
+	 * @param lastPublishDate the last publish date of this d d m content
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

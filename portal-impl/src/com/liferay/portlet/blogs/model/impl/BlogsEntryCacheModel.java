@@ -66,7 +66,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -124,6 +124,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -262,6 +264,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			blogsEntryImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			blogsEntryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		blogsEntryImpl.resetOriginalValues();
 
 		return blogsEntryImpl;
@@ -297,6 +306,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -408,6 +418,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -438,4 +449,5 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

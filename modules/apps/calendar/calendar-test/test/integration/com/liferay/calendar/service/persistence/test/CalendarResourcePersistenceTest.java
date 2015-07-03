@@ -152,6 +152,8 @@ public class CalendarResourcePersistenceTest {
 
 		newCalendarResource.setActive(RandomTestUtil.randomBoolean());
 
+		newCalendarResource.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_calendarResources.add(_persistence.update(newCalendarResource));
 
 		CalendarResource existingCalendarResource = _persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
@@ -190,6 +192,9 @@ public class CalendarResourcePersistenceTest {
 			newCalendarResource.getDescription());
 		Assert.assertEquals(existingCalendarResource.getActive(),
 			newCalendarResource.getActive());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendarResource.getLastPublishDate()),
+			Time.getShortTimestamp(newCalendarResource.getLastPublishDate()));
 	}
 
 	@Test
@@ -317,7 +322,7 @@ public class CalendarResourcePersistenceTest {
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "resourceBlockId", true, "classNameId", true,
 			"classPK", true, "classUuid", true, "code", true, "name", true,
-			"description", true, "active", true);
+			"description", true, "active", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -573,6 +578,8 @@ public class CalendarResourcePersistenceTest {
 		calendarResource.setDescription(RandomTestUtil.randomString());
 
 		calendarResource.setActive(RandomTestUtil.randomBoolean());
+
+		calendarResource.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_calendarResources.add(_persistence.update(calendarResource));
 

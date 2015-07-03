@@ -69,6 +69,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -163,6 +164,12 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -275,6 +282,16 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public Date getLastPostDate() {
 		return _wikiNode.getLastPostDate();
+	}
+
+	/**
+	* Returns the last publish date of this wiki node.
+	*
+	* @return the last publish date of this wiki node
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _wikiNode.getLastPublishDate();
 	}
 
 	/**
@@ -669,6 +686,16 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		_wikiNode.setLastPostDate(lastPostDate);
+	}
+
+	/**
+	* Sets the last publish date of this wiki node.
+	*
+	* @param lastPublishDate the last publish date of this wiki node
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_wikiNode.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

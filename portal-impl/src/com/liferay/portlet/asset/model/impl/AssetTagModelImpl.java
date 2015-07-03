@@ -80,7 +80,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "assetCount", Types.INTEGER }
+			{ "assetCount", Types.INTEGER },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -95,9 +96,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetCount", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetTag (uuid_ VARCHAR(75) null,tagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,assetCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetTag (uuid_ VARCHAR(75) null,tagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,assetCount INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetTag";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetTag.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetTag.name ASC";
@@ -141,6 +143,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setAssetCount(soapModel.getAssetCount());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -224,6 +227,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("assetCount", getAssetCount());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -291,6 +295,12 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 		if (assetCount != null) {
 			setAssetCount(assetCount);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -483,6 +493,17 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		_assetCount = assetCount;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -530,6 +551,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		assetTagImpl.setModifiedDate(getModifiedDate());
 		assetTagImpl.setName(getName());
 		assetTagImpl.setAssetCount(getAssetCount());
+		assetTagImpl.setLastPublishDate(getLastPublishDate());
 
 		assetTagImpl.resetOriginalValues();
 
@@ -663,12 +685,21 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 		assetTagCacheModel.assetCount = getAssetCount();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			assetTagCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			assetTagCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return assetTagCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -690,6 +721,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		sb.append(getName());
 		sb.append(", assetCount=");
 		sb.append(getAssetCount());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -697,7 +730,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.asset.model.AssetTag");
@@ -743,6 +776,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 			"<column><column-name>assetCount</column-name><column-value><![CDATA[");
 		sb.append(getAssetCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -770,6 +807,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private String _name;
 	private String _originalName;
 	private int _assetCount;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetTag _escapedModel;
 }

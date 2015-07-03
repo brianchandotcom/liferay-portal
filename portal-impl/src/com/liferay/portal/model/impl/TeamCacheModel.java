@@ -79,7 +79,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -103,6 +103,8 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -162,6 +164,13 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 			teamImpl.setDescription(description);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			teamImpl.setLastPublishDate(null);
+		}
+		else {
+			teamImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		teamImpl.resetOriginalValues();
 
 		return teamImpl;
@@ -180,6 +189,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		groupId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -222,6 +232,8 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -235,4 +247,5 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 	public long groupId;
 	public String name;
 	public String description;
+	public long lastPublishDate;
 }

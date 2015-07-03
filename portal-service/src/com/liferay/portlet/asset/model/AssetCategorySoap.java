@@ -49,6 +49,7 @@ public class AssetCategorySoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setVocabularyId(model.getVocabularyId());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -221,6 +222,14 @@ public class AssetCategorySoap implements Serializable {
 		_vocabularyId = vocabularyId;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _categoryId;
 	private long _groupId;
@@ -236,4 +245,5 @@ public class AssetCategorySoap implements Serializable {
 	private String _title;
 	private String _description;
 	private long _vocabularyId;
+	private Date _lastPublishDate;
 }

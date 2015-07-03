@@ -64,6 +64,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("threadId", getThreadId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -123,6 +124,12 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 		if (threadId != null) {
 			setThreadId(threadId);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -169,6 +176,16 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	@Override
 	public long getGroupId() {
 		return _mbThreadFlag.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this message boards thread flag.
+	*
+	* @return the last publish date of this message boards thread flag
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbThreadFlag.getLastPublishDate();
 	}
 
 	/**
@@ -332,6 +349,16 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	@Override
 	public void setGroupId(long groupId) {
 		_mbThreadFlag.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this message boards thread flag.
+	*
+	* @param lastPublishDate the last publish date of this message boards thread flag
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mbThreadFlag.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

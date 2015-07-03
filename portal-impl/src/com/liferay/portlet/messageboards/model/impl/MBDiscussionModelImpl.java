@@ -77,7 +77,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "threadId", Types.BIGINT }
+			{ "threadId", Types.BIGINT },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -93,9 +94,10 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("threadId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBDiscussion";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbDiscussion.discussionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBDiscussion.discussionId ASC";
@@ -169,6 +171,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("threadId", getThreadId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -242,6 +245,12 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 		if (threadId != null) {
 			setThreadId(threadId);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -476,6 +485,16 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				MBDiscussion.class.getName()), getClassNameId());
@@ -523,6 +542,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		mbDiscussionImpl.setClassNameId(getClassNameId());
 		mbDiscussionImpl.setClassPK(getClassPK());
 		mbDiscussionImpl.setThreadId(getThreadId());
+		mbDiscussionImpl.setLastPublishDate(getLastPublishDate());
 
 		mbDiscussionImpl.resetOriginalValues();
 
@@ -664,12 +684,21 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 		mbDiscussionCacheModel.threadId = getThreadId();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			mbDiscussionCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			mbDiscussionCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return mbDiscussionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -693,6 +722,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		sb.append(getClassPK());
 		sb.append(", threadId=");
 		sb.append(getThreadId());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -700,7 +731,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBDiscussion");
@@ -750,6 +781,10 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 			"<column><column-name>threadId</column-name><column-value><![CDATA[");
 		sb.append(getThreadId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -783,6 +818,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	private long _threadId;
 	private long _originalThreadId;
 	private boolean _setOriginalThreadId;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MBDiscussion _escapedModel;
 }

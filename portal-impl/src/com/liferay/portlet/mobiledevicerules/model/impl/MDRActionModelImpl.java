@@ -92,7 +92,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
-			{ "typeSettings", Types.CLOB }
+			{ "typeSettings", Types.CLOB },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -112,9 +113,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MDRAction (uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table MDRAction (uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MDRAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY mdrAction.actionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MDRAction.actionId ASC";
@@ -164,6 +166,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		model.setDescription(soapModel.getDescription());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -243,6 +246,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -340,6 +344,12 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -794,6 +804,17 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_typeSettings = typeSettings;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -928,6 +949,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		mdrActionImpl.setDescription(getDescription());
 		mdrActionImpl.setType(getType());
 		mdrActionImpl.setTypeSettings(getTypeSettings());
+		mdrActionImpl.setLastPublishDate(getLastPublishDate());
 
 		mdrActionImpl.resetOriginalValues();
 
@@ -1093,12 +1115,21 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 			mdrActionCacheModel.typeSettings = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			mdrActionCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			mdrActionCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return mdrActionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1130,6 +1161,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		sb.append(getType());
 		sb.append(", typeSettings=");
 		sb.append(getTypeSettings());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1137,7 +1170,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.mobiledevicerules.model.MDRAction");
@@ -1203,6 +1236,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
 		sb.append(getTypeSettings());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1238,6 +1275,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	private String _descriptionCurrentLanguageId;
 	private String _type;
 	private String _typeSettings;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MDRAction _escapedModel;
 }

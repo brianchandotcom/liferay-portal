@@ -66,7 +66,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -134,6 +134,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -295,6 +297,13 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			journalArticleImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			journalArticleImpl.setLastPublishDate(null);
+		}
+		else {
+			journalArticleImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		journalArticleImpl.resetOriginalValues();
 
 		journalArticleImpl.setDefaultLanguageId(_defaultLanguageId);
@@ -340,6 +349,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 
 		_defaultLanguageId = (java.lang.String)objectInput.readObject();
 		_document = (com.liferay.portal.kernel.xml.Document)objectInput.readObject();
@@ -464,6 +474,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeObject(_defaultLanguageId);
 		objectOutput.writeObject(_document);
@@ -502,6 +513,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 	public java.lang.String _defaultLanguageId;
 	public com.liferay.portal.kernel.xml.Document _document;
 }

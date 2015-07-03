@@ -336,9 +336,11 @@ public class LiferaySerializer extends AbstractSerializer {
 					Object value = null;
 
 					try {
-						value = ser.unmarshall(
-							serializerState, field.getType(),
-							serializableJSONObject.get(fieldName));
+						if (serializableJSONObject.has(fieldName)) {
+							value = ser.unmarshall(
+								serializerState, field.getType(),
+								serializableJSONObject.get(fieldName));
+						}
 					}
 					catch (Exception e) {
 					}

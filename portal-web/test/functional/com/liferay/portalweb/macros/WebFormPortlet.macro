@@ -37,13 +37,17 @@
 	</command>
 
 	<command name="deleteEditableField">
-		<execute macro="WebFormPortlet#viewEditableField" />
+		<execute macro="WebFormPortlet#viewEditableField">
+			<var name="wfFieldName" value="${wfFieldName}" />
+		</execute>
 
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute function="DoubleClick" locator1="PGWebformConfiguration#SETUP_FORM_FIELDS_DELETE_ROW_BUTTON" />
 
-		<execute macro="WebFormPortlet#viewEditableFieldNotVisibleCmd" />
+		<execute macro="WebFormPortlet#viewEditableFieldNotVisibleCmd">
+			<var name="wfFieldName" value="${wfFieldName}" />
+		</execute>
 	</command>
 
 	<command name="editField">

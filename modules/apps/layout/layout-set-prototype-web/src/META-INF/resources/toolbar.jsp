@@ -27,8 +27,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 			<portlet:renderURL var="addLayoutSetPrototypeURL">
 				<portlet:param name="mvcPath" value="/edit_layout_set_prototype.jsp" />
-				<portlet:param name="redirect" value="<%= viewLayoutSetPrototypesURL %>" />
-				<portlet:param name="backURL" value="<%= viewLayoutSetPrototypesURL %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item href="<%= addLayoutSetPrototypeURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />

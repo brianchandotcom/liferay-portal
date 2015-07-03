@@ -19,7 +19,11 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
 
 LayoutSetPrototype layoutSetPrototype = null;
 
@@ -54,7 +58,7 @@ Group group = themeDisplay.getSiteGroup();
 
 <c:if test="<%= !group.isLayoutSetPrototype() %>">
 	<liferay-ui:header
-		backURL="<%= backURL %>"
+		backURL="<%= redirect %>"
 		localizeTitle="<%= layoutSetPrototype.isNew() %>"
 		title='<%= layoutSetPrototype.isNew() ? "new-site-template" : layoutSetPrototype.getName(locale) %>'
 	/>

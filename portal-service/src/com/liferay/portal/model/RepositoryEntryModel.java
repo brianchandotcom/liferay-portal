@@ -271,6 +271,20 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	 */
 	public void setManualCheckInRequired(boolean manualCheckInRequired);
 
+	/**
+	 * Returns the last publish date of this repository entry.
+	 *
+	 * @return the last publish date of this repository entry
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this repository entry.
+	 *
+	 * @param lastPublishDate the last publish date of this repository entry
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

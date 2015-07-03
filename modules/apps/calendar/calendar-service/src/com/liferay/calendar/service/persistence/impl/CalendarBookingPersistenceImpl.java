@@ -5814,6 +5814,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		calendarBookingImpl.setStatusByUserId(calendarBooking.getStatusByUserId());
 		calendarBookingImpl.setStatusByUserName(calendarBooking.getStatusByUserName());
 		calendarBookingImpl.setStatusDate(calendarBooking.getStatusDate());
+		calendarBookingImpl.setLastPublishDate(calendarBooking.getLastPublishDate());
 
 		return calendarBookingImpl;
 	}

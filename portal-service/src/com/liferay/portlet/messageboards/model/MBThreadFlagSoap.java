@@ -42,6 +42,7 @@ public class MBThreadFlagSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setThreadId(model.getThreadId());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -166,6 +167,14 @@ public class MBThreadFlagSoap implements Serializable {
 		_threadId = threadId;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _threadFlagId;
 	private long _groupId;
@@ -175,4 +184,5 @@ public class MBThreadFlagSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _threadId;
+	private Date _lastPublishDate;
 }

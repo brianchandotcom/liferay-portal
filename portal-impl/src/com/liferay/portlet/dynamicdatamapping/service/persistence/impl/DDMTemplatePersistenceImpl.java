@@ -12146,6 +12146,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplateImpl.setSmallImage(ddmTemplate.isSmallImage());
 		ddmTemplateImpl.setSmallImageId(ddmTemplate.getSmallImageId());
 		ddmTemplateImpl.setSmallImageURL(ddmTemplate.getSmallImageURL());
+		ddmTemplateImpl.setLastPublishDate(ddmTemplate.getLastPublishDate());
 
 		return ddmTemplateImpl;
 	}

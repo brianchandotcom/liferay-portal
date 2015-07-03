@@ -147,6 +147,8 @@ public class AnnouncementsEntryPersistenceTest {
 
 		newAnnouncementsEntry.setAlert(RandomTestUtil.randomBoolean());
 
+		newAnnouncementsEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_announcementsEntries.add(_persistence.update(newAnnouncementsEntry));
 
 		AnnouncementsEntry existingAnnouncementsEntry = _persistence.findByPrimaryKey(newAnnouncementsEntry.getPrimaryKey());
@@ -189,6 +191,9 @@ public class AnnouncementsEntryPersistenceTest {
 			newAnnouncementsEntry.getPriority());
 		Assert.assertEquals(existingAnnouncementsEntry.getAlert(),
 			newAnnouncementsEntry.getAlert());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAnnouncementsEntry.getLastPublishDate()),
+			Time.getShortTimestamp(newAnnouncementsEntry.getLastPublishDate()));
 	}
 
 	@Test
@@ -260,7 +265,8 @@ public class AnnouncementsEntryPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "title", true, "content",
 			true, "url", true, "type", true, "displayDate", true,
-			"expirationDate", true, "priority", true, "alert", true);
+			"expirationDate", true, "priority", true, "alert", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -494,6 +500,8 @@ public class AnnouncementsEntryPersistenceTest {
 		announcementsEntry.setPriority(RandomTestUtil.nextInt());
 
 		announcementsEntry.setAlert(RandomTestUtil.randomBoolean());
+
+		announcementsEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_announcementsEntries.add(_persistence.update(announcementsEntry));
 

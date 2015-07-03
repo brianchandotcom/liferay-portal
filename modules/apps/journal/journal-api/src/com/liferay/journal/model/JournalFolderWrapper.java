@@ -72,6 +72,7 @@ public class JournalFolderWrapper implements JournalFolder,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -178,6 +179,12 @@ public class JournalFolderWrapper implements JournalFolder,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -291,6 +298,16 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public long getGroupId() {
 		return _journalFolder.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this journal folder.
+	*
+	* @return the last publish date of this journal folder
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _journalFolder.getLastPublishDate();
 	}
 
 	/**
@@ -716,6 +733,16 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public void setGroupId(long groupId) {
 		_journalFolder.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this journal folder.
+	*
+	* @param lastPublishDate the last publish date of this journal folder
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_journalFolder.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

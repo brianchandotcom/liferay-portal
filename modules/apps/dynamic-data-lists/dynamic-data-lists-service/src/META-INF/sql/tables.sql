@@ -12,7 +12,8 @@ create table DDLRecord (
 	DDMStorageId LONG,
 	recordSetId LONG,
 	version VARCHAR(75) null,
-	displayIndex INTEGER
+	displayIndex INTEGER,
+	lastPublishDate DATE null
 );
 
 create table DDLRecordSet (
@@ -29,7 +30,8 @@ create table DDLRecordSet (
 	name STRING null,
 	description STRING null,
 	minDisplayRows INTEGER,
-	scope INTEGER
+	scope INTEGER,
+	lastPublishDate DATE null
 );
 
 create table DDLRecordVersion (

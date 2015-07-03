@@ -66,7 +66,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -106,6 +106,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		sb.append(storageType);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -204,6 +206,13 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setType(type);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			ddmStructureImpl.setLastPublishDate(null);
+		}
+		else {
+			ddmStructureImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		ddmStructureImpl.resetOriginalValues();
 
 		ddmStructureImpl.setDDMForm(_ddmForm);
@@ -235,6 +244,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		definition = objectInput.readUTF();
 		storageType = objectInput.readUTF();
 		type = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 
 		_ddmForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
 		_fullHierarchyDDMForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
@@ -319,6 +329,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		}
 
 		objectOutput.writeInt(type);
+		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeObject(_ddmForm);
 		objectOutput.writeObject(_fullHierarchyDDMForm);
@@ -343,6 +354,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String definition;
 	public String storageType;
 	public int type;
+	public long lastPublishDate;
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _ddmForm;
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _fullHierarchyDDMForm;
 }

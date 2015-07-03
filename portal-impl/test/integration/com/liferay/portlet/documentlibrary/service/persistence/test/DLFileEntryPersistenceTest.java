@@ -173,6 +173,8 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setManualCheckInRequired(RandomTestUtil.randomBoolean());
 
+		newDLFileEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_dlFileEntries.add(_persistence.update(newDLFileEntry));
 
 		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(newDLFileEntry.getPrimaryKey());
@@ -237,6 +239,9 @@ public class DLFileEntryPersistenceTest {
 			newDLFileEntry.getCustom2ImageId());
 		Assert.assertEquals(existingDLFileEntry.getManualCheckInRequired(),
 			newDLFileEntry.getManualCheckInRequired());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFileEntry.getLastPublishDate()),
+			Time.getShortTimestamp(newDLFileEntry.getLastPublishDate()));
 	}
 
 	@Test
@@ -440,7 +445,7 @@ public class DLFileEntryPersistenceTest {
 			true, "extraSettings", true, "fileEntryTypeId", true, "version",
 			true, "size", true, "readCount", true, "smallImageId", true,
 			"largeImageId", true, "custom1ImageId", true, "custom2ImageId",
-			true, "manualCheckInRequired", true);
+			true, "manualCheckInRequired", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -743,6 +748,8 @@ public class DLFileEntryPersistenceTest {
 		dlFileEntry.setCustom2ImageId(RandomTestUtil.nextLong());
 
 		dlFileEntry.setManualCheckInRequired(RandomTestUtil.randomBoolean());
+
+		dlFileEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_dlFileEntries.add(_persistence.update(dlFileEntry));
 

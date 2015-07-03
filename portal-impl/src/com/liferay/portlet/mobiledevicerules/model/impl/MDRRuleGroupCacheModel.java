@@ -66,7 +66,7 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,8 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -144,6 +146,13 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 			mdrRuleGroupImpl.setDescription(description);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			mdrRuleGroupImpl.setLastPublishDate(null);
+		}
+		else {
+			mdrRuleGroupImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		mdrRuleGroupImpl.resetOriginalValues();
 
 		return mdrRuleGroupImpl;
@@ -161,6 +170,7 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -201,6 +211,8 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -213,4 +225,5 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 	public long modifiedDate;
 	public String name;
 	public String description;
+	public long lastPublishDate;
 }

@@ -4852,6 +4852,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		assetTagImpl.setModifiedDate(assetTag.getModifiedDate());
 		assetTagImpl.setName(assetTag.getName());
 		assetTagImpl.setAssetCount(assetTag.getAssetCount());
+		assetTagImpl.setLastPublishDate(assetTag.getLastPublishDate());
 
 		return assetTagImpl;
 	}

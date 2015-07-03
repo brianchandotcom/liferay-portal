@@ -44,6 +44,7 @@ public class RatingsEntrySoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setScore(model.getScore());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -176,6 +177,14 @@ public class RatingsEntrySoap implements Serializable {
 		_score = score;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _entryId;
 	private long _companyId;
@@ -186,4 +195,5 @@ public class RatingsEntrySoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private double _score;
+	private Date _lastPublishDate;
 }

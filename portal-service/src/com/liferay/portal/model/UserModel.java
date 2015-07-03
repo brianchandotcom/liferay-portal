@@ -718,6 +718,20 @@ public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
 	 */
 	public void setStatus(int status);
 
+	/**
+	 * Returns the last publish date of this user.
+	 *
+	 * @return the last publish date of this user
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this user.
+	 *
+	 * @param lastPublishDate the last publish date of this user
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

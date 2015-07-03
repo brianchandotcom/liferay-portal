@@ -84,6 +84,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		attributes.put("custom1ImageId", getCustom1ImageId());
 		attributes.put("custom2ImageId", getCustom2ImageId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -263,6 +264,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 
 		if (manualCheckInRequired != null) {
 			setManualCheckInRequired(manualCheckInRequired);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -526,6 +533,16 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public long getLargeImageId() {
 		return _dlFileEntry.getLargeImageId();
+	}
+
+	/**
+	* Returns the last publish date of this document library file entry.
+	*
+	* @return the last publish date of this document library file entry
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFileEntry.getLastPublishDate();
 	}
 
 	@Override
@@ -1040,6 +1057,16 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public void setLargeImageId(long largeImageId) {
 		_dlFileEntry.setLargeImageId(largeImageId);
+	}
+
+	/**
+	* Sets the last publish date of this document library file entry.
+	*
+	* @param lastPublishDate the last publish date of this document library file entry
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_dlFileEntry.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

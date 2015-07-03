@@ -706,7 +706,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			</then>
 		</if>
 
-		<ant dir="../portal-service" target="compile" inheritAll="false" />
+
 	</target>
 
 	<target name="build-service-counter">

@@ -138,6 +138,8 @@ public class RepositoryEntryPersistenceTest {
 
 		newRepositoryEntry.setManualCheckInRequired(RandomTestUtil.randomBoolean());
 
+		newRepositoryEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_repositoryEntries.add(_persistence.update(newRepositoryEntry));
 
 		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
@@ -168,6 +170,9 @@ public class RepositoryEntryPersistenceTest {
 			newRepositoryEntry.getMappedId());
 		Assert.assertEquals(existingRepositoryEntry.getManualCheckInRequired(),
 			newRepositoryEntry.getManualCheckInRequired());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingRepositoryEntry.getLastPublishDate()),
+			Time.getShortTimestamp(newRepositoryEntry.getLastPublishDate()));
 	}
 
 	@Test
@@ -240,7 +245,8 @@ public class RepositoryEntryPersistenceTest {
 			"mvccVersion", true, "uuid", true, "repositoryEntryId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "repositoryId",
-			true, "mappedId", true, "manualCheckInRequired", true);
+			true, "mappedId", true, "manualCheckInRequired", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -489,6 +495,8 @@ public class RepositoryEntryPersistenceTest {
 		repositoryEntry.setMappedId(RandomTestUtil.randomString());
 
 		repositoryEntry.setManualCheckInRequired(RandomTestUtil.randomBoolean());
+
+		repositoryEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_repositoryEntries.add(_persistence.update(repositoryEntry));
 

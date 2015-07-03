@@ -444,6 +444,20 @@ public interface CalEventModel extends BaseModel<CalEvent>, StagedGroupedModel {
 	 */
 	public void setSecondReminder(int secondReminder);
 
+	/**
+	 * Returns the last publish date of this cal event.
+	 *
+	 * @return the last publish date of this cal event
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this cal event.
+	 *
+	 * @param lastPublishDate the last publish date of this cal event
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

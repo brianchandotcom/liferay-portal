@@ -176,6 +176,8 @@ public class CalendarBookingPersistenceTest {
 
 		newCalendarBooking.setStatusDate(RandomTestUtil.nextDate());
 
+		newCalendarBooking.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_calendarBookings.add(_persistence.update(newCalendarBooking));
 
 		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(newCalendarBooking.getPrimaryKey());
@@ -239,6 +241,9 @@ public class CalendarBookingPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarBooking.getStatusDate()),
 			Time.getShortTimestamp(newCalendarBooking.getStatusDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendarBooking.getLastPublishDate()),
+			Time.getShortTimestamp(newCalendarBooking.getLastPublishDate()));
 	}
 
 	@Test
@@ -368,7 +373,7 @@ public class CalendarBookingPersistenceTest {
 			"recurrence", true, "firstReminder", true, "firstReminderType",
 			true, "secondReminder", true, "secondReminderType", true, "status",
 			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"statusDate", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -656,6 +661,8 @@ public class CalendarBookingPersistenceTest {
 		calendarBooking.setStatusByUserName(RandomTestUtil.randomString());
 
 		calendarBooking.setStatusDate(RandomTestUtil.nextDate());
+
+		calendarBooking.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_calendarBookings.add(_persistence.update(calendarBooking));
 

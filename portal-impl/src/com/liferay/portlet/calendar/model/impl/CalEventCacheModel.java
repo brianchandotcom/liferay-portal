@@ -67,7 +67,7 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -115,6 +115,8 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 		sb.append(firstReminder);
 		sb.append(", secondReminder=");
 		sb.append(secondReminder);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -217,6 +219,13 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 		calEventImpl.setFirstReminder(firstReminder);
 		calEventImpl.setSecondReminder(secondReminder);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			calEventImpl.setLastPublishDate(null);
+		}
+		else {
+			calEventImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		calEventImpl.resetOriginalValues();
 
 		return calEventImpl;
@@ -247,6 +256,7 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 		remindBy = objectInput.readInt();
 		firstReminder = objectInput.readInt();
 		secondReminder = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -321,6 +331,7 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 		objectOutput.writeInt(remindBy);
 		objectOutput.writeInt(firstReminder);
 		objectOutput.writeInt(secondReminder);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -346,4 +357,5 @@ public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable 
 	public int remindBy;
 	public int firstReminder;
 	public int secondReminder;
+	public long lastPublishDate;
 }

@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -584,6 +586,23 @@ public class AssetPublisherDisplayContext {
 		return assetLinkBehavior.equals("viewInPortlet");
 	}
 
+	public boolean isDefaultAssetPublisher() {
+		if (_defaultAssetPublisher != null) {
+			return _defaultAssetPublisher;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(
+			themeDisplay.getLayout(), portletDisplay.getId(),
+			getPortletResource());
+
+		return _defaultAssetPublisher;
+	}
+
 	public boolean isEnableCommentRatings() {
 		if (_enableCommentRatings == null) {
 			_enableCommentRatings = GetterUtil.getBoolean(
@@ -988,6 +1007,25 @@ public class AssetPublisherDisplayContext {
 		_displayStyle = displayStyle;
 	}
 
+	public void setLayoutAssetEntry(AssetEntry assetEntry)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String defaultAssetPublisherPortletId =
+			AssetUtil.getDefaultAssetPublisherId(themeDisplay.getLayout());
+
+		if (isDefaultAssetPublisher() ||
+			Validator.isNull(defaultAssetPublisherPortletId) ||
+			!PortletPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				defaultAssetPublisherPortletId, ActionKeys.VIEW)) {
+
+			_request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+		}
+	}
+
 	public void setSelectionStyle(String selectionStyle) {
 		_selectionStyle = selectionStyle;
 	}
@@ -1104,6 +1142,7 @@ public class AssetPublisherDisplayContext {
 	private String _ddmStructureFieldLabel;
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
+	private Boolean _defaultAssetPublisher;
 	private Integer _delta;
 	private String _displayStyle;
 	private Long _displayStyleGroupId;

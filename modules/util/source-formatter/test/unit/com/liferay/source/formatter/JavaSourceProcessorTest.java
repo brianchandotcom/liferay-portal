@@ -233,6 +233,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUnassignedVariables() throws Exception {
+		test("UnassignedVariables.testjava");
+	}
+
+	@Test
 	public void testUnusedImport() throws Exception {
 		test("UnusedImport.testjava");
 	}

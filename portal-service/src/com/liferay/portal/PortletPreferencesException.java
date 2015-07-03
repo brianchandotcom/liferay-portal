@@ -20,4 +20,25 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Pei-Jung Lan
  */
 public class PortletPreferencesException extends PortalException {
+
+	public static class MustBeStrictPortlet
+		extends PortletPreferencesException {
+
+		public MustBeStrictPortlet(String portletId) {
+			super(
+				String.format(
+					"Portlet preferences for portlet %s must be an instance " +
+					"of StrictPortletPreferencesImpl", portletId));
+
+			this.portletId = portletId;
+		}
+
+		public final String portletId;
+
+	}
+
+	private PortletPreferencesException(String msg) {
+		super(msg);
+	}
+
 }

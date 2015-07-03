@@ -912,6 +912,27 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
+	public String updateFileName(String fileName, String counterSuffixValue) {
+		String extension = getExtension(fileName);
+
+		fileName = fileName.substring(
+			0, (fileName.length() - 1) - extension.length());
+
+		String counterSuffix =
+			StringPool.OPEN_PARENTHESIS + counterSuffixValue +
+				StringPool.CLOSE_PARENTHESIS;
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(fileName);
+		sb.append(counterSuffix);
+		sb.append(StringPool.PERIOD);
+		sb.append(extension);
+
+		return sb.toString();
+	}
+
+	@Override
 	public void write(File file, byte[] bytes) throws IOException {
 		write(file, bytes, 0, bytes.length, false);
 	}

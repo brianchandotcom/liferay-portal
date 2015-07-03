@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -925,7 +926,7 @@ public class AssetPublisherUtil {
 			Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
 			if (scopeGroup == null) {
-				throw new PrincipalException();
+				throw new NoSuchGroupException();
 			}
 
 			return scopeGroupId;

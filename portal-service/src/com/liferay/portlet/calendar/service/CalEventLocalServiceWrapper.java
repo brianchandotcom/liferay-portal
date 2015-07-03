@@ -23,8 +23,10 @@ import com.liferay.portal.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see CalEventLocalService
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventLocalServiceWrapper implements CalEventLocalService,
 	ServiceWrapper<CalEventLocalService> {

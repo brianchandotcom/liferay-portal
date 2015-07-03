@@ -35,8 +35,10 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * @see CalEventLocalServiceUtil
  * @see com.liferay.portlet.calendar.service.base.CalEventLocalServiceBaseImpl
  * @see com.liferay.portlet.calendar.service.impl.CalEventLocalServiceImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

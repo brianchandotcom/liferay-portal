@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventFinderUtil {
 	public static int countByG_SD_T(long groupId, java.util.Date startDateGT,

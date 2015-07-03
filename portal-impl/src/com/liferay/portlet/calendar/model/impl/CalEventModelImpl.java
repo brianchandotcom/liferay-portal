@@ -55,8 +55,10 @@ import java.util.Map;
  * @see CalEventImpl
  * @see CalEvent
  * @see CalEventModel
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	implements CalEventModel {

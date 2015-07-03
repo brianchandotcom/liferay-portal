@@ -32,8 +32,10 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see CalEvent
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 	public CalEventWrapper(CalEvent calEvent) {

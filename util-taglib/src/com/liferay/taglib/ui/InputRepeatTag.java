@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,14 +28,9 @@ public class InputRepeatTag extends IncludeTag {
 		_cssClass = cssClass;
 	}
 
-	public void setEvent(CalEvent event) {
-		_event = event;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_cssClass = null;
-		_event = null;
 	}
 
 	@Override
@@ -47,12 +41,10 @@ public class InputRepeatTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:input-repeat:cssClass", _cssClass);
-		request.setAttribute("liferay-ui:input-repeat:event", _event);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/input_repeat/page.jsp";
 
 	private String _cssClass;
-	private CalEvent _event;
 
 }

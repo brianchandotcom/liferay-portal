@@ -74,6 +74,7 @@ public class VerifyCalendar extends VerifyProcess {
 					"'null')");
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void verifyNoAssets() throws Exception {
 		List<CalEvent> events = CalEventLocalServiceUtil.getNoAssetEvents();
 

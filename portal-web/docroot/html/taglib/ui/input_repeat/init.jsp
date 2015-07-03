@@ -16,5 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.cal.DayAndPosition" %><%@
-page import="com.liferay.portlet.calendar.model.CalEvent" %>
+<%@ page import="com.liferay.portal.kernel.cal.DayAndPosition" %>

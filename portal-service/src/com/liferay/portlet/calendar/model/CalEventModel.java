@@ -39,8 +39,10 @@ import java.util.Date;
  * @see CalEvent
  * @see com.liferay.portlet.calendar.model.impl.CalEventImpl
  * @see com.liferay.portlet.calendar.model.impl.CalEventModelImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CalEventModel extends BaseModel<CalEvent>, StagedGroupedModel {
 	/*

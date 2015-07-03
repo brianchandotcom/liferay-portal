@@ -21,13 +21,14 @@ import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 
@@ -92,8 +93,11 @@ public class BlogsEntryAtomCollectionAdapter
 
 	@Override
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
 		return AtomUtil.createFeedTitleFromPortletName(
-			atomRequestContext, PortletKeys.BLOGS);
+			atomRequestContext, portletId);
 	}
 
 	@Override

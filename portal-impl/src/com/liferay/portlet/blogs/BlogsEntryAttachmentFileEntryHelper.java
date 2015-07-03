@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.BlogsConstants;
 
 import java.io.InputStream;
 
@@ -128,8 +128,8 @@ public class BlogsEntryAttachmentFileEntryHelper {
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
-			PortletKeys.BLOGS, folder.getFolderId(), is, fileName, mimeType,
-			true);
+			BlogsConstants.SERVICE_NAME, folder.getFolderId(), is, fileName,
+			mimeType, true);
 	}
 
 	protected String getBlogsEntryAttachmentFileEntryImgTag(

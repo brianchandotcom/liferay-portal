@@ -15,11 +15,13 @@
 package com.liferay.portlet.blogs.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.blogs.model.BlogsEntry;
 
 /**
  * @author Jorge Ferrer
@@ -43,9 +45,11 @@ public class BlogsPermission extends BaseResourcePermissionChecker {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.EDIT);
+
 		return contains(
-			permissionChecker, RESOURCE_NAME, PortletKeys.BLOGS, classPK,
-			actionId);
+			permissionChecker, RESOURCE_NAME, portletId, classPK, actionId);
 	}
 
 	@Override

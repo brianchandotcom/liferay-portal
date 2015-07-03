@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
@@ -37,7 +38,6 @@ import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.journal.web.constants.JournalPortletKeys;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -1999,7 +1999,8 @@ public class DataFactory {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
 		layoutModels.add(newLayoutModel(groupId, "welcome", "58,", "47,"));
-		layoutModels.add(newLayoutModel(groupId, "blogs", "", "33,"));
+		layoutModels.add(
+			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
 		layoutModels.add(
 			newLayoutModel(groupId, "document_library", "", "20,"));
 		layoutModels.add(newLayoutModel(groupId, "forums", "", "19,"));

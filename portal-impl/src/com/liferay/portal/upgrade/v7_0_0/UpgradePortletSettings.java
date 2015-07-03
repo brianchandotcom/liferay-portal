@@ -140,7 +140,7 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		// Main portlets
 
 		upgradeMainPortlet(
-			PortletKeys.BLOGS, BlogsConstants.SERVICE_NAME,
+			"33", BlogsConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,

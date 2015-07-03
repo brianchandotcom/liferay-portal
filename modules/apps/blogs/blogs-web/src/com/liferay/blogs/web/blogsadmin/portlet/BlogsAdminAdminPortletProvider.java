@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.mentions.web.editor.configuration;
+package com.liferay.blogs.web.blogsadmin.portlet;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.ManagePortletProvider;
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,14 +26,20 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {
-		"editor.config.key=contentEditor", "editor.name=alloyeditor",
-		"editor.name=ckeditor", "javax.portlet.name=" + BlogsPortletKeys.BLOGS,
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
-		"service.ranking:Integer=10"
-	},
-	service = EditorConfigContributor.class
+	immediate = true,
+	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	service = {
+		EditPortletProvider.class, ManagePortletProvider.class,
+		ViewPortletProvider.class
+	}
 )
-public class BlogsMentionsEditorConfigContributor
-	extends BaseMentionsEditorConfigContributor {
+public class BlogsAdminAdminPortletProvider
+	extends BasePortletProvider
+	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+
+	@Override
+	public String getPortletId() {
+		return BlogsPortletKeys.BLOGS_ADMIN;
+	}
+
 }

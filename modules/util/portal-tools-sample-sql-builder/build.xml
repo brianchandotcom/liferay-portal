@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../apps/dynamic-data-lists/dynamic-data-lists-api,../apps/dynamic-data-lists/dynamic-data-lists-service,../apps/dynamic-data-lists/dynamic-data-lists-web,../apps/journal/journal-web,../apps/wiki/wiki-api,../apps/wiki/wiki-service" />
+	<property name="import.shared" value="../apps/blogs/blogs-web,../apps/dynamic-data-lists/dynamic-data-lists-api,../apps/dynamic-data-lists/dynamic-data-lists-service,../apps/dynamic-data-lists/dynamic-data-lists-web,../apps/journal/journal-web,../apps/wiki/wiki-api,../apps/wiki/wiki-service" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

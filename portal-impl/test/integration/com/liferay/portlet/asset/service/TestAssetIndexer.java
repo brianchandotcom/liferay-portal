@@ -14,14 +14,14 @@
 
 package com.liferay.portlet.asset.service;
 
-import com.liferay.portlet.blogs.util.BlogsEntryIndexer;
+import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 
 import org.junit.Assert;
 
 /**
  * @author Michael C. Han
  */
-public class TestAssetIndexer extends BlogsEntryIndexer {
+public class TestAssetIndexer extends OrganizationIndexer {
 
 	@Override
 	public void reindex(String className, long classPK) {

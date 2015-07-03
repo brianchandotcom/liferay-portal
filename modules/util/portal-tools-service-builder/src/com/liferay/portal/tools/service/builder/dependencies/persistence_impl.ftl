@@ -110,8 +110,16 @@ import java.util.Set;
  * @author ${author}
  * @see ${entity.name}Persistence
  * @see ${packagePath}.service.persistence.${entity.name}Util
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 @ProviderType
 public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.name}> implements ${entity.name}Persistence {
 

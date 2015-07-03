@@ -887,17 +887,18 @@ public class ServiceBuilder {
 							_createHbm(entity);
 							_createHbmUtil(entity);
 
-							_createPersistenceImpl(entity);
+							JavaClass modelImplJavaClass = _getJavaClass(
+								_outputPath + "/model/impl/" +
+									entity.getName() + "Impl.java");
+
+							_createPersistenceImpl(entity, modelImplJavaClass);
 							_createPersistence(entity);
 							_createPersistenceUtil(entity);
 
 							if (Validator.isNotNull(_testDirName)) {
-								_createPersistenceTest(entity);
+								_createPersistenceTest(
+									entity, modelImplJavaClass);
 							}
-
-							JavaClass modelImplJavaClass = _getJavaClass(
-								_outputPath + "/model/impl/" +
-									entity.getName() + "Impl.java");
 
 							_createModelImpl(entity, modelImplJavaClass);
 							_createExtendedModelBaseImpl(
@@ -2819,6 +2820,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplPersistence, context);
@@ -2832,11 +2835,16 @@ public class ServiceBuilder {
 		writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createPersistenceImpl(Entity entity) throws Exception {
+	private void _createPersistenceImpl(
+			Entity entity, JavaClass modelImplJavaClass)
+		throws Exception {
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 		context.put("referenceList", _mergeReferenceList(entity));
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
 		// Content
 
@@ -2865,10 +2873,15 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createPersistenceTest(Entity entity) throws Exception {
+	private void _createPersistenceTest(
+			Entity entity, JavaClass modelImplJavaClass)
+		throws Exception {
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
 		// Content
 
@@ -2902,6 +2915,8 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
+
+		context = _putDeprecatedKeys(context, javaClass);
 
 		// Content
 

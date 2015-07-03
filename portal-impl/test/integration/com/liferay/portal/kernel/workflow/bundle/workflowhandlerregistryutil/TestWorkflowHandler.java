@@ -32,8 +32,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -141,6 +142,14 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 	}
 
 	@Override
+	public boolean include(
+		long classPK, HttpServletRequest request, HttpServletResponse response,
+		String template) {
+
+		return false;
+	}
+
+	@Override
 	public boolean isAssetTypeSearchable() {
 		return false;
 	}
@@ -153,14 +162,6 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 	@Override
 	public boolean isVisible() {
 		return false;
-	}
-
-	@Override
-	public String render(
-		long classPK, RenderRequest renderRequest,
-		RenderResponse renderResponse, String template) {
-
-		return null;
 	}
 
 	@Override

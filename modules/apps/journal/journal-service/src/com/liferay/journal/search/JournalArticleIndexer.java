@@ -287,6 +287,8 @@ public class JournalArticleIndexer
 						Property ddmStructureKey = PropertyFactoryUtil.forName(
 							"DDMStructureKey");
 
+						dynamicQuery.add(ddmStructureKey.in(ddmStructureKeys));
+
 						if (!JournalServiceConfigurationValues.
 								JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 
@@ -300,11 +302,10 @@ public class JournalArticleIndexer
 
 							dynamicQuery.add(statusProperty.in(statuses));
 						}
-
-						dynamicQuery.add(ddmStructureKey.in(ddmStructureKeys));
 					}
 
 				});
+
 			actionableDynamicQuery.setPerformActionMethod(
 				new ActionableDynamicQuery.PerformActionMethod() {
 

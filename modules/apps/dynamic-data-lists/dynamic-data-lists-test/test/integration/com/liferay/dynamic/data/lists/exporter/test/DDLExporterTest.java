@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.lists.exporter.DDLExporterFactoryUtil;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.test.util.DDMTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -55,16 +56,12 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import java.io.File;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -90,7 +87,7 @@ public class DDLExporterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_availableLocales = DDMFormTestUtil.createAvailableLocales(Locale.US);
+		_availableLocales = new Locale[] {Locale.US};
 		_defaultLocale = Locale.US;
 		_group = GroupTestUtil.addGroup();
 
@@ -112,13 +109,13 @@ public class DDLExporterTest {
 
 	@Test
 	public void testCSVExport() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			_availableLocales, _defaultLocale);
+		DDMForm ddmForm = DDMTestUtil.createDDMForm(
+			_defaultLocale, _availableLocales);
 
 		createDDMFormFields(ddmForm);
 
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm, _availableLocales, _defaultLocale);
+		DDMFormValues ddmFormValues = DDMTestUtil.createDDMFormValues(
+			ddmForm, _defaultLocale, _availableLocales);
 
 		createDDMFormFieldValues(ddmFormValues);
 
@@ -146,13 +143,13 @@ public class DDLExporterTest {
 
 	@Test
 	public void testXMLExport() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			_availableLocales, _defaultLocale);
+		DDMForm ddmForm = DDMTestUtil.createDDMForm(
+			_defaultLocale, _availableLocales);
 
 		createDDMFormFields(ddmForm);
 
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm, _availableLocales, _defaultLocale);
+		DDMFormValues ddmFormValues = DDMTestUtil.createDDMFormValues(
+			ddmForm, _defaultLocale, _availableLocales);
 
 		createDDMFormFieldValues(ddmFormValues);
 
@@ -179,11 +176,8 @@ public class DDLExporterTest {
 	}
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(_group);
-
-		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+		DDMStructure ddmStructure = DDMTestUtil.addDDMStructure(
+			_group.getGroupId(), ddmForm, StorageType.JSON.toString());
 
 		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
 			_group);
@@ -194,7 +188,7 @@ public class DDLExporterTest {
 	protected DDMFormField createDDMFormField(
 		String name, String type, String dataType) {
 
-		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+		DDMFormField ddmFormField = DDMTestUtil.createDDMFormField(
 			name, name, type, dataType, true, false, false);
 
 		if (type.equals("radio") || type.equals("select")) {
@@ -230,8 +224,7 @@ public class DDLExporterTest {
 			Value fieldValue = createDDMFormFieldValue(_fieldValues.get(type));
 
 			ddmFormValues.addDDMFormFieldValue(
-				DDMFormValuesTestUtil.createDDMFormFieldValue(
-					fieldName, fieldValue));
+				DDMTestUtil.createDDMFormFieldValue(fieldName, fieldValue));
 		}
 	}
 
@@ -372,7 +365,7 @@ public class DDLExporterTest {
 		});
 	}
 
-	private Set<Locale> _availableLocales;
+	private Locale[] _availableLocales;
 	private Map<DDMFormFieldType, String> _ddmFormFieldDataTypes;
 	private Locale _defaultLocale;
 	private Map<DDMFormFieldType, String> _fieldValues;

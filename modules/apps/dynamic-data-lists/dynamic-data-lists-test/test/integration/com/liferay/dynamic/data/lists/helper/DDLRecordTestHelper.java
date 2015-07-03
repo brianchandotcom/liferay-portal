@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.test.util.DDMTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -29,7 +30,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
 
 /**
  * @author Marcellus Tavares
@@ -49,10 +49,8 @@ public class DDLRecordTestHelper {
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm,
-			DDMFormValuesTestUtil.createAvailableLocales(LocaleUtil.US),
-			LocaleUtil.US);
+		DDMFormValues ddmFormValues = DDMTestUtil.createDDMFormValues(
+			ddmForm, LocaleUtil.US, LocaleUtil.US);
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			if (ddmFormField.isLocalizable()) {
@@ -90,15 +88,13 @@ public class DDLRecordTestHelper {
 	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
 		String name, String enValue) {
 
-		return DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
-			name, enValue);
+		return DDMTestUtil.createLocalizedDDMFormFieldValue(name, enValue);
 	}
 
 	protected DDMFormFieldValue createUnlocalizedDDMFormFieldValue(
 		String name, String value) {
 
-		return DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-			name, value);
+		return DDMTestUtil.createUnlocalizedDDMFormFieldValue(name, value);
 	}
 
 	private final Group _group;

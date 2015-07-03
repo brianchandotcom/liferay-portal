@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.taglib.ddm;
 
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;

@@ -522,7 +522,7 @@ public class Recurrence implements Serializable {
 	 * Method setDtStart
 	 */
 	public void setDtStart(Calendar start) {
-		int oldStart;
+		int oldStart = 0;
 
 		if (dtStart != null) {
 			oldStart = dtStart.getFirstDayOfWeek();
@@ -944,9 +944,7 @@ public class Recurrence implements Serializable {
 			return true;
 		}
 
-		int i;
-
-		for (i = 0; i < byDay.length; i++) {
+		for (int i = 0; i < byDay.length; i++) {
 			if (matchesIndividualByDay(candidate, byDay[i])) {
 				return true;
 			}
@@ -970,10 +968,8 @@ public class Recurrence implements Serializable {
 			return true;
 		}
 
-		int i;
-
-		for (i = 0; i < array.length; i++) {
-			int val;
+		for (int i = 0; i < array.length; i++) {
+			int val = 0;
 
 			if (allowNegative && (array[i] < 0)) {
 

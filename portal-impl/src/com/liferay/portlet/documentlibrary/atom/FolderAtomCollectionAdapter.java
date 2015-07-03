@@ -118,7 +118,7 @@ public class FolderAtomCollectionAdapter
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long repositoryId;
+		long repositoryId = 0L;
 
 		long parentFolderId = atomRequestContext.getLongParameter(
 			"parentFolderId");
@@ -150,7 +150,7 @@ public class FolderAtomCollectionAdapter
 			AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		long repositoryId;
+		long repositoryId = 0L;
 
 		long parentFolderId = atomRequestContext.getLongParameter(
 			"parentFolderId");

@@ -226,7 +226,8 @@ public class RuntimeChecker extends BaseChecker {
 			}
 
 			logSecurityException(
-				_log, "Attempted to " + permission.getName() + " on " +
+				_log,
+				"Attempted to " + permission.getName() + " on " +
 					permission.getActions());
 
 			return false;

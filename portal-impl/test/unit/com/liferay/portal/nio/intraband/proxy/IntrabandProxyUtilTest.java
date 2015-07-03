@@ -2211,7 +2211,7 @@ public class IntrabandProxyUtilTest {
 			class TestValidateClass5 {
 
 				@SuppressWarnings("unused")
-				int _proxyType;
+				int _proxyType = 0;
 			}
 
 			try {

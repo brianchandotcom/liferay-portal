@@ -289,8 +289,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 						project, Constants.BUNDLE_SYMBOLICNAME);
 
 					properties.put(
-						Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName +
-							".wsdd");
+						Constants.BUNDLE_SYMBOLICNAME,
+						bundleSymbolicName + ".wsdd");
 					properties.put(Constants.FRAGMENT_HOST, bundleSymbolicName);
 					properties.put(
 						Constants.IMPORT_PACKAGE,
@@ -487,7 +487,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	protected void configureBundleExtension(Project project) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
-		Properties bundleProperties;
+		Properties bundleProperties = null;
 
 		try {
 			bundleProperties = FileUtil.readProperties(project, "bnd.bnd");

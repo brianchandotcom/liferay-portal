@@ -1747,7 +1747,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 					String oldDependencyName = file.getName();
 
-					String newDependencyName;
+					String newDependencyName = null;
 
 					String suffix =
 						"-" + moduleVersionIdentifier.getVersion() + ".jar";

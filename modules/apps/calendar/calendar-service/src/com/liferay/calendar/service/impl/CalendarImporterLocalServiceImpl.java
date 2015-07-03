@@ -714,7 +714,7 @@ public class CalendarImporterLocalServiceImpl
 		long entryId1 = 0;
 		long entryId2 = 0;
 
-		AssetEntry linkedAssetEntry;
+		AssetEntry linkedAssetEntry = null;
 
 		if (assetLink.getEntryId1() == oldEntryId) {
 			entryId1 = newEntryId;

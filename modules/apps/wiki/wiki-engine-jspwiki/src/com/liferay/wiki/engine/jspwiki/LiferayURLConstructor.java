@@ -66,7 +66,7 @@ public class LiferayURLConstructor implements URLConstructor {
 			parameters = StringPool.BLANK;
 		}
 
-		String path;
+		String path = null;
 
 		if (context.equals(WikiContext.EDIT)) {
 			path =

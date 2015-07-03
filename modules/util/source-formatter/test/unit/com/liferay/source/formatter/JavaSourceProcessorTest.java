@@ -107,10 +107,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
-				"line break:", "line break:", "line break:", "line break:"
+				"line break:", "line break:", "line break:", "line break:",
+				"line break:"
 			},
 			new Integer[] {
-				23, 27, 31, 38, 42, 45, 48, 52, 55, 60, 66, 70, 76, 84, 87, 94
+				23, 27, 31, 38, 42, 46, 49, 52, 56, 59, 64, 70, 74, 80, 88, 91,
+				98
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}
@@ -228,6 +230,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testTruncateLongLines() throws Exception {
 		test("TruncateLongLines.testjava");
+	}
+
+	@Test
+	public void testUnassignedVariables() throws Exception {
+		test("UnassignedVariables.testjava");
 	}
 
 	@Test

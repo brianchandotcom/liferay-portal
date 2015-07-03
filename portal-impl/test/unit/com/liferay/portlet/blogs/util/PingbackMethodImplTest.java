@@ -532,7 +532,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 			_blogsEntry
 		);
 
-		String name;
+		String name = null;
 
 		if (namespace == null) {
 			name = "entryId";

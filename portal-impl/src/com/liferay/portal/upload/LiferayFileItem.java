@@ -149,7 +149,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 	}
 
 	private static String _getUniqueId() {
-		int current;
+		int current = 0;
 
 		synchronized (LiferayFileItem.class) {
 			current = _counter++;

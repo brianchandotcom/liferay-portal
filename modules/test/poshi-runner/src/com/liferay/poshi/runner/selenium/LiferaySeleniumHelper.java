@@ -266,7 +266,7 @@ public class LiferaySeleniumHelper {
 
 				Element throwableElement = eventElement.element("throwable");
 
-				Exception exception;
+				Exception exception = null;
 
 				if (throwableElement != null) {
 					exception = new Exception(

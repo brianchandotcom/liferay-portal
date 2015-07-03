@@ -24,6 +24,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +76,8 @@ public class BlogsItemSelectorViewDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createActionURL(
 			PortletKeys.BLOGS);
 
-		portletURL.setParameter("struts_action", "/blogs/cover_image_selector");
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
 
 		return portletURL;
 	}

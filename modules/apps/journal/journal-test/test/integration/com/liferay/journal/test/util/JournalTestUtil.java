@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -59,6 +60,7 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -656,6 +658,81 @@ public class JournalTestUtil {
 		return JournalArticleLocalServiceUtil.expireArticle(
 			article.getUserId(), article.getGroupId(), article.getArticleId(),
 			version, null, ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	public static String getSampleStructuredContent() {
+		return getSampleStructuredContent("name", "title");
+	}
+
+	public static String getSampleStructuredContent(
+		Map<Locale, String> contents, String defaultLanguageId) {
+
+		return getSampleStructuredContent(
+			"name", Collections.singletonList(contents), defaultLanguageId);
+	}
+
+	public static String getSampleStructuredContent(String keywords) {
+		return getSampleStructuredContent("name", keywords);
+	}
+
+	public static String getSampleStructuredContent(
+		String name, List<Map<Locale, String>> contents,
+		String defaultLanguageId) {
+
+		StringBundler availableLocales = new StringBundler(2 * contents.size());
+
+		for (Map<Locale, String> map : contents) {
+			StringBundler sb = new StringBundler(2 * map.size());
+
+			for (Locale locale : map.keySet()) {
+				sb.append(LocaleUtil.toLanguageId(locale));
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			availableLocales.append(sb);
+		}
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		rootElement.addAttribute(
+			"available-locales", availableLocales.toString());
+		rootElement.addAttribute("default-locale", defaultLanguageId);
+		rootElement.addElement("request");
+
+		for (Map<Locale, String> map : contents) {
+			Element dynamicElementElement = rootElement.addElement(
+				"dynamic-element");
+
+			dynamicElementElement.addAttribute("index-type", "keyword");
+			dynamicElementElement.addAttribute("name", name);
+			dynamicElementElement.addAttribute("type", "text");
+
+			for (Map.Entry<Locale, String> entry : map.entrySet()) {
+				Element element = dynamicElementElement.addElement(
+					"dynamic-content");
+
+				element.addAttribute(
+					"language-id", LocaleUtil.toLanguageId(entry.getKey()));
+				element.addCDATA(entry.getValue());
+			}
+		}
+
+		return document.asXML();
+	}
+
+	public static String getSampleStructuredContent(
+		String name, String keywords) {
+
+		Map<Locale, String> contents = new HashMap<>();
+
+		contents.put(Locale.US, keywords);
+
+		return getSampleStructuredContent(
+			name, Collections.singletonList(contents), "en_US");
 	}
 
 	public static String getSampleTemplateXSL() {

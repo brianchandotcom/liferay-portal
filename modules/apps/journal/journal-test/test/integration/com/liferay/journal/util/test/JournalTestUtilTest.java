@@ -41,8 +41,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -80,14 +78,13 @@ public class JournalTestUtilTest {
 	public void testAddArticleWithDDMStructureAndDDMTemplate()
 		throws Exception {
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent();
+		String content = JournalTestUtil.getSampleStructuredContent();
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(
 			JournalArticle.class.getName());
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
-			JournalTestUtil.getSampleTemplateXSL());
+		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
+			ddmStructure.getStructureId());
 
 		Assert.assertNotNull(
 			JournalTestUtil.addArticleWithXMLContent(
@@ -117,26 +114,26 @@ public class JournalTestUtilTest {
 	@Test
 	public void testAddDDMStructure() throws Exception {
 		Assert.assertNotNull(
-			DDMStructureTestUtil.addStructure(JournalArticle.class.getName()));
+			JournalTestUtil.addDDMStructure(JournalArticle.class.getName()));
 	}
 
 	@Test
 	public void testAddDDMStructureWithDefinition() throws Exception {
 		Assert.assertNotNull(
-			DDMStructureTestUtil.addStructure(JournalArticle.class.getName()));
+			JournalTestUtil.addDDMStructure(JournalArticle.class.getName()));
 	}
 
 	@Test
 	public void testAddDDMStructureWithDefinitionAndLocale() throws Exception {
 		Assert.assertNotNull(
-			DDMStructureTestUtil.addStructure(
+			JournalTestUtil.addDDMStructure(
 				JournalArticle.class.getName(), LocaleUtil.getSiteDefault()));
 	}
 
 	@Test
 	public void testAddDDMStructureWithLocale() throws Exception {
 		Assert.assertNotNull(
-			DDMStructureTestUtil.addStructure(
+			JournalTestUtil.addDDMStructure(
 				JournalArticle.class.getName(), LocaleUtil.getSiteDefault()));
 	}
 
@@ -150,7 +147,7 @@ public class JournalTestUtilTest {
 				PortalUtil.getDefaultCompanyId(), Arrays.asList(LocaleUtil.US),
 				LocaleUtil.US);
 
-			DDMStructureTestUtil.addStructure(
+			JournalTestUtil.addDDMStructure(
 				JournalArticle.class.getName(), LocaleUtil.CANADA);
 		}
 		finally {
@@ -162,24 +159,22 @@ public class JournalTestUtilTest {
 
 	@Test
 	public void testAddDDMTemplateToDDMStructure() throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(
 			JournalArticle.class.getName());
 
 		Assert.assertNotNull(
-			DDMTemplateTestUtil.addTemplate(ddmStructure.getStructureId()));
+			JournalTestUtil.addDDMTemplate(ddmStructure.getStructureId()));
 	}
 
 	@Test
 	public void testAddDDMTemplateToDDMStructureWithXSLAndLanguage()
 		throws Exception {
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(
 			JournalArticle.class.getName());
 
 		Assert.assertNotNull(
-			DDMTemplateTestUtil.addTemplate(
-				ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
-				JournalTestUtil.getSampleTemplateXSL()));
+			JournalTestUtil.addDDMTemplate(ddmStructure.getStructureId()));
 	}
 
 	@Test
@@ -189,7 +184,7 @@ public class JournalTestUtilTest {
 		contents.put(LocaleUtil.BRAZIL, "Joe Bloggs");
 		contents.put(LocaleUtil.US, "Joe Bloggs");
 
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+		String xml = JournalTestUtil.getSampleStructuredContent(
 			contents, LanguageUtil.getLanguageId(LocaleUtil.US));
 
 		String content = JournalUtil.transform(
@@ -220,7 +215,7 @@ public class JournalTestUtilTest {
 
 	@Test
 	public void testGetSampleStructuredContent() throws Exception {
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+		String xml = JournalTestUtil.getSampleStructuredContent(
 			"name", "Joe Bloggs");
 
 		String content = JournalUtil.transform(
@@ -234,7 +229,7 @@ public class JournalTestUtilTest {
 
 	@Test
 	public void testGetSampleStructureDefinition() {
-		Assert.assertNotNull(DDMStructureTestUtil.getSampleDDMForm());
+		Assert.assertNotNull(JournalTestUtil.getSampleDDMForm());
 	}
 
 	@Test
@@ -255,9 +250,8 @@ public class JournalTestUtilTest {
 		String defaultLanguageId = LanguageUtil.getLanguageId(
 			LocaleUtil.getSiteDefault());
 
-		String localizedContent =
-			DDMStructureTestUtil.getSampleStructuredContent(
-				contents, defaultLanguageId);
+		String localizedContent = JournalTestUtil.getSampleStructuredContent(
+			contents, defaultLanguageId);
 
 		Assert.assertNotNull(
 			JournalTestUtil.updateArticle(

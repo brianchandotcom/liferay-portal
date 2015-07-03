@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Test
 Bundle-Version: 7.0.0
 Export-Package:\
+	com.liferay.portal.kernel.locale.test,\
 	com.liferay.portal.kernel.test,\
 	com.liferay.portal.kernel.test.randomizerbumpers,\
 	com.liferay.portal.kernel.test.rule,\

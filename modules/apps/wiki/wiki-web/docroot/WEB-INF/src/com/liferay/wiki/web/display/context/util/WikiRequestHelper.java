@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
@@ -52,7 +52,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	public WikiGroupServiceSettings getWikiGroupServiceSettings() {
 		try {
 			if (_wikiGroupServiceSettings == null) {
-				String portletId = getPortletId();
+				String portletResource = getPortletResource();
 
 				WikiWebComponentProvider wikiWebComponentProvider =
 					WikiWebComponentProvider.getWikiWebComponentProvider();
@@ -60,7 +60,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 				SettingsFactory settingsFactory =
 					wikiWebComponentProvider.getSettingsFactory();
 
-				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+				if (Validator.isNotNull(portletResource)) {
 					_wikiGroupServiceSettings = settingsFactory.getSettings(
 						WikiGroupServiceSettings.class,
 						new ParameterMapSettingsLocator(
@@ -96,7 +96,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	public WikiPortletInstanceSettings getWikiPortletInstanceSettings() {
 		try {
 			if (_wikiPortletInstanceSettings == null) {
-				String portletId = getPortletId();
+				String portletResource = getPortletResource();
 
 				WikiWebComponentProvider wikiWebComponentProvider =
 					WikiWebComponentProvider.getWikiWebComponentProvider();
@@ -104,7 +104,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 				SettingsFactory settingsFactory =
 					wikiWebComponentProvider.getSettingsFactory();
 
-				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+				if (Validator.isNotNull(portletResource)) {
 					_wikiPortletInstanceSettings = settingsFactory.getSettings(
 						WikiPortletInstanceSettings.class,
 						new ParameterMapSettingsLocator(

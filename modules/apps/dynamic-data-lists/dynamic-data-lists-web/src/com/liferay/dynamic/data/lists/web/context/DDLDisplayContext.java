@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -31,7 +32,6 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
@@ -60,9 +60,7 @@ public class DDLDisplayContext {
 
 		_portletPreferences = renderRequest.getPreferences();
 
-		String portletId = PortalUtil.getPortletId(renderRequest);
-
-		if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+		if (Validator.isNotNull(getPortletResource())) {
 			return;
 		}
 
@@ -327,6 +325,14 @@ public class DDLDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getId();
+	}
+
+	protected String getPortletResource() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getPortletResource();
 	}
 
 	protected long getScopeGroupId() {

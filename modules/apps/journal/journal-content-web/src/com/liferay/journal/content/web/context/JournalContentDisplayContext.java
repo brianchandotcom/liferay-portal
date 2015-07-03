@@ -45,7 +45,6 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -84,9 +83,7 @@ public class JournalContentDisplayContext {
 		_portletResponse = portletResponse;
 		_portletPreferences = portletPreferences;
 
-		String portletId = PortalUtil.getPortletId(portletRequest);
-
-		if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+		if (Validator.isNotNull(getPortletResource())) {
 			return;
 		}
 

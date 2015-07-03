@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.display.context.util;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
@@ -25,7 +26,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
 
 import java.util.Locale;
@@ -188,9 +188,9 @@ public abstract class BaseRequestHelper {
 
 	public String getResourcePortletId() {
 		if (_resourcePortletId == null) {
-			String portletId = getPortletId();
+			String portletResource = getPortletResource();
 
-			if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+			if (Validator.isNotNull(portletResource)) {
 				_resourcePortletId = getPortletResource();
 			}
 			else {
@@ -203,10 +203,10 @@ public abstract class BaseRequestHelper {
 
 	public String getResourcePortletName() {
 		if (_resourcePortletName == null) {
-			String portletId = getPortletId();
+			String portletResource = getPortletResource();
 
-			if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-				_resourcePortletName = getPortletResource();
+			if (Validator.isNull(portletResource)) {
+				_resourcePortletName = portletResource;
 			}
 			else {
 				_resourcePortletName = getPortletName();

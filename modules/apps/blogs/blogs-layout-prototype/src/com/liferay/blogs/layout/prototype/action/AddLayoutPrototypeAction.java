@@ -14,17 +14,18 @@
 
 package com.liferay.blogs.layout.prototype.action;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.LayoutPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -79,10 +80,10 @@ public class AddLayoutPrototypeAction {
 		}
 
 		DefaultLayoutPrototypesUtil.addPortletId(
-			layout, PortletKeys.BLOGS, "column-1");
+			layout, BlogsPortletKeys.BLOGS, "column-1");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
-			layout, PortletKeys.RECENT_BLOGGERS, "column-2");
+			layout, BlogsPortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
 	@Reference(unbind = "-")
@@ -97,6 +98,12 @@ public class AddLayoutPrototypeAction {
 		LayoutPrototypeLocalService layoutPrototypeLocalService) {
 
 		_layoutPrototypeLocalService = layoutPrototypeLocalService;
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=com.liferay.blogs.web.blogs.portlet.BlogsPortlet)"
+	)
+	protected void setPortlet(Portlet portlet) {
 	}
 
 	@Reference(target = "(original.bean=*)", unbind = "-")

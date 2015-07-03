@@ -14,14 +14,6 @@
 				imageTPL: React.PropTypes.string
 			},
 
-			componentWillUnmount: function() {
-				var instance = this;
-
-				if (instance._itemSelectorDialog) {
-					instance._itemSelectorDialog.destroy();
-				}
-			},
-
 			getDefaultProps: function() {
 				return {
 					imageTPL: new CKEDITOR.template('<img src="{src}" />')
@@ -68,6 +60,19 @@
 				return el;
 			},
 
+			_destroyItemSelectorDialog: function() {
+				var instance = this;
+
+				if (instance._itemSelectorDialog) {
+					setTimeout(
+						function() {
+							instance._itemSelectorDialog.destroy();
+						},
+						0
+					);
+				}
+			},
+
 			_handleClick: function() {
 				var instance = this;
 
@@ -87,6 +92,8 @@
 								{
 									after: {
 										selectedItemChange: A.bind('_onSelectedItemChange', instance),
+										selectedItemUploadComplete: A.bind('_destroyItemSelectorDialog', instance),
+										selectedItemUploadError: A.bind('_destroyItemSelectorDialog', instance),
 										selectedItemUploadStart: A.bind('_onSelectedItemUploadStart', instance)
 									},
 									eventName: eventName,
@@ -120,6 +127,8 @@
 						}
 					);
 				}
+
+				instance._destroyItemSelectorDialog();
 			},
 
 			_onSelectedItemUploadStart: function(event) {

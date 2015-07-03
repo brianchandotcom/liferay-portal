@@ -33,10 +33,6 @@ if (layoutPrototype == null) {
 }
 %>
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="toolbarItem" value='<%= layoutPrototype.isNew() ? "add" : StringPool.BLANK %>' />
-</liferay-util:include>
-
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= layoutPrototype.isNew() %>"

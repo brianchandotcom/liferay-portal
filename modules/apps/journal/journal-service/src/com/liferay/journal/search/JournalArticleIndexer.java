@@ -317,9 +317,15 @@ public class JournalArticleIndexer
 						if (!JournalServiceConfigurationValues.
 								JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 
-							article =
-								_journalArticleLocalService.getLatestArticle(
+							JournalArticle latestIndexableArticle =
+								fetchLatestIndexableArticleVersion(
 									article.getResourcePrimKey());
+
+							if (latestIndexableArticle == null) {
+								return;
+							}
+
+							article = latestIndexableArticle;
 						}
 
 						try {

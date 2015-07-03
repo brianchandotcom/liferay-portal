@@ -140,35 +140,33 @@ AUI.add(
 					_onImageDrop: function(event) {
 						var instance = this;
 
-						var file = event.data.file;
-						var image = event.data.el.$;
+						var eventData = event.data;
+
+						var file = eventData.file;
+						var image = eventData.el.$;
 
 						image = A.one(image);
 
-						var randomId = event.randomId;
-
-						if (!randomId) {
-							randomId = Date.now() + STR_UNDERSCORE + Liferay.Util.randomInt();
-						}
+						var randomId = eventData.randomId || A.guid();
 
 						image.attr('data-random-id', randomId);
 
 						image.addClass(CSS_UPLOADING_IMAGE);
 
-						file = new A.FileHTML5(file);
+						var uploader = eventData.uploader;
 
-						file.progressbar = instance._createProgressBar(image);
-
-						if (event.uploader) {
-							var uploader = event.uploader;
-
+						if (uploader) {
 							uploader.on('uploadcomplete', instance._onUploadComplete, instance);
 							uploader.on('uploaderror', instance._onUploadError, instance);
 							uploader.on('uploadprogress', instance._onUploadProgress, instance);
 						}
 						else {
+							file = new A.FileHTML5(file);
+
 							instance._uploadImage(file, randomId);
 						}
+
+						file.progressbar = instance._createProgressBar(image);
 					},
 
 					_onUploadComplete: function(event) {

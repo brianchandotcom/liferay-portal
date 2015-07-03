@@ -122,25 +122,29 @@
 				}
 			},
 
-			_onSelectedItemUploadStart: function(item) {
+			_onSelectedItemUploadStart: function(event) {
 				var instance = this;
 
 				var editor = instance.props.editor.get('nativeEditor');
 
 				var eventName = editor.name + 'selectDocument';
 
+				var uploadableItem = event.data;
+
+				var uploadableItemValue = uploadableItem.value;
+
 				Util.getWindow(eventName).onceAfter(
 					'visibleChange',
 					function() {
-						var el = instance._createEl(item.value.base64);
+						var el = instance._createEl(uploadableItemValue.base64);
 
 						editor.fire(
 							'imagedrop',
 							{
 								el: el,
-								file: item.value.file,
-								randomId: item.randomId,
-								uploader: item.uploader
+								file: uploadableItemValue.file,
+								randomId: uploadableItemValue.id,
+								uploader: uploadableItem.uploader
 							}
 						);
 					}

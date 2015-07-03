@@ -202,6 +202,7 @@ AUI.add(
 							value = {
 								base64: preview,
 								file: file,
+								id: A.guid(),
 								uploadURL: dropArea.getData('uploadurl')
 							};
 						}

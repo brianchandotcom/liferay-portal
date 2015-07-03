@@ -7,15 +7,11 @@ AUI.add(
 
 		var STR_BLANK = '';
 
+		var STR_HOST = 'host';
+
 		var STR_UNDERSCORE = '_';
 
 		var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
-
-		var STR_UPLOAD_COMPLETE = 'uploadcomplete';
-
-		var STR_UPLOAD_ERROR = 'uploaderror';
-
-		var STR_UPLOAD_PROGRESS = 'uploadprogress';
 
 		var FileUploader = A.Component.create(
 			{
@@ -35,9 +31,9 @@ AUI.add(
 
 						instance._eventHandles = [
 							host.on('selectedItemChange', instance._onSelectedItemChange, instance),
-							uploader.on(STR_UPLOAD_COMPLETE, instance._onUploadComplete, instance),
-							uploader.on(STR_UPLOAD_ERROR, instance._onUploadError, instance),
-							uploader.on(STR_UPLOAD_PROGRESS, instance._onUploadProgress, instance)
+							uploader.on('uploadcomplete', instance._onUploadComplete, instance),
+							uploader.on('uploaderror', instance._onUploadError, instance),
+							uploader.on('uploadprogress', instance._onUploadProgress, instance)
 						];
 					},
 
@@ -51,7 +47,7 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
-					_getUploader: function() {
+					_getUploader: function(uploadableItem) {
 						var instance = this;
 
 						var uploader = instance._uploader;
@@ -66,6 +62,11 @@ AUI.add(
 							instance._uploader = uploader;
 						}
 
+						if (uploadableItem) {
+							instance._uploader.set('uploadURL', uploadableItem.value.uploadURL);
+							instance._uploader.set('postVarsPerFile', { randomId: uploadableItem.value.id });
+						}
+
 						return uploader;
 					},
 
@@ -77,57 +78,63 @@ AUI.add(
 						if (item.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
 							event.preventDefault();
 
-							var randomId = Date.now() + STR_UNDERSCORE + Liferay.Util.randomInt();
-
-							item.randomId = randomId;
-
-							item.uploader = instance._getUploader();
-
-							var host = instance.get('host');
-
-							host.fire('selectedItemUploadStart', item);
-
-							instance.startUpload(item.value.file, item.value.uploadURL, randomId);
+							instance.startUpload(item);
 						}
 					},
 
 					_onUploadComplete: function(event) {
 						var instance = this;
 
-						instance.fire(STR_UPLOAD_COMPLETE, event.details[0]);
+						var host = instance.get(STR_HOST);
+
+						var eventData = {
+							uploadEvent: event
+						};
+
+						host.fire('selectedItemUploadComplete', event.details[0]);
 					},
 
 					_onUploadError: function(event) {
 						var instance = this;
 
+						var host = instance.get(STR_HOST);
+
 						event.target.cancelUpload();
 
-						instance.fire(STR_UPLOAD_ERROR, event.details[0]);
+						host.fire('selectedItemUploadError', event.details[0]);
 					},
 
 					_onUploadProgress: function(event) {
 						var instance = this;
 
-						instance.fire(STR_UPLOAD_PROGRESS, event.details[0]);
+						var host = instance.get(STR_HOST);
+
+						host.fire('selectedItemUploadProgress', event.details[0]);
 					},
 
-					startUpload: function(file, url, randomId) {
+					startUpload: function(uploadableItem) {
 						var instance = this;
 
-						Object.setPrototypeOf(file, File.prototype);
+						var host = instance.get(STR_HOST);
 
-						file = new A.FileHTML5(file);
+						var uploader = instance._getUploader(uploadableItem);
 
-						var uploader = instance._getUploader();
+						uploadableItem.uploader = uploader;
 
-						uploader.set(
-							'postVarsPerFile',
+						var originalFile = uploadableItem.value.file;
+
+						Object.setPrototypeOf(originalFile, File.prototype);
+
+						uploadableItem.value.file = new A.FileHTML5(originalFile);
+
+						uploader.upload(uploadableItem.value.file);
+
+						host.fire(
+							'selectedItemUploadStart',
 							{
-								randomId: randomId
+								data: uploadableItem
 							}
 						);
-
-						uploader.upload(file, url);
 					}
 				}
 			}

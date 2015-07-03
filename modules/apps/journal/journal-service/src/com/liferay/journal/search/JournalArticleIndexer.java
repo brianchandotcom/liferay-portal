@@ -619,7 +619,9 @@ public class JournalArticleIndexer
 			return;
 		}
 
-		if (allVersions) {
+		if (allVersions || !JournalServiceConfigurationValues.
+				JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+
 			reindexArticleVersions(article);
 		}
 		else {

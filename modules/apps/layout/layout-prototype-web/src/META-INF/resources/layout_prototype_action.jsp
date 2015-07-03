@@ -30,7 +30,6 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 	<c:if test="<%= LayoutPrototypePermissionUtil.contains(permissionChecker, layoutPrototype.getLayoutPrototypeId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 		</portlet:renderURL>
 

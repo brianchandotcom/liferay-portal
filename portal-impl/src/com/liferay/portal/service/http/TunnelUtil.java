@@ -16,21 +16,16 @@ package com.liferay.portal.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.tunnel.TunnelAuthenticationManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.util.Encryptor;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -40,81 +35,23 @@ import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.security.Key;
-
-import javax.crypto.spec.SecretKeySpec;
-
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class TunnelUtil {
 
-	public static Key getSharedSecretKey() throws AuthException {
-		String sharedSecret = PropsValues.TUNNELING_SERVLET_SHARED_SECRET;
-		boolean sharedSecretHex =
-			PropsValues.TUNNELING_SERVLET_SHARED_SECRET_HEX;
-
-		if (Validator.isNull(sharedSecret)) {
-			AuthException authException = new AuthException();
-
-			authException.setType(AuthException.NO_SHARED_SECRET);
-
-			throw authException;
-		}
-
-		byte[] key = null;
-
-		if (sharedSecretHex) {
-			try {
-				key = Hex.decodeHex(sharedSecret.toCharArray());
-			}
-			catch (DecoderException e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
-				}
-
-				AuthException authException = new AuthException();
-
-				authException.setType(AuthException.INVALID_SHARED_SECRET);
-
-				throw authException;
-			}
-		}
-		else {
-			key = sharedSecret.getBytes();
-		}
-
-		if (key.length < 8) {
-			AuthException authException = new AuthException();
-
-			authException.setType(AuthException.INVALID_SHARED_SECRET);
-
-			throw authException;
-		}
-
-		return new SecretKeySpec(
-			key, PropsValues.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM);
-	}
-
 	public static Object invoke(
 			HttpPrincipal httpPrincipal, MethodHandler methodHandler)
 		throws Exception {
 
-		String password = Encryptor.encrypt(
-			getSharedSecretKey(), httpPrincipal.getLogin());
-
-		httpPrincipal.setPassword(password);
-
 		HttpURLConnection httpURLConnection = _getConnection(httpPrincipal);
+
+		TunnelAuthenticationManagerUtil.setCredentials(
+			httpPrincipal.getLogin(), httpURLConnection);
 
 		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				httpURLConnection.getOutputStream())) {
@@ -196,19 +133,6 @@ public class TunnelUtil {
 		httpURLConnection.setUseCaches(false);
 
 		httpURLConnection.setRequestMethod(HttpMethods.POST);
-
-		if (Validator.isNotNull(httpPrincipal.getLogin()) &&
-			Validator.isNotNull(httpPrincipal.getPassword())) {
-
-			String userNameAndPassword =
-				httpPrincipal.getLogin() + StringPool.COLON +
-					httpPrincipal.getPassword();
-
-			httpURLConnection.setRequestProperty(
-				HttpHeaders.AUTHORIZATION,
-				HttpServletRequest.BASIC_AUTH + StringPool.SPACE +
-					Base64.encode(userNameAndPassword.getBytes()));
-		}
 
 		return httpURLConnection;
 	}

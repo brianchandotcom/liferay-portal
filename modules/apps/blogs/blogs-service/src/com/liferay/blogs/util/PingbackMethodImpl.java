@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,7 +43,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.pingback.DisabledPingbackException;
@@ -194,15 +195,21 @@ public class PingbackMethodImpl implements Method {
 
 		StringBundler sb = new StringBundler(5);
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			groupId, PortletKeys.BLOGS);
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		if (Validator.isNull(portletId)) {
+			return serviceContext;
+		}
+
+		String layoutFullURL = PortalUtil.getLayoutFullURL(groupId, portletId);
 
 		sb.append(layoutFullURL);
 
 		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, PortletKeys.BLOGS);
+			companyId, portletId);
 
 		sb.append(portlet.getFriendlyURLMapping());
 		sb.append(StringPool.SLASH);
@@ -236,8 +243,10 @@ public class PingbackMethodImpl implements Method {
 		FriendlyURLMapperThreadLocal.setPRPIdentifiers(
 			new HashMap<String, String>());
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortletKeys.BLOGS);
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
 		FriendlyURLMapper friendlyURLMapper =
 			portlet.getFriendlyURLMapperInstance();
@@ -313,8 +322,10 @@ public class PingbackMethodImpl implements Method {
 		String[] paramArray = params.get(name);
 
 		if (paramArray == null) {
-			String namespace = PortalUtil.getPortletNamespace(
-				PortletKeys.BLOGS);
+			String portletId = PortletProviderUtil.getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
+			String namespace = PortalUtil.getPortletNamespace(portletId);
 
 			paramArray = params.get(namespace + name);
 		}

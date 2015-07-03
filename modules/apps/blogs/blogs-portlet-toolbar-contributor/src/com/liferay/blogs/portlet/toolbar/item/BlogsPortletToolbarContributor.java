@@ -24,7 +24,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.util.ArrayList;
@@ -77,7 +76,7 @@ public class BlogsPortletToolbarContributor
 		urlMenuItem.setIcon("icon-plus-sign-2");
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.BLOGS, themeDisplay.getPlid(),
+			portletRequest, BlogsPortletKeys.BLOGS, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");

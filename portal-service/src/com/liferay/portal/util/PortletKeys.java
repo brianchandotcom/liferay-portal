@@ -31,12 +31,6 @@ public class PortletKeys {
 
 	public static final String BACKGROUND_TASK = "189";
 
-	public static final String BLOGS = "33";
-
-	public static final String BLOGS_ADMIN = "161";
-
-	public static final String BLOGS_AGGREGATOR = "115";
-
 	public static final String CALENDAR = "8";
 
 	public static final String CHAT = "1_WAR_chatportlet";
@@ -157,8 +151,6 @@ public class PortletKeys {
 	public static final int PREFS_OWNER_TYPE_USER = 4;
 
 	public static final long PREFS_PLID_SHARED = 0;
-
-	public static final String RECENT_BLOGGERS = "114";
 
 	public static final String RECENT_DOCUMENTS = "64";
 

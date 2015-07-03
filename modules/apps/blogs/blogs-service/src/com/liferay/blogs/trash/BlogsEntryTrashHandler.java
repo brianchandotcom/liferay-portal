@@ -15,13 +15,14 @@
 package com.liferay.blogs.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -108,15 +109,17 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			boolean isContainerModel)
 		throws PortalException {
 
-		String portletId = PortletKeys.BLOGS;
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			entry.getGroupId(), PortletKeys.BLOGS);
+			entry.getGroupId(), portletId);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.BLOGS_ADMIN;
+			portletId = PortletProviderUtil.getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.MANAGE);
 
 			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}

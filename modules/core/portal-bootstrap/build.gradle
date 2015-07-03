@@ -1,0 +1,49 @@
+import org.dm.gradle.plugins.bundle.JarBuilder
+
+dependencies {
+	compile project(":core:jaxws-osgi-bridge")
+	compile project(":core:osgi-service-tracker-map")
+	compile project(":core:registry-impl")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/core")
+}
+
+task buildSystemPackagesExtraManifest
+
+buildSystemPackagesExtraManifest {
+	dependsOn classes
+	dependsOn copyLibs
+
+	doLast {
+		JarBuilder jarBuilder = bundle.jarBuilderFactory.create()
+
+		jarBuilder.withBase projectDir
+
+		Map<String, String> properties = liferay.bundleDefaultInstructions
+
+		properties["-include"] = "system.packages.extra.bnd"
+
+		jarBuilder.withProperties properties
+		jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs
+
+		File buildSystemPackagesExtraManifestFile = file("tmp/META-INF/MANIFEST.MF")
+
+		buildSystemPackagesExtraManifestFile.parentFile.mkdirs()
+
+		buildSystemPackagesExtraManifestFile.withOutputStream {
+			jarBuilder.writeManifestTo it
+		}
+	}
+}
+
+copyLibs {
+	onlyIf = {
+		true
+	}
+}
+
+jar {
+	dependsOn buildSystemPackagesExtraManifest
+}

@@ -330,6 +330,42 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			"Initializes build.gradle by migrating information from legacy " +
 				"files.");
 
+		initGradleTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					File buildGradleFile = project.file("build.gradle");
+
+					if (!buildGradleFile.exists() ||
+						(buildGradleFile.length() == 0)) {
+
+						return true;
+					}
+
+					long buildGradleFileLastModified =
+						buildGradleFile.lastModified();
+
+					for (String sourceFileName :
+							InitGradleTask.SOURCE_FILE_NAMES) {
+
+						File sourceFile = project.file(sourceFileName);
+
+						if (sourceFile.exists() &&
+							(buildGradleFileLastModified <
+								sourceFile.lastModified())) {
+
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+			});
+
 		return initGradleTask;
 	}
 
@@ -1280,6 +1316,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, INIT_GRADLE_TASK_NAME);
 
 		configureTaskInitGradleIgnoreMissingDependencies(initGradleTask);
+		configureTaskInitGradleOverwrite(initGradleTask);
 	}
 
 	protected void configureTaskInitGradleIgnoreMissingDependencies(
@@ -1291,6 +1328,17 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(value)) {
 			initGradleTask.setIgnoreMissingDependencies(
 				Boolean.parseBoolean(value));
+		}
+	}
+
+	protected void configureTaskInitGradleOverwrite(
+		InitGradleTask initGradleTask) {
+
+		String value = GradleUtil.getTaskPrefixedProperty(
+			initGradleTask, "overwrite");
+
+		if (Validator.isNotNull(value)) {
+			initGradleTask.setOverwrite(Boolean.parseBoolean(value));
 		}
 	}
 

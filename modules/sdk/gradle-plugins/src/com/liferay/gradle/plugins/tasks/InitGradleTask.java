@@ -56,6 +56,11 @@ import org.gradle.api.tasks.TaskAction;
  */
 public class InitGradleTask extends DefaultTask {
 
+	public static final String[] SOURCE_FILE_NAMES = {
+		"build.xml", "docroot/WEB-INF/liferay-plugin-package.properties",
+		"ivy.xml"
+	};
+
 	public InitGradleTask() {
 		portalDependencyNotation("antlr2.jar", "antlr", "antlr", "2.7.7");
 		portalDependencyNotation(
@@ -158,6 +163,16 @@ public class InitGradleTask extends DefaultTask {
 	public void initGradle() throws Exception {
 		_project = getProject();
 
+		File buildGradleFile = _project.file("build.gradle");
+
+		if (!isOverwrite() && buildGradleFile.exists() &&
+			(buildGradleFile.length() > 0)) {
+
+			throw new GradleException(
+				"Unable to automatically upgrade build.gradle in \"" +
+					_project.getPath() + "\"");
+		}
+
 		_liferayExtension = GradleUtil.getExtension(
 			_project, LiferayExtension.class);
 		_pluginPackageProperties = FileUtil.readProperties(
@@ -170,8 +185,6 @@ public class InitGradleTask extends DefaultTask {
 
 		_buildXmlNode = readXml(xmlParser, "build.xml");
 		_ivyXmlNode = readXml(xmlParser, "ivy.xml");
-
-		File buildGradleFile = _project.file("build.gradle");
 
 		List<String> contents = new ArrayList<>();
 
@@ -186,6 +199,10 @@ public class InitGradleTask extends DefaultTask {
 		return _ignoreMissingDependencies;
 	}
 
+	public boolean isOverwrite() {
+		return _overwrite;
+	}
+
 	public void portalDependencyNotation(
 		String fileName, String group, String name, String version) {
 
@@ -197,6 +214,10 @@ public class InitGradleTask extends DefaultTask {
 		boolean ignoreMissingDependencies) {
 
 		_ignoreMissingDependencies = ignoreMissingDependencies;
+	}
+
+	public void setOverwrite(boolean overwrite) {
+		_overwrite = overwrite;
 	}
 
 	protected void addContents(List<String> contents1, List<String> contents2) {
@@ -748,6 +769,7 @@ public class InitGradleTask extends DefaultTask {
 	private boolean _ignoreMissingDependencies;
 	private Node _ivyXmlNode;
 	private LiferayExtension _liferayExtension;
+	private boolean _overwrite;
 	private Properties _pluginPackageProperties;
 	private final Map<String, String[]> _portalDependencyNotations =
 		new HashMap<>();

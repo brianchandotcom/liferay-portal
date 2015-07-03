@@ -9,21 +9,10 @@ File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
 File sdkDir = rootProject.file("../tools/sdk")
 
-ext.sdkDestinationDir = new File(sdkDir, "dist2")
-
 afterEvaluate {
 	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
 	project.ext.set("app.server.portal.dir", project.relativePath(liferay.appServerPortalDir))
 	project.ext.set("plugin.full.version", project.version.toString())
-}
-
-bundle {
-	instruction "-jsp", "*.jsp"
-	instruction "-jsp", "*.jspf"
-	instruction "-metatype", "*"
-	instruction "-plugin", "com.liferay.ant.bnd.plugin.JspAnalyzerPlugin"
-	instruction "-plugin", "com.liferay.ant.bnd.plugin.SassAnalyzerPlugin"
-	instruction "-sass", "*"
 }
 
 compileJava {
@@ -46,6 +35,10 @@ dependencies {
 	portal fileTree(dir: new File(sdkDir, "lib"), includes: ["activation.jar", "javax.servlet-api.jar", "jsp-api.jar", "net.sf.jargs.jar", "qdox.jar"])
 
 	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
+}
+
+ext {
+	sdkDestinationDir = new File(sdkDir, "dist2")
 }
 
 jar {

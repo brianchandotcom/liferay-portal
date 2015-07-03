@@ -15,7 +15,7 @@
 package com.liferay.portlet.messageboards.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.trash.BaseTrashRenderer;
+import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -34,10 +34,13 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Zsolt Berentey
  */
-public class MBThreadTrashRenderer extends BaseTrashRenderer {
+public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	public static final String TYPE = "message_thread";
 
@@ -69,6 +72,11 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		return "/html/portlet/message_boards/view_thread_tree.jsp";
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.MESSAGE_BOARDS;
 	}
@@ -91,8 +99,8 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
@@ -101,30 +109,28 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 				_rootMessage.getMessageId(), WorkflowConstants.STATUS_ANY,
 				MBThreadConstants.THREAD_VIEW_TREE, false);
 
-		portletRequest.setAttribute(
-			WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
 
 		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 
-		portletRequest.setAttribute(
-			WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-		portletRequest.setAttribute(
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
+		request.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY,
 			messageDisplay.getCategory());
-		portletRequest.setAttribute(
+		request.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE,
 			treeWalker.getRoot());
-		portletRequest.setAttribute(
+		request.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
-		portletRequest.setAttribute(
+		request.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.FALSE);
-		portletRequest.setAttribute(
+		request.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, _rootMessage);
-		portletRequest.setAttribute(
+		request.setAttribute(
 			WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD,
 			messageDisplay.getThread());
 
-		return "/html/portlet/message_boards/view_thread_tree.jsp";
+		return super.include(request, response, template);
 	}
 
 	private final MBMessage _rootMessage;

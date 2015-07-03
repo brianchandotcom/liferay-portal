@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
-import com.liferay.portal.kernel.trash.BaseTrashRenderer;
+import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -33,10 +33,13 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Zsolt Berentey
  */
-public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
+public class DLFileShortcutTrashRenderer extends BaseJSPTrashRenderer {
 
 	public static final String TYPE = "shortcut";
 
@@ -71,6 +74,18 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(AssetRenderer.TEMPLATE_ABSTRACT) ||
+			template.equals(AssetRenderer.TEMPLATE_FULL_CONTENT)) {
+
+			return "/html/portlet/document_library/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.DOCUMENT_LIBRARY;
 	}
@@ -94,21 +109,14 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		if (template.equals(AssetRenderer.TEMPLATE_ABSTRACT) ||
-			template.equals(AssetRenderer.TEMPLATE_FULL_CONTENT)) {
+		request.setAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
 
-			portletRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
-
-			return "/html/portlet/document_library/asset/" + template + ".jsp";
-		}
-
-		return null;
+		return super.include(request, response, template);
 	}
 
 	private final FileEntry _fileEntry;

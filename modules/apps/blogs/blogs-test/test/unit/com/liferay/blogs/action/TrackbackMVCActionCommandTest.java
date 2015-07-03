@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.blogs.action;
 
+import com.liferay.blogs.web.blogs.portlet.action.ActionUtil;
+import com.liferay.blogs.web.blogs.portlet.action.TrackbackMVCActionCommand;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;

@@ -70,11 +70,11 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 		_trackback = new TrackbackImpl();
 	}
 
-	protected TrackbackMVCActionCommand(Trackback trackback) {
+	public TrackbackMVCActionCommand(Trackback trackback) {
 		_trackback = trackback;
 	}
 
-	protected void addTrackback(
+	public void addTrackback(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

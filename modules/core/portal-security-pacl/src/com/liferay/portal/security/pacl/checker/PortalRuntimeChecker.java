@@ -174,7 +174,8 @@ public class PortalRuntimeChecker extends BaseChecker {
 				}
 				else {
 					logSecurityException(
-						_log, "Attempted to get bean property on " + subject +
+						_log,
+						"Attempted to get bean property on " + subject +
 							" from " + servletContextName);
 				}
 
@@ -217,7 +218,8 @@ public class PortalRuntimeChecker extends BaseChecker {
 				}
 				else {
 					logSecurityException(
-						_log, "Attempted to set bean property on " + subject +
+						_log,
+						"Attempted to set bean property on " + subject +
 							" from " + servletContextName);
 				}
 

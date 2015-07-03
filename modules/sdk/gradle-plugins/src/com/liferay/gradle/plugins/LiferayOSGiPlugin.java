@@ -282,8 +282,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 						project, Constants.BUNDLE_SYMBOLICNAME);
 
 					properties.put(
-						Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName +
-							".wsdd");
+						Constants.BUNDLE_SYMBOLICNAME,
+						bundleSymbolicName + ".wsdd");
 					properties.put(Constants.FRAGMENT_HOST, bundleSymbolicName);
 					properties.put(
 						Constants.IMPORT_PACKAGE,

@@ -1658,8 +1658,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
 						processErrorMessage(
-							fileName, "line break: " + fileName + " " +
-								lineCount);
+							fileName,
+							"line break: " + fileName + " " + lineCount);
 					}
 
 					String strippedQuotesLine = stripQuotes(
@@ -1778,8 +1778,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
 						processErrorMessage(
-							fileName, "line break: " + fileName + " " +
-								lineCount);
+							fileName,
+							"line break: " + fileName + " " + lineCount);
 					}
 
 					if (line.endsWith(" +") || line.endsWith(" -") ||
@@ -1806,8 +1806,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
 
 						processErrorMessage(
-							fileName, "line break: " + fileName + " " +
-								lineCount);
+							fileName,
+							"line break: " + fileName + " " + lineCount);
 					}
 
 					if (trimmedLine.startsWith(StringPool.PERIOD) ||
@@ -1815,8 +1815,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						 line.contains(StringPool.EQUAL))) {
 
 						processErrorMessage(
-							fileName, "line break: " + fileName + " " +
-								lineCount);
+							fileName,
+							"line break: " + fileName + " " + lineCount);
 					}
 
 					if (trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
@@ -1827,8 +1827,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 						if (!matcher.find()) {
 							processErrorMessage(
-								fileName, "line break: " + fileName + " " +
-									lineCount);
+								fileName,
+								"line break: " + fileName + " " + lineCount);
 						}
 					}
 				}
@@ -1902,8 +1902,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							}
 
 							processErrorMessage(
-								fileName, "> 80: " + fileName + " " +
-									lineCount);
+								fileName,
+								"> 80: " + fileName + " " + lineCount);
 						}
 					}
 					else {
@@ -1932,8 +1932,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 									 StringPool.OPEN_PARENTHESIS))) {
 
 								processErrorMessage(
-									fileName, "tab: " + fileName + " " +
-										lineCount);
+									fileName,
+									"tab: " + fileName + " " + lineCount);
 							}
 
 							if (Validator.isNotNull(trimmedLine)) {
@@ -1993,8 +1993,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								((diff == 0) || (diff > 1))) {
 
 								processErrorMessage(
-									fileName, "tab: " + fileName + " " +
-										lineCount);
+									fileName,
+									"tab: " + fileName + " " + lineCount);
 							}
 
 							if ((diff == 2) &&

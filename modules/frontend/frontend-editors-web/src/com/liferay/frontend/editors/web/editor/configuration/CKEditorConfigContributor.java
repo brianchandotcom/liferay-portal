@@ -60,9 +60,9 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			"liferay-ui:input-editor:cssClasses");
 
 		jsonObject.put(
-			"bodyClass", "html-editor " +
-				HtmlUtil.escape(colorScheme.getCssClass()) + " " +
-					HtmlUtil.escape(cssClasses));
+			"bodyClass",
+			"html-editor " + HtmlUtil.escape(colorScheme.getCssClass()) + " " +
+				HtmlUtil.escape(cssClasses));
 
 		jsonObject.put("closeNoticeTimeout", 8000);
 		jsonObject.put("entities", Boolean.FALSE);

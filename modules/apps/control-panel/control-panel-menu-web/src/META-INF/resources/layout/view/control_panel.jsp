@@ -27,19 +27,17 @@ if (controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) {
 	showControlPanelMenu = false;
 }
 
-if (ppid.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	String portletResource = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "portletResource");
+String portletResource = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "portletResource");
 
-	if (Validator.isNull(portletResource)) {
-		portletResource = ParamUtil.getString(request, "portletResource");
-	}
+if (Validator.isNull(portletResource)) {
+	portletResource = ParamUtil.getString(request, "portletResource");
+}
 
-	if (Validator.isNotNull(portletResource)) {
-		String mvcPath = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "mvcPath");
+if (Validator.isNotNull(portletResource)) {
+	String mvcPath = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "mvcPath");
 
-		if (!mvcPath.contains("/portlet_configuration/")) {
-			ppid = portletResource;
-		}
+	if (!mvcPath.contains("/portlet_configuration/")) {
+		ppid = portletResource;
 	}
 }
 

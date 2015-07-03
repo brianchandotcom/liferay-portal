@@ -358,8 +358,8 @@ public class CreateAccountAction extends PortletAction {
 			themeDisplay.getCompanyId(), emailAddress);
 
 		if (anonymousUser.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-			throw new PrincipalException(
-				"Unable to reset user " + anonymousUser.getUuid());
+			throw new PrincipalException.MustBeAuthenticated(
+				anonymousUser.getUuid());
 		}
 
 		UserLocalServiceUtil.deleteUser(anonymousUser.getUserId());

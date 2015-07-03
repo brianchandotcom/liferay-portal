@@ -119,7 +119,10 @@
 		<execute function="Click" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
 
-		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow" />
+		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />
+		</execute>
 	</command>
 
 	<command name="deactivateWorkflow">
@@ -389,7 +392,10 @@
 
 		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow" />
+		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />
+		</execute>
 	</command>
 
 	<command name="saveAndContinueForm">

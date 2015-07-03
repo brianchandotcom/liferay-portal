@@ -117,6 +117,8 @@
 
 	var STR_NEW_LINE = '\n';
 
+	var STR_START = 'start';
+
 	var STR_TAG_A_CLOSE = '</a>';
 
 	var STR_TAG_ATTR_CLOSE = '">';
@@ -140,6 +142,8 @@
 	var STR_TAG_URL = 'url';
 
 	var STR_TEXT_ALIGN = '<p style="text-align: ';
+
+	var STR_TYPE = 'type';
 
 	var TOKEN_DATA = Parser.TOKEN_DATA;
 
@@ -381,27 +385,34 @@
 			var instance = this;
 
 			var tag = 'ul';
+			var listAttributes = STR_BLANK;
 
-			var styleAttr;
+			if (token.attribute) {
+				while (listAttribute = REGEX_ATTRS.exec(token.attribute)) {
+					var attrName = listAttribute[1];
+					var attrValue = listAttribute[2];
 
-			var listAttribute = token.attribute;
+					if (attrName == STR_TYPE) {
+						if (MAP_LIST_BULLETED_STYLES[attrValue]) {
+							styleAttr = MAP_LIST_BULLETED_STYLES[attrValue];
+						}
+						else {
+							tag = 'ol';
 
-			if (MAP_LIST_BULLETED_STYLES[listAttribute]) {
-				styleAttr = MAP_LIST_BULLETED_STYLES[listAttribute];
+							styleAttr = MAP_LIST_STYLES[attrValue];
+						}
+
+						if (styleAttr) {
+							listAttributes += ' style="' + styleAttr + '"';
+						}
+					}
+					else if (attrName == STR_START && REGEX_NUMBER.test(attrValue)) {
+						listAttributes += ' start="' + attrValue + '"';
+					}
+				}
 			}
-			else {
-				tag = 'ol';
 
-				styleAttr = MAP_LIST_STYLES[listAttribute];
-			}
-
-			var result = STR_TAG_OPEN + tag + STR_TAG_END_CLOSE;
-
-			if (styleAttr) {
-				result = STR_TAG_OPEN + tag + ' style="' + styleAttr + STR_TAG_ATTR_CLOSE;
-			}
-
-			instance._result.push(result);
+			instance._result.push(STR_TAG_OPEN + tag + listAttributes + STR_TAG_END_CLOSE);
 
 			instance._stack.push(STR_TAG_END_OPEN + tag + STR_TAG_END_CLOSE);
 		},

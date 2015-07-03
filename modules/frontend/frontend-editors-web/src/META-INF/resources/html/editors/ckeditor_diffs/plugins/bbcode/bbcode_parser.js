@@ -354,18 +354,18 @@
 		'width': 1
 	};
 
-	var MAP_LIST_BULLETED_STYLES = {
-		circle: 'list-style-type: circle;',
-		disc: 'list-style-type: disc;',
-		square: 'list-style-type: square;'
-	};
-
-	var MAP_LIST_STYLES = {
+	var MAP_ORDERED_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
 		a: 'list-style-type: lower-alpha;',
 		i: 'list-style-type: lower-roman;',
 		A: 'list-style-type: upper-alpha;',
 		I: 'list-style-type: upper-roman;'
+	};
+
+	var MAP_UNORDERED_LIST_STYLES = {
+		circle: 'list-style-type: circle;',
+		disc: 'list-style-type: disc;',
+		square: 'list-style-type: square;'
 	};
 
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
@@ -407,6 +407,8 @@
 
 	var STR_NEW_LINE = '\n';
 
+	var STR_START = 'start';
+
 	var STR_TAG_A_CLOSE = '</a>';
 
 	var STR_TAG_ATTR_CLOSE = '">';
@@ -430,6 +432,8 @@
 	var STR_TAG_URL = 'url';
 
 	var STR_TEXT_ALIGN = '<p style="text-align: ';
+
+	var STR_TYPE = 'type';
 
 	var TOKEN_DATA = Parser.TOKEN_DATA;
 
@@ -646,7 +650,7 @@
 		_handleImageAttributes: function(token) {
 			var instance = this;
 
-			var attrs = '';
+			var attrs = STR_BLANK;
 
 			if (token.attribute) {
 				var bbCodeAttr;
@@ -671,27 +675,34 @@
 			var instance = this;
 
 			var tag = 'ul';
+			var listAttributes = STR_BLANK;
 
-			var styleAttr;
+			if (token.attribute) {
+				while (listAttribute = REGEX_ATTRS.exec(token.attribute)) {
+					var attrName = listAttribute[1];
+					var attrValue = listAttribute[2];
 
-			var listAttribute = token.attribute;
+					if (attrName == STR_TYPE) {
+						if (MAP_ORDERED_LIST_STYLES[attrValue]) {
+							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
 
-			if (MAP_LIST_BULLETED_STYLES[listAttribute]) {
-				styleAttr = MAP_LIST_BULLETED_STYLES[listAttribute];
+							tag = 'ol';
+						}
+						else {
+							styleAttr = MAP_UNORDERED_LIST_STYLES[attrValue];
+						}
+
+						if (styleAttr) {
+							listAttributes += ' style="' + styleAttr + '"';
+						}
+					}
+					else if (attrName == STR_START && REGEX_NUMBER.test(attrValue)) {
+						listAttributes += ' start="' + attrValue + '"';
+					}
+				}
 			}
-			else {
-				tag = 'ol';
 
-				styleAttr = MAP_LIST_STYLES[listAttribute];
-			}
-
-			var result = STR_TAG_OPEN + tag + STR_TAG_END_CLOSE;
-
-			if (styleAttr) {
-				result = STR_TAG_OPEN + tag + ' style="' + styleAttr + STR_TAG_ATTR_CLOSE;
-			}
-
-			instance._result.push(result);
+			instance._result.push(STR_TAG_OPEN + tag + listAttributes + STR_TAG_END_CLOSE);
 
 			instance._stack.push(STR_TAG_END_OPEN + tag + STR_TAG_END_CLOSE);
 		},

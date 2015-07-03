@@ -941,9 +941,7 @@ public class Recurrence implements Serializable {
 			return true;
 		}
 
-		int i = 0;
-
-		for (i = 0; i < byDay.length; i++) {
+		for (int i = 0; i < byDay.length; i++) {
 			if (matchesIndividualByDay(candidate, byDay[i])) {
 				return true;
 			}
@@ -967,9 +965,7 @@ public class Recurrence implements Serializable {
 			return true;
 		}
 
-		int i = 0;
-
-		for (i = 0; i < array.length; i++) {
+		for (int i = 0; i < array.length; i++) {
 			int val = 0;
 
 			if (allowNegative && (array[i] < 0)) {

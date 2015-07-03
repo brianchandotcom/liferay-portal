@@ -201,9 +201,7 @@ public class UserIndexerTest {
 
 		addUserNameFields(firstName, lastName, middleName);
 
-		User user = null;
-
-		user = assertSearchOneUser("Fir");
+		User user = assertSearchOneUser("Fir");
 
 		Assert.assertEquals("First", user.getFirstName());
 

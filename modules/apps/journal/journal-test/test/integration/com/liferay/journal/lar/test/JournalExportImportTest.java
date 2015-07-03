@@ -49,8 +49,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 
@@ -239,13 +237,13 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			groupId = companyGroup.getGroupId();
 		}
 
-		ddmStructure = DDMStructureTestUtil.addStructure(
+		ddmStructure = JournalTestUtil.addDDMStructure(
 			groupId, JournalArticle.class.getName());
 
-		ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		ddmTemplate = JournalTestUtil.addDDMTemplate(
 			groupId, ddmStructure.getStructureId());
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent();
+		String content = JournalTestUtil.getSampleStructuredContent();
 
 		article = JournalTestUtil.addArticleWithXMLContent(
 			group.getGroupId(), content, ddmStructure.getStructureKey(),

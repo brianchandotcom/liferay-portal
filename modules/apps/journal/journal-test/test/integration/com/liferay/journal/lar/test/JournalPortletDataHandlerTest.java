@@ -36,8 +36,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import java.util.List;
@@ -114,17 +112,17 @@ public class JournalPortletDataHandlerTest
 			stagingGroup.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(
 			stagingGroup.getGroupId(), JournalArticle.class.getName());
 
-		DDMTemplateTestUtil.addTemplate(
+		JournalTestUtil.addDDMTemplate(
 			stagingGroup.getGroupId(),
 			PortalUtil.getClassNameId(DDMStructure.class), -1L);
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
 			stagingGroup.getGroupId(), ddmStructure.getStructureId());
 
-		DDMTemplate rendererDDMTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate rendererDDMTemplate = JournalTestUtil.addDDMTemplate(
 			stagingGroup.getGroupId(), ddmStructure.getStructureId());
 
 		JournalTestUtil.addFeed(

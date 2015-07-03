@@ -33,8 +33,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.search.test.BaseAssetSearchTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -126,18 +124,18 @@ public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 		throws Exception {
 
 		if (_ddmStructure == null) {
-			_ddmStructure = DDMStructureTestUtil.addStructure(
+			_ddmStructure = JournalTestUtil.addDDMStructure(
 				serviceContext.getScopeGroupId(),
 				JournalArticle.class.getName());
 		}
 
 		if (_ddmTemplate == null) {
-			_ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmTemplate = JournalTestUtil.addDDMTemplate(
 				serviceContext.getScopeGroupId(),
 				_ddmStructure.getStructureId());
 		}
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent();
+		String content = JournalTestUtil.getSampleStructuredContent();
 
 		return JournalTestUtil.addArticleWithXMLContent(
 			serviceContext.getScopeGroupId(), content,

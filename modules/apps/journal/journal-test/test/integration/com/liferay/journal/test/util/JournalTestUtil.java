@@ -24,11 +24,13 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.locale.test.LocaleTestUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -53,11 +56,20 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -148,16 +160,15 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
+		String content = JournalTestUtil.getSampleStructuredContent(
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
-		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
-			_locales, defaultLocale);
+		DDMForm ddmForm = getSampleDDMForm(_locales, defaultLocale);
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = addDDMStructure(
 			groupId, JournalArticle.class.getName(), ddmForm, defaultLocale);
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate ddmTemplate = addDDMTemplate(
 			groupId, ddmStructure.getStructureId());
 
 		boolean neverExpire = true;
@@ -542,6 +553,197 @@ public class JournalTestUtil {
 			ddmStructureKey, ddmTemplateKey, serviceContext);
 	}
 
+	public static DDMStructure addDDMStructure(
+			long groupId, long parentStructureId, long classNameId,
+			String structureKey, String name, String description,
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout, String storageType,
+			int type)
+		throws Exception {
+
+		return DDMStructureLocalServiceUtil.addStructure(
+			TestPropsValues.getUserId(), groupId, parentStructureId,
+			classNameId, structureKey, LocaleTestUtil.getDefaultLocaleMap(name),
+			LocaleTestUtil.getDefaultLocaleMap(description), ddmForm,
+			ddmFormLayout, storageType, type,
+			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	public static DDMStructure addDDMStructure(
+			long groupId, long classNameId, String structureKey, String name,
+			DDMForm ddmForm, String storageType, int type)
+		throws Exception {
+
+		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+
+		return addDDMStructure(
+			groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			classNameId, structureKey, name, StringPool.BLANK, ddmForm,
+			ddmFormLayout, storageType, type);
+	}
+
+	public static DDMStructure addDDMStructure(
+			long groupId, long classNameId, String structureKey, String name,
+			String definition, String storageType, int type)
+		throws Exception {
+
+		DDMForm ddmForm = toDDMForm(definition);
+
+		return addDDMStructure(
+			groupId, classNameId, structureKey, name, ddmForm, storageType,
+			type);
+	}
+
+	public static DDMStructure addDDMStructure(long groupId, String className)
+		throws Exception {
+
+		return addDDMStructure(
+			groupId, className, 0, getSampleDDMForm(),
+			LocaleUtil.getSiteDefault(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static DDMStructure addDDMStructure(
+			long groupId, String className, DDMForm ddmForm)
+		throws Exception {
+
+		return addDDMStructure(
+			groupId, className, 0, ddmForm, LocaleUtil.getSiteDefault(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static DDMStructure addDDMStructure(
+			long groupId, String className, DDMForm ddmForm,
+			Locale defaultLocale)
+		throws Exception {
+
+		return addDDMStructure(
+			groupId, className, 0, ddmForm, defaultLocale,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static DDMStructure addDDMStructure(
+			long groupId, String className, long parentStructureId,
+			DDMForm ddmForm, Locale defaultLocale,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(defaultLocale, "Test Structure");
+
+		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return DDMStructureLocalServiceUtil.addStructure(
+			TestPropsValues.getUserId(), groupId, parentStructureId,
+			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm,
+			ddmFormLayout, StorageType.JSON.toString(),
+			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+	}
+
+	public static DDMStructure addDDMStructure(String className)
+		throws Exception {
+
+		return addDDMStructure(
+			TestPropsValues.getGroupId(), className, 0, getSampleDDMForm(),
+			LocaleUtil.getSiteDefault(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static DDMStructure addDDMStructure(
+			String className, DDMForm ddmForm)
+		throws Exception {
+
+		return addDDMStructure(
+			TestPropsValues.getGroupId(), className, ddmForm);
+	}
+
+	public static DDMStructure addDDMStructure(
+			String className, Locale defaultLocale)
+		throws Exception {
+
+		return addDDMStructure(
+			TestPropsValues.getGroupId(), className, 0,
+			getSampleDDMForm(
+				"name", new Locale[] {LocaleUtil.US}, defaultLocale),
+			defaultLocale, ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static DDMTemplate addDDMTemplate(long structureId)
+		throws Exception {
+
+		return addDDMTemplate(
+			TestPropsValues.getGroupId(), structureId,
+			TemplateConstants.LANG_TYPE_VM, _SAMPLE_VM_TEMPLATE_SCRIPT);
+	}
+
+	public static DDMTemplate addDDMTemplate(long groupId, long structureId)
+		throws Exception {
+
+		return addDDMTemplate(
+			groupId, structureId, TemplateConstants.LANG_TYPE_VM,
+			_SAMPLE_VM_TEMPLATE_SCRIPT);
+	}
+
+	public static DDMTemplate addDDMTemplate(
+			long groupId, long structureId, Locale defaultLocale)
+		throws Exception {
+
+		return addDDMTemplate(
+			groupId, structureId, TemplateConstants.LANG_TYPE_VM,
+			_SAMPLE_VM_TEMPLATE_SCRIPT, defaultLocale);
+	}
+
+	public static DDMTemplate addDDMTemplate(
+			long groupId, long classNameId, long classPK)
+		throws Exception {
+
+		return addDDMTemplate(
+			groupId, classNameId, classPK, TemplateConstants.LANG_TYPE_VM,
+			_SAMPLE_VM_TEMPLATE_SCRIPT, LocaleUtil.getSiteDefault());
+	}
+
+	public static DDMTemplate addDDMTemplate(
+			long groupId, long classNameId, long classPK, String language,
+			String script, Locale defaultLocale)
+		throws Exception {
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(defaultLocale, "Test Template");
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return DDMTemplateLocalServiceUtil.addTemplate(
+			TestPropsValues.getUserId(), groupId, classNameId, classPK, 0,
+			nameMap, null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+			language, script, serviceContext);
+	}
+
+	public static DDMTemplate addDDMTemplate(
+			long groupId, long structureId, String language, String script)
+		throws Exception {
+
+		return addDDMTemplate(
+			groupId, PortalUtil.getClassNameId(DDMStructure.class), structureId,
+			language, script, LocaleUtil.getSiteDefault());
+	}
+
+	public static DDMTemplate addDDMTemplate(
+			long groupId, long structureId, String language, String script,
+			Locale defaultLocale)
+		throws Exception {
+
+		return addDDMTemplate(
+			groupId, PortalUtil.getClassNameId(DDMStructure.class), structureId,
+			language, script, defaultLocale);
+	}
+
 	public static Element addDynamicElementElement(
 		Element element, String type, String name) {
 
@@ -658,6 +860,56 @@ public class JournalTestUtil {
 		return JournalArticleLocalServiceUtil.expireArticle(
 			article.getUserId(), article.getGroupId(), article.getArticleId(),
 			version, null, ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	public static DDMForm getSampleDDMForm() {
+		return getSampleDDMForm("name");
+	}
+
+	public static DDMForm getSampleDDMForm(
+		Locale[] availableLocales, Locale defaultLocale) {
+
+		return getSampleDDMForm("name", availableLocales, defaultLocale);
+	}
+
+	public static DDMForm getSampleDDMForm(String name) {
+		return getSampleDDMForm(
+			name, new Locale[] {LocaleUtil.US}, LocaleUtil.US);
+	}
+
+	public static DDMForm getSampleDDMForm(
+		String name, Locale[] availableLocales, Locale defaultLocale) {
+
+		return getSampleDDMForm(
+			name, "string", "text", true, "text", availableLocales,
+			defaultLocale);
+	}
+
+	public static DDMForm getSampleDDMForm(
+		String name, String dataType, String indexType, boolean repeatable,
+		String type, Locale[] availableLocales, Locale defaultLocale) {
+
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(SetUtil.fromArray(availableLocales));
+		ddmForm.setDefaultLocale(defaultLocale);
+
+		DDMFormField ddmFormField = new DDMFormField(name, type);
+
+		ddmFormField.setDataType(dataType);
+		ddmFormField.setIndexType(indexType);
+		ddmFormField.setLocalizable(true);
+		ddmFormField.setRepeatable(repeatable);
+
+		LocalizedValue label = new LocalizedValue(defaultLocale);
+
+		label.addString(defaultLocale, "Field");
+
+		ddmFormField.setLabel(label);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		return ddmForm;
 	}
 
 	public static String getSampleStructuredContent() {
@@ -909,6 +1161,12 @@ public class JournalTestUtil {
 			approved, serviceContext);
 	}
 
+	protected static DDMForm toDDMForm(String definition) throws Exception {
+		DDMXMLUtil.validateXML(definition);
+
+		return DDMFormXSDDeserializerUtil.deserialize(definition);
+	}
+
 	private static String _getFeedFriendlyURL(long groupId, long plid)
 		throws Exception {
 
@@ -988,6 +1246,8 @@ public class JournalTestUtil {
 
 		return map;
 	}
+
+	private static final String _SAMPLE_VM_TEMPLATE_SCRIPT = "$name.getData()";
 
 	private static final Locale[] _locales = {
 		LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN

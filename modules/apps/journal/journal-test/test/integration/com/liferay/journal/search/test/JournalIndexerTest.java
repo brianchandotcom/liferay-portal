@@ -47,8 +47,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -159,7 +157,7 @@ public class JournalIndexerTest {
 			initialSearchCount + 1,
 			searchCount(_group.getGroupId(), searchContext));
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
+		String content = JournalTestUtil.getSampleStructuredContent(
 			"Architectural Approach");
 
 		ServiceContext serviceContext =
@@ -179,7 +177,7 @@ public class JournalIndexerTest {
 			initialSearchCount + 2,
 			searchCount(_group.getGroupId(), searchContext));
 
-		content = DDMStructureTestUtil.getSampleStructuredContent(
+		content = JournalTestUtil.getSampleStructuredContent(
 			"Architectural Tablet");
 
 		JournalTestUtil.updateArticle(
@@ -442,7 +440,7 @@ public class JournalIndexerTest {
 		String defaultLanguageId = LanguageUtil.getLanguageId(
 			LocaleUtil.getDefault());
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
+		String content = JournalTestUtil.getSampleStructuredContent(
 			contentMap, defaultLanguageId);
 
 		article = JournalArticleLocalServiceUtil.updateArticleTranslation(
@@ -506,16 +504,16 @@ public class JournalIndexerTest {
 			long folderId, String keywords, ServiceContext serviceContext)
 		throws Exception {
 
-		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm("name");
+		DDMForm ddmForm = JournalTestUtil.getSampleDDMForm("name");
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
 			ddmForm);
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
 			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
+		String content = JournalTestUtil.getSampleStructuredContent(
 			"name", keywords);
 
 		return JournalTestUtil.addArticleWithXMLContent(
@@ -556,7 +554,7 @@ public class JournalIndexerTest {
 			initialSearchCount1 + 1,
 			searchCount(_group.getGroupId(), searchContext1));
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
+		String content = JournalTestUtil.getSampleStructuredContent(
 			"Apple tablet");
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -805,7 +803,7 @@ public class JournalIndexerTest {
 			initialSearchCount1 + 1,
 			searchCount(_group.getGroupId(), searchContext1));
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent(
+		String content = JournalTestUtil.getSampleStructuredContent(
 			"Apple tablet");
 
 		ServiceContext serviceContext =
@@ -873,7 +871,7 @@ public class JournalIndexerTest {
 			initialSearchCount1 + 1,
 			searchCount(_group.getGroupId(), searchContext1));
 
-		content = DDMStructureTestUtil.getSampleStructuredContent(
+		content = JournalTestUtil.getSampleStructuredContent(
 			"name", "Architectural Approach");
 
 		JournalArticleLocalServiceUtil.updateContent(

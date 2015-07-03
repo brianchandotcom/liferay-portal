@@ -1250,7 +1250,7 @@ public class JavadocFormatter {
 		File javadocsXmlFile = new File(
 			srcDirName, "META-INF/" + _outputFilePrefix + "-all.xml");
 
-		String javadocsXmlContent;
+		String javadocsXmlContent = null;
 
 		if (!javadocsXmlFile.exists()) {
 			javadocsXmlContent =

@@ -627,7 +627,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		File pluginPackagePropertiesFile = new File(
 			getWebAppDir(project), "WEB-INF/liferay-plugin-package.properties");
 
-		Properties pluginPackageProperties;
+		Properties pluginPackageProperties = null;
 
 		try {
 			pluginPackageProperties = FileUtil.readProperties(

@@ -480,7 +480,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	protected void configureBundleExtension(Project project) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
-		Properties bundleProperties;
+		Properties bundleProperties = null;
 
 		try {
 			bundleProperties = FileUtil.readProperties(project, "bnd.bnd");

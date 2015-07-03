@@ -201,7 +201,7 @@ public class UserIndexerTest {
 
 		addUserNameFields(firstName, lastName, middleName);
 
-		User user;
+		User user = null;
 
 		user = assertSearchOneUser("Fir");
 

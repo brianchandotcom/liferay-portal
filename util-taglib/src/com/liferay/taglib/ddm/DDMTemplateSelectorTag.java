@@ -156,7 +156,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 	}
 
 	private static final String _PAGE =
-		"/html/taglib/ui/ddm_template_selector/page.jsp";
+		"/html/taglib/ddm/ddm_template_selector/page.jsp";
 
 	private String _className;
 	private String _defaultDisplayStyle = StringPool.BLANK;

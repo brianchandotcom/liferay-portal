@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/ddm_template_selector/init.jsp" %>
+<%@ include file="/html/taglib/ddm/ddm_template_selector/init.jsp" %>
 
 <%
 long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-select:classNameId"));

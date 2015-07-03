@@ -95,6 +95,14 @@ public class PortletProviderUtil {
 					PortletProvider.CLASS_NAME_ANY);
 			}
 		}
+		else if (action.equals(PortletProvider.Action.MANAGE)) {
+			portletProvider = _manageServiceTrackerMap.getService(className);
+
+			if (portletProvider == null) {
+				portletProvider = _manageServiceTrackerMap.getService(
+					PortletProvider.CLASS_NAME_ANY);
+			}
+		}
 		else if (action.equals(PortletProvider.Action.VIEW)) {
 			portletProvider = _viewServiceTrackerMap.getService(className);
 
@@ -116,6 +124,9 @@ public class PortletProviderUtil {
 	private static final ServiceTrackerMap<String, EditPortletProvider>
 		_editServiceTrackerMap = ServiceTrackerCollections.singleValueMap(
 			EditPortletProvider.class, "model.class.name");
+	private static final ServiceTrackerMap<String, ManagePortletProvider>
+		_manageServiceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			ManagePortletProvider.class, "model.class.name");
 	private static final ServiceTrackerMap<String, ViewPortletProvider>
 		_viewServiceTrackerMap = ServiceTrackerCollections.singleValueMap(
 			ViewPortletProvider.class, "model.class.name");

@@ -64,18 +64,18 @@
 		'width': 1
 	};
 
-	var MAP_LIST_BULLETED_STYLES = {
-		circle: 'list-style-type: circle;',
-		disc: 'list-style-type: disc;',
-		square: 'list-style-type: square;'
-	};
-
-	var MAP_LIST_STYLES = {
+	var MAP_ORDERED_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
 		a: 'list-style-type: lower-alpha;',
 		i: 'list-style-type: lower-roman;',
 		A: 'list-style-type: upper-alpha;',
 		I: 'list-style-type: upper-roman;'
+	};
+
+	var MAP_UNORDERED_LIST_STYLES = {
+		circle: 'list-style-type: circle;',
+		disc: 'list-style-type: disc;',
+		square: 'list-style-type: square;'
 	};
 
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
@@ -360,7 +360,7 @@
 		_handleImageAttributes: function(token) {
 			var instance = this;
 
-			var attrs = '';
+			var attrs = STR_BLANK;
 
 			if (token.attribute) {
 				var bbCodeAttr;
@@ -393,13 +393,13 @@
 					var attrValue = listAttribute[2];
 
 					if (attrName == STR_TYPE) {
-						if (MAP_LIST_BULLETED_STYLES[attrValue]) {
-							styleAttr = MAP_LIST_BULLETED_STYLES[attrValue];
+						if (MAP_UNORDERED_LIST_STYLES[attrValue]) {
+							styleAttr = MAP_UNORDERED_LIST_STYLES[attrValue];
 						}
 						else {
 							tag = 'ol';
 
-							styleAttr = MAP_LIST_STYLES[attrValue];
+							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
 						}
 
 						if (styleAttr) {

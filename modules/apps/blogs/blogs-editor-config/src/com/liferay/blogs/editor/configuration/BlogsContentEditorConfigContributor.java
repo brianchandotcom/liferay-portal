@@ -81,10 +81,10 @@ public class BlogsContentEditorConfigContributor
 			blogsContentEditorDesiredItemSelectorReturnTypes = new HashSet<>();
 
 		blogsContentEditorDesiredItemSelectorReturnTypes.add(
-			new URLItemSelectorReturnType());
+			new UploadableFileReturnType());
 
 		blogsContentEditorDesiredItemSelectorReturnTypes.add(
-			new UploadableFileReturnType());
+			new URLItemSelectorReturnType());
 
 		ItemSelectorCriterion blogsItemSelectorCriterion =
 			new BlogsItemSelectorCriterion();

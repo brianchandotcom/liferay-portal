@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -310,6 +312,14 @@ public class PortletFileRepositoryUtil {
 
 		getPortletFileRepository().restorePortletFileEntryFromTrash(
 			groupId, userId, folderId, fileName);
+	}
+
+	public static Hits searchPortletFileEntries(
+			long repositoryId, SearchContext searchContext)
+		throws PortalException {
+
+		return getPortletFileRepository().searchPortletFileEntries(
+			repositoryId, searchContext);
 	}
 
 	public void setPortletFileRepository(

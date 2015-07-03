@@ -206,8 +206,13 @@ public class DLFileEntryIndexer
 			addRelatedClassNames(contextBooleanFilter, searchContext);
 		}
 
-		contextBooleanFilter.addRequiredTerm(
-			Field.HIDDEN, searchContext.isIncludeAttachments());
+		if (ArrayUtil.contains(
+				searchContext.getFolderIds(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			contextBooleanFilter.addRequiredTerm(
+				Field.HIDDEN, searchContext.isIncludeAttachments());
+		}
 
 		addSearchClassTypeIds(contextBooleanFilter, searchContext);
 

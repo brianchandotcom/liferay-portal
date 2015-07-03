@@ -77,6 +77,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -219,6 +220,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -388,6 +395,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public boolean getHead() {
 		return _wikiPage.getHead();
+	}
+
+	/**
+	* Returns the last publish date of this wiki page.
+	*
+	* @return the last publish date of this wiki page
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _wikiPage.getLastPublishDate();
 	}
 
 	/**
@@ -934,6 +951,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public void setHead(boolean head) {
 		_wikiPage.setHead(head);
+	}
+
+	/**
+	* Sets the last publish date of this wiki page.
+	*
+	* @param lastPublishDate the last publish date of this wiki page
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_wikiPage.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

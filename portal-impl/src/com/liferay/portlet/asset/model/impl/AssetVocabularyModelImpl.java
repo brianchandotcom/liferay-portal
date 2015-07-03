@@ -89,7 +89,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "settings_", Types.VARCHAR }
+			{ "settings_", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -106,9 +107,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetVocabulary (uuid_ VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetVocabulary (uuid_ VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetVocabulary";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetVocabulary.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetVocabulary.name ASC";
@@ -154,6 +156,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setSettings(soapModel.getSettings());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -231,6 +234,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -310,6 +314,12 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 		if (settings != null) {
 			setSettings(settings);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -709,6 +719,17 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		_settings = settings;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -840,6 +861,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		assetVocabularyImpl.setTitle(getTitle());
 		assetVocabularyImpl.setDescription(getDescription());
 		assetVocabularyImpl.setSettings(getSettings());
+		assetVocabularyImpl.setLastPublishDate(getLastPublishDate());
 
 		assetVocabularyImpl.resetOriginalValues();
 
@@ -995,12 +1017,21 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 			assetVocabularyCacheModel.settings = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			assetVocabularyCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			assetVocabularyCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return assetVocabularyCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1026,6 +1057,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		sb.append(getDescription());
 		sb.append(", settings=");
 		sb.append(getSettings());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1033,7 +1066,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.asset.model.AssetVocabulary");
@@ -1087,6 +1120,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 			"<column><column-name>settings</column-name><column-value><![CDATA[");
 		sb.append(getSettings());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1118,6 +1155,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _settings;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetVocabulary _escapedModel;
 }

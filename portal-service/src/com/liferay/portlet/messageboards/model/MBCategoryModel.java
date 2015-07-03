@@ -397,6 +397,20 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the last publish date of this message boards category.
+	 *
+	 * @return the last publish date of this message boards category
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this message boards category.
+	 *
+	 * @param lastPublishDate the last publish date of this message boards category
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the trash entry created when this message boards category was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards category.
 	 *
 	 * @return the trash entry created when this message boards category was moved to the Recycle Bin

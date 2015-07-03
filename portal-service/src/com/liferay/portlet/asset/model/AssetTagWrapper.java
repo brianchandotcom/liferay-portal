@@ -64,6 +64,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("assetCount", getAssetCount());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -129,6 +130,12 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		if (assetCount != null) {
 			setAssetCount(assetCount);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -184,6 +191,16 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	@Override
 	public long getGroupId() {
 		return _assetTag.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this asset tag.
+	*
+	* @return the last publish date of this asset tag
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _assetTag.getLastPublishDate();
 	}
 
 	/**
@@ -357,6 +374,16 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	@Override
 	public void setGroupId(long groupId) {
 		_assetTag.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this asset tag.
+	*
+	* @param lastPublishDate the last publish date of this asset tag
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_assetTag.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

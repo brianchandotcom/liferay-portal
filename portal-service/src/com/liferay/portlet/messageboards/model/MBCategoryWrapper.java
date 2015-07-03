@@ -73,6 +73,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -191,6 +192,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -319,6 +326,16 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public Date getLastPostDate() {
 		return _mbCategory.getLastPostDate();
+	}
+
+	/**
+	* Returns the last publish date of this message boards category.
+	*
+	* @return the last publish date of this message boards category
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbCategory.getLastPublishDate();
 	}
 
 	/**
@@ -764,6 +781,16 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		_mbCategory.setLastPostDate(lastPostDate);
+	}
+
+	/**
+	* Sets the last publish date of this message boards category.
+	*
+	* @param lastPublishDate the last publish date of this message boards category
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mbCategory.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

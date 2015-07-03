@@ -76,6 +76,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -213,6 +214,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -357,6 +364,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public Date getLastPostDate() {
 		return _dlFolder.getLastPostDate();
+	}
+
+	/**
+	* Returns the last publish date of this document library folder.
+	*
+	* @return the last publish date of this document library folder
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFolder.getLastPublishDate();
 	}
 
 	/**
@@ -884,6 +901,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		_dlFolder.setLastPostDate(lastPostDate);
+	}
+
+	/**
+	* Sets the last publish date of this document library folder.
+	*
+	* @param lastPublishDate the last publish date of this document library folder
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_dlFolder.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

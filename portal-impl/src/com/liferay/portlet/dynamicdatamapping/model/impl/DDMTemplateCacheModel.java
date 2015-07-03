@@ -66,7 +66,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -118,6 +118,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		sb.append(smallImageId);
 		sb.append(", smallImageURL=");
 		sb.append(smallImageURL);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -240,6 +242,13 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 			ddmTemplateImpl.setSmallImageURL(smallImageURL);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			ddmTemplateImpl.setLastPublishDate(null);
+		}
+		else {
+			ddmTemplateImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		ddmTemplateImpl.resetOriginalValues();
 
 		return ddmTemplateImpl;
@@ -272,6 +281,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		smallImage = objectInput.readBoolean();
 		smallImageId = objectInput.readLong();
 		smallImageURL = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -377,6 +387,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		else {
 			objectOutput.writeUTF(smallImageURL);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -404,4 +416,5 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public boolean smallImage;
 	public long smallImageId;
 	public String smallImageURL;
+	public long lastPublishDate;
 }

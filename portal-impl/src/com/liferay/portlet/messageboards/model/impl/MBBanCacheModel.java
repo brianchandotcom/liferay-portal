@@ -65,7 +65,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -85,6 +85,8 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		sb.append(modifiedDate);
 		sb.append(", banUserId=");
 		sb.append(banUserId);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -129,6 +131,13 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 		mbBanImpl.setBanUserId(banUserId);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			mbBanImpl.setLastPublishDate(null);
+		}
+		else {
+			mbBanImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		mbBanImpl.resetOriginalValues();
 
 		return mbBanImpl;
@@ -145,6 +154,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		banUserId = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -172,6 +182,7 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(banUserId);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -183,4 +194,5 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 	public long createDate;
 	public long modifiedDate;
 	public long banUserId;
+	public long lastPublishDate;
 }

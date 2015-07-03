@@ -8763,6 +8763,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		roleImpl.setDescription(role.getDescription());
 		roleImpl.setType(role.getType());
 		roleImpl.setSubtype(role.getSubtype());
+		roleImpl.setLastPublishDate(role.getLastPublishDate());
 
 		return roleImpl;
 	}

@@ -84,7 +84,8 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "data_", Types.CLOB }
+			{ "data_", Types.CLOB },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -100,9 +101,10 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMContent (uuid_ VARCHAR(75) null,contentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMContent (uuid_ VARCHAR(75) null,contentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,data_ TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMContent";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmContent.contentId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMContent.contentId ASC";
@@ -173,6 +175,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("data", getData());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -246,6 +249,12 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 		if (data != null) {
 			setData(data);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -522,6 +531,16 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				DDMContent.class.getName()));
@@ -630,6 +649,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		ddmContentImpl.setName(getName());
 		ddmContentImpl.setDescription(getDescription());
 		ddmContentImpl.setData(getData());
+		ddmContentImpl.setLastPublishDate(getLastPublishDate());
 
 		ddmContentImpl.resetOriginalValues();
 
@@ -777,12 +797,21 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 			ddmContentCacheModel.data = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			ddmContentCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			ddmContentCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return ddmContentCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -806,6 +835,8 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		sb.append(getDescription());
 		sb.append(", data=");
 		sb.append(getData());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -813,7 +844,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMContent");
@@ -863,6 +894,10 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 			"<column><column-name>data</column-name><column-value><![CDATA[");
 		sb.append(getData());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -891,6 +926,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _data;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private DDMContent _escapedModel;
 }

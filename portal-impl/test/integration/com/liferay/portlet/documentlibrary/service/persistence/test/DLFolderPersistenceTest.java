@@ -159,6 +159,8 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setStatusDate(RandomTestUtil.nextDate());
 
+		newDLFolder.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_dlFolders.add(_persistence.update(newDLFolder));
 
 		DLFolder existingDLFolder = _persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
@@ -209,6 +211,9 @@ public class DLFolderPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFolder.getStatusDate()),
 			Time.getShortTimestamp(newDLFolder.getStatusDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFolder.getLastPublishDate()),
+			Time.getShortTimestamp(newDLFolder.getLastPublishDate()));
 	}
 
 	@Test
@@ -392,7 +397,8 @@ public class DLFolderPersistenceTest {
 			"treePath", true, "name", true, "description", true,
 			"lastPostDate", true, "defaultFileEntryTypeId", true, "hidden",
 			true, "restrictionType", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+			true, "statusByUserName", true, "statusDate", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -668,6 +674,8 @@ public class DLFolderPersistenceTest {
 		dlFolder.setStatusByUserName(RandomTestUtil.randomString());
 
 		dlFolder.setStatusDate(RandomTestUtil.nextDate());
+
+		dlFolder.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_dlFolders.add(_persistence.update(dlFolder));
 

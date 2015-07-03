@@ -427,6 +427,20 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	public void setDescriptionMap(Map<Locale, String> descriptionMap,
 		Locale defaultLocale);
 
+	/**
+	 * Returns the last publish date of this document library file entry type.
+	 *
+	 * @return the last publish date of this document library file entry type
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this document library file entry type.
+	 *
+	 * @param lastPublishDate the last publish date of this document library file entry type
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

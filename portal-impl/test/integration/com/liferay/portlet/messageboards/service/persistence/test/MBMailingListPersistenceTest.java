@@ -167,6 +167,8 @@ public class MBMailingListPersistenceTest {
 
 		newMBMailingList.setActive(RandomTestUtil.randomBoolean());
 
+		newMBMailingList.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_mbMailingLists.add(_persistence.update(newMBMailingList));
 
 		MBMailingList existingMBMailingList = _persistence.findByPrimaryKey(newMBMailingList.getPrimaryKey());
@@ -225,6 +227,9 @@ public class MBMailingListPersistenceTest {
 			newMBMailingList.getAllowAnonymous());
 		Assert.assertEquals(existingMBMailingList.getActive(),
 			newMBMailingList.getActive());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBMailingList.getLastPublishDate()),
+			Time.getShortTimestamp(newMBMailingList.getLastPublishDate()));
 	}
 
 	@Test
@@ -301,7 +306,7 @@ public class MBMailingListPersistenceTest {
 			"inReadInterval", true, "outEmailAddress", true, "outCustom", true,
 			"outServerName", true, "outServerPort", true, "outUseSSL", true,
 			"outUserName", true, "outPassword", true, "allowAnonymous", true,
-			"active", true);
+			"active", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -577,6 +582,8 @@ public class MBMailingListPersistenceTest {
 		mbMailingList.setAllowAnonymous(RandomTestUtil.randomBoolean());
 
 		mbMailingList.setActive(RandomTestUtil.randomBoolean());
+
+		mbMailingList.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_mbMailingLists.add(_persistence.update(mbMailingList));
 

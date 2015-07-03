@@ -81,6 +81,7 @@ public class MBMailingListWrapper implements MBMailingList,
 		attributes.put("outPassword", getOutPassword());
 		attributes.put("allowAnonymous", getAllowAnonymous());
 		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -242,6 +243,12 @@ public class MBMailingListWrapper implements MBMailingList,
 		if (active != null) {
 			setActive(active);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -398,6 +405,16 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public java.lang.String getInUserName() {
 		return _mbMailingList.getInUserName();
+	}
+
+	/**
+	* Returns the last publish date of this message boards mailing list.
+	*
+	* @return the last publish date of this message boards mailing list
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbMailingList.getLastPublishDate();
 	}
 
 	/**
@@ -781,6 +798,16 @@ public class MBMailingListWrapper implements MBMailingList,
 	@Override
 	public void setInUserName(java.lang.String inUserName) {
 		_mbMailingList.setInUserName(inUserName);
+	}
+
+	/**
+	* Sets the last publish date of this message boards mailing list.
+	*
+	* @param lastPublishDate the last publish date of this message boards mailing list
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mbMailingList.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

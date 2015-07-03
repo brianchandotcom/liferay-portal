@@ -31,7 +31,8 @@ create table JournalArticle (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	lastPublishDate DATE null
 );
 
 create table JournalArticleImage (
@@ -84,7 +85,8 @@ create table JournalFeed (
 	targetPortletId VARCHAR(75) null,
 	contentField VARCHAR(75) null,
 	feedFormat VARCHAR(75) null,
-	feedVersion DOUBLE
+	feedVersion DOUBLE,
+	lastPublishDate DATE null
 );
 
 create table JournalFolder (
@@ -104,5 +106,6 @@ create table JournalFolder (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	lastPublishDate DATE null
 );

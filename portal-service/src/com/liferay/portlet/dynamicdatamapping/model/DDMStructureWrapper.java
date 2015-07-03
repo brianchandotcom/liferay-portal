@@ -74,6 +74,7 @@ public class DDMStructureWrapper implements DDMStructure,
 		attributes.put("definition", getDefinition());
 		attributes.put("storageType", getStorageType());
 		attributes.put("type", getType());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -192,6 +193,12 @@ public class DDMStructureWrapper implements DDMStructure,
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -469,6 +476,16 @@ public class DDMStructureWrapper implements DDMStructure,
 	@Override
 	public long getGroupId() {
 		return _ddmStructure.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this d d m structure.
+	*
+	* @return the last publish date of this d d m structure
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _ddmStructure.getLastPublishDate();
 	}
 
 	/**
@@ -950,6 +967,16 @@ public class DDMStructureWrapper implements DDMStructure,
 	@Override
 	public void setGroupId(long groupId) {
 		_ddmStructure.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this d d m structure.
+	*
+	* @param lastPublishDate the last publish date of this d d m structure
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddmStructure.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

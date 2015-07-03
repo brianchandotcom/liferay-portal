@@ -66,7 +66,7 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,8 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		sb.append(priority);
 		sb.append(", alert=");
 		sb.append(alert);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -191,6 +193,13 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		announcementsEntryImpl.setPriority(priority);
 		announcementsEntryImpl.setAlert(alert);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			announcementsEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			announcementsEntryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		announcementsEntryImpl.resetOriginalValues();
 
 		return announcementsEntryImpl;
@@ -215,6 +224,7 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		expirationDate = objectInput.readLong();
 		priority = objectInput.readInt();
 		alert = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -275,6 +285,7 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeInt(priority);
 		objectOutput.writeBoolean(alert);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -294,4 +305,5 @@ public class AnnouncementsEntryCacheModel implements CacheModel<AnnouncementsEnt
 	public long expirationDate;
 	public int priority;
 	public boolean alert;
+	public long lastPublishDate;
 }

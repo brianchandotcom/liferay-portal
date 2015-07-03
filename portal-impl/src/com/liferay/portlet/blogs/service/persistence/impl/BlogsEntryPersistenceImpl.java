@@ -18170,6 +18170,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		blogsEntryImpl.setStatusByUserId(blogsEntry.getStatusByUserId());
 		blogsEntryImpl.setStatusByUserName(blogsEntry.getStatusByUserName());
 		blogsEntryImpl.setStatusDate(blogsEntry.getStatusDate());
+		blogsEntryImpl.setLastPublishDate(blogsEntry.getLastPublishDate());
 
 		return blogsEntryImpl;
 	}

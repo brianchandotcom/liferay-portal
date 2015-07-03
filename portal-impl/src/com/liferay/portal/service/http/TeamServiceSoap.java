@@ -66,8 +66,8 @@ import java.rmi.RemoteException;
 public class TeamServiceSoap {
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
-	#addTeam(long,long,String,String,ServiceContext)}
+	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, String,
+	String, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.TeamSoap addTeam(long groupId,

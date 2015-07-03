@@ -46,6 +46,7 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		soapModel.setPrivateLayout(model.getPrivateLayout());
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setLanguageId(model.getLanguageId());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -209,6 +210,14 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		_languageId = languageId;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _layoutFriendlyURLId;
@@ -222,4 +231,5 @@ public class LayoutFriendlyURLSoap implements Serializable {
 	private boolean _privateLayout;
 	private String _friendlyURL;
 	private String _languageId;
+	private Date _lastPublishDate;
 }

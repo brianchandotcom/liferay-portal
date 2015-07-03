@@ -2961,6 +2961,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		journalFeedImpl.setContentField(journalFeed.getContentField());
 		journalFeedImpl.setFeedFormat(journalFeed.getFeedFormat());
 		journalFeedImpl.setFeedVersion(journalFeed.getFeedVersion());
+		journalFeedImpl.setLastPublishDate(journalFeed.getLastPublishDate());
 
 		return journalFeedImpl;
 	}

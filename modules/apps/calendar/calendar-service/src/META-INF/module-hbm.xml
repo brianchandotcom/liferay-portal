@@ -27,6 +27,7 @@
 		<property name="defaultCalendar" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="enableComments" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="enableRatings" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.calendar.model.impl.CalendarBookingImpl" table="CalendarBooking">
 		<id name="calendarBookingId" type="long">
@@ -59,6 +60,7 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl" table="CalendarNotificationTemplate">
 		<id name="calendarNotificationTemplateId" type="long">
@@ -77,6 +79,7 @@
 		<property name="notificationTemplateType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="body" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.calendar.model.impl.CalendarResourceImpl" table="CalendarResource">
 		<id name="calendarResourceId" type="long">
@@ -97,5 +100,6 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

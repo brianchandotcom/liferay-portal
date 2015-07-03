@@ -1086,6 +1086,15 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-56767, temporary workaround until Eudaldo Alonso fixes it
+
+		if (line.matches(
+				".*\\java.io.FileNotFoundException: " +
+					"/html/portlet/blogs_admin/view.jsp.*")) {
+
+			return true;
+		}
+
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

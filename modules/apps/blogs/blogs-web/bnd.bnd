@@ -1,6 +1,11 @@
 Bundle-Name: Liferay Blogs Web
 Bundle-SymbolicName: com.liferay.blogs.web
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.blogs.web.blogs.asset,\
+	com.liferay.blogs.web.blogs.lar,\
+	com.liferay.blogs.web.blogs.social,\
+	com.liferay.blogs.web.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources

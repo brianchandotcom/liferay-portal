@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.ratings.definition;
+package com.liferay.blogs.web.blogs.ratings.definition;
 
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
@@ -35,7 +35,7 @@ public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.BLOGS;
+		return BlogsPortletKeys.BLOGS;
 	}
 
 }

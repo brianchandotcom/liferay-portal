@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -62,7 +63,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl;
-import com.liferay.portlet.journal.util.JournalConverterUtil;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -110,6 +111,9 @@ public class JournalConverterUtilTest {
 		_ddmStructure = _ddmStructureTestHelper.addStructure(
 			classNameId, null, "Test Structure", definition,
 			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		_journalConverter = RegistryUtil.getRegistry().getService(
+			JournalConverter.class);
 	}
 
 	@Test
@@ -129,7 +133,7 @@ public class JournalConverterUtilTest {
 		String expectedContent = read(
 			"test-journal-content-boolean-repeatable-field.xml");
 
-		String actualContent = JournalConverterUtil.getContent(
+		String actualContent = _journalConverter.getContent(
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
@@ -162,7 +166,7 @@ public class JournalConverterUtilTest {
 		String expectedContent = replaceLinksToLayoutsParameters(
 			read("test-journal-content-link-to-page-field.xml"), layouts);
 
-		String actualContent = JournalConverterUtil.getContent(
+		String actualContent = _journalConverter.getContent(
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
@@ -183,7 +187,7 @@ public class JournalConverterUtilTest {
 
 		String expectedContent = read("test-journal-content-list-field.xml");
 
-		String actualContent = JournalConverterUtil.getContent(
+		String actualContent = _journalConverter.getContent(
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
@@ -206,7 +210,7 @@ public class JournalConverterUtilTest {
 		String expectedContent = read(
 			"test-journal-content-multi-list-field.xml");
 
-		String actualContent = JournalConverterUtil.getContent(
+		String actualContent = _journalConverter.getContent(
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
@@ -218,7 +222,7 @@ public class JournalConverterUtilTest {
 
 		String expectedContent = read("test-journal-content-nested-fields.xml");
 
-		String actualContent = JournalConverterUtil.getContent(
+		String actualContent = _journalConverter.getContent(
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
@@ -240,7 +244,7 @@ public class JournalConverterUtilTest {
 		String expectedContent = read(
 			"test-journal-content-text-area-field.xml");
 
-		String actualContent = JournalConverterUtil.getContent(
+		String actualContent = _journalConverter.getContent(
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
@@ -264,7 +268,7 @@ public class JournalConverterUtilTest {
 		String expectedContent = read(
 			"test-journal-content-text-box-repeatable-field.xml");
 
-		String actualContent = JournalConverterUtil.getContent(
+		String actualContent = _journalConverter.getContent(
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
@@ -285,7 +289,7 @@ public class JournalConverterUtilTest {
 
 		String expectedContent = read("test-journal-content-text-field.xml");
 
-		String actualContent = JournalConverterUtil.getContent(
+		String actualContent = _journalConverter.getContent(
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
@@ -298,7 +302,7 @@ public class JournalConverterUtilTest {
 		DDMForm expectedDDMForm = DDMFormXSDDeserializerUtil.deserialize(
 			expectedXSD);
 
-		String actualXSD = JournalConverterUtil.getDDMXSD(
+		String actualXSD = _journalConverter.getDDMXSD(
 			read("test-journal-structure-all-fields.xml"));
 
 		validateDDMXSD(actualXSD);
@@ -326,7 +330,7 @@ public class JournalConverterUtilTest {
 		String content = read(
 			"test-journal-content-boolean-repeatable-field.xml");
 
-		Fields actualFields = JournalConverterUtil.getDDMFields(
+		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
 		Assert.assertEquals(expectedFields, actualFields);
@@ -379,7 +383,7 @@ public class JournalConverterUtilTest {
 		for (int i = 0; i < previewURLs.length; i++) {
 			element.addCDATA(previewURLs[i]);
 
-			Fields actualFields = JournalConverterUtil.getDDMFields(
+			Fields actualFields = _journalConverter.getDDMFields(
 				_ddmStructure, document.asXML());
 
 			Assert.assertEquals(expectedFields, actualFields);
@@ -418,7 +422,7 @@ public class JournalConverterUtilTest {
 		String content = replaceLinksToLayoutsParameters(
 			read("test-journal-content-link-to-page-field.xml"), layoutsMap);
 
-		Fields actualFields = JournalConverterUtil.getDDMFields(
+		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
 		Assert.assertEquals(expectedFields, actualFields);
@@ -439,7 +443,7 @@ public class JournalConverterUtilTest {
 
 		String content = read("test-journal-content-list-field.xml");
 
-		Fields actualFields = JournalConverterUtil.getDDMFields(
+		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
 		Assert.assertEquals(expectedFields, actualFields);
@@ -463,7 +467,7 @@ public class JournalConverterUtilTest {
 
 		String content = read("test-journal-content-multi-list-field.xml");
 
-		Fields actualFields = JournalConverterUtil.getDDMFields(
+		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
 		Assert.assertEquals(expectedFields, actualFields);
@@ -475,7 +479,7 @@ public class JournalConverterUtilTest {
 
 		String content = read("test-journal-content-nested-fields.xml");
 
-		Fields actualFields = JournalConverterUtil.getDDMFields(
+		Fields actualFields = _journalConverter.getDDMFields(
 			_ddmStructure, content);
 
 		Assert.assertEquals(expectedFields, actualFields);
@@ -488,7 +492,7 @@ public class JournalConverterUtilTest {
 		Map<String, Map<String, String>> expectedMap =
 			JournalTestUtil.getXsdMap(expectedXSD);
 
-		String actualXSD = JournalConverterUtil.getJournalXSD(
+		String actualXSD = _journalConverter.getJournalXSD(
 			read("test-ddm-structure-all-fields.xml"));
 
 		Map<String, Map<String, String>> actualMap = JournalTestUtil.getXsdMap(
@@ -989,6 +993,7 @@ public class JournalConverterUtilTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private JournalConverter _journalConverter;
 	private final Locale _ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 
 }

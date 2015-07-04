@@ -15,6 +15,7 @@
 package com.liferay.journal.web.asset;
 
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.BaseDDMFormValuesReader;
@@ -23,7 +24,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
-import com.liferay.portlet.journal.util.JournalConverterUtil;
+import com.liferay.registry.RegistryUtil;
 
 /**
  * @author Adolfo Pérez
@@ -43,7 +44,7 @@ final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 					PortalUtil.getClassNameId(JournalArticle.class),
 					_article.getDDMStructureKey(), true);
 
-			Fields fields = JournalConverterUtil.getDDMFields(
+			Fields fields = getJournalConverter().getDDMFields(
 				ddmStructure, _article.getContent());
 
 			return FieldsToDDMFormValuesConverterUtil.convert(
@@ -53,6 +54,10 @@ final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 			throw new PortalException(
 				"Unable to read fields for article " + _article.getId(), e);
 		}
+	}
+
+	protected JournalConverter getJournalConverter() {
+		return RegistryUtil.getRegistry().getService(JournalConverter.class);
 	}
 
 	private final JournalArticle _article;

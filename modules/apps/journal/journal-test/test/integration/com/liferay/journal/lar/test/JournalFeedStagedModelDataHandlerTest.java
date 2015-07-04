@@ -35,8 +35,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -86,11 +84,11 @@ public class JournalFeedStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new LinkedHashMap<>();
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(
 			group.getGroupId(), JournalArticle.class.getName());
 
 		for (int i = 0; i < 2; i++) {
-			DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
 				group.getGroupId(), ddmStructure.getStructureId());
 
 			addDependentStagedModel(

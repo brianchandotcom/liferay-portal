@@ -43,8 +43,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -86,15 +84,15 @@ public class JournalArticleFinderTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_ddmStructure = DDMStructureTestUtil.addStructure(
+		_ddmStructure = JournalTestUtil.addDDMStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
 		_folder = JournalTestUtil.addFolder(_group.getGroupId(), "Folder 1");
 
-		_basicWebContentDDMStructure = DDMStructureTestUtil.addStructure(
+		_basicWebContentDDMStructure = JournalTestUtil.addDDMStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
-		DDMTemplate basicWebContentTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate basicWebContentTemplate = JournalTestUtil.addDDMTemplate(
 			_group.getGroupId(), _basicWebContentDDMStructure.getStructureId());
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
@@ -109,7 +107,7 @@ public class JournalArticleFinderTest {
 		JournalFolder folder = JournalTestUtil.addFolder(
 			_group.getGroupId(), "Folder 2");
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
 			_group.getGroupId(), _ddmStructure.getStructureId());
 
 		article = JournalTestUtil.addArticleWithXMLContent(

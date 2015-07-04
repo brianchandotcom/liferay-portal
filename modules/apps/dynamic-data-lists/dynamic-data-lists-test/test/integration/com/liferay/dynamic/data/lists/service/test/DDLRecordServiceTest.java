@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.test.util.DDMTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -45,8 +46,6 @@ import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -77,7 +76,6 @@ public class DDLRecordServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_ddmStructureTestHelper = new DDMStructureTestHelper(_group);
 		_recordSetTestHelper = new DDLRecordSetTestHelper(_group);
 	}
 
@@ -237,8 +235,8 @@ public class DDLRecordServiceTest {
 	}
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
-		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
+		DDMStructure ddmStructure = DDMTestUtil.addDDMStructure(
+			_group.getGroupId(), ddmForm, StorageType.JSON.toString());
 
 		return _recordSetTestHelper.addRecordSet(ddmStructure);
 	}
@@ -279,22 +277,18 @@ public class DDLRecordServiceTest {
 	protected DDMFormFieldValue createDDMFormFieldValue(
 		String name, Value value) {
 
-		return DDMFormValuesTestUtil.createDDMFormFieldValue(name, value);
+		return DDMTestUtil.createDDMFormFieldValue(name, value);
 	}
 
 	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {
-		Set<Locale> availableLocales =
-			DDMFormValuesTestUtil.createAvailableLocales(LocaleUtil.US);
-
-		return DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm, availableLocales, LocaleUtil.US);
+		return DDMTestUtil.createDDMFormValues(
+			ddmForm, LocaleUtil.US, LocaleUtil.US);
 	}
 
 	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
 		String name, String enValue) {
 
-		return DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
-			name, enValue);
+		return DDMTestUtil.createLocalizedDDMFormFieldValue(name, enValue);
 	}
 
 	protected DDMFormField createSeparatorDDMFormField(String name) {
@@ -337,8 +331,7 @@ public class DDLRecordServiceTest {
 	protected DDMFormFieldValue createUnlocalizedDDMFormFieldValue(
 		String name, String value) {
 
-		return DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-			name, value);
+		return DDMTestUtil.createUnlocalizedDDMFormFieldValue(name, value);
 	}
 
 	protected DDLRecord updateRecord(
@@ -353,8 +346,6 @@ public class DDLRecordServiceTest {
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
 			serviceContext);
 	}
-
-	private DDMStructureTestHelper _ddmStructureTestHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;

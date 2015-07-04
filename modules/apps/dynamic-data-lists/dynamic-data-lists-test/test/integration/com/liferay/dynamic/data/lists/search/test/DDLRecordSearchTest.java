@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.test.util.DDMTestUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
@@ -41,9 +42,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormValuesTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -230,11 +228,8 @@ public class DDLRecordSearchTest {
 		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
 			_group);
 
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(_group);
-
-		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			createDDMForm(), StorageType.JSON.toString());
+		DDMStructure ddmStructure = DDMTestUtil.addDDMStructure(
+			_group.getGroupId(), createDDMForm(), StorageType.JSON.toString());
 
 		return recordSetTestHelper.addRecordSet(ddmStructure);
 	}
@@ -262,11 +257,10 @@ public class DDLRecordSearchTest {
 	}
 
 	protected DDMForm createDDMForm() {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
-			LocaleUtil.US);
+		DDMForm ddmForm = DDMTestUtil.createDDMForm(
+			LocaleUtil.US, LocaleUtil.US);
 
-		DDMFormField nameDDMFormField = DDMFormTestUtil.createTextDDMFormField(
+		DDMFormField nameDDMFormField = DDMTestUtil.createTextDDMFormField(
 			"name", true, false, false);
 
 		nameDDMFormField.setIndexType("keyword");
@@ -274,7 +268,7 @@ public class DDLRecordSearchTest {
 		ddmForm.addDDMFormField(nameDDMFormField);
 
 		DDMFormField descriptionDDMFormField =
-			DDMFormTestUtil.createTextDDMFormField(
+			DDMTestUtil.createTextDDMFormField(
 				"description", true, false, false);
 
 		descriptionDDMFormField.setIndexType("text");
@@ -289,17 +283,14 @@ public class DDLRecordSearchTest {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		return DDMFormValuesTestUtil.createDDMFormValues(
-			ddmStructure.getDDMForm(),
-			DDMFormValuesTestUtil.createAvailableLocales(LocaleUtil.US),
-			LocaleUtil.US);
+		return DDMTestUtil.createDDMFormValues(
+			ddmStructure.getDDMForm(), LocaleUtil.US, LocaleUtil.US);
 	}
 
 	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
 		String name, String enValue) {
 
-		return DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
-			name, enValue);
+		return DDMTestUtil.createLocalizedDDMFormFieldValue(name, enValue);
 	}
 
 	protected boolean isExactPhraseQueryImplementedForSearchEngine() {

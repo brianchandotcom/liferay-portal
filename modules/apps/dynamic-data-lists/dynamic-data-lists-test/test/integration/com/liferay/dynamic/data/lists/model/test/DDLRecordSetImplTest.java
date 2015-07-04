@@ -17,20 +17,17 @@ package com.liferay.dynamic.data.lists.model.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.test.util.DDMTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.Set;
 
@@ -63,20 +60,20 @@ public class DDLRecordSetImplTest {
 
 	@Test
 	public void testGetDDMStructure() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+		DDMForm ddmForm = DDMTestUtil.createDDMForm(
 			"Text 1", "Text 2", "Text 3");
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = DDMTestUtil.addDDMStructure(
 			_group.getGroupId(), DDLRecordSet.class.getName(), ddmForm);
 
 		DDLRecordSet recordSet = _ddlRecordSetTestHelper.addRecordSet(
 			ddmStructure);
 
-		ddmForm = DDMFormTestUtil.createDDMForm("Text 2", "Text 3");
+		ddmForm = DDMTestUtil.createDDMForm("Text 2", "Text 3");
 
-		DDMTemplate template = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate template = DDMTestUtil.addDDMTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(), "json",
-			DDMFormJSONSerializerUtil.serialize(ddmForm), LocaleUtil.US);
+			DDMFormJSONSerializerUtil.serialize(ddmForm));
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 

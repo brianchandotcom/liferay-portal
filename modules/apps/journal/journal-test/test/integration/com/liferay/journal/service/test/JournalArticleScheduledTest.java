@@ -42,8 +42,6 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -123,14 +121,14 @@ public class JournalArticleScheduledTest {
 		descriptionMap.put(
 			LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
-		String content = DDMStructureTestUtil.getSampleStructuredContent();
+		String content = JournalTestUtil.getSampleStructuredContent();
 
-		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm();
+		DDMForm ddmForm = JournalTestUtil.getSampleDDMForm();
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = JournalTestUtil.addDDMStructure(
 			groupId, JournalArticle.class.getName(), ddmForm);
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplate ddmTemplate = JournalTestUtil.addDDMTemplate(
 			groupId, ddmStructure.getStructureId());
 
 		Calendar displayDateCalendar = getCalendar(displayDate, when);

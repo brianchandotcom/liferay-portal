@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.lar;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.publisher.util.AssetPublisherTestUtil;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.journal.model.JournalArticle;
@@ -57,7 +58,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -338,7 +338,7 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testOneDLFileEntryType() throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = AssetPublisherTestUtil.addDDMStructure(
 			group.getGroupId(), DLFileEntryType.class.getName());
 
 		ServiceContext serviceContext =
@@ -350,8 +350,9 @@ public class AssetPublisherExportImportTest
 
 		serviceContext.setUuid(ddmStructure.getUuid());
 
-		DDMStructure importedDDMStructure = DDMStructureTestUtil.addStructure(
-			importedGroup.getGroupId(), DLFileEntryType.class.getName(), 0,
+		DDMStructure importedDDMStructure =
+			AssetPublisherTestUtil.addDDMStructure(
+				importedGroup.getGroupId(), DLFileEntryType.class.getName(),
 			ddmStructure.getDDMForm(), LocaleUtil.getDefault(), serviceContext);
 
 		serviceContext.setUuid(dlFileEntryType.getUuid());
@@ -404,7 +405,7 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testOneJournalStructure() throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure = AssetPublisherTestUtil.addDDMStructure(
 			group.getGroupId(), JournalArticle.class.getName());
 
 		ServiceContext serviceContext =
@@ -412,8 +413,9 @@ public class AssetPublisherExportImportTest
 
 		serviceContext.setUuid(ddmStructure.getUuid());
 
-		DDMStructure importedDDMStructure = DDMStructureTestUtil.addStructure(
-			importedGroup.getGroupId(), JournalArticle.class.getName(), 0,
+		DDMStructure importedDDMStructure =
+			AssetPublisherTestUtil.addDDMStructure(
+				importedGroup.getGroupId(), JournalArticle.class.getName(),
 			ddmStructure.getDDMForm(), LocaleUtil.getDefault(), serviceContext);
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
@@ -457,7 +459,7 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testSeveralDLFileEntryTypes() throws Exception {
-		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure1 = AssetPublisherTestUtil.addDDMStructure(
 			group.getGroupId(), DLFileEntryType.class.getName());
 
 		ServiceContext serviceContext =
@@ -469,8 +471,9 @@ public class AssetPublisherExportImportTest
 
 		serviceContext.setUuid(ddmStructure1.getUuid());
 
-		DDMStructure importedDDMStructure1 = DDMStructureTestUtil.addStructure(
-			importedGroup.getGroupId(), DLFileEntryType.class.getName(), 0,
+		DDMStructure importedDDMStructure1 =
+			AssetPublisherTestUtil.addDDMStructure(
+				importedGroup.getGroupId(), DLFileEntryType.class.getName(),
 			ddmStructure1.getDDMForm(), LocaleUtil.getDefault(),
 			serviceContext);
 
@@ -480,7 +483,7 @@ public class AssetPublisherExportImportTest
 			importedGroup.getGroupId(), importedDDMStructure1.getStructureId(),
 			serviceContext);
 
-		DDMStructure ddmStructure2 = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure2 = AssetPublisherTestUtil.addDDMStructure(
 			group.getGroupId(), DLFileEntryType.class.getName());
 
 		serviceContext.setUuid(null);
@@ -490,8 +493,9 @@ public class AssetPublisherExportImportTest
 
 		serviceContext.setUuid(ddmStructure2.getUuid());
 
-		DDMStructure importedDDMStructure2 = DDMStructureTestUtil.addStructure(
-			importedGroup.getGroupId(), DLFileEntryType.class.getName(), 0,
+		DDMStructure importedDDMStructure2 =
+			AssetPublisherTestUtil.addDDMStructure(
+				importedGroup.getGroupId(), DLFileEntryType.class.getName(),
 			ddmStructure2.getDDMForm(), LocaleUtil.getDefault(),
 			serviceContext);
 
@@ -527,7 +531,7 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testSeveralJournalStructures() throws Exception {
-		DDMStructure ddmStructure1 = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure1 = AssetPublisherTestUtil.addDDMStructure(
 			group.getGroupId(), JournalArticle.class.getName());
 
 		ServiceContext serviceContext =
@@ -535,18 +539,20 @@ public class AssetPublisherExportImportTest
 
 		serviceContext.setUuid(ddmStructure1.getUuid());
 
-		DDMStructure importedDDMStructure1 = DDMStructureTestUtil.addStructure(
-			importedGroup.getGroupId(), JournalArticle.class.getName(), 0,
+		DDMStructure importedDDMStructure1 =
+			AssetPublisherTestUtil.addDDMStructure(
+				importedGroup.getGroupId(), JournalArticle.class.getName(),
 			ddmStructure1.getDDMForm(), LocaleUtil.getDefault(),
 			serviceContext);
 
-		DDMStructure ddmStructure2 = DDMStructureTestUtil.addStructure(
+		DDMStructure ddmStructure2 = AssetPublisherTestUtil.addDDMStructure(
 			group.getGroupId(), JournalArticle.class.getName());
 
 		serviceContext.setUuid(ddmStructure2.getUuid());
 
-		DDMStructure importedDDMStructure2 = DDMStructureTestUtil.addStructure(
-			importedGroup.getGroupId(), JournalArticle.class.getName(), 0,
+		DDMStructure importedDDMStructure2 =
+			AssetPublisherTestUtil.addDDMStructure(
+				importedGroup.getGroupId(), JournalArticle.class.getName(),
 			ddmStructure1.getDDMForm(), LocaleUtil.getDefault(),
 			serviceContext);
 

@@ -168,6 +168,19 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
 				ddmStructure, ddmFormValues);
 
+			Assert.assertNotNull(fields);
+
+			Field integerField = fields.get("Integer");
+
+			testField(
+				integerField, createValuesList(""), createValuesList(""),
+				_availableLocales, LocaleUtil.US);
+
+			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+			Assert.assertEquals(
+				"Integer_INSTANCE_rztm", fieldsDisplayField.getValue());
+
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertEquals(5, logRecords.size());
@@ -182,19 +195,6 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 					expectedValues[i]+" is not a valid language id",
 					logRecord.getMessage());
 			}
-
-			Assert.assertNotNull(fields);
-
-			Field integerField = fields.get("Integer");
-
-			testField(
-				integerField, createValuesList(""), createValuesList(""),
-				_availableLocales, LocaleUtil.US);
-
-			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
-
-			Assert.assertEquals(
-				"Integer_INSTANCE_rztm", fieldsDisplayField.getValue());
 		}
 	}
 

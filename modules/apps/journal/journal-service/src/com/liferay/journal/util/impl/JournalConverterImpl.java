@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util;
+package com.liferay.journal.util.impl;
 
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,10 +60,13 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  * @author Bruno Basto
  */
+@Component(immediate = true)
 public class JournalConverterImpl implements JournalConverter {
 
 	public JournalConverterImpl() {

@@ -51,5 +51,6 @@
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.osgi.metadata/jbosgi-metadata/jars/jbosgi-metadata-4.0.0.CR1.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/com.liferay.arquillian.extension.junit.bridge/jars/com.liferay.arquillian.extension.junit.bridge-1.0.0-SNAPSHOT.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/com.liferay.dynamic.data.mapping.test.util/jars/com.liferay.dynamic.data.mapping.test.util-1.0.0-SNAPSHOT.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

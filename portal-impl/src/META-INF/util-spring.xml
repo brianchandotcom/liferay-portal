@@ -1040,10 +1040,6 @@
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.journal.util.JournalConverter" class="com.liferay.portlet.journal.util.JournalConverterImpl" />
-	<bean id="com.liferay.portlet.journal.util.JournalConverterUtil" class="com.liferay.portlet.journal.util.JournalConverterUtil">
-		<property name="journalConverter" ref="com.liferay.portlet.journal.util.JournalConverter" />
-	</bean>
 	<bean id="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler">

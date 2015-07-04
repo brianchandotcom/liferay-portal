@@ -72,7 +72,7 @@ List<LayoutDescription> layoutDescriptions = siteMapDisplayContext.getLayoutDesc
 		<aui:input name="preferences--showHiddenPages--" type="checkbox" value="<%= siteMapPortletInstanceConfiguration.showHiddenPages() %>" />
 
 		<div class="display-template">
-			<liferay-ui:ddm-template-selector
+			<liferay-ui:template-selector
 				className="<%= LayoutSet.class.getName() %>"
 				displayStyle="<%= siteMapPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= siteMapDisplayContext.getDisplayStyleGroupId() %>"

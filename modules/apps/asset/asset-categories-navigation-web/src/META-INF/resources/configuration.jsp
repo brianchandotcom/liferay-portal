@@ -45,7 +45,7 @@
 		</div>
 
 		<div class="display-template">
-			<liferay-ui:ddm-template-selector
+			<liferay-ui:template-selector
 				className="<%= AssetCategory.class.getName() %>"
 				displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"

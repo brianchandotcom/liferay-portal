@@ -84,7 +84,7 @@
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="rssFeedsDisplaySettingsPanel" persistState="<%= true %>" title="display-settings">
 			<aui:fieldset>
 				<div class="display-template">
-					<liferay-ui:ddm-template-selector
+					<liferay-ui:template-selector
 						className="<%= RSSFeed.class.getName() %>"
 						displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>"

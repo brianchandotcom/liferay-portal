@@ -134,24 +134,24 @@ public class TemplateSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:classNameId",
+			"liferay-ui:template-select:classNameId",
 			String.valueOf(PortalUtil.getClassNameId(_className)));
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:displayStyle", getDisplayStyle());
+			"liferay-ui:template-select:displayStyle", getDisplayStyle());
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:displayStyleGroupId",
+			"liferay-ui:template-select:displayStyleGroupId",
 			String.valueOf(getDisplayStyleGroupId()));
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:displayStyles", _displayStyles);
-		request.setAttribute("liferay-ui:ddm-template-select:icon", _icon);
-		request.setAttribute("liferay-ui:ddm-template-select:label", _label);
+			"liferay-ui:template-select:displayStyles", _displayStyles);
+		request.setAttribute("liferay-ui:template-select:icon", _icon);
+		request.setAttribute("liferay-ui:template-select:label", _label);
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:portletDisplayDDMTemplate",
+			"liferay-ui:template-select:portletDisplayDDMTemplate",
 			getPortletDisplayDDMTemplate());
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:refreshURL", _refreshURL);
+			"liferay-ui:template-select:refreshURL", _refreshURL);
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:showEmptyOption",
+			"liferay-ui:template-select:showEmptyOption",
 			String.valueOf(_showEmptyOption));
 	}
 

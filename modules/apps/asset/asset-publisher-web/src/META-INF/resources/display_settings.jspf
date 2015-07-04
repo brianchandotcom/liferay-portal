@@ -20,7 +20,7 @@
 	</c:if>
 
 	<div class="display-template">
-		<liferay-ui:ddm-template-selector
+		<liferay-ui:template-selector
 			className="<%= AssetEntry.class.getName() %>"
 			defaultDisplayStyle="<%= AssetPublisherWebConfigurationValues.DISPLAY_STYLE_DEFAULT %>"
 			displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"

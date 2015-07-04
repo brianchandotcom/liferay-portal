@@ -14,11 +14,11 @@
 
 package com.liferay.workflow.task.web.portlet.routes;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.util.PortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -32,5 +32,4 @@ import com.liferay.portal.util.PortletKeys;
 	service = FriendlyURLMapper.class
 )
 public class MyWorkflowTaskFriendlyURLMapper extends DefaultFriendlyURLMapper {
-
 }

@@ -161,21 +161,41 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 		ddmFormValues.addDDMFormFieldValue(integerDDMFormFieldValue);
 
-		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
-			ddmStructure, ddmFormValues);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocaleUtil.class.getName(), Level.WARNING)) {
 
-		Assert.assertNotNull(fields);
+			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+				ddmStructure, ddmFormValues);
 
-		Field integerField = fields.get("Integer");
+			Assert.assertNotNull(fields);
 
-		testField(
-			integerField, createValuesList(""), createValuesList(""),
-			_availableLocales, LocaleUtil.US);
+			Field integerField = fields.get("Integer");
 
-		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+			testField(
+				integerField, createValuesList(""), createValuesList(""),
+				_availableLocales, LocaleUtil.US);
 
-		Assert.assertEquals(
-			"Integer_INSTANCE_rztm", fieldsDisplayField.getValue());
+			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+			Assert.assertEquals(
+				"Integer_INSTANCE_rztm", fieldsDisplayField.getValue());
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(5, logRecords.size());
+
+			String[] expectedValues =
+				{"pt_BR", "en_US", "en_US", "pt_BR", "en_US"};
+
+			for (int i = 0; i < logRecords.size(); i++) {
+				LogRecord logRecord = logRecords.get(i);
+
+				Assert.assertEquals(
+					expectedValues[i]+" is not a valid language id",
+					logRecord.getMessage());
+			}
+		}
 	}
 
 	@Test

@@ -44,7 +44,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.asset.model.DDMFormValuesReader;
 
 import java.util.Date;
@@ -56,6 +56,12 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Julio Camarero
  * @author Juan Fernández
@@ -63,7 +69,7 @@ import javax.portlet.PortletURL;
  * @author Raymond Augé
  */
 public class JournalArticleAssetRenderer
-	extends BaseAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer implements TrashRenderer {
 
 	public static final String TYPE = "journal_article";
 
@@ -126,6 +132,18 @@ public class JournalArticleAssetRenderer
 	@Override
 	public long getGroupId() {
 		return _article.getGroupId();
+	}
+
+	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
+			return "/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
@@ -374,6 +392,17 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String template)
+		throws Exception {
+
+		request.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
+
+		return super.include(request, response, template);
+	}
+
+	@Override
 	public boolean isConvertible() {
 		return true;
 	}
@@ -408,21 +437,11 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			String template)
-		throws Exception {
-
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
-
-			portletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
-
-			return "/asset/" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override

@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.trash;
 
-import com.liferay.portal.kernel.trash.BaseTrashRenderer;
+import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
@@ -25,10 +25,14 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Levente Hudák
  */
-public class ExportImportConfigurationTrashRenderer extends BaseTrashRenderer {
+public class ExportImportConfigurationTrashRenderer
+	extends BaseJSPTrashRenderer {
 
 	public static final String TYPE = "export_import_configuration";
 
@@ -54,6 +58,11 @@ public class ExportImportConfigurationTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		return "/html/portlet/export_import/view_configuration.jsp";
+	}
+
+	@Override
 	public String getPortletId() {
 		return PortletKeys.EXPORT_IMPORT;
 	}
@@ -76,16 +85,16 @@ public class ExportImportConfigurationTrashRenderer extends BaseTrashRenderer {
 	}
 
 	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		portletRequest.setAttribute(
+		request.setAttribute(
 			WebKeys.EXPORT_IMPORT_CONFIGURATION_ID,
 			_exportImportConfiguration.getExportImportConfigurationId());
 
-		return "/html/portlet/export_import/view_configuration.jsp";
+		return super.include(request, response, template);
 	}
 
 	private final ExportImportConfiguration _exportImportConfiguration;

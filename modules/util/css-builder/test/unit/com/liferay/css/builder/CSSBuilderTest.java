@@ -17,6 +17,7 @@ package com.liferay.css.builder;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
@@ -107,17 +108,28 @@ public class CSSBuilderTest {
 
 		String expectedCacheContent = _read(
 			_docrootDirName + "/expected/test.css");
-		String actualCacheContent = _read(
+		String testCacheContent = _read(
 			_docrootDirName + "/css/.sass-cache/test.css");
+		String mainCacheContent = _read(
+			_docrootDirName + "/css/.sass-cache/main.css");
 
-		Assert.assertEquals(expectedCacheContent, actualCacheContent);
+		Assert.assertEquals(expectedCacheContent, testCacheContent);
+		Assert.assertEquals(expectedCacheContent, mainCacheContent);
+
+		File file = new File(
+			Paths.get("/css/.sass-cache/_partial.css").toString());
+
+		Assert.assertFalse(file.exists());
 
 		String expectedRtlCacheContent = _read(
 			_docrootDirName + "/expected/test_rtl.css");
-		String actualRtlCacheContent = _read(
+		String testRtlCacheContent = _read(
 			_docrootDirName + "/css/.sass-cache/test_rtl.css");
+		String mainRtlCacheContent = _read(
+			_docrootDirName + "/css/.sass-cache/main_rtl.css");
 
-		Assert.assertEquals(expectedRtlCacheContent, actualRtlCacheContent);
+		Assert.assertEquals(expectedRtlCacheContent, testRtlCacheContent);
+		Assert.assertEquals(expectedRtlCacheContent, mainRtlCacheContent);
 	}
 
 	private static String _docrootDirName;

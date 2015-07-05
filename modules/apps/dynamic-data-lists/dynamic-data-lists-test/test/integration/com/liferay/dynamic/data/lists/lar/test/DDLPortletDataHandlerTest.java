@@ -20,13 +20,13 @@ import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.web.lar.DDLPortletDataHandler;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import org.junit.ClassRule;

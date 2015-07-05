@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Dynamic Data Mapping Test Util
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.dynamic.data.mapping.test.util
+Include-Resource: classes

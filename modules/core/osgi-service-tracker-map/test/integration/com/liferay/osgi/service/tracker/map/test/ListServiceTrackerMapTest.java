@@ -148,6 +148,55 @@ public class ListServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGestServiceWithUnregisteringAndCustomComparator() {
+		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			createServiceTrackerMap(
+				_bundleContext, new Comparator<ServiceReference<TrackedOne>>() {
+
+				@Override
+				public int compare(
+					ServiceReference<TrackedOne> o1,
+					ServiceReference<TrackedOne> o2) {
+
+					return 0;
+				}
+			});
+
+		TrackedOne trackedOne1 = new TrackedOne();
+		TrackedOne trackedOne2 = new TrackedOne();
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1);
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2);
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3);
+
+		serviceRegistration2.unregister();
+
+		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+
+		// Getting the list of services should return a list with the affected
+		// changes
+
+		Assert.assertEquals(2, services.size());
+
+		Assert.assertTrue(services.contains(trackedOne1));
+		Assert.assertTrue(services.contains(trackedOne3));
+
+		serviceRegistration3.unregister();
+
+		services = serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(1, services.size());
+
+		Assert.assertTrue(services.contains(trackedOne1));
+
+		serviceRegistration1.unregister();
+	}
+
+	@Test
 	public void testGetServicesIsNullAfterDeregistration() {
 		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);
@@ -329,6 +378,27 @@ public class ListServiceTrackerMapTest {
 		try {
 			_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 				bundleContext, TrackedOne.class, "target");
+		}
+		catch (InvalidSyntaxException ise) {
+			throw new RuntimeException(ise);
+		}
+
+		_serviceTrackerMap.open();
+
+		return _serviceTrackerMap;
+	}
+
+	protected ServiceTrackerMap<String, List<TrackedOne>>
+		createServiceTrackerMap(
+			BundleContext bundleContext,
+			Comparator<ServiceReference<TrackedOne>> comparator) {
+
+		try {
+			_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+				bundleContext, TrackedOne.class, null,
+				new PropertyServiceReferenceMapper<String, TrackedOne>(
+					"target"),
+				comparator);
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(ise);

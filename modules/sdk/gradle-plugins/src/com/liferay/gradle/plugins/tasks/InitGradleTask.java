@@ -45,6 +45,8 @@ import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.TaskAction;
@@ -168,9 +170,11 @@ public class InitGradleTask extends DefaultTask {
 		if (!isOverwrite() && buildGradleFile.exists() &&
 			(buildGradleFile.length() > 0)) {
 
-			throw new GradleException(
+			_logger.error(
 				"Unable to automatically upgrade build.gradle in \"" +
 					_project.getPath() + "\"");
+
+			return;
 		}
 
 		_liferayExtension = GradleUtil.getExtension(
@@ -353,7 +357,7 @@ public class InitGradleTask extends DefaultTask {
 						"Unable to find project dependency " + projectFileName;
 
 					if (isIgnoreMissingDependencies()) {
-						System.out.println(message);
+						_logger.error(message);
 
 						continue;
 					}
@@ -427,7 +431,7 @@ public class InitGradleTask extends DefaultTask {
 					fileName);
 
 				if (portalDependencyNotation == null) {
-					System.out.println(
+					_logger.error(
 						"Unable to find portal dependency " + fileName);
 				}
 				else {
@@ -764,6 +768,9 @@ public class InitGradleTask extends DefaultTask {
 
 		return sb.toString();
 	}
+
+	private static final Logger _logger = Logging.getLogger(
+		InitGradleTask.class);
 
 	private Node _buildXmlNode;
 	private boolean _ignoreMissingDependencies;

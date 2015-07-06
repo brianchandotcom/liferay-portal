@@ -15,6 +15,8 @@
 package com.liferay.taglib.security;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -23,6 +25,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
@@ -103,7 +106,10 @@ public class PermissionsURLTag extends TagSupport {
 			redirect = PortalUtil.getCurrentURL(request);
 		}
 
-		PortletURL portletURL = themeDisplay.getURLPortletConfiguration();
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			request,
+			PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
+			PortletProvider.Action.VIEW);
 
 		if (Validator.isNotNull(windowState)) {
 			portletURL.setWindowState(

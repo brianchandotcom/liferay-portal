@@ -50,7 +50,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.admin.util.PortalAdministrationApplicationType;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType;
 
 import java.io.Serializable;
 
@@ -947,24 +946,6 @@ public class ThemeDisplay
 
 	public String getURLPortal() {
 		return _urlPortal;
-	}
-
-	@JSON(include = false)
-	public PortletURL getURLPortletConfiguration() {
-		try {
-			if (_urlPortletConfiguration == null) {
-				_urlPortletConfiguration = PortletProviderUtil.getPortletURL(
-					getRequest(),
-					PortletConfigurationApplicationType.
-						PortletConfiguration.CLASS_NAME,
-					PortletProvider.Action.VIEW);
-			}
-
-			return _urlPortletConfiguration;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
 	}
 
 	@JSON(include = false)
@@ -1945,7 +1926,6 @@ public class ThemeDisplay
 	private transient PortletURL _urlMyAccount = null;
 	private transient PortletURL _urlPageSettings = null;
 	private String _urlPortal = StringPool.BLANK;
-	private transient PortletURL _urlPortletConfiguration = null;
 	private transient PortletURL _urlPublishToLive = null;
 	private String _urlSignIn = StringPool.BLANK;
 	private String _urlSignOut = StringPool.BLANK;

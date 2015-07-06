@@ -414,7 +414,7 @@ portletDisplay.setURLClose(urlClose);
 
 // URL configuration
 
-PortletURL urlConfiguration = themeDisplay.getURLPortletConfiguration();
+PortletURL urlConfiguration = PortletProviderUtil.getPortletURL(request, PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME, PortletProvider.Action.VIEW);
 
 urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
 

@@ -37,7 +37,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 String portletId = portletDisplay.getId();
 
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+if (Validator.isNotNull(portletResource)) {
 	portletId = portletResource;
 	portletName = portletResource;
 }

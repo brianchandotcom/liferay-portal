@@ -22,10 +22,7 @@ compileJava {
 
 configurations {
 	portal
-
-	portalTest {
-		extendsFrom portal
-	}
+	portalTest
 }
 
 dependencies {
@@ -55,13 +52,13 @@ sourceSets {
 	}
 
 	test {
-		compileClasspath += configurations.portalTest
-		runtimeClasspath += configurations.portalTest
+		compileClasspath += configurations.portal + configurations.portalTest
+		runtimeClasspath += configurations.portal + configurations.portalTest
 	}
 
 	testIntegration {
-		compileClasspath += configurations.portalTest
-		runtimeClasspath += configurations.portalTest
+		compileClasspath += configurations.portal + configurations.portalTest
+		runtimeClasspath += configurations.portal + configurations.portalTest
 	}
 }
 

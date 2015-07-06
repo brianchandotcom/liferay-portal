@@ -23,6 +23,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Matthew Kong
  */
@@ -40,7 +44,12 @@ public class MicroblogsEntryAssetRendererFactory
 		MicroblogsEntry microblogsEntry =
 			MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(classPK);
 
-		return new MicroblogsEntryAssetRenderer(microblogsEntry);
+		MicroblogsEntryAssetRenderer microblogsEntryAssetRenderer =
+			new MicroblogsEntryAssetRenderer(microblogsEntry);
+
+		microblogsEntryAssetRenderer.setServletContext(_servletContext);
+
+		return microblogsEntryAssetRenderer;
 	}
 
 	@Override
@@ -67,9 +76,19 @@ public class MicroblogsEntryAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.microblogs.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/microblogs/icon.png";
 	}
+
+	private ServletContext _servletContext;
 
 }

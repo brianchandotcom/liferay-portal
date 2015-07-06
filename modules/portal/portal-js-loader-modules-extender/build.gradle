@@ -1,0 +1,9 @@
+dependencies {
+	compile group: "org.json", name: "json", version: "20140107"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

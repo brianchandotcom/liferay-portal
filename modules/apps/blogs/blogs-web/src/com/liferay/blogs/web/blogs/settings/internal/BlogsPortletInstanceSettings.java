@@ -140,28 +140,12 @@ public class BlogsPortletInstanceSettings {
 		fallbackKeys.add(
 			"enableComments", PropsKeys.BLOGS_ENTRY_COMMENTS_ENABLED);
 		fallbackKeys.add(
-			"enableCommentRatings", PropsKeys.BLOGS_COMMENT_RATINGS_ENABLED);
-		fallbackKeys.add("enableFlags", PropsKeys.BLOGS_FLAGS_ENABLED);
-		fallbackKeys.add("enableRatings", PropsKeys.BLOGS_RATINGS_ENABLED);
-		fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.BLOGS_RELATED_ASSETS_ENABLED);
-		fallbackKeys.add("enableRss", PropsKeys.BLOGS_RSS_ENABLED);
-		fallbackKeys.add(
-			"enableSocialBookmarks", PropsKeys.BLOGS_SOCIAL_BOOKMARKS_ENABLED);
-		fallbackKeys.add("displayStyle", PropsKeys.BLOGS_DISPLAY_STYLE);
-		fallbackKeys.add(
 			"pageDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		fallbackKeys.add(
 			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		fallbackKeys.add(
 			"rssDisplayStyle", PropsKeys.RSS_FEED_DISPLAY_STYLE_DEFAULT);
 		fallbackKeys.add("rssFeedType", PropsKeys.RSS_FEED_TYPE_DEFAULT);
-		fallbackKeys.add(
-			"socialBookmarksDisplayPosition",
-			PropsKeys.BLOGS_SOCIAL_BOOKMARKS_DISPLAY_POSITION);
-		fallbackKeys.add(
-			"socialBookmarksDisplayStyle",
-			PropsKeys.BLOGS_SOCIAL_BOOKMARKS_DISPLAY_STYLE);
 		fallbackKeys.add(
 			"socialBookmarksTypes", PropsKeys.SOCIAL_BOOKMARK_TYPES);
 

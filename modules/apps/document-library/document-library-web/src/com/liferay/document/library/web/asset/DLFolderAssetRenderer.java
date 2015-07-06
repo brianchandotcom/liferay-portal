@@ -64,6 +64,11 @@ public class DLFolderAssetRenderer
 	}
 
 	@Override
+	public Object getAsset() {
+		return _folder;
+	}
+
+	@Override
 	public String getClassName() {
 		return DLFolder.class.getName();
 	}
@@ -76,11 +81,6 @@ public class DLFolderAssetRenderer
 	@Override
 	public Date getDisplayDate() {
 		return _folder.getModifiedDate();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _folder;
 	}
 
 	@Override

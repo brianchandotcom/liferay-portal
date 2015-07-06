@@ -51,6 +51,11 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public Object getAsset() {
+		return _category;
+	}
+
+	@Override
 	public String getClassName() {
 		return MBCategory.class.getName();
 	}
@@ -58,11 +63,6 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 	@Override
 	public long getClassPK() {
 		return _category.getCategoryId();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _category;
 	}
 
 	@Override

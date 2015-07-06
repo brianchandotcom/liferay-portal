@@ -72,6 +72,11 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
+	public Object getAsset() {
+		return _fileEntry;
+	}
+
+	@Override
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}
@@ -108,11 +113,6 @@ public class DLFileEntryAssetRenderer
 	@Override
 	public Date getDisplayDate() {
 		return _fileEntry.getModifiedDate();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _fileEntry;
 	}
 
 	@Override

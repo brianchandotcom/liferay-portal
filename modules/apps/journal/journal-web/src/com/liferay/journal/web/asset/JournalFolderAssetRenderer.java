@@ -57,6 +57,11 @@ public class JournalFolderAssetRenderer
 	}
 
 	@Override
+	public Object getAsset() {
+		return _folder;
+	}
+
+	@Override
 	public String getClassName() {
 		return JournalFolder.class.getName();
 	}
@@ -69,11 +74,6 @@ public class JournalFolderAssetRenderer
 	@Override
 	public Date getDisplayDate() {
 		return _folder.getModifiedDate();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _folder;
 	}
 
 	@Override

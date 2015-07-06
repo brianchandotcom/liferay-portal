@@ -53,6 +53,11 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
+	public Object getAsset() {
+		return _entry;
+	}
+
+	@Override
 	public String getClassName() {
 		return BookmarksEntry.class.getName();
 	}
@@ -65,11 +70,6 @@ public class BookmarksEntryAssetRenderer
 	@Override
 	public Date getDisplayDate() {
 		return _entry.getModifiedDate();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _entry;
 	}
 
 	@Override

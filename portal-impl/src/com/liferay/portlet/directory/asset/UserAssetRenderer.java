@@ -46,6 +46,11 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public Object getAsset() {
+		return _user;
+	}
+
+	@Override
 	public String getClassName() {
 		return User.class.getName();
 	}
@@ -58,11 +63,6 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer {
 	@Override
 	public String getDiscussionPath() {
 		return null;
-	}
-
-	@Override
-	public Object getEntry() {
-		return _user;
 	}
 
 	@Override

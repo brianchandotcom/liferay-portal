@@ -56,6 +56,11 @@ public class BlogsEntryAssetRenderer
 	}
 
 	@Override
+	public Object getAsset() {
+		return _entry;
+	}
+
+	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
 	}
@@ -78,11 +83,6 @@ public class BlogsEntryAssetRenderer
 	@Override
 	public Date getDisplayDate() {
 		return _entry.getDisplayDate();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _entry;
 	}
 
 	@Override

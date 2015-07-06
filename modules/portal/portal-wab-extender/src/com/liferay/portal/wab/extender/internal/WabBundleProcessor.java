@@ -26,6 +26,7 @@ import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinitionLoade
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.Hashtable;
 import java.util.List;
@@ -64,11 +65,13 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 public class WabBundleProcessor implements ServletContextListener {
 
 	public WabBundleProcessor(
-		Bundle bundle, String contextPath, SAXParserFactory saxParserFactory,
-		Logger logger) {
+		Bundle bundle, String contextPath,
+		Dictionary<String, Object> properties,
+		SAXParserFactory saxParserFactory, Logger logger) {
 
 		_bundle = bundle;
 		_contextPath = contextPath;
+		_properties = properties;
 
 		if (_contextPath.indexOf('/') != 0) {
 			throw new IllegalArgumentException(
@@ -220,6 +223,22 @@ public class WabBundleProcessor implements ServletContextListener {
 		}
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		for (Enumeration<String> keys = _properties.keys();
+				keys.hasMoreElements();) {
+
+			String key = keys.nextElement();
+
+			if (!key.startsWith(_JSP_SERVLET_INIT_PARAM_PREFIX)) {
+				continue;
+			}
+
+			String paramName =
+				_SERVLET_INIT_PARAM_PREFIX +
+					key.substring(_JSP_SERVLET_INIT_PARAM_PREFIX.length());
+
+			properties.put(paramName, _properties.get(key));
+		}
 
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
@@ -542,6 +561,12 @@ public class WabBundleProcessor implements ServletContextListener {
 			ServletContextListener.class, this, properties);
 	}
 
+	private static final String _JSP_SERVLET_INIT_PARAM_PREFIX =
+		"jsp.servlet.init.param.";
+
+	private static final String _SERVLET_INIT_PARAM_PREFIX =
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
+
 	private static final String _VENDOR = "Liferay, Inc.";
 
 	private final Bundle _bundle;
@@ -556,6 +581,7 @@ public class WabBundleProcessor implements ServletContextListener {
 	private final Set<ServiceRegistration<?>> _listenerRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final Logger _logger;
+	private final Dictionary<String, Object> _properties;
 	private ServiceRegistration<ServletContextHelper> _serviceRegistration;
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final Set<ServiceRegistration<Servlet>> _servletRegistrations =

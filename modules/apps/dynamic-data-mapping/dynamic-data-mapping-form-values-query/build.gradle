@@ -1,0 +1,8 @@
+dependencies {
+	compile group: "org.antlr", name: "antlr4", version: "4.3"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

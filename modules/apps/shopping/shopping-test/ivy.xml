@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency conf="default->master" name="jodd-bean" org="org.jodd" rev="3.6.6" />
 		<dependency conf="test->default" name="com.liferay.arquillian.extension.junit.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 	</dependencies>
 </ivy-module>

@@ -32,9 +32,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,7 +55,7 @@ public class JournalContentConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(RenderRequest renderRequest) {
+	public String getJspPath(HttpServletRequest request) {
 		return "/configuration.jsp";
 	}
 

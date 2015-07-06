@@ -47,10 +47,10 @@ import java.util.regex.Pattern;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -74,21 +74,21 @@ public class NestedPortletsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(RenderRequest renderRequest) {
+	public String getJspPath(HttpServletRequest request) {
 		return "/configuration.jsp";
 	}
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+			PortletConfig portletConfig, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
-		renderRequest.setAttribute(
+		request.setAttribute(
 			NestedPortletsConfiguration.class.getName(),
 			_nestedPortletsConfiguration);
 
-		super.include(portletConfig, renderRequest, renderResponse);
+		super.include(portletConfig, request, response);
 	}
 
 	public void processAction(

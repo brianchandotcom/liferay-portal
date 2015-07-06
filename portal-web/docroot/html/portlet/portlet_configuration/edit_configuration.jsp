@@ -49,6 +49,6 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);
 
 if (configurationAction != null) {
-	configurationAction.include(portletConfig, renderRequest, renderResponse);
+	configurationAction.include(portletConfig, request, new PipingServletResponse(pageContext));
 }
 %>

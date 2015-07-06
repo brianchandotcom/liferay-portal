@@ -20,18 +20,16 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
@@ -40,8 +38,8 @@ public class BaseJSPSettingsConfigurationAction
 	extends SettingsConfigurationAction
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
-	public String getJspPath(RenderRequest renderRequest) {
-		PortletConfig selPortletConfig = getSelPortletConfig(renderRequest);
+	public String getJspPath(HttpServletRequest request) {
+		PortletConfig selPortletConfig = getSelPortletConfig(request);
 
 		String configTemplate = selPortletConfig.getInitParameter(
 			"config-template");
@@ -61,20 +59,17 @@ public class BaseJSPSettingsConfigurationAction
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+			PortletConfig portletConfig, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
-		ServletContext servletContext = getServletContext(
-			PortalUtil.getHttpServletRequest(renderRequest));
+		ServletContext servletContext = getServletContext(request);
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(getJspPath(renderRequest));
+			servletContext.getRequestDispatcher(getJspPath(request));
 
 		try {
-			requestDispatcher.include(
-				PortalUtil.getHttpServletRequest(renderRequest),
-				PortalUtil.getHttpServletResponse(renderResponse));
+			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
 			if (_log.isErrorEnabled()) {
@@ -82,7 +77,7 @@ public class BaseJSPSettingsConfigurationAction
 			}
 
 			throw new IOException(
-				"Unable to include " + getJspPath(renderRequest), se);
+				"Unable to include " + getJspPath(request), se);
 		}
 	}
 

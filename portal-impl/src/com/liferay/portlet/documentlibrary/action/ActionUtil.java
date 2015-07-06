@@ -259,9 +259,9 @@ public class ActionUtil {
 
 				folders.add(folder);
 			}
-			catch (NoSuchFolderException nsfee) {
+			catch (NoSuchFolderException nsfe) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfee, nsfee);
+					_log.debug(nsfe, nsfe);
 				}
 			}
 		}

@@ -37,6 +37,7 @@ if (Validator.isNotNull(keywords)) {
 
 	searchContext.setAttribute("mimeTypes", mimeTypes);
 	searchContext.setEnd(searchContainer.getEnd());
+	searchContext.setFolderIds(new long[] {dlItemSelectorViewDisplayContext.getFolderId(request)});
 	searchContext.setStart(searchContainer.getStart());
 
 	Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
@@ -47,31 +48,34 @@ if (Validator.isNotNull(keywords)) {
 
 	results = new ArrayList(docs.length);
 
-	for (Document doc : docs) {
-		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+	List<SearchResult> searchResultsList = SearchResultUtil.getSearchResults(hits, locale);
 
-		FileEntry fileEntry = null;
+	for (int i = 0; i < searchResultsList.size(); i++) {
+		SearchResult searchResult = searchResultsList.get(i);
 
-		try {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+		String className = searchResult.getClassName();
+
+		if (className.equals(DLFileEntryConstants.getClassName()) || FileEntry.class.isAssignableFrom(Class.forName(className))) {
+			results.add(DLAppServiceUtil.getFileEntry(searchResult.getClassPK()));
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
-			}
-
+		else if (className.equals(DLFileShortcutConstants.getClassName())) {
+			results.add(DLAppServiceUtil.getFileShortcut(searchResult.getClassPK()));
+		}
+		else if (className.equals(DLFolderConstants.getClassName())) {
+			results.add(DLAppServiceUtil.getFolder(searchResult.getClassPK()));
+		}
+		else {
 			continue;
 		}
-
-		results.add(fileEntry);
 	}
 }
 else {
-	total = DLAppServiceUtil.getFileEntriesCount(repositoryId, folderId, mimeTypes);
-	results = DLAppServiceUtil.getFileEntries(repositoryId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
+	results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
-searchContainer.setTotal(total);
+searchContainer.
+	setTotal(total);
 searchContainer.setResults(results);
 %>
 
@@ -84,7 +88,3 @@ searchContainer.setResults(results);
 	searchURL="<%= PortletURLUtil.clone(dlItemSelectorViewDisplayContext.getPortletURL(), liferayPortletResponse) %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 />
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_document_library_item_selector_web.documents_jsp");
-%>

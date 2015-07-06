@@ -119,6 +119,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_init();
 	}
 
+	protected static int getLeadingTabCount(String line) {
+		int leadingTabCount = 0;
+
+		while (line.startsWith(StringPool.TAB)) {
+			line = line.substring(1);
+
+			leadingTabCount++;
+		}
+
+		return leadingTabCount;
+	}
+
 	protected static boolean isExcludedFile(
 		List<String> exclusionFiles, String absolutePath) {
 
@@ -177,6 +189,32 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		for (String exclusionPath : exclusionPaths) {
 			if (absolutePath.contains(exclusionPath)) {
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected static boolean isInsideQuotes(String s, int pos) {
+		boolean insideQuotes = false;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (insideQuotes) {
+				if ((c == CharPool.QUOTE) &&
+					((c <= 1) || (s.charAt(i - 1) != CharPool.BACK_SLASH) ||
+					 (s.charAt(i - 2) == CharPool.BACK_SLASH))) {
+
+					insideQuotes = false;
+				}
+			}
+			else if (c == CharPool.QUOTE) {
+				insideQuotes = true;
+			}
+
+			if (pos == i) {
+				return insideQuotes;
 			}
 		}
 
@@ -754,6 +792,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
+	protected String formatIncorrectSyntax(
+		String line, String incorrectSyntax, String correctSyntax) {
+
+		for (int x = -1;;) {
+			x = line.indexOf(incorrectSyntax, x + 1);
+
+			if (x == -1) {
+				return line;
+			}
+
+			if (!isInsideQuotes(line, x)) {
+				line = StringUtil.replaceFirst(
+					line, incorrectSyntax, correctSyntax, x);
+			}
+		}
+	}
+
 	protected String formatJavaTerms(
 			String javaClassName, String packagePath, File file,
 			String fileName, String absolutePath, String content,
@@ -796,6 +851,154 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String formatTagAttributeType(
 			String line, String tag, String attributeAndValue)
 		throws Exception {
+
+		return line;
+	}
+
+	protected String formatWhitespace(String line, String trimmedLine) {
+		line = formatIncorrectSyntax(line, "catch(", "catch (");
+		line = formatIncorrectSyntax(line, "else{", "else {");
+		line = formatIncorrectSyntax(line, "for(", "for (");
+		line = formatIncorrectSyntax(line, "if(", "if (");
+		line = formatIncorrectSyntax(line, "while(", "while (");
+		line = formatIncorrectSyntax(line, "List <", "List<");
+		line = formatIncorrectSyntax(line, "){", ") {");
+		line = formatIncorrectSyntax(line, "]{", "] {");
+		line = formatIncorrectSyntax(line, " [", "[");
+		line = formatIncorrectSyntax(
+			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB);
+
+		for (int x = 0;;) {
+			x = line.indexOf(CharPool.EQUAL, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (isInsideQuotes(line, x)) {
+				continue;
+			}
+
+			char c = line.charAt(x - 1);
+
+			if (Character.isLetterOrDigit(c)) {
+				line = StringUtil.replaceFirst(line, "=", " =", x);
+
+				break;
+			}
+
+			if (x == (line.length() - 1)) {
+				break;
+			}
+
+			c = line.charAt(x + 1);
+
+			if (Character.isLetterOrDigit(c)) {
+				line = StringUtil.replaceFirst(line, "=", "= ", x);
+
+				break;
+			}
+		}
+
+		if (!line.contains(StringPool.DOUBLE_SLASH)) {
+			while (trimmedLine.contains(StringPool.TAB)) {
+				line = StringUtil.replaceLast(
+					line, StringPool.TAB, StringPool.SPACE);
+
+				trimmedLine = StringUtil.replaceLast(
+					trimmedLine, StringPool.TAB, StringPool.SPACE);
+			}
+		}
+
+		for (int x = 0;;) {
+			x = trimmedLine.indexOf(StringPool.DOUBLE_SPACE, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (isInsideQuotes(trimmedLine, x)) {
+				continue;
+			}
+
+			trimmedLine = StringUtil.replaceFirst(
+				trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE, x);
+
+			line = StringUtil.replaceFirst(
+				line, StringPool.DOUBLE_SPACE, StringPool.SPACE,
+				x + getLeadingTabCount(line));
+		}
+
+		if (line.contains(StringPool.DOUBLE_SLASH)) {
+			return line;
+		}
+
+		int pos = line.indexOf(") ");
+
+		if ((pos != -1) && !line.contains(StringPool.AT) &&
+			!isInsideQuotes(line, pos)) {
+
+			String linePart = line.substring(pos + 2);
+
+			if (Character.isLetter(linePart.charAt(0)) &&
+				!linePart.startsWith("default") &&
+				!linePart.startsWith("instanceof") &&
+				!linePart.startsWith("throws")) {
+
+				line = StringUtil.replaceFirst(
+					line, StringPool.SPACE, StringPool.BLANK, pos);
+			}
+		}
+
+		pos = line.indexOf(" (");
+
+		if ((pos != -1) && !line.contains(StringPool.EQUAL) &&
+			!isInsideQuotes(line, pos) &&
+			(trimmedLine.startsWith("private ") ||
+			 trimmedLine.startsWith("protected ") ||
+			 trimmedLine.startsWith("public "))) {
+
+			line = StringUtil.replaceFirst(line, " (", "(", pos);
+		}
+
+		for (int x = -1;;) {
+			int posComma = line.indexOf(CharPool.COMMA, x + 1);
+			int posSemicolon = line.indexOf(CharPool.SEMICOLON, x + 1);
+
+			if ((posComma == -1) && (posSemicolon == -1)) {
+				break;
+			}
+
+			x = Math.min(posComma, posSemicolon);
+
+			if (x == -1) {
+				x = Math.max(posComma, posSemicolon);
+			}
+
+			if (isInsideQuotes(line, x)) {
+				continue;
+			}
+
+			if (line.length() > (x + 1)) {
+				char nextChar = line.charAt(x + 1);
+
+				if ((nextChar != CharPool.APOSTROPHE) &&
+					(nextChar != CharPool.CLOSE_PARENTHESIS) &&
+					(nextChar != CharPool.SPACE) &&
+					(nextChar != CharPool.STAR)) {
+
+					line = StringUtil.insert(line, StringPool.SPACE, x + 1);
+				}
+			}
+
+			if (x > 0) {
+				char previousChar = line.charAt(x - 1);
+
+				if (previousChar == CharPool.SPACE) {
+					line = line.substring(0, x - 1).concat(line.substring(x));
+				}
+			}
+		}
 
 		return line;
 	}

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.web.portlet;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -101,6 +102,7 @@ public class DDMPortlet extends MVCPortlet {
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchStructureException ||
+				e instanceof PortletPreferencesException ||
 				e instanceof PrincipalException ||
 				e instanceof NoSuchTemplateException) {
 
@@ -164,7 +166,9 @@ public class DDMPortlet extends MVCPortlet {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException) {
+			if (e instanceof PortletPreferencesException ||
+				e instanceof PrincipalException) {
+
 				SessionErrors.add(request, e.getClass());
 
 				include("/error.jsp", request, response);

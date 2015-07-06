@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
+import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -139,6 +140,10 @@ public class DDLFormPortlet extends MVCPortlet {
 				renderRequest,
 				NoSuchStructureLayoutException.class.getName()) ||
 			SessionErrors.contains(
+				renderRequest,
+				PortletPreferencesException.
+					MustBeStrictPortlet.class.getName()) ||
+			SessionErrors.contains(
 				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include(templatePath + "error.jsp", renderRequest, renderResponse);
@@ -167,6 +172,7 @@ public class DDLFormPortlet extends MVCPortlet {
 			cause instanceof NoSuchRecordSetException ||
 			cause instanceof NoSuchStructureException ||
 			cause instanceof NoSuchStructureLayoutException ||
+			cause instanceof PortletPreferencesException ||
 			cause instanceof PrincipalException) {
 
 			return true;

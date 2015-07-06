@@ -393,8 +393,6 @@ public interface PropsKeys {
 
 	public static final String CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES = "cluster.link.channel.system.properties";
 
-	public static final String CLUSTER_LINK_DEBUG_ENABLED = "cluster.link.debug.enabled";
-
 	public static final String CLUSTER_LINK_ENABLED = "cluster.link.enabled";
 
 	public static final String CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT = "cluster.link.node.bootup.response.timeout";

@@ -306,8 +306,6 @@ public class PropsValues {
 
 	public static final String[] CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES = PropsUtil.getArray(PropsKeys.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES);
 
-	public static final boolean CLUSTER_LINK_DEBUG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CLUSTER_LINK_DEBUG_ENABLED));
-
 	public static final boolean CLUSTER_LINK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
 	public static final long CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT = GetterUtil.getLong(PropsUtil.get(PropsKeys.CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT));

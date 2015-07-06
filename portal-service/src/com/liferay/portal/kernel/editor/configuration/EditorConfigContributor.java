@@ -21,13 +21,13 @@ import com.liferay.portal.theme.ThemeDisplay;
 import java.util.Map;
 
 /**
- * Provides an interface responsible for setting the configuration of the
- * editor. Editor options can be set using {@link EditorOptionsContributor}.
+ * Provides an interface for setting the editor's configuration. Editor options
+ * can be set using {@link EditorOptionsContributor}.
  *
  * <p>
- * In general, implementations of this interface will be specific to a
- * particular editor, since the configuration JSON object updated here is
- * different based on the editor.
+ * Implementations of this interface are typically specific to a particular
+ * editor, since the configuration JSON object updated here can differ from
+ * those of other editors.
  * </p>
  *
  * <p>
@@ -36,9 +36,9 @@ import java.util.Map;
  * </p>
  *
  * <p>
- * The configuration can be targeted for specific editors, based on three
- * different criteria: portlet name, editor config key, and editor name.
- * These criteria can be defined as OSGi properties with the following names:
+ * The configuration can be targeted to specific editors, based on three
+ * criteria: portlet name, editor config key, and editor name. These criteria
+ * can be defined as OSGi properties with the following names:
  * </p>
  *
  * <ul>
@@ -64,8 +64,8 @@ import java.util.Map;
  *
  * <p>
  * In case there's more than one configuration, they're prioritized by the
- * following criteria combinations (the first combination getting the highest
- * priority):
+ * following criteria combinations (the lower the criteria's number, the higher
+ * it's prioritized):
  * </p>
  *
  * <ol>
@@ -96,8 +96,8 @@ import java.util.Map;
  * </ol>
  *
  * <p>
- * If there are multiple configurations having the same criteria elements,
- * prioritization between them is based on service rank.
+ * If there are multiple configurations with the same criteria elements, they're
+ * prioritized by service rank.
  * </p>
  *
  * @author Sergio González
@@ -105,19 +105,19 @@ import java.util.Map;
 public interface EditorConfigContributor {
 
 	/**
-	 * Updates the original configuration JSON object to some new configuration.
-	 * It can even update or delete the original configuration, or any other
-	 * configuration introduced by any other {@link EditorConfigContributor}.
+	 * Updates the original configuration JSON object with some new
+	 * configuration. It can even update or delete the original configuration,
+	 * or any other configuration introduced by any other {@link
+	 * EditorConfigContributor}.
 	 *
 	 * <p>
 	 * The configuration object contains the configuration to be directly used
-	 * by the editor. The configuration JSON object might, therefore, be
-	 * different for different editors.
+	 * by the editor. The configuration JSON object might, therefore, differ
+	 * from other editors.
 	 * </p>
 	 *
-	 * @param jsonObject the original JSON object containing the entire
-	 *        configuration set by previous {@link EditorConfigContributor}
-	 *        modules
+	 * @param jsonObject the original JSON object composed of the entire
+	 *        configuration set by {@link EditorConfigContributor} modules
 	 * @param inputEditorTaglibAttributes the attributes specified to the input
 	 *        taglib tag that renders the editor
 	 * @param themeDisplay the theme display

@@ -21,29 +21,29 @@ import com.liferay.portal.theme.ThemeDisplay;
 import java.util.Map;
 
 /**
- * Provides an interface that is responsible for adapting the high level options
- * provided by {@link EditorOptionsContributor} to specific configuration JSON
- * object (as used by {@link EditorConfigContributor}).
+ * Provides an interface for adapting an {@link EditorOptionsContributor}'s high
+ * level options to a specific configuration JSON object (as used by the {@link
+ * EditorConfigContributor}).
  *
  * <p>
- * In general, each editor should create its own Editor Config Transformer
- * because the configuration JSON object that will need to be created is usually
- * different based on the editor.
+ * Each editor should typically create its own Editor Config Transformer for the
+ * editor's configuration JSON objects, which can differ from those of other
+ * editors.
  * </p>
  *
  * <p>
- * Implementations of this class must be OSGi components that are registered in
- * the OSGi Registry.
+ * Implementations must be OSGi components that are registered in the OSGi
+ * Registry.
  * </p>
  *
  * <p>
- * The Editor Config Transformers will be targeted to specific editors based on
- * the <code>editor.name</code> OSGi property.
+ * Editor Config Transformers are targeted to specific editors based on the
+ * <code>editor.name</code> OSGi property.
  * </p>
  *
  * <p>
- * In case there's more than one editor config transformer for a particular
- * editor, the one with the higher service rank will be used.
+ * In case there's more than one Editor Config Transformer for an editor, the
+ * one with the highest service rank is used.
  * </p>
  *
  * @author Sergio González
@@ -51,21 +51,19 @@ import java.util.Map;
 public interface EditorConfigTransformer {
 
 	/**
-	 * Transforms the editor options in configuration that the editor can handle
-	 * by populating the configuration JSON object.
+	 * Transforms the editor options in configuration that the editor can
+	 * handle, by populating the configuration JSON object.
 	 *
-	 * @param editorOptions the EditorOptions object containing the
-	 *        options set by previous {@link EditorOptionsContributor}
-	 *        modules
+	 * @param editorOptions the {@link EditorOptions} object composed of the
+	 *        options set by {@link EditorOptionsContributor} modules
 	 * @param inputEditorTaglibAttributes the attributes specified to the input
 	 *        taglib tag that renders the editor
 	 * @param themeDisplay the theme display
 	 * @param liferayPortletResponse the Liferay portlet response (optionally
 	 *        <code>null</code>). Only use the response to generate portlet
 	 *        URLs.
-	 * @param configJSONObject the JSON object containing the entire
-	 *        configuration set by previous {@link EditorConfigContributor}
-	 *        modules
+	 * @param configJSONObject the JSON object composed of the entire
+	 *        configuration set by {@link EditorConfigContributor} modules
 	 */
 	public void transform(
 		EditorOptions editorOptions,

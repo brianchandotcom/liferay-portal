@@ -146,18 +146,13 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 							</div>
 
 							<div class="list-group-item-content">
-								<div class="text-default">
-									<liferay-ui:message key="modified" />
-									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-								</div>
+								<h6>
+									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(fileEntry.getUserName()), LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
+								</h6>
 
-								<div class="text-primary">
-									<%= HtmlUtil.escape(title) %>
-								</div>
+								<h5><%= HtmlUtil.escape(title) %></h5>
 
-								<div class="status text-default">
-									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" />
-								</div>
+								<h6><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" /></h6>
 							</div>
 						</a>
 					</li>

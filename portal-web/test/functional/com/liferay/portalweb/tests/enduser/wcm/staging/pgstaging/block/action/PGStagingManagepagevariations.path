@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>MANAGE_PAGE_VARIATIONS_IFRAME</td>
-	<td>//iframe[@id='_170_layoutRevisions_iframe_']</td>
+	<td>//iframe[contains(@id,'_layoutRevisions_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,12 +47,12 @@
 <!--PAGE_VARIATIONS_TABLE_ACTIONS_MENULIST-->
 <tr>
 	<td>PAGE_VARIATIONS_TABLE_ACTIONS_MENULIST_EDIT</td>
-	<td>//a[@id='_170_layoutRevisionsSearchContainer_2_menu_edit']</td>
+	<td>//a[contains(@id,'_layoutRevisionsSearchContainer_2_menu_edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_VARIATIONS_TABLE_ACTIONS_MENULIST_DELETE</td>
-	<td>//a[@id='_170_layoutRevisionsSearchContainer_2_menu_delete']</td>
+	<td>//a[contains(@id,'_layoutRevisionsSearchContainer_2_menu_delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,12 +63,12 @@
 <!--ADD_PAGE_VARIATION-->
 <tr>
 	<td>ADD_PAGE_VARIATION_NAME_FIELD</td>
-	<td>//input[@id='_170_name']</td>
+	<td>//input[contains(@id,'_name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_PAGE_VARIATION_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_170_description']</td>
+	<td>//textarea[contains(@id,'_description')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -244,7 +244,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 				<liferay-ui:search-iterator paginate="<%= false %>" />
 
 				<c:if test="<%= total > searchContainer.getDelta() %>">
-					<a href="<%= viewUsersURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
+					<a href="<%= HtmlUtil.escapeAttribute(viewUsersURL.toString()) %>"><liferay-ui:message key="view-more" /> &raquo;</a>
 				</c:if>
 			</liferay-ui:panel>
 		</c:when>

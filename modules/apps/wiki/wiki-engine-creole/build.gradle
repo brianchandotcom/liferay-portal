@@ -1,7 +1,50 @@
+configurations {
+	antlr
+}
+
 dependencies {
+	antlr group: "org.antlr", name: "antlr", version: "3.0.1"
+
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-engine-input-editor-common")
+}
+
+task buildCreoleParser(type: JavaExec)
+
+buildCreoleParser {
+	args "-o", "../parser"
+	args "Creole10.g"
+
+	classpath = configurations.antlr
+
+	doLast {
+		ant.replace(file: "src/com/liferay/wiki/engine/creole/parser/parser/Creole10Lexer.java") {
+			replacetoken "public class Creole10Lexer"
+
+			replacevalue """\
+@SuppressWarnings(\"all\")
+public class Creole10Lexer"""
+		}
+
+		ant.replace(file: "src/com/liferay/wiki/engine/creole/parser/parser/Creole10Parser.java") {
+			replacetoken "public class Creole10Parser"
+
+			replacevalue """\
+@SuppressWarnings(\"all\")
+public class Creole10Parser"""
+		}
+
+		ant.fixcrlf includes: "*.java", javafiles: "yes", srcdir: "src/com/liferay/wiki/engine/creole/parser/parser", tab: "add"
+	}
+
+	main = "org.antlr.Tool"
+	maxHeapSize = "1512m"
+	workingDir = "src/com/liferay/wiki/engine/creole/parser/grammar"
+}
+
+compileJava {
+	dependsOn buildCreoleParser
 }
 
 liferay {

@@ -1361,6 +1361,112 @@ public class VerifyProperties extends VerifyProcess {
 			"rss.display.templates.config", "display.templates.config",
 			"com.liferay.rss.web"
 		},
+		
+		// Shopping
+		
+		new String[] { 
+			"shopping.credit.card.types", "credit.card.types",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.cart.min.qty.multiple", "cart.min.qty.multiple",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.category.forward.to.cart", "category.forward.to.cart",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.category.show.special.items",
+			"category.show.special.items", "com.liferay.shopping.service"
+		},
+		new String[] { 
+			"shopping.currency.id", "currency.id", 
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.from.name", "email.from.name",
+			"com.liferay.shopping.service"
+		},
+		new String[] { 
+			"shopping.email.from.address", "email.from.address",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.confirmation.enabled",
+			"email.order.confirmation.enabled", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.confirmation.subject",
+			"email.order.confirmation.subject",  "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.confirmation.body",
+			"email.order.confirmation.body", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.shipping.enabled",
+			"email.order.shipping.enabled", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.shipping.subject", 
+			"email.order.shipping.subject", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.shipping.body", "email.order.shipping.body",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.insurance", "insurance", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.insurance.formula", "insurance.formula",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.item.show.availability", "item.show.availability", 
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.image.small.max.size", "image.small.max.size",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.image.medium.max.size", "image.medium.max.size",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.image.large.max.size", "image.large.max.size",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.image.extensions", "image.extensions",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.min.order", "min.order", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.order.comments.enabled", "order.comments.enabled",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.paypal.email.address", "paypal.email.address", 
+			"com.liferay.shopping.service"
+		},
+		new String[] { 
+			"shopping.shipping", "shipping", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.shipping.formula", "shipping.formula",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.tax.rate", "tax.rate", "com.liferay.shopping.service"
+		},
+		new String[] { 
+			"shopping.tax.state", "tax.state", "com.liferay.shopping.service"
+		},
 
 		// Scripting
 

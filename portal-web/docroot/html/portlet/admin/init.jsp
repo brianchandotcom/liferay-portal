@@ -24,8 +24,6 @@ page import="com.liferay.portal.captcha.recaptcha.ReCaptchaImpl" %><%@
 page import="com.liferay.portal.convert.ConvertProcess" %><%@
 page import="com.liferay.portal.convert.ConvertProcessUtil" %><%@
 page import="com.liferay.portal.convert.FileSystemStoreRootDirException" %><%@
-page import="com.liferay.portal.dao.shard.ManualShardSelector" %><%@
-page import="com.liferay.portal.kernel.dao.shard.ShardUtil" %><%@
 page import="com.liferay.portal.kernel.image.ImageMagickUtil" %><%@
 page import="com.liferay.portal.kernel.scripting.ScriptingUtil" %><%@
 page import="com.liferay.portal.kernel.util.OSDetector" %><%@
@@ -65,12 +63,6 @@ if (tabs1.equals("plugins")) {
 	if (!tabs2.equals("portlet-plugins") && !tabs2.equals("theme-plugins") && !tabs2.equals("layout-template-plugins") && !tabs2.equals("hook-plugins") && !tabs2.equals("web-plugins")) {
 		tabs2 = "portlet-plugins";
 	}
-}
-
-boolean showShardSelector = false;
-
-if (PropsValues.SHARD_SELECTOR.equals(ManualShardSelector.class.getName()) && (ShardUtil.getAvailableShardNames().length > 1)) {
-	showShardSelector = true;
 }
 
 NumberFormat numberFormat = NumberFormat.getInstance();

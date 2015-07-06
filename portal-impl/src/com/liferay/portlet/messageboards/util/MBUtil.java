@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.util;
 
-import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -982,13 +981,11 @@ public class MBUtil {
 			});
 	}
 
-	public static void updateCategoryMessageCount(
-		long companyId, final long categoryId) {
-
-		Callable<Void> callable = new ShardCallable<Void>(companyId) {
+	public static void updateCategoryMessageCount(final long categoryId) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
+			public Void call() throws Exception {
 				MBCategory category =
 					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
 
@@ -1010,13 +1007,11 @@ public class MBUtil {
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
-	public static void updateCategoryStatistics(
-		long companyId, final long categoryId) {
-
-		Callable<Void> callable = new ShardCallable<Void>(companyId) {
+	public static void updateCategoryStatistics(final long categoryId) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
+			public Void call() throws Exception {
 				MBCategory category =
 					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
 
@@ -1044,13 +1039,11 @@ public class MBUtil {
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
-	public static void updateCategoryThreadCount(
-		long companyId, final long categoryId) {
-
-		Callable<Void> callable = new ShardCallable<Void>(companyId) {
+	public static void updateCategoryThreadCount(final long categoryId) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
+			public Void call() throws Exception {
 				MBCategory category =
 					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
 
@@ -1075,13 +1068,11 @@ public class MBUtil {
 		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
-	public static void updateThreadMessageCount(
-		long companyId, final long threadId) {
-
-		Callable<Void> callable = new ShardCallable<Void>(companyId) {
+	public static void updateThreadMessageCount(final long threadId) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
+			public Void call() throws Exception {
 				MBThread thread = MBThreadLocalServiceUtil.fetchThread(
 					threadId);
 

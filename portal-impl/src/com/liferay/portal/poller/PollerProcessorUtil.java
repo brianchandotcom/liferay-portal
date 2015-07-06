@@ -14,8 +14,6 @@
 
 package com.liferay.portal.poller;
 
-import com.liferay.portal.dao.shard.ShardPollerProcessorWrapper;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.proxy.TargetLocator;
 import com.liferay.portal.kernel.poller.PollerProcessor;
@@ -190,11 +188,6 @@ public class PollerProcessorUtil {
 
 			PollerProcessor pollerProcessor = registry.getService(
 				serviceReference);
-
-			if (ShardUtil.isEnabled()) {
-				pollerProcessor = new ShardPollerProcessorWrapper(
-					pollerProcessor);
-			}
 
 			String portletId = (String)serviceReference.getProperty(
 				"javax.portlet.name");

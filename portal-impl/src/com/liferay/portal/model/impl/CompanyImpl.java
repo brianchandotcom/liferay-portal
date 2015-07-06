@@ -29,13 +29,11 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.AccountLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.ShardLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -175,14 +173,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 		}
 
 		return portalURL;
-	}
-
-	@Override
-	public String getShardName() throws PortalException {
-		Shard shard = ShardLocalServiceUtil.getShard(
-			Company.class.getName(), getCompanyId());
-
-		return shard.getName();
 	}
 
 	@Override

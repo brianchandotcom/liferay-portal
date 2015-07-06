@@ -55,15 +55,15 @@ import com.liferay.portal.service.CompanyServiceUtil;
 public class CompanyServiceHttp {
 	public static com.liferay.portal.model.Company addCompany(
 		HttpPrincipal httpPrincipal, java.lang.String webId,
-		java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String shardName, boolean system, int maxUsers, boolean active)
+		java.lang.String virtualHost, java.lang.String mx, boolean system,
+		int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class,
 					"addCompany", _addCompanyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, webId,
-					virtualHost, mx, shardName, system, maxUsers, active);
+					virtualHost, mx, system, maxUsers, active);
 
 			Object returnObj = null;
 
@@ -694,8 +694,7 @@ public class CompanyServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CompanyServiceHttp.class);
 	private static final Class<?>[] _addCompanyParameterTypes0 = new Class[] {
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, boolean.class,
-			int.class, boolean.class
+			java.lang.String.class, boolean.class, int.class, boolean.class
 		};
 	private static final Class<?>[] _deleteCompanyParameterTypes1 = new Class[] {
 			long.class

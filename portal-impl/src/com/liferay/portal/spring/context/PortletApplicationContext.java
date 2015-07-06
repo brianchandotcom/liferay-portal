@@ -16,7 +16,6 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
@@ -100,11 +99,6 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 			"WEB-INF/classes/META-INF/hibernate-spring.xml");
 		serviceBuilderPropertiesConfigLocations.remove(
 			"WEB-INF/classes/META-INF/infrastructure-spring.xml");
-
-		if (ShardUtil.isEnabled()) {
-			serviceBuilderPropertiesConfigLocations.remove(
-				"WEB-INF/classes/META-INF/shard-data-source-spring.xml");
-		}
 
 		return ArrayUtil.append(
 			configLocations,

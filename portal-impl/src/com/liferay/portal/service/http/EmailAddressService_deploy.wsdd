@@ -31,6 +31,9 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="deleteEmailAddress" qname="operNS:deleteEmailAddress" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="emailAddressId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="fetchEmailAddress" qname="operNS:fetchEmailAddress" returnQName="fetchEmailAddressReturn" returnType="rtns:EmailAddressSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="emailAddressId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="getEmailAddress" qname="operNS:getEmailAddress" returnQName="getEmailAddressReturn" returnType="rtns:EmailAddressSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="emailAddressId" type="tns:long"></parameter>
 		</operation>
@@ -44,7 +47,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="typeId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="primary" type="tns:boolean"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addEmailAddress deleteEmailAddress getEmailAddress getEmailAddresses updateEmailAddress" />
+		<parameter name="allowedMethods" value="addEmailAddress deleteEmailAddress fetchEmailAddress getEmailAddress getEmailAddresses updateEmailAddress" />
 		<parameter name="className" value="com.liferay.portal.service.http.EmailAddressServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

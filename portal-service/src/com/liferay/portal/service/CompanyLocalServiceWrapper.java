@@ -48,7 +48,6 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	* @param webId the the company's web domain
 	* @param virtualHostname the company's virtual host name
 	* @param mx the company's mail domain
-	* @param shardName the company's shard
 	* @param system whether the company is the very first company (i.e., the
 	super company)
 	* @param maxUsers the max number of company users (optionally
@@ -60,18 +59,18 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	*/
 	@Override
 	public com.liferay.portal.model.Company addCompany(java.lang.String webId,
-		java.lang.String virtualHostname, java.lang.String mx,
-		java.lang.String shardName, boolean system, int maxUsers, boolean active)
+		java.lang.String virtualHostname, java.lang.String mx, boolean system,
+		int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _companyLocalService.addCompany(webId, virtualHostname, mx,
-			shardName, system, maxUsers, active);
+			system, maxUsers, active);
 	}
 
 	/**
 	* Returns the company with the web domain.
 	*
-	* The method sets mail domain to the web domain, and the shard name to
-	* the default name set in portal.properties
+	* The method sets mail domain to the web domain to the default name set in
+	* portal.properties
 	*
 	* @param webId the company's web domain
 	* @return the company with the web domain
@@ -84,23 +83,22 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	}
 
 	/**
-	* Returns the company with the web domain, mail domain, and shard. If no
-	* such company exits, the method will create a new company.
+	* Returns the company with the web domain and mail domain. If no such
+	* company exits, the method will create a new company.
 	*
 	* The method goes through a series of checks to ensure that the company
 	* contains default users, groups, etc.
 	*
 	* @param webId the company's web domain
 	* @param mx the company's mail domain
-	* @param shardName the company's shard
-	* @return the company with the web domain, mail domain, and shard
+	* @return the company with the web domain and mail domain
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Company checkCompany(
-		java.lang.String webId, java.lang.String mx, java.lang.String shardName)
+		java.lang.String webId, java.lang.String mx)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _companyLocalService.checkCompany(webId, mx, shardName);
+		return _companyLocalService.checkCompany(webId, mx);
 	}
 
 	/**

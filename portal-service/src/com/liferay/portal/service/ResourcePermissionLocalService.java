@@ -593,8 +593,7 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getRolesWithResourcePermission(long, String, int, String,
-	String}
+	#getRoles(long, String, int, String, String}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

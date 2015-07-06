@@ -36,8 +36,6 @@ public interface DB {
 
 	public static final int DEFAULT = 1;
 
-	public static final int SHARDED = 2;
-
 	public static final String[] TYPE_ALL = {
 		DB.TYPE_DB2, DB.TYPE_DERBY, DB.TYPE_FIREBIRD, DB.TYPE_HYPERSONIC,
 		DB.TYPE_INFORMIX, DB.TYPE_INGRES, DB.TYPE_INTERBASE, DB.TYPE_JDATASTORE,

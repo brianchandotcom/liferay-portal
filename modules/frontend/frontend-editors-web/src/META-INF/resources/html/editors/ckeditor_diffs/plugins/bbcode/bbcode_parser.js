@@ -481,13 +481,13 @@
 
 				var type = token.type;
 
-				if (type == TOKEN_TAG_START) {
+				if (type === TOKEN_TAG_START) {
 					instance._handleTagStart(token);
 				}
-				else if (type == TOKEN_TAG_END) {
+				else if (type === TOKEN_TAG_END) {
 					instance._handleTagEnd(token);
 				}
-				else if (type == TOKEN_DATA) {
+				else if (type === TOKEN_DATA) {
 					instance._handleData(token);
 				}
 				else {
@@ -516,12 +516,12 @@
 			do {
 				token = instance._parsedData[index++];
 
-				if (token && token.type == TOKEN_DATA) {
+				if (token && token.type === TOKEN_DATA) {
 					result.push(token.value);
 				}
 
 			}
-			while (token && token.type != TOKEN_TAG_END && token.value != toTagName);
+			while (token && token.type !== TOKEN_TAG_END && token.value !== toTagName);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;
@@ -655,7 +655,7 @@
 			if (token.attribute) {
 				var bbCodeAttr;
 
-				while (bbCodeAttr = REGEX_ATTRS.exec(token.attribute)) {
+				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
 					var attrName = bbCodeAttr[1];
 
 					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
@@ -678,11 +678,15 @@
 			var listAttributes = STR_BLANK;
 
 			if (token.attribute) {
-				while (listAttribute = REGEX_ATTRS.exec(token.attribute)) {
+				var listAttribute;
+
+				while ((listAttribute = REGEX_ATTRS.exec(token.attribute))) {
 					var attrName = listAttribute[1];
 					var attrValue = listAttribute[2];
 
-					if (attrName == STR_TYPE) {
+					var styleAttr;
+
+					if (attrName === STR_TYPE) {
 						if (MAP_ORDERED_LIST_STYLES[attrValue]) {
 							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
 
@@ -696,7 +700,7 @@
 							listAttributes += ' style="' + styleAttr + '"';
 						}
 					}
-					else if (attrName == STR_START && REGEX_NUMBER.test(attrValue)) {
+					else if (attrName === STR_START && REGEX_NUMBER.test(attrValue)) {
 						listAttributes += ' start="' + attrValue + '"';
 					}
 				}
@@ -733,8 +737,8 @@
 					nextToken = instance._parsedData[instance._tokenPointer + 1];
 
 					if (nextToken &&
-						nextToken.type == TOKEN_TAG_END &&
-						nextToken.value == STR_TAG_LIST_ITEM_SHORT) {
+						nextToken.type === TOKEN_TAG_END &&
+						nextToken.value === STR_TAG_LIST_ITEM_SHORT) {
 
 						value = value.substring(0, value.length - 1);
 					}
@@ -840,7 +844,7 @@
 
 			instance._result.push(instance._stack.pop());
 
-			if (tagName == STR_CODE) {
+			if (tagName === STR_CODE) {
 				instance._noParse = false;
 			}
 		},

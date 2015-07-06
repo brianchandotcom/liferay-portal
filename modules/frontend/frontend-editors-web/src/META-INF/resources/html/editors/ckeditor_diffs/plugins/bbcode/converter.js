@@ -72,12 +72,6 @@
 		I: 'list-style-type: upper-roman;'
 	};
 
-	var MAP_UNORDERED_LIST_STYLES = {
-		circle: 'list-style-type: circle;',
-		disc: 'list-style-type: disc;',
-		square: 'list-style-type: square;'
-	};
-
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
 		'*': 3,
 		li: 3,
@@ -85,6 +79,12 @@
 		td: 3,
 		th: 3,
 		tr: 3
+	};
+
+	var MAP_UNORDERED_LIST_STYLES = {
+		circle: 'list-style-type: circle;',
+		disc: 'list-style-type: disc;',
+		square: 'list-style-type: square;'
 	};
 
 	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
@@ -191,13 +191,13 @@
 
 				var type = token.type;
 
-				if (type == TOKEN_TAG_START) {
+				if (type === TOKEN_TAG_START) {
 					instance._handleTagStart(token);
 				}
-				else if (type == TOKEN_TAG_END) {
+				else if (type === TOKEN_TAG_END) {
 					instance._handleTagEnd(token);
 				}
-				else if (type == TOKEN_DATA) {
+				else if (type === TOKEN_DATA) {
 					instance._handleData(token);
 				}
 				else {
@@ -226,12 +226,12 @@
 			do {
 				token = instance._parsedData[index++];
 
-				if (token && token.type == TOKEN_DATA) {
+				if (token && token.type === TOKEN_DATA) {
 					result.push(token.value);
 				}
 
 			}
-			while (token && token.type != TOKEN_TAG_END && token.value != toTagName);
+			while (token && token.type !== TOKEN_TAG_END && token.value !== toTagName);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;
@@ -384,15 +384,19 @@
 		_handleList: function(token) {
 			var instance = this;
 
-			var tag = 'ul';
 			var listAttributes = STR_BLANK;
+			var tag = 'ul';
 
 			if (token.attribute) {
+				var listAttribute;
+
 				while (listAttribute = REGEX_ATTRS.exec(token.attribute)) {
 					var attrName = listAttribute[1];
 					var attrValue = listAttribute[2];
 
-					if (attrName == STR_TYPE) {
+					var styleAttr;
+
+					if (attrName === STR_TYPE) {
 						if (MAP_ORDERED_LIST_STYLES[attrValue]) {
 							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
 
@@ -406,7 +410,7 @@
 							listAttributes += ' style="' + styleAttr + '"';
 						}
 					}
-					else if (attrName == STR_START && REGEX_NUMBER.test(attrValue)) {
+					else if (attrName === STR_START && REGEX_NUMBER.test(attrValue)) {
 						listAttributes += ' start="' + attrValue + '"';
 					}
 				}
@@ -443,8 +447,8 @@
 					nextToken = instance._parsedData[instance._tokenPointer + 1];
 
 					if (nextToken &&
-						nextToken.type == TOKEN_TAG_END &&
-						nextToken.value == STR_TAG_LIST_ITEM_SHORT) {
+						nextToken.type === TOKEN_TAG_END &&
+						nextToken.value === STR_TAG_LIST_ITEM_SHORT) {
 
 						value = value.substring(0, value.length - 1);
 					}
@@ -550,7 +554,7 @@
 
 			instance._result.push(instance._stack.pop());
 
-			if (tagName == STR_CODE) {
+			if (tagName === STR_CODE) {
 				instance._noParse = false;
 			}
 		},

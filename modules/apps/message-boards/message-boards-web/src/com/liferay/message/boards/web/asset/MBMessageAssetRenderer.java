@@ -55,6 +55,11 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
+	public Object getAsset() {
+		return _message;
+	}
+
+	@Override
 	public String getClassName() {
 		return MBMessage.class.getName();
 	}
@@ -67,11 +72,6 @@ public class MBMessageAssetRenderer
 	@Override
 	public Date getDisplayDate() {
 		return _message.getModifiedDate();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _message;
 	}
 
 	@Override

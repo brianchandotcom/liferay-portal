@@ -192,12 +192,6 @@ public class BookmarksFolderTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashDuplicate() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
 	}
 

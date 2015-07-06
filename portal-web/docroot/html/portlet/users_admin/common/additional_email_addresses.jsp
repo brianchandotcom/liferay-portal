@@ -41,7 +41,7 @@ else {
 
 		emailAddressesIndexes = new int[emailAddresses.size()];
 
-		for (int i = 0; i < emailAddresses.size() ; i++) {
+		for (int i = 0; i < emailAddresses.size(); i++) {
 			emailAddressesIndexes[i] = i;
 		}
 	}

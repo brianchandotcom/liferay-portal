@@ -121,7 +121,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 						data.put("portlet-id", portletId);
 						data.put("title", title);
 
-						String navItemCssClass="content-shortcut drag-content-item lfr-content-item ";
+						String navItemCssClass ="content-shortcut drag-content-item lfr-content-item ";
 
 						if (!displayStyle.equals("icon")) {
 							navItemCssClass += "has-preview";

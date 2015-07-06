@@ -101,11 +101,11 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 	String title = "new-site";
 
 	if (group != null) {
-		localizeTitle= false;
+		localizeTitle = false;
 		title = group.getDescriptiveName(locale);
 	}
 	else if (layoutSetPrototype != null) {
-		localizeTitle= false;
+		localizeTitle = false;
 		title = layoutSetPrototype.getName(locale);
 	}
 	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {

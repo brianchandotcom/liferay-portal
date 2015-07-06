@@ -62,7 +62,7 @@ entriesChecker.setCssClass("entry-selector");
 
 articleSearchContainer.setRowChecker(entriesChecker);
 
-ArticleDisplayTerms displayTerms = (ArticleDisplayTerms) articleSearchContainer.getDisplayTerms();
+ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)articleSearchContainer.getDisplayTerms();
 %>
 
 <c:if test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
@@ -89,7 +89,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms) articleSearchContainer.
 </c:if>
 
 <%
-ArticleSearchTerms searchTerms = (ArticleSearchTerms) articleSearchContainer.getSearchTerms();
+ArticleSearchTerms searchTerms = (ArticleSearchTerms)articleSearchContainer.getSearchTerms();
 
 if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	List<Long> folderIds = new ArrayList<Long>(1);

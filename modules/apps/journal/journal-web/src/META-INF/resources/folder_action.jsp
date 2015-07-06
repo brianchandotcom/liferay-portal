@@ -37,16 +37,16 @@ String resourcePrimKey = null;
 boolean hasPermissionsPermission = false;
 
 if (folder != null) {
-	modelResource= JournalFolder.class.getName();
+	modelResource = JournalFolder.class.getName();
 	modelResourceDescription = folder.getName();
-	resourcePrimKey= String.valueOf(folder.getPrimaryKey());
+	resourcePrimKey = String.valueOf(folder.getPrimaryKey());
 
 	hasPermissionsPermission = JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
 }
 else {
-	modelResource= "com.liferay.journal";
+	modelResource = "com.liferay.journal";
 	modelResourceDescription = themeDisplay.getScopeGroupName();
-	resourcePrimKey= String.valueOf(scopeGroupId);
+	resourcePrimKey = String.valueOf(scopeGroupId);
 
 	hasPermissionsPermission = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }

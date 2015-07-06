@@ -108,7 +108,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					</div>
 
 					<%
-					List <AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+					List<AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
 					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
@@ -292,7 +292,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						int index = 0;
 
 						for (int queryLogicIndex : queryLogicIndexes) {
-							String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex , new String[0]));
+							String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
 							String tagNames = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
 							String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
 

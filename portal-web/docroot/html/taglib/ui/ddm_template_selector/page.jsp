@@ -57,7 +57,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 
 	<%
 	for (DDMTemplate curDDMTemplate : DDMTemplateLocalServiceUtil.getTemplates(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), classNameId, 0L)) {
-		Map<String,Object> data = new HashMap<String,Object>();
+		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("displaystylegroupid", curDDMTemplate.getGroupId());
 

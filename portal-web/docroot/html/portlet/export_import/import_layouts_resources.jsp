@@ -303,7 +303,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 																<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getRootPortletId() %>"></span>
 
 																<%
-																Map<String,Object> data = new HashMap<String,Object>();
+																Map<String, Object> data = new HashMap<String, Object>();
 
 																data.put("portletid", portlet.getRootPortletId());
 																data.put("portlettitle", portletTitle);

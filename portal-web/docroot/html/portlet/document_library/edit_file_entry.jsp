@@ -159,7 +159,7 @@ else {
 
 	if (fileVersion != null) {
 		headerTitle = fileVersion.getTitle();
-		localizeTitle= false;
+		localizeTitle = false;
 	}
 	else if ((dlFileEntryType != null) && (fileEntryTypeId != 0)) {
 		headerTitle = LanguageUtil.format(request, "new-x", dlFileEntryType.getName(locale), false);

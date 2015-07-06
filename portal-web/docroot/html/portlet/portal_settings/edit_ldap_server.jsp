@@ -60,12 +60,12 @@ String userMappingJobTitle = StringPool.BLANK;
 String userMappingLastName = StringPool.BLANK;
 String userMappingMiddleName = StringPool.BLANK;
 String userMappingPassword = StringPool.BLANK;
-String userMappingPortrait= StringPool.BLANK;
+String userMappingPortrait = StringPool.BLANK;
 String userMappingScreenName = StringPool.BLANK;
 String userMappingStatus = StringPool.BLANK;
 String userMappingUuid = StringPool.BLANK;
 
-for (int i = 0 ; i < userMappingArray.length ; i++) {
+for (int i = 0; i < userMappingArray.length; i++) {
 	if (!userMappingArray[i].contains("=")) {
 		continue;
 	}
@@ -128,7 +128,7 @@ String groupMappingDescription = StringPool.BLANK;
 String groupMappingGroupName = StringPool.BLANK;
 String groupMappingUser = StringPool.BLANK;
 
-for (int i = 0 ; i < groupMappingArray.length ; i++) {
+for (int i = 0; i < groupMappingArray.length; i++) {
 	if (!groupMappingArray[i].contains("=")) {
 		continue;
 	}

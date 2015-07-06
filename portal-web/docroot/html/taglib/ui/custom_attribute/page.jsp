@@ -629,11 +629,11 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							String xml = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
 
 							if (Validator.isNull(xml) && (value != null)) {
-								xml = LocalizationUtil.updateLocalization((Map<Locale,String>)value, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
+								xml = LocalizationUtil.updateLocalization((Map<Locale, String>)value, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
 							}
 
 							if (Validator.isNull(xml) && (defaultValue != null)) {
-								xml = LocalizationUtil.updateLocalization((Map<Locale,String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
+								xml = LocalizationUtil.updateLocalization((Map<Locale, String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
 							}
 							%>
 

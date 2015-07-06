@@ -207,7 +207,7 @@ portletURL.setParameter("modelResource", modelResource);
 					String xml = StringPool.BLANK;
 
 					if (defaultValue != null) {
-						xml = LocalizationUtil.updateLocalization((Map<Locale,String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
+						xml = LocalizationUtil.updateLocalization((Map<Locale, String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
 					}
 					%>
 

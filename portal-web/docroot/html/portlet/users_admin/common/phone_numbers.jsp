@@ -42,7 +42,7 @@ else {
 
 		phonesIndexes = new int[phones.size()];
 
-		for (int i = 0; i < phones.size() ; i++) {
+		for (int i = 0; i < phones.size(); i++) {
 			phonesIndexes[i] = i;
 		}
 	}

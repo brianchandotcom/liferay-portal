@@ -25,12 +25,12 @@ if (wikiPage != null) {
 	attachmentURLPrefix = themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/wiki/get_page_attachment?p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + HttpUtil.encodeURL(wikiPage.getTitle()) + "&fileName=";
 }
 
-Map<String,String> configParams = new HashMap();
+Map<String, String> configParams = new HashMap();
 
 configParams.put("attachmentURLPrefix", attachmentURLPrefix);
 configParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
 
-Map<String,String> fileBrowserParams = new HashMap();
+Map<String, String> fileBrowserParams = new HashMap();
 
 fileBrowserParams.put("attachmentURLPrefix", attachmentURLPrefix);
 fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));

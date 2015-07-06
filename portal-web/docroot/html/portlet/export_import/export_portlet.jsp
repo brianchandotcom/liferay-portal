@@ -98,7 +98,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 												<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= selPortlet.getRootPortletId() %>"></span>
 
 												<%
-												Map<String,Object> data = new HashMap<String,Object>();
+												Map<String, Object> data = new HashMap<String, Object>();
 
 												data.put("portletid", selPortlet.getRootPortletId());
 												%>
@@ -333,7 +333,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 															<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
 
 															<%
-															Map<String,Object> data = new HashMap<String,Object>();
+															Map<String, Object> data = new HashMap<String, Object>();
 
 															data.put("portletid", selPortlet.getRootPortletId());
 															%>

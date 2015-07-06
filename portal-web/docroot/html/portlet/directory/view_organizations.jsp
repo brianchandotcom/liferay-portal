@@ -50,7 +50,7 @@ if (parentOrganizationId > 0) {
 		groupParams.put("site", Boolean.TRUE);
 		groupParams.put("usersGroups", user.getUserId());
 
-		List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+		List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		organizationParams.put("organizationsGroups", SitesUtil.filterGroups(groups, PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES));
 	}

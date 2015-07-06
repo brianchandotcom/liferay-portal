@@ -19,7 +19,7 @@
 <liferay-staging:defineObjects />
 
 <%
-String cssClass = "staging-icon-menu " + GetterUtil.getString((String) request.getAttribute("liferay-staging:menu:cssClass"));
+String cssClass = "staging-icon-menu " + GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:cssClass"));
 boolean extended = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:extended"));
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:icon"));
 long layoutSetBranchId = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:layoutSetBranchId"));

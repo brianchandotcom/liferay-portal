@@ -15,7 +15,7 @@
 --%>
 
 <%
-int assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(groupIds, new long[]{assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator());
+int assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(groupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator());
 
 searchContainer.setTotal(assetEntriesTotal);
 

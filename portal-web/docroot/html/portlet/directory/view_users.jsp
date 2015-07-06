@@ -104,7 +104,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 
 		userParams.put("inherit", Boolean.TRUE);
 
-		List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+		List<Group> groups = GroupLocalServiceUtil.search(user.getCompanyId(), groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		userParams.put("usersGroups", SitesUtil.filterGroups(groups, PropsValues.MY_SITES_DIRECTORY_SITE_EXCLUDES));
 	}

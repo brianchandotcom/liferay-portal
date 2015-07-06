@@ -83,7 +83,7 @@
 						<c:if test="<%= hasLayoutAddPermission && themeDisplay.isShowSiteAdministrationIcon() %>">
 
 							<%
-							long selPlid= ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
+							long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 							%>
 
 							<liferay-ui:section>

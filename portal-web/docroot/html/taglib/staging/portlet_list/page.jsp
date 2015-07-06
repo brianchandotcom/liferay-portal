@@ -157,7 +157,7 @@
 					<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>"></span>
 
 					<%
-					Map<String,Object> data = new HashMap<String,Object>();
+					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("portletid", portletId);
 					data.put("portlettitle", portletTitle);

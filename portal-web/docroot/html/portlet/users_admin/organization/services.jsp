@@ -59,7 +59,7 @@ else {
 
 		orgLaborsIndexes = new int[orgLabors.size()];
 
-		for (int i = 0; i < orgLabors.size() ; i++) {
+		for (int i = 0; i < orgLabors.size(); i++) {
 			orgLaborsIndexes[i] = i;
 		}
 	}

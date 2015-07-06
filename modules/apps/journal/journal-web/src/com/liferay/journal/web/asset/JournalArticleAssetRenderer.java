@@ -56,11 +56,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -434,14 +431,6 @@ public class JournalArticleAssetRenderer
 	@Override
 	public boolean isPrintable() {
 		return true;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	@Override

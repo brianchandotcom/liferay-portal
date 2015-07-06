@@ -36,7 +36,10 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Fabio Pezzutto
@@ -72,6 +75,7 @@ public class CalendarBookingAssetRendererFactory
 			new CalendarBookingAssetRenderer(calendarBooking);
 
 		calendarBookingAssetRenderer.setAssetRendererType(type);
+		calendarBookingAssetRenderer.setServletContext(_servletContext);
 
 		return calendarBookingAssetRenderer;
 	}
@@ -165,9 +169,19 @@ public class CalendarBookingAssetRendererFactory
 			permissionChecker, calendarBooking.getCalendarId(), actionId);
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.calendar.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/date.png";
 	}
+
+	private ServletContext _servletContext;
 
 }

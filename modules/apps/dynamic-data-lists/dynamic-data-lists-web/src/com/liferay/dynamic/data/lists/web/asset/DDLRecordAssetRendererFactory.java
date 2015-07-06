@@ -33,7 +33,10 @@ import com.liferay.portlet.asset.model.ClassTypeReader;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -80,6 +83,7 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 			new DDLRecordAssetRenderer(record, recordVersion);
 
 		ddlRecordAssetRenderer.setAssetRendererType(type);
+		ddlRecordAssetRenderer.setServletContext(_servletContext);
 
 		return ddlRecordAssetRenderer;
 	}
@@ -145,9 +149,19 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 			permissionChecker, record.getRecordSet(), actionId);
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
+
+	private ServletContext _servletContext;
 
 }

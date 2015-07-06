@@ -35,11 +35,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matthew Kong
@@ -173,15 +170,6 @@ public class MicroblogsEntryAssetRenderer extends BaseJSPAssetRenderer {
 		request.setAttribute(WebKeys.MICROBLOGS_ENTRY, _entry);
 
 		return super.include(request, response, template);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.microblogs.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private final MicroblogsEntry _entry;

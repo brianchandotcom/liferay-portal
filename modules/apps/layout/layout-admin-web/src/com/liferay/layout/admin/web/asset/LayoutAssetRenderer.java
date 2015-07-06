@@ -31,11 +31,8 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -136,15 +133,6 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer {
 		request.setAttribute(WebKeys.LAYOUT, _layout);
 
 		return super.include(request, response, template);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private final Layout _layout;

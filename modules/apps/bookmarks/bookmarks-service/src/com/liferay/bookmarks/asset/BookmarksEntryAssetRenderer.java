@@ -36,11 +36,8 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -224,15 +221,6 @@ public class BookmarksEntryAssetRenderer
 	@Override
 	public boolean isPrintable() {
 		return true;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private final BookmarksEntry _entry;

@@ -41,10 +41,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -253,14 +250,6 @@ public class JournalFolderAssetRenderer
 
 		return JournalFolderPermission.contains(
 			permissionChecker, _folder, ActionKeys.VIEW);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private final JournalFolder _folder;

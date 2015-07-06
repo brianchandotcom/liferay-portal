@@ -57,7 +57,7 @@ FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(us
 					for (String value : fullNameField.getValues()) {
 					%>
 
-						<aui:option label="<%= value %>" selected="<%= listTypeName.equals(value) %>" value="<%= value %>" />
+						<aui:option label="<%= value %>" selected="<%= listTypeName.equalsIgnoreCase(value) %>" value="<%= value %>" />
 
 					<%
 					}

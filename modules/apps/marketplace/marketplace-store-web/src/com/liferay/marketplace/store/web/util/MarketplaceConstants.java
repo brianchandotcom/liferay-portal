@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.web.util;
+package com.liferay.marketplace.store.web.util;
 
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;

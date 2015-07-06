@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.web.util;
+package com.liferay.marketplace.store.web.util;
 
 /**
  * @author Ryan Park

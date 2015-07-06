@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.web.util;
+package com.liferay.marketplace.store.web.util;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

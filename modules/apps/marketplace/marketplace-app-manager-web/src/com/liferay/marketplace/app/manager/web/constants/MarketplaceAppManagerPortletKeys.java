@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.marketplace.web.constants;
+package com.liferay.marketplace.app.manager.web.constants;
 
 /**
- * @author Ryan Park
  * @author Joan Kim
  */
-public class MarketplacePortletKeys {
+public class MarketplaceAppManagerPortletKeys {
 
-	public static final String MY_MARKETPLACE = "2_WAR_marketplaceweb";
-
-	public static final String STORE = "1_WAR_marketplaceweb";
+	public static final String APP_MANAGER =
+		"com_liferay_marketplace_app_manager_web_portlet_" +
+			"MarketplaceAppManagerPortlet";
 
 }

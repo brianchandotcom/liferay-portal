@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.app.manager.web.portlet;
 
+import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
 import com.liferay.marketplace.service.AppServiceUtil;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -62,10 +63,37 @@ import javax.portlet.ActionResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ryan Park
+ * @author Joan Kim
  */
-public class AppManagerPortlet extends MVCPortlet {
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.control-panel-entry-category=marketplace",
+		"com.liferay.portlet.control-panel-entry-weight=1.0",
+		"com.liferay.portlet.css-class-wrapper=marketplace-portlet",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.icon=/icons/icon.png",
+		"com.liferay.portlet.preferences-owned-by-group=false",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.description=", "javax.portlet.display-name=App Manager",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + MarketplaceAppManagerPortletKeys.APP_MANAGER,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {javax.portlet.Portlet.class}
+)
+public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
 	public void installApp(
 			ActionRequest actionRequest, ActionResponse actionResponse)

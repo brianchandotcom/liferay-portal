@@ -14,15 +14,28 @@
 
 package com.liferay.marketplace.app.manager.web.portlet;
 
+import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ryan Park
+ * @author Joan Kim
  */
-public class AppManagerControlPanelEntry extends BaseControlPanelEntry {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MarketplaceAppManagerPortletKeys.APP_MANAGER
+	},
+	service = ControlPanelEntry.class
+)
+public class MarketplaceAppManagerControlPanelEntry
+	extends BaseControlPanelEntry {
 
 	@Override
 	public boolean hasAccessPermission(

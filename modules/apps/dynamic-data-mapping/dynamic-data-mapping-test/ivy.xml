@@ -19,5 +19,6 @@
 	<dependencies defaultconf="default">
 		<dependency name="jsonassert" org="org.skyscreamer" rev="1.2.3" />
 		<dependency conf="test->default" name="com.liferay.arquillian.extension.junit.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency conf="test->default" name="com.liferay.dynamic.data.mapping.test.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 	</dependencies>
 </ivy-module>

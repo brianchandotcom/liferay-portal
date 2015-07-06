@@ -51,6 +51,7 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
+import com.liferay.portlet.trash.test.WhenCanBeDuplicatedInTrash;
 import com.liferay.portlet.trash.test.WhenHasGrandParent;
 import com.liferay.portlet.trash.test.WhenHasMyBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
@@ -79,11 +80,11 @@ import org.junit.Test;
 @Sync
 public class DLFileEntryTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenHasGrandParent, WhenHasMyBaseModel,
-			   WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
-			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
-			   WhenIsMoveableFromTrashBaseModel, WhenIsRestorableBaseModel,
-			   WhenIsUpdatableBaseModel {
+	implements WhenCanBeDuplicatedInTrash, WhenHasGrandParent,
+			   WhenHasMyBaseModel, WhenHasRecentBaseModelCount,
+			   WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
+			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
+			   WhenIsRestorableBaseModel, WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule

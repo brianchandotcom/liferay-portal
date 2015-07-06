@@ -70,7 +70,7 @@ public class DDMFormFactory {
 		ddmFormField.setLabel(ddmFormFactoryHelper.getDDMFormFieldLabel());
 		ddmFormField.setLocalizable(
 			ddmFormFactoryHelper.isDDMFormFieldLocalizable(method));
-	ddmFormField.setDDMFormFieldOptions(
+		ddmFormField.setDDMFormFieldOptions(
 			ddmFormFactoryHelper.getDDMFormFieldOptions());
 		ddmFormField.setVisibilityExpression(
 			ddmFormFactoryHelper.getDDMFormFieldVisibilityExpression());

@@ -34,7 +34,7 @@ public interface DefaultDDMFormFieldTypeSettings
 		optionLabels = {
 			"%not-indexable", "%indexable-keyword", "%indexable-text"
 		},
-		optionValues = { StringPool.BLANK, "keyword", "text" },
+		optionValues = {StringPool.BLANK, "keyword", "text"},
 		type = "select"
 	)
 	public String indexType();

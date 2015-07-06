@@ -557,11 +557,10 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpLanguageUtil() {
-		whenLanguageGetAvailableLocalesThen(
-			SetUtil.fromArray(
-				new Locale[] {
-					LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US
-				}));
+		Set<Locale> availableLocales = SetUtil.fromArray(
+			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US});
+
+		whenLanguageGetAvailableLocalesThen(availableLocales);
 
 		whenLanguageGet(LocaleUtil.BRAZIL, "no", "Não");
 		whenLanguageGet(LocaleUtil.BRAZIL, "yes", "Sim");
@@ -572,10 +571,12 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		whenLanguageGet(LocaleUtil.US, "no", "No");
 		whenLanguageGet(LocaleUtil.US, "yes", "Yes");
 
-		whenLanguageGetLanguageId(LocaleUtil.US, "en_US");
 		whenLanguageGetLanguageId(LocaleUtil.BRAZIL, "pt_BR");
+		whenLanguageGetLanguageId(LocaleUtil.SPAIN, "es_ES");
+		whenLanguageGetLanguageId(LocaleUtil.US, "en_US");
 
 		whenLanguageIsAvailableLocale("en_US");
+		whenLanguageIsAvailableLocale("es_ES");
 		whenLanguageIsAvailableLocale("pt_BR");
 
 		LanguageUtil languageUtil = new LanguageUtil();

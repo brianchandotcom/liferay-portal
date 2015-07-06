@@ -23,6 +23,4 @@ public interface LogFactory {
 
 	public Log getLog(String name);
 
-	public void setLevel(String name, String priority, boolean custom);
-
 }

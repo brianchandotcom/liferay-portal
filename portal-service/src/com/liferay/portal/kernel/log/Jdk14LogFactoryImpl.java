@@ -53,8 +53,4 @@ public class Jdk14LogFactoryImpl implements LogFactory {
 		return new Jdk14LogImpl(Logger.getLogger(name));
 	}
 
-	@Override
-	public void setLevel(String name, String priority, boolean custom) {
-	}
-
 }

@@ -57,7 +57,6 @@ Include-Resource:\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/StateUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class
-
 Web-ContextPath: /shopping-web
 
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)

@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map;
+package com.liferay.osgi.service.tracker.map.internal;
+
+import com.liferay.osgi.service.tracker.map.ServiceReferenceServiceTuple;
 
 import java.util.Comparator;
 
@@ -21,7 +23,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceReferenceServiceTupleComparator<S>
+class ServiceReferenceServiceTupleComparator<S>
 	implements Comparator<ServiceReferenceServiceTuple<S, ?, ?>> {
 
 	public ServiceReferenceServiceTupleComparator(
@@ -43,9 +45,21 @@ public class ServiceReferenceServiceTupleComparator<S>
 			return -1;
 		}
 
-		return _comparator.compare(
-			serviceReferenceServiceTuple1.getServiceReference(),
-			serviceReferenceServiceTuple2.getServiceReference());
+		ServiceReference<S> serviceReference1 =
+			serviceReferenceServiceTuple1.getServiceReference();
+		ServiceReference<S> serviceReference2 =
+			serviceReferenceServiceTuple2.getServiceReference();
+
+		int compare = _comparator.compare(serviceReference1, serviceReference2);
+
+		// If the provided comparator finds the ServiceReferences to be equal we
+		// resort to the ServiceReference natural order so no one is discarded.
+
+		if (compare == 0) {
+			return serviceReference1.compareTo(serviceReference2);
+		}
+
+		return compare;
 	}
 
 	private final Comparator<ServiceReference<S>> _comparator;

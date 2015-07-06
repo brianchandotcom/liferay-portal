@@ -94,8 +94,9 @@ public class ClusterLinkImpl implements ClusterLink {
 			_props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
 		Properties transportProperties = getTransportProperties(properties);
+		Properties transportNames = getTransportNames(properties);
 
-		initialize(transportProperties);
+		initialize(transportProperties, transportNames);
 	}
 
 	@Deactivate
@@ -138,16 +139,43 @@ public class ClusterLinkImpl implements ClusterLink {
 		return _localTransportAddresses;
 	}
 
+	protected Properties getTransportNames(Map<String, Object> properties) {
+		Properties transportNames = new Properties();
+
+		int prefixLength =
+			ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX.length();
+
+		for (String key : properties.keySet()) {
+			if (key.startsWith(
+					ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX)) {
+
+				transportNames.put(
+					key.substring(prefixLength + 1), properties.get(key));
+			}
+		}
+
+		if (transportNames.isEmpty()) {
+			transportNames = _props.getProperties(
+				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT, true);
+		}
+
+		return transportNames;
+	}
+
 	protected Properties getTransportProperties(
 		Map<String, Object> properties) {
 
 		Properties transportProperties = new Properties();
 
+		int prefixLength =
+			ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX.length();
+
 		for (String key : properties.keySet()) {
 			if (key.startsWith(
 					ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX)) {
 
-				transportProperties.put(key, properties.get(key));
+				transportProperties.put(
+					key.substring(prefixLength + 1), properties.get(key));
 			}
 		}
 
@@ -159,7 +187,8 @@ public class ClusterLinkImpl implements ClusterLink {
 		return transportProperties;
 	}
 
-	protected void initChannels(Properties transportProperties)
+	protected void initChannels(
+			Properties transportProperties, Properties transportNames)
 		throws Exception {
 
 		_channelCount = transportProperties.size();
@@ -181,22 +210,21 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		Collections.sort(keys);
 
-		String channelNamePrefix = GetterUtil.getString(
-			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_PREFIX),
-			ClusterPropsKeys.CHANNEL_NAME_PREFIX_DEFAULT);
-
-		String transportChannelNamePrefix = channelNamePrefix + "transport-";
-
 		for (int i = 0; i < keys.size(); i++) {
 			String customName = keys.get(i);
 
-			String value = transportProperties.getProperty(customName);
+			String properties = transportProperties.getProperty(customName);
+			String name = transportNames.getProperty(customName);
+
+			if (Validator.isNull(properties) || Validator.isNull(name)) {
+				continue;
+			}
 
 			ClusterReceiver clusterReceiver = new ClusterForwardReceiver(this);
 
 			ClusterChannel clusterChannel =
 				_clusterChannelFactory.createClusterChannel(
-					value, transportChannelNamePrefix + i, clusterReceiver);
+					properties, name, clusterReceiver);
 
 			_clusterReceivers.add(clusterReceiver);
 			_localTransportAddresses.add(clusterChannel.getLocalAddress());
@@ -204,7 +232,9 @@ public class ClusterLinkImpl implements ClusterLink {
 		}
 	}
 
-	protected void initialize(Properties transportProperties) {
+	protected void initialize(
+		Properties transportProperties, Properties transportNames) {
+
 		if (!isEnabled()) {
 			return;
 		}
@@ -213,7 +243,7 @@ public class ClusterLinkImpl implements ClusterLink {
 			ClusterLinkImpl.class.getName());
 
 		try {
-			initChannels(transportProperties);
+			initChannels(transportProperties, transportNames);
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {

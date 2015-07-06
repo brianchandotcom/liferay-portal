@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping;
 
+import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -58,7 +59,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormFieldTypeSettingsTestUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

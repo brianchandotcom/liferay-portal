@@ -29,9 +29,13 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.application.list.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.item.selector.api.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.journal.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.journal.service.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.journal.web.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.osgi.service.tracker.map.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
 	<classpathentry kind="lib" path="lib/javax.servlet.jsp.jstl.jar" />
 	<classpathentry kind="lib" path="lib/jsp-api.jar" />
 	<classpathentry kind="lib" path="lib/jstl-api.jar" />
@@ -52,5 +56,6 @@
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.osgi.metadata/jbosgi-metadata/jars/jbosgi-metadata-4.0.0.CR1.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/com.liferay.arquillian.extension.junit.bridge/jars/com.liferay.arquillian.extension.junit.bridge-1.0.0-SNAPSHOT.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/com.liferay.dynamic.data.mapping.test.util/jars/com.liferay.dynamic.data.mapping.test.util-1.0.0-SNAPSHOT.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

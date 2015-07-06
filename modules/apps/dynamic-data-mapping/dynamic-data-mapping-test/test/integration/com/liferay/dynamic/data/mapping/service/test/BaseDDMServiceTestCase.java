@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.service.test;
 
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureLayoutTestHelper;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -33,8 +35,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureLayoutTestHelper;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
 import java.util.HashMap;
 import java.util.Locale;

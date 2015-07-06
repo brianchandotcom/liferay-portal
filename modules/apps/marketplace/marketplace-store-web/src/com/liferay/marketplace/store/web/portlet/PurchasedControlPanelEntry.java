@@ -14,7 +14,6 @@
 
 package com.liferay.marketplace.store.web.portlet;
 
-import com.liferay.marketplace.store.web.configuration.MarketplaceWebConfigurationValues;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
@@ -30,19 +29,15 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MarketplaceStorePortletKeys.STORE},
+	property = {"javax.portlet.name=" + MarketplaceStorePortletKeys.PURCHASED},
 	service = ControlPanelEntry.class
 )
-public class StoreControlPanelEntry extends BaseControlPanelEntry {
+public class PurchasedControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
-
-		if (!MarketplaceWebConfigurationValues.MARKETPLACE_STORE_ENABLED) {
-			return false;
-		}
 
 		return permissionChecker.isOmniadmin();
 	}

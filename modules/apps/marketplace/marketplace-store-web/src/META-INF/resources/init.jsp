@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
@@ -23,42 +21,14 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.marketplace.model.App" %><%@
-page import="com.liferay.marketplace.service.AppLocalServiceUtil" %><%@
-page import="com.liferay.marketplace.util.comparator.PluginComparator" %><%@
-page import="com.liferay.marketplace.web.constants.MarketplacePortletKeys" %><%@
-page import="com.liferay.marketplace.web.util.MarketplaceConstants" %><%@
-page import="com.liferay.portal.kernel.deploy.DeployManagerUtil" %><%@
-page import="com.liferay.portal.kernel.plugin.RequiredPluginPackageException" %><%@
-page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@
-page import="com.liferay.portal.kernel.upload.UploadException" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+<%@ page import="com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys" %><%@
+page import="com.liferay.marketplace.store.web.util.MarketplaceConstants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.ServerDetector" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.model.LayoutTemplate" %><%@
-page import="com.liferay.portal.model.Plugin" %><%@
-page import="com.liferay.portal.model.PluginSetting" %><%@
-page import="com.liferay.portal.model.Portlet" %><%@
-page import="com.liferay.portal.model.Theme" %><%@
-page import="com.liferay.portal.service.CompanyLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.PluginSettingLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletCategoryKeys" %><%@
-page import="com.liferay.portal.util.PortletKeys" %>
+page import="com.liferay.portal.util.PortalUtil" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Iterator" %><%@
-page import="java.util.List" %>
-
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
-
-<%@ page import="javax.servlet.ServletContext" %>
+<%@ page import="javax.portlet.WindowState" %>
 
 <portlet:defineObjects />
 
@@ -73,10 +43,10 @@ String iFrameURL = MarketplaceConstants.MARKETPLACE_URL_LOGOUT;
 
 String referer = StringPool.BLANK;
 
-if (portletId.equals(MarketplacePortletKeys.MY_MARKETPLACE)) {
+if (portletId.equals(MarketplaceStorePortletKeys.PURCHASED)) {
 	referer = MarketplaceConstants.getPathPurchased();
 }
-else if (portletId.equals(MarketplacePortletKeys.STORE) && (appId > 0)) {
+else if (portletId.equals(MarketplaceStorePortletKeys.STORE) && (appId > 0)) {
 	referer = MarketplaceConstants.getPathStore() + "/application/" + appId;
 }
 else {

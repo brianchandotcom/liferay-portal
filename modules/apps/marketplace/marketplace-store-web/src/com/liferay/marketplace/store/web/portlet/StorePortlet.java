@@ -17,9 +17,10 @@ package com.liferay.marketplace.store.web.portlet;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.AppServiceUtil;
-import com.liferay.marketplace.util.MarketplaceUtil;
+import com.liferay.marketplace.store.web.configuration.MarketplaceWebConfigurationValues;
+import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.marketplace.store.web.util.MarketplaceLicenseUtil;
-import com.liferay.marketplace.store.web.util.PortletPropsValues;
+import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -46,11 +47,40 @@ import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ryan Park
+ * @author Joan Kim
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.control-panel-entry-category=marketplace",
+		"com.liferay.portlet.control-panel-entry-weight=2.0",
+		"com.liferay.portlet.css-class-wrapper=marketplace-portlet",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.icon=/icons/store.png",
+		"com.liferay.portlet.preferences-owned-by-group=false",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.description=", "javax.portlet.display-name=Store",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + MarketplaceStorePortletKeys.STORE,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {Portlet.class}
+)
 public class StorePortlet extends MVCPortlet {
 
 	public void downloadApp(
@@ -65,7 +95,9 @@ public class StorePortlet extends MVCPortlet {
 		String url = ParamUtil.getString(actionRequest, "url");
 		String version = ParamUtil.getString(actionRequest, "version");
 
-		if (!url.startsWith(PortletPropsValues.MARKETPLACE_URL)) {
+		if (!url.startsWith(
+				MarketplaceWebConfigurationValues.MARKETPLACE_URL)) {
+
 			JSONObject jsonObject = getAppJSONObject(remoteAppId);
 
 			jsonObject.put("cmd", "downloadApp");
@@ -235,7 +267,9 @@ public class StorePortlet extends MVCPortlet {
 		String productEntryName = ParamUtil.getString(
 			actionRequest, "productEntryName");
 
-		if (!url.startsWith(PortletPropsValues.MARKETPLACE_URL)) {
+		if (!url.startsWith(
+				MarketplaceWebConfigurationValues.MARKETPLACE_URL)) {
+
 			JSONObject jsonObject = getAppJSONObject(remoteAppId);
 
 			jsonObject.put("cmd", "downloadApp");
@@ -402,15 +436,17 @@ public class StorePortlet extends MVCPortlet {
 		String encodedClientId = MarketplaceUtil.encodeClientId(
 			companyId, userId, token);
 
+		String portletNameSpace = PortalUtil.getPortletNamespace(
+			_OSB_PORTLET_ID);
+
 		url = HttpUtil.addParameter(
-			url, _PORTLET_NAMESPACE.concat("clientId"), encodedClientId);
+			url, portletNameSpace.concat("clientId"), encodedClientId);
 		url = HttpUtil.addParameter(
-			url, _PORTLET_NAMESPACE.concat("token"), token);
+			url, portletNameSpace.concat("token"), token);
 
 		return url;
 	}
 
-	private static final String _PORTLET_NAMESPACE =
-		PortalUtil.getPortletNamespace("12_WAR_osbportlet");
+	private static final String _OSB_PORTLET_ID = "12_WAR_osbportlet";
 
 }

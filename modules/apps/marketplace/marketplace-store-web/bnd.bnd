@@ -1,40 +1,8 @@
-Bundle-Name: Liferay Marketplace Web
-Bundle-SymbolicName: com.liferay.marketplace.web
+Bundle-Name: Liferay Marketplace Store Web
+Bundle-SymbolicName: com.liferay.marketplace.store.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.license.util
-Import-Package: \
-	com.liferay.marketplace.model,\
-	com.liferay.marketplace.service,\
-	com.liferay.marketplace.service.persistence,\
-	com.liferay.marketplace.util.*,\
-	\
-	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.configuration,\
-	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.log,\
-	com.liferay.portal.kernel.messaging,\
-	com.liferay.portal.kernel.plugin,\
-	com.liferay.portal.kernel.portlet,\
-	com.liferay.portal.kernel.servlet.*,\
-	com.liferay.portal.kernel.servlet.filters.invoker,\
-	com.liferay.portal.kernel.upgrade,\
-	com.liferay.portal.kernel.util,\
-	com.liferay.portal.kernel.xml,\
-	com.liferay.portal.model,\
-	com.liferay.portal.security.permission,\
-	com.liferay.portal.service,\
-	com.liferay.portal.theme,\
-	com.liferay.portal.util,\
-	\
-	com.liferay.portlet,\
-	com.liferay.portlet.expando,\
-	com.liferay.portlet.expando.model,\
-	com.liferay.portlet.exportimport.lar,\
-	*
 Include-Resource:\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class
-Web-ContextPath: /marketplace-web
-
--donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
--wab: docroot
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /marketplace-store-web

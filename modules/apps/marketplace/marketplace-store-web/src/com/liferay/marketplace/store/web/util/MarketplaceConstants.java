@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.store.web.util;
 
+import com.liferay.marketplace.store.web.configuration.MarketplaceWebConfigurationValues;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -23,7 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 public class MarketplaceConstants {
 
 	public static final String MARKETPLACE_URL_LOGOUT =
-		PortletPropsValues.MARKETPLACE_URL + "/c/portal/logout";
+		MarketplaceWebConfigurationValues.MARKETPLACE_URL + "/c/portal/logout";
 
 	public static String getPathPurchased() {
 		if (_pathPurchased == null) {

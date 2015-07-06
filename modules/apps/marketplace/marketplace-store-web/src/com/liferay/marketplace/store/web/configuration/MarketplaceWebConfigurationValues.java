@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.marketplace.store.web.constants;
+package com.liferay.marketplace.store.web.configuration;
+
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Ryan Park
  * @author Joan Kim
  */
-public class MarketplacePortletKeys {
+public class MarketplaceWebConfigurationValues {
 
-	public static final String MY_MARKETPLACE = "2_WAR_marketplaceweb";
+	public static final boolean MARKETPLACE_STORE_ENABLED =
+		GetterUtil.getBoolean(
+			MarketplaceWebConfigurationUtil.get("marketplace.store.enabled"),
+			true);
 
-	public static final String STORE = "1_WAR_marketplaceweb";
+	public static final String MARKETPLACE_URL = GetterUtil.getString(
+		MarketplaceWebConfigurationUtil.get("marketplace.url"));
 
 }

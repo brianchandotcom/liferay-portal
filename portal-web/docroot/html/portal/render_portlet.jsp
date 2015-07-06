@@ -414,11 +414,9 @@ portletDisplay.setURLClose(urlClose);
 
 // URL configuration
 
-PortletURLImpl urlConfiguration = new PortletURLImpl(request, PortletKeys.PORTLET_CONFIGURATION, plid, PortletRequest.RENDER_PHASE);
+PortletURL urlConfiguration = themeDisplay.getURLPortletConfiguration();
 
 urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
-
-urlConfiguration.setEscapeXml(false);
 
 if (portlet.getConfigurationActionInstance() != null) {
 	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_configuration.jsp");

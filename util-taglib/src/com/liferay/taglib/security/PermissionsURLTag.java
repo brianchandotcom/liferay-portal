@@ -23,10 +23,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -106,9 +103,7 @@ public class PermissionsURLTag extends TagSupport {
 			redirect = PortalUtil.getCurrentURL(request);
 		}
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.PORTLET_CONFIGURATION, layout.getPlid(),
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = themeDisplay.getURLPortletConfiguration();
 
 		if (Validator.isNotNull(windowState)) {
 			portletURL.setWindowState(

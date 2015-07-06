@@ -36,7 +36,10 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -72,6 +75,7 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			new BlogsEntryAssetRenderer(entry);
 
 		blogsEntryAssetRenderer.setAssetRendererType(type);
+		blogsEntryAssetRenderer.setServletContext(_servletContext);
 
 		return blogsEntryAssetRenderer;
 	}
@@ -149,9 +153,18 @@ public class BlogsEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			permissionChecker, classPK, actionId);
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.blogs.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/blogs/blogs.png";
 	}
+
+	private ServletContext _servletContext;
 
 }

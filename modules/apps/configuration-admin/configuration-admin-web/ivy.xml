@@ -20,5 +20,6 @@
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency conf="default->master" name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" />
+		<dependency conf="test->default" name="com.liferay.dynamic.data.mapping.test.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 	</dependencies>
 </ivy-module>

@@ -14,20 +14,12 @@
 
 package com.liferay.portlet.portletconfiguration;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Juergen Kappler
@@ -39,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 	},
 	service = ViewPortletProvider.class
 )
-public class PortletConfigurationViewPortletProvider
+public class PortletConfigurationViewPortletProvider extends BasePortletProvider
 	implements ViewPortletProvider {
 
 	@Override
@@ -48,19 +40,8 @@ public class PortletConfigurationViewPortletProvider
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		PortletURLImpl urlConfiguration = new PortletURLImpl(
-			request, PortletKeys.PORTLET_CONFIGURATION, layout.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		return urlConfiguration;
+	protected long getPlid(ThemeDisplay themeDisplay) {
+		return themeDisplay.getPlid();
 	}
 
 }

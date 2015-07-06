@@ -317,7 +317,12 @@ if (layout.isLayoutPrototypeLinkActive()) {
 
 long previousScopeGroupId = themeDisplay.getScopeGroupId();
 
-themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, (Validator.isNotNull(portletResource) ? portletResourcePortlet.getPortletId() : portletId)));
+if (Validator.isNotNull(portletResource)) {
+	themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, portletResourcePortlet.getPortletId()));
+}
+else {
+	themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, portletId));
+}
 
 long previousSiteGroupId = themeDisplay.getSiteGroupId();
 

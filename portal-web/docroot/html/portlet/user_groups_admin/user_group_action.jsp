@@ -94,6 +94,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 
 		managePagesURL.setParameter("redirect", redirect);
 		managePagesURL.setParameter("groupId", String.valueOf(userGroupGroup.getGroupId()));
+		managePagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
 		<liferay-ui:icon

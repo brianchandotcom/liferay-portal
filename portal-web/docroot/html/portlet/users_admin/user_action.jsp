@@ -75,6 +75,7 @@ long userId = user2.getUserId();
 
 		managePagesURL.setParameter("redirect", redirect);
 		managePagesURL.setParameter("groupId", String.valueOf(user2.getGroup().getGroupId()));
+		managePagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
 		<liferay-ui:icon

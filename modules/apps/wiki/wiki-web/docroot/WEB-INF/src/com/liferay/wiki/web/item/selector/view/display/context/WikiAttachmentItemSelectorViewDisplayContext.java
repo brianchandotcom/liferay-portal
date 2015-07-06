@@ -15,7 +15,9 @@
 package com.liferay.wiki.web.item.selector.view.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -23,6 +25,7 @@ import com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView;
 
 import java.util.Locale;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,8 +56,17 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
-	public PortletURL getPortletURL() {
-		return _portletURL;
+	public PortletURL getPortletURL(
+			HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortletException {
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, liferayPortletResponse);
+
+		portletURL.setParameter("displayStyle", getDisplayStyle(request));
+
+		return portletURL;
 	}
 
 	public String getTitle(Locale locale) {

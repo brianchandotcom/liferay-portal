@@ -37,7 +37,6 @@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

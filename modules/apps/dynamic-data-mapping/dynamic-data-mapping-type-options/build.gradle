@@ -1,0 +1,9 @@
+dependencies {
+	compile group: "com.google.template", name: "soy", version: "2012-12-21"
+
+	testCompile group: "junit", name: "junit", version: "4.11"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

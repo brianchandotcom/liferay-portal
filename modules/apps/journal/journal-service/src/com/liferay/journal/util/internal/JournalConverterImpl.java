@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.util.impl;
+package com.liferay.journal.util.internal;
 
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;

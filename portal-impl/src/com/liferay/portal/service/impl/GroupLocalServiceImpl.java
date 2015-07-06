@@ -922,7 +922,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			expandoRowLocalService.deleteRows(group.getGroupId());
 
-
 			// Social
 
 			socialActivityLocalService.deleteActivities(group.getGroupId());

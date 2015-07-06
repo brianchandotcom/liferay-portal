@@ -65,7 +65,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 		/>
 	</div>
 
-	<liferay-util:include page="/html/portlet/export_import/publish_process_message_task_details.jsp">
+	<liferay-util:include page="/publish_process_message_task_details.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId()) %>" />
 	</liferay-util:include>
 </c:if>
@@ -87,7 +87,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 						title: '<liferay-ui:message key="initial-publication" />',
 
 						<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="struts_action" value="/export_import/publish_layouts" />
+							<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 							<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
 							<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 							<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />

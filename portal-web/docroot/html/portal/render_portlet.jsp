@@ -541,7 +541,7 @@ PortletURLImpl urlExportImport = new PortletURLImpl(request, PortletKeys.EXPORT_
 
 urlExportImport.setWindowState(LiferayWindowState.POP_UP);
 
-urlExportImport.setParameter("struts_action", "/export_import/export_import");
+urlExportImport.setParameter("mvcRenderCommandName", "exportImport");
 urlExportImport.setParameter("redirect", currentURL);
 urlExportImport.setParameter("returnToFullPageURL", currentURL);
 urlExportImport.setParameter("portletResource", portletDisplay.getId());
@@ -665,7 +665,7 @@ PortletURLImpl urlStaging = new PortletURLImpl(request, PortletKeys.EXPORT_IMPOR
 
 urlStaging.setWindowState(LiferayWindowState.POP_UP);
 
-urlStaging.setParameter("struts_action", "/export_import/staging");
+urlStaging.setParameter("mvcRenderCommandName", "staging");
 urlStaging.setParameter("cmd", Constants.PUBLISH_TO_LIVE);
 urlStaging.setParameter("redirect", currentURL);
 urlStaging.setParameter("returnToFullPageURL", currentURL);

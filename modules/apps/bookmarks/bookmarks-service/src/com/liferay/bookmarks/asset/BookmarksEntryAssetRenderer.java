@@ -94,6 +94,11 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
+	public int getStatus() {
+		return _entry.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

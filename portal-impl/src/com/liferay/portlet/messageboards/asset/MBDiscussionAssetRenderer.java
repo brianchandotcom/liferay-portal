@@ -54,6 +54,11 @@ public class MBDiscussionAssetRenderer extends MBMessageAssetRenderer {
 	}
 
 	@Override
+	public int getStatus() {
+		return _message.getStatus();
+	}
+
+	@Override
 	public PortletURL getURLEdit(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

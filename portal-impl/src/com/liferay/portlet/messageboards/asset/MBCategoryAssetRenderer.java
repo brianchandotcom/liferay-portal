@@ -77,6 +77,11 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public int getStatus() {
+		return _category.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

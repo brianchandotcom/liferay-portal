@@ -77,6 +77,11 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public int getStatus() {
+		return _user.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

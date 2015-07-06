@@ -104,6 +104,11 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
+	public int getStatus() {
+		return _message.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

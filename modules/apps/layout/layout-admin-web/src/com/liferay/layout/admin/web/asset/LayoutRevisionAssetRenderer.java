@@ -85,6 +85,11 @@ public class LayoutRevisionAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public int getStatus() {
+		return _layoutRevision.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

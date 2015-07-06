@@ -149,6 +149,11 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
+	public int getStatus() {
+		return _article.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

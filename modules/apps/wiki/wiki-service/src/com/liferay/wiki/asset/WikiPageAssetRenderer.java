@@ -134,6 +134,11 @@ public class WikiPageAssetRenderer
 	}
 
 	@Override
+	public int getStatus() {
+		return _page.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

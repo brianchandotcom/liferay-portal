@@ -2633,7 +2633,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 		MBThreadFlagPersistence mbThreadFlagPersistence) {
 		this.mbThreadFlagPersistence = mbThreadFlagPersistence;
 	}
-	
+
 	/**
 	 * Returns the social activity local service.
 	 *

@@ -393,6 +393,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/javacpp.jar</file-name>
+				<version>0.9</version>
+				<project-name>JavaCPP</project-name>
+				<project-url>http://bytedeco.org/javacpp/</project-url>
+				<licenses>
+					<license>
+						<license-name>GPLv2 with Classpath exception</license-name>
+						<license-url>http://www.gnu.org/software/classpath/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/jbi_rt.jar</file-name>
 				<version>2.0 UR1</version>
 				<project-name>Glassfish</project-name>
@@ -632,6 +644,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/opencv.jar</file-name>
+				<version>2.4.9-0.9</version>
+				<project-name>JavaCPP Presets For OpenCV</project-name>
+				<project-url>https://github.com/bytedeco/javacpp-presets/tree/master/opencv</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD license</license-name>
+						<license-url>http://www.opencv.org/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/orangevolt-ant-tasks.jar</file-name>
 				<version>1.3.5</version>
 				<project-name>Orangevolt ANT Tasks</project-name>
@@ -679,6 +703,30 @@
 					<license>
 						<license-name>Sun Binary Code License Agreement</license-name>
 						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/piccolo2d-core.jar</file-name>
+				<version>1.3.1</version>
+				<project-name>Piccolo2D Core</project-name>
+				<project-url>http://code.google.com/p/piccolo2d/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD license</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/piccolo2d-extras.jar</file-name>
+				<version>1.3.1</version>
+				<project-name>Piccolo2D Extras</project-name>
+				<project-url>http://code.google.com/p/piccolo2d/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD license</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -887,7 +935,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/sikuli-api.jar</file-name>
-				<version>1.0.2</version>
+				<version>1.2.0</version>
 				<project-name>Sikuli API</project-name>
 				<project-url>http://www.sikuli.org</project-url>
 				<licenses>
@@ -898,9 +946,9 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/sikuli-script.jar</file-name>
-				<version>1.0.1</version>
-				<project-name>Sikuli Script</project-name>
+				<file-name>lib/development/sikuli-core.jar</file-name>
+				<version>1.2.2</version>
+				<project-name>Sikuli Core</project-name>
 				<project-url>http://www.sikuli.org</project-url>
 				<licenses>
 					<license>

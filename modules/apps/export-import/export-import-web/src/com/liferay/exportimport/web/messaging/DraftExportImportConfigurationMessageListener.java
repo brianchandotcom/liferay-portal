@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.messaging;
+package com.liferay.exportimport.web.messaging;
 
+import com.liferay.exportimport.web.configuration.ExportImportWebConfigurationValues;
+import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -21,26 +23,48 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Levente Hudák
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT},
+	service = SchedulerEntry.class
+)
 public class DraftExportImportConfigurationMessageListener
-	extends BaseMessageListener {
+	extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	protected void activate() {
+		schedulerEntry.setTimeUnit(TimeUnit.HOUR);
+		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
+		schedulerEntry.setTriggerValue(
+			ExportImportWebConfigurationValues.
+				DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws PortalException {
-		if (PropsValues.
-				STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT ==
-					-1) {
+		if (ExportImportWebConfigurationValues.
+				DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT == -1) {
 
 			return;
 		}
@@ -58,8 +82,8 @@ public class DraftExportImportConfigurationMessageListener
 
 		dynamicQuery.setLimit(
 			QueryUtil.ALL_POS,
-			PropsValues.
-				STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT);
+			ExportImportWebConfigurationValues.
+				DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT);
 
 		List<ExportImportConfiguration> exportImportConfigurations =
 			ExportImportConfigurationLocalServiceUtil.dynamicQuery(
@@ -71,6 +95,17 @@ public class DraftExportImportConfigurationMessageListener
 			ExportImportConfigurationLocalServiceUtil.
 				deleteExportImportConfiguration(exportImportConfiguration);
 		}
+	}
+
+	@Reference(
+		target =
+			"(javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT + ")"
+	)
+	protected void setPortlet(Portlet portlet) {
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

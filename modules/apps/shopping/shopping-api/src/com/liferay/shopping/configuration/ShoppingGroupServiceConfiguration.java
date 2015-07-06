@@ -74,7 +74,7 @@ public interface ShoppingGroupServiceConfiguration {
 	)
 	public LocalizedValuesMap emailOrderShippingSubject();
 
-	@Meta.AD(deflt = " | | | | | ", required = false)
+	@Meta.AD(required = false)
 	public String[] insurance();
 
 	@Meta.AD(deflt = "flat", required = false)
@@ -86,7 +86,7 @@ public interface ShoppingGroupServiceConfiguration {
 	@Meta.AD(deflt = " ", required = false)
 	public String paypalEmailAddress();
 
-	@Meta.AD(deflt = " | | | | | ", required = false)
+	@Meta.AD(required = false)
 	public String[] shipping();
 
 	@Meta.AD(deflt = "flat", required = false)

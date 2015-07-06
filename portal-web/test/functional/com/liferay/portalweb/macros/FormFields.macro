@@ -1,0 +1,31 @@
+<definition>
+	<command name="disableCheckbox">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Uncheck" locator1="FormFields#CHECKBOX" />
+	</command>
+
+	<command name="editText">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
+	</command>
+
+	<command name="enableCheckbox">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Check" locator1="FormFields#CHECKBOX" />
+	</command>
+
+	<command name="save">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewTextLabel">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}" />
+	</command>
+</definition>

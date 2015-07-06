@@ -1,0 +1,34 @@
+<definition>
+	<var name="formDescription" value="Created Form Name" />
+	<var name="formName" value="Created Form Name" />
+
+	<command name="editDescription">
+		<execute function="Type#typeAceEditor" locator1="Form#DESCRIPTION_FIELD" value1="${formDescription}" />
+	</command>
+
+	<command name="editName">
+		<execute function="Type#typeAceEditor" locator1="Form#NAME_FIELD" value1="${formName}" />
+	</command>
+
+	<command name="editPageDescription">
+		<execute function="Type" locator1="Form#PAGE_DESCRIPTION_FIELD" value1="${formPageDescription}" />
+	</command>
+
+	<command name="editPageTitle">
+		<execute function="Type" locator1="Form#PAGE_TITLE_FIELD" value1="${formPageName}" />
+	</command>
+
+	<command name="gotoAddField">
+		<execute function="Click" locator1="Form#ADD_FIELD"  />
+
+		<var name="key_fieldType" value="${fieldType}" />
+
+		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
+	</command>
+
+	<command name="save">
+		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+</definition>

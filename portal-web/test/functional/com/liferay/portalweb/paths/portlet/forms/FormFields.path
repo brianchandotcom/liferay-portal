@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>FormFields</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FormFields</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TEXT_FIELD</td>
+	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_LABEL</td>
+	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]/../label[contains(@class,'control-fieldLabel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX</td>
+	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

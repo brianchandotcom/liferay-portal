@@ -56,7 +56,7 @@ public class AmazonRankingsConfigurationAction
 
 	@Override
 	public String getJspPath(RenderRequest renderRequest) {
-		return "/display/configuration.jsp";
+		return "/configuration.jsp";
 	}
 
 	@Override

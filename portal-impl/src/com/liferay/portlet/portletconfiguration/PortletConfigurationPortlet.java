@@ -551,7 +551,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		catch (Exception ex) {
 			_log.error(ex.getMessage());
 
-			include("/error.jsp", renderRequest, renderResponse);
+			include(
+				"/html/portlet/portlet_configuration/error.jsp", renderRequest,
+				renderResponse);
 		}
 
 		super.doDispatch(renderRequest, renderResponse);

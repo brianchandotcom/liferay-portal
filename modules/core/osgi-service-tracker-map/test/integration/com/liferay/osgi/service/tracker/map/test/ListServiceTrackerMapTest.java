@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.map.test;
 
+import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
@@ -21,6 +22,7 @@ import com.liferay.osgi.service.tracker.map.internal.BundleContextWrapper;
 import com.liferay.osgi.service.tracker.map.internal.TrackedOne;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -184,6 +186,34 @@ public class ListServiceTrackerMapTest {
 
 		Assert.assertNotNull(anotherTargetList);
 		Assert.assertEquals(3, anotherTargetList.size());
+	}
+
+	@Test
+	public void testGetServiceWithCustomComparatorReturningZero()
+		throws InvalidSyntaxException {
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			_bundleContext, TrackedOne.class, null,
+			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
+			new Comparator<ServiceReference<TrackedOne>>() {
+				@Override
+				public int compare(
+					ServiceReference<TrackedOne> o1,
+					ServiceReference<TrackedOne> o2) {
+
+					return 0;
+				}
+			}
+		);
+
+		_serviceTrackerMap.open();
+
+		registerService(new TrackedOne());
+		registerService(new TrackedOne());
+
+		List<TrackedOne> services = _serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(2, services.size());
 	}
 
 	@Test

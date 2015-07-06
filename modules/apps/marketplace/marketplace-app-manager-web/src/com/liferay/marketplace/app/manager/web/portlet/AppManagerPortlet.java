@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.web.appmanager.portlet;
+package com.liferay.marketplace.app.manager.web.portlet;
 
 import com.liferay.marketplace.service.AppServiceUtil;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;

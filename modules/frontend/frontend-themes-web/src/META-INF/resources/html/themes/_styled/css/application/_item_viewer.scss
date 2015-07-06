@@ -6,6 +6,10 @@
 	.image-viewer-footer-content .image-viewer-footer-control {
 		color: #777;
 	}
+
+	.list-group-item:hover a.item-preview {
+		text-decoration: none;
+	}
 }
 
 .lfr-item-viewer-close {

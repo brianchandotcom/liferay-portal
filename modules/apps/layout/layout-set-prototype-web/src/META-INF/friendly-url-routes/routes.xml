@@ -3,7 +3,7 @@
 
 <routes>
 	<route>
-		<pattern>/template/add</pattern>
+		<pattern>/templates/new</pattern>
 		<implicit-parameter name="mvcPath">/edit_layout_set_prototype.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>

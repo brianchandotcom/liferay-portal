@@ -461,6 +461,8 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 		properties.put(
 			ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL, sb.toString());
+		properties.put(
+			ClusterPropsKeys.CHANNEL_NAME_CONTROL, "test-channel-name");
 
 		clusterExecutorImpl.activate(new MockComponentContext(properties));
 

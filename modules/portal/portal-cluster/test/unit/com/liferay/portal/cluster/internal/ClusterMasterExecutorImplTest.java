@@ -794,7 +794,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			sb.append("FRAG2(frag_size=61440):");
 			sb.append("RSVP(resend_interval=2000;timeout=10000)");
 
-			initialize(sb.toString());
+			initialize(sb.toString(), "test-channel-name");
 		}
 
 		private final boolean _enabled;

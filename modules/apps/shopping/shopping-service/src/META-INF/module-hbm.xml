@@ -20,7 +20,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="itemIds" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="itemIds" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="couponCodes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="altShipping" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="insure" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
@@ -168,7 +168,7 @@
 		<property name="ccExpMonth" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="ccExpYear" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="ccVerNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="ppTxnId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="ppPaymentStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="ppPaymentGross" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
@@ -182,7 +182,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="orderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />

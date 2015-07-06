@@ -1,0 +1,23 @@
+{
+  "name": "liferay-theme-unstyled",
+  "version": "7.0.0",
+  "description": "The base theme structure for Liferay themes",
+  "repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-themes-web/src/META-INF/resources/html/themes/_unstyled",
+  "keywords": [
+    "liferay",
+    "theme"
+  ],
+  "author": {
+    "name": "Nate Cavanaugh",
+    "email": "nathan.cavanaugh@liferay.com",
+    "url": "https://github.com/natecavanaugh"
+  },
+  "contributors": [
+    {
+      "name": "Rob Frampton",
+      "email": "rob.g.frampton@gmail.com",
+      "url": "https://github.com/Robert-Frampton"
+    }
+  ],
+  "license": "LGPL"
+}

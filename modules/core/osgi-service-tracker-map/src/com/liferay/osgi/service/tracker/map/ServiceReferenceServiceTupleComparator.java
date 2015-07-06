@@ -43,9 +43,21 @@ public class ServiceReferenceServiceTupleComparator<S>
 			return -1;
 		}
 
-		return _comparator.compare(
-			serviceReferenceServiceTuple1.getServiceReference(),
-			serviceReferenceServiceTuple2.getServiceReference());
+		ServiceReference<S> serviceReference1 =
+			serviceReferenceServiceTuple1.getServiceReference();
+		ServiceReference<S> serviceReference2 =
+			serviceReferenceServiceTuple2.getServiceReference();
+
+		int compare = _comparator.compare(serviceReference1, serviceReference2);
+
+		//If the provided comparator finds to ServiceReferences to be equal we
+		//resort to the ServiceReference natural order so no one is discarded
+
+		if (compare == 0) {
+			return serviceReference1.compareTo(serviceReference2);
+		}
+
+		return compare;
 	}
 
 	private final Comparator<ServiceReference<S>> _comparator;

@@ -30,9 +30,7 @@ import com.liferay.portlet.layoutsadmin.util.test.ExportImportConfigurationTestU
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Levente Hudak
@@ -47,12 +45,6 @@ public class ExportImportConfigurationTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashDuplicate() throws Exception {
-	}
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(

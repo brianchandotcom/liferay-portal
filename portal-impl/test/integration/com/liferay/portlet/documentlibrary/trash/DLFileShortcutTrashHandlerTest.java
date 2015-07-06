@@ -150,12 +150,6 @@ public class DLFileShortcutTrashHandlerTest
 		throws Exception {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testTrashDuplicate() throws Exception {
-	}
-
 	@Test
 	public void testTrashFileEntry() throws Exception {
 		trashFileEntry();

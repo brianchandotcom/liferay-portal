@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -125,6 +126,10 @@ public class DDLPortlet extends MVCPortlet {
 				renderRequest, NoSuchRecordException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, NoSuchRecordSetException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest,
+				PortletPreferencesException.
+					MustBeStrictPortlet.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, PrincipalException.getNestedClasses())) {
 

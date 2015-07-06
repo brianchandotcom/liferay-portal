@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
+import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -161,7 +161,8 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 				layout, portletId);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
+			throw new PortletPreferencesException.MustBeStrictPortlet(
+				portletId);
 		}
 
 		return portletPreferences;

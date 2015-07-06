@@ -1,0 +1,23 @@
+{
+  "name": "liferay-theme-mixins",
+  "version": "7.0.1",
+  "description": "Sass mixins for Liferay themes",
+  "repository": "https://github.com/liferay/liferay-portal/tree/master/portal-web/docroot/html/css/common",
+  "keywords": [
+    "liferay",
+    "theme"
+  ],
+  "author": {
+    "name": "Nate Cavanaugh",
+    "email": "nathan.cavanaugh@liferay.com",
+    "url": "https://github.com/natecavanaugh"
+  },
+  "contributors": [
+    {
+      "name": "Rob Frampton",
+      "email": "rob.g.frampton@gmail.com",
+      "url": "https://github.com/Robert-Frampton"
+    }
+  ],
+  "license": "LGPL"
+}

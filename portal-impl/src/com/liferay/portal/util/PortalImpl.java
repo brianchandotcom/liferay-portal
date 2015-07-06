@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -5239,16 +5240,27 @@ public class PortalImpl implements Portal {
 		if (((parameterMap == null) || !parameterMap.containsKey("t")) &&
 			 !(timestamp < 0)) {
 
-			if ((timestamp == 0) && uri.startsWith(StrutsUtil.TEXT_HTML_DIR)) {
-				ServletContext servletContext =
-					(ServletContext)request.getAttribute(WebKeys.CTX);
-
-				timestamp = ServletContextUtil.getLastModified(
-					servletContext, uri, true);
-			}
-
 			if (timestamp == 0) {
-				timestamp = theme.getTimestamp();
+				String portalURL = getPortalURL(request);
+
+				String requestPath = StringUtil.replace(
+					uri, portalURL, StringPool.BLANK);
+
+				if (requestPath.startsWith(StrutsUtil.TEXT_HTML_DIR)) {
+					ServletContext servletContext =
+						(ServletContext)request.getAttribute(WebKeys.CTX);
+
+					timestamp = ServletContextUtil.getLastModified(
+						servletContext, requestPath, true);
+				}
+				else if (PortalWebResourcesUtil.hasContextPath(requestPath)) {
+					timestamp = PortalWebResourcesUtil.getLastModified(
+						PortalWebResourcesUtil.getPathResourceType(
+							requestPath));
+				}
+				else {
+					timestamp = theme.getTimestamp();
+				}
 			}
 
 			sb.append("&t=");

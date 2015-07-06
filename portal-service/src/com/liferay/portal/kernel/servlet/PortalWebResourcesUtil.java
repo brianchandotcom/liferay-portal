@@ -48,6 +48,18 @@ public class PortalWebResourcesUtil {
 		return portalWebResources.getLastModified();
 	}
 
+	public static String getPathResourceType(String path) {
+		for (PortalWebResources portalWebResources :
+				_instance._getPortalWebResourcesList()) {
+
+			if (path.contains(portalWebResources.getContextPath())) {
+				return portalWebResources.getResourceType();
+			}
+		}
+
+		return null;
+	}
+
 	public static ServletContext getPathServletContext(String path) {
 		for (PortalWebResources portalWebResources :
 				_instance._getPortalWebResourcesList()) {

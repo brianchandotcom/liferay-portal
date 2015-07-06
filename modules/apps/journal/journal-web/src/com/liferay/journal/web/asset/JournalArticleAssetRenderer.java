@@ -90,6 +90,11 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
+	public Object getAsset() {
+		return _article;
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return _article.getAvailableLanguageIds();
 	}
@@ -124,11 +129,6 @@ public class JournalArticleAssetRenderer
 	@Override
 	public Date getDisplayDate() {
 		return _article.getDisplayDate();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _article;
 	}
 
 	@Override

@@ -87,6 +87,11 @@ public class WikiPageAssetRenderer
 	}
 
 	@Override
+	public Object getAsset() {
+		return _page;
+	}
+
+	@Override
 	public String getClassName() {
 		return WikiPage.class.getName();
 	}
@@ -109,11 +114,6 @@ public class WikiPageAssetRenderer
 	@Override
 	public Date getDisplayDate() {
 		return _page.getModifiedDate();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _page;
 	}
 
 	@Override

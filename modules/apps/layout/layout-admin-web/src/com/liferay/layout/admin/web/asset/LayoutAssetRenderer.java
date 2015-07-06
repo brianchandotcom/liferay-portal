@@ -44,6 +44,11 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public Object getAsset() {
+		return _layout;
+	}
+
+	@Override
 	public String getClassName() {
 		return Layout.class.getName();
 	}
@@ -51,11 +56,6 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer {
 	@Override
 	public long getClassPK() {
 		return _layout.getLayoutId();
-	}
-
-	@Override
-	public Object getEntry() {
-		return _layout;
 	}
 
 	@Override

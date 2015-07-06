@@ -3,6 +3,7 @@
 
 <project>
 	<property name="import.shared" value="shopping-api" />
+	<property name="osgi.ide.dependencies" value="spring-context.jar" />
 	<property name="service.input.file" value="service.xml" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />

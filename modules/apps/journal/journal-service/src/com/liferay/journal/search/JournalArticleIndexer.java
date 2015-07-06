@@ -314,20 +314,6 @@ public class JournalArticleIndexer
 
 						JournalArticle article = (JournalArticle)object;
 
-						if (!JournalServiceConfigurationValues.
-								JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
-							JournalArticle latestIndexableArticle =
-								fetchLatestIndexableArticleVersion(
-									article.getResourcePrimKey());
-
-							if (latestIndexableArticle == null) {
-								return;
-							}
-
-							article = latestIndexableArticle;
-						}
-
 						try {
 							doReindex(article, false);
 						}

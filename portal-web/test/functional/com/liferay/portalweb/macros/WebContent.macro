@@ -386,6 +386,9 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
 		<execute function="AssertTextEquals" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_CATEGORY" value1="${categoryName}" />
 	</command>
 

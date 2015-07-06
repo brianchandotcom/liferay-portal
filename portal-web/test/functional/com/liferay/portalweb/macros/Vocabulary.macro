@@ -60,10 +60,6 @@
 
 		<execute function="AssertClick" locator1="CPVocabulariesAdd#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 
 	<command name="addViewableByCP">

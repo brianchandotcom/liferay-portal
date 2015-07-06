@@ -123,10 +123,6 @@
 		<execute function="Type" locator1="CPCategoriesEditSubcategory#NAME_FIELD" value1="${subcategoryNameEdit}" />
 		<execute function="AssertClick" locator1="CPCategoriesEditSubcategory#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_subcategoryName" value="${subcategoryNameEdit}" />
-
-		<execute function="AssertTextEquals" locator1="CPCategories#SUBCATEGORY_ENTRY" value1="${subcategoryNameEdit}" />
 	</command>
 
 	<command name="moveCP">

@@ -26,7 +26,6 @@
 		<execute function="AssertClick" locator1="CPCategoriesAdd#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
 	<command name="addCategoryPropertyCP">
@@ -92,7 +91,6 @@
 		<execute function="AssertClick" locator1="CPCategoriesAdd#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
 	<command name="addCP">
@@ -240,10 +238,6 @@
 		<execute function="AssertClick" locator1="CPCategoriesEdit#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="CPCategories#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_categoryName" value="${categoryNameEdit}" />
-
-		<execute function="AssertTextEquals" locator1="CPCategories#VOCABULARY_CATEGORY" value1="${categoryNameEdit}" />
 	</command>
 
 	<command name="moveViaEditCP">

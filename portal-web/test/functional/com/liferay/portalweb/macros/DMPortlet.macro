@@ -104,6 +104,20 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="configureScopetoGlobalPG">
+		<execute function="Click" locator1="Icon#COG" />
+
+		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+
+		<execute function="SelectFrame" locator1="PGDocumentsandmediaConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
+
+		<execute function="AssertClick" locator1="MenuItem#SCOPE" value1="${currentScope}" />
+
+		<execute function="AssertClick" locator1="MenuItem#GLOBAL" value1="Global" />
+	</command>
+
 	<command name="viewDefaultConfigurationDisplaySettingsPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletNameBorderless" value="${portletNameBorderless}" />

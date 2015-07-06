@@ -372,14 +372,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = StringUtil.replace(
 			newContent,
 			new String[] {
-				"<br/>", "\"/>", "\" >", "@page import", "\"%>", ")%>", "else{",
-				"for(", "function (", "if(", "javascript: ", "while(", "){\n",
-				";;\n", "\n\n\n"
+				"<br/>", "\"/>", "\" >", "@page import", "\"%>", ")%>",
+				"function (", "javascript: ", "){\n", ";;\n", "\n\n\n"
 			},
 			new String[] {
 				"<br />", "\" />", "\">", "@ page import", "\" %>", ") %>",
-				"else {", "for (", "function(", "if (", "javascript:",
-				"while (", ") {\n", ";\n", "\n\n"
+				"function(", "javascript:", ") {\n", ";\n", "\n\n"
 			});
 
 		newContent = fixRedirectBackURL(newContent);
@@ -633,14 +631,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						line, fileName, absolutePath, lineCount);
 				}
 
-				if (javaSource && portalSource &&
-					!isExcludedFile(
-						_unusedVariablesExclusionFiles, absolutePath,
-						lineCount) &&
-					!_jspContents.isEmpty() &&
-					hasUnusedVariable(fileName, trimmedLine)) {
+				if (javaSource) {
+					if (portalSource &&
+						!isExcludedFile(
+							_unusedVariablesExclusionFiles, absolutePath,
+							lineCount) &&
+						!_jspContents.isEmpty() &&
+						hasUnusedVariable(fileName, trimmedLine)) {
 
-					continue;
+						continue;
+					}
+
+					line = formatWhitespace(line, trimmedLine);
 				}
 
 				// LPS-47179

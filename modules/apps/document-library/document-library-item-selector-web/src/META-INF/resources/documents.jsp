@@ -21,7 +21,7 @@ DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext = (DLItemSelec
 
 ItemSelectorCriterion itemSelectorCriterion = dlItemSelectorViewDisplayContext.getItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, dlItemSelectorViewDisplayContext.getPortletURL(), null, LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder"));
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder"));
 
 List results = null;
 int total = 0;
@@ -82,9 +82,9 @@ searchContainer.setResults(results);
 <item-selector-ui:browser
 	desiredItemSelectorReturnTypes="<%= itemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	displayStyle="<%= dlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	displayStyleURL="<%= dlItemSelectorViewDisplayContext.getPortletURL() %>"
+	displayStyleURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	searchContainer="<%= searchContainer %>"
-	searchURL="<%= PortletURLUtil.clone(dlItemSelectorViewDisplayContext.getPortletURL(), liferayPortletResponse) %>"
+	searchURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

@@ -56,6 +56,73 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 		</aui:nav-bar>
 	</c:if>
 
+	<%
+	long folderId = ParamUtil.getLong(request, "folderId");
+	String keywords = ParamUtil.getString(request, "keywords");
+
+	if ((folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && Validator.isNull(keywords)) {
+		ItemSelectorBrowserUtil.addPortletBreadcrumEntries(folderId, request, searchContainer.getIteratorURL(), displayStyle);
+	%>
+
+		<liferay-ui:breadcrumb
+			showCurrentGroup="<%= false %>"
+			showGuestGroup="<%= false %>"
+			showLayout="<%= false %>"
+			showParentGroups="<%= false %>"
+		/>
+
+	<%
+	}
+	else if (Validator.isNotNull(keywords)) {
+	%>
+
+		<div class="search-info">
+			<span class="keywords">
+
+				<%
+				Folder folder = null;
+				boolean searchEverywhere = true;
+
+				if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+					searchEverywhere = false;
+
+					folder = DLAppServiceUtil.getFolder(folderId);
+				}
+				else {
+					long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
+
+					folderId = searchFolderId;
+				}
+				%>
+
+				<%= !searchEverywhere ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
+			</span>
+
+			<span class="change-search-folder">
+
+				<%
+				searchURL.setParameter("folderId", !searchEverywhere ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId));
+				searchURL.setParameter("searchFolderId", String.valueOf(folderId));
+				searchURL.setParameter("keywords", keywords);
+				%>
+
+				<aui:button href="<%= searchURL.toString() %>" value='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
+			</span>
+
+			<%
+			PortletURL closeSearchURL = searchContainer.getIteratorURL();
+
+			closeSearchURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+			closeSearchURL.setParameter("keywords", StringPool.BLANK);
+			%>
+
+			<liferay-ui:icon cssClass="close-search" iconCssClass="icon-remove" id="closeSearch" message="remove" url="<%= closeSearchURL.toString() %>" />
+		</div>
+
+	<%
+	}
+	%>
+
 	<c:if test="<%= draggableFileReturnType != null %>">
 		<div class="drop-enabled drop-zone" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
 			<label class="btn btn-primary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>

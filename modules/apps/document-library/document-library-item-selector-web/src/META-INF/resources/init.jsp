@@ -34,7 +34,6 @@ page import="com.liferay.portal.kernel.search.SearchResultUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@

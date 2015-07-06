@@ -27,14 +27,38 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.Locale;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Ambrin Chaudhary
  */
 public class ItemSelectorBrowserUtil {
+
+	public static void addPortletBreadcrumEntries(
+			long folderId, HttpServletRequest request, PortletURL portletURL,
+			String displayStyle)
+		throws Exception {
+
+		portletURL.setParameter("displayStyle", displayStyle);
+		portletURL.setParameter(
+			"folderId",
+			String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, LanguageUtil.get(request, "home"), portletURL.toString());
+
+		DLUtil.addPortletBreadcrumbEntries(
+			DLAppServiceUtil.getFolder(folderId), request, portletURL);
+	}
 
 	public static JSONObject getItemMetadataJSONObject(
 			FileEntry fileEntry, Locale locale)

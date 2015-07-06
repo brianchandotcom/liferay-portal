@@ -1203,6 +1203,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashDuplicate() throws Exception {
+		Assume.assumeTrue(this instanceof WhenCanBeDuplicatedInTrash);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 

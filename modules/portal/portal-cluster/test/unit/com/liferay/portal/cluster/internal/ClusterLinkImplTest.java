@@ -366,6 +366,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX +
 					StringPool.PERIOD + i,
 				sb.toString());
+			properties.put(
+				ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX +
+					StringPool.PERIOD + i,
+				"test-channel-name-" + i);
 		}
 
 		clusterLinkImpl.activate(properties);

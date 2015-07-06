@@ -353,7 +353,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/portlet_configuration/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/export_import/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-configuration</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>

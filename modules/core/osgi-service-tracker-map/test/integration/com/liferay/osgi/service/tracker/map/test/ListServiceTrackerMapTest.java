@@ -155,11 +155,12 @@ public class ListServiceTrackerMapTest {
 
 				@Override
 				public int compare(
-					ServiceReference<TrackedOne> o1,
-					ServiceReference<TrackedOne> o2) {
+					ServiceReference<TrackedOne> serviceReference1,
+					ServiceReference<TrackedOne> serviceReference2) {
 
 					return 0;
 				}
+
 			});
 
 		TrackedOne trackedOne1 = new TrackedOne();
@@ -245,13 +246,15 @@ public class ListServiceTrackerMapTest {
 			_bundleContext, TrackedOne.class, null,
 			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
 			new Comparator<ServiceReference<TrackedOne>>() {
+
 				@Override
 				public int compare(
-					ServiceReference<TrackedOne> o1,
-					ServiceReference<TrackedOne> o2) {
+					ServiceReference<TrackedOne> serviceReference1,
+					ServiceReference<TrackedOne> serviceReference2) {
 
 					return 0;
 				}
+
 			}
 		);
 

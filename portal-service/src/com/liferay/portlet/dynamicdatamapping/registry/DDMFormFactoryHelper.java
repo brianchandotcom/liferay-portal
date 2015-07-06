@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.registry;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,6 +32,7 @@ import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Marcellus Tavares
@@ -38,23 +41,52 @@ public class DDMFormFactoryHelper {
 
 	public DDMFormFactoryHelper(Class<?> clazz, Method method) {
 		_clazz = clazz;
+		_ddmForm = clazz.getAnnotation(DDMForm.class);
+		_ddmFormField = method.getAnnotation(DDMFormField.class);
 		_method = method;
 
-		_ddmFormField = method.getAnnotation(DDMFormField.class);
+		setDefaultLocale();
+		setAvailableLocales();
+	}
+
+	public String getDDMFormFieldDataType() {
+		if (Validator.isNotNull(_ddmFormField.dataType())) {
+			return _ddmFormField.dataType();
+		}
+
+		Class<?> returnType = _method.getReturnType();
+
+		if (returnType.isAssignableFrom(boolean.class) ||
+			returnType.isAssignableFrom(Boolean.class)) {
+
+			return "boolean";
+		}
+
+		return "string";
 	}
 
 	public LocalizedValue getDDMFormFieldLabel() {
-		LocalizedValue localizedLabel = new LocalizedValue();
+		LocalizedValue localizedValue = new LocalizedValue(_defaultLocale);
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+		String label = _ddmFormField.label();
 
-		for (Locale currentLocale : availableLocales) {
-			localizedLabel.addString(
-				currentLocale,
-				getLocalizedLabel(currentLocale, _ddmFormField.label()));
+		if (Validator.isNull(label)) {
+			return localizedValue;
 		}
 
-		return localizedLabel;
+		if (!isLocalizableKey(label)) {
+			localizedValue.addString(_defaultLocale, label);
+
+			return localizedValue;
+		}
+
+		String key = getKey(label);
+
+		for (Locale locale : _availableLocales) {
+			localizedValue.addString(locale, getLocalizedKey(locale, key));
+		}
+
+		return localizedValue;
 	}
 
 	public String getDDMFormFieldName() {
@@ -63,6 +95,41 @@ public class DDMFormFactoryHelper {
 		}
 
 		return _method.getName();
+	}
+
+	public DDMFormFieldOptions getDDMFormFieldOptions() {
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.setDefaultLocale(_defaultLocale);
+
+		String[] optionLabels = _ddmFormField.optionLabels();
+		String[] optionValues = _ddmFormField.optionValues();
+
+		if (ArrayUtil.isEmpty(optionLabels) ||
+			ArrayUtil.isEmpty(optionValues)) {
+
+			return ddmFormFieldOptions;
+		}
+
+		for (int i = 0; i < optionLabels.length; i++) {
+			String optionLabel = optionLabels[i];
+
+			if (!isLocalizableKey(optionLabel)) {
+				ddmFormFieldOptions.addOptionLabel(
+					optionValues[i], _defaultLocale, optionLabel);
+
+				continue;
+			}
+
+			String key = getKey(optionLabels[i]);
+
+			for (Locale locale : _availableLocales) {
+				ddmFormFieldOptions.addOptionLabel(
+					optionValues[i], locale, getLocalizedKey(locale, key));
+			}
+		}
+
+		return ddmFormFieldOptions;
 	}
 
 	public String getDDMFormFieldType() {
@@ -99,73 +166,107 @@ public class DDMFormFactoryHelper {
 		return false;
 	}
 
-	protected String getDDMFormFieldDataType() {
-		if (Validator.isNotNull(_ddmFormField.dataType())) {
-			return _ddmFormField.dataType();
-		}
-
-		Class<?> returnType = _method.getReturnType();
-
-		if (returnType.isAssignableFrom(boolean.class) ||
-			returnType.isAssignableFrom(Boolean.class)) {
-
-			return "boolean";
-		}
-
-		return "string";
+	protected String getKey(String value) {
+		return StringUtil.extractLast(value, StringPool.PERCENT);
 	}
 
-	protected DDMFormFieldOptions getDDMFormFieldOptions() {
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+	protected String getLocalizedKey(Locale locale, String key) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
 
-		String[] optionLabels = _ddmFormField.optionLabels();
-		String[] optionValues = _ddmFormField.optionValues();
+		return LanguageUtil.get(resourceBundle, key);
+	}
 
-		if ((optionLabels == null) || (optionValues == null)) {
-			return ddmFormFieldOptions;
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		try {
+			return ResourceBundle.getBundle(
+				getResourceBundleBaseName(_clazz), locale,
+				_clazz.getClassLoader(), UTF8Control.INSTANCE);
+		}
+		catch (Exception e) {
+			return ResourceBundle.getBundle(
+				getResourceBundleBaseName(_clazz), locale,
+				PortalClassLoaderUtil.getClassLoader(), UTF8Control.INSTANCE);
+		}
+	}
+
+	protected String getResourceBundleBaseName(Class<?> clazz) {
+		if (!clazz.isAnnotationPresent(DDMForm.class)) {
+			return null;
 		}
 
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+		DDMForm ddmForm = clazz.getAnnotation(DDMForm.class);
 
-		for (int i = 0; i < optionLabels.length; i++) {
-			for (Locale currentLocale : availableLocales) {
-				ddmFormFieldOptions.addOptionLabel(
-					optionValues[i], currentLocale,
-					getLocalizedLabel(currentLocale, optionLabels[i]));
+		if (Validator.isNotNull(ddmForm.localization())) {
+			return ddmForm.localization();
+		}
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			if (!interfaceClass.isAnnotationPresent(DDMForm.class)) {
+				continue;
+			}
+
+			String resourceBundleBaseName = getResourceBundleBaseName(
+				interfaceClass);
+
+			if (Validator.isNotNull(resourceBundleBaseName)) {
+				return resourceBundleBaseName;
 			}
 		}
 
-		return ddmFormFieldOptions;
+		return null;
 	}
 
-	protected String getLocalizedLabel(Locale locale, String label) {
-		DDMForm ddmForm = _clazz.getAnnotation(DDMForm.class);
-
-		ResourceBundle resourceBundle = getResourceBundle(ddmForm, locale);
-
-		return LanguageUtil.get(
-			resourceBundle, StringUtil.extractLast(label, StringPool.PERCENT));
-	}
-
-	protected ResourceBundle getResourceBundle(DDMForm ddmForm, Locale locale) {
-		ResourceBundle resourceBundle;
-
-		try {
-			resourceBundle = ResourceBundle.getBundle(
-				ddmForm.localization(), locale, _clazz.getClassLoader(),
-				UTF8Control.INSTANCE);
-		}
-		catch (Exception e) {
-			resourceBundle = ResourceBundle.getBundle(
-				ddmForm.localization(), locale,
-				PortalClassLoaderUtil.getClassLoader(), UTF8Control.INSTANCE);
+	protected boolean isLocalizableDDMForm() {
+		if (Validator.isNotNull(getResourceBundleBaseName(_clazz))) {
+			return true;
 		}
 
-		return resourceBundle;
+		return false;
 	}
 
+	protected boolean isLocalizableKey(String key) {
+		if (isLocalizableDDMForm() &&
+			StringUtil.startsWith(key, StringPool.PERCENT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void setAvailableLocales() {
+		if (Validator.isNull(_ddmForm.availableLanguageIds())) {
+			_availableLocales = LanguageUtil.getAvailableLocales();
+
+			return;
+		}
+
+		_availableLocales = new TreeSet<>();
+
+		for (String availableLanguageId :
+				StringUtil.split(_ddmForm.availableLanguageIds())) {
+
+			_availableLocales.add(
+				LocaleUtil.fromLanguageId(availableLanguageId));
+		}
+	}
+
+	protected void setDefaultLocale() {
+		if (Validator.isNull(_ddmForm.defaultLanguageId())) {
+			_defaultLocale = LocaleUtil.getDefault();
+
+			return;
+		}
+
+		_defaultLocale = LocaleUtil.fromLanguageId(
+			_ddmForm.defaultLanguageId());
+	}
+
+	private Set<Locale> _availableLocales;
 	private final Class<?> _clazz;
+	private final DDMForm _ddmForm;
 	private final DDMFormField _ddmFormField;
+	private Locale _defaultLocale;
 	private final Method _method;
 
 }

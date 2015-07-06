@@ -1241,7 +1241,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashGrandparentBaseModel() throws Exception {
-		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1291,7 +1291,7 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashGrandparentBaseModelAndRestoreParentModel()
 		throws Exception {
 
-		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1328,7 +1328,7 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashGrandparentBaseModelAndRestoreParentModelIsNotInTrashContainer()
 		throws Exception {
 
-		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1363,7 +1363,7 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashGrandparentBaseModelAndRestoreParentModelIsVisible()
 		throws Exception {
 
-		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 
 		ServiceContext serviceContext =
@@ -1398,7 +1398,7 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashGrandparentBaseModelAndRestoreParentModelIsVisibleParent()
 		throws Exception {
 
-		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableParentModel);
 
 		ServiceContext serviceContext =
@@ -1431,7 +1431,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashGrandparentBaseModelIsNotVisible() throws Exception {
-		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 
 		ServiceContext serviceContext =
@@ -1458,7 +1458,7 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashGrandparentBaseModelIsNotVisibleParent()
 		throws Exception {
 
-		Assume.assumeTrue(this instanceof WhenHasParent);
+		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableParentModel);
 
 		ServiceContext serviceContext =

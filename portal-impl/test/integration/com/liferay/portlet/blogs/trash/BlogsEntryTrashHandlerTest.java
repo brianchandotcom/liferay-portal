@@ -88,12 +88,6 @@ public class BlogsEntryTrashHandlerTest
 	public void testTrashBaseModelIsInTrashContainer() throws Exception {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testTrashDuplicate() throws Exception {
-	}
-
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,

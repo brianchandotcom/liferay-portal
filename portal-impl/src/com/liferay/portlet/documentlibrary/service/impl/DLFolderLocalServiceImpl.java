@@ -56,7 +56,6 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFolderException;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -199,15 +198,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFileShortcutLocalService.deleteFileShortcuts(
 			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		try {
-			DLStoreUtil.deleteDirectory(
-				group.getCompanyId(), groupId, StringPool.BLANK);
-		}
-		catch (NoSuchDirectoryException nsde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsde.getMessage());
-			}
-		}
+		DLStoreUtil.deleteDirectory(
+			group.getCompanyId(), groupId, StringPool.BLANK);
 	}
 
 	@Override
@@ -251,15 +243,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		}
 
-		try {
-			DLStoreUtil.deleteDirectory(
-				group.getCompanyId(), repositoryId, StringPool.BLANK);
-		}
-		catch (NoSuchDirectoryException nsde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsde.getMessage());
-			}
-		}
+		DLStoreUtil.deleteDirectory(
+			group.getCompanyId(), repositoryId, StringPool.BLANK);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -1384,17 +1369,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		// Directory
 
-		try {
-			if (includeTrashedEntries) {
-				DLStoreUtil.deleteDirectory(
-					dlFolder.getCompanyId(), dlFolder.getFolderId(),
-					StringPool.BLANK);
-			}
-		}
-		catch (NoSuchDirectoryException nsde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsde.getMessage());
-			}
+		if (includeTrashedEntries) {
+			DLStoreUtil.deleteDirectory(
+				dlFolder.getCompanyId(), dlFolder.getFolderId(),
+				StringPool.BLANK);
 		}
 
 		// Workflow

@@ -30,7 +30,6 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -422,16 +421,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 		String dirName = getDirName(containerModelId, resourcePrimKey);
 
-		String[] attachments = null;
-
-		try {
-			attachments = DLStoreUtil.getFileNames(
-				companyId, CompanyConstants.SYSTEM, dirName);
-		}
-		catch (NoSuchDirectoryException nsde) {
-		}
-
-		return attachments;
+		return DLStoreUtil.getFileNames(
+			companyId, CompanyConstants.SYSTEM, dirName);
 	}
 
 	protected long getBitwiseValue(

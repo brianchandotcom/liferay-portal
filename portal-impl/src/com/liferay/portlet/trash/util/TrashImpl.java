@@ -209,9 +209,8 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public void deleteEntriesAttachments(
-			long companyId, long repositoryId, Date date,
-			String[] attachmentFileNames)
-		throws PortalException {
+		long companyId, long repositoryId, Date date,
+		String[] attachmentFileNames) {
 
 		for (String attachmentFileName : attachmentFileNames) {
 			String trashTime = TrashUtil.getTrashTime(

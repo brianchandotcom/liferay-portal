@@ -68,9 +68,8 @@ public interface Trash {
 		ActionRequest actionRequest, TrashedModel trashedModel, String cmd);
 
 	public void deleteEntriesAttachments(
-			long companyId, long repositoryId, Date date,
-			String[] attachmentFileNames)
-		throws PortalException;
+		long companyId, long repositoryId, Date date,
+		String[] attachmentFileNames);
 
 	public Group disableTrash(Group group);
 

@@ -67,8 +67,7 @@ public interface DLStore {
 		throws PortalException;
 
 	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException;
+		long companyId, long repositoryId, String dirName);
 
 	public void deleteFile(long companyId, long repositoryId, String fileName)
 		throws PortalException;

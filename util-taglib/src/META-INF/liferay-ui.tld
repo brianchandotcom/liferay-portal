@@ -5285,7 +5285,6 @@
 		<attribute>
 			<description>An icon to use as the mechanism for showing the content. You can specify the location of an image file to use in the icon; otherwise a default icon is used.</description>
 			<name>showImage</name>
-			<name>showImage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

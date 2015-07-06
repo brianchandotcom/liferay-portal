@@ -67,6 +67,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return StringPool.BLANK;
 	}
 
+	@Override
+	public Object getAsset() {
+		return null;
+	}
+
 	public AssetRendererFactory getAssetRendererFactory() {
 		if (_assetRendererFactory != null) {
 			return _assetRendererFactory;
@@ -110,11 +115,6 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	@Override
 	public Date getDisplayDate() {
-		return null;
-	}
-
-	@Override
-	public Object getEntry() {
 		return null;
 	}
 

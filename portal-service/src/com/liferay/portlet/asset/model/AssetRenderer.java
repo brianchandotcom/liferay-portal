@@ -47,6 +47,8 @@ public interface AssetRenderer extends Renderer {
 	@Deprecated
 	public String getAddToPagePortletId() throws Exception;
 
+	public Object getAsset();
+
 	public int getAssetRendererType();
 
 	public String[] getAvailableLanguageIds() throws Exception;
@@ -62,8 +64,6 @@ public interface AssetRenderer extends Renderer {
 	public String getDiscussionPath();
 
 	public Date getDisplayDate();
-
-	public Object getEntry();
 
 	public long getGroupId();
 

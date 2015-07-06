@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>FormPortletConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FormPortletConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORMS_TABLE-->
+<tr>
+	<td>FORMS_TABLE_NAME</td>
+	<td>xpath=(//div[contains(@id,'SearchContainer')]//tr[contains(.,'${key_formName}')]/td/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORMS_TABLE_DESCRIPTION</td>
+	<td>xpath=(//div[contains(@id,'SearchContainer')]//tr[contains(.,'${key_formName}')]/td/a)[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

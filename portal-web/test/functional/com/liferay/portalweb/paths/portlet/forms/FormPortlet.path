@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>FormPortlet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FormPortlet</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SELECT_FORM</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Select Form')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

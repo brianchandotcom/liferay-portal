@@ -1,0 +1,7 @@
+<definition>
+	<command name="send">
+		<execute function="AssertClick" locator1="Button#SEND" value1="Send" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+</definition>

@@ -64,6 +64,7 @@ import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsRestorableParentBaseModelFromTrash;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
+import com.liferay.portlet.trash.test.WhenIsVersionableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.HashMap;
@@ -91,7 +92,7 @@ public class JournalArticleTrashHandlerTest
 			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
 			   WhenIsMoveableFromTrashBaseModel, WhenIsRestorableBaseModel,
 			   WhenIsRestorableParentBaseModelFromTrash,
-			   WhenIsUpdatableBaseModel {
+			   WhenIsUpdatableBaseModel, WhenIsVersionableBaseModel {
 
 	@ClassRule
 	@Rule

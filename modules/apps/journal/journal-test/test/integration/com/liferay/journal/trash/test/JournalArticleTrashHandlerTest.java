@@ -117,6 +117,13 @@ public class JournalArticleTrashHandlerTest
 	}
 
 	@Override
+	public String getParentBaseModelClassName() {
+		Class<JournalFolder> journalFolderClass = JournalFolder.class;
+
+		return journalFolderClass.getName();
+	}
+
+	@Override
 	public int getRecentBaseModelsCount(long groupId) throws Exception {
 		return JournalArticleServiceUtil.getGroupArticlesCount(
 			groupId, 0, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -377,11 +384,6 @@ public class JournalArticleTrashHandlerTest
 		return getParentBaseModel(
 			group, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			serviceContext);
-	}
-
-	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return JournalFolder.class;
 	}
 
 	@Override

@@ -19,6 +19,8 @@ package com.liferay.portlet.trash.test;
  */
 public interface WhenHasParent {
 
+	public String getParentBaseModelClassName();
+
 	public void moveParentBaseModelToTrash(long primaryKey) throws Exception;
 
 }

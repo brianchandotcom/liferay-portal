@@ -72,6 +72,13 @@ public class DLFileShortcutTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getParentBaseModelClassName() {
+		Class<DLFolder> dlFolderClass = DLFolder.class;
+
+		return dlFolderClass.getName();
+	}
+
+	@Override
 	public BaseModel<?> moveBaseModelFromTrash(
 			ClassedModel classedModel, Group group,
 			ServiceContext serviceContext)
@@ -337,11 +344,6 @@ public class DLFileShortcutTrashHandlerTest
 
 		return getParentBaseModel(
 			group, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
-	}
-
-	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return DLFolder.class;
 	}
 
 	@Override

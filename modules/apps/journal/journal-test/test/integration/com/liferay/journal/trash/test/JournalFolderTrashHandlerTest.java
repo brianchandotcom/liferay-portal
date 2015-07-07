@@ -72,6 +72,11 @@ public class JournalFolderTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getParentBaseModelClassName() {
+		return getBaseModelClass().getName();
+	}
+
+	@Override
 	public String getSearchKeywords() {
 		return _FOLDER_NAME;
 	}

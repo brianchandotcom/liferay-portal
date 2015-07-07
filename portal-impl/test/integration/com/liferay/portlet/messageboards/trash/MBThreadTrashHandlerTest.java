@@ -91,6 +91,13 @@ public class MBThreadTrashHandlerTest
 	}
 
 	@Override
+	public String getParentBaseModelClassName() {
+		Class<MBCategory> mbCategoryClass = MBCategory.class;
+
+		return mbCategoryClass.getName();
+	}
+
+	@Override
 	public int getRecentBaseModelsCount(long groupId) throws Exception {
 		Calendar calendar = Calendar.getInstance();
 
@@ -426,11 +433,6 @@ public class MBThreadTrashHandlerTest
 			TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-	}
-
-	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return MBCategory.class;
 	}
 
 	@Override

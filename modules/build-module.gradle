@@ -79,6 +79,34 @@ pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	}
 }
 
+pluginManager.withPlugin("com.moowork.node") {
+	File nodejsDir = new File(liferay.tmpDir, "nodejs")
+
+	task setupNpmCache(type: NpmTask)
+
+	node {
+		download = true
+		nodeModulesDir = nodejsDir
+		npmVersion = project.properties["nodejs.npm.version"]
+		version = project.properties["nodejs.version"]
+		workDir = nodejsDir
+	}
+
+	npmSetup {
+		finalizedBy setupNpmCache
+	}
+
+	setupNpmCache {
+		args = ["config", "set", "cache", new File(nodejsDir, ".cache"), "--global"]
+	}
+
+	tasks.withType(NpmTask) {
+		if (it != npmSetup) {
+			dependsOn npmSetup
+		}
+	}
+}
+
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 	options.warnings = false

@@ -3,9 +3,5 @@ dependencies {
 	compile group: "org.apache.axis", name: "axis-jaxrpc", version: "1.4"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"

@@ -5239,15 +5239,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = WikiNodeModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + WikiNodeModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return WikiNodeModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

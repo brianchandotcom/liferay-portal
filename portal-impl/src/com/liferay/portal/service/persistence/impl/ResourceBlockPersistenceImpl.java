@@ -2307,15 +2307,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = ResourceBlockModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + ResourceBlockModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ResourceBlockModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

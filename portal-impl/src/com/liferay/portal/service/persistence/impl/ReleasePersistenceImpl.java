@@ -1008,15 +1008,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = ReleaseModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + ReleaseModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ReleaseModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

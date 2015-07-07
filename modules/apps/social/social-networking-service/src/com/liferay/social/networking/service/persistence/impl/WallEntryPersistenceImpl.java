@@ -2228,15 +2228,8 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = WallEntryModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + WallEntryModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return WallEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

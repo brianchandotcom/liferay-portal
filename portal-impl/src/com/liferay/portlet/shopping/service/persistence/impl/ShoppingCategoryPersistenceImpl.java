@@ -2828,16 +2828,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = ShoppingCategoryModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				ShoppingCategoryModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ShoppingCategoryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

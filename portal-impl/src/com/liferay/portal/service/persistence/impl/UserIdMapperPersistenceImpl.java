@@ -1831,15 +1831,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = UserIdMapperModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + UserIdMapperModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserIdMapperModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

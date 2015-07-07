@@ -2057,16 +2057,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DDLRecordVersionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				DDLRecordVersionModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DDLRecordVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

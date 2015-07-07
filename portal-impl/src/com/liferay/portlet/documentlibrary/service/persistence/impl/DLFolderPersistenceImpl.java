@@ -12029,15 +12029,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DLFolderModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + DLFolderModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DLFolderModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

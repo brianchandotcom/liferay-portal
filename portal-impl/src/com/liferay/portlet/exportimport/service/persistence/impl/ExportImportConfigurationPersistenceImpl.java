@@ -3438,16 +3438,8 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = ExportImportConfigurationModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				ExportImportConfigurationModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ExportImportConfigurationModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

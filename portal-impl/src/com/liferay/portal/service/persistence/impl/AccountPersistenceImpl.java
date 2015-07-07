@@ -716,15 +716,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = AccountModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + AccountModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AccountModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

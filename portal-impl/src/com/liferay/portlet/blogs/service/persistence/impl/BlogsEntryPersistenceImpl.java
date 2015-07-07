@@ -18533,15 +18533,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = BlogsEntryModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + BlogsEntryModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return BlogsEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

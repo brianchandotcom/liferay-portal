@@ -1976,15 +1976,8 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = CompanyModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + CompanyModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return CompanyModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -9288,15 +9288,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = UserModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + UserModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

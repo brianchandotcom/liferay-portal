@@ -3838,16 +3838,8 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = SocialActivityAchievementModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				SocialActivityAchievementModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return SocialActivityAchievementModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

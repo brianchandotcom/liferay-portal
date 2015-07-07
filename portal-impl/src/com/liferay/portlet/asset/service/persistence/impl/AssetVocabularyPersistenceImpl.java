@@ -5235,16 +5235,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = AssetVocabularyModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				AssetVocabularyModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AssetVocabularyModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

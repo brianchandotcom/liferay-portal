@@ -1577,15 +1577,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = PluginSettingModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + PluginSettingModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PluginSettingModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

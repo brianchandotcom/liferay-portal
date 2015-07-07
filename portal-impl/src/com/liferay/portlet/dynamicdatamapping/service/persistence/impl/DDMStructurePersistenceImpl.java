@@ -9333,15 +9333,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DDMStructureModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + DDMStructureModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DDMStructureModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

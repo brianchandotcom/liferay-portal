@@ -22473,15 +22473,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = WikiPageModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + WikiPageModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return WikiPageModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

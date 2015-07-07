@@ -1965,15 +1965,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = AssetTagStatsModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + AssetTagStatsModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AssetTagStatsModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

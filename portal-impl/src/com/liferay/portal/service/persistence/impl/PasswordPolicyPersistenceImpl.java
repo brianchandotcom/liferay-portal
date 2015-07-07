@@ -4161,16 +4161,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = PasswordPolicyModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				PasswordPolicyModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PasswordPolicyModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

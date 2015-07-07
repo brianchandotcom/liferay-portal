@@ -2518,15 +2518,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = RegionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + RegionModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return RegionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -5138,16 +5138,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = PortletPreferencesModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				PortletPreferencesModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PortletPreferencesModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

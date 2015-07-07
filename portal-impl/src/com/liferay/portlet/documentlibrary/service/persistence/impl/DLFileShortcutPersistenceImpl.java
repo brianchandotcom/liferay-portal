@@ -6624,16 +6624,8 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DLFileShortcutModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				DLFileShortcutModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DLFileShortcutModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

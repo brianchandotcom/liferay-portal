@@ -3151,15 +3151,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DDMContentModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + DDMContentModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DDMContentModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

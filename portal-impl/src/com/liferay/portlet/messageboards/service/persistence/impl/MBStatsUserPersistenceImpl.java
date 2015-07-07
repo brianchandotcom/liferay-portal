@@ -2492,15 +2492,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = MBStatsUserModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + MBStatsUserModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return MBStatsUserModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

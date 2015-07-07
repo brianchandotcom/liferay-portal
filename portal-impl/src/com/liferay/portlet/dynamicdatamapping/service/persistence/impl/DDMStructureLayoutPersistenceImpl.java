@@ -2436,16 +2436,8 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DDMStructureLayoutModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				DDMStructureLayoutModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DDMStructureLayoutModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

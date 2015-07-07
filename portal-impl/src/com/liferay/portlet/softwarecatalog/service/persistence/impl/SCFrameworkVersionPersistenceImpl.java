@@ -3303,16 +3303,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = SCFrameworkVersionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				SCFrameworkVersionModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return SCFrameworkVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

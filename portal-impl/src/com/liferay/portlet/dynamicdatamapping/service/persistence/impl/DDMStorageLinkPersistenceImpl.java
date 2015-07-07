@@ -1998,16 +1998,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DDMStorageLinkModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				DDMStorageLinkModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DDMStorageLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

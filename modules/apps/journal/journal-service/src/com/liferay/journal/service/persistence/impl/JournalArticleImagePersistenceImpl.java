@@ -2875,16 +2875,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = JournalArticleImageModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				JournalArticleImageModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return JournalArticleImageModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

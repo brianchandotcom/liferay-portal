@@ -1405,15 +1405,8 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DLSyncEventModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + DLSyncEventModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DLSyncEventModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronize
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
-import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -6182,11 +6181,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		final Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			User.class);
 
-		Callable<Void> callable = new ShardCallable<Void>(
-			user.getCompanyId()) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
+			public Void call() throws Exception {
 				indexer.reindex(user);
 
 				return null;

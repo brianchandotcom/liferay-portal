@@ -283,7 +283,6 @@
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="ResourcePermission" />
 		<reference package-path="com.liferay.portal" entity="Role" />
-		<reference package-path="com.liferay.portal" entity="Shard" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="VirtualHost" />
 	</entity>
@@ -2260,7 +2259,6 @@
 		<reference package-path="com.liferay.portal" entity="ResourceBlockPermission" />
 		<reference package-path="com.liferay.portal" entity="ResourcePermission" />
 		<reference package-path="com.liferay.portal" entity="ResourceTypePermission" />
-		<reference package-path="com.liferay.portal" entity="Shard" />
 		<reference package-path="com.liferay.portal" entity="Team" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="UserGroupGroupRole" />
@@ -2296,32 +2294,6 @@
 			<finder-column name="buildNamespace" />
 			<finder-column name="buildNumber" />
 		</finder>
-	</entity>
-	<entity name="Shard" local-service="true" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="shardId" type="long" primary="true" />
-
-		<!-- Other fields -->
-
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
-		<column name="name" type="String" />
-
-		<!-- Finder methods -->
-
-		<finder name="Name" return-type="Shard">
-			<finder-column name="name" />
-		</finder>
-		<finder name="C_C" return-type="Shard">
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="ClassName" />
 	</entity>
 	<entity name="Subscription" local-service="true" remote-service="false">
 

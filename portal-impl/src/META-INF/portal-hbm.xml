@@ -52,7 +52,6 @@
 	<import class="com.liferay.portal.model.ResourceTypePermission" />
 	<import class="com.liferay.portal.model.Role" />
 	<import class="com.liferay.portal.model.ServiceComponent" />
-	<import class="com.liferay.portal.model.Shard" />
 	<import class="com.liferay.portal.model.Subscription" />
 	<import class="com.liferay.portal.model.SystemEvent" />
 	<import class="com.liferay.portal.model.Team" />
@@ -893,15 +892,6 @@
 		<property name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="buildDate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="data_" />
-	</class>
-	<class name="com.liferay.portal.model.impl.ShardImpl" table="Shard" dynamic-update="true">
-		<id name="shardId" type="long">
-			<generator class="assigned" />
-		</id>
-		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
-		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.SubscriptionImpl" table="Subscription" dynamic-update="true">
 		<id name="subscriptionId" type="long">

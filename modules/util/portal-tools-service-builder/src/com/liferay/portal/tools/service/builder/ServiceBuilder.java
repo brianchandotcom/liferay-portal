@@ -3987,8 +3987,6 @@ public class ServiceBuilder {
 		_deleteFile("docroot/WEB-INF/src/META-INF/hibernate-spring.xml");
 		_deleteFile("docroot/WEB-INF/src/META-INF/infrastructure-spring.xml");
 		_deleteFile("docroot/WEB-INF/src/META-INF/misc-spring.xml");
-		_deleteFile(
-			"docroot/WEB-INF/src/META-INF/shard-data-source-spring.xml");
 	}
 
 	private String _fixHbmXml(String content) throws IOException {

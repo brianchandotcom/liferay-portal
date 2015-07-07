@@ -2153,10 +2153,6 @@ public interface PropsKeys {
 
 	public static final String SETUP_WIZARD_ENABLED = "setup.wizard.enabled";
 
-	public static final String SHARD_DEFAULT_NAME = "shard.default.name";
-
-	public static final String SHARD_SELECTOR = "shard.selector";
-
 	public static final String SHAREPOINT_STORAGE_CLASS = "sharepoint.storage.class";
 
 	public static final String SHAREPOINT_STORAGE_TOKENS = "sharepoint.storage.tokens";

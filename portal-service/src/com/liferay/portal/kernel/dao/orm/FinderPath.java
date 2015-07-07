@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -78,17 +77,7 @@ public class FinderPath {
 	}
 
 	public Serializable encodeCacheKey(Object[] arguments) {
-		StringBundler sb = null;
-
-		if (ShardUtil.isEnabled()) {
-			sb = new StringBundler(arguments.length * 2 + 3);
-
-			sb.append(ShardUtil.getCurrentShardName());
-			sb.append(StringPool.PERIOD);
-		}
-		else {
-			sb = new StringBundler(arguments.length * 2 + 1);
-		}
+		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
 
 		sb.append(_cacheKeyPrefix);
 
@@ -101,17 +90,7 @@ public class FinderPath {
 	}
 
 	public Serializable encodeLocalCacheKey(Object[] arguments) {
-		StringBundler sb = null;
-
-		if (ShardUtil.isEnabled()) {
-			sb = new StringBundler(arguments.length * 2 + 3);
-
-			sb.append(ShardUtil.getCurrentShardName());
-			sb.append(StringPool.PERIOD);
-		}
-		else {
-			sb = new StringBundler(arguments.length * 2 + 1);
-		}
+		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
 
 		sb.append(_localCacheKeyPrefix);
 

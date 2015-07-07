@@ -20,7 +20,6 @@ import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.NoSuchAccountException;
 import com.liferay.portal.NoSuchPasswordPolicyException;
 import com.liferay.portal.NoSuchPreferencesException;
-import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.RequiredCompanyException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -398,16 +397,6 @@ public class CompanyLocalServiceTest {
 		Assert.assertEquals(0, roles.size());
 	}
 
-	@Test(expected = NoSuchShardException.class)
-	public void testDeleteCompanyDeletesShard() throws Exception {
-		Company company = addCompany();
-
-		CompanyLocalServiceUtil.deleteCompany(company);
-
-		ShardLocalServiceUtil.getShard(
-			Company.class.getName(), company.getCompanyId());
-	}
-
 	@Test
 	public void testDeleteCompanyDeletesUsers() throws Exception {
 		Company company = addCompany();
@@ -522,8 +511,7 @@ public class CompanyLocalServiceTest {
 		String webId = RandomTestUtil.randomString() + "test.com";
 
 		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, "test.com", PropsValues.SHARD_DEFAULT_NAME, false, 0,
-			true);
+			webId, webId, "test.com", false, 0, true);
 
 		PortalInstances.initCompany(_mockServletContext, webId);
 

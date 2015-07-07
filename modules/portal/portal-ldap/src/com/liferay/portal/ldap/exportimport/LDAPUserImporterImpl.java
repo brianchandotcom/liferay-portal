@@ -21,7 +21,6 @@ import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
@@ -354,8 +353,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 
 		try {
-			ShardUtil.pushCompanyService(companyId);
-
 			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 				companyId);
 
@@ -400,8 +397,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 		finally {
 			_lockManager.unlock(UserImporterUtil.class.getName(), companyId);
-
-			ShardUtil.popCompanyService();
 		}
 	}
 

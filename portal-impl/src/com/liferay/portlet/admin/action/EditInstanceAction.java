@@ -27,7 +27,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -135,8 +134,6 @@ public class EditInstanceAction extends PortletAction {
 		String virtualHostname = ParamUtil.getString(
 			actionRequest, "virtualHostname");
 		String mx = ParamUtil.getString(actionRequest, "mx");
-		String shardName = ParamUtil.getString(
-			actionRequest, "shardName", PropsValues.SHARD_DEFAULT_NAME);
 		boolean system = false;
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers", 0);
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
@@ -146,8 +143,7 @@ public class EditInstanceAction extends PortletAction {
 			// Add instance
 
 			Company company = CompanyServiceUtil.addCompany(
-				webId, virtualHostname, mx, shardName, system, maxUsers,
-				active);
+				webId, virtualHostname, mx, system, maxUsers, active);
 
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);

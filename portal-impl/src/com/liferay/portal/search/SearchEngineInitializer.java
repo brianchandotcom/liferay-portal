@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search;
 
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -55,14 +54,7 @@ public class SearchEngineInitializer implements Runnable {
 	}
 
 	public void reindex(int delay) {
-		ShardUtil.pushCompanyService(_companyId);
-
-		try {
-			doReIndex(delay);
-		}
-		finally {
-			ShardUtil.popCompanyService();
-		}
+		doReIndex(delay);
 	}
 
 	@Override

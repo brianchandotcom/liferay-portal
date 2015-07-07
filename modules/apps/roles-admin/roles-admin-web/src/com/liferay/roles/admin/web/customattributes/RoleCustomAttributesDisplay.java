@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.rolesadmin;
+package com.liferay.roles.admin.web.customattributes;
 
 import com.liferay.portal.model.Role;
 import com.liferay.portal.theme.ThemeDisplay;

@@ -263,6 +263,33 @@ AUI.add(
 						container.append(infoIconEl);
 
 						instance._infoIconEl = infoIconEl;
+					},
+
+					_setLinks: function(val) {
+						var links;
+						var sources = [];
+
+						if (val instanceof A.NodeList) {
+							links = val;
+						}
+						else if (A.Lang.isString(val)) {
+							links = A.all(val);
+						}
+						else {
+							links = new A.NodeList([val]);
+						}
+
+						if (links.size() > 0) {
+							links.each(
+								function() {
+									sources.push(this.getAttribute('href') || this.getAttribute('data-href'));
+								}
+							);
+
+							this.set('sources', sources);
+						}
+
+						return links;
 					}
 				}
 			}

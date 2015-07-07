@@ -7,8 +7,8 @@
 		color: #777;
 	}
 
-	.list-group-item:hover a.item-preview {
-		text-decoration: none;
+	.item-preview:hover {
+		cursor: pointer;
 	}
 }
 

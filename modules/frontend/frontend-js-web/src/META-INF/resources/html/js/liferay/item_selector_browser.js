@@ -44,7 +44,7 @@ AUI.add(
 						instance._itemViewer = new A.LiferayItemViewer(
 							{
 								btnCloseCaption: instance.get('closeCaption'),
-								links: instance.all('a.item-preview')
+								links: instance.all('.item-preview')
 							}
 						);
 

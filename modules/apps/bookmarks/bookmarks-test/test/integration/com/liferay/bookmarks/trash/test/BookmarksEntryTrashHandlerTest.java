@@ -84,6 +84,13 @@ public class BookmarksEntryTrashHandlerTest
 	}
 
 	@Override
+	public String getParentBaseModelClassName() {
+		Class<BookmarksFolder> bookmarksFolderClass = BookmarksFolder.class;
+
+		return bookmarksFolderClass.getName();
+	}
+
+	@Override
 	public int getRecentBaseModelsCount(long groupId) throws Exception {
 		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, 0);
 	}
@@ -393,11 +400,6 @@ public class BookmarksEntryTrashHandlerTest
 		return getParentBaseModel(
 			group, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			serviceContext);
-	}
-
-	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return BookmarksFolder.class;
 	}
 
 	@Override

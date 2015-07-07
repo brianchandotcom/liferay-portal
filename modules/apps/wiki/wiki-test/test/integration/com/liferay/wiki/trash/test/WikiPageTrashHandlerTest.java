@@ -64,6 +64,13 @@ public class WikiPageTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getParentBaseModelClassName() {
+		Class<WikiNode> wikiNodeClass = WikiNode.class;
+
+		return wikiNodeClass.getName();
+	}
+
+	@Override
 	public String getSearchKeywords() {
 		return WikiPageTrashHandlerTestUtil.getSearchKeywords();
 	}
@@ -315,11 +322,6 @@ public class WikiPageTrashHandlerTest
 
 		return WikiPageTrashHandlerTestUtil.getParentBaseModel(
 			group, serviceContext);
-	}
-
-	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return WikiNode.class;
 	}
 
 	@Override

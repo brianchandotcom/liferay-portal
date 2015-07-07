@@ -57,6 +57,11 @@ public class MBCategoryTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getParentBaseModelClassName() {
+		return getBaseModelClass().getName();
+	}
+
+	@Override
 	public BaseModel<?> moveBaseModelFromTrash(
 			ClassedModel classedModel, Group group,
 			ServiceContext serviceContext)

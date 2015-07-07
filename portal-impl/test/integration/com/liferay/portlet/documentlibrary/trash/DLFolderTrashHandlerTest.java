@@ -69,6 +69,13 @@ public class DLFolderTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getParentBaseModelClassName() {
+		Class<DLFolder> dlFolderClass = DLFolder.class;
+
+		return dlFolderClass.getName();
+	}
+
+	@Override
 	public String getSearchKeywords() {
 		return _FOLDER_NAME;
 	}

@@ -71,6 +71,13 @@ public class BookmarksFolderTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getParentBaseModelClassName() {
+		Class<BookmarksFolder> bookmarksFolderClass = BookmarksFolder.class;
+
+		return bookmarksFolderClass.getName();
+	}
+
+	@Override
 	public String getSearchKeywords() {
 		return _whenIsIndexableBaseModel.getSearchKeywords();
 	}

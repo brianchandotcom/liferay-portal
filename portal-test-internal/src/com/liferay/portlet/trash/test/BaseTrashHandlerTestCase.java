@@ -819,9 +819,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
-		if (getBaseModelClassName().equals(getParentBaseModelClassName())) {
+		if (getBaseModelClassName().equals(
+				whenHasParent.getParentBaseModelClassName())) {
+
 			Assert.assertEquals(
 				0,
 				parentTrashHandler.getTrashContainedModelsCount(
@@ -903,7 +905,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
 		parentTrashHandler.deleteTrashEntry(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -953,7 +955,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
 		parentTrashHandler.deleteTrashEntry(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1116,7 +1118,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
 		parentTrashHandler.deleteTrashEntry(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1257,7 +1259,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		if (getBaseModelClassName().equals(getParentBaseModelClassName())) {
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		if (getBaseModelClassName().equals(
+				whenHasParent.getParentBaseModelClassName())) {
+
 			Assert.assertEquals(
 				initialBaseModelsCount + 1,
 				getNotInTrashBaseModelsCount(grandparentBaseModel));
@@ -1267,8 +1273,6 @@ public abstract class BaseTrashHandlerTestCase {
 				initialBaseModelsCount,
 				getNotInTrashBaseModelsCount(grandparentBaseModel));
 		}
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
@@ -1310,7 +1314,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
 		parentTrashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(),
@@ -1345,7 +1349,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
 		parentTrashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(),
@@ -1381,7 +1385,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
 		parentTrashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(),
@@ -1416,7 +1420,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
 		parentTrashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(),
@@ -1561,9 +1565,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
-		if (getBaseModelClassName().equals(getParentBaseModelClassName())) {
+		if (getBaseModelClassName().equals(
+				whenHasParent.getParentBaseModelClassName())) {
+
 			Assert.assertEquals(
 				0,
 				parentTrashHandler.getTrashContainedModelsCount(
@@ -1638,7 +1644,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
+				whenHasParent.getParentBaseModelClassName());
 
 		parentTrashHandler.deleteTrashEntry(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -2774,16 +2780,6 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		return group;
-	}
-
-	protected Class<?> getParentBaseModelClass() {
-		return getBaseModelClass();
-	}
-
-	protected String getParentBaseModelClassName() {
-		Class<?> clazz = getParentBaseModelClass();
-
-		return clazz.getName();
 	}
 
 	protected int getTrashEntriesCount(long groupId) throws Exception {

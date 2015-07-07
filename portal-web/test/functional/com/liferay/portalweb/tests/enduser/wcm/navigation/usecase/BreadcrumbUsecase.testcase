@@ -211,8 +211,6 @@
 	</command>
 
 	<command name="BreadcrumbLinkPointsToLocalhost" priority="4">
-		<property name="custom.properties" value="show.guest.group=true" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -239,6 +237,14 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkSetupName" value="Show Guest Site" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

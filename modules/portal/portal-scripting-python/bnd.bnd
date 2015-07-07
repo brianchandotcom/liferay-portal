@@ -2,6 +2,7 @@ Bundle-ClassPath: .,lib/jython-standalone.jar
 Bundle-Name: Liferay Portal Scripting Python
 Bundle-SymbolicName: com.liferay.portal.scripting.python
 Bundle-Version: 1.0.0
+DynamicImport-Package: *
 Import-Package: \
 	!com.informix.*,\
 	!com.kenai.jnr.*,\

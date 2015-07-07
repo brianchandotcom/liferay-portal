@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelWrapper;
 
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
@@ -1721,7 +1722,8 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
 		_layout.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -2248,7 +2250,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.model.Layout> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Layout> toCacheModel() {
 		return _layout.toCacheModel();
 	}
 

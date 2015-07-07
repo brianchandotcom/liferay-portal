@@ -18,14 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.SubscriptionConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.social.manager.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.List;
@@ -151,25 +149,9 @@ public class SubscriptionLocalServiceImpl
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
-			if (className.equals(MBThread.class.getName())) {
-				MBThread mbThread = mbThreadLocalService.getMBThread(classPK);
-
-				extraDataJSONObject.put("threadId", classPK);
-
-				socialActivityLocalService.addActivity(
-					userId, groupId, MBMessage.class.getName(),
-					mbThread.getRootMessageId(),
-					SocialActivityConstants.TYPE_SUBSCRIBE,
-					extraDataJSONObject.toString(), 0);
-			}
-			else {
-				if (classPK != groupId) {
-					socialActivityLocalService.addActivity(
-						userId, groupId, className, classPK,
-						SocialActivityConstants.TYPE_SUBSCRIBE,
-						extraDataJSONObject.toString(), 0);
-				}
-			}
+			SocialActivityManagerUtil.addActivity(
+				userId, assetEntry, SocialActivityConstants.TYPE_SUBSCRIBE,
+				extraDataJSONObject.toString(), 0);
 		}
 
 		return subscription;
@@ -240,18 +222,12 @@ public class SubscriptionLocalServiceImpl
 			subscription.getClassNameId(), subscription.getClassPK());
 
 		if (assetEntry != null) {
-			ClassName className = classNameLocalService.getClassName(
-				subscription.getClassNameId());
-
-			String subscriptionClassName = className.getValue();
-
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
-			socialActivityLocalService.addActivity(
-				subscription.getUserId(), assetEntry.getGroupId(),
-				subscriptionClassName, subscription.getClassPK(),
+			SocialActivityManagerUtil.addActivity(
+				subscription.getUserId(), subscription,
 				SocialActivityConstants.TYPE_UNSUBSCRIBE,
 				extraDataJSONObject.toString(), 0);
 		}

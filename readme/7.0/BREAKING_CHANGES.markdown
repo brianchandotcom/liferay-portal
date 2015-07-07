@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `e32f122`.*
+*This document has been reviewed through commit `73b5d09`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2037,13 +2037,13 @@ configure any editor in Liferay Portal in a coherent and extensible way.
 
 ---------------------------------------
 
-### Removed the liferay-ui:journal-article taglib
+### Removed the liferay-ui:journal-article Tag
 - **Date:** 2015-Jun-29
 - **JIRA Ticket:** LPS-56383
 
 #### What changed?
 
-The `liferay-ui:journal-article` taglib was removed.
+The `liferay-ui:journal-article` tag has been removed.
 
 #### Who is affected?
 
@@ -2051,10 +2051,12 @@ This affects developers using the `liferay-ui:journal-article` tag.
 
 #### How should I update my code?
 
-Use the `liferay-ui:asset-display` taglib instead.
+You should use the `liferay-ui:asset-display` tag instead.
+
+**Example**
 
 Old code:
-    
+
     <liferay-ui:journal-article
         articleId="<%= article.getArticleId() %>"
     />
@@ -2069,6 +2071,7 @@ New code:
 #### Why was this change made?
 
 The `liferay-ui:asset-display` is a generic way to display any type of asset.
+Therefore, the `liferay-ui:journal-article` tag is no longer necessary.
 
 ---------------------------------------
 

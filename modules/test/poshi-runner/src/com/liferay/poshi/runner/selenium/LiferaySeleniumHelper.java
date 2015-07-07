@@ -1078,14 +1078,6 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		// LPS-55835, temporary workaround while Brian Wulbern investigates it
-
-		if (line.matches(
-				"Current URL.*add_panel generates exception:[\\s\\S]*")) {
-
-			return true;
-		}
-
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

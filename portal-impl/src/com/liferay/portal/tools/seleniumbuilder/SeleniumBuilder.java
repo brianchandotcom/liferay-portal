@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.ToolDependencies;
@@ -546,40 +547,30 @@ public class SeleniumBuilder {
 					testCaseProperties.add(sb.toString());
 				}
 
-				sb = new StringBundler();
+				List<Attribute> commandAttributes = commandElement.attributes();
 
-				sb.append(testCaseName);
-				sb.append("TestCase.test");
-				sb.append(commandElement.attributeValue("name"));
-				sb.append(".testray.testcase.description=");
+				for (Attribute commandAttribute : commandAttributes) {
+					String commandAttributeName = StringUtil.replace(
+						commandAttribute.getName(), "-", ".");
 
-				if (commandElement.attributeValue("description") != null) {
-					sb.append(commandElement.attributeValue("description"));
+					if (commandAttributeName.equals("line.number") ||
+						commandAttributeName.equals("name")) {
+
+						continue;
+					}
+
+					sb = new StringBundler();
+
+					sb.append(testCaseName);
+					sb.append("TestCase.test");
+					sb.append(commandElement.attributeValue("name"));
+					sb.append(".");
+					sb.append(commandAttributeName);
+					sb.append("=");
+					sb.append(commandAttribute.getValue());
+
+					testCaseProperties.add(sb.toString());
 				}
-
-				testCaseProperties.add(sb.toString());
-
-				sb = new StringBundler();
-
-				sb.append(testCaseName);
-				sb.append("TestCase.test");
-				sb.append(commandElement.attributeValue("name"));
-				sb.append(".testray.testcase.name=");
-				sb.append(testCaseName);
-				sb.append("#");
-				sb.append(commandElement.attributeValue("name"));
-
-				testCaseProperties.add(sb.toString());
-
-				sb = new StringBundler();
-
-				sb.append(testCaseName);
-				sb.append("TestCase.test");
-				sb.append(commandElement.attributeValue("name"));
-				sb.append(".testray.testcase.priority=");
-				sb.append(commandElement.attributeValue("priority"));
-
-				testCaseProperties.add(sb.toString());
 			}
 		}
 

@@ -93,9 +93,11 @@ public class ClusterLinkImpl implements ClusterLink {
 		_enabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
-		initialize(
-			getTransportChannelProperties(properties),
-			getTransportChannelNames(properties));
+		if (_enabled) {
+			initialize(
+				getTransportChannelProperties(properties),
+				getTransportChannelNames(properties));
+		}
 	}
 
 	@Deactivate
@@ -238,10 +240,6 @@ public class ClusterLinkImpl implements ClusterLink {
 	protected void initialize(
 		Properties transportChannelProperties,
 		Properties transportChannelNames) {
-
-		if (!isEnabled()) {
-			return;
-		}
 
 		_executorService = _portalExecutorManager.getPortalExecutor(
 			ClusterLinkImpl.class.getName());

@@ -370,25 +370,16 @@ AUI.add(
 							themeDisplay.getPathMain() + '/portal/session_tree_js_click',
 							{
 								data: data,
+								dataType: 'json',
 								on: {
-		   							success: function() {
-		   								try{
-			   									var checkedNodes = JSON.parse(this.get('responseData'));
-			   									var currentCheckedNodes = [];
-			   									
-			     								if(checkedNodes && checkedNodes.length > 0 ){
-													for(k in checkedNodes){
-														currentCheckedNodes.push(checkedNodes[k]);
-							     					}
-						     					}
-			     								
-			     								instance.set(STR_CHECKED_NODES, currentCheckedNodes);
-					     					}catch(e){
-					     					
-					     					}
-					     								
-		   								}
+									success: function() {
+										var checkedNodes = this.get('responseData');
+
+										if (checkedNodes) {
+											instance.set(STR_CHECKED_NODES, checkedNodes);
+										}
 									}
+								}
 							}
 						);
 					},

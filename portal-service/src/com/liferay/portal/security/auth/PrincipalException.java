@@ -59,6 +59,25 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBeCompanyAdmin extends PrincipalException {
+
+		public MustBeCompanyAdmin(long userId) {
+			super(
+				String.format(
+					"User %s must be the company administrator to perform " +
+					"the action", userId));
+
+			this.userId = userId;
+		}
+
+		public MustBeCompanyAdmin(PermissionChecker permissionChecker) {
+			this(permissionChecker.getUserId());
+		}
+
+		public final long userId;
+
+	}
+
 	public static class MustHavePermission extends PrincipalException {
 
 		public MustHavePermission(long userId, String... actionIds) {
@@ -115,6 +134,7 @@ public class PrincipalException extends PortalException {
 
 	private static final Class<?>[] _NESTED_CLASSES = {
 		PrincipalException.class, PrincipalException.MustBeAuthenticated.class,
+		PrincipalException.MustBeCompanyAdmin.class,
 		PrincipalException.MustHavePermission.class
 	};
 

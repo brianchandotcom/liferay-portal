@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -148,11 +150,18 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 			},
 			new String[] {fromAddress, fromName, layoutFullURL, portalURL});
 
+		Company company = themeDisplay.getCompany();
+
 		for (String emailAddress : validEmailAddresses) {
 			InternetAddress to = new InternetAddress(emailAddress);
 
 			MailMessage message = new MailMessage(
 				from, to, subject, body, true);
+
+			message.setMessageId(
+				PortalUtil.getMailId(
+					company.getMx(), InvitationUtil.MESSAGE_POP_PORTLET_PREFIX,
+					PortalUUIDUtil.generate()));
 
 			MailServiceUtil.sendEmail(message);
 		}

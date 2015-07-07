@@ -849,8 +849,8 @@
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>StorePortlet</name>
-		<type>com.liferay.marketplace.store.portlet.StorePortlet</type>
+		<name>MarketplaceStorePortlet</name>
+		<type>com.liferay.marketplace.store.portlet.MarketplaceStorePortlet</type>
 		<author><![CDATA[Ryan Park]]></author>
 		<method>
 			<name>downloadApp</name>
@@ -1332,7 +1332,7 @@
 			<name>MY_MARKETPLACE</name>
 		</field>
 		<field>
-			<name>STORE</name>
+			<name>MARKETPLACE_STORE</name>
 		</field>
 	</javadoc>
 	<javadoc>

@@ -24,7 +24,7 @@
 
 			var preBlock = editor.document.findOne('pre')
 
-			if (preBlock && preBlock.getChildCount() == 0) {
+			if (preBlock && preBlock.getChildCount() === 0) {
 				preBlock.appendBogus();
 			}
 

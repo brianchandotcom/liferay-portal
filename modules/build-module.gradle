@@ -63,14 +63,7 @@ sourceSets {
 
 group = "com.liferay"
 
-tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
-	options.warnings = false
-}
-
-if (project.path in [":util:css-builder"]) {
-	apply plugin: "com.liferay.maven.plugin.builder"
-
+pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	afterEvaluate {
 		buildPluginDescriptor {
 			pomArtifactId = bundle.instructions["Bundle-SymbolicName"]
@@ -84,4 +77,9 @@ if (project.path in [":util:css-builder"]) {
 			autoClean = false
 		}
 	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+	options.warnings = false
 }

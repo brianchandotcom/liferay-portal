@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.service.impl;
+package com.liferay.portlet.display.template.service.internal;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;

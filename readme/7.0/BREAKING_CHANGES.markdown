@@ -2075,20 +2075,20 @@ Therefore, the `liferay-ui:journal-article` tag is no longer necessary.
 
 ---------------------------------------
 
-### Java package names changed for portlets extracted as modules
+### Changed Java Package Names for Portlets Extracted as Modules
 - **Date:** 2015-Jun-29
 - **JIRA Ticket:** LPS-56383 and others
 
 #### What changed?
 
-The java package names changed for those portlets that were extracted as OSGi
-modules in 7.0. Here follows the complete list:
+The Java package names changed for portlets that were extracted as OSGi modules
+in 7.0. Here is the complete list:
 
-- com.liferay.portlet.bookmarks -> com.liferay.bookmarks
-- com.liferay.portlet.dynamicdatalists -> com.liferay.dynamicdatalists
-- com.liferay.portlet.journal -> com.liferay.journal
-- com.liferay.portlet.polls -> com.liferay.polls
-- com.liferay.portlet.wiki -> com.liferay.wiki
+- `com.liferay.portlet.bookmarks` &rarr; `com.liferay.bookmarks`
+- `com.liferay.portlet.dynamicdatalists` &rarr; `com.liferay.dynamicdatalists`
+- `com.liferay.portlet.journal` &rarr; `com.liferay.journal`
+- `com.liferay.portlet.polls` &rarr; `com.liferay.polls`
+- `com.liferay.portlet.wiki` &rarr; `com.liferay.wiki`
 
 #### Who is affected?
 
@@ -2097,7 +2097,7 @@ This affects developers using the portlets API from their own plugins.
 #### How should I update my code?
 
 Update the package imports to use the new package names. Any literal usage of
-the portlet className should also be updated.
+the portlet `className` should also be updated.
 
 #### Why was this change made?
 

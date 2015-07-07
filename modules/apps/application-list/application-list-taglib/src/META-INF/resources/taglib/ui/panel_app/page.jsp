@@ -28,15 +28,17 @@ portletURL.setWindowState(WindowState.MAXIMIZED);
 Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), panelApp.getPortletId());
 %>
 
-<li class="<%= panelApp.getPortletId().equals(ppid) ? "active" : StringPool.BLANK %>">
-	<c:choose>
-		<c:when test="<%= portletURL != null %>">
-			<a href="<%= portletURL.toString() %>">
-				<span><%= PortalUtil.getPortletTitle(portlet, pageContext.getServletContext(), themeDisplay.getLocale()) %></span>
-			</a>
-		</c:when>
-		<c:otherwise>
-			<span><%= PortalUtil.getPortletTitle(portlet, pageContext.getServletContext(), themeDisplay.getLocale()) %></span>
-		</c:otherwise>
-	</c:choose>
-</li>
+<c:if test="<%= portletURL != null %>">
+	<li
+		aria-selected="<%= ppid.equals(panelApp.getPortletId()) ? "true" : StringPool.BLANK %>"
+		class="<%= panelApp.getPortletId().equals(ppid) ? "selected-portlet" : StringPool.BLANK %>"
+		role="presentation"
+	>
+		<aui:a
+			ariaRole="menuitem"
+			href="<%= portletURL.toString() %>"
+			id='<%= "portlet_" + panelApp.getPortletId() %>'
+			label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+		/>
+	</li>
+</c:if>

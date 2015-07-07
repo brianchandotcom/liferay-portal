@@ -24,7 +24,7 @@ ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelec
 	<aui:col cssClass="col-md-offset-2" width="<%= 60 %>">
 		<p><%= LanguageUtil.get(resourceBundle, "enter-url-that-contains-the-image-you-want-to-add") %></p>
 
-		<aui:input helpMessage="<%= LanguageUtil.format(request, "for-example-x", "http://www.liferay.com/liferay.png", false) %>" label="<%= LanguageUtil.get(resourceBundle, "url") %>" name="urlInput" placeholder="http://"/>
+		<aui:input helpMessage="<%= LanguageUtil.format(request, "for-example-x", "http://www.liferay.com/liferay.png", false) %>" label="<%= LanguageUtil.get(resourceBundle, "url") %>" name="urlInput" placeholder="http://" />
 
 		<aui:button disabled="<%= true %>" name="previewBtn" value='<%= LanguageUtil.get(resourceBundle, "enter") %>'/>
 	</aui:col>

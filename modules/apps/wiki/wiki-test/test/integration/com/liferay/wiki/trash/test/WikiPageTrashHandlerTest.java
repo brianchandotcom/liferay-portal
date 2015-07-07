@@ -153,44 +153,6 @@ public class WikiPageTrashHandlerTest
 	public void testTrashParentWithBaseModelIsIsNotVisible() throws Exception {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelAndRestoreIsNotInTrashContainer()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelAndRestoreIsVisible()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelIsNotVisible() throws Exception {
-	}
-
 	@Override
 	public BaseModel<?> updateBaseModel(
 			long primaryKey, ServiceContext serviceContext)

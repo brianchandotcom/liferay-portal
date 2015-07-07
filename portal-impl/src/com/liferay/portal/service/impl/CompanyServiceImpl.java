@@ -74,7 +74,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
 
 		return companyLocalService.addCompany(
@@ -87,7 +87,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
 
 		return companyLocalService.deleteCompany(companyId);
@@ -227,7 +227,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
 
 		return companyLocalService.updateCompany(

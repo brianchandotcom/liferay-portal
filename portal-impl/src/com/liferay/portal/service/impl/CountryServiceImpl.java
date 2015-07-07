@@ -39,7 +39,8 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		throws PortalException {
 
 		if (!getPermissionChecker().isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(
+				getPermissionChecker());
 		}
 
 		if (Validator.isNull(name)) {

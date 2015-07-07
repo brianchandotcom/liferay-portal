@@ -35,7 +35,8 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 		throws PortalException {
 
 		if (!getPermissionChecker().isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(
+				getPermissionChecker());
 		}
 
 		countryPersistence.findByPrimaryKey(countryId);

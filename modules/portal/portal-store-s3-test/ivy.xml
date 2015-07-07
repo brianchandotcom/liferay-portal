@@ -17,13 +17,10 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="jackrabbit-api" org="org.apache.jackrabbit" rev="2.1.6"/>
-		<dependency name="jackrabbit-core" org="org.apache.jackrabbit" rev="2.1.6"/>
-		<dependency name="jackrabbit-jcr-commons" org="org.apache.jackrabbit" rev="2.1.6"/>
-		<dependency name="jackrabbit-spi" org="org.apache.jackrabbit" rev="2.1.6"/>
-		<dependency name="jackrabbit-spi-commons" org="org.apache.jackrabbit" rev="2.1.6"/>
-		<dependency name="jcr" org="javax.jcr" rev="2.0"/>
+		<dependency name="com.liferay.arquillian.extension.junit.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+
 	</dependencies>
 </ivy-module>

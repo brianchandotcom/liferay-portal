@@ -1,0 +1,6 @@
+Bundle-Activator: com.liferay.portal.store.filesystem.test.activator.configuration.ConfigurationAdminBundleActivator
+Bundle-Name: Liferay Portal File System Store Test
+Bundle-SymbolicName: com.liferay.portal.store.filesystem.test
+Bundle-Version: 1.0.0
+Include-Resource:\
+	com/liferay/portal/store/filesystem/test/activator/configuration=classes/com/liferay/portal/store/filesystem/test/activator/configuration

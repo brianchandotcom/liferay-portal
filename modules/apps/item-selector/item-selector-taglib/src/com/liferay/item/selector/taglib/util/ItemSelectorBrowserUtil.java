@@ -56,8 +56,10 @@ public class ItemSelectorBrowserUtil {
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, LanguageUtil.get(request, "home"), portletURL.toString());
 
-		DLUtil.addPortletBreadcrumbEntries(
-			DLAppServiceUtil.getFolder(folderId), request, portletURL);
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLUtil.addPortletBreadcrumbEntries(
+				DLAppServiceUtil.getFolder(folderId), request, portletURL);
+		}
 	}
 
 	public static JSONObject getItemMetadataJSONObject(

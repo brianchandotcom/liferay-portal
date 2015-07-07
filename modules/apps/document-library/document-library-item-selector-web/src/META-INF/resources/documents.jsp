@@ -86,5 +86,6 @@ searchContainer.setResults(results);
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	searchContainer="<%= searchContainer %>"
 	searchURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
+	showBreadcrumb="<%= true %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

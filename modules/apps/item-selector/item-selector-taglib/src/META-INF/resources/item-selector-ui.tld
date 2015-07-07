@@ -44,6 +44,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>showBreadcrumb</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>tabName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

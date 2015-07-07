@@ -18,7 +18,9 @@
 
 <%@ page import="com.liferay.application.list.PanelApp" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@

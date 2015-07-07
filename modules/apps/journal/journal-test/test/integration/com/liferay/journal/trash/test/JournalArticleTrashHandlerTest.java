@@ -296,26 +296,25 @@ public class JournalArticleTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		JournalFolder folder = (JournalFolder)parentBaseModel;
 
 		return JournalTestUtil.addArticleWithWorkflow(
 			serviceContext.getScopeGroupId(), folder.getFolderId(),
-			getSearchKeywords(), getSearchKeywords(), approved);
+			getSearchKeywords(), getSearchKeywords(), true);
 	}
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			boolean approved, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		return JournalTestUtil.addArticleWithWorkflow(
 			serviceContext.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			getSearchKeywords(), getSearchKeywords(), approved);
+			getSearchKeywords(), getSearchKeywords(), true);
 	}
 
 	@Override

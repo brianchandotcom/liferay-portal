@@ -229,24 +229,13 @@ public class DLFolderTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
 
 		return addBaseModelWithWorkflow(
 			parentDLFolder.getGroupId(), parentDLFolder.getFolderId());
-	}
-
-	@Override
-	protected BaseModel<?> addBaseModelWithWorkflow(
-			boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		return addBaseModelWithWorkflow(
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	protected BaseModel<?> addBaseModelWithWorkflow(long groupId, long folderId)
@@ -261,6 +250,16 @@ public class DLFolderTrashHandlerTest
 			RandomTestUtil.randomString(), serviceContext);
 
 		return (DLFolder)folder.getModel();
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModelWithWorkflow(
+			serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override

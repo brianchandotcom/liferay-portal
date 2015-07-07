@@ -200,21 +200,6 @@
 		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>128</portlet-name>
-		<icon>/html/icons/roles_admin.png</icon>
-		<control-panel-entry-category>users</control-panel-entry-category>
-		<control-panel-entry-weight>3.0</control-panel-entry-weight>
-		<custom-attributes-display>com.liferay.portlet.rolesadmin.RoleCustomAttributesDisplay</custom-attributes-display>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/users_admin/js/main.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>130</portlet-name>
 		<icon>/html/icons/portal_settings.png</icon>
 		<struts-path>portal_settings</struts-path>

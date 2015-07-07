@@ -283,31 +283,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>128</portlet-name>
-		<display-name>Roles Admin</display-name>
-		<portlet-class>com.liferay.portlet.rolesadmin.RolesAdminPortlet</portlet-class>
-		<init-param>
-			<name>mvc-action-command-package-prefix</name>
-			<value>com.liferay.portlet.rolesadmin.action</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/roles_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/roles_admin/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>130</portlet-name>
 		<display-name>Portal Settings</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

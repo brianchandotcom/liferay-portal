@@ -85,10 +85,10 @@
 					url = '<%= themeDisplay.getURLControlPanel() %>';
 				}
 				else {
-					url = '<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= portletId.equals(MarketplaceStorePortletKeys.STORE) ? MarketplaceStorePortletKeys.PURCHASED : MarketplaceStorePortletKeys.STORE %>" windowState="<%= WindowState.MAXIMIZED.toString() %>" />';
+					url = '<liferay-portlet:renderURL doAsGroupId="<%= themeDisplay.getScopeGroupId() %>" portletName="<%= portletId.equals(MarketplaceStorePortletKeys.MARKETPLACE_STORE) ? MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED : MarketplaceStorePortletKeys.MARKETPLACE_STORE %>" windowState="<%= WindowState.MAXIMIZED.toString() %>" />';
 
 					if (response.appId) {
-						url = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(MarketplaceStorePortletKeys.STORE) %>appId=' + response.appId, url);
+						url = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(MarketplaceStorePortletKeys.MARKETPLACE_STORE) %>appId=' + response.appId, url);
 					}
 				}
 

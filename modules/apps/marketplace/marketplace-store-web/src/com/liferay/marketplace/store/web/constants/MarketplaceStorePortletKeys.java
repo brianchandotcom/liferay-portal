@@ -20,10 +20,10 @@ package com.liferay.marketplace.store.web.constants;
  */
 public class MarketplaceStorePortletKeys {
 
-	public static final String PURCHASED =
-		"com_liferay_marketplace_store_web_portlet_PurchasedPortlet";
+	public static final String MARKETPLACE_PURCHASED =
+		"com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet";
 
-	public static final String STORE =
-		"com_liferay_marketplace_store_web_portlet_StorePortlet";
+	public static final String MARKETPLACE_STORE =
+		"com_liferay_marketplace_store_web_portlet_MarketplaceStorePortlet";
 
 }

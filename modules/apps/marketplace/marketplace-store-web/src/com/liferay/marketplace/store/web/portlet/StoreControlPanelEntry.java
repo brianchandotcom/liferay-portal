@@ -30,7 +30,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MarketplaceStorePortletKeys.STORE},
+	property = {
+		"javax.portlet.name=" + MarketplaceStorePortletKeys.MARKETPLACE_STORE
+	},
 	service = ControlPanelEntry.class
 )
 public class StoreControlPanelEntry extends BaseControlPanelEntry {

@@ -43,10 +43,10 @@ String iFrameURL = MarketplaceConstants.MARKETPLACE_URL_LOGOUT;
 
 String referer = StringPool.BLANK;
 
-if (portletId.equals(MarketplaceStorePortletKeys.PURCHASED)) {
+if (portletId.equals(MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED)) {
 	referer = MarketplaceConstants.getPathPurchased();
 }
-else if (portletId.equals(MarketplaceStorePortletKeys.STORE) && (appId > 0)) {
+else if (portletId.equals(MarketplaceStorePortletKeys.MARKETPLACE_STORE) && (appId > 0)) {
 	referer = MarketplaceConstants.getPathStore() + "/application/" + appId;
 }
 else {

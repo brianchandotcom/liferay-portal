@@ -1,6 +1,5 @@
 <definition component-name="portal-acceptance">
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="portlet.plugins.includes" value="calendar-portlet" />
 	<property name="testray.main.component.name" value="Calendar" />
 
 	<var name="pageName" value="Calendar Page" />

@@ -36,34 +36,43 @@ public class PortletDisplayTemplateManagerUtil {
 		long groupId, long classNameId, String displayStyle,
 		boolean useDefault) {
 
-		PortletDisplayTemplateManager manager =
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
 			_getPortletDisplayTemplateManager();
 
-		return manager.getDDMTemplate(
+		return portletDisplayTemplateManager.getDDMTemplate(
 			groupId, classNameId, displayStyle, useDefault);
 	}
 
 	public static long getDDMTemplateGroupId(long groupId) {
-		PortletDisplayTemplateManager manager =
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
 			_getPortletDisplayTemplateManager();
 
-		return manager.getDDMTemplateGroupId(groupId);
+		return portletDisplayTemplateManager.getDDMTemplateGroupId(groupId);
+	}
+
+	public static String getDisplayStyle(String ddmTemplateKey) {
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
+			_getPortletDisplayTemplateManager();
+
+		return portletDisplayTemplateManager.getDisplayStyle(ddmTemplateKey);
 	}
 
 	public static List<TemplateHandler> getPortletDisplayTemplateHandlers() {
-		PortletDisplayTemplateManager manager =
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
 			_getPortletDisplayTemplateManager();
 
-		return manager.getPortletDisplayTemplateHandlers();
+		return portletDisplayTemplateManager.
+			getPortletDisplayTemplateHandlers();
 	}
 
 	public static Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 		String language) {
 
-		PortletDisplayTemplateManager manager =
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
 			_getPortletDisplayTemplateManager();
 
-		return manager.getTemplateVariableGroups(language);
+		return portletDisplayTemplateManager.getTemplateVariableGroups(
+			language);
 	}
 
 	public static String renderDDMTemplate(
@@ -72,29 +81,24 @@ public class PortletDisplayTemplateManagerUtil {
 			Map<String, Object> contextObjects)
 		throws Exception {
 
-		PortletDisplayTemplateManager manager =
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
 			_getPortletDisplayTemplateManager();
 
-		return manager.renderDDMTemplate(
+		return portletDisplayTemplateManager.renderDDMTemplate(
 			request, response, templateId, entries, contextObjects);
 	}
 
 	private static PortletDisplayTemplateManager
 		_getPortletDisplayTemplateManager() {
 
-		PortletDisplayTemplateManager manager =
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
 			_instance._serviceTracker.getService();
 
-		if (manager != null) {
-			return manager;
+		if (portletDisplayTemplateManager == null) {
+			return _dummyPortletDisplayTemplateManagerImpl;
 		}
-		else {
-			if (_dummyImpl == null) {
-				_dummyImpl = new DummyPortletDisplayTemplateManagerImpl();
-			}
 
-			return _dummyImpl;
-		}
+		return portletDisplayTemplateManager;
 	}
 
 	private PortletDisplayTemplateManagerUtil() {
@@ -109,7 +113,9 @@ public class PortletDisplayTemplateManagerUtil {
 	private static final PortletDisplayTemplateManagerUtil _instance =
 		new PortletDisplayTemplateManagerUtil();
 
-	private static DummyPortletDisplayTemplateManagerImpl _dummyImpl;
+	private static final DummyPortletDisplayTemplateManagerImpl
+		_dummyPortletDisplayTemplateManagerImpl =
+			new DummyPortletDisplayTemplateManagerImpl();
 
 	private final
 		ServiceTracker<PortletDisplayTemplateManager,

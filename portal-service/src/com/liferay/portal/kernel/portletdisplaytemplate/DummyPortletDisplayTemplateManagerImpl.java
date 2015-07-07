@@ -44,6 +44,11 @@ public class DummyPortletDisplayTemplateManagerImpl
 	}
 
 	@Override
+	public String getDisplayStyle(String ddmTemplateKey) {
+		return null;
+	}
+
+	@Override
 	public List<TemplateHandler> getPortletDisplayTemplateHandlers() {
 		return null;
 	}

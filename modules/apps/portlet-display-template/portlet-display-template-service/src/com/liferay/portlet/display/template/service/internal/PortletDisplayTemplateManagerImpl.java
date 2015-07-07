@@ -62,6 +62,11 @@ public class PortletDisplayTemplateManagerImpl
 
 		return _portletDisplayTemplate.getTemplateVariableGroups(language);
 	}
+	
+	@Override
+	public String getDisplayStyle(String ddmTemplateKey) {
+		return _portletDisplayTemplate.getDisplayStyle(ddmTemplateKey);
+	}
 
 	@Override
 	public String renderDDMTemplate(

@@ -39,6 +39,8 @@ public interface PortletDisplayTemplateManager {
 
 	public long getDDMTemplateGroupId(long groupId);
 
+	public String getDisplayStyle(String ddmTemplateKey);
+
 	public List<TemplateHandler> getPortletDisplayTemplateHandlers();
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(

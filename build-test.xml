@@ -760,6 +760,24 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testray-testcase-description">
+		<sequential>
+			<condition property="testray.testcase.description" value="${description}" else="">
+				<isset property="description" />
+			</condition>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-product-edition">
+		<sequential>
+			<condition property="testray.testcase.product.edition" value="CE">
+				<not>
+					<isset property="testray.testcase.product.edition" />
+				</not>
+			</condition>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<get-testcase-property property.name="app.server.bundles.size" />
@@ -2191,11 +2209,17 @@ go]]></replacevalue>
 		<if>
 			<isset property="test.class" />
 			<then>
+				<get-poshi-test-name />
+
+				<property name="testray.testcase.name" value="${poshi.test.name}" />
+
+				<get-testcase-property property.name="description" />
+				<get-testcase-property property.name="priority" />
+
+				<property name="testray.testcase.priority" value="${priority}" />
+
 				<get-testcase-property property.name="testray.component.names" />
 				<get-testcase-property property.name="testray.main.component.name" />
-				<get-testcase-property property.name="testray.testcase.description" />
-				<get-testcase-property property.name="testray.testcase.name" />
-				<get-testcase-property property.name="testray.testcase.priority" />
 				<get-testcase-property property.name="testray.testcase.product.edition" />
 			</then>
 		</if>
@@ -2205,6 +2229,8 @@ go]]></replacevalue>
 		<get-testray-project-name />
 		<get-testray-run-id />
 		<get-testray-team-name />
+		<get-testray-testcase-description />
+		<get-testray-testcase-product-edition />
 
 		<if>
 			<isset property="env.TEST_BUILD_FIX_PACK_NAME" />

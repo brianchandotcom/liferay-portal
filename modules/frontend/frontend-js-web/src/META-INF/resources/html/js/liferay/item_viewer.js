@@ -153,7 +153,7 @@ AUI.add(
 						var instance = this;
 
 						if (!instance.get(STR_RENDER_CONTROLS)) {
-							return Do.Halt();
+							return new Do.Halt();
 						}
 					},
 

@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var ITEM_LINK_TPL = '<a data-returnType="URL" data-value="{value}" href="{preview}" title=""></a>';
+		var ITEM_LINK_TPL = '<a data-returnType="URL" data-value="{value}" href="{preview}"></a>';
 
 		var STR_LINKS = 'links';
 
@@ -33,6 +33,7 @@ AUI.add(
 						instance._itemViewer = new A.LiferayItemViewer(
 							{
 								btnCloseCaption: instance.get('closeCaption'),
+								caption: '',
 								links: '',
 								renderControls: false
 							}

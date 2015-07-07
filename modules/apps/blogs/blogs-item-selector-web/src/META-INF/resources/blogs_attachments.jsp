@@ -21,7 +21,7 @@ BlogsItemSelectorViewDisplayContext blogsItemSelectorViewDisplayContext = (Blogs
 
 BlogsItemSelectorCriterion blogsItemSelectorCriterion = blogsItemSelectorViewDisplayContext.getBlogsItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments"));
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curBlogsAttachments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments"));
 
 Folder folder = blogsItemSelectorViewDisplayContext.fetchAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 

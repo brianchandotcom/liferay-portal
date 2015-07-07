@@ -98,7 +98,11 @@ public class LiferayExtension {
 	}
 
 	public File getTmpDir() {
-		return project.file(_tmpDir);
+		File tmpDir = project.file(_tmpDir);
+
+		tmpDir.mkdirs();
+
+		return tmpDir;
 	}
 
 	public String getVersionPrefix() {

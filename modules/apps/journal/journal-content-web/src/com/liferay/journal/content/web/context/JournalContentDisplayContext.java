@@ -18,6 +18,7 @@ import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAsset
 import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAssetAddonEntryTracker;
 import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntry;
 import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntryTracker;
+import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -65,7 +65,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -76,12 +75,14 @@ public class JournalContentDisplayContext {
 
 	public JournalContentDisplayContext(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortletPreferences portletPreferences)
+			JournalContentPortletInstanceConfiguration
+				journalContentPortletInstanceConfiguration)
 		throws PortalException {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
-		_portletPreferences = portletPreferences;
+		_journalContentPortletInstanceConfiguration =
+			journalContentPortletInstanceConfiguration;
 
 		if (Validator.isNotNull(getPortletResource())) {
 			return;
@@ -175,12 +176,17 @@ public class JournalContentDisplayContext {
 			return _articleGroupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_articleGroupId = ParamUtil.getLong(
+			_portletRequest, "groupId",
+			_journalContentPortletInstanceConfiguration.groupId());
 
-		_articleGroupId = PrefsParamUtil.getLong(
-			_portletPreferences, _portletRequest, "groupId",
-			themeDisplay.getScopeGroupId());
+		if (_articleGroupId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_articleGroupId = themeDisplay.getScopeGroupId();
+		}
 
 		return _articleGroupId;
 	}
@@ -190,8 +196,9 @@ public class JournalContentDisplayContext {
 			return _articleId;
 		}
 
-		_articleId = PrefsParamUtil.getString(
-			_portletPreferences, _portletRequest, "articleId");
+		_articleId = ParamUtil.getString(
+			_portletRequest, "articleId",
+			_journalContentPortletInstanceConfiguration.articleId());
 
 		return _articleId;
 	}
@@ -266,8 +273,9 @@ public class JournalContentDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		_ddmTemplateKey = PrefsParamUtil.getString(
-			_portletPreferences, _portletRequest, "ddmTemplateKey");
+		_ddmTemplateKey = ParamUtil.getString(
+			_portletRequest, "ddmTemplateKey",
+			_journalContentPortletInstanceConfiguration.ddmTemplateKey());
 
 		if (getDDMTemplates().isEmpty()) {
 			return _ddmTemplateKey;
@@ -388,8 +396,8 @@ public class JournalContentDisplayContext {
 		_contentMetadataAssetAddonEntries = new ArrayList<>();
 
 		String contentMetadataAssetAddonEntryKeysKeysString =
-			_portletPreferences.getValue(
-				"contentMetadataAssetAddonEntryKeys", null);
+			_journalContentPortletInstanceConfiguration.
+				contentMetadataAssetAddonEntryKeys();
 
 		if (Validator.isNull(contentMetadataAssetAddonEntryKeysKeysString)) {
 			return _contentMetadataAssetAddonEntries;
@@ -428,8 +436,9 @@ public class JournalContentDisplayContext {
 
 		_userToolAssetAddonEntries = new ArrayList<>();
 
-		String userToolAssetAddonEntryKeysString = _portletPreferences.getValue(
-			"userToolAssetAddonEntryKeys", null);
+		String userToolAssetAddonEntryKeysString =
+			_journalContentPortletInstanceConfiguration.
+				userToolAssetAddonEntryKeys();
 
 		if (Validator.isNull(userToolAssetAddonEntryKeysString)) {
 			return _userToolAssetAddonEntries;
@@ -498,9 +507,18 @@ public class JournalContentDisplayContext {
 			return _enableViewCountIncrement;
 		}
 
-		_enableViewCountIncrement = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableViewCountIncrement", null),
-			PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED);
+		if (Validator.isNotNull(
+				_journalContentPortletInstanceConfiguration.
+					enableViewCountIncrement())) {
+
+			_enableViewCountIncrement = GetterUtil.getBoolean(
+				_journalContentPortletInstanceConfiguration.
+					enableViewCountIncrement());
+		}
+		else {
+			_enableViewCountIncrement =
+				PropsValues.ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED;
+		}
 
 		return _enableViewCountIncrement;
 	}
@@ -677,8 +695,9 @@ public class JournalContentDisplayContext {
 	private Boolean _enableViewCountIncrement;
 	private Boolean _expired;
 	private Boolean _hasViewPermission;
+	private final JournalContentPortletInstanceConfiguration
+		_journalContentPortletInstanceConfiguration;
 	private JournalArticle _latestArticle;
-	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
 	private String _portletResource;
 	private final PortletResponse _portletResponse;

@@ -24,7 +24,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.journal.content.web.constants.JournalContentPortletKeys" %><%@
+<%@ page import="com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration" %><%@
+page import="com.liferay.journal.content.web.constants.JournalContentPortletKeys" %><%@
 page import="com.liferay.journal.content.web.context.JournalContentDisplayContext" %><%@
 page import="com.liferay.journal.exception.NoSuchArticleException" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
@@ -71,7 +72,9 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 
 String currentURL = currentURLObj.toString();
 
-JournalContentDisplayContext journalContentDisplayContext = new JournalContentDisplayContext(liferayPortletRequest, liferayPortletResponse, portletPreferences);
+JournalContentPortletInstanceConfiguration journalContentPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(JournalContentPortletInstanceConfiguration.class);
+
+JournalContentDisplayContext journalContentDisplayContext = new JournalContentDisplayContext(liferayPortletRequest, liferayPortletResponse, journalContentPortletInstanceConfiguration);
 %>
 
 <%@ include file="/init-ext.jsp" %>

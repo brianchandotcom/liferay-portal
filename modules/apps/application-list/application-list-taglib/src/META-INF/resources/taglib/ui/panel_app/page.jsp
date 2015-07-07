@@ -19,7 +19,7 @@
 <%
 PanelApp panelApp = (PanelApp)request.getAttribute("application-list-ui:panel-app:panelApp");
 
-PortletURL portletURL = PortletURLFactoryUtil.create(request, panelApp.getPortletId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+PortletURL portletURL = panelApp.getPortletURL(request);
 %>
 
 <c:if test="<%= portletURL != null %>">
@@ -35,8 +35,6 @@ PortletURL portletURL = PortletURLFactoryUtil.create(request, panelApp.getPortle
 	>
 
 		<%
-		portletURL.setWindowState(WindowState.MAXIMIZED);
-
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), panelApp.getPortletId());
 		%>
 

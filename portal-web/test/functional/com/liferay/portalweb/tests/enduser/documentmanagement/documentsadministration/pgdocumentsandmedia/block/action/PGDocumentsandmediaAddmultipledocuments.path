@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADD_ATTACHMENTS_BUTTON</td>
-	<td>//div[@class='btn-toolbar']/button[contains(.,'Add Attachments')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_FILES_BUTTON</td>
 	<td>//span[@class='select-files-container']/button[contains(.,'Select Files')]</td>
 	<td></td>

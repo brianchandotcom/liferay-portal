@@ -350,7 +350,9 @@
 
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#deleteViaDDLDisplayPG" />
+		<execute macro="DDLRecord#deleteViaDDLDisplayPG">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
 	</command>
 
 	<command name="EditList" priority="4">

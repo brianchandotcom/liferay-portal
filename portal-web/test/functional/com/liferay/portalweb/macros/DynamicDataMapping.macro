@@ -528,6 +528,7 @@
 				<execute macro="DynamicDataMapping#viewFieldPredefinedValueCmd">
 					<var name="field" value="${field}" />
 					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+					<var name="fieldName" value="${fieldName}" />
 					<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 				</execute>
 			</then>

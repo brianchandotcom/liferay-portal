@@ -39,6 +39,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="ScrollWebElementIntoView" locator1="DragAndDrop#CALENDAR_EVENT" />

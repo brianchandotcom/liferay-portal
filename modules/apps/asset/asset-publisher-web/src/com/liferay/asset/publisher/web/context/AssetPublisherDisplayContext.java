@@ -1236,8 +1236,7 @@ public class AssetPublisherDisplayContext {
 
 		List<AssetCategory> assetCategories =
 			AssetCategoryLocalServiceUtil.getVocabularyRootCategories(
-				assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		assetEntryQuery.setClassNameIds(getClassNameIds());
 

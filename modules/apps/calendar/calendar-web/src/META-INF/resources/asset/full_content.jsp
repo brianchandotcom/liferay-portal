@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div>
+<div class="calendar-asset-full-content">
 	<c:if test="<%= Validator.isNotNull(calendarBooking.getDescription(locale)) %>">
 		<div>
 			<%= calendarBooking.getDescription(locale) %>

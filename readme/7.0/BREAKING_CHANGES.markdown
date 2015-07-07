@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `73b5d09`.*
+*This document has been reviewed through commit `1f40667`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2106,24 +2106,24 @@ OSGi services.
 
 ---------------------------------------
 
-### DLFileEntryTypes_DDMStructures is no longer available
-- **Date:** 2015-Jul-1
-- **JIRA Ticket:** LPS-56660 and others
+### Removed the DLFileEntryTypes_DDMStructures Mapping Table
+- **Date:** 2015-Jul-01
+- **JIRA Ticket:** LPS-56660
 
 #### What changed?
 
-DLFileEntryTypes_DDMStructures mapping table is not longer available.
+The `DLFileEntryTypes_DDMStructures` mapping table is no longer available.
 
 #### Who is affected?
 
-This might affect developers using the Document Library File Entry Type Local
-Service API.
+This affects developers using the Document Library File Entry Type Local Service
+API.
 
 #### How should I update my code?
 
-Update the calls to addDDMStructureLinks deleteDDMStructureLinks 
-updateDDMStructureLinks if you want
-to add/remove or update references between DLFileEntryType and DDMStructures.
+Update the calls to `addDDMStructureLinks`, `deleteDDMStructureLinks`, and
+`updateDDMStructureLinks` if you want to add, delete, or update references
+between `DLFileEntryType` and `DDMStructures`.
 
 #### Why was this change made?
 

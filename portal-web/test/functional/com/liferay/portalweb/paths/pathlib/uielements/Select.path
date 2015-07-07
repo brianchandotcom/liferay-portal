@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_TYPE</td>
+	<td>//select[contains(@id,'fileEntryTypeId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER</td>
 	<td>//div[label[contains(.,'Header')]]/select</td>
 	<td></td>

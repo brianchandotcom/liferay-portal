@@ -213,6 +213,61 @@
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Websites')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_HOME</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Home')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_HOME_ACTIONS</td>
+	<td>//div[contains(@id,'folderContainer')]//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_RECENT</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Recent')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_MINE</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Mine')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BROWSE_BY_TYPE</td>
+	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Browse by Type')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BROWSE_BY_TYPE_UP</td>
+	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Up')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BROWSE_BY_TYPE_BASIC_DOCUMENT</td>
+	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Basic Document')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BROWSE_BY_TYPE_CONTRACT</td>
+	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Contract')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BROWSE_BY_TYPE_MARKETING_BANNER</td>
+	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Marketing Banner')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BROWSE_BY_TYPE_ONLINE_TRAINING</td>
+	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Online Training')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BROWSE_BY_TYPE_SALES_PRESENTATION</td>
+	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Sales Presentation')]/a/span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

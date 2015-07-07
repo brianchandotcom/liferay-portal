@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CATEGORIES_DIALOG_BOX</td>
+	<td>//div[contains(@class,'lfr-tag-selector-popup')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
 	<td></td>
@@ -34,13 +39,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_TYPES</td>
+	<td>//iframe[contains(@id,'_openFileEntryTypeView_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_ASSET</td>
 	<td>//iframe[contains(@id,'editAsset_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>METADATA_SETS_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node ')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_CONTENT</td>
 	<td>//iframe[contains(@id,'selectContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILE</td>
+	<td>//iframe[contains(@name,'selectFileEntry')]</td>
 	<td></td>
 </tr>
 <tr>

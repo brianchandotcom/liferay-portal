@@ -14,7 +14,7 @@
 
 package com.liferay.portal.language;
 
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
@@ -52,6 +52,10 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.io.Serializable;
 
@@ -82,6 +86,47 @@ import javax.servlet.http.HttpServletResponse;
  */
 @DoPrivileged
 public class LanguageImpl implements Language, Serializable {
+
+	public void afterPropertiesSet() {
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		serviceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+				@Override
+				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
+
+					MultiVMPool multiVMPool = registry.getService(
+						MultiVMPool.class);
+
+					_portalCache =
+						(PortalCache<Long, Serializable>)multiVMPool.getCache(
+							LanguageImpl.class.getName());
+
+					PortalCacheMapSynchronizeUtil.synchronize(
+						_portalCache, _companyLocalesBags,
+						new Synchronizer<Long, Serializable>() {
+
+							@Override
+							public void onSynchronize(
+								Map<? extends Long, ? extends Serializable> map,
+								Long key, Serializable value, int timeToLive) {
+
+								_companyLocalesBags.remove(key);
+							}
+
+						});
+				}
+
+				@Override
+				public void destroy() {
+				}
+			}
+		);
+
+		serviceDependencyManager.registerDependencies(MultiVMPool.class);
+	}
 
 	@Override
 	public String format(
@@ -947,24 +992,7 @@ public class LanguageImpl implements Language, Serializable {
 		new ConcurrentHashMap<>();
 	private static final Pattern _pattern = Pattern.compile(
 		"Liferay\\.Language\\.get\\([\"']([^)]+)[\"']\\)");
-	private static final PortalCache<Long, Serializable> _portalCache =
-		MultiVMPoolUtil.getCache(LanguageImpl.class.getName());
-
-	static {
-		PortalCacheMapSynchronizeUtil.<Long, Serializable>synchronize(
-			_portalCache, _companyLocalesBags,
-			new Synchronizer<Long, Serializable>() {
-
-				@Override
-				public void onSynchronize(
-					Map<? extends Long, ? extends Serializable> map, Long key,
-					Serializable value, int timeToLive) {
-
-					_companyLocalesBags.remove(key);
-				}
-
-			});
-	}
+	private static PortalCache<Long, Serializable> _portalCache;
 
 	private final Map<Long, Map<String, Locale>>
 		_groupLanguageCodeLocalesMapMap = new ConcurrentHashMap<>();

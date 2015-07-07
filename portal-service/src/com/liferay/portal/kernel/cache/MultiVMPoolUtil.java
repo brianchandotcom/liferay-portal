@@ -14,8 +14,13 @@
 
 package com.liferay.portal.kernel.cache;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.io.Serializable;
 
@@ -52,19 +57,36 @@ public class MultiVMPoolUtil {
 	public static MultiVMPool getMultiVMPool() {
 		PortalRuntimePermission.checkGetBeanProperty(MultiVMPoolUtil.class);
 
-		return _multiVMPool;
+		MultiVMPool multiVMPool = _instance._serviceTracker.getService();
+
+		if (multiVMPool == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("MultiVMPoolUtil has not been initialized");
+			}
+
+			return null;
+		}
+
+		return multiVMPool;
 	}
 
 	public static void removeCache(String portalCacheName) {
 		getMultiVMPool().removeCache(portalCacheName);
 	}
 
-	public void setMultiVMPool(MultiVMPool multiVMPool) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private MultiVMPoolUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_multiVMPool = multiVMPool;
+		_serviceTracker = registry.trackServices(MultiVMPool.class);
+
+		_serviceTracker.open();
 	}
 
-	private static MultiVMPool _multiVMPool;
+	private static final Log _log = LogFactoryUtil.getLog(
+		MultiVMPoolUtil.class);
+
+	private static final MultiVMPoolUtil _instance = new MultiVMPoolUtil();
+
+	private final ServiceTracker<MultiVMPool, MultiVMPool> _serviceTracker;
 
 }

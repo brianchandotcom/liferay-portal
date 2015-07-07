@@ -34,6 +34,10 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.io.Serializable;
 
@@ -55,6 +59,34 @@ public class EntityCacheImpl
 
 	public void afterPropertiesSet() {
 		CacheRegistryUtil.register(this);
+
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		serviceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+				@Override
+				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
+
+					_multiVMPool = registry.getService(MultiVMPool.class);
+
+					PortalCacheManager
+						<? extends Serializable, ? extends Serializable>
+							portalCacheManager =
+						_multiVMPool.getCacheManager();
+
+					portalCacheManager.registerCacheManagerListener(
+						EntityCacheImpl.this);
+				}
+
+				@Override
+				public void destroy() {
+				}
+			}
+		);
+
+		serviceDependencyManager.registerDependencies(MultiVMPool.class);
 	}
 
 	@Override
@@ -326,15 +358,6 @@ public class EntityCacheImpl
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
 		portalCache.remove(cacheKey);
-	}
-
-	public void setMultiVMPool(MultiVMPool multiVMPool) {
-		_multiVMPool = multiVMPool;
-
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = _multiVMPool.getCacheManager();
-
-		portalCacheManager.registerCacheManagerListener(this);
 	}
 
 	private Serializable _encodeCacheKey(Serializable primaryKey) {

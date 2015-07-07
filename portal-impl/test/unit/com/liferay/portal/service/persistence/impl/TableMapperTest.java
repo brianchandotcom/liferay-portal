@@ -39,6 +39,10 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
@@ -57,8 +61,10 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -82,6 +88,11 @@ public class TableMapperTest {
 
 		};
 
+	@BeforeClass
+	public static void setUpClass() {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+	}
+
 	@Before
 	public void setUp() {
 		MappingSqlQueryFactoryUtil mappingSqlQueryFactoryUtil =
@@ -90,9 +101,10 @@ public class TableMapperTest {
 		mappingSqlQueryFactoryUtil.setMappingSqlQueryFactory(
 			new MockMappingSqlQueryFactory());
 
-		MultiVMPoolUtil multiVMPoolUtil = new MultiVMPoolUtil();
+		Registry registry = RegistryUtil.getRegistry();
 
-		multiVMPoolUtil.setMultiVMPool(new MockMultiVMPool());
+		_serviceRegistration = registry.registerService(
+			MultiVMPool.class, new MockMultiVMPool());
 
 		PropsUtil.setProps(new PropsImpl());
 
@@ -128,6 +140,11 @@ public class TableMapperTest {
 		_tableMapperImpl = new TableMapperImpl<Left, Right>(
 			_TABLE_NAME, _LEFT_COLUMN_NAME, _RIGHT_COLUMN_NAME,
 			_leftBasePersistence, _rightBasePersistence);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -1396,6 +1413,7 @@ public class TableMapperTest {
 	private MockBasePersistence<Left> _leftBasePersistence;
 	private final Map<Long, long[]> _mappingStore = new HashMap<>();
 	private MockBasePersistence<Right> _rightBasePersistence;
+	private ServiceRegistration<MultiVMPool> _serviceRegistration;
 	private TableMapperImpl<Left, Right> _tableMapperImpl;
 
 	private class GetPrimaryKeyObjInvocationHandler

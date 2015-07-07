@@ -41,14 +41,7 @@
 			<bean class="com.liferay.portal.bean.ConstantsBeanFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.cache.MultiVMPool" class="com.liferay.portal.cache.MultiVMPoolImpl" />
-	<bean id="com.liferay.portal.kernel.cache.MultiVMPoolUtil" class="com.liferay.portal.kernel.cache.MultiVMPoolUtil">
-		<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.cache.SingleVMPool" class="com.liferay.portal.cache.SingleVMPoolImpl" />
-	<bean id="com.liferay.portal.kernel.cache.SingleVMPoolUtil" class="com.liferay.portal.kernel.cache.SingleVMPoolUtil">
-		<property name="singleVMPool" ref="com.liferay.portal.kernel.cache.SingleVMPool" />
-	</bean>
+	<bean id="com.liferay.portal.kernel.resiliency.spi.cache.SPIPortalCacheManagerConfigurator" class="com.liferay.portal.resiliency.spi.cache.SPIPortalCacheManagerConfiguratorImpl" />
 	<bean id="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" class="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil">
 		<property name="cacheKeyGenerators">
 			<map>
@@ -88,16 +81,12 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.EntityCacheUtil" class="com.liferay.portal.kernel.dao.orm.EntityCacheUtil">
 		<property name="entityCache">
-			<bean class="com.liferay.portal.dao.orm.common.EntityCacheImpl">
-				<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
-			</bean>
+			<bean class="com.liferay.portal.dao.orm.common.EntityCacheImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.FinderCacheUtil" class="com.liferay.portal.kernel.dao.orm.FinderCacheUtil">
 		<property name="finderCache">
-			<bean class="com.liferay.portal.dao.orm.common.FinderCacheImpl">
-				<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
-			</bean>
+			<bean class="com.liferay.portal.dao.orm.common.FinderCacheImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil" class="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil">
@@ -412,9 +401,7 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.webcache.WebCachePoolUtil" class="com.liferay.portal.kernel.webcache.WebCachePoolUtil">
 		<property name="webCachePool">
-			<bean class="com.liferay.portal.webcache.WebCachePoolImpl">
-				<property name="singleVMPool" ref="com.liferay.portal.kernel.cache.SingleVMPool" />
-			</bean>
+			<bean class="com.liferay.portal.webcache.WebCachePoolImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil" class="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil">
@@ -796,9 +783,7 @@
 	<bean class="com.liferay.portal.verify.model.WebSiteVerifiableModel" />
 	<bean id="com.liferay.portal.webserver.WebServerServletTokenUtil" class="com.liferay.portal.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken">
-			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl">
-				<property name="multiVMPool" ref="com.liferay.portal.kernel.cache.MultiVMPool" />
-			</bean>
+			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.workflow.LayoutRevisionWorkflowHandler" class="com.liferay.portal.workflow.LayoutRevisionWorkflowHandler" />

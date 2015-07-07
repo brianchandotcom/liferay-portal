@@ -30,6 +30,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.io.Serializable;
 
@@ -56,6 +60,34 @@ public class FinderCacheImpl
 
 	public void afterPropertiesSet() {
 		CacheRegistryUtil.register(this);
+
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		serviceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+				@Override
+				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
+
+					_multiVMPool = registry.getService(MultiVMPool.class);
+
+					PortalCacheManager
+						<? extends Serializable, ? extends Serializable>
+							portalCacheManager =
+						_multiVMPool.getCacheManager();
+
+					portalCacheManager.registerCacheManagerListener(
+						FinderCacheImpl.this);
+				}
+
+				@Override
+				public void destroy() {
+				}
+			}
+		);
+
+		serviceDependencyManager.registerDependencies(MultiVMPool.class);
 	}
 
 	@Override
@@ -236,15 +268,6 @@ public class FinderCacheImpl
 		portalCache.remove(cacheKey);
 	}
 
-	public void setMultiVMPool(MultiVMPool multiVMPool) {
-		_multiVMPool = multiVMPool;
-
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = _multiVMPool.getCacheManager();
-
-		portalCacheManager.registerCacheManagerListener(this);
-	}
-
 	private PortalCache<Serializable, Serializable> _getPortalCache(
 		String className, boolean createIfAbsent) {
 
@@ -256,7 +279,7 @@ public class FinderCacheImpl
 
 			portalCache =
 				(PortalCache<Serializable, Serializable>)_multiVMPool.getCache(
-					groupKey, PropsValues.VALUE_OBJECT_FINDER_BLOCKING_CACHE);
+					groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
 			PortalCache<Serializable, Serializable> previousPortalCache =
 				_portalCaches.putIfAbsent(className, portalCache);
@@ -347,7 +370,7 @@ public class FinderCacheImpl
 		if (PropsValues.VALUE_OBJECT_FINDER_THREAD_LOCAL_CACHE_MAX_SIZE > 0) {
 			_LOCAL_CACHE_AVAILABLE = true;
 
-			_localCache = new AutoResetThreadLocal<LRUMap>(
+			_localCache = new AutoResetThreadLocal<>(
 				FinderCacheImpl.class + "._localCache",
 				new LRUMap(
 					PropsValues.

@@ -224,28 +224,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		List<TrashEntry> entries = trashEntryPersistence.findByGroupId(
 			groupId, 0, end + PropsValues.TRASH_SEARCH_LIMIT, obc);
 
-		List<TrashEntry> filteredEntries = new ArrayList<>();
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		for (TrashEntry entry : entries) {
-			String className = entry.getClassName();
-			long classPK = entry.getClassPK();
-
-			try {
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(className);
-
-				if (trashHandler.hasTrashPermission(
-						permissionChecker, 0, classPK, ActionKeys.VIEW)) {
-
-					filteredEntries.add(entry);
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+		List<TrashEntry> filteredEntries = filterViewableEntries(entries);
 
 		int total = filteredEntries.size();
 
@@ -277,29 +256,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		List<TrashEntry> entries = trashEntryPersistence.findByG_C(
 			groupId, classNameId);
 
-		List<TrashEntry> filteredEntries = new ArrayList<>();
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		for (TrashEntry entry : entries) {
-			long classPK = entry.getClassPK();
-
-			try {
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(className);
-
-				if (trashHandler.hasTrashPermission(
-						permissionChecker, 0, classPK, ActionKeys.VIEW)) {
-
-					filteredEntries.add(entry);
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		return filteredEntries;
+		return filterViewableEntries(entries);
 	}
 
 	/**
@@ -519,6 +476,35 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		}
 
 		trashHandler.deleteTrashEntry(entry.getClassPK());
+	}
+
+	protected List<TrashEntry> filterViewableEntries(List<TrashEntry> entries)
+		throws PrincipalException {
+
+		List<TrashEntry> filteredEntries = new ArrayList<>();
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		for (TrashEntry entry : entries) {
+			String className = entry.getClassName();
+			long classPK = entry.getClassPK();
+
+			try {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(className);
+
+				if (trashHandler.hasTrashPermission(
+						permissionChecker, 0, classPK, ActionKeys.VIEW)) {
+
+					filteredEntries.add(entry);
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		return filteredEntries;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

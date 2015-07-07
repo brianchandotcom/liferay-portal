@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>DocumentsAndMediaMetadataSets</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaMetadataSets</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>REQUIRED_STRUCTURES_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'Required structures could not be deleted.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_SETS_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD</td>
+	<td>//div[contains(@id,'Navbar')]/ul[@aria-label='Dynamic Data Mapping']/li/a/span[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--METADATA_SETS_TABLE-->
+<tr>
+	<td>METADATA_SETS_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_metadataSetName}')]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_SETS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_metadataSetName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_SETS_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_metadataSetName}')]/td[6]/div/a[@title='Actions']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_SETS_TABLE_ACTIONS_1</td>
+	<td>//div[contains(@class,'lfr-icon-menu')]/a[@title='Actions']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_SETS_TABLE_CHOOSE</td>
+	<td>//tr[contains(.,'${key_metadataSetName}')]/td[5]/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

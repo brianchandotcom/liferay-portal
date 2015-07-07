@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>DocumentsAndMediaConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DocumentsAndMediaConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTINGS-->
+<tr>
+	<td>DISPLAY_SETTINGS_DROPDOWN</td>
+	<td>//div[@id='documentLibraryItemsListingPanel']/div[contains(@class,'toggler-header-expanded')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DROPDOWN_COLLAPSED</td>
+	<td>//div[@id='documentLibraryItemsListingPanel']/div[contains(@class,'toggler-header-collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ROOT_FOLDER_FIELD</td>
+	<td>//input[@id='_86_rootFolderName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ROOT_FOLDER_SELECT_BUTTON</td>
+	<td>//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ROOT_FOLDER_REMOVE_BUTTON</td>
+	<td>//button[contains(.,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX</td>
+	<td>//input[contains(@id,'showFoldersSearch')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT</td>
+	<td>//select[contains(@id,'entriesPerPage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX</td>
+	<td>//input[contains(@id,'enableRelatedAssets')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_CURRENT_SELECT</td>
+	<td>//select[contains(@id,'currentDisplayViews')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT</td>
+	<td>//select[contains(@id,'availableDisplayViews')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT</td>
+	<td>//select[contains(@id,'currentDisplayViews')]/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_AVAILABLE_PRESENT</td>
+	<td>//select[contains(@id,'availableDisplayViews')]/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
+	<td>xpath=(//div[contains(@class,'btn-group-vertical')]/button)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
+	<td>xpath=(//div[contains(@class,'btn-group-vertical')]/button)[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

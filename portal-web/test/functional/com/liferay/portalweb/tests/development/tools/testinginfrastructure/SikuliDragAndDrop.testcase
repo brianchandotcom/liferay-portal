@@ -1,5 +1,4 @@
 <definition component-name="portal-tools">
-	<property name="portlet.plugins.includes" value="calendar-portlet" />
 	<property name="testray.main.component.name" value="Tools" />
 
 	<var name="pageName" value="Calendar Page" />

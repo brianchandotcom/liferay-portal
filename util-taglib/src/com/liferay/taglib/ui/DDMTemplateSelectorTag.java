@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -94,9 +93,8 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		if (Validator.isNull(displayStyle) &&
 			(portletDisplayDDMTemplate != null)) {
 
-			displayStyle =
-				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
-					portletDisplayDDMTemplate.getTemplateKey();
+			displayStyle = PortletDisplayTemplateManagerUtil.getDisplayStyle(
+				portletDisplayDDMTemplate.getTemplateKey());
 		}
 
 		return displayStyle;

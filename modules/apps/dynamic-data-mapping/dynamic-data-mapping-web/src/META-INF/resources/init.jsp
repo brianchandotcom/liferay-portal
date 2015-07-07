@@ -116,6 +116,7 @@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil"
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
+page import="com.liferay.registry.Registry" %><%@
 page import="com.liferay.registry.RegistryUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.ContentUtil" %>
@@ -228,7 +229,9 @@ private JSONArray _getFormTemplateFieldsJSONArray(DDMStructure structure, String
 	return jsonArray;
 }
 
-private PortletDisplayTemplate getPortletDisplayTemplate() {
-	return RegistryUtil.getRegistry().getService(PortletDisplayTemplate.class);
+private PortletDisplayTemplate _getPortletDisplayTemplate() {
+	Registry registry = RegistryUtil.getRegistry();
+
+	return registry.getService(PortletDisplayTemplate.class);
 }
 %>

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.display.template.service.PortletDisplayTemplate;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
 
@@ -167,8 +168,9 @@ public class BreadcrumbDisplayContext {
 	}
 
 	protected PortletDisplayTemplate getPortletDisplayTemplate() {
-		return RegistryUtil.getRegistry().getService(
-			PortletDisplayTemplate.class);
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(PortletDisplayTemplate.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

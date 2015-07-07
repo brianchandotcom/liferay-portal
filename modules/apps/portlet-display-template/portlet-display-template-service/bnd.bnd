@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Portlet Display Template Service
 Bundle-SymbolicName: com.liferay.portlet.display.template.service
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.portlet.display.template.service
 Include-Resource: classes
-Export-Package:  \
-	com.liferay.portlet.display.template.service

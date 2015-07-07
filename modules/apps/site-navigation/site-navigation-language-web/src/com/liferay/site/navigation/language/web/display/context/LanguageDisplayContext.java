@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.display.template.service.PortletDisplayTemplate;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
 
@@ -164,8 +165,9 @@ public class LanguageDisplayContext {
 	}
 
 	protected PortletDisplayTemplate getPortletDisplayTemplate() {
-		return RegistryUtil.getRegistry().getService(
-			PortletDisplayTemplate.class);
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(PortletDisplayTemplate.class);
 	}
 
 	private String[] _availableLanguageIds;

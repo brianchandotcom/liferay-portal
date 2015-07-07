@@ -95,6 +95,9 @@ public class TemplateHandlerRegistryUtil {
 		_serviceTracker.open();
 	}
 
+	private static final String _PORTLET_DISPLAY_TEMPLATE_CLASS_NAME =
+		"com.liferay.portlet.display.template.service.PortletDisplayTemplate";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateHandlerRegistryUtil.class);
 
@@ -207,8 +210,7 @@ public class TemplateHandlerRegistryUtil {
 				DDMTemplateLocalServiceUtil.addTemplate(
 					userId, group.getGroupId(), classNameId, 0,
 					PortalUtil.getClassNameId(
-						"com.liferay.portlet.display" +
-						".template.service.PortletDisplayTemplate"),
+						_PORTLET_DISPLAY_TEMPLATE_CLASS_NAME),
 					templateKey, nameMap, descriptionMap,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language,
 					script, cacheable, false, null, null, serviceContext);

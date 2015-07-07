@@ -85,7 +85,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
 				group.getCompanyId());
 
-			String uuid = getDDMTemplateUuid(displayStyle);
+			String uuid = getDDMTemplateKey(displayStyle);
 
 			if (Validator.isNull(uuid)) {
 				return null;

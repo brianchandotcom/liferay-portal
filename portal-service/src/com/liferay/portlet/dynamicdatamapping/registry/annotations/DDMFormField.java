@@ -34,6 +34,10 @@ public @interface DDMFormField {
 
 	public String name() default StringPool.BLANK;
 
+	public String[] optionLabels() default {};
+
+	public String[] optionValues() default {};
+
 	public String type() default StringPool.BLANK;
 
 	public String visibilityExpression() default StringPool.TRUE;

@@ -26,10 +26,12 @@ import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
 public interface SelectDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField
+	@DDMFormField(label = "%multiple")
 	public boolean multiple();
 
-	@DDMFormField(dataType = "ddm-options", type = "options")
+	@DDMFormField(
+		dataType = "ddm-options", label = "%options", type = "options"
+	)
 	public DDMFormFieldOptions options();
 
 }

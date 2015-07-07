@@ -12,10 +12,17 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.util;
+package com.liferay.dynamic.data.mapping.util.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFactory;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.portlet.dynamicdatamapping.registry.DefaultDDMFormFieldTypeSettings;
@@ -23,12 +30,21 @@ import com.liferay.portlet.dynamicdatamapping.registry.DefaultDDMFormFieldTypeSe
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Marcellus Tavares
  */
+@RunWith(Arquillian.class)
 public class DDMFormFactoryTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testCreateDDMFormFieldTypeSettingsDDMForm() {
@@ -56,7 +72,19 @@ public class DDMFormFactoryTest {
 
 		Assert.assertNotNull(indexTypeDDMFormField);
 		Assert.assertEquals("string", indexTypeDDMFormField.getDataType());
-		Assert.assertEquals("text", indexTypeDDMFormField.getType());
+		Assert.assertEquals("select", indexTypeDDMFormField.getType());
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			indexTypeDDMFormField.getDDMFormFieldOptions();
+
+		LocalizedValue ddmFormFieldOptionLabels =
+			ddmFormFieldOptions.getOptionLabels(StringPool.BLANK);
+
+		Assert.assertEquals(
+			"No indexable",
+			ddmFormFieldOptionLabels.getString(LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			"Not Indexable", ddmFormFieldOptionLabels.getString(LocaleUtil.US));
 
 		DDMFormField labelDDMFormField = ddmFormFieldsMap.get("label");
 
@@ -130,6 +158,11 @@ public class DDMFormFactoryTest {
 		Assert.assertEquals("string", nameDDMFormField.getDataType());
 		Assert.assertEquals("text", nameDDMFormField.getType());
 		Assert.assertEquals(false, nameDDMFormField.isLocalizable());
+
+		LocalizedValue nameLabel = nameDDMFormField.getLabel();
+
+		Assert.assertEquals("Nome", nameLabel.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals("Name", nameLabel.getString(LocaleUtil.US));
 
 		DDMFormField typeDDMFormField = ddmFormFieldsMap.get("type");
 

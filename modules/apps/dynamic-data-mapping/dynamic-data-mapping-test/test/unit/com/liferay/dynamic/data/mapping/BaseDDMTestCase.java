@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -556,6 +557,11 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpLanguageUtil() {
+		Set<Locale> availableLocales = SetUtil.fromArray(
+			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US});
+
+		whenLanguageGetAvailableLocalesThen(availableLocales);
+
 		whenLanguageGet(LocaleUtil.BRAZIL, "no", "Não");
 		whenLanguageGet(LocaleUtil.BRAZIL, "yes", "Sim");
 		whenLanguageGet(LocaleUtil.SPAIN, "latitude", "Latitud");
@@ -565,10 +571,12 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		whenLanguageGet(LocaleUtil.US, "no", "No");
 		whenLanguageGet(LocaleUtil.US, "yes", "Yes");
 
-		whenLanguageGetLanguageId(LocaleUtil.US, "en_US");
 		whenLanguageGetLanguageId(LocaleUtil.BRAZIL, "pt_BR");
+		whenLanguageGetLanguageId(LocaleUtil.SPAIN, "es_ES");
+		whenLanguageGetLanguageId(LocaleUtil.US, "en_US");
 
 		whenLanguageIsAvailableLocale("en_US");
+		whenLanguageIsAvailableLocale("es_ES");
 		whenLanguageIsAvailableLocale("pt_BR");
 
 		LanguageUtil languageUtil = new LanguageUtil();
@@ -692,6 +700,16 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 			_language.get(Matchers.eq(locale), Matchers.eq(key))
 		).thenReturn(
 			returnValue
+		);
+	}
+
+	protected void whenLanguageGetAvailableLocalesThen(
+		Set<Locale> availableLocales) {
+
+		when(
+			_language.getAvailableLocales()
+		).thenReturn(
+			availableLocales
 		);
 	}
 

@@ -202,24 +202,13 @@ public class DLFileShortcutTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		DLFolder dlFolder = (DLFolder)parentBaseModel;
 
 		return addBaseModelWithWorkflow(
 			dlFolder.getGroupId(), dlFolder.getFolderId(), serviceContext);
-	}
-
-	@Override
-	protected BaseModel<?> addBaseModelWithWorkflow(
-			boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		return addBaseModelWithWorkflow(
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
 	protected BaseModel<?> addBaseModelWithWorkflow(
@@ -235,6 +224,16 @@ public class DLFileShortcutTrashHandlerTest
 			groupId, folderId, fileEntry.getFileEntryId(), serviceContext);
 
 		return (BaseModel<?>)fileShortcut.getModel();
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModelWithWorkflow(
+			serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
 	@Override
@@ -312,8 +311,7 @@ public class DLFileShortcutTrashHandlerTest
 			parentBaseModel);
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
-		BaseModel<?> baseModel = addBaseModel(
-			parentBaseModel, true, serviceContext);
+		BaseModel<?> baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		DLFileShortcut dlFileShortcut = (DLFileShortcut)baseModel;
 

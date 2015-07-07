@@ -168,7 +168,7 @@ public class MBThreadTrashHandlerTest
 		int initialBaseModelsCount = getMessageCount(
 			(Long)parentBaseModel.getPrimaryKeyObj());
 
-		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
@@ -180,7 +180,7 @@ public class MBThreadTrashHandlerTest
 			initialBaseModelsCount,
 			getMessageCount((Long)parentBaseModel.getPrimaryKeyObj()));
 
-		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
@@ -290,8 +290,7 @@ public class MBThreadTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		MBCategory category = (MBCategory)parentBaseModel;
@@ -299,14 +298,14 @@ public class MBThreadTrashHandlerTest
 		MBMessage message = MBTestUtil.addMessageWithWorkflow(
 			serviceContext.getUserId(), category.getGroupId(),
 			category.getCategoryId(), getSearchKeywords(), getSearchKeywords(),
-			approved, serviceContext);
+			true, serviceContext);
 
 		return message.getThread();
 	}
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			boolean approved, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(

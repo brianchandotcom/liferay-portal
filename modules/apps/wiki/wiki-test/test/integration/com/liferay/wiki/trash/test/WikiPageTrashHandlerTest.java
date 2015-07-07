@@ -202,12 +202,11 @@ public class WikiPageTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		return WikiPageTrashHandlerTestUtil.addBaseModelWithWorkflow(
-			parentBaseModel, approved, serviceContext);
+			parentBaseModel, true, serviceContext);
 	}
 
 	@Override

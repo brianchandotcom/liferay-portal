@@ -236,8 +236,7 @@ public class BookmarksFolderTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
@@ -251,7 +250,7 @@ public class BookmarksFolderTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			boolean approved, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		String name = getSearchKeywords();

@@ -255,8 +255,7 @@ public class BookmarksEntryTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
@@ -264,16 +263,6 @@ public class BookmarksEntryTrashHandlerTest
 		return addBaseModelWithWorkflow(
 			folder.getUserId(), folder.getGroupId(), folder.getFolderId(),
 			serviceContext);
-	}
-
-	@Override
-	protected BaseModel<?> addBaseModelWithWorkflow(
-			boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		return addBaseModelWithWorkflow(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
 	protected BaseModel<?> addBaseModelWithWorkflow(
@@ -287,6 +276,16 @@ public class BookmarksEntryTrashHandlerTest
 
 		return BookmarksEntryLocalServiceUtil.addEntry(
 			userId, groupId, folderId, name, url, description, serviceContext);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModelWithWorkflow(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
 	@Override

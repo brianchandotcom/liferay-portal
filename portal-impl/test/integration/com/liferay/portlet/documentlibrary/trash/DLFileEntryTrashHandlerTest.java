@@ -191,7 +191,7 @@ public class DLFileEntryTrashHandlerTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		DLFileEntry dlFileEntry = (DLFileEntry)addBaseModelWithWorkflow(
-			true, serviceContext);
+			serviceContext);
 
 		moveBaseModelToTrash(dlFileEntry.getFileEntryId());
 
@@ -280,24 +280,13 @@ public class DLFileEntryTrashHandlerTest
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		DLFolder dlFolder = (DLFolder)parentBaseModel;
 
 		return addBaseModelWithWorkflow(
-			dlFolder.getGroupId(), dlFolder.getFolderId(), approved);
-	}
-
-	@Override
-	protected BaseModel<?> addBaseModelWithWorkflow(
-			boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		return addBaseModelWithWorkflow(
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved);
+			dlFolder.getGroupId(), dlFolder.getFolderId(), true);
 	}
 
 	protected BaseModel<?> addBaseModelWithWorkflow(
@@ -314,6 +303,16 @@ public class DLFileEntryTrashHandlerTest
 			approved, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModelWithWorkflow(
+			serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true);
 	}
 
 	@Override
@@ -418,8 +417,7 @@ public class DLFileEntryTrashHandlerTest
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		BaseModel<?> baseModel = addBaseModel(
-			parentBaseModel, true, serviceContext);
+		BaseModel<?> baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		DLAppLocalServiceUtil.addFileRank(
 			group.getGroupId(), TestPropsValues.getCompanyId(),

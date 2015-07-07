@@ -76,6 +76,13 @@ public class DLFileShortcutTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
+		throws Exception {
+
+		return _whenIsAssetable.fetchAssetEntry(classedModel);
+	}
+
+	@Override
 	public String getParentBaseModelClassName() {
 		Class<DLFolder> dlFolderClass = DLFolder.class;
 

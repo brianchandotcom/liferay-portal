@@ -38,8 +38,6 @@ import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -339,7 +337,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
-		Assert.assertNull(fetchAssetEntry(baseModel));
+		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
+			(WhenIsAssetableBaseModel)this;
+
+		Assert.assertNull(whenIsAssetableBaseModel.fetchAssetEntry(baseModel));
 	}
 
 	@Test
@@ -439,7 +440,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
-		Assert.assertNull(fetchAssetEntry(baseModel));
+		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
+			(WhenIsAssetableBaseModel)this;
+
+		Assert.assertNull(whenIsAssetableBaseModel.fetchAssetEntry(baseModel));
 	}
 
 	@Test
@@ -2097,7 +2101,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
-		Assert.assertNull(fetchAssetEntry(baseModel));
+		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
+			(WhenIsAssetableBaseModel)this;
+
+		Assert.assertNull(whenIsAssetableBaseModel.fetchAssetEntry(baseModel));
 	}
 
 	@Test
@@ -2840,15 +2847,6 @@ public abstract class BaseTrashHandlerTestCase {
 	protected void deleteParentBaseModel(
 			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
 		throws Exception {
-	}
-
-	protected AssetEntry fetchAssetEntry(ClassedModel classedModel)
-		throws Exception {
-
-		Class<?> modelClass = classedModel.getModelClass();
-
-		return AssetEntryLocalServiceUtil.fetchEntry(
-			modelClass.getName(), (Long)classedModel.getPrimaryKeyObj());
 	}
 
 	protected Long getAssetClassPK(ClassedModel classedModel) {

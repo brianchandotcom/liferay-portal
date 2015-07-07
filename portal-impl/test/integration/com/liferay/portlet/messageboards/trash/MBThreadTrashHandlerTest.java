@@ -29,6 +29,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -109,6 +111,19 @@ public class MBThreadTrashHandlerTest
 	@Override
 	public String getSearchKeywords() {
 		return _SUBJECT;
+	}
+
+	@Override
+	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
+		throws Exception {
+
+		MBMessage rootMessage = MBMessageLocalServiceUtil.getMBMessage(
+			((MBThread)classedModel).getRootMessageId());
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			rootMessage.getModelClassName(), getAssetClassPK(rootMessage));
+
+		return assetEntry.isVisible();
 	}
 
 	@Override
@@ -302,18 +317,6 @@ public class MBThreadTrashHandlerTest
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected boolean isAssetEntryVisible(
-			ClassedModel classedModel, long classPK)
-		throws Exception {
-
-		MBMessage rootMessage = MBMessageLocalServiceUtil.getMBMessage(
-			((MBThread)classedModel).getRootMessageId());
-
-		return super.isAssetEntryVisible(
-			rootMessage, getAssetClassPK(rootMessage));
 	}
 
 	@Override

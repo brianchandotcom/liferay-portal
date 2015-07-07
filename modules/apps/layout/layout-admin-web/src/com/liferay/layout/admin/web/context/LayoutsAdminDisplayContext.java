@@ -70,7 +70,7 @@ public class LayoutsAdminDisplayContext {
 		if (Validator.isNull(tabs1)) {
 			LayoutSet layoutSet = _themeDisplay.getLayoutSet();
 
-			Layout refererLayout = LayoutLocalServiceUtil.getLayout(
+			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
 				_themeDisplay.getRefererPlid());
 
 			if (refererLayout != null) {

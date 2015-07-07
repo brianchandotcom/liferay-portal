@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+package com.liferay.portlet.admin.util;
 
-<%@ page import="com.liferay.application.list.PanelApp" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portlet.PortletURLFactoryUtil" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class PortalProductMenuApplicationType {
 
-<%@ page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+	public interface ProductMenu {
 
-<liferay-theme:defineObjects />
+		public static final String CLASS_NAME =
+			"com.liferay.portlet.admin.util." +
+				"PortalProductMenuApplicationType$ProductMenu";
+
+	}
+
+}

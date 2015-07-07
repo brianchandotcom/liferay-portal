@@ -305,13 +305,15 @@ public class MBThreadTrashHandlerTest
 	}
 
 	@Override
-	protected boolean isAssetEntryVisible(ClassedModel classedModel)
+	protected boolean isAssetEntryVisible(
+			ClassedModel classedModel, long classPK)
 		throws Exception {
 
 		MBMessage rootMessage = MBMessageLocalServiceUtil.getMBMessage(
 			((MBThread)classedModel).getRootMessageId());
 
-		return super.isAssetEntryVisible(rootMessage);
+		return super.isAssetEntryVisible(
+			rootMessage, getAssetClassPK(rootMessage));
 	}
 
 	@Override

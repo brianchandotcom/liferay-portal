@@ -185,6 +185,8 @@ public class POPNotificationsMessageListener
 				messages, new Flags(Flags.Flag.DELETED), true);
 
 			_inboxFolder.close(true);
+
+			_store.close();
 		}
 	}
 

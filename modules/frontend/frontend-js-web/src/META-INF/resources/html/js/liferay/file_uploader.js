@@ -75,7 +75,7 @@ AUI.add(
 
 						var item = event.newVal;
 
-						if (item.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+						if (item && item.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
 							event.preventDefault();
 
 							instance.startUpload(item);

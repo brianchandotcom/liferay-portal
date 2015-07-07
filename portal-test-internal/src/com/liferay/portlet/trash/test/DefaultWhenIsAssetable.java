@@ -24,6 +24,16 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 public class DefaultWhenIsAssetable implements WhenIsAssetable {
 
 	@Override
+	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
+		throws Exception {
+
+		Class<?> modelClass = classedModel.getModelClass();
+
+		return AssetEntryLocalServiceUtil.fetchEntry(
+			modelClass.getName(), (Long)classedModel.getPrimaryKeyObj());
+	}
+
+	@Override
 	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
 		throws Exception {
 

@@ -15,11 +15,15 @@
 package com.liferay.portlet.trash.test;
 
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portlet.asset.model.AssetEntry;
 
 /**
  * @author Cristina González
  */
 public interface WhenIsAssetable {
+
+	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
+		throws Exception;
 
 	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
 		throws Exception;

@@ -25,6 +25,7 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
@@ -67,6 +68,13 @@ public class BlogsEntryTrashHandlerTest
 		return BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), getSearchKeywords(), false,
 			serviceContext);
+	}
+
+	@Override
+	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
+		throws Exception {
+
+		return _whenIsAssetable.fetchAssetEntry(classedModel);
 	}
 
 	@Override

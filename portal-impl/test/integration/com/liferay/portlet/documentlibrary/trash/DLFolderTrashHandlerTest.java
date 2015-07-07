@@ -28,6 +28,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -68,6 +69,13 @@ public class DLFolderTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
+		throws Exception {
+
+		return _whenIsAssetable.fetchAssetEntry(classedModel);
+	}
 
 	@Override
 	public String getBaseModelName(ClassedModel classedModel) {

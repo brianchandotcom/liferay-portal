@@ -29,6 +29,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -82,6 +83,13 @@ public class MBThreadTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
+		throws Exception {
+
+		return _whenIsAssetable.fetchAssetEntry(classedModel);
+	}
 
 	@Override
 	public int getMineBaseModelsCount(long groupId, long userId)

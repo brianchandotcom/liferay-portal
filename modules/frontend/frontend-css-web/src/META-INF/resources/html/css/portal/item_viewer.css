@@ -22,6 +22,10 @@
 			display: none;
 		}
 	}
+
+	.tabular-list-group {
+		width: 100%;
+	}
 }
 
 .lfr-item-viewer-close {

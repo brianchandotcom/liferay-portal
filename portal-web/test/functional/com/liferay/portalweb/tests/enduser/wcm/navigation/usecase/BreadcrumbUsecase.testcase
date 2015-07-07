@@ -229,10 +229,9 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+			<var name="url" value="http://localhost:8080/web/site-name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -247,11 +246,9 @@
 			<var name="checkSetupName" value="Show Guest Site" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://127.0.0.1:8080/web/site-name" />
+			<var name="url" value="http://127.0.0.1:8080/web/site-name" />
 		</execute>
 
 		<execute function="AssertLocation" value1="http://127.0.0.1:8080/web/site-name/site-page-name" />

@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.portal.kernel.test.search,\
 	com.liferay.portal.kernel.test.util,\
 	com.liferay.portlet.asset.service.persistence.test,\
+	com.liferay.portlet.blogs.util.test,\
 	com.liferay.portlet.documentlibrary.util.test,\
 	com.liferay.portlet.dynamicdatamapping.util.test,\
 	com.liferay.portlet.expando.util.test,\

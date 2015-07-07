@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.editor.configuration;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,8 +32,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=coverImageCaptionEditor", "javax.portlet.name=33",
-		"javax.portlet.name=161"
+		"editor.config.key=coverImageCaptionEditor",
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN
 	},
 	service = EditorConfigContributor.class
 )

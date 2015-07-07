@@ -182,42 +182,6 @@
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
-		<portlet-name>33</portlet-name>
-		<display-name>Blogs</display-name>
-		<portlet-class>com.liferay.portlet.blogs.portlet.BlogsPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/blogs/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<portlet-preferences>
-			<preference>
-				<name>portletSetupShowBorders</name>
-				<value>false</value>
-			</preference>
-		</portlet-preferences>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
-		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
-		<supported-public-render-parameter>tag</supported-public-render-parameter>
-	</portlet>
-	<portlet>
 		<portlet-name>34</portlet-name>
 		<display-name>Shopping</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
@@ -510,64 +474,6 @@
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
 		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
-	</portlet>
-	<portlet>
-		<portlet-name>114</portlet-name>
-		<display-name>Recent Bloggers</display-name>
-		<portlet-class>com.liferay.portlet.recentbloggers.portlet.RecentBloggersPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/recent_bloggers/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/recent_bloggers/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>115</portlet-name>
-		<display-name>Blogs Aggregator</display-name>
-		<portlet-class>com.liferay.portlet.blogsaggregator.portlet.BlogsAggregatorPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/blogs_aggregator/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
 	</portlet>
 	<portlet>
 		<portlet-name>119</portlet-name>
@@ -924,27 +830,6 @@
 		</security-role-ref>
 		<security-role-ref>
 			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>161</portlet-name>
-		<display-name>Blogs</display-name>
-		<portlet-class>com.liferay.portlet.blogsadmin.portlet.BlogsAdminPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/blogs_admin/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
 		</security-role-ref>
 	</portlet>
 	<portlet>

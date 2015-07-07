@@ -1,0 +1,142 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+	<portlet:renderURL var="editEntryURL">
+		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<aui:button href="<%= editEntryURL %>" icon="icon-plus" value="add-blog-entry" />
+</c:if>
+
+<div class="subscribe">
+	<c:if test="<%= blogsPortletInstanceSettings.isEnableRSS() %>">
+		<liferay-ui:rss
+			delta="<%= blogsPortletInstanceSettings.getRssDelta() %>"
+			displayStyle="<%= blogsPortletInstanceSettings.getRssDisplayStyle() %>"
+			feedType="<%= blogsPortletInstanceSettings.getRssFeedType() %>"
+			url='<%= themeDisplay.getPathMain() + "/blogs/rss" %>'
+		/>
+	</c:if>
+
+	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
+		<c:choose>
+			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
+				<portlet:actionURL name="/blogs/edit_entry" var="unsubscribeURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					iconCssClass="icon-remove-sign"
+					label="<%= true %>"
+					message="unsubscribe"
+					url="<%= unsubscribeURL %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL name="/blogs/edit_entry" var="subscribeURL">
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					iconCssClass="icon-ok-sign"
+					label="<%= true %>"
+					message="subscribe"
+					url="<%= subscribeURL %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</div>
+
+<liferay-ui:categorization-filter
+	assetType="entries"
+	portletURL="<%= portletURL %>"
+/>
+
+<%
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("blogsPortletInstanceSettings", blogsPortletInstanceSettings);
+%>
+
+<liferay-ui:ddm-template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= _convertToBlogEntries(results) %>">
+
+	<%
+	int index = 0;
+
+	for (Object result : results) {
+		BlogsEntry entry = null;
+
+		AssetEntry assetEntry = null;
+
+		if (result instanceof AssetEntry) {
+			assetEntry = (AssetEntry)result;
+
+			entry = BlogsEntryLocalServiceUtil.getEntry(assetEntry.getClassPK());
+
+			AssetUtil.addLayoutTags(request, assetEntry.getTags());
+		}
+		else {
+			entry = (BlogsEntry)result;
+		}
+
+		index++;
+
+		request.setAttribute("view_entry_content.jsp-searchContainer", searchContainer);
+
+		request.setAttribute("view_entry_content.jsp-entry", entry);
+
+		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
+	%>
+
+	<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
+
+	<c:if test="<%= index < searchContainer.getTotal() %>">
+		<div class="separator"><!-- --></div>
+	</c:if>
+
+	<%
+	}
+	%>
+
+</liferay-ui:ddm-template-renderer>
+
+<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+
+<%!
+private List<BlogsEntry> _convertToBlogEntries(List results) throws PortalException, SystemException {
+	if (results.isEmpty() || (results.get(0) instanceof BlogsEntry)) {
+		return results;
+	}
+
+	List<BlogsEntry> entries = new ArrayList<BlogsEntry>(results.size());
+
+	for (Object result : results) {
+		AssetEntry assetEntry = (AssetEntry)result;
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(assetEntry.getClassPK());
+
+		entries.add(entry);
+	}
+
+	return entries;
+}
+%>

@@ -24,12 +24,14 @@ String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYP
 
 Group guestGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.GUEST);
 
-long blogsPlid = PortalUtil.getPlidFromPortletId(group.getGroupId(), PortletKeys.BLOGS);
+String portletId = PortletProviderUtil.getPortletId(BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
+long blogsPlid = PortalUtil.getPlidFromPortletId(group.getGroupId(), portletId);
 
 String blogsFriendlyURL = null;
 
 if (blogsPlid != LayoutConstants.DEFAULT_PLID) {
-	blogsFriendlyURL = PortalUtil.getLayoutFullURL(group.getGroupId(), PortletKeys.BLOGS, request.isSecure());
+	blogsFriendlyURL = PortalUtil.getLayoutFullURL(group.getGroupId(), portletId, request.isSecure());
 }
 
 long mbPlid = PortalUtil.getPlidFromPortletId(guestGroup.getGroupId(), PortletKeys.MESSAGE_BOARDS);

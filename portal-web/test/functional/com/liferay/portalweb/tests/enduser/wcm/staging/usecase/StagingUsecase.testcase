@@ -582,6 +582,7 @@
 	<command known-issues="LPS-47429" name="PublishCustomPortletTitle" priority="4">
 		<execute test-case="super#AddSitePagesVariation" />
 
+		<var name="pageName" value="Staging Test Page" />
 		<var name="portletName" value="Sites Directory" />
 
 		<execute macro="Page#gotoPG">
@@ -2106,7 +2107,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#activateStagingCP" />
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -2154,6 +2157,7 @@
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="editActivateStaging" value="true" />
+			<var name="siteName" value="Site Name" />
 			<var name="uncheckContent" value="Blogs" />
 		</execute>
 

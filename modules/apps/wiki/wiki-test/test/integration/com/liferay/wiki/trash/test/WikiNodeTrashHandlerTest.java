@@ -52,6 +52,13 @@ public class WikiNodeTrashHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
+	public String getBaseModelName(ClassedModel classedModel) {
+		WikiNode node = (WikiNode)classedModel;
+
+		return node.getName();
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -132,13 +139,6 @@ public class WikiNodeTrashHandlerTest
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return WikiNode.class;
-	}
-
-	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		WikiNode node = (WikiNode)classedModel;
-
-		return node.getName();
 	}
 
 	@Override

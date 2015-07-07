@@ -361,13 +361,6 @@ public class BookmarksEntryTrashHandlerTest
 	}
 
 	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		BookmarksEntry entry = (BookmarksEntry)classedModel;
-
-		return entry.getName();
-	}
-
-	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 

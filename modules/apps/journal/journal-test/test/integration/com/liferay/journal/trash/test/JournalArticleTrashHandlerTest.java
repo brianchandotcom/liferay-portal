@@ -100,6 +100,13 @@ public class JournalArticleTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getBaseModelName(ClassedModel classedModel) {
+		JournalArticle article = (JournalArticle)classedModel;
+
+		return article.getArticleId();
+	}
+
+	@Override
 	public List<? extends WorkflowedModel> getChildrenWorkflowedModels(
 			BaseModel<?> parentBaseModel)
 		throws Exception {
@@ -349,13 +356,6 @@ public class JournalArticleTrashHandlerTest
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return JournalArticle.class;
-	}
-
-	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		JournalArticle article = (JournalArticle)classedModel;
-
-		return article.getArticleId();
 	}
 
 	@Override

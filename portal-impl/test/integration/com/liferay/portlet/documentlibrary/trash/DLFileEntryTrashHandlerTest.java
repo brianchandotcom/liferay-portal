@@ -94,6 +94,13 @@ public class DLFileEntryTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getBaseModelName(ClassedModel classedModel) {
+		DLFileEntry dlFileEntry = (DLFileEntry)classedModel;
+
+		return dlFileEntry.getTitle();
+	}
+
+	@Override
 	public int getMineBaseModelsCount(long groupId, long userId)
 		throws Exception {
 
@@ -331,13 +338,6 @@ public class DLFileEntryTrashHandlerTest
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return DLFileEntry.class;
-	}
-
-	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		DLFileEntry dlFileEntry = (DLFileEntry)classedModel;
-
-		return dlFileEntry.getTitle();
 	}
 
 	@Override

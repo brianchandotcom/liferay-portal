@@ -70,6 +70,13 @@ public class DLFolderTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getBaseModelName(ClassedModel classedModel) {
+		DLFolder dlFolder = (DLFolder)classedModel;
+
+		return dlFolder.getName();
+	}
+
+	@Override
 	public String getParentBaseModelClassName() {
 		Class<DLFolder> dlFolderClass = DLFolder.class;
 
@@ -325,13 +332,6 @@ public class DLFolderTrashHandlerTest
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return DLFolder.class;
-	}
-
-	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		DLFolder dlFolder = (DLFolder)classedModel;
-
-		return dlFolder.getName();
 	}
 
 	@Override

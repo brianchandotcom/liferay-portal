@@ -70,7 +70,7 @@
 
 		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="1" />
-			<var name="feedRowIndexNumber" value="2" />
+			<var name="feedRowIndexNumber" value="3" />
 			<var name="feedTitle" value="NBA" />
 			<var name="feedUrlLink" value="http://sports.espn.go.com/espn/rss/nba/news" />
 		</execute>

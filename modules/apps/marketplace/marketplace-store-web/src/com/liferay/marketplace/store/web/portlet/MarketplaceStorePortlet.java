@@ -81,7 +81,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = {Portlet.class}
 )
-public class StorePortlet extends MVCPortlet {
+public class MarketplaceStorePortlet extends MVCPortlet {
 
 	public void downloadApp(
 			ActionRequest actionRequest, ActionResponse actionResponse)

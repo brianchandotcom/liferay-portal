@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ControlPanelEntry.class
 )
-public class StoreControlPanelEntry extends BaseControlPanelEntry {
+public class MarketplaceStoreControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override
 	public boolean hasAccessPermission(

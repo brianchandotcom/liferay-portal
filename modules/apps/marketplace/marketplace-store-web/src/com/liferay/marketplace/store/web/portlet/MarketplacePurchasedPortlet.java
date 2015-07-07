@@ -50,5 +50,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = {Portlet.class}
 )
-public class PurchasedPortlet extends StorePortlet {
+public class MarketplacePurchasedPortlet extends MarketplaceStorePortlet {
 }

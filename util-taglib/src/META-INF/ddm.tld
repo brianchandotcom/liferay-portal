@@ -27,10 +27,10 @@
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<name>fields</name>
+			<name>ddmFormValues</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portlet.dynamicdatamapping.storage.Fields</type>
+			<type>com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues</type>
 		</attribute>
 		<attribute>
 			<name>fieldsNamespace</name>

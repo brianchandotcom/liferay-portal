@@ -53,19 +53,17 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 <aui:fieldset>
 
 	<%
-	Fields fields = null;
+	DDMFormValues ddmFormValues = null;
 
 	if (recordVersion != null) {
-		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
-
-		fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
+		ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
 	}
 	%>
 
 	<liferay-ddm:html
 		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 		classPK="<%= ddmStructure.getPrimaryKey() %>"
-		fields="<%= fields %>"
+		ddmFormValues="<%= ddmFormValues %>"
 		readOnly="<%= true %>"
 		requestedLocale="<%= locale %>"
 	/>

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `e32f122`.*
+*This document has been reviewed through commit `a432a58`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2037,13 +2037,13 @@ configure any editor in Liferay Portal in a coherent and extensible way.
 
 ---------------------------------------
 
-### Removed the liferay-ui:journal-article taglib
+### Removed the liferay-ui:journal-article Tag
 - **Date:** 2015-Jun-29
 - **JIRA Ticket:** LPS-56383
 
 #### What changed?
 
-The `liferay-ui:journal-article` taglib was removed.
+The `liferay-ui:journal-article` tag has been removed.
 
 #### Who is affected?
 
@@ -2051,10 +2051,12 @@ This affects developers using the `liferay-ui:journal-article` tag.
 
 #### How should I update my code?
 
-Use the `liferay-ui:asset-display` taglib instead.
+You should use the `liferay-ui:asset-display` tag instead.
+
+**Example**
 
 Old code:
-    
+
     <liferay-ui:journal-article
         articleId="<%= article.getArticleId() %>"
     />
@@ -2069,23 +2071,24 @@ New code:
 #### Why was this change made?
 
 The `liferay-ui:asset-display` is a generic way to display any type of asset.
+Therefore, the `liferay-ui:journal-article` tag is no longer necessary.
 
 ---------------------------------------
 
-### Java package names changed for portlets extracted as modules
+### Changed Java Package Names for Portlets Extracted as Modules
 - **Date:** 2015-Jun-29
 - **JIRA Ticket:** LPS-56383 and others
 
 #### What changed?
 
-The java package names changed for those portlets that were extracted as OSGi
-modules in 7.0. Here follows the complete list:
+The Java package names changed for portlets that were extracted as OSGi modules
+in 7.0. Here is the complete list:
 
-- com.liferay.portlet.bookmarks -> com.liferay.bookmarks
-- com.liferay.portlet.dynamicdatalists -> com.liferay.dynamicdatalists
-- com.liferay.portlet.journal -> com.liferay.journal
-- com.liferay.portlet.polls -> com.liferay.polls
-- com.liferay.portlet.wiki -> com.liferay.wiki
+- `com.liferay.portlet.bookmarks` &rarr; `com.liferay.bookmarks`
+- `com.liferay.portlet.dynamicdatalists` &rarr; `com.liferay.dynamicdatalists`
+- `com.liferay.portlet.journal` &rarr; `com.liferay.journal`
+- `com.liferay.portlet.polls` &rarr; `com.liferay.polls`
+- `com.liferay.portlet.wiki` &rarr; `com.liferay.wiki`
 
 #### Who is affected?
 
@@ -2094,7 +2097,7 @@ This affects developers using the portlets API from their own plugins.
 #### How should I update my code?
 
 Update the package imports to use the new package names. Any literal usage of
-the portlet className should also be updated.
+the portlet `className` should also be updated.
 
 #### Why was this change made?
 
@@ -2103,24 +2106,24 @@ OSGi services.
 
 ---------------------------------------
 
-### DLFileEntryTypes_DDMStructures is no longer available
-- **Date:** 2015-Jul-1
-- **JIRA Ticket:** LPS-56660 and others
+### Removed the DLFileEntryTypes_DDMStructures Mapping Table
+- **Date:** 2015-Jul-01
+- **JIRA Ticket:** LPS-56660
 
 #### What changed?
 
-DLFileEntryTypes_DDMStructures mapping table is not longer available.
+The `DLFileEntryTypes_DDMStructures` mapping table is no longer available.
 
 #### Who is affected?
 
-This might affect developers using the Document Library File Entry Type Local
-Service API.
+This affects developers using the Document Library File Entry Type Local Service
+API.
 
 #### How should I update my code?
 
-Update the calls to addDDMStructureLinks deleteDDMStructureLinks 
-updateDDMStructureLinks if you want
-to add/remove or update references between DLFileEntryType and DDMStructures.
+Update the calls to `addDDMStructureLinks`, `deleteDDMStructureLinks`, and
+`updateDDMStructureLinks` if you want to add, delete, or update references
+between `DLFileEntryType` and `DDMStructures`.
 
 #### Why was this change made?
 
@@ -2129,24 +2132,24 @@ This change was made to reduce the coupling between the two applications.
 ---------------------------------------
 
 ### Removed render Method from AssetRenderer API and WorkflowHandler API
-- **Date:** 2015-Jul-3
+- **Date:** 2015-Jul-03
 - **JIRA Ticket:** LPS-56705
 
 #### What changed?
 
-The method `render` has been removed from the interface `AssetRenderer` and
+The method `render` has been removed from the interfaces `AssetRenderer` and
 `WorkflowHandler`.
 
 #### Who is affected?
 
-This affects any Java code calling the method `render` on an
-`AssetRenderer` or `WorkflowHandler` class, or Java classes overriding the 
-`render` method of this classes.
+This affects any Java code calling the method `render` on an `AssetRenderer` or
+`WorkflowHandler` class, or Java classes overriding the `render` method of these
+classes.
 
 #### How should I update my code?
 
 The method `render` was used to return the path of a JSP, including the
-configuration of a portlet. That method is now available for the same 
+configuration of a portlet. That method is now available for the same
 AssetRender API extending the `BaseJSPAssetRenderer` class, and is called
 `getJspPath`.
 
@@ -2157,7 +2160,7 @@ the `include` method.
 
 This change was part of needed modifications to support adding asset renderers
 and workflow handlers for portlets based on other technology different than JSP
-(e.g., FreeMarker). The method `include` can now be used to create asset 
+(e.g., FreeMarker). The method `include` can now be used to create asset
 renderers or workflow handlers with UIs written in FreeMarker or any other
 framework.
 

@@ -67,16 +67,10 @@ public class PortalWebResourcesUtil {
 			ServletContext servletContext =
 				portalWebResources.getServletContext();
 
-			path = stripContextPath(servletContext, path);
+			URL url = getResource(servletContext, path);
 
-			try {
-				URL url = servletContext.getResource(path);
-
-				if (url != null) {
-					return servletContext;
-				}
-			}
-			catch (MalformedURLException murle) {
+			if (url != null) {
+				return servletContext;
 			}
 		}
 

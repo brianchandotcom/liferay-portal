@@ -15,17 +15,9 @@ afterEvaluate {
 	project.ext.set("plugin.full.version", project.version.toString())
 }
 
-compileJava {
-	options.encoding = "ISO-8859-1"
-	options.warnings = false
-}
-
 configurations {
 	portal
-
-	portalTest {
-		extendsFrom portal
-	}
+	portalTest
 }
 
 dependencies {
@@ -55,17 +47,22 @@ sourceSets {
 	}
 
 	test {
-		compileClasspath += configurations.portalTest
-		runtimeClasspath += configurations.portalTest
+		compileClasspath += configurations.portal + configurations.portalTest
+		runtimeClasspath += configurations.portal + configurations.portalTest
 	}
 
 	testIntegration {
-		compileClasspath += configurations.portalTest
-		runtimeClasspath += configurations.portalTest
+		compileClasspath += configurations.portal + configurations.portalTest
+		runtimeClasspath += configurations.portal + configurations.portalTest
 	}
 }
 
 group = "com.liferay"
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+	options.warnings = false
+}
 
 if (project.path in [":util:css-builder"]) {
 	apply plugin: "com.liferay.maven.plugin.builder"

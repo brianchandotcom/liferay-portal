@@ -1,0 +1,18 @@
+buildService {
+	apiDirName = "../marketplace-api/src"
+	autoNamespaceTables = true
+	hbmFileName = "src/META-INF/module-hbm.xml"
+	springFileName = "src/META-INF/module-spring.xml"
+	sqlDirName = "src/META-INF/sql"
+	testDirName = "../marketplace-test/test/integration"
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.0-SNAPSHOT"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:marketplace:marketplace-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

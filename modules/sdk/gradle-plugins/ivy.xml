@@ -32,6 +32,7 @@
 		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.13" />
 		<dependency name="gradle-bundle-plugin" org="org.dm.gradle" rev="0.6.2" />
 		<dependency name="gradle-extra-configurations-plugin" org="com.netflix.nebula" rev="2.2.2" />
+		<dependency name="slf4j-api" org="org.slf4j" rev="1.7.10" />
 		<dependency name="zt-exec" org="org.zeroturnaround" rev="1.8" />
 		<dependency conf="provided->default" name="groovy-all" org="org.codehaus.groovy" rev="2.3.10" />
 		<dependency conf="provided->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.4" />

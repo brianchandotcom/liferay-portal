@@ -1,0 +1,21 @@
+buildService {
+	apiDirName = "../wiki-api/src"
+	autoNamespaceTables = false
+	hbmFileName = "src/META-INF/module-hbm.xml"
+	springFileName = "src/META-INF/module-spring.xml"
+	sqlDirName = "src/META-INF/sql"
+	testDirName = "../wiki-test/test/integration"
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.0"
+	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:wiki:wiki-api")
+	compile project(":core:osgi-service-tracker-map")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

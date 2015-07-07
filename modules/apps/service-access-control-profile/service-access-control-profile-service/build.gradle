@@ -1,0 +1,18 @@
+buildService {
+	apiDirName = "../service-access-control-profile-api/src"
+	autoNamespaceTables = false
+	hbmFileName = "src/META-INF/module-hbm.xml"
+	springFileName = "src/META-INF/module-spring.xml"
+	sqlDirName = "src/META-INF/sql"
+	testDirName = "../service-access-control-profile-test/test/integration"
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:service-access-control-profile:service-access-control-profile-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

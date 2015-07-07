@@ -1,0 +1,9 @@
+liferay {
+	deployDir = file("${liferayHome}/osgi/test")
+}
+
+sourceSets {
+	main {
+		compileClasspath += configurations.portalTest
+	}
+}

@@ -33,6 +33,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenHasGrandParent;
@@ -78,6 +80,16 @@ public class BookmarksFolderTrashHandlerTest
 	@Override
 	public String getSearchKeywords() {
 		return _whenIsIndexableBaseModel.getSearchKeywords();
+	}
+
+	@Override
+	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
+		throws Exception {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			classedModel.getModelClassName(), classPK);
+
+		return assetEntry.isVisible();
 	}
 
 	@Override

@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
@@ -69,6 +72,16 @@ public class BlogsEntryTrashHandlerTest
 	@Override
 	public String getSearchKeywords() {
 		return _whenIsIndexableBaseModel.getSearchKeywords();
+	}
+
+	@Override
+	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
+		throws Exception {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			classedModel.getModelClassName(), classPK);
+
+		return assetEntry.isVisible();
 	}
 
 	@Override

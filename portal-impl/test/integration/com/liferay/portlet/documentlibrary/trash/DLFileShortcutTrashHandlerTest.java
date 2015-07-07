@@ -32,6 +32,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -75,6 +77,16 @@ public class DLFileShortcutTrashHandlerTest
 		Class<DLFolder> dlFolderClass = DLFolder.class;
 
 		return dlFolderClass.getName();
+	}
+
+	@Override
+	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
+		throws Exception {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			classedModel.getModelClassName(), classPK);
+
+		return assetEntry.isVisible();
 	}
 
 	@Override

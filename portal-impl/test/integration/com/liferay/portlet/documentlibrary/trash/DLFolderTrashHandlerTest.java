@@ -28,6 +28,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -84,6 +86,16 @@ public class DLFolderTrashHandlerTest
 	@Override
 	public String getSearchKeywords() {
 		return _FOLDER_NAME;
+	}
+
+	@Override
+	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
+		throws Exception {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			classedModel.getModelClassName(), classPK);
+
+		return assetEntry.isVisible();
 	}
 
 	@Override

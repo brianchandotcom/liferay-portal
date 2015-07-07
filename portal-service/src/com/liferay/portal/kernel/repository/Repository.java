@@ -137,9 +137,6 @@ public interface Repository extends DocumentRepository {
 			OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
-	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
-		throws PortalException;
-
 	public int getFileEntriesAndFileShortcutsCount(
 			long folderId, int status, String[] mimeTypes)
 		throws PortalException;

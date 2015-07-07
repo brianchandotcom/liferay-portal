@@ -1,4 +1,5 @@
 apply plugin: "com.liferay.plugin"
+apply plugin: "eclipse"
 
 liferay {
 	appServerParentDir = rootProject.file("../../bundles")
@@ -31,6 +32,18 @@ dependencies {
 	portal group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 
 	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
+}
+
+eclipseClasspath {
+	ext {
+		autoClean = false
+	}
+}
+
+eclipseProject {
+	ext {
+		autoClean = false
+	}
 }
 
 ext {

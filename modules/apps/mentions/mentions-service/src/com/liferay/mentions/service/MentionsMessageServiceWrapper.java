@@ -72,7 +72,6 @@ public class MentionsMessageServiceWrapper
 			userId, messageId, status, serviceContext, workflowContext);
 
 		if ((status != WorkflowConstants.STATUS_APPROVED) ||
-			(oldStatus == WorkflowConstants.STATUS_APPROVED) ||
 			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) {
 
 			return message;

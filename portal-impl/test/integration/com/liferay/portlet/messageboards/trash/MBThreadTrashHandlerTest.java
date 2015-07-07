@@ -29,8 +29,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -43,10 +41,12 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsAssetable;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenHasGrandParent;
 import com.liferay.portlet.trash.test.WhenHasMyBaseModel;
 import com.liferay.portlet.trash.test.WhenHasRecentBaseModelCount;
+import com.liferay.portlet.trash.test.WhenIsAssetable;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
@@ -120,10 +120,8 @@ public class MBThreadTrashHandlerTest
 		MBMessage rootMessage = MBMessageLocalServiceUtil.getMBMessage(
 			((MBThread)classedModel).getRootMessageId());
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			rootMessage.getModelClassName(), getAssetClassPK(rootMessage));
-
-		return assetEntry.isVisible();
+		return _whenIsAssetable.isAssetEntryVisible(
+			rootMessage, getAssetClassPK(rootMessage));
 	}
 
 	@Override
@@ -166,6 +164,8 @@ public class MBThreadTrashHandlerTest
 
 	@Before
 	public void setUp() throws Exception {
+		_whenIsAssetable = new DefaultWhenIsAssetable();
+
 		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
 
 		super.setUp();
@@ -347,6 +347,7 @@ public class MBThreadTrashHandlerTest
 
 	private static final String _SUBJECT = "Subject";
 
+	private WhenIsAssetable _whenIsAssetable;
 	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
 
 }

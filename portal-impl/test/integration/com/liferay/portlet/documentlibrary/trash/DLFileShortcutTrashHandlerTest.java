@@ -43,13 +43,16 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsAssetable;
 import com.liferay.portlet.trash.test.WhenHasGrandParent;
+import com.liferay.portlet.trash.test.WhenIsAssetable;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -108,6 +111,13 @@ public class DLFileShortcutTrashHandlerTest
 	@Override
 	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		_whenIsAssetable = new DefaultWhenIsAssetable();
+
+		super.setUp();
 	}
 
 	@Test
@@ -273,5 +283,7 @@ public class DLFileShortcutTrashHandlerTest
 			initialBaseModelsCount + 1,
 			getNotInTrashBaseModelsCount(parentBaseModel));
 	}
+
+	private WhenIsAssetable _whenIsAssetable;
 
 }

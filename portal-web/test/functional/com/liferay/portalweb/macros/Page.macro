@@ -110,6 +110,7 @@
 						<var name="friendlyURL" value="${friendlyURL}" />
 						<var name="pageAccess" value="${pageAccess}" />
 						<var name="pageStaging" value="${pageStaging}" />
+						<var name="siteName" value="${siteName}" />
 						<var name="siteNameURL" value="${siteNameURL}" />
 						<var name="siteURL" value="${siteURL}" />
 						<var name="specificURL" value="${specificURL}" />
@@ -137,6 +138,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -258,6 +260,7 @@
 					<var name="friendlyURL" value="${friendlyURL}" />
 					<var name="pageAccess" value="${pageAccess}" />
 					<var name="pageStaging" value="${pageStaging}" />
+					<var name="siteName" value="${siteName}" />
 					<var name="siteNameURL" value="${siteNameURL}" />
 					<var name="siteURL" value="${siteURL}" />
 					<var name="specificURL" value="${specificURL}" />
@@ -314,6 +317,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -363,11 +367,19 @@
 		<description message="Navigate to Site Administration > Configuration > ${portletName}." />
 
 		<execute macro="Page#gotoCmdCP">
+			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION" />
 			<var name="portletCategoryName" value="Configuration" />
 			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 	</command>
 
@@ -387,11 +399,19 @@
 
 	<command name="gotoContentCP" summary="Navigate to Admin > Site Administration > Content > ${portletName}">
 		<execute macro="Page#gotoCmdCP">
+			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONTENT" />
 			<var name="portletCategoryName" value="Content" />
 			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 	</command>
 
@@ -402,6 +422,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -428,6 +449,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -455,6 +477,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -476,6 +499,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -493,6 +517,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -507,11 +532,19 @@
 		<description message="Navigate to Site Administration > Pages > ${portletName}." />
 
 		<execute macro="Page#gotoCmdCP">
+			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_PAGES" />
 			<var name="portletCategoryName" value="Pages" />
 			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 	</command>
 
@@ -533,6 +566,7 @@
 						<var name="friendlyURL" value="${friendlyURL}" />
 						<var name="pageAccess" value="${pageAccess}" />
 						<var name="pageStaging" value="${pageStaging}" />
+						<var name="siteName" value="${siteName}" />
 						<var name="siteNameURL" value="${siteNameURL}" />
 						<var name="siteURL" value="${siteURL}" />
 						<var name="specificURL" value="${specificURL}" />
@@ -582,6 +616,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -603,11 +638,19 @@
 		<description message="Navigate to Site Administration > Users > ${portletName}." />
 
 		<execute macro="Page#gotoCmdCP">
+			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_USERS" />
 			<var name="portletCategoryName" value="Users" />
 			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 	</command>
 
@@ -616,6 +659,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -739,6 +783,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />
@@ -964,6 +1009,7 @@
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
 			<var name="specificURL" value="${specificURL}" />

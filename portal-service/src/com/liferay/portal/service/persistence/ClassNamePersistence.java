@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.ClassName;
+import com.liferay.portal.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the class name service.

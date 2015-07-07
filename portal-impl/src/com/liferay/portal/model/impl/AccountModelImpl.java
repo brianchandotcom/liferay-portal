@@ -28,6 +28,7 @@ import com.liferay.portal.model.AccountModel;
 import com.liferay.portal.model.AccountSoap;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 

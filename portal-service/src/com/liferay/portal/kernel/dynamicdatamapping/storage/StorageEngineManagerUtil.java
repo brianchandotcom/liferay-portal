@@ -65,7 +65,24 @@ public class StorageEngineManagerUtil {
 	}
 
 	private static StorageEngineManager _getStorageEngineManager() {
-		return _instance._serviceTracker.getService();
+		
+		StorageEngineManager manager = _instance._serviceTracker.getService();
+		
+		if (manager == null) {
+			manager = _getDummyStorageEngineManager();
+		} 
+		
+		return manager;
+	}
+	
+	
+	private static StorageEngineManager _getDummyStorageEngineManager(){
+		
+		if(_dummyImpl == null) {
+			_dummyImpl = new DummyStorageEngineManagerImpl();
+		}
+		
+		return _dummyImpl;
 	}
 
 	private StorageEngineManagerUtil() {
@@ -78,6 +95,8 @@ public class StorageEngineManagerUtil {
 
 	private static final StorageEngineManagerUtil _instance =
 		new StorageEngineManagerUtil();
+
+	private static DummyStorageEngineManagerImpl _dummyImpl;
 
 	private final ServiceTracker<StorageEngineManager,
 										StorageEngineManager> _serviceTracker;

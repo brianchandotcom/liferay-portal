@@ -1,6 +1,6 @@
 {
   "name": "liferay-theme-unstyled",
-  "version": "7.0.0",
+  "version": "7.0.2",
   "description": "The base theme structure for Liferay themes",
   "repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-themes-web/src/META-INF/resources/html/themes/_unstyled",
   "keywords": [

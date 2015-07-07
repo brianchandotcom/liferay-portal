@@ -1,6 +1,6 @@
 {
   "name": "liferay-theme-mixins",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Sass mixins for Liferay themes",
   "repository": "https://github.com/liferay/liferay-portal/tree/master/portal-web/docroot/html/css/common",
   "keywords": [

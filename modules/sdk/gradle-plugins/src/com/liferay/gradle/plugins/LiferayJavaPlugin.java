@@ -50,6 +50,7 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -88,6 +89,8 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
@@ -101,6 +104,9 @@ import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
+
+import org.zeroturnaround.exec.ProcessExecutor;
+import org.zeroturnaround.exec.ProcessResult;
 
 /**
  * @author Andrea Di Giorgi
@@ -335,33 +341,61 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
+					try {
+						Project project = task.getProject();
 
-					File buildGradleFile = project.file("build.gradle");
+						File buildGradleFile = project.file("build.gradle");
 
-					if (!buildGradleFile.exists() ||
-						(buildGradleFile.length() == 0)) {
-
-						return true;
-					}
-
-					long buildGradleFileLastModified =
-						buildGradleFile.lastModified();
-
-					for (String sourceFileName :
-							InitGradleTask.SOURCE_FILE_NAMES) {
-
-						File sourceFile = project.file(sourceFileName);
-
-						if (sourceFile.exists() &&
-							(buildGradleFileLastModified <
-								sourceFile.lastModified())) {
+						if (!buildGradleFile.exists() ||
+							(buildGradleFile.length() == 0)) {
 
 							return true;
 						}
+
+						long buildGradleLastModified = _getLastModified(
+							buildGradleFile);
+
+						for (String sourceFileName :
+								InitGradleTask.SOURCE_FILE_NAMES) {
+
+							File sourceFile = project.file(sourceFileName);
+
+							if (sourceFile.exists() &&
+								(buildGradleLastModified <
+									_getLastModified(sourceFile))) {
+
+								return true;
+							}
+						}
+
+						return false;
+					}
+					catch (IOException ioe) {
+					}
+					catch (Exception e) {
+						if (_logger.isWarnEnabled()) {
+							_logger.warn(e.getMessage(), e);
+						}
 					}
 
-					return false;
+					return true;
+				}
+
+				private long _getLastModified(File file) throws Exception {
+					ProcessExecutor processExecutor = new ProcessExecutor(
+						"git", "log", "--format=%ct", "--max-count=1",
+						file.getName());
+
+					processExecutor.directory(file.getParentFile());
+					processExecutor.exitValueNormal();
+					processExecutor.readOutput(true);
+
+					ProcessResult processResult =
+						processExecutor.executeNoTimeout();
+
+					String output = processResult.outputUTF8();
+
+					return Long.parseLong(output.trim());
 				}
 
 			});
@@ -1810,5 +1844,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	private static final String _TESTABLE_PORTAL_STARTED_FILE_NAME =
 		".testable.portal.started";
+
+	private static final Logger _logger = Logging.getLogger(
+		LiferayJavaPlugin.class);
 
 }

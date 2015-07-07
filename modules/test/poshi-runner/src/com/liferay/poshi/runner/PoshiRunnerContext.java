@@ -35,6 +35,7 @@ import java.util.TreeSet;
 
 import org.apache.tools.ant.DirectoryScanner;
 
+import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 /**
@@ -661,6 +662,28 @@ public class PoshiRunnerContext {
 				sb.append(commandPropertyElement.attributeValue("name"));
 				sb.append("=");
 				sb.append(commandPropertyElement.attributeValue("value"));
+				sb.append("\n");
+			}
+
+			List<Attribute> commandAttributes = commandElement.attributes();
+
+			for (Attribute commandAttribute : commandAttributes) {
+				String commandAttributeName = StringUtil.replace(
+					commandAttribute.getName(), "-", ".");
+
+				if (commandAttributeName.equals("line.number") ||
+					commandAttributeName.equals("name")) {
+
+					continue;
+				}
+
+				sb.append(className);
+				sb.append("TestCase.test");
+				sb.append(commandName);
+				sb.append(".");
+				sb.append(commandAttributeName);
+				sb.append("=");
+				sb.append(commandAttribute.getValue());
 				sb.append("\n");
 			}
 		}

@@ -43,7 +43,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 		throws PortalException {
 
 		SocialActivityManager<T> socialActivityManager =
-			getSocialActivityHandler(model.getModelClassName());
+			getSocialActivityManager(model.getModelClassName());
 
 		socialActivityManager.addActivity(
 			userId, model, type, extraData, receiverUserId);
@@ -56,7 +56,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 		throws PortalException {
 
 		SocialActivityManager<T> socialActivityManager =
-			getSocialActivityHandler(model.getModelClassName());
+			getSocialActivityManager(model.getModelClassName());
 
 		socialActivityManager.addUniqueActivity(
 			userId, createDate, model, type, extraData, receiverUserId);
@@ -69,7 +69,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 		throws PortalException {
 
 		SocialActivityManager<T> socialActivityManager =
-			getSocialActivityHandler(model.getModelClassName());
+			getSocialActivityManager(model.getModelClassName());
 
 		socialActivityManager.addUniqueActivity(
 			userId, model, type, extraData, receiverUserId);
@@ -78,7 +78,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 	@Override
 	public void deleteActivities(T model) throws PortalException {
 		SocialActivityManager<T> socialActivityManager =
-			getSocialActivityHandler(model.getModelClassName());
+			getSocialActivityManager(model.getModelClassName());
 
 		socialActivityManager.deleteActivities(model);
 	}
@@ -89,7 +89,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 		throws PortalException {
 
 		SocialActivityManager<T> socialActivityManager =
-			getSocialActivityHandler(model.getModelClassName());
+			getSocialActivityManager(model.getModelClassName());
 
 		socialActivityManager.updateLastSocialActivity(
 			userId, model, type, createDate);
@@ -100,7 +100,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 	}
 
 	@SuppressWarnings("unchecked")
-	protected SocialActivityManager<T> getSocialActivityHandler(
+	protected SocialActivityManager<T> getSocialActivityManager(
 		String className) {
 
 		SocialActivityManager<T> socialActivityManager =

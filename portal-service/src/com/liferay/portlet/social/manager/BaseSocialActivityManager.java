@@ -118,7 +118,7 @@ public abstract class BaseSocialActivityManager
 		if (!(classedModel.getPrimaryKeyObj() instanceof Long)) {
 			throw new IllegalArgumentException(
 				"Only models with a primary key of type Long can make use " +
-					"of SocialActivityHandlers");
+					"of SocialActivityManagers");
 		}
 
 		return (Long)classedModel.getPrimaryKeyObj();

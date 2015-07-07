@@ -307,6 +307,18 @@ public class JournalArticleTrashHandlerTest
 	}
 
 	@Override
+	protected BaseModel<?> addDraftBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
+		return JournalTestUtil.addArticleWithWorkflow(
+			serviceContext.getScopeGroupId(), folder.getFolderId(),
+			getSearchKeywords(), getSearchKeywords(), false);
+	}
+
+	@Override
 	protected void deleteParentBaseModel(
 			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
 		throws Exception {

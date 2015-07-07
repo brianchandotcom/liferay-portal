@@ -306,6 +306,17 @@ public class DLFileEntryTrashHandlerTest
 	}
 
 	@Override
+	protected BaseModel<?> addDraftBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		DLFolder dlFolder = (DLFolder)parentBaseModel;
+
+		return addBaseModelWithWorkflow(
+			dlFolder.getGroupId(), dlFolder.getFolderId(), false);
+	}
+
+	@Override
 	protected void deleteParentBaseModel(
 			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
 		throws Exception {

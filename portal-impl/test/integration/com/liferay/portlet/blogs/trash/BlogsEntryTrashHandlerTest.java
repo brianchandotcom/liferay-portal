@@ -102,6 +102,16 @@ public class BlogsEntryTrashHandlerTest
 	}
 
 	@Override
+	protected BaseModel<?> addDraftBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		return BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), getSearchKeywords(), false,
+			serviceContext);
+	}
+
+	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
 		return BlogsEntryLocalServiceUtil.getEntry(primaryKey);
 	}

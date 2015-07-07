@@ -350,7 +350,7 @@ public abstract class BaseTrashHandlerTestCase {
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
 
-		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -390,7 +390,7 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -423,7 +423,7 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -621,7 +621,7 @@ public abstract class BaseTrashHandlerTestCase {
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
 
-		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
@@ -660,7 +660,7 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
@@ -694,7 +694,7 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
@@ -721,7 +721,7 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -756,7 +756,7 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -2699,6 +2699,32 @@ public abstract class BaseTrashHandlerTestCase {
 
 		return addBaseModelWithWorkflow(
 			parentBaseModel, approved, serviceContext);
+	}
+
+	protected BaseModel<?> addDraftBaseModel(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(true);
+
+			BaseModel<?> baseModel = addBaseModelWithWorkflow(
+				parentBaseModel, false, serviceContext);
+
+			return baseModel;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+	}
+
+	protected BaseModel<?> addDraftBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		return null;
 	}
 
 	protected void deleteParentBaseModel(

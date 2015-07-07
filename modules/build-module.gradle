@@ -24,7 +24,11 @@ dependencies {
 	portal files(appServerClassesPortalDir)
 	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
 	portal fileTree(dir: liferay.appServerLibGlobalDir, include: "*.jar")
-	portal fileTree(dir: new File(sdkDir, "lib"), includes: ["activation.jar", "javax.servlet-api.jar", "jsp-api.jar", "net.sf.jargs.jar", "qdox.jar"])
+	portal group: "com.liferay", name: "net.sf.jargs", version: "1.0"
+	portal group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
+	portal group: "javax.activation", name: "activation", version: "1.1"
+	portal group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	portal group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 
 	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
 }

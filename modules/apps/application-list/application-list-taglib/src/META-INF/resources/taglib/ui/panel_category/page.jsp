@@ -29,7 +29,6 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 	collapsible="<%= true %>"
 	cssClass="list-unstyled panel-page-category"
 	extended="<%= true %>"
-	iconCssClass="<%= panelCategory.getIconCssClass() %>"
 	id="<%= panelPageCategoryId %>"
 	parentId="<%= StringUtil.replace(panelCategory.getParentCategoryKey(), StringPool.PERIOD, StringPool.UNDERLINE) %>"
 	persistState="<%= true %>"

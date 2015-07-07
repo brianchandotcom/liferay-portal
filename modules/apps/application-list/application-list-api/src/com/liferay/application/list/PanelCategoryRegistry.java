@@ -55,6 +55,17 @@ public class PanelCategoryRegistry {
 		return childPanelCategories;
 	}
 
+	public PanelCategory getFirstChildPanelCategory(String panelCategoryKey) {
+		List<PanelCategory> childPanelCategories =
+			_childPanelCategoriesServiceTrackerMap.getService(panelCategoryKey);
+
+		if (childPanelCategories == null) {
+			return null;
+		}
+
+		return childPanelCategories.get(0);
+	}
+
 	public PanelCategory getPanelCategory(String panelCategoryKey) {
 		PanelCategory panelCategory =
 			_panelCategoryServiceTrackerMap.getService(panelCategoryKey);

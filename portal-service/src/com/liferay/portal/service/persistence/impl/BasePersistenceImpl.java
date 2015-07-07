@@ -475,7 +475,16 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		fieldName = entityAlias.concat(fieldName);
 
-		if (getColumnType(columnName) == Types.CLOB) {
+		Map<String, Integer> tableColumnsMap = getTableColumnsMap();
+
+		Integer type = tableColumnsMap.get(columnName);
+
+		if (type == null) {
+			throw new IllegalArgumentException(
+				"Unknown column name " + columnName);
+		}
+
+		if (type == Types.CLOB) {
 			fieldName = CAST_CLOB_TEXT_OPEN.concat(fieldName).concat(
 				StringPool.CLOSE_PARENTHESIS);
 		}
@@ -483,7 +492,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		return fieldName;
 	}
 
-	protected int getColumnType(String columnName) {
+	protected Map<String, Integer> getTableColumnsMap() {
 		throw new UnsupportedOperationException();
 	}
 

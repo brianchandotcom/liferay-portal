@@ -20,22 +20,6 @@
 	<c:if test="<%= ddmForm != null %>">
 
 		<%
-		long ddmStructureId = classPK;
-
-		if (classNameId == PortalUtil.getClassNameId(DDMTemplate.class)) {
-			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(classPK);
-
-			ddmStructureId = ddmTemplate.getClassPK();
-		}
-
-		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(ddmStructureId);
-
-		Fields fields = null;
-
-		if (ddmFormValues != null) {
-			fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
-		}
-
 		pageContext.setAttribute("checkRequired", checkRequired);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext = new DDMFormFieldRenderingContext();

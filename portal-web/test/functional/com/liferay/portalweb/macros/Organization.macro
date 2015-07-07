@@ -528,14 +528,6 @@
 	</command>
 
 	<command name="viewAssignMemberCP">
-		<execute function="Type" locator1="CPUsersandorganizations#SEARCH_FIELD" value1="${searchToken}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_BUTTON" value1="Search" />
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganization#USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganization#USER_TABLE_LAST_NAME_1" value1="${userLastName}" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganization#USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />

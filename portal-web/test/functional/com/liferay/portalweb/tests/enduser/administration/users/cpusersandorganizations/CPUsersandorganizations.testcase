@@ -151,9 +151,12 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Organization#viewAssignMemberCP">
+		<execute macro="Organization#gotoCP">
 			<var name="orgName" value="${orgName}" />
 			<var name="searchToken" value="${searchToken}" />
+		</execute>
+
+		<execute macro="Organization#viewAssignMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />

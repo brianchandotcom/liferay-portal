@@ -22,7 +22,6 @@
 #set ($portlet_topper_css_class = "portlet-topper")
 
 <section class="portlet" id="portlet_$portlet_id">
-
 	<header class="header-toolbar header-toolbar-default">
 		<div class="container-fluid-1280">
 			<div class="toolbar-group">
@@ -39,7 +38,7 @@
 
 			<div class="toolbar-group-right">
 				<div class="toolbar-group-content">
-					$theme.portletIconOptions("lexicon")
+					$theme.portletIconOptions("right", "lexicon")
 				</div>
 			</div>
 

@@ -393,7 +393,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void portletIconOptions(String view) {
+	public void portletIconOptions(String direction, String view) {
 	}
 
 	@Override

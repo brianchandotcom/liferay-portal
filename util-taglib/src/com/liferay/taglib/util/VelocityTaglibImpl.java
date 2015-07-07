@@ -777,14 +777,15 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public void portletIconOptions(String view) throws Exception {
+	public void portletIconOptions(String direction, String view)
+		throws Exception {
+
 		IconOptionsTag iconOptionsTag = new IconOptionsTag();
 
 		setUp(iconOptionsTag);
 
 		iconOptionsTag.setView(view);
-		iconOptionsTag.setDirection("right");
-		iconOptionsTag.setShowArrow(false);
+		iconOptionsTag.setDirection(direction);
 
 		iconOptionsTag.runTag();
 	}

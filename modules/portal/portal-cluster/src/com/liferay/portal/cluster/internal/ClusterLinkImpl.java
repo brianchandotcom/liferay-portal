@@ -212,9 +212,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		Collections.sort(keys);
 
-		for (int i = 0; i < keys.size(); i++) {
-			String customName = keys.get(i);
-
+		for (String customName : keys) {
 			String channelProperties = transportChannelProperties.getProperty(
 				customName);
 			String channelName = transportChannelNames.getProperty(customName);

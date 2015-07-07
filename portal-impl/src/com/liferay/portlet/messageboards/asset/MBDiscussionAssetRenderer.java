@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.asset;
 
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -77,7 +79,7 @@ public class MBDiscussionAssetRenderer extends MBMessageAssetRenderer {
 		editPortletURL.setParameter(
 			"struts_action", "/message_boards/edit_discussion");
 		editPortletURL.setParameter(
-			"messageId", String.valueOf(_message.getMessageId()));
+			"commentId", String.valueOf(_message.getMessageId()));
 
 		return editPortletURL;
 	}
@@ -97,7 +99,10 @@ public class MBDiscussionAssetRenderer extends MBMessageAssetRenderer {
 			String template)
 		throws Exception {
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, _message);
+		Comment comment = CommentManagerUtil.fetchComment(
+			_message.getMessageId());
+
+		request.setAttribute(WebKeys.COMMENT, comment);
 
 		return super.include(request, response, template);
 	}

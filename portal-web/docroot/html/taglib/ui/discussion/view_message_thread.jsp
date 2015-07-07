@@ -150,7 +150,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				</header>
 
 				<div class="lfr-discussion-message-body" id='<portlet:namespace /><%= randomNamespace + "discussionMessage" + index %>'>
-					<%= discussionComment.getTranslatedBody() %>
+					<%= discussionComment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
 				</div>
 
 				<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">

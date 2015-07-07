@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.Date;
 
@@ -81,6 +82,13 @@ public class MBCommentImpl implements WorkflowableComment {
 	}
 
 	@Override
+	public long getParentCommentId() {
+		MBMessage message = getMessage();
+
+		return message.getParentMessageId();
+	}
+
+	@Override
 	public long getPrimaryKey() {
 		return _message.getPrimaryKey();
 	}
@@ -88,6 +96,17 @@ public class MBCommentImpl implements WorkflowableComment {
 	@Override
 	public int getStatus() {
 		return _message.getStatus();
+	}
+
+	@Override
+	public String getTranslatedBody(String pathThemeImages) {
+		MBMessage message = getMessage();
+
+		if (message.isFormatBBCode()) {
+			return MBUtil.getBBCodeHTML(getBody(), pathThemeImages);
+		}
+
+		return getBody();
 	}
 
 	@Override
@@ -103,6 +122,13 @@ public class MBCommentImpl implements WorkflowableComment {
 	@Override
 	public String getUserName() {
 		return _message.getUserName();
+	}
+
+	@Override
+	public boolean isRoot() {
+		MBMessage message = getMessage();
+
+		return message.isRoot();
 	}
 
 	protected MBMessage getMessage() {

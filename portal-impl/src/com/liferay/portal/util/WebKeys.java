@@ -65,6 +65,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String COMIC_ENTRY = "COMIC_ENTRY";
 
+	public static final String COMMENT = "COMMENT";
+
 	public static final String COMPANY = "COMPANY";
 
 	public static final String COMPANY_ID = "COMPANY_ID";

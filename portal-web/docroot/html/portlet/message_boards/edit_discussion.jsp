@@ -19,72 +19,67 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+Comment comment = (Comment)request.getAttribute(WebKeys.COMMENT);
 
-long messageId = BeanParamUtil.getLong(message, request, "messageId");
+long commentId = BeanParamUtil.getLong(comment, request, "commentId");
 
-long threadId = BeanParamUtil.getLong(message, request, "threadId");
-long parentMessageId = BeanParamUtil.getLong(message, request, "parentMessageId", MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
+long parentCommentId = comment.getParentCommentId();
 
-MBMessage curParentMessage = null;
+Comment parentComment = CommentManagerUtil.fetchComment(parentCommentId);
 
-if (threadId > 0) {
-	try {
-		curParentMessage = MBMessageLocalServiceUtil.getMessage(parentMessageId);
-	}
-	catch (Exception e) {
-	}
-
-	if (curParentMessage.isRoot() && curParentMessage.isDiscussion()) {
-		curParentMessage = null;
-	}
+if ((parentComment != null) && parentComment.isRoot()) {
+	parentComment = null;
 }
 
-boolean pending = false;
+WorkflowableComment workflowableComment = null;
 
-if (message != null) {
-	pending = message.isPending();
+boolean pending = false;
+boolean approved = true;
+
+if (comment instanceof WorkflowableComment) {
+	workflowableComment = (WorkflowableComment)comment;
+
+	pending = workflowableComment.getStatus() == WorkflowConstants.STATUS_PENDING;
+	approved = workflowableComment.getStatus() == WorkflowConstants.STATUS_APPROVED;
 }
 %>
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	localizeTitle="<%= (message == null) %>"
-	title='<%= (message == null) ? "new-message" : message.getSubject() %>'
+	title='<%= (comment == null) ? "new-message" : "edit-message" %>'
 />
 
 <portlet:actionURL var="editMessageURL">
 	<portlet:param name="struts_action" value="/message_boards/edit_discussion" />
 </portlet:actionURL>
 
-<aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage(" + pending + ");" %>'>
+<aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
-	<aui:input name="threadId" type="hidden" value="<%= threadId %>" />
-	<aui:input name="parentMessageId" type="hidden" value="<%= parentMessageId %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
+	<aui:input name="commentId" type="hidden" value="<%= commentId %>" />
+	<aui:input name="parentCommentId" type="hidden" value="<%= parentCommentId %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(pending ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
 
 	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 	<liferay-ui:error exception="<%= DiscussionMaxCommentsException.class %>" message="maximum-number-of-comments-has-been-reached" />
 	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
 
-	<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+	<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
 
 	<aui:fieldset>
-		<c:if test="<%= message != null %>">
-			<aui:workflow-status status="<%= message.getStatus() %>" />
+		<c:if test="<%= workflowableComment != null %>">
+			<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" status="<%= workflowableComment.getStatus() %>" />
 		</c:if>
 
 		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="body" style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
 	</aui:fieldset>
 
-	<c:if test="<%= curParentMessage != null %>">
+	<c:if test="<%= parentComment != null %>">
 		<liferay-ui:message key="replying-to" />:
 
 		<%
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, curParentMessage);
+		request.setAttribute(WebKeys.COMMENT, parentComment);
 		%>
 
 		<liferay-util:include page="/html/portlet/message_boards/asset/discussion_full_content.jsp" />
@@ -97,34 +92,16 @@ if (message != null) {
 	</c:if>
 
 	<aui:button-row>
-		<c:if test="<%= (message == null) || !message.isApproved() %>">
+		<c:if test="<%= (comment == null) || !approved %>">
 			<aui:button type="submit" />
 		</c:if>
 
-		<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
+		<c:if test="<%= (workflowableComment != null) && approved && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(workflowableComment.getCompanyId(), workflowableComment.getGroupId(), CommentConstants.getDiscussionClassName()) %>">
 			<div class="alert alert-info">
-				<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()), false) %>
+				<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, comment.getModelClassName()), false) %>
 			</div>
 		</c:if>
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveMessage(pending) {
-		if (!pending) {
-			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
-		}
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
-
-<%
-if (message != null) {
-	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "update-message"), currentURL);
-}
-%>

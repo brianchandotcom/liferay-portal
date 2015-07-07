@@ -19,57 +19,60 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "discussion_full_content") + StringPool.UNDERLINE;
 
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+Comment comment = (Comment)request.getAttribute(WebKeys.COMMENT);
 
-MBThread thread = message.getThread();
+Comment parentComment = CommentManagerUtil.fetchComment(comment.getParentCommentId());
 
-MBMessage rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
-MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
+WorkflowableComment workflowableComment = null;
+
+if (comment instanceof WorkflowableComment) {
+	workflowableComment = (WorkflowableComment)comment;
+}
 %>
 
 <table class="lfr-grid lfr-table">
 <tr>
-	<td colspan="2" id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-		<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>
+	<td colspan="2" id="<%= randomNamespace %>messageScroll<%= comment.getCommentId() %>">
+		<a name="<%= randomNamespace %>message_<%= comment.getCommentId() %>"></a>
 	</td>
 </tr>
 <tr>
 	<td class="lfr-center lfr-top">
 		<liferay-ui:user-display
 			displayStyle="2"
-			userId="<%= message.getUserId() %>"
-			userName="<%= HtmlUtil.escape(message.getUserName()) %>"
+			userId="<%= comment.getUserId() %>"
+			userName="<%= HtmlUtil.escape(comment.getUserName()) %>"
 		/>
 	</td>
 	<td class="lfr-top stretch">
-		<c:if test="<%= (message != null) && !message.isApproved() %>">
-			<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+		<c:if test="<%= (workflowableComment != null) && (workflowableComment.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
+			<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
 
 			<div>
-				<aui:workflow-status status="<%= message.getStatus() %>" />
+				<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" status="<%= workflowableComment.getStatus() %>" />
 			</div>
 		</c:if>
 
 		<div>
-			<%= HtmlUtil.escape(message.getBody()) %>
+			<%= comment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
 		</div>
 
 		<br />
 
 		<div>
-			<c:if test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
-				<%= LanguageUtil.format(request, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate()), false) %>
+			<c:if test="<%= (parentComment != null) && parentComment.isRoot() %>">
+				<%= LanguageUtil.format(request, "posted-on-x", dateFormatDateTime.format(comment.getModifiedDate()), false) %>
 			</c:if>
 		</div>
 	</td>
 </tr>
 </table>
 
-<c:if test="<%= (parentMessage != null) && !parentMessage.isRoot() %>">
+<c:if test="<%= (parentComment != null) && !parentComment.isRoot() %>">
 	<h3><liferay-ui:message key="replying-to" />:</h3>
 
 	<%
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, parentMessage);
+	request.setAttribute(WebKeys.COMMENT, parentComment);
 	%>
 
 	<liferay-util:include page="/html/portlet/message_boards/asset/discussion_full_content.jsp" />

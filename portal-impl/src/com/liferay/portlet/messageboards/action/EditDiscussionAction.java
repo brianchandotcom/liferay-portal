@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -275,6 +277,15 @@ public class EditDiscussionAction extends PortletAction {
 		else {
 
 			// Update message
+
+			if (Validator.isNull(className) || (classPK == 0)) {
+				Comment comment = CommentManagerUtil.fetchComment(commentId);
+
+				if (comment != null) {
+					className = comment.getClassName();
+					classPK = comment.getClassPK();
+				}
+			}
 
 			discussionPermission.checkUpdatePermission(commentId);
 

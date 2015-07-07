@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -208,14 +207,8 @@ public class MBCommentManagerImpl implements CommentManager {
 				CommentConstants.getDiscussionClassName(), classPKs);
 		}
 
-		ServiceContext serviceContext = serviceContextFunction.apply(
-			MBMessage.class.getName());
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
 		DiscussionComment rootDiscussionComment = new MBDiscussionCommentImpl(
-			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats,
-			themeDisplay.getPathThemeImages());
+			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);
 
 		return new MBDiscussionImpl(
 			rootDiscussionComment, messageDisplay.isDiscussionMaxComments());

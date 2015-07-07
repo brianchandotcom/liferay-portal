@@ -27,8 +27,6 @@ public interface DiscussionComment extends Comment {
 
 	public DiscussionComment getParentComment() throws PortalException;
 
-	public long getParentCommentId();
-
 	public RatingsEntry getRatingsEntry();
 
 	public RatingsStats getRatingsStats();
@@ -41,9 +39,5 @@ public interface DiscussionComment extends Comment {
 
 	public DiscussionCommentIterator getThreadDiscussionCommentIterator(
 		int from);
-
-	public String getTranslatedBody();
-
-	public boolean isRoot();
 
 }

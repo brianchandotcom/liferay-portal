@@ -16,14 +16,22 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
 
 import java.io.IOException;
 
+import java.util.Locale;
+import java.util.Map;
+
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -103,6 +111,27 @@ public class BaseJSPSettingsConfigurationAction
 		}
 
 		return (ServletContext)request.getAttribute(WebKeys.CTX);
+	}
+
+	protected void removeDefaultValue(
+		PortletRequest portletRequest, ModifiableSettings modifiableSettings,
+		String key, LocalizedValuesMap localizedMap) {
+
+		String defaultValue = localizedMap.getDefaultValue();
+
+		Map<Locale, String> localizedMapValues = localizedMap.getValues();
+
+		for (Locale locale : localizedMapValues.keySet()) {
+			String languageKeyId = key + "_" + LocaleUtil.toLanguageId(locale);
+
+			String value = getParameter(portletRequest, languageKeyId);
+
+			if (defaultValue.equals(value) ||
+				StringUtil.equalsIgnoreBreakLine(defaultValue, value)) {
+
+				modifiableSettings.reset(languageKeyId);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -2842,18 +2842,13 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 	}
 
-	protected AssetEntry fetchAssetEntry(Class<?> clazz, long classPK)
-		throws Exception {
-
-		return AssetEntryLocalServiceUtil.fetchEntry(clazz.getName(), classPK);
-	}
-
 	protected AssetEntry fetchAssetEntry(ClassedModel classedModel)
 		throws Exception {
 
-		return fetchAssetEntry(
-			classedModel.getModelClass(),
-			(Long)classedModel.getPrimaryKeyObj());
+		Class<?> modelClass = classedModel.getModelClass();
+
+		return AssetEntryLocalServiceUtil.fetchEntry(
+			modelClass.getName(), (Long)classedModel.getPrimaryKeyObj());
 	}
 
 	protected Long getAssetClassPK(ClassedModel classedModel) {

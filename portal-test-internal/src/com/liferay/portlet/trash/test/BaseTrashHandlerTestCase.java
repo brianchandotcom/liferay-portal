@@ -2245,7 +2245,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		baseModel = expireBaseModel(baseModel, serviceContext);
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
+		baseModel = whenIsVersionableBaseModel.expireBaseModel(
+			baseModel, serviceContext);
 
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
 
@@ -2304,7 +2308,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		baseModel = expireBaseModel(baseModel, serviceContext);
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
+		baseModel = whenIsVersionableBaseModel.expireBaseModel(
+			baseModel, serviceContext);
 
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
 
@@ -2381,7 +2389,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		baseModel = expireBaseModel(baseModel, serviceContext);
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
+		baseModel = whenIsVersionableBaseModel.expireBaseModel(
+			baseModel, serviceContext);
 
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
 
@@ -2449,7 +2461,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		baseModel = expireBaseModel(baseModel, serviceContext);
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
+		baseModel = whenIsVersionableBaseModel.expireBaseModel(
+			baseModel, serviceContext);
 
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
 
@@ -2512,7 +2528,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		baseModel = expireBaseModel(baseModel, serviceContext);
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
+		baseModel = whenIsVersionableBaseModel.expireBaseModel(
+			baseModel, serviceContext);
 
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
 
@@ -2582,7 +2602,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		baseModel = expireBaseModel(baseModel, serviceContext);
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
+		baseModel = whenIsVersionableBaseModel.expireBaseModel(
+			baseModel, serviceContext);
 
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
 
@@ -2637,7 +2661,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		baseModel = expireBaseModel(baseModel, serviceContext);
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
+		baseModel = whenIsVersionableBaseModel.expireBaseModel(
+			baseModel, serviceContext);
 
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
 
@@ -2732,13 +2760,6 @@ public abstract class BaseTrashHandlerTestCase {
 	protected void deleteParentBaseModel(
 			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
 		throws Exception {
-	}
-
-	protected BaseModel<?> expireBaseModel(
-			BaseModel<?> baseModel, ServiceContext serviceContext)
-		throws Exception {
-
-		return baseModel;
 	}
 
 	protected AssetEntry fetchAssetEntry(Class<?> clazz, long classPK)

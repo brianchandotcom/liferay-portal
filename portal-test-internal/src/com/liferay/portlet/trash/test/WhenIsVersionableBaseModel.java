@@ -14,8 +14,16 @@
 
 package com.liferay.portlet.trash.test;
 
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.service.ServiceContext;
+
 /**
  * @author Cristina González
  */
 public interface WhenIsVersionableBaseModel {
+
+	public BaseModel<?> expireBaseModel(
+			BaseModel<?> baseModel, ServiceContext serviceContext)
+		throws Exception;
+
 }

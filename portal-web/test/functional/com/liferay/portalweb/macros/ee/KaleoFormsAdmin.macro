@@ -554,7 +554,9 @@
 	</command>
 
 	<command name="viewProcessFieldSet">
-		<execute macro="KaleoFormsAdmin#viewFieldsStepCmd" />
+		<execute macro="KaleoFormsAdmin#viewFieldsStepCmd">
+			<var name="kfProcessName" value="${kfProcessName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 

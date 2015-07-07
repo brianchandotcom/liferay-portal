@@ -2710,21 +2710,19 @@ public abstract class BaseTrashHandlerTestCase {
 		try {
 			WorkflowThreadLocal.setEnabled(true);
 
-			BaseModel<?> baseModel = addBaseModelWithWorkflow(
-				parentBaseModel, false, serviceContext);
+			Assume.assumeTrue(this instanceof WhenHasDraftStatus);
+
+			WhenHasDraftStatus whenHasDraftStatus = (WhenHasDraftStatus)this;
+
+			BaseModel<?> baseModel =
+				whenHasDraftStatus.addDraftBaseModelWithWorkflow(
+					parentBaseModel, serviceContext);
 
 			return baseModel;
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
-	}
-
-	protected BaseModel<?> addDraftBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
-		throws Exception {
-
-		return null;
 	}
 
 	protected void deleteParentBaseModel(

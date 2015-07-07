@@ -57,6 +57,16 @@ public class BlogsEntryTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public BaseModel<?> addDraftBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		return BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), getSearchKeywords(), false,
+			serviceContext);
+	}
+
+	@Override
 	public String getSearchKeywords() {
 		return _whenIsIndexableBaseModel.getSearchKeywords();
 	}
@@ -98,16 +108,6 @@ public class BlogsEntryTrashHandlerTest
 
 		return BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), getSearchKeywords(), approved,
-			serviceContext);
-	}
-
-	@Override
-	protected BaseModel<?> addDraftBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
-		throws Exception {
-
-		return BlogsTestUtil.addEntryWithWorkflow(
-			TestPropsValues.getUserId(), getSearchKeywords(), false,
 			serviceContext);
 	}
 

@@ -101,6 +101,18 @@ public class JournalArticleTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public BaseModel<?> addDraftBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
+		return JournalTestUtil.addArticleWithWorkflow(
+			serviceContext.getScopeGroupId(), folder.getFolderId(),
+			getSearchKeywords(), getSearchKeywords(), false);
+	}
+
+	@Override
 	public String getBaseModelName(ClassedModel classedModel) {
 		JournalArticle article = (JournalArticle)classedModel;
 
@@ -304,18 +316,6 @@ public class JournalArticleTrashHandlerTest
 			serviceContext.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			getSearchKeywords(), getSearchKeywords(), approved);
-	}
-
-	@Override
-	protected BaseModel<?> addDraftBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
-		throws Exception {
-
-		JournalFolder folder = (JournalFolder)parentBaseModel;
-
-		return JournalTestUtil.addArticleWithWorkflow(
-			serviceContext.getScopeGroupId(), folder.getFolderId(),
-			getSearchKeywords(), getSearchKeywords(), false);
 	}
 
 	@Override

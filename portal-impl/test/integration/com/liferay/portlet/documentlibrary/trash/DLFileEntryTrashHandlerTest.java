@@ -96,6 +96,17 @@ public class DLFileEntryTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public BaseModel<?> addDraftBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		DLFolder dlFolder = (DLFolder)parentBaseModel;
+
+		return addBaseModelWithWorkflow(
+			dlFolder.getGroupId(), dlFolder.getFolderId(), false);
+	}
+
+	@Override
 	public String getBaseModelName(ClassedModel classedModel) {
 		DLFileEntry dlFileEntry = (DLFileEntry)classedModel;
 
@@ -303,17 +314,6 @@ public class DLFileEntryTrashHandlerTest
 			approved, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
-	}
-
-	@Override
-	protected BaseModel<?> addDraftBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
-		throws Exception {
-
-		DLFolder dlFolder = (DLFolder)parentBaseModel;
-
-		return addBaseModelWithWorkflow(
-			dlFolder.getGroupId(), dlFolder.getFolderId(), false);
 	}
 
 	@Override

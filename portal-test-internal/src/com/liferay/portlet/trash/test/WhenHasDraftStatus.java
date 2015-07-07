@@ -14,8 +14,16 @@
 
 package com.liferay.portlet.trash.test;
 
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.service.ServiceContext;
+
 /**
  * @author Cristina González
  */
 public interface WhenHasDraftStatus {
+
+	public BaseModel<?> addDraftBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception;
+
 }

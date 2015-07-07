@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_DOCUMENT</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Basic Document')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BROWSE_BY_TYPE</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Browse by Type')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORIZATION</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Categorization')]</td>
 	<td></td>
@@ -61,6 +71,11 @@
 <tr>
 	<td>CONTENT_SHARING</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Content Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRACT</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Contract')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -99,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HOME</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Home')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INSTANT_MESSENGER</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Instant Messenger')]</td>
 	<td></td>
@@ -124,6 +144,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARKETING_BANNER</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Marketing Banner')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINE</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Mine')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOBILE_DEVICE_RULES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Mobile Device Rules')]</td>
 	<td></td>
@@ -131,6 +161,11 @@
 <tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ONLINE_TRAINING</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Online Training')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -164,6 +199,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECENT</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Recent')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Recycle Bin')]</td>
 	<td></td>
@@ -171,6 +211,11 @@
 <tr>
 	<td>ROLES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SALES_PRESENTATION</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Sales Presentation')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -199,6 +244,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UP</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Up')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_GROUPS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'User Groups')]</td>
 	<td></td>
@@ -211,61 +261,6 @@
 <tr>
 	<td>WEBSITES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Websites')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_HOME</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Home')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_HOME_ACTIONS</td>
-	<td>//div[contains(@id,'folderContainer')]//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_RECENT</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Recent')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_MINE</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Mine')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BROWSE_BY_TYPE</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Browse by Type')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BROWSE_BY_TYPE_UP</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Up')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BROWSE_BY_TYPE_BASIC_DOCUMENT</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Basic Document')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BROWSE_BY_TYPE_CONTRACT</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Contract')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BROWSE_BY_TYPE_MARKETING_BANNER</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Marketing Banner')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BROWSE_BY_TYPE_ONLINE_TRAINING</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Online Training')]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BROWSE_BY_TYPE_SALES_PRESENTATION</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Sales Presentation')]/a/span</td>
 	<td></td>
 </tr>
 </tbody>

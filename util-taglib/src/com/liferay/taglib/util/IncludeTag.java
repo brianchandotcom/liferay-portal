@@ -298,11 +298,6 @@ public class IncludeTag extends AttributesTagSupport {
 		return _page;
 	}
 
-	protected RequestDispatcher getRequestDispatcher(String page) {
-		return DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-			servletContext, page);
-	}
-
 	protected String getStartPage() {
 		return null;
 	}
@@ -367,7 +362,9 @@ public class IncludeTag extends AttributesTagSupport {
 	protected void includePage(String page, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		RequestDispatcher requestDispatcher = getRequestDispatcher(page);
+		RequestDispatcher requestDispatcher =
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				servletContext, page);
 
 		requestDispatcher.include(request, response);
 	}

@@ -114,6 +114,18 @@ public class JournalArticleTrashHandlerTest
 	}
 
 	@Override
+	public BaseModel<?> expireBaseModel(
+			BaseModel<?> baseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		JournalArticle article = (JournalArticle)baseModel;
+
+		return JournalArticleLocalServiceUtil.expireArticle(
+			article.getUserId(), article.getGroupId(), article.getArticleId(),
+			article.getVersion(), StringPool.BLANK, serviceContext);
+	}
+
+	@Override
 	public String getBaseModelName(ClassedModel classedModel) {
 		JournalArticle article = (JournalArticle)classedModel;
 
@@ -326,18 +338,6 @@ public class JournalArticleTrashHandlerTest
 		JournalFolder folder = (JournalFolder)parentBaseModel;
 
 		JournalFolderServiceUtil.deleteFolder(folder.getFolderId(), false);
-	}
-
-	@Override
-	protected BaseModel<?> expireBaseModel(
-			BaseModel<?> baseModel, ServiceContext serviceContext)
-		throws Exception {
-
-		JournalArticle article = (JournalArticle)baseModel;
-
-		return JournalArticleLocalServiceUtil.expireArticle(
-			article.getUserId(), article.getGroupId(), article.getArticleId(),
-			article.getVersion(), StringPool.BLANK, serviceContext);
 	}
 
 	@Override

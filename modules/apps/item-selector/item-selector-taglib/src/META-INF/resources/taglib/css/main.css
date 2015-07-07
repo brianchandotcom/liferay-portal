@@ -1,0 +1,26 @@
+.lfr-item-viewer {
+	.search-info {
+		background-color: #D3E8F1;
+		padding: 10px;
+		padding-right: 50px;
+		position: relative;
+
+		.keywords {
+			float: none;
+			font-size: 1.4em;
+			font-weight: bold;
+		}
+
+		.change-search-folder {
+			font-size: 0.8em;
+			font-weight: normal;
+		}
+
+		.close-search {
+			margin-top: -8px;
+			position: absolute;
+			right: 15px;
+			top: 50%;
+		}
+	}
+}

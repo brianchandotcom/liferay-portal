@@ -31,6 +31,10 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:uploadURL");
 %>
 
+<liferay-util:html-top>
+	<link href="/o/item-selector-taglib/taglib/css/main.css" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
 	<c:if test="<%= displayStyleURL != null %>">
 		<aui:nav-bar>

@@ -92,6 +92,10 @@ downloadSassSpec {
 
 	eachFile new StripPathSegmentsAction(3)
 
+	ext {
+		autoClean = false
+	}
+
 	from zipTree(
 		{
 			FileUtil.get(project, sassSpecUrl)
@@ -141,6 +145,12 @@ generateJNALibrary {
 
 processTestResources {
 	dependsOn downloadSassSpec
+}
+
+tasks.withType(BuildLibSassTask) {
+	ext {
+		autoClean = false
+	}
 }
 
 class BuildLibSassTask extends DefaultTask {

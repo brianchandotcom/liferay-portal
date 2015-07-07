@@ -23,6 +23,10 @@ downloadSassSpec {
 
 	eachFile new StripPathSegmentsAction(3)
 
+	ext {
+		autoClean = false
+	}
+
 	from zipTree(
 		{
 			FileUtil.get(project, sassSpecUrl)

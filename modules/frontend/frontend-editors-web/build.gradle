@@ -93,6 +93,10 @@ buildCKEditorBBCode {
 
 	destinationFile = new File(bbCodeDir, "bbcode_parser.js")
 
+	ext {
+		autoClean = false
+	}
+
 	sourceFiles new File(bbCodeDir, "bbcode_utils.js")
 	sourceFiles new File(bbCodeDir, "lexer.js")
 	sourceFiles new File(bbCodeDir, "parser.js")

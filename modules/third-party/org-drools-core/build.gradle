@@ -23,6 +23,10 @@ targetCompatibility = "1.6"
 task patch(type: PatchTask)
 
 patch {
+	ext {
+		autoClean = false
+	}
+
 	fileNames "org/drools/base/ClassFieldAccessorCache.java"
 	originalLibModuleName = "drools-core"
 }

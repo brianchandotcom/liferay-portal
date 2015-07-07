@@ -26,6 +26,10 @@ deploy {
 }
 
 patch {
+	ext {
+		autoClean = false
+	}
+
 	fileNames "org/hibernate/cache/UpdateTimestampsCache.java"
 	fileNames "org/hibernate/intercept/FieldInterceptionHelper.java"
 

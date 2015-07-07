@@ -26,6 +26,10 @@ deploy {
 }
 
 patch {
+	ext {
+		autoClean = false
+	}
+
 	fileNames "**/com/ctc/wstx/sw/BufferingXmlWriter.java"
 	originalLibModuleName = "wstx-asl"
 	originalLibSrcDirName = "src/java"

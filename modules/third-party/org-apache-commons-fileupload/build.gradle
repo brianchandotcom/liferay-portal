@@ -20,6 +20,10 @@ targetCompatibility = "1.6"
 task patch(type: PatchTask)
 
 patch {
+	ext {
+		autoClean = false
+	}
+
 	fileNames "org/apache/commons/fileupload/FileUploadBase.java"
 	fileNames "org/apache/commons/fileupload/MultipartStream.java"
 

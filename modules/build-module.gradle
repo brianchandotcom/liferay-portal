@@ -75,5 +75,9 @@ if (project.path in [":util:css-builder"]) {
 
 	buildPluginDescriptor {
 		configurationScopeMapping "provided", "provided"
+
+		ext {
+			autoClean = false
+		}
 	}
 }

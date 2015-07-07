@@ -55,6 +55,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.roles.admin.web.upgrade.RolesAdminWebUpgrade;
 
 import java.io.IOException;
 
@@ -70,6 +71,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -441,6 +443,11 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRolesAdminWebUpgrade(
+		RolesAdminWebUpgrade rolesAdminWebUpgrade) {
 	}
 
 	protected void updateAction(

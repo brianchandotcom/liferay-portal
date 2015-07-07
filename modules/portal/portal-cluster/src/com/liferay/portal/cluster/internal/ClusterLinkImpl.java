@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
@@ -148,12 +149,14 @@ public class ClusterLinkImpl implements ClusterLink {
 		int prefixLength =
 			ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX.length();
 
-		for (String key : properties.keySet()) {
+		for (Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
 			if (key.startsWith(
 					ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX)) {
 
 				transportNames.put(
-					key.substring(prefixLength + 1), properties.get(key));
+					key.substring(prefixLength + 1), entry.getValue());
 			}
 		}
 
@@ -173,12 +176,14 @@ public class ClusterLinkImpl implements ClusterLink {
 		int prefixLength =
 			ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX.length();
 
-		for (String key : properties.keySet()) {
+		for (Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
 			if (key.startsWith(
 					ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX)) {
 
 				transportProperties.put(
-					key.substring(prefixLength + 1), properties.get(key));
+					key.substring(prefixLength + 1), entry.getValue());
 			}
 		}
 
@@ -206,11 +211,8 @@ public class ClusterLinkImpl implements ClusterLink {
 		_transportChannels = new ArrayList<>(_channelCount);
 		_clusterReceivers = new ArrayList<>(_channelCount);
 
-		List<String> keys = new ArrayList<>(_channelCount);
-
-		for (Object key : transportChannelProperties.keySet()) {
-			keys.add((String)key);
-		}
+		List<String> keys = new ArrayList<>(
+			transportChannelProperties.stringPropertyNames());
 
 		Collections.sort(keys);
 

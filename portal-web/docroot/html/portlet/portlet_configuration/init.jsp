@@ -29,7 +29,8 @@ page import="com.liferay.portal.util.ResourcePermissionUtil" %><%@
 page import="com.liferay.portlet.PortletQNameUtil" %><%@
 page import="com.liferay.portlet.exportimport.LARFileSizeException" %><%@
 page import="com.liferay.portlet.portletconfiguration.action.ActionUtil" %><%@
-page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration" %>
+page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

@@ -281,7 +281,8 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 
 				boolean optional = false;
-				boolean transitive = true;
+				boolean transitive = getNodeAttribute(
+					dependencyNode, "transitive", true);
 
 				if (Validator.isNotNull(conf)) {
 					if (conf.startsWith("default")) {
@@ -468,12 +469,14 @@ public class InitGradleTask extends DefaultTask {
 
 				String group = (String)dependencyNode.attribute("org");
 				String name = (String)dependencyNode.attribute("name");
+				boolean transitive = getNodeAttribute(
+					dependencyNode, "transitive", true);
 				String version = (String)dependencyNode.attribute("rev");
 
 				contents.add(
 					wrapDependency(
 						JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, group, name,
-						true, version));
+						transitive, version));
 			}
 		}
 
@@ -605,6 +608,18 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return (Node)nodeList.get(0);
+	}
+
+	protected boolean getNodeAttribute(
+		Node node, String name, boolean defaultValue) {
+
+		String value = (String)node.attribute(name);
+
+		if (Validator.isNull(value)) {
+			return defaultValue;
+		}
+
+		return Boolean.parseBoolean(value);
 	}
 
 	protected String getServiceJarFileName(String deploymentContext) {

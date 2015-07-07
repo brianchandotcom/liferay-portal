@@ -122,7 +122,7 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 
 				var buttons = [
 					{
-						label: Liferay.Language.get('import'),
+						label: '<liferay-ui:message key="import" />',
 						on: {
 							click: function() {
 								A.io.request(
@@ -135,8 +135,14 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 										},
 										method: 'POST',
 										on: {
-											complete: function() {
-												var responseData = this.get('responseData');
+											complete: function(event, id, xhr) {
+												var responseData = {};
+
+												try {
+													responseData = A.JSON.parse(xhr.responseText);
+												}
+												catch (e) {
+												}
 
 												var portletErrorMessage = A.one('#<portlet:namespace />portletErrorMessage');
 
@@ -167,12 +173,12 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 					{
 						cssClass: 'close',
 						label: '\u00D7',
-						render: true,
 						on: {
 							click: function() {
 								<portlet:namespace />importDialog.hide();
 							}
-						}
+						},
+						render: true
 					}
 				];
 
@@ -180,10 +186,6 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 					{
 						dialog: {
 							bodyContent: importCalendarContainer.html(),
-							toolbars: {
-								footer: buttons,
-								header: buttonClose
-							},
 							modal: true,
 							on: {
 								visibleChange: function(event) {
@@ -191,9 +193,13 @@ CalendarResource calendarResource = (CalendarResource)request.getAttribute(Calen
 									A.one('#<portlet:namespace />portletErrorMessage').hide();
 									A.one('#<portlet:namespace />portletSuccessMessage').hide();
 								}
+							},
+							toolbars: {
+								footer: buttons,
+								header: buttonClose
 							}
 						},
-						title: Liferay.Language.get('import')
+						title: '<liferay-ui:message key="import" />'
 					}
 				).render();
 			}

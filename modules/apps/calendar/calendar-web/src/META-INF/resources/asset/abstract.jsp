@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div>
+<div class="calendar-asset-abstract">
 	<p>
 		<liferay-ui:icon
 			iconCssClass="icon-user"

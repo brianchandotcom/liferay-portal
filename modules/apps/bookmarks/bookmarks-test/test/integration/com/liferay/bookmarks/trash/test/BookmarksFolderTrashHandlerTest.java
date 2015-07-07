@@ -334,13 +334,6 @@ public class BookmarksFolderTrashHandlerTest
 	}
 
 	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		BookmarksFolder folder = (BookmarksFolder)classedModel;
-
-		return folder.getName();
-	}
-
-	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 

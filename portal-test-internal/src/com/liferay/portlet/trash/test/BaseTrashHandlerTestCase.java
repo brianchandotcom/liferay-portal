@@ -1221,7 +1221,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
-		String baseModelName = getBaseModelName(baseModel);
+		WhenCanBeDuplicatedInTrash whenCanBeDuplicatedInTrash =
+			(WhenCanBeDuplicatedInTrash)this;
+
+		String baseModelName = whenCanBeDuplicatedInTrash.getBaseModelName(
+			baseModel);
 
 		Assert.assertTrue(baseModelName.startsWith(StringPool.SLASH));
 
@@ -1240,7 +1244,8 @@ public abstract class BaseTrashHandlerTestCase {
 			initialTrashEntriesCount + 2,
 			getTrashEntriesCount(group.getGroupId()));
 
-		String duplicateBaseModelName = getBaseModelName(duplicateBaseModel);
+		String duplicateBaseModelName =
+			whenCanBeDuplicatedInTrash.getBaseModelName(duplicateBaseModel);
 
 		Assert.assertTrue(duplicateBaseModelName.startsWith(StringPool.SLASH));
 	}
@@ -2723,10 +2728,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Class<?> clazz = getBaseModelClass();
 
 		return clazz.getName();
-	}
-
-	protected String getBaseModelName(ClassedModel classedModel) {
-		return StringPool.BLANK;
 	}
 
 	protected long getDeletionSystemEventCount(

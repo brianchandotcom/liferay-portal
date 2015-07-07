@@ -275,13 +275,6 @@ public class MBCategoryTrashHandlerTest
 	}
 
 	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		MBCategory category = (MBCategory)classedModel;
-
-		return category.getName();
-	}
-
-	@Override
 	protected int getNotInTrashBaseModelsCount(BaseModel<?> parentBaseModel)
 		throws Exception {
 

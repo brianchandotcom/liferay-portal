@@ -73,6 +73,13 @@ public class JournalFolderTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getBaseModelName(ClassedModel classedModel) {
+		JournalFolder folder = (JournalFolder)classedModel;
+
+		return folder.getName();
+	}
+
+	@Override
 	public String getParentBaseModelClassName() {
 		return getBaseModelClass().getName();
 	}
@@ -331,13 +338,6 @@ public class JournalFolderTrashHandlerTest
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return JournalFolder.class;
-	}
-
-	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		JournalFolder folder = (JournalFolder)classedModel;
-
-		return folder.getName();
 	}
 
 	@Override

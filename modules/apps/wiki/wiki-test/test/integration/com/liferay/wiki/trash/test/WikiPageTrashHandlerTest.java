@@ -66,6 +66,11 @@ public class WikiPageTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public String getBaseModelName(ClassedModel classedModel) {
+		return WikiPageTrashHandlerTestUtil.getBaseModelName(classedModel);
+	}
+
+	@Override
 	public String getParentBaseModelClassName() {
 		Class<WikiNode> wikiNodeClass = WikiNode.class;
 
@@ -269,11 +274,6 @@ public class WikiPageTrashHandlerTest
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return WikiPageTrashHandlerTestUtil.getBaseModelClass();
-	}
-
-	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		return WikiPageTrashHandlerTestUtil.getBaseModelName(classedModel);
 	}
 
 	@Override

@@ -304,16 +304,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MANAGE_DOCUMENT_TYPES</td>
-	<td>//a[@role='menuitem' and contains(.,'Document Types')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MANAGE_METADATA_SETS</td>
-	<td>//a[@role='menuitem' and contains(.,'Metadata Sets')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_PAGES</td>
 	<td>//a[@role='menuitem' and contains(.,'Manage Pages')]</td>
 	<td></td>

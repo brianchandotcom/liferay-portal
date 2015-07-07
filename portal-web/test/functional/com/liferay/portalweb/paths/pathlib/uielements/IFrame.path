@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>CATEGORIES_DIALOG_BOX</td>
-	<td>//div[contains(@class,'lfr-tag-selector-popup')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONFIGURATION</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
 	<td></td>

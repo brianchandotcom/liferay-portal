@@ -79,7 +79,7 @@ AUI.add(
 					},
 
 					zIndex: {
-						value: 1
+						value: 5
 					}
 				},
 

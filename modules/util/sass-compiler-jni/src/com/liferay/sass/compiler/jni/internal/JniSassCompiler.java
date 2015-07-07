@@ -21,14 +21,13 @@ import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Fi
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Output_Style;
 
-import com.sun.jna.Memory;
-import com.sun.jna.Native;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+
+import java.nio.file.Files;
 
 /**
  * @author Gregory Amerson
@@ -59,44 +58,47 @@ public class JniSassCompiler implements SassCompiler {
 
 			write(
 				getOutputFile(file),
-				sassCompiler.compileFile(fileName, "", ""));
+				sassCompiler.compileFile(fileName, "", false));
 		}
 	}
 
 	@Override
-	public String compileFile(
-			String inputFileName, String includeDirName, String imgDirName)
+	public String compileFile(String inputFileName, String includeDirName)
 		throws JniSassCompilerException {
 
-		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
+		return compileFile(inputFileName, includeDirName, false, "");
+	}
 
-		byte sourceComments = (byte)0;
+	@Override
+	public String compileFile(
+			String inputFileName, String includeDirName,
+			boolean generateSourceMap)
+		throws JniSassCompilerException {
 
-		String includeDirNames = includeDirName + File.pathSeparator + new File(
-			inputFileName).getParent();
+		return compileFile(
+			inputFileName, includeDirName, generateSourceMap, "");
+	}
+
+	@Override
+	public String compileFile(
+			String inputFileName, String includeDirName,
+			boolean generateSourceMap, String sourceMapFileName)
+		throws JniSassCompilerException {
 
 		Sass_File_Context sassFileContext = null;
 
 		try {
-			sassFileContext = _liferaysassLibrary.sass_make_file_context(
-				inputFileName);
+			String includeDirNames =
+				includeDirName + File.pathSeparator + new File(
+					inputFileName).getParent();
 
-			Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
+			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
+				sourceMapFileName = getOutputFileName(inputFileName) + ".map";
+			}
 
-			_liferaysassLibrary.sass_option_set_include_path(
-				sassOptions, includeDirNames);
-			_liferaysassLibrary.sass_option_set_input_path(
-				sassOptions, inputFileName);
-			_liferaysassLibrary.sass_option_set_output_path(sassOptions, "");
-			_liferaysassLibrary.sass_option_set_output_style(
-				sassOptions, Sass_Output_Style.SASS_STYLE_NESTED);
-			_liferaysassLibrary.sass_option_set_source_comments(
-				sassOptions, sourceComments);
-
-			_liferaysassLibrary.sass_file_context_set_options(
-				sassFileContext, sassOptions);
-
-			_liferaysassLibrary.sass_compile_file_context(sassFileContext);
+			sassFileContext = _createSassFileContext(
+				inputFileName, includeDirNames, generateSourceMap,
+				sourceMapFileName);
 
 			Sass_Context sassContext =
 				_liferaysassLibrary.sass_file_context_get_context(
@@ -115,6 +117,21 @@ public class JniSassCompiler implements SassCompiler {
 
 			String output = _liferaysassLibrary.sass_context_get_output_string(
 				sassContext);
+
+			if (generateSourceMap) {
+				try {
+					File sourceMapFile = new File(sourceMapFileName);
+
+					String sourcemapOutput =
+						_liferaysassLibrary.sass_context_get_source_map_string(
+							sassContext);
+
+					write(sourceMapFile, sourcemapOutput);
+				}
+				catch (Exception e) {
+					System.out.println("Unable to create source map");
+				}
+			}
 
 			if (output == null) {
 				throw new JniSassCompilerException("Null output");
@@ -136,23 +153,127 @@ public class JniSassCompiler implements SassCompiler {
 	}
 
 	@Override
+	public String compileString(String input, String includeDirName)
+		throws JniSassCompilerException {
+
+		return compileString(input, "", includeDirName, false);
+	}
+
+	@Override
 	public String compileString(
-			String input, String includeDirName, String imgDirName)
+		String input, String inputFileName, String includeDirName,
+		boolean generateSourceMap) throws JniSassCompilerException {
+
+		return compileString(
+			input, inputFileName, includeDirName, generateSourceMap, "");
+	}
+
+	@Override
+	public String compileString(
+			String input, String inputFileName, String includeDirName,
+			boolean generateSourceMap, String sourceMapFileName)
 		throws JniSassCompilerException {
 
 		try {
-			File tempFile = File.createTempFile("tmp", ".scss");
+			File parentFile = new File(inputFileName).getParentFile();
+			File tempFile = null;
+			boolean modifySourceMap = false;
+
+			if ((inputFileName == null) || inputFileName.equals("")) {
+				tempFile = new File(_TMP_DIR, "tmp.scss");
+
+				if (generateSourceMap) {
+					System.out.println("Source maps require a fileName");
+
+					generateSourceMap = false;
+				}
+			}
+			else {
+				modifySourceMap = true;
+
+				String fileName = inputFileName.substring(
+					inputFileName.lastIndexOf("/"));
+
+				tempFile = new File(parentFile.getCanonicalPath(), "tmp.scss");
+
+				if ((sourceMapFileName == null) ||
+					sourceMapFileName.equals("")) {
+
+					sourceMapFileName =
+						parentFile.getPath() + fileName + ".map";
+				}
+			}
 
 			tempFile.deleteOnExit();
 
 			write(tempFile, input);
 
-			return compileFile(
-				tempFile.getCanonicalPath(), includeDirName, imgDirName);
+			String output = compileFile(
+				tempFile.getCanonicalPath(), includeDirName, generateSourceMap,
+				sourceMapFileName);
+
+			if (modifySourceMap) {
+				String fileName = inputFileName.substring(
+					inputFileName.lastIndexOf("/"));
+				File sourceMapFile = new File(sourceMapFileName);
+				String sourceMapContent = new String(
+					Files.readAllBytes(sourceMapFile.toPath()));
+
+				sourceMapContent = sourceMapContent.replaceAll(
+					"tmp\\.scss", fileName);
+				sourceMapContent = sourceMapContent.replaceAll(
+					"tmp\\.css", getOutputFileName(fileName));
+
+				write(sourceMapFile, sourceMapContent);
+			}
+
+			return output;
 		}
-		catch (Exception e) {
-			throw new JniSassCompilerException(e);
+		catch (Throwable t) {
+			throw new JniSassCompilerException(t);
 		}
+	}
+
+	private Sass_File_Context _createSassFileContext(
+		String inputFileName, String includeDirNames, boolean generateSourceMap,
+		String sourceMapFileName) {
+
+		Sass_File_Context sassFileContext =
+			_liferaysassLibrary.sass_make_file_context(inputFileName);
+
+		// NONE((byte)0), DEFAULT((byte)1), MAP((byte)2);
+
+		byte sourceComments = (byte)0;
+
+		Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
+
+		_liferaysassLibrary.sass_option_set_include_path(
+			sassOptions, includeDirNames);
+		_liferaysassLibrary.sass_option_set_input_path(
+			sassOptions, inputFileName);
+		_liferaysassLibrary.sass_option_set_output_path(sassOptions, "");
+		_liferaysassLibrary.sass_option_set_output_style(
+			sassOptions, Sass_Output_Style.SASS_STYLE_NESTED);
+		_liferaysassLibrary.sass_option_set_source_comments(
+			sassOptions, sourceComments);
+
+		if (generateSourceMap) {
+			_liferaysassLibrary.sass_option_set_source_map_file(
+				sassOptions, sourceMapFileName);
+			_liferaysassLibrary.sass_option_set_source_map_contents(
+				sassOptions, (byte) 0);
+			_liferaysassLibrary.sass_option_set_source_map_embed(
+				sassOptions, (byte) 0);
+			_liferaysassLibrary.sass_option_set_omit_source_map_url(
+				sassOptions, (byte) 0);
+		}
+
+		_liferaysassLibrary.sass_file_context_set_options(
+			sassFileContext, sassOptions);
+
+		_liferaysassLibrary.sass_compile_file_context(sassFileContext);
+
+		return sassFileContext;
 	}
 
 	private File getOutputFile(File file) {
@@ -160,8 +281,10 @@ public class JniSassCompiler implements SassCompiler {
 	}
 
 	private String getOutputFileName(File file) {
-		String fileName = file.getName();
+		return getOutputFileName(file.getName());
+	}
 
+	private String getOutputFileName(String fileName) {
 		return fileName.replaceAll("scss$", "css");
 	}
 
@@ -179,22 +302,21 @@ public class JniSassCompiler implements SassCompiler {
 		return fileName.endsWith(".scss");
 	}
 
-	private Memory toPointer(String input) {
-		byte[] data = Native.toByteArray(input);
-		Memory pointer = new Memory(data.length + 1);
-		pointer.write(0, data, 0, data.length);
-		pointer.setByte(data.length, (byte)0);
-
-		return pointer;
-	}
-
 	private void write(File file, String string) throws IOException {
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+
+			file.createNewFile();
+		}
+
 		try (Writer writer = new OutputStreamWriter(
 				new FileOutputStream(file, false), "UTF-8")) {
 
 			writer.write(string);
 		}
 	}
+
+	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 
 	private static final LiferaysassLibrary _liferaysassLibrary =
 		LiferaysassLibrary.INSTANCE;

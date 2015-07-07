@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1f40667`.*
+*This document has been reviewed through commit `a432a58`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2132,24 +2132,24 @@ This change was made to reduce the coupling between the two applications.
 ---------------------------------------
 
 ### Removed render Method from AssetRenderer API and WorkflowHandler API
-- **Date:** 2015-Jul-3
+- **Date:** 2015-Jul-03
 - **JIRA Ticket:** LPS-56705
 
 #### What changed?
 
-The method `render` has been removed from the interface `AssetRenderer` and
+The method `render` has been removed from the interfaces `AssetRenderer` and
 `WorkflowHandler`.
 
 #### Who is affected?
 
-This affects any Java code calling the method `render` on an
-`AssetRenderer` or `WorkflowHandler` class, or Java classes overriding the 
-`render` method of this classes.
+This affects any Java code calling the method `render` on an `AssetRenderer` or
+`WorkflowHandler` class, or Java classes overriding the `render` method of these
+classes.
 
 #### How should I update my code?
 
 The method `render` was used to return the path of a JSP, including the
-configuration of a portlet. That method is now available for the same 
+configuration of a portlet. That method is now available for the same
 AssetRender API extending the `BaseJSPAssetRenderer` class, and is called
 `getJspPath`.
 
@@ -2160,7 +2160,7 @@ the `include` method.
 
 This change was part of needed modifications to support adding asset renderers
 and workflow handlers for portlets based on other technology different than JSP
-(e.g., FreeMarker). The method `include` can now be used to create asset 
+(e.g., FreeMarker). The method `include` can now be used to create asset
 renderers or workflow handlers with UIs written in FreeMarker or any other
 framework.
 

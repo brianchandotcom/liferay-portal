@@ -33,11 +33,11 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsAssetable;
 import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenHasGrandParent;
+import com.liferay.portlet.trash.test.WhenIsAssetable;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
@@ -86,10 +86,7 @@ public class BookmarksFolderTrashHandlerTest
 	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
 		throws Exception {
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			classedModel.getModelClassName(), classPK);
-
-		return assetEntry.isVisible();
+		return _whenIsAssetable.isAssetEntryVisible(classedModel, classPK);
 	}
 
 	@Override
@@ -132,6 +129,8 @@ public class BookmarksFolderTrashHandlerTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		_whenIsAssetable = new DefaultWhenIsAssetable();
+
 		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
 
 		_testMode = PortalRunMode.isTestMode();
@@ -256,6 +255,7 @@ public class BookmarksFolderTrashHandlerTest
 	}
 
 	private boolean _testMode;
+	private WhenIsAssetable _whenIsAssetable;
 	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
 
 }

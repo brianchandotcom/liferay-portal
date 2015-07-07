@@ -43,9 +43,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ItemSelectorBrowserUtil {
 
-	public static void addPortletBreadcrumEntries(
-			long folderId, HttpServletRequest request, PortletURL portletURL,
-			String displayStyle)
+	public static void addPortletBreadcrumbEntries(
+			long folderId, String displayStyle, HttpServletRequest request,
+			PortletURL portletURL)
 		throws Exception {
 
 		portletURL.setParameter("displayStyle", displayStyle);

@@ -65,7 +65,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 	String keywords = ParamUtil.getString(request, "keywords");
 
 	if ((folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && Validator.isNull(keywords)) {
-		ItemSelectorBrowserUtil.addPortletBreadcrumEntries(folderId, request, searchContainer.getIteratorURL(), displayStyle);
+		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, searchContainer.getIteratorURL());
 	%>
 
 		<liferay-ui:breadcrumb

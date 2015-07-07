@@ -69,6 +69,17 @@
   <td>//select[contains(@id,'workflowDefinition-1')]</td>
   <td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_SELECT</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td>Permissions Viewable by</td>
+</tr>
 </tbody>
 </table>
 </body>

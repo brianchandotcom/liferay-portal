@@ -80,7 +80,7 @@ public class JCRFactoryWrapper {
 			new JCRSessionInvocationHandler(jcrSession);
 
 		Object sessionProxy = ProxyUtil.newProxyInstance(
-			ClassLoaderUtil.getPortalClassLoader(),
+			ClassLoaderUtil.getClassLoader(this.getClass()),
 			new Class<?>[] {Map.class, Session.class},
 			jcrSessionInvocationHandler);
 

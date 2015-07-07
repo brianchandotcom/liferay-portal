@@ -266,8 +266,9 @@ AUI.add(
 					},
 
 					_setLinks: function(val) {
+						var instance = this;
+
 						var links;
-						var sources = [];
 
 						if (val instanceof A.NodeList) {
 							links = val;
@@ -279,14 +280,16 @@ AUI.add(
 							links = new A.NodeList([val]);
 						}
 
-						if (links.size() > 0) {
-							links.each(
-								function() {
-									sources.push(this.getAttribute('href') || this.getAttribute('data-href'));
-								}
-							);
+						var sources = [];
 
-							this.set('sources', sources);
+						links.each(
+							function(item, index) {
+								sources.push(item.attr('href') || item.attr('data-href'));
+							}
+						);
+
+						if (sources.length) {
+							instance.set('sources', sources);
 						}
 
 						return links;

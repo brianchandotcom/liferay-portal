@@ -115,9 +115,9 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 			</span>
 
 			<%
-			PortletURL closeSearchURL = searchContainer.getIteratorURL();
+			PortletURL closeSearchURL = PortletURLUtil.clone(searchURL, liferayPortletResponse);
 
-			closeSearchURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+			closeSearchURL.setParameter("folderId", String.valueOf(folderId));
 			closeSearchURL.setParameter("keywords", StringPool.BLANK);
 			%>
 

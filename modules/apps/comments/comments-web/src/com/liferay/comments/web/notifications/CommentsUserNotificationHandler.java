@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.comments.notifications;
+package com.liferay.comments.web.notifications;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;

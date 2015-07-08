@@ -2668,15 +2668,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = MDRActionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + MDRActionModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return MDRActionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

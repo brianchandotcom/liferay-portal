@@ -5195,15 +5195,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = AddressModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + AddressModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AddressModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

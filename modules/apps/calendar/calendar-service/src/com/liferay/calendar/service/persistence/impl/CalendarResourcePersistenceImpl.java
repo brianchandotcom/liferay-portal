@@ -7160,16 +7160,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = CalendarResourceModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				CalendarResourceModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return CalendarResourceModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

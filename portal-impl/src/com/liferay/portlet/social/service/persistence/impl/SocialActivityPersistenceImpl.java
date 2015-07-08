@@ -6820,16 +6820,8 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = SocialActivityModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				SocialActivityModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return SocialActivityModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

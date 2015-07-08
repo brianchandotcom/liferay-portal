@@ -2556,16 +2556,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DDMStructureLinkModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				DDMStructureLinkModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DDMStructureLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

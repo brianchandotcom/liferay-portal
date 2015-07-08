@@ -2074,16 +2074,8 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = DDMTemplateVersionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				DDMTemplateVersionModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DDMTemplateVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

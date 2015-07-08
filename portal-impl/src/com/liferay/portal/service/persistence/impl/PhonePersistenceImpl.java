@@ -4537,15 +4537,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = PhoneModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + PhoneModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PhoneModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

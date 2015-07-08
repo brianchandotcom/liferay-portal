@@ -9647,15 +9647,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = RoleModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + RoleModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return RoleModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

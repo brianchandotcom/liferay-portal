@@ -3416,15 +3416,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = MBThreadFlagModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + MBThreadFlagModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return MBThreadFlagModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

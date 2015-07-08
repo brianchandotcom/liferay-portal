@@ -2220,15 +2220,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = UserTrackerModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + UserTrackerModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserTrackerModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

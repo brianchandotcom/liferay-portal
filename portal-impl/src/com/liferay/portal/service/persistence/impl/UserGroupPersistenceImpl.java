@@ -5538,15 +5538,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = UserGroupModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + UserGroupModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserGroupModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

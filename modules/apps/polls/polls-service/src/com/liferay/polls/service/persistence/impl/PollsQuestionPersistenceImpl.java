@@ -3030,15 +3030,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = PollsQuestionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + PollsQuestionModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PollsQuestionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

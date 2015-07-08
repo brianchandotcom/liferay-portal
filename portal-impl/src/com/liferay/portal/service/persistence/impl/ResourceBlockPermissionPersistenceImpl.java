@@ -2013,16 +2013,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = ResourceBlockPermissionModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				ResourceBlockPermissionModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ResourceBlockPermissionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

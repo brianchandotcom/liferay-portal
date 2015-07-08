@@ -3174,15 +3174,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = UserGroupRoleModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + UserGroupRoleModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserGroupRoleModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

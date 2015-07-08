@@ -3412,15 +3412,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = PollsVoteModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + PollsVoteModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PollsVoteModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

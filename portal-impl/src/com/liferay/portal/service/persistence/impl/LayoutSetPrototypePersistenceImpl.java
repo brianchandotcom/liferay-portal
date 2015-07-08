@@ -4484,16 +4484,8 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = LayoutSetPrototypeModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				LayoutSetPrototypeModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return LayoutSetPrototypeModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

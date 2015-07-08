@@ -19399,15 +19399,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = MBMessageModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + MBMessageModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return MBMessageModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

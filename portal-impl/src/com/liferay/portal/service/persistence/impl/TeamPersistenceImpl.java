@@ -2391,15 +2391,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = TeamModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + TeamModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return TeamModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -9266,16 +9266,8 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = MicroblogsEntryModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				MicroblogsEntryModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return MicroblogsEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

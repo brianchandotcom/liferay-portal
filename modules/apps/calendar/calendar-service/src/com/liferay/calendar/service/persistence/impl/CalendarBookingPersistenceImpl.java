@@ -6177,16 +6177,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = CalendarBookingModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				CalendarBookingModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return CalendarBookingModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

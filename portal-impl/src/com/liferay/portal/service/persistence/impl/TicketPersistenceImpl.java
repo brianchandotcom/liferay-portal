@@ -1550,15 +1550,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = TicketModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + TicketModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return TicketModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

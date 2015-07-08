@@ -675,15 +675,8 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = ClusterGroupModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + ClusterGroupModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ClusterGroupModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

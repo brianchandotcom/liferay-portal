@@ -964,15 +964,8 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = RatingsStatsModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " + RatingsStatsModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return RatingsStatsModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

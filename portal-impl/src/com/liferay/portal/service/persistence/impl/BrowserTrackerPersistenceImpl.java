@@ -934,16 +934,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	}
 
 	@Override
-	protected int getColumnType(String columnName) {
-		Integer type = BrowserTrackerModelImpl.TABLE_COLUMNS_MAP.get(columnName);
-
-		if (type == null) {
-			throw new IllegalArgumentException("Unknown column name " +
-				columnName + " for table " +
-				BrowserTrackerModelImpl.TABLE_NAME);
-		}
-
-		return type;
+	protected Map<String, Integer> getTableColumnsMap() {
+		return BrowserTrackerModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

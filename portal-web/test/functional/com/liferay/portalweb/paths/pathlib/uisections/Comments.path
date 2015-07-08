@@ -103,6 +103,11 @@
 	<td>//header[@class='lfr-discussion-message-author']/a | //span[@class='user-name']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//span[contains(@class,'workflow-status')]/strong</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

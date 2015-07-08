@@ -67,10 +67,10 @@ public class PortletDisplayTemplatePortletDataHandlerTest
 		PortletBag portletBag = PortletBagPool.get(
 			PortletKeys.PORTLET_DISPLAY_TEMPLATE);
 
-		List<PortletDataHandler> portletDataHandlerIsntances =
+		List<PortletDataHandler> portletDataHandlerInstances =
 			portletBag.getPortletDataHandlerInstances();
 
-		return portletDataHandlerIsntances.get(0);
+		return portletDataHandlerInstances.get(0);
 	}
 
 	@Override

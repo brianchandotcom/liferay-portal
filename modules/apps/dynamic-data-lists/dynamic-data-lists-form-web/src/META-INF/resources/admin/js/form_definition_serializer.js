@@ -1,7 +1,8 @@
 AUI.add(
 	'liferay-ddl-form-builder-definition-serializer',
 	function(A) {
-		var AArray = A.Array;
+		var _ = AUI._;
+		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
 		var DefinitionSerializer = A.Component.create(
 			{
@@ -25,8 +26,6 @@ AUI.add(
 
 						instance.visit();
 
-						var layouts = instance.get('layouts');
-
 						var definition = A.JSON.stringify(
 							{
 								availableLanguageIds: ['en_US'],
@@ -40,19 +39,17 @@ AUI.add(
 						return definition;
 					},
 
-					serializeField: function(field) {
+					_serializeField: function(field) {
 						var instance = this;
 
 						var config = {};
 
-						var settingsForm = field.get('settingsForm');
+						var fieldType = FieldTypes.get(field.get('type'));
 
-						var settingsJSON = settingsForm.toJSON();
-
-						AArray.each(
-							settingsJSON.fields,
+						_.each(
+							fieldType.get('settings').fields,
 							function(item, index) {
-								config[item.name] = item.value;
+								config[item.name] = field.get(item.name);
 							}
 						);
 
@@ -61,7 +58,7 @@ AUI.add(
 								config,
 								{
 									dataType: 'string',
-									type: field.get('fieldType')
+									type: field.get('type')
 								}
 							)
 						);
@@ -70,7 +67,7 @@ AUI.add(
 					_valueFieldHandler: function() {
 						var instance = this;
 
-						return instance.serializeField;
+						return instance._serializeField;
 					}
 				}
 			}
@@ -80,6 +77,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['json', 'liferay-ddl-form-builder-layout-visitor']
+		requires: ['json', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddm-form-field-types']
 	}
 );

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.pop.MessageListener;
+import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -93,7 +94,7 @@ public class POPNotificationsMessageListener
 		return internetAddress.getAddress();
 	}
 
-	protected Folder getInboxFolder(Store store) throws Exception {
+	protected Folder getInboxFolder(Store store) throws MessagingException {
 		Folder defaultFolder = store.getDefaultFolder();
 
 		Folder[] folders = defaultFolder.list();
@@ -101,16 +102,15 @@ public class POPNotificationsMessageListener
 		if (folders.length == 0) {
 			throw new MessagingException("Inbox not found");
 		}
-		else {
-			Folder inboxFolder = folders[0];
 
-			inboxFolder.open(Folder.READ_WRITE);
+		Folder inboxFolder = folders[0];
 
-			return inboxFolder;
-		}
+		inboxFolder.open(Folder.READ_WRITE);
+
+		return inboxFolder;
 	}
 
-	protected Store getStore() throws Exception {
+	protected Store getStore() throws MessagingException {
 		Session session = MailEngine.getSession();
 
 		String storeProtocol = GetterUtil.getString(
@@ -145,7 +145,7 @@ public class POPNotificationsMessageListener
 
 	protected void notifyMessageListeners(
 			List<MessageListener> messageListeners, Message message)
-		throws Exception {
+		throws MessagingException {
 
 		String from = getEmailAddress(message.getFrom());
 		String recipient = getEmailAddress(
@@ -162,8 +162,8 @@ public class POPNotificationsMessageListener
 					messageListener.deliver(from, recipient, message);
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (MessageListenerException mle) {
+				_log.error(mle, mle);
 			}
 		}
 	}
@@ -179,9 +179,7 @@ public class POPNotificationsMessageListener
 
 		List<MessageListener> messageListeners = POPServerUtil.getListeners();
 
-		for (int i = 0; i < messages.length; i++) {
-			Message message = messages[i];
-
+		for (Message message : messages) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Message " + message);
 			}

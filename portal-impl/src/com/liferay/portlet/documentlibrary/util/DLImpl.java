@@ -1022,12 +1022,12 @@ public class DLImpl implements DL {
 	}
 
 	@Override
-	public String getThumbnailStyle() throws Exception {
+	public String getThumbnailStyle() {
 		return getThumbnailStyle(true, 0);
 	}
 
 	@Override
-	public String getThumbnailStyle(boolean max, int margin) throws Exception {
+	public String getThumbnailStyle(boolean max, int margin) {
 		return getThumbnailStyle(
 			max, margin,
 			PrefsPropsUtil.getInteger(

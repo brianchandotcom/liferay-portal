@@ -266,9 +266,9 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.social.SocialActivityManagerUtil" class="com.liferay.portal.kernel.social.SocialActivityManagerUtil">
 		<property name="socialActivityManager">
-			<bean class="com.liferay.portal.social.SocialActivityManagerImpl" init-method="activate">
+			<bean class="com.liferay.portal.social.manager.SocialActivityManagerImpl" init-method="activate">
 				<constructor-arg>
-					<bean class="com.liferay.portal.social.DefaultSocialActivityManager" />
+					<bean class="com.liferay.portal.social.manager.DefaultSocialActivityManager" />
 				</constructor-arg>
 			</bean>
 		</property>

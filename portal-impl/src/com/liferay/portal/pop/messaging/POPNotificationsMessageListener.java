@@ -47,7 +47,7 @@ public class POPNotificationsMessageListener
 	@Override
 	protected void doReceive(
 			com.liferay.portal.kernel.messaging.Message message)
-		throws Exception {
+		throws MessagingException {
 
 		Store store = null;
 
@@ -168,7 +168,9 @@ public class POPNotificationsMessageListener
 		}
 	}
 
-	protected void notifyMessageListeners(Message[] messages) throws Exception {
+	protected void notifyMessageListeners(Message[] messages)
+		throws MessagingException {
+
 		if (ArrayUtil.isEmpty(messages)) {
 			return;
 		}

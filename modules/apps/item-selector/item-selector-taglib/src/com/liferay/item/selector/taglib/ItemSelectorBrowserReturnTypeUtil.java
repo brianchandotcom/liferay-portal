@@ -39,19 +39,19 @@ public class ItemSelectorBrowserReturnTypeUtil
 	implements ItemSelectorReturnType {
 
 	public static ItemSelectorReturnType
-		getFirstAvailableExistingFileEntryReturnType(
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
-
-		return getFirstAvailableItemSelectorReturnType(
-			desiredItemSelectorReturnTypes, _existingFileEntryReturnTypeNames);
-	}
-
-	public static ItemSelectorReturnType
 		getFirstAvailableDraggableFileReturnType(
 			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		return getFirstAvailableItemSelectorReturnType(
 			desiredItemSelectorReturnTypes, _draggableFileReturnTypeNames);
+	}
+
+	public static ItemSelectorReturnType
+		getFirstAvailableExistingFileEntryReturnType(
+			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		return getFirstAvailableItemSelectorReturnType(
+			desiredItemSelectorReturnTypes, _existingFileEntryReturnTypeNames);
 	}
 
 	public static String getValue(

@@ -49,7 +49,9 @@ public class POPNotificationsMessageListener
 		throws Exception {
 
 		try {
-			initInboxFolder();
+			Store store = getStore();
+
+			initInboxFolder(store);
 
 			Message[] messages = _inboxFolder.getMessages();
 
@@ -66,11 +68,10 @@ public class POPNotificationsMessageListener
 
 				_inboxFolder.close(true);
 
-				_store.close();
+				store.close();
 			}
 		}
 		finally {
-			_store = null;
 			_inboxFolder = null;
 		}
 	}
@@ -85,11 +86,9 @@ public class POPNotificationsMessageListener
 		return internetAddress.getAddress();
 	}
 
-	protected void initInboxFolder() throws Exception {
+	protected void initInboxFolder(Store store) throws Exception {
 		if ((_inboxFolder == null) || !_inboxFolder.isOpen()) {
-			initStore();
-
-			Folder defaultFolder = _store.getDefaultFolder();
+			Folder defaultFolder = store.getDefaultFolder();
 
 			Folder[] folders = defaultFolder.list();
 
@@ -104,11 +103,7 @@ public class POPNotificationsMessageListener
 		}
 	}
 
-	protected void initStore() throws Exception {
-		if ((_store != null) && _store.isConnected()) {
-			return;
-		}
-
+	protected Store getStore() throws Exception {
 		Session session = MailEngine.getSession();
 
 		String storeProtocol = GetterUtil.getString(
@@ -118,7 +113,7 @@ public class POPNotificationsMessageListener
 			storeProtocol = Account.PROTOCOL_POP;
 		}
 
-		_store = session.getStore(storeProtocol);
+		Store store = session.getStore(storeProtocol);
 
 		String prefix = "mail." + storeProtocol + ".";
 
@@ -136,7 +131,9 @@ public class POPNotificationsMessageListener
 			password = session.getProperty("mail.smtp.password");
 		}
 
-		_store.connect(host, user, password);
+		store.connect(host, user, password);
+
+		return store;
 	}
 
 	protected void notifyMessageListeners(
@@ -190,6 +187,5 @@ public class POPNotificationsMessageListener
 		POPNotificationsMessageListener.class);
 
 	private Folder _inboxFolder;
-	private Store _store;
 
 }

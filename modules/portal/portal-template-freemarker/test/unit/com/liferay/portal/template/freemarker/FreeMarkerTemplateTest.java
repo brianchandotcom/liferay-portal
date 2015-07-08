@@ -231,8 +231,8 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate3() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new StringTemplateResource(
-				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT), null, null,
-			_configuration, _templateContextHelper, false,
+				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
+			null, null, _configuration, _templateContextHelper, false,
 			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);

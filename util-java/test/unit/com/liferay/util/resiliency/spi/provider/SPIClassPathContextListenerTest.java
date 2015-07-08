@@ -483,8 +483,8 @@ public class SPIClassPathContextListenerTest {
 		}
 		catch (RuntimeException re) {
 			Assert.assertEquals(
-				"Unable to find directory " + _CONTEXT_PATH +
-					dirName, re.getMessage());
+				"Unable to find directory " + _CONTEXT_PATH + dirName,
+				re.getMessage());
 		}
 
 		// Not a directory
@@ -503,8 +503,8 @@ public class SPIClassPathContextListenerTest {
 		}
 		catch (RuntimeException re) {
 			Assert.assertEquals(
-				"Unable to find directory " + _CONTEXT_PATH +
-					dirName, re.getMessage());
+				"Unable to find directory " + _CONTEXT_PATH + dirName,
+				re.getMessage());
 		}
 		finally {
 			file.delete();

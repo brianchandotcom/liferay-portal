@@ -873,7 +873,8 @@ public class MPIHelperUtilTest {
 
 			Assert.assertEquals(
 				"Not registering SPI " + mockSPI1 + " because it duplicates " +
-					mockSPI1, logRecord.getMessage());
+					mockSPI1,
+				logRecord.getMessage());
 
 			// Duplicate register, without log
 

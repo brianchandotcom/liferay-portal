@@ -70,7 +70,8 @@ public abstract class WorkflowTaskBaseMVCActionCommand
 			SessionMessages.add(
 				actionRequest,
 				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT, closeRedirect);
+					SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
+				closeRedirect);
 		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);

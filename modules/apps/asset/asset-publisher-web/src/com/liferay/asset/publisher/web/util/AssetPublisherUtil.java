@@ -789,8 +789,8 @@ public class AssetPublisherUtil {
 
 		Long[] classTypeIds = ArrayUtil.toArray(
 			StringUtil.split(
-				portletPreferences.getValue(
-					"classTypeIds" + className, null), 0L));
+				portletPreferences.getValue("classTypeIds" + className, null),
+				0L));
 
 		if (classTypeIds != null) {
 			return classTypeIds;

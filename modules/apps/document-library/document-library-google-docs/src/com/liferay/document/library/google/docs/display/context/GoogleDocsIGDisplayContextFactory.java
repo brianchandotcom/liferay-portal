@@ -60,7 +60,8 @@ public class GoogleDocsIGDisplayContextFactory
 		catch (PortalException pe) {
 			throw new SystemException(
 				"Unable to build GoogleDocsDLViewFileVersionDisplayContext " +
-					"for shortcut " + fileShortcut.getPrimaryKey(), pe);
+					"for shortcut " + fileShortcut.getPrimaryKey(),
+				pe);
 		}
 	}
 

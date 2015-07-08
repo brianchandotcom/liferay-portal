@@ -97,7 +97,8 @@ public class TrashUndoUtil {
 		SessionMessages.add(
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
+			data);
 	}
 
 	public static void addRestoreData(

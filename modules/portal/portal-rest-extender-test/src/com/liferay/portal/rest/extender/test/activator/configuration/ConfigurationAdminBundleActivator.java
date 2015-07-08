@@ -52,7 +52,8 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 		try {
 			_cxfConfiguration = configurationAdmin.createFactoryConfiguration(
 				"com.liferay.portal.cxf.common.configuration." +
-					"CXFEndpointPublisherConfiguration", null);
+					"CXFEndpointPublisherConfiguration",
+				null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 

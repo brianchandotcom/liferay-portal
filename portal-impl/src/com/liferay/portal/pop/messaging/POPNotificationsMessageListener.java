@@ -48,26 +48,38 @@ public class POPNotificationsMessageListener
 			com.liferay.portal.kernel.messaging.Message message)
 		throws Exception {
 
-		Store store = getStore();
+		Store store = null;
 
-		Folder inboxFolder = getInboxFolder(store);
+		Folder inboxFolder = null;
 
-		Message[] messages = inboxFolder.getMessages();
+		Message[] messages = null;
 
 		try {
+			store = getStore();
+
+			inboxFolder = getInboxFolder(store);
+
+			messages = inboxFolder.getMessages();
+
 			notifyMessageListeners(messages);
 		}
 		finally {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Deleting messages");
+			if (inboxFolder != null) {
+				if (messages != null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Deleting messages");
+					}
+
+					inboxFolder.setFlags(
+						messages, new Flags(Flags.Flag.DELETED), true);
+				}
+
+				inboxFolder.close(true);
 			}
 
-			inboxFolder.setFlags(
-				messages, new Flags(Flags.Flag.DELETED), true);
-
-			inboxFolder.close(true);
-
-			store.close();
+			if (store != null) {
+				store.close();
+			}
 		}
 	}
 

@@ -70,12 +70,18 @@
 
 		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="1" />
-			<var name="feedRowIndexNumber" value="2" />
+			<var name="feedRowIndexNumber" value="3" />
 			<var name="feedTitle" value="NBA" />
 			<var name="feedUrlLink" value="http://sports.espn.go.com/espn/rss/nba/news" />
 		</execute>
 
 		<execute macro="RSS#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
 
 		<for list="Technology,NBA,Latimes > Technology News" param="feedTitle" >
 			<execute macro="RSS#viewDefaultDisplayFeedTitle">

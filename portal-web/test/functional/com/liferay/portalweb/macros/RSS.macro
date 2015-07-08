@@ -19,7 +19,7 @@
 
 	<command name="configureFeedDisplayStyle">
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="RSS_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
 
 		<execute function="Select" locator1="RSSFeed#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_OPTION" value1="${feedDisplayStyle}" />
 	</command>

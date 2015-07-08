@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/admin/init.jsp" %>
+<%@ include file="/html/portlet/portal_instances/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -39,9 +39,7 @@ catch (Exception e) {
 	title='<%= (selCompany == null) ? "new-portal-instance" : HtmlUtil.escape(selCompany.getName()) %>'
 />
 
-<portlet:actionURL var="editInstanceURL">
-	<portlet:param name="struts_action" value="/admin/edit_instance" />
-</portlet:actionURL>
+<portlet:actionURL name="/portal_instances/edit_instance" var="editInstanceURL" />
 
 <aui:form action="<%= editInstanceURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

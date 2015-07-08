@@ -68,9 +68,6 @@
 						);
 					</aui:script>
 				</c:when>
-				<c:when test='<%= tabs1.equals("instances") %>'>
-					<%@ include file="/html/portlet/admin/instances.jspf" %>
-				</c:when>
 				<c:when test='<%= tabs1.equals("plugins") %>'>
 
 					<%

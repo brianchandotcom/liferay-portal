@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/admin/init.jsp" %>
+<%@ include file="/html/portlet/portal_instances/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -24,7 +24,7 @@ Company companyObject = (Company)row.getObject();
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="struts_action" value="/admin/edit_instance" />
+		<portlet:param name="mvcRenderCommandName" value="/portal_instances/edit_instance" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="companyId" value="<%= String.valueOf(companyObject.getCompanyId()) %>" />
 	</portlet:renderURL>
@@ -32,8 +32,7 @@ Company companyObject = (Company)row.getObject();
 	<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= editURL %>" />
 
 	<c:if test="<%= companyObject.getCompanyId() != PortalInstances.getDefaultCompanyId() %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/admin/edit_instance" />
+		<portlet:actionURL name="/portal_instances/edit_instance" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="companyId" value="<%= String.valueOf(companyObject.getCompanyId()) %>" />

@@ -43,7 +43,7 @@ public class PortalInstancesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.ADMIN_INSTANCE;
+		return PortletKeys.PORTAL_INSTANCES;
 	}
 
 	@Reference(unbind = "-")

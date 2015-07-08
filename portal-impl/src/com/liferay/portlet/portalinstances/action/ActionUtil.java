@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.admin.action;
+package com.liferay.portlet.portalinstances.action;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Company;

@@ -12,45 +12,52 @@
  * details.
  */
 
-package com.liferay.portlet.admin.action;
+package com.liferay.portlet.portalinstances.action;
 
 import com.liferay.portal.CompanyMxException;
 import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.NoSuchCompanyException;
 import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.CompanyServiceUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditInstanceAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.PORTAL_INSTANCES,
+		"mvc.command.name=/portal_instances/edit_instance"
+	}
+)
+public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteInstance(ActionRequest actionRequest)
+		throws Exception {
+
+		long companyId = ParamUtil.getLong(actionRequest, "companyId");
+
+		CompanyServiceUtil.deleteCompany(companyId);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -63,66 +70,35 @@ public class EditInstanceAction extends PortletAction {
 				updateInstance(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
+			String mvcPath = "/html/portlet/portal_instances/error.jsp";
+
 			if (e instanceof NoSuchCompanyException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.admin.error");
 			}
 			else if (e instanceof CompanyMxException ||
 					 e instanceof CompanyVirtualHostException ||
 					 e instanceof CompanyWebIdException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
+
+				mvcPath = "/html/portlet/portal_instances/edit_instance.jsp";
 			}
 			else if (e instanceof RequiredCompanyException) {
 				SessionErrors.add(actionRequest, e.getClass());
-
-				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				throw e;
 			}
+
+			actionResponse.setRenderParameter("mvcPath", mvcPath);
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getInstance(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCompanyException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.admin.edit_instance"));
-	}
-
-	protected void deleteInstance(ActionRequest actionRequest)
-		throws Exception {
-
-		long companyId = ParamUtil.getLong(actionRequest, "companyId");
-
-		CompanyServiceUtil.deleteCompany(companyId);
 	}
 
 	protected void updateInstance(ActionRequest actionRequest)

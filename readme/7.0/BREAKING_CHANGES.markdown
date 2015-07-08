@@ -2165,3 +2165,27 @@ renderers or workflow handlers with UIs written in FreeMarker or any other
 framework.
 
 ---------------------------------------
+### ADMIN_INSTANCES in PortletKeys renamed as PORTAL_INSTANCES
+
+- **Date:** July 8th, 2015
+- **JIRA Ticket:** LPS-56867
+
+#### What changed?
+
+Constant PortletKeys.ADMIN_INSTANCES renamed as  PortletKeys.PORTAL_INSTANCES.
+
+#### Who is affected?
+
+This affects developers using the old constant in their code, for example to 
+create a direct link to it. This is not common and most probably not a good 
+practice so it should probably not affect many people.
+
+#### How should I update my code?
+
+Rename the constant to PORTAL_INSTANCES whenever is used.
+
+#### Why was this change made?
+
+The old name was not accurate since it comes from the heritage of the portlet as
+part of the old "admin" portlet. Since Portal Instances is now extracted to its
+own module, the old name was clearly not fitting.

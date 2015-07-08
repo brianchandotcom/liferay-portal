@@ -18,7 +18,7 @@
 
 <div class="btn-toolbar">
 	<portlet:renderURL var="addURL">
-		<portlet:param name="struts_action" value="/admin/edit_instance" />
+		<portlet:param name="mvcRenderCommandName" value="/portal_instances/edit_instance" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
@@ -45,7 +45,7 @@
 		<%
 		PortletURL rowURL = renderResponse.createRenderURL();
 
-		rowURL.setParameter("struts_action", "/admin/edit_instance");
+		rowURL.setParameter("mvcRenderCommandName", "/portal_instances/edit_instance");
 		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("companyId", String.valueOf(curCompany.getCompanyId()));
 		%>
@@ -98,7 +98,7 @@
 
 		<liferay-ui:search-container-column-jsp
 			cssClass="entry-action"
-			path="/html/portlet/admin/instance_actions.jsp"
+			path="/html/portlet/portal_instances/instance_actions.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

@@ -16,11 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.CompanyMxException" %><%@
-page import="com.liferay.portal.CompanyVirtualHostException" %><%@
-page import="com.liferay.portal.CompanyWebIdException" %><%@
-page import="com.liferay.portal.RequiredCompanyException" %><%@
-page import="com.liferay.portal.captcha.recaptcha.ReCaptchaImpl" %><%@
+<%@ page import="com.liferay.portal.captcha.recaptcha.ReCaptchaImpl" %><%@
 page import="com.liferay.portal.convert.ConvertProcess" %><%@
 page import="com.liferay.portal.convert.ConvertProcessUtil" %><%@
 page import="com.liferay.portal.convert.FileSystemStoreRootDirException" %><%@
@@ -29,7 +25,6 @@ page import="com.liferay.portal.kernel.scripting.ScriptingUtil" %><%@
 page import="com.liferay.portal.kernel.util.OSDetector" %><%@
 page import="com.liferay.portal.kernel.xuggler.XugglerUtil" %><%@
 page import="com.liferay.portal.upload.LiferayFileUpload" %><%@
-page import="com.liferay.portal.util.PortalInstances" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileVersion" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %>
@@ -43,10 +38,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "server");
 
 boolean showTabs1 = false;
 
-if (portletName.equals(PortletKeys.ADMIN_INSTANCE)) {
-	tabs1 = "instances";
-}
-else if (portletName.equals(PortletKeys.ADMIN_PLUGINS)) {
+if (portletName.equals(PortletKeys.ADMIN_PLUGINS)) {
 	tabs1 = "plugins";
 }
 else if (portletName.equals(PortletKeys.ADMIN_SERVER)) {

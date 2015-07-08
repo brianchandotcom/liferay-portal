@@ -129,25 +129,11 @@
 
 		<!-- Admin -->
 
-		<action path="/admin/edit_instance" type="com.liferay.portlet.admin.action.EditInstanceAction">
-			<forward name="portlet.admin.edit_instance" path="portlet.admin.edit_instance" />
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
 		<action path="/admin/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
 			<forward name="portlet.admin.error" path="portlet.admin.error" />
 		</action>
 
 		<action path="/admin/view" forward="portlet.admin.view" />
-
-		<!-- Admin Instances -->
-
-		<action path="/admin_instances/edit_instance" type="com.liferay.portlet.admin.action.EditInstanceAction">
-			<forward name="portlet.admin.edit_instance" path="portlet.admin.edit_instance" />
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
-		<action path="/admin_instances/view" forward="portlet.admin.view" />
 
 		<!-- Admin Plugins -->
 

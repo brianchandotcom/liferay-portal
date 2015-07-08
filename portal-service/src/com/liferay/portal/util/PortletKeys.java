@@ -21,8 +21,6 @@ public class PortletKeys {
 
 	public static final String ADMIN = "9";
 
-	public static final String ADMIN_INSTANCE = "135";
-
 	public static final String ADMIN_PLUGINS = "136";
 
 	public static final String ADMIN_SERVER = "137";
@@ -130,6 +128,8 @@ public class PortletKeys {
 	public static final String PLUGINS_ADMIN = "132";
 
 	public static final String PORTAL = "90";
+
+	public static final String PORTAL_INSTANCES = "135";
 
 	public static final String PORTAL_SETTINGS = "130";
 

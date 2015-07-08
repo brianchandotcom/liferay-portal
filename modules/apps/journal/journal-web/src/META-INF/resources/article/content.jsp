@@ -40,7 +40,7 @@ if (article != null) {
 		Fields fields = _getJournalConverter().getDDMFields(ddmStructure, content);
 
 		if (fields != null) {
-             ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+			 ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 		}
 	}
 }

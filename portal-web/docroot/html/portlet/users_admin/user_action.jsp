@@ -71,10 +71,10 @@ long userId = user2.getUserId();
 	<c:if test="<%= (PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED || PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) && hasUpdatePermission %>">
 
 		<%
-		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+		LiferayPortletURL managePagesURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
 
 		managePagesURL.setParameter("redirect", redirect);
-		managePagesURL.setParameter("groupId", String.valueOf(user2.getGroup().getGroupId()));
+		managePagesURL.setDoAsGroupId(user2.getGroup().getGroupId());
 		managePagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 

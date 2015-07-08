@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portletdisplaytemplate.util;
+package com.liferay.portlet.display.template.service.internal;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +39,8 @@ import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
+import com.liferay.portlet.display.template.service.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.service.PortletDisplayTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
@@ -62,12 +64,16 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  * @author Juan Fernández
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Leonardo Barros
  */
+@Component(immediate = true)
 @DoPrivileged
 public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
@@ -79,7 +85,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
 				group.getCompanyId());
 
-			String uuid = getDDMTemplateUuid(displayStyle);
+			String uuid = getDDMTemplateKey(displayStyle);
 
 			if (Validator.isNull(uuid)) {
 				return null;

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +71,7 @@ public class UpgradePortletDisplayTemplatePreferencesTest
 		_layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
 
 		Assert.assertEquals(
-			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+			PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
 				ddmTemplate.getTemplateKey(),
 			getPortletDisplayStyle("portlet1"));
 		Assert.assertEquals(

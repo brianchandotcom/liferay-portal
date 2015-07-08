@@ -16,6 +16,7 @@ package com.liferay.portal.lar.test;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -52,7 +53,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
 import java.io.Serializable;
 
@@ -555,8 +555,9 @@ public abstract class BasePortletExportImportTestCase
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
-		String displayStyle = PortletDisplayTemplateUtil.getDisplayStyle(
-			ddmTemplate.getTemplateKey());
+		String displayStyle =
+			PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
+				ddmTemplate.getTemplateKey();
 
 		preferenceMap.put("displayStyle", new String[] {displayStyle});
 

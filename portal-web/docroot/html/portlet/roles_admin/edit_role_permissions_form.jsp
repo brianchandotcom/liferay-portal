@@ -135,7 +135,7 @@ if (Validator.isNotNull(portletResource)) {
 
 			List resultRows = searchContainer.getResultRows();
 
-			List<TemplateHandler> templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
+			List<TemplateHandler> templateHandlers = PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateHandlers();
 
 			ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
 

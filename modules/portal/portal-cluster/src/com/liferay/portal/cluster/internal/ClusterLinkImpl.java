@@ -78,7 +78,7 @@ public class ClusterLinkImpl implements ClusterLink {
 			return;
 		}
 
-		if (_localTransportAddresses.contains(address)) {
+		if (_localAddresses.contains(address)) {
 			sendLocalMessage(message);
 
 			return;
@@ -103,14 +103,14 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_transportChannels != null) {
-			for (ClusterChannel clusterChannel : _transportChannels) {
+		if (_clusterChannels != null) {
+			for (ClusterChannel clusterChannel : _clusterChannels) {
 				clusterChannel.close();
 			}
 		}
 
-		_localTransportAddresses = null;
-		_transportChannels = null;
+		_localAddresses = null;
+		_clusterChannels = null;
 		_clusterReceivers = null;
 
 		if (_executorService != null) {
@@ -130,15 +130,15 @@ public class ClusterLinkImpl implements ClusterLink {
 					priority);
 		}
 
-		return _transportChannels.get(channelIndex);
+		return _clusterChannels.get(channelIndex);
 	}
 
 	protected ExecutorService getExecutorService() {
 		return _executorService;
 	}
 
-	protected List<Address> getLocalTransportAddresses() {
-		return _localTransportAddresses;
+	protected List<Address> getLocalAddresses() {
+		return _localAddresses;
 	}
 
 	protected Properties getTransportChannelNames(
@@ -207,8 +207,8 @@ public class ClusterLinkImpl implements ClusterLink {
 				"Channel count must be between 1 and " + MAX_CHANNEL_COUNT);
 		}
 
-		_localTransportAddresses = new ArrayList<>(_channelCount);
-		_transportChannels = new ArrayList<>(_channelCount);
+		_localAddresses = new ArrayList<>(_channelCount);
+		_clusterChannels = new ArrayList<>(_channelCount);
 		_clusterReceivers = new ArrayList<>(_channelCount);
 
 		List<String> keys = new ArrayList<>(
@@ -234,8 +234,8 @@ public class ClusterLinkImpl implements ClusterLink {
 					channelProperties, channelName, clusterReceiver);
 
 			_clusterReceivers.add(clusterReceiver);
-			_localTransportAddresses.add(clusterChannel.getLocalAddress());
-			_transportChannels.add(clusterChannel);
+			_localAddresses.add(clusterChannel.getLocalAddress());
+			_clusterChannels.add(clusterChannel);
 		}
 	}
 
@@ -324,13 +324,13 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	private int _channelCount;
 	private ClusterChannelFactory _clusterChannelFactory;
+	private List<ClusterChannel> _clusterChannels;
 	private List<ClusterReceiver> _clusterReceivers;
 	private boolean _enabled;
 	private ExecutorService _executorService;
-	private List<Address> _localTransportAddresses;
+	private List<Address> _localAddresses;
 	private MessageBus _messageBus;
 	private PortalExecutorManager _portalExecutorManager;
 	private Props _props;
-	private List<ClusterChannel> _transportChannels;
 
 }

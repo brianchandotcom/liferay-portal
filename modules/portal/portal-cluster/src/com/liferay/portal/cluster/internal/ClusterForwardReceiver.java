@@ -35,10 +35,9 @@ public class ClusterForwardReceiver extends BaseClusterReceiver {
 
 	@Override
 	protected void doReceive(Object messagePayload, Address srcAddress) {
-		List<Address> localTransportAddresses =
-			_clusterLinkImpl.getLocalTransportAddresses();
+		List<Address> localAddresses = _clusterLinkImpl.getLocalAddresses();
 
-		if (localTransportAddresses.contains(srcAddress)) {
+		if (localAddresses.contains(srcAddress)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Block received message " + messagePayload);
 			}

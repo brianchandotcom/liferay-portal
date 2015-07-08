@@ -827,24 +827,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>139</portlet-name>
-		<display-name>Expando</display-name>
-		<portlet-class>com.liferay.portlet.expando.ExpandoPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/expando/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/expando/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-	</portlet>
-	<portlet>
 		<portlet-name>142</portlet-name>
 		<display-name>Flags</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

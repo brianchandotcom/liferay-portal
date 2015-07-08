@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.expando;
+package com.liferay.expando.web.portlet;
 
+import com.liferay.expando.web.constants.ExpandoPortletKeys;
+import com.liferay.expando.web.upgrade.ExpandoWebUpgrade;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -28,6 +30,11 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.expando.ColumnNameException;
+import com.liferay.portlet.expando.ColumnTypeException;
+import com.liferay.portlet.expando.DuplicateColumnNameException;
+import com.liferay.portlet.expando.NoSuchColumnException;
+import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
@@ -44,15 +51,46 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  * @author Drew Brokke
  */
+
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.control-panel-entry-category=configuration",
+		"com.liferay.portlet.control-panel-entry-weight=2.0",
+		"com.liferay.portlet.css-class-wrapper=portlet-expando",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.icon=/icons/expando.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.system=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Custom Fields",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.portlet-mode=text/html",
+		"javax.portlet.portlet-name=" + ExpandoPortletKeys.EXPANDO,
+		"javax.portlet.resource-bundle=content.Language"
+	},
+	service = Portlet.class
+)
 public class ExpandoPortlet extends MVCPortlet {
 
 	public void addExpando(
@@ -134,19 +172,14 @@ public class ExpandoPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest, ValueDataException.class.getName())) {
 
-			include(
-				"/html/portlet/expando/edit_expando.jsp", renderRequest,
-				renderResponse);
+			include("/edit_expando.jsp", renderRequest, renderResponse);
 		}
+		else if (SessionErrors.contains(
+					renderRequest, NoSuchColumnException.class.getName()) ||
+				 SessionErrors.contains(
+					 renderRequest, PrincipalException.getNestedClasses())) {
 
-		if (SessionErrors.contains(
-				renderRequest, NoSuchColumnException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, PrincipalException.getNestedClasses())) {
-
-			include(
-				"/html/portlet/expando/error.jsp", renderRequest,
-				renderResponse);
+			include("/error.jsp", renderRequest, renderResponse);
 		}
 		else {
 			super.doDispatch(renderRequest, renderResponse);
@@ -309,6 +342,10 @@ public class ExpandoPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExpandoWebUpgrade(ExpandoWebUpgrade expandoWebUpgrade) {
 	}
 
 	protected void updateProperties(

@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_FULLSCREEN</td>
+	<td>//input[@id='_86_enableFullscreen']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_GOOGLE_AUTHENTICATION</td>
 	<td>//input[contains(@id,'google-auth')]</td>
 	<td></td>

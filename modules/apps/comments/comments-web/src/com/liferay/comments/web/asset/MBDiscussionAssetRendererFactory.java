@@ -14,7 +14,11 @@
 
 package com.liferay.comments.web.asset;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -23,9 +27,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -48,10 +49,16 @@ public class MBDiscussionAssetRendererFactory extends BaseAssetRendererFactory {
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+		Comment comment = CommentManagerUtil.fetchComment(classPK);
+
+		if (!(comment instanceof WorkflowableComment)) {
+			return null;
+		}
+
+		WorkflowableComment workflowableComment = (WorkflowableComment)comment;
 
 		MBDiscussionAssetRenderer mbDiscussionAssetRenderer =
-			new MBDiscussionAssetRenderer(message);
+			new MBDiscussionAssetRenderer(workflowableComment);
 
 		mbDiscussionAssetRenderer.setAssetRendererType(type);
 
@@ -96,8 +103,10 @@ public class MBDiscussionAssetRendererFactory extends BaseAssetRendererFactory {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return MBMessagePermission.contains(
-			permissionChecker, classPK, actionId);
+		DiscussionPermission discussionPermission =
+			CommentManagerUtil.getDiscussionPermission(permissionChecker);
+
+		return discussionPermission.hasPermission(classPK, actionId);
 	}
 
 	@Override

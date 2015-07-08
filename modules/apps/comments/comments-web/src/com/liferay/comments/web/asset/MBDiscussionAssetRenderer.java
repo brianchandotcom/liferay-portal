@@ -16,12 +16,15 @@ package com.liferay.comments.web.asset;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -30,9 +33,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.util.Date;
 import java.util.Locale;
@@ -52,18 +52,18 @@ import javax.servlet.http.HttpServletResponse;
 public class MBDiscussionAssetRenderer
 	extends BaseJSPAssetRenderer implements TrashRenderer {
 
-	public MBDiscussionAssetRenderer(MBMessage message) {
+	public MBDiscussionAssetRenderer(WorkflowableComment message) {
 		_message = message;
 	}
 
 	@Override
 	public String getClassName() {
-		return MBMessage.class.getName();
+		return _message.getModelClassName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _message.getMessageId();
+		return _message.getCommentId();
 	}
 
 	@Override
@@ -98,12 +98,8 @@ public class MBDiscussionAssetRenderer
 
 	@Override
 	public String getSearchSummary(Locale locale) {
-		if (_message.isFormatBBCode()) {
-			return HtmlUtil.extractText(
-				BBCodeTranslatorUtil.getHTML(_message.getBody()));
-		}
-
-		return getSummary(null, null);
+		return HtmlUtil.extractText(
+			_message.getTranslatedBody(StringPool.BLANK));
 	}
 
 	@Override
@@ -131,7 +127,7 @@ public class MBDiscussionAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _message.getSubject();
+		return StringUtil.shorten(getSearchSummary(locale));
 	}
 
 	@Override
@@ -158,7 +154,7 @@ public class MBDiscussionAssetRenderer
 		editPortletURL.setParameter(
 			"struts_action", "/message_boards/edit_discussion");
 		editPortletURL.setParameter(
-			"commentId", String.valueOf(_message.getMessageId()));
+			"commentId", String.valueOf(_message.getCommentId()));
 
 		return editPortletURL;
 	}
@@ -177,7 +173,7 @@ public class MBDiscussionAssetRenderer
 		portletURL.setParameter(
 			"struts_action", "/message_boards/view_message");
 		portletURL.setParameter(
-			"messageId", String.valueOf(_message.getMessageId()));
+			"messageId", String.valueOf(_message.getCommentId()));
 		portletURL.setWindowState(windowState);
 
 		return portletURL;
@@ -211,28 +207,22 @@ public class MBDiscussionAssetRenderer
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (_message.isDiscussion()) {
-			return MBDiscussionPermission.contains(
-				permissionChecker, _message.getMessageId(), ActionKeys.UPDATE);
-		}
-		else {
-			return MBMessagePermission.contains(
-				permissionChecker, _message, ActionKeys.UPDATE);
-		}
+		DiscussionPermission discussionPermission =
+			CommentManagerUtil.getDiscussionPermission(permissionChecker);
+
+		return discussionPermission.hasUpdatePermission(
+			_message.getCommentId());
 	}
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (_message.isDiscussion()) {
-			return MBDiscussionPermission.contains(
-				permissionChecker, _message.getMessageId(), ActionKeys.VIEW);
-		}
-		else {
-			return MBMessagePermission.contains(
-				permissionChecker, _message, ActionKeys.VIEW);
-		}
+		DiscussionPermission discussionPermission =
+			CommentManagerUtil.getDiscussionPermission(permissionChecker);
+
+		return discussionPermission.hasPermission(
+			_message.getCommentId(), ActionKeys.VIEW);
 	}
 
 	@Override
@@ -242,7 +232,7 @@ public class MBDiscussionAssetRenderer
 		throws Exception {
 
 		Comment comment = CommentManagerUtil.fetchComment(
-			_message.getMessageId());
+			_message.getCommentId());
 
 		request.setAttribute(WebKeys.COMMENT, comment);
 
@@ -259,6 +249,6 @@ public class MBDiscussionAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/message.png";
 	}
 
-	private final MBMessage _message;
+	private final WorkflowableComment _message;
 
 }

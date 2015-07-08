@@ -60,6 +60,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--RADIO-->
+<tr>
+	<td>RADIO_OPTION</td>
+	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RADIO_LABEL</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--TEXT-->
 <tr>
 	<td>TEXT_FIELD</td>

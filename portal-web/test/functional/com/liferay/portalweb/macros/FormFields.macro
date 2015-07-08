@@ -36,6 +36,13 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="selectRadioOption">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_radioOption" value="${radioOption}" />
+
+		<execute function="Click" locator1="FormFields#RADIO_OPTION" />
+	</command>
+
 	<command name="viewCheckboxLabel">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -47,6 +54,12 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#OPTIONS_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewRadioLabel">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#RADIO_LABEL" value1="${fieldLabel}" />
 	</command>
 
 	<command name="viewTextLabel">

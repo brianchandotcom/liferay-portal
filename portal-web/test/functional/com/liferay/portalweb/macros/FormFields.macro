@@ -1,8 +1,21 @@
 <definition>
+	<var name="rowNumber" value="1" />
+
+	<command name="addOptionsRow">
+		<execute function="Click" locator1="FormFields#OPTIONS_ADD_ROW_BUTTON" />
+	</command>
+
 	<command name="disableCheckbox">
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Uncheck" locator1="FormFields#CHECKBOX" />
+	</command>
+
+	<command name="editOptionsRow">
+		<var name="key_rowNumber" value="${rowNumber}" />
+
+		<execute function="Type" locator1="FormFields#OPTIONS_OPTION_LABEL_FIELD" value1="${optionLabel}" />
+		<execute function="Type" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" value1="${optionValue}" />
 	</command>
 
 	<command name="editText">
@@ -21,6 +34,13 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewOptionsLabel">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#OPTIONS_LABEL" value1="${fieldLabel}" />
 	</command>
 
 	<command name="viewTextLabel">

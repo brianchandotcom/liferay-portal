@@ -9,6 +9,43 @@
 </thead>
 <tbody>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS-->
+<tr>
+	<td>OPTIONS_ADD_ROW_BUTTON</td>
+	<td>//button[contains(@class,'add-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_DELETE_ROW_BUTTON</td>
+	<td>//button[contains(@class,'delete-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_OPTION_LABEL_FIELD</td>
+	<td>//div[contains(@class,'ddm-options-row')][${key_rowNumber}]//input[contains(@name,'label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_OPTION_VALUE_FIELD</td>
+	<td>//div[contains(@class,'ddm-options-row')][${key_rowNumber}]//input[contains(@name,'value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_LABEL</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/span[contains(.,'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TEXT-->
+<tr>
 	<td>TEXT_FIELD</td>
 	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]</td>
 	<td></td>

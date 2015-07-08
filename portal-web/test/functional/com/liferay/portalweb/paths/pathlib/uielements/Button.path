@@ -444,6 +444,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VOTE</td>
+	<td>//button[contains(.,'Vote')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_CHOOSE</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td/button</td>
 	<td></td>

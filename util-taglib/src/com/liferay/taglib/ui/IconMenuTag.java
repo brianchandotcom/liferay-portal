@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTag;
+import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -280,7 +281,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			((singleIcon == null) || _showWhenSingleIcon)) {
 
 			if (!FileAvailabilityUtil.isAvailable(
-					pageContext.getServletContext(), getStartPage())) {
+					(ServletContext)request.getAttribute(WebKeys.CTX), getStartPage())) {
 
 				if (_showExpanded) {
 					jspWriter.write("<ul class=\"lfr-menu-expanded ");
@@ -417,7 +418,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			((singleIcon == null) || _showWhenSingleIcon)) {
 
 			if (!FileAvailabilityUtil.isAvailable(
-					pageContext.getServletContext(), getEndPage())) {
+					(ServletContext)request.getAttribute(WebKeys.CTX), getEndPage())) {
 
 				jspWriter.write("</ul>");
 

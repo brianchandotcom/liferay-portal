@@ -31,7 +31,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /**
  * @author Brian Myunghun Kim
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class LiferayFileUpload extends ServletFileUpload {
 
 	public static final String FILE_NAME =
@@ -51,7 +53,6 @@ public class LiferayFileUpload extends ServletFileUpload {
 	public List<FileItem> parseRequest(HttpServletRequest request)
 		throws FileUploadException {
 
-		_session.removeAttribute(LiferayFileUpload.FILE_NAME);
 		_session.removeAttribute(LiferayFileUpload.PERCENT);
 
 		return super.parseRequest(request);

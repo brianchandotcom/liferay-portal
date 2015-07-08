@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -46,6 +47,7 @@ import java.util.Set;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -83,8 +85,12 @@ public class UploadServletRequestImpl
 		LiferayServletRequest liferayServletRequest = null;
 
 		try {
-			ServletFileUpload servletFileUpload = new LiferayFileUpload(
-				new LiferayFileItemFactory(getTempDir()), request);
+			HttpSession session = request.getSession();
+
+			session.removeAttribute(ProgressTracker.PERCENT);
+
+			ServletFileUpload servletFileUpload = new ServletFileUpload(
+				new LiferayFileItemFactory(getTempDir()));
 
 			servletFileUpload.setSizeMax(
 				PrefsPropsUtil.getLong(
@@ -94,6 +100,8 @@ public class UploadServletRequestImpl
 
 			List<org.apache.commons.fileupload.FileItem> fileItems =
 				servletFileUpload.parseRequest(liferayServletRequest);
+
+			liferayServletRequest.setFinishedReadingOriginalStream(true);
 
 			for (org.apache.commons.fileupload.FileItem fileItem : fileItems) {
 				LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
@@ -209,6 +217,8 @@ public class UploadServletRequestImpl
 				}
 			}
 		}
+
+		_liferayServletRequest.cleanUp();
 	}
 
 	@Override
@@ -452,7 +462,6 @@ public class UploadServletRequestImpl
 		}
 
 		parameterNames.addAll(_regularParameters.keySet());
-		parameterNames.addAll(_fileParameters.keySet());
 
 		return Collections.enumeration(parameterNames);
 	}

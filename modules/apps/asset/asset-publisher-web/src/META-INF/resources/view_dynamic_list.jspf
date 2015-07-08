@@ -15,15 +15,14 @@
 --%>
 
 <%
-List<Tuple> assetEntryResults = assetPublisherDisplayContext.getAssetEntryResults(searchContainer);
+List<AssetEntryResult> assetEntryResults = assetPublisherDisplayContext.getAssetEntryResults(searchContainer);
 
-for (Tuple assetEntryResult : assetEntryResults) {
-	String categoryTitle = (String)assetEntryResult.getObject(0);
-	List<AssetEntry> results = (List<AssetEntry>)assetEntryResult.getObject(1);
+for (AssetEntryResult assetEntryResult : assetEntryResults) {
+	List<AssetEntry> results = assetEntryResult.getResults();
 %>
 
-	<c:if test="<%= Validator.isNotNull(categoryTitle) %>">
-		<h3 class="asset-entries-group-label"><%= HtmlUtil.escape(categoryTitle) %></h3>
+	<c:if test="<%= Validator.isNotNull(assetEntryResult.getTitle()) %>">
+		<h3 class="asset-entries-group-label"><%= HtmlUtil.escape(assetEntryResult.getTitle()) %></h3>
 	</c:if>
 
 	<liferay-ui:ddm-template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= results %>">

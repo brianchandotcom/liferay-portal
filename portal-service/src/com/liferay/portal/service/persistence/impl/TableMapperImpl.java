@@ -50,47 +50,63 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		BasePersistence<L> leftBasePersistence,
 		BasePersistence<R> rightBasePersistence) {
 
+		this(
+			tableName, leftColumnName, rightColumnName, leftBasePersistence,
+			rightBasePersistence, new ThreadLocalCompanyProvider());
+	}
+
+	public TableMapperImpl(
+		String tableName, String leftColumnName, String rightColumnName,
+		BasePersistence<L> leftBasePersistence,
+		BasePersistence<R> rightBasePersistence,
+		CompanyProvider companyProvider) {
+
 		this.leftColumnName = leftColumnName;
 		this.rightColumnName = rightColumnName;
 		this.leftBasePersistence = leftBasePersistence;
 		this.rightBasePersistence = rightBasePersistence;
+		this.companyProvider = companyProvider;
 
 		DataSource dataSource = leftBasePersistence.getDataSource();
 
 		addTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
 			dataSource,
-			"INSERT INTO " + tableName + " (" + leftColumnName + ", " +
-				rightColumnName + ") VALUES (?, ?)",
-			new int[] {Types.BIGINT, Types.BIGINT});
+			"INSERT INTO " + tableName + " (" +
+				companyProvider.getCompanyIdName() + ", " + leftColumnName +
+				", " + rightColumnName + ") VALUES (?, ?, ?)",
+			new int[] {Types.BIGINT, Types.BIGINT, Types.BIGINT});
 		deleteLeftPrimaryKeyTableMappingsSqlUpdate =
 			SqlUpdateFactoryUtil.getSqlUpdate(
 				dataSource,
 				"DELETE FROM " + tableName + " WHERE " + leftColumnName +
-					" = ?",
-				new int[] {Types.BIGINT});
+					" = ? AND " + companyProvider.getCompanyIdName() + " = ?",
+				new int[] {Types.BIGINT, Types.BIGINT});
 		deleteRightPrimaryKeyTableMappingsSqlUpdate =
 			SqlUpdateFactoryUtil.getSqlUpdate(
 				dataSource,
 				"DELETE FROM " + tableName + " WHERE " + rightColumnName +
-					" = ?",
-				new int[] {Types.BIGINT});
+					" = ? AND " + companyProvider.getCompanyIdName() + " = ?",
+				new int[] {Types.BIGINT, Types.BIGINT});
 		deleteTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
 			dataSource,
 			"DELETE FROM " + tableName + " WHERE " + leftColumnName +
-				" = ? AND " + rightColumnName + " = ?",
-			new int[] {Types.BIGINT, Types.BIGINT});
+				" = ? AND " + rightColumnName + " = ? AND " +
+				companyProvider.getCompanyIdName() + " = ?",
+			new int[] {Types.BIGINT, Types.BIGINT, Types.BIGINT});
 		getLeftPrimaryKeysSqlQuery =
 			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 				dataSource,
 				"SELECT " + leftColumnName + " FROM " + tableName + " WHERE " +
-					rightColumnName + " = ?",
-				new int[] {Types.BIGINT}, RowMapper.PRIMARY_KEY);
+					rightColumnName + " = ? AND " +
+					companyProvider.getCompanyIdName() + " = ?",
+				new int[] {Types.BIGINT, Types.BIGINT}, RowMapper.PRIMARY_KEY);
 		getRightPrimaryKeysSqlQuery =
 			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 				dataSource,
 				"SELECT " + rightColumnName + " FROM " + tableName + " WHERE " +
-					leftColumnName + " = ?",
-				new int[] {Types.BIGINT}, RowMapper.PRIMARY_KEY);
+					leftColumnName + " = ? AND " +
+					companyProvider.getCompanyIdName() + " = ?",
+				new int[] {Types.BIGINT, Types.BIGINT}, RowMapper.PRIMARY_KEY);
 		leftToRightPortalCache = MultiVMPoolUtil.getPortalCache(
 			TableMapper.class.getName() + "-" + tableName + "-LeftToRight");
 		rightToLeftPortalCache = MultiVMPoolUtil.getPortalCache(
@@ -127,7 +143,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		}
 
 		try {
-			addTableMappingSqlUpdate.update(leftPrimaryKey, rightPrimaryKey);
+			addTableMappingSqlUpdate.update(
+				companyProvider.getCompanyId(), leftPrimaryKey,
+				rightPrimaryKey);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -204,7 +222,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		try {
 			rowCount = deleteTableMappingSqlUpdate.update(
-				leftPrimaryKey, rightPrimaryKey);
+				leftPrimaryKey, rightPrimaryKey,
+				companyProvider.getCompanyId());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -341,7 +360,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		int rowCount = 0;
 
 		try {
-			rowCount = deleteSqlUpdate.update(masterPrimaryKey);
+			rowCount = deleteSqlUpdate.update(
+				masterPrimaryKey, companyProvider.getCompanyId());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -416,7 +436,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			List<Long> primaryKeysList = null;
 
 			try {
-				primaryKeysList = mappingSqlQuery.execute(masterPrimaryKey);
+				primaryKeysList = mappingSqlQuery.execute(
+					masterPrimaryKey, companyProvider.getCompanyId());
 			}
 			catch (Exception e) {
 				throw new SystemException(e);
@@ -453,6 +474,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			return true;
 		}
 	}
+
+	protected static CompanyProvider companyProvider;
 
 	protected SqlUpdate addTableMappingSqlUpdate;
 	protected SqlUpdate deleteLeftPrimaryKeyTableMappingsSqlUpdate;

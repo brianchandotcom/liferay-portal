@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogsadmin.action;
+package com.liferay.portlet.recentbloggers.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -26,8 +26,8 @@ import javax.portlet.RenderResponse;
  */
 @OSGiBeanProperties(
 	property = {
-		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN, "mvc.command.name=/",
-		"mvc.command.name=/blogs_admin/view"
+		"javax.portlet.name=" + PortletKeys.RECENT_BLOGGERS,
+		"mvc.command.name=/"
 	}
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {
@@ -36,7 +36,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/blogs_admin/view.jsp";
+		return "/html/portlet/recent_bloggers/view.jsp";
 	}
 
 }

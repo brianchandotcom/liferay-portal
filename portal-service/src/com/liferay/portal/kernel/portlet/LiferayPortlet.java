@@ -91,7 +91,7 @@ public class LiferayPortlet extends GenericPortlet {
 				return;
 			}
 
-			boolean emptySessionMessages = SessionMessages.isEmpty(
+			boolean emptySessionMessages = isEmptySessionMessages(
 				actionRequest);
 
 			if (emptySessionMessages) {
@@ -432,6 +432,28 @@ public class LiferayPortlet extends GenericPortlet {
 
 	protected boolean isAlwaysSendRedirect() {
 		return alwaysSendRedirect;
+	}
+
+	protected boolean isEmptySessionMessages(ActionRequest actionRequest) {
+		if (SessionMessages.isEmpty(actionRequest)) {
+			return true;
+		}
+
+		int sessionMessagesSize = SessionMessages.size(actionRequest);
+
+		if (SessionMessages.contains(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT)) {
+
+			sessionMessagesSize--;
+		}
+
+		if (sessionMessagesSize == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isProcessActionRequest(ActionRequest actionRequest) {

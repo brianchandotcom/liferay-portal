@@ -55,9 +55,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	/>
 </c:if>
 
-<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL">
-	<portlet:param name="mvcPath" value="/html/portlet/blogs/edit_entry.jsp" />
-</portlet:actionURL>
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <div class="edit-entry">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">

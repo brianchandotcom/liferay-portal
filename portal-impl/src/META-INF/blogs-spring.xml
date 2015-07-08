@@ -19,4 +19,5 @@
 	<bean id="com.liferay.portlet.blogs.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogs.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.blogsadmin.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogsadmin.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.blogsaggregator.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogsaggregator.action.ViewMVCRenderCommand" />
+	<bean id="com.liferay.portlet.recentbloggers.action.ViewMVCRenderCommand" class="com.liferay.portlet.recentbloggers.action.ViewMVCRenderCommand" />
 </beans>

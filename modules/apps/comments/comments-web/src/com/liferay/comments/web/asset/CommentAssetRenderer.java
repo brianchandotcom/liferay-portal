@@ -49,10 +49,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author Jorge Ferrer
  * @author Sergio González
  */
-public class MBDiscussionAssetRenderer
+public class CommentAssetRenderer
 	extends BaseJSPAssetRenderer implements TrashRenderer {
 
-	public MBDiscussionAssetRenderer(WorkflowableComment workflowableComment) {
+	public CommentAssetRenderer(WorkflowableComment workflowableComment) {
 		_workflowableComment = workflowableComment;
 	}
 
@@ -131,7 +131,7 @@ public class MBDiscussionAssetRenderer
 
 	@Override
 	public String getType() {
-		return MBDiscussionAssetRendererFactory.TYPE;
+		return CommentAssetRendererFactory.TYPE;
 	}
 
 	@Override

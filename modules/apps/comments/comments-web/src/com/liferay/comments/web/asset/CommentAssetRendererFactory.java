@@ -36,11 +36,11 @@ import javax.portlet.WindowStateException;
 /**
  * @author Jorge Ferrer
  */
-public class MBDiscussionAssetRendererFactory extends BaseAssetRendererFactory {
+public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "discussion";
 
-	public MBDiscussionAssetRendererFactory() {
+	public CommentAssetRendererFactory() {
 		setCategorizable(false);
 		setLinkable(true);
 	}
@@ -57,12 +57,12 @@ public class MBDiscussionAssetRendererFactory extends BaseAssetRendererFactory {
 
 		WorkflowableComment workflowableComment = (WorkflowableComment)comment;
 
-		MBDiscussionAssetRenderer mbDiscussionAssetRenderer =
-			new MBDiscussionAssetRenderer(workflowableComment);
+		CommentAssetRenderer commentAssetRenderer = new CommentAssetRenderer(
+			workflowableComment);
 
-		mbDiscussionAssetRenderer.setAssetRendererType(type);
+		commentAssetRenderer.setAssetRendererType(type);
 
-		return mbDiscussionAssetRenderer;
+		return commentAssetRenderer;
 	}
 
 	@Override

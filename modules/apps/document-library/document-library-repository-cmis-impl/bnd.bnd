@@ -13,10 +13,10 @@ Import-Package:\
 	!org.jvnet.*,\
 	*
 Include-Resource:\
+	classes,\
 	@${app.server.lib.portal.dir}/chemistry-opencmis-client-api.jar,\
 	@${app.server.lib.portal.dir}/chemistry-opencmis-client-bindings.jar,\
 	@${app.server.lib.portal.dir}/chemistry-opencmis-client-impl.jar,\
 	@${app.server.lib.portal.dir}/chemistry-opencmis-commons-api.jar,\
 	@${app.server.lib.portal.dir}/chemistry-opencmis-commons-impl.jar,\
-	@${app.server.lib.portal.dir}/jaxws-rt.jar,\
-	classes
+	@${app.server.lib.portal.dir}/jaxws-rt.jar

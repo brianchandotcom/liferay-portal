@@ -50,6 +50,8 @@ public interface Comment {
 
 	public String getUserName();
 
+	public String getUuid();
+
 	public boolean isRoot();
 
 }

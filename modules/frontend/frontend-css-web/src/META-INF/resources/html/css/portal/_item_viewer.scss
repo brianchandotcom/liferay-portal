@@ -1,4 +1,8 @@
 .lfr-item-viewer {
+	#cardSection {
+		margin-bottom: 20px;
+	}
+
 	.image-viewer-base-image-list {
 		padding-top: 30px;
 	}
@@ -20,6 +24,16 @@
 
 		.image-viewer-thumbnails {
 			display: none;
+		}
+	}
+
+	.aspect-ratio {
+		margin-top: 30px;
+
+		a.item-preview {
+			height: 100%;
+			position: absolute;
+			width: 100%;
 		}
 	}
 

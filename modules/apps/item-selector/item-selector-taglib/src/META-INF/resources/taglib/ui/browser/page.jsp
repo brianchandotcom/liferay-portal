@@ -38,7 +38,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				<liferay-ui:app-view-display-style
 					displayStyle="<%= displayStyle %>"
 					displayStyleURL="<%= displayStyleURL %>"
-					displayStyles='<%= new String[] {"descriptive", "list"} %>'
+					displayStyles='<%= new String[] {"icon", "descriptive", "list"} %>'
 				/>
 			</aui:nav>
 
@@ -127,7 +127,15 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				</div>
 			</c:when>
 			<c:otherwise>
-				<ul class="tabular-list-group">
+
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+						<div class="row" id="cardSection">
+					</c:when>
+					<c:otherwise>
+						<ul class="tabular-list-group">
+					</c:otherwise>
+				</c:choose>
 
 				<%
 				for (Object result : searchContainer.getResults()) {
@@ -140,27 +148,53 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 					JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 				%>
 
-					<li class="item-preview list-group-item list-group-item-default" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
-						<div class="list-group-item-field">
-							<img src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+
+							<%
+							String imageThumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+							%>
+
+							<div class="aspect-ratio aspect-ratio-middle">
+								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" style='background-image: url("<%= imageThumbnailSrc %>");' title="<%= HtmlUtil.escapeAttribute(title) %>" >
+									<img class="hidden" src="<%= imageThumbnailSrc %>" />
+								</a>
+							</div>
 						</div>
+					</c:when>
 
-						<div class="list-group-item-content">
-							<h6>
-								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(fileEntry.getUserName()), LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
-							</h6>
+					<c:otherwise>
+						<li class="item-preview list-group-item list-group-item-default" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+							<div class="list-group-item-field">
+								<img src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle(true, 9, 128, 128) %>" />
+							</div>
 
-							<h5><%= HtmlUtil.escape(title) %></h5>
+							<div class="list-group-item-content">
+								<h6>
+									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(fileEntry.getUserName()), LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
+								</h6>
 
-							<h6><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" /></h6>
-						</div>
-					</li>
+								<h5><%= HtmlUtil.escape(title) %></h5>
+
+								<h6><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" /></h6>
+							</div>
+						</li>
+					</c:otherwise>
+				</c:choose>
 
 				<%
-				}
+					}
 				%>
 
-				</ul>
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+						</div>
+					</c:when>
+					<c:otherwise>
+						</ul>
+					</c:otherwise>
+				</c:choose>
 
 				<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 			</c:otherwise>

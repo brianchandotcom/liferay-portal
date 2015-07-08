@@ -31,14 +31,5 @@ Liferay.on(
 	*/
 
 	function() {
-		// $('#main-content').sideNavigation(
-		// 	{
-		// 		content: '.sidenav-content',
-		// 		navigation: '.sidenav-menu-slider',
-		// 		position: 'left',
-		// 		toggler: '.sidenav-toggler',
-		// 		width: '300px'
-		// 	}
-		// );
 	}
 );

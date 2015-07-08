@@ -83,7 +83,6 @@ import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
-import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
@@ -269,6 +268,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
 
 		GradleUtil.setProperty(copy, AUTO_CLEAN_PROPERTY_NAME, false);
+
+		Jar jar = (Jar)GradleUtil.getTask(
+			copy.getProject(), JavaPlugin.JAR_TASK_NAME);
+
+		copy.from(jar.getOutputs());
 
 		return copy;
 	}
@@ -1238,27 +1242,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTaskDeploy(
 		Project project, LiferayExtension liferayExtension) {
 
-		final Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
 
-		copy.into(project.getProjectDir());
-
-		copy.into(
-			project.relativePath(liferayExtension.getDeployDir()),
-			new Closure<Void>(null) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					configureTaskDeployFrom(copy, copySpec);
-				}
-
-			});
+		configureTaskDeployInto(copy, liferayExtension);
 	}
 
-	protected void configureTaskDeployFrom(Copy copy, CopySpec copySpec) {
-		Jar jar = (Jar)GradleUtil.getTask(
-			copy.getProject(), JavaPlugin.JAR_TASK_NAME);
+	protected void configureTaskDeployInto(
+		Copy copy, LiferayExtension liferayExtension) {
 
-		copySpec.from(jar.getOutputs());
+		copy.into(liferayExtension.getDeployDir());
 	}
 
 	protected void configureTaskDirectDeployAppServerLibGlobalDir(

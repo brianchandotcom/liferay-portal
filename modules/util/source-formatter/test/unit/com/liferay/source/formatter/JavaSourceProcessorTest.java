@@ -94,8 +94,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IncorrectImports2.testjava",
 			new String[] {
-				"Proxy:", "edu.emory.mathcs.backport.java:",
-				"jodd.util.StringPool:"
+				"edu.emory.mathcs.backport.java:", "jodd.util.StringPool:",
+				"Proxy:"
 			});
 	}
 

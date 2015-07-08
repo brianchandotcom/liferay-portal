@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -125,6 +126,8 @@ public class BaseSourceProcessorTestCase {
 		}
 
 		List<String> errorMessages = sourceFormatter.getErrorMessages();
+
+		Collections.sort(errorMessages, new NaturalOrderStringComparator());
 
 		if (!errorMessages.isEmpty() || (expectedErrorMessages.length > 0)) {
 			Assert.assertEquals(

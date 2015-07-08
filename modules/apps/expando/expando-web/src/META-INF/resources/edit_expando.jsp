@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/expando/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -56,7 +56,7 @@ String propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnCo
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/expando/view_attributes.jsp");
+portletURL.setParameter("mvcPath", "/view_attributes.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("modelResource", modelResource);
 %>
@@ -68,7 +68,7 @@ portletURL.setParameter("modelResource", modelResource);
 />
 
 <portlet:actionURL name='<%= (column == null) ? "addExpando" : "updateExpando" %>' var="editExpandoURL">
-	<portlet:param name="mvcPath" value="/html/portlet/expando/edit_expando.jsp" />
+	<portlet:param name="mvcPath" value="/edit_expando.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editExpandoURL %>" method="post" name="fm">

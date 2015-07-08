@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/expando/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -49,7 +49,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 		/>
 
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="mvcPath" value="/html/portlet/expando/view_attributes.jsp" />
+			<portlet:param name="mvcPath" value="/view_attributes.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="modelResource" value="<%= customAttributesDisplay.getClassName() %>" />
 		</portlet:renderURL>
@@ -96,7 +96,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 		<liferay-ui:search-container-column-jsp
 			align="right"
 			cssClass="entry-action"
-			path="/html/portlet/expando/resource_action.jsp"
+			path="/resource_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

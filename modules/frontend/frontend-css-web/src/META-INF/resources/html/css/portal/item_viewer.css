@@ -26,6 +26,10 @@
 	.tabular-list-group {
 		width: 100%;
 	}
+
+	.url-view {
+		margin: 15px;
+	}
 }
 
 .lfr-item-viewer-close {

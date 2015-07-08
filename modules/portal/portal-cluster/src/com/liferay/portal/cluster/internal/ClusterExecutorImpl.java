@@ -239,10 +239,12 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		_enabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
-		String controlChannelProperties = getControlChannelProperties(
+		String channelPropertiesString = getChannelPropertiesString(
 			componentContext.getProperties());
 
-		initialize(controlChannelProperties);
+		String channelName = getChannelName(componentContext.getProperties());
+
+		initialize(channelPropertiesString, channelName);
 
 		BundleContext bundleContext = componentContext.getBundleContext();
 
@@ -425,15 +427,23 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return clusterNodeResponse;
 	}
 
-	protected void initialize(String channelPropertiesControl) {
+	protected void initialize(
+		String channelPropertiesString, String channelName) {
+
 		if (!isEnabled()) {
 			return;
 		}
 
-		if (Validator.isNull(channelPropertiesControl)) {
+		if (Validator.isNull(channelPropertiesString)) {
 			throw new IllegalStateException(
 				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + " or " +
 					ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL + " not set.");
+		}
+
+		if (Validator.isNull(channelName)) {
+			throw new IllegalStateException(
+				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL + " or " +
+					ClusterPropsKeys.CHANNEL_NAME_CONTROL + " not set.");
 		}
 
 		_executorService = _portalExecutorManager.getPortalExecutor(
@@ -442,13 +452,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		ClusterRequestReceiver clusterReceiver = new ClusterRequestReceiver(
 			this);
 
-		String channelNamePrefix = GetterUtil.getString(
-			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_PREFIX),
-			ClusterPropsKeys.CHANNEL_NAME_PREFIX_DEFAULT);
-
 		_clusterChannel = _clusterChannelFactory.createClusterChannel(
-			channelPropertiesControl, channelNamePrefix + "control",
-			clusterReceiver);
+			channelPropertiesString, channelName, clusterReceiver);
 
 		ClusterNode localClusterNode = new ClusterNode(
 			generateClusterNodeId(), _clusterChannel.getBindInetAddress());
@@ -578,18 +583,30 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return true;
 	}
 
-	private String getControlChannelProperties(
+	private String getChannelName(Dictionary<String, Object> properties) {
+		String channelName = GetterUtil.getString(
+			properties.get(ClusterPropsKeys.CHANNEL_NAME_CONTROL));
+
+		if (Validator.isNull(channelName)) {
+			channelName = _props.get(
+				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
+		}
+
+		return channelName;
+	}
+
+	private String getChannelPropertiesString(
 		Dictionary<String, Object> properties) {
 
-		String controlChannepProperties = GetterUtil.getString(
+		String channelPropertiesString = GetterUtil.getString(
 			properties.get(ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL));
 
-		if (Validator.isNull(controlChannepProperties)) {
-			controlChannepProperties = _props.get(
+		if (Validator.isNull(channelPropertiesString)) {
+			channelPropertiesString = _props.get(
 				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 		}
 
-		return controlChannepProperties;
+		return channelPropertiesString;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

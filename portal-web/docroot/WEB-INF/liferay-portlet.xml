@@ -869,11 +869,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>196</portlet-name>
-		<user-notification-definitions>com/liferay/portlet/comments/comments-user-notification-definitions.xml</user-notification-definitions>
-		<user-notification-handler-class>com.liferay.comments.web.notifications.CommentsUserNotificationHandler</user-notification-handler-class>
-	</portlet>
-	<portlet>
 		<portlet-name>197</portlet-name>
 		<icon>/html/icons/shopping.png</icon>
 		<struts-path>shopping_admin</struts-path>

@@ -24,8 +24,9 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 public class DummyStorageEngineManagerImpl implements StorageEngineManager {
 
 	@Override
-	public long create(long companyId, long ddmStructureId,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+	public long create(
+			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
 		throws StorageException {
 
 		return 0;
@@ -53,8 +54,10 @@ public class DummyStorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	@Override
-	public void update(long classPK, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext) throws StorageException {
+	public void update(
+			long classPK, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws StorageException {
 	}
 
 }

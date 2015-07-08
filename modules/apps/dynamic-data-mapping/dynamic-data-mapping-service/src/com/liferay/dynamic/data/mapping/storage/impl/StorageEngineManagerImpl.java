@@ -30,12 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 public class StorageEngineManagerImpl implements StorageEngineManager {
 
 	@Override
-	public long create(long companyId, long ddmStructureId,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+	public long create(
+			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
 		throws StorageException {
 
-		return _storageEngine.create(companyId, ddmStructureId, ddmFormValues,
-			serviceContext);
+		return _storageEngine.create(
+			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
 	@Override
@@ -63,8 +64,10 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	@Override
-	public void update(long classPK, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext) throws StorageException {
+	public void update(
+			long classPK, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws StorageException {
 
 		_storageEngine.update(classPK, ddmFormValues, serviceContext);
 	}

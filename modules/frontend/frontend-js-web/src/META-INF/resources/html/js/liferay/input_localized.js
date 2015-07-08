@@ -7,8 +7,6 @@ AUI.add(
 
 		var AObject = A.Object;
 
-		var REGEX_DELIMITER_NS = /_/g;
-
 		var SELECTOR_LANG_VALUE = '.language-value';
 
 		var STR_BLANK = '';
@@ -591,10 +589,12 @@ AUI.add(
 		Liferay.on(
 			'destroyPortlet',
 			function(event) {
+				var portletNamespace = '_' + event.portletId + '_';
+
 				AObject.each(
 					Liferay.InputLocalized._instances,
 					function(item, index) {
-						if (item.get('namespace').replace(REGEX_DELIMITER_NS, STR_BLANK) === event.portletId) {
+						if (item.get('namespace') === portletNamespace) {
 							item.destroy();
 						}
 					}
@@ -603,7 +603,7 @@ AUI.add(
 				AObject.each(
 					Liferay.InputLocalized._registered,
 					function(item, index) {
-						if (item.namespace.replace(REGEX_DELIMITER_NS, STR_BLANK) === event.portletId) {
+						if (item.namespace === portletNamespace) {
 							Liferay.InputLocalized.unregister(index);
 						}
 					}

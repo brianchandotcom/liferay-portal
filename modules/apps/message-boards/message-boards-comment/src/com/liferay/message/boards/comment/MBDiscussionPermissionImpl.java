@@ -46,6 +46,14 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 	}
 
 	@Override
+	public boolean hasPermission(long commentId, String actionId)
+		throws PortalException {
+
+		return MBDiscussionPermission.contains(
+			_permissionChecker, commentId, actionId);
+	}
+
+	@Override
 	public boolean hasUpdatePermission(long commentId) throws PortalException {
 		return MBDiscussionPermission.contains(
 			_permissionChecker, commentId, ActionKeys.UPDATE_DISCUSSION);

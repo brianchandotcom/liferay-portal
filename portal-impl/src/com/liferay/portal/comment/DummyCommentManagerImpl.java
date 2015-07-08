@@ -156,6 +156,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 			}
 
 			@Override
+			public boolean hasPermission(long commentId, String actionId) {
+				return false;
+			}
+
+			@Override
 			public boolean hasUpdatePermission(long commentId) {
 
 				return false;

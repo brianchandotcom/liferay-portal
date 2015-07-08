@@ -40,6 +40,9 @@ public interface DiscussionPermission {
 
 	public boolean hasDeletePermission(long commentId) throws PortalException;
 
+	public boolean hasPermission(long commentId, String actionId)
+		throws PortalException;
+
 	public boolean hasUpdatePermission(long commentId) throws PortalException;
 
 	public boolean hasViewPermission(

@@ -113,14 +113,24 @@ public class BBCodeParser {
 		List<BBCodeItem> bbCodeItems, BBCodeLexer bbCodeLexer,
 		IntegerWrapper marker, BBCodeToken bbCodeToken, String data) {
 
+		int lastIndex = 0;
+
 		int length = data.length();
 
-		int lastIndex = length;
-
 		if (bbCodeToken != null) {
-			length = bbCodeToken.getStart();
-
 			lastIndex = bbCodeLexer.getLastIndex();
+
+			length = lastIndex;
+
+			String tag = bbCodeToken.getStartTag();
+
+			if (tag == null) {
+				tag = bbCodeToken.getEndTag();
+			}
+
+			if (isValidTag(tag)) {
+				length = bbCodeToken.getStart();
+			}
 		}
 
 		if (length > marker.getValue()) {

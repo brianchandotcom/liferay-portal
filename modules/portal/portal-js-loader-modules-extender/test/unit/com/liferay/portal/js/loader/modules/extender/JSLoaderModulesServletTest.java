@@ -117,7 +117,8 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		assertContains("'foo@13.2.23': '/foo-13.2.23'", content);
 		assertContains(
 			"'foo/foo.es':{'dependencies':['exports','foo@13.2.23/fum.es'," +
-				"'jquery@2.15.3/jquery.js']}", content);
+				"'jquery@2.15.3/jquery.js']}",
+			content);
 		assertContains(
 			"'foo@13.2.23/foo.es':{'dependencies':['exports'," +
 				"'foo@13.2.23/fum.es','jquery@2.15.3/jquery.js']}",

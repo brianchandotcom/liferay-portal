@@ -461,7 +461,8 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			actionRequest, "modelResource");
 		long[] roleIds = StringUtil.split(
 			ParamUtil.getString(
-				actionRequest, "rolesSearchContainerPrimaryKeys"), 0L);
+				actionRequest, "rolesSearchContainerPrimaryKeys"),
+			0L);
 
 		String selResource = PortletConstants.getRootPortletId(portletResource);
 

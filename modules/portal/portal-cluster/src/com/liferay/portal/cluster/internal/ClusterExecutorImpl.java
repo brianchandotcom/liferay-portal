@@ -374,7 +374,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		catch (UnknownHostException uhe) {
 			throw new IllegalArgumentException(
 				"Unable to parse the portal instance host name and port from " +
-					portalInstanceInetSocketAddress, uhe);
+					portalInstanceInetSocketAddress,
+				uhe);
 		}
 
 		int port = -1;
@@ -385,7 +386,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		catch (NumberFormatException nfe) {
 			throw new IllegalArgumentException(
 				"Unable to parse portal InetSocketAddress port from " +
-					portalInstanceInetSocketAddress, nfe);
+					portalInstanceInetSocketAddress,
+				nfe);
 		}
 
 		return new InetSocketAddress(hostInetAddress, port);

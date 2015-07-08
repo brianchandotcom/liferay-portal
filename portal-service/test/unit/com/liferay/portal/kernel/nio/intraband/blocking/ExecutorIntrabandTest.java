@@ -243,7 +243,8 @@ public class ExecutorIntrabandTest {
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
 				"Channel is of type SelectableChannel and configured in " +
-					"nonblocking mode", iae.getMessage());
+					"nonblocking mode",
+				iae.getMessage());
 		}
 	}
 
@@ -357,7 +358,8 @@ public class ExecutorIntrabandTest {
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
 				"Scattering byte channel is of type SelectableChannel and " +
-					"configured in nonblocking mode", iae.getMessage());
+					"configured in nonblocking mode",
+				iae.getMessage());
 		}
 
 		// Gathering byte channel is of type SelectableChannel and configured in
@@ -372,7 +374,8 @@ public class ExecutorIntrabandTest {
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
 				"Gathering byte channel is of type SelectableChannel and " +
-					"configured in nonblocking mode", iae.getMessage());
+					"configured in nonblocking mode",
+				iae.getMessage());
 		}
 	}
 

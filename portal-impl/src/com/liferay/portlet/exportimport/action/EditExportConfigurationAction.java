@@ -205,7 +205,8 @@ public class EditExportConfigurationAction extends PortletAction {
 		else {
 			deleteExportImportConfigurationIds = StringUtil.split(
 				ParamUtil.getString(
-					actionRequest, "deleteExportImportConfigurationIds"), 0L);
+					actionRequest, "deleteExportImportConfigurationIds"),
+				0L);
 		}
 
 		List<TrashedModel> trashedModels = new ArrayList<>();

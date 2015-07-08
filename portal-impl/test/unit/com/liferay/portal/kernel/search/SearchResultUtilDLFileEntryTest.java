@@ -310,7 +310,8 @@ public class SearchResultUtilDLFileEntryTest
 
 			Assert.assertEquals(
 				"Search index is stale and contains entry {" + entryClassPK +
-					"}", logRecord.getMessage());
+					"}",
+				logRecord.getMessage());
 
 			Assert.assertEquals(
 				SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME,

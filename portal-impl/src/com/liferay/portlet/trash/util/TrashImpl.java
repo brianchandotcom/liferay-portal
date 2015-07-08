@@ -184,7 +184,8 @@ public class TrashImpl implements Trash {
 		SessionMessages.add(
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
+			data);
 	}
 
 	@Override

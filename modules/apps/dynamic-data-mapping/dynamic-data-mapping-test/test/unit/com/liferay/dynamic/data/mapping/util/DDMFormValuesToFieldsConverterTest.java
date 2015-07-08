@@ -307,8 +307,9 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 			Assert.assertEquals(
 				"Name_INSTANCE_rztm,Phone_INSTANCE_ovho,Phone_INSTANCE_krvx," +
-				"Name_INSTANCE_rght,Phone_INSTANCE_latb,Phone_INSTANCE_jewp," +
-				"Phone_INSTANCE_mkar", fieldsDisplayField.getValue());
+					"Name_INSTANCE_rght,Phone_INSTANCE_latb," +
+						"Phone_INSTANCE_jewp,Phone_INSTANCE_mkar",
+				fieldsDisplayField.getValue());
 		}
 	}
 
@@ -367,9 +368,8 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 			testField(
 				nameField, createValuesList("Name 1", "Name 2", "Name 3"),
-				createValuesList(
-					"Nome 1", "Nome 2", "Nome 3"), _availableLocales,
-					LocaleUtil.US);
+				createValuesList("Nome 1", "Nome 2", "Nome 3"),
+				_availableLocales, LocaleUtil.US);
 
 			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 

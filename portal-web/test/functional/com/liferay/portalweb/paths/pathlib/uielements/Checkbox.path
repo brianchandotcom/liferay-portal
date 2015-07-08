@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLOGS_ENTRY</td>
+	<td>//input[contains(@id,'BlogsEntry')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGEABLE</td>
 	<td>//label[contains(.,'Changeable')]/input[@type='checkbox']</td>
 	<td></td>

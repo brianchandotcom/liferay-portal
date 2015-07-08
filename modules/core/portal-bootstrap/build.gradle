@@ -44,6 +44,14 @@ copyLibs {
 	}
 }
 
+deploy {
+	from("lib") {
+		include "com.liferay.osgi.servicetrackermap.jar"
+		include "org.eclipse.osgi.jar"
+		include "registry-impl.jar"
+	}
+}
+
 jar {
 	dependsOn buildSystemPackagesExtraManifest
 }

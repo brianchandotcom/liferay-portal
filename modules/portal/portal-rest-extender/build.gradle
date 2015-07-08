@@ -16,6 +16,12 @@ dependencies {
 	testCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.8.Final"
 }
 
+deploy {
+	from("lib") {
+		include "com.liferay.portal.cxf.jaxrs.common.jar"
+	}
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }

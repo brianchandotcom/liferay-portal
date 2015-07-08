@@ -10,6 +10,13 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }
 
+deploy {
+	from("lib") {
+		include "org.apache.felix.dependencymanager.jar"
+		include "org.apache.felix.dependencymanager.shell.jar"
+	}
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }

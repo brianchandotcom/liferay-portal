@@ -4,6 +4,13 @@ dependencies {
 	compile project(":core:registry-api")
 }
 
+deploy {
+	from("lib") {
+		include "com.liferay.osgi.service.tracker.map.jar"
+		include "org.eclipse.osgi.jar"
+	}
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/core")
 }

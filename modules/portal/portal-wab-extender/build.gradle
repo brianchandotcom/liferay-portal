@@ -10,6 +10,15 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 }
 
+deploy {
+	from("lib") {
+		include "commons-fileupload.jar"
+		include "commons-io.jar"
+		include "org.apache.felix.webconsole.jar"
+		include "org.eclipse.equinox.http.servlet.jar"
+	}
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }

@@ -1123,7 +1123,7 @@ body.yui3-skin-sam .yui3-widget-mask {
 	}
 
 	pre {
-		min-height: 33px;
+		overflow: visible;
 	}
 }
 

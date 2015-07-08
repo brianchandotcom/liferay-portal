@@ -22,6 +22,12 @@
 
 			preElement[elementAction](editor.document);
 
+			var preBlock = editor.document.findOne('pre');
+
+			if (preBlock && preBlock.getChildCount() === 0) {
+				preBlock.appendBogus();
+			}
+
 			setTimeout(
 				function() {
 					editor.fire('saveSnapshot');

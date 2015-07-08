@@ -39,7 +39,7 @@ public class ItemSelectorBrowserReturnTypeUtil
 	implements ItemSelectorReturnType {
 
 	public static ItemSelectorReturnType
-		getExistingFileEntryReturnType(
+		getFirstAvailableExistingFileEntryReturnType(
 			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		return getFirstAvailableItemSelectorReturnType(

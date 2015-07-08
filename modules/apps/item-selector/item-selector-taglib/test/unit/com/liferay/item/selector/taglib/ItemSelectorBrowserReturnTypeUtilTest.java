@@ -31,12 +31,15 @@ import org.junit.Test;
 public class ItemSelectorBrowserReturnTypeUtilTest {
 
 	@Test
-	public void testGetExistingFileEntryReturnType() throws Exception {
+	public void testGetFirstAvailableExistingFileEntryReturnType()
+		throws Exception {
+
 		populateItemSelectorReturnTypesSet();
 
 		ItemSelectorReturnType itemSelectorReturnType =
 			ItemSelectorBrowserReturnTypeUtil.
-				getExistingFileEntryReturnType(_itemSelectorReturnTypeSet);
+				getFirstAvailableExistingFileEntryReturnType(
+					_itemSelectorReturnTypeSet);
 
 		Assert.assertEquals(
 			URLItemSelectorReturnType.class.getName(),
@@ -69,8 +72,9 @@ public class ItemSelectorBrowserReturnTypeUtilTest {
 			getFirstAvailableDraggableFileReturnType(
 				_itemSelectorReturnTypeSet);
 
-		ItemSelectorBrowserReturnTypeUtil.getExistingFileEntryReturnType(
-			_itemSelectorReturnTypeSet);
+		ItemSelectorBrowserReturnTypeUtil.
+			getFirstAvailableExistingFileEntryReturnType(
+				_itemSelectorReturnTypeSet);
 
 		Assert.assertEquals(3, _itemSelectorReturnTypeSet.size());
 	}

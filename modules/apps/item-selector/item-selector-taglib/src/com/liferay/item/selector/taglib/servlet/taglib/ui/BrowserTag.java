@@ -149,8 +149,9 @@ public class BrowserTag extends IncludeTag {
 			getDraggableFileReturnType());
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:existingFileEntryReturnType",
-			ItemSelectorBrowserReturnTypeUtil.getExistingFileEntryReturnType(
-				_desiredItemSelectorReturnTypes));
+			ItemSelectorBrowserReturnTypeUtil.
+				getFirstAvailableExistingFileEntryReturnType(
+					_desiredItemSelectorReturnTypes));
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);

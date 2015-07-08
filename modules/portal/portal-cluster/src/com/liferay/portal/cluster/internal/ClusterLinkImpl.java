@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -96,8 +97,8 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		if (_enabled) {
 			initialize(
-				getTransportChannelProperties(properties),
-				getTransportChannelNames(properties));
+				getChannelPropertiesStrings(properties),
+				getChannelNames(properties));
 		}
 	}
 
@@ -133,18 +134,10 @@ public class ClusterLinkImpl implements ClusterLink {
 		return _clusterChannels.get(channelIndex);
 	}
 
-	protected ExecutorService getExecutorService() {
-		return _executorService;
-	}
-
-	protected List<Address> getLocalAddresses() {
-		return _localAddresses;
-	}
-
-	protected Properties getTransportChannelNames(
+	protected Map<String, String> getChannelNames(
 		Map<String, Object> properties) {
 
-		Properties transportNames = new Properties();
+		Map<String, String> channelNames = new HashMap<>();
 
 		int prefixLength =
 			ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX.length();
@@ -155,23 +148,30 @@ public class ClusterLinkImpl implements ClusterLink {
 			if (key.startsWith(
 					ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX)) {
 
-				transportNames.put(
-					key.substring(prefixLength + 1), entry.getValue());
+				channelNames.put(
+					key.substring(prefixLength + 1), (String)entry.getValue());
 			}
 		}
 
-		if (transportNames.isEmpty()) {
-			transportNames = _props.getProperties(
+		if (channelNames.isEmpty()) {
+			Properties channelNameProperties = _props.getProperties(
 				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT, true);
+
+			for (Map.Entry<Object, Object> entry :
+					channelNameProperties.entrySet()) {
+
+				channelNames.put(
+					(String)entry.getKey(), (String)entry.getValue());
+			}
 		}
 
-		return transportNames;
+		return channelNames;
 	}
 
-	protected Properties getTransportChannelProperties(
+	protected Map<String, String> getChannelPropertiesStrings(
 		Map<String, Object> properties) {
 
-		Properties transportProperties = new Properties();
+		Map<String, String> channelPropertiesStrings = new HashMap<>();
 
 		int prefixLength =
 			ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX.length();
@@ -182,25 +182,40 @@ public class ClusterLinkImpl implements ClusterLink {
 			if (key.startsWith(
 					ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX)) {
 
-				transportProperties.put(
-					key.substring(prefixLength + 1), entry.getValue());
+				channelPropertiesStrings.put(
+					key.substring(prefixLength + 1), (String)entry.getValue());
 			}
 		}
 
-		if (transportProperties.isEmpty()) {
-			transportProperties = _props.getProperties(
+		if (channelPropertiesStrings.isEmpty()) {
+			Properties channelProperties = _props.getProperties(
 				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);
+
+			for (Map.Entry<Object, Object> entry :
+					channelProperties.entrySet()) {
+
+				channelPropertiesStrings.put(
+					(String)entry.getKey(), (String)entry.getValue());
+			}
 		}
 
-		return transportProperties;
+		return channelPropertiesStrings;
+	}
+
+	protected ExecutorService getExecutorService() {
+		return _executorService;
+	}
+
+	protected List<Address> getLocalAddresses() {
+		return _localAddresses;
 	}
 
 	protected void initChannels(
-			Properties transportChannelProperties,
-			Properties transportChannelNames)
+			Map<String, String> channelPropertiesStrings,
+			Map<String, String> channelNames)
 		throws Exception {
 
-		_channelCount = transportChannelProperties.size();
+		_channelCount = channelPropertiesStrings.size();
 
 		if ((_channelCount <= 0) || (_channelCount > MAX_CHANNEL_COUNT)) {
 			throw new IllegalArgumentException(
@@ -211,15 +226,13 @@ public class ClusterLinkImpl implements ClusterLink {
 		_clusterChannels = new ArrayList<>(_channelCount);
 		_clusterReceivers = new ArrayList<>(_channelCount);
 
-		List<String> keys = new ArrayList<>(
-			transportChannelProperties.stringPropertyNames());
+		List<String> keys = new ArrayList<>(channelPropertiesStrings.keySet());
 
 		Collections.sort(keys);
 
-		for (String customName : keys) {
-			String channelProperties = transportChannelProperties.getProperty(
-				customName);
-			String channelName = transportChannelNames.getProperty(customName);
+		for (String key : keys) {
+			String channelProperties = channelPropertiesStrings.get(key);
+			String channelName = channelNames.get(key);
 
 			if (Validator.isNull(channelProperties) ||
 				Validator.isNull(channelName)) {
@@ -240,14 +253,14 @@ public class ClusterLinkImpl implements ClusterLink {
 	}
 
 	protected void initialize(
-		Properties transportChannelProperties,
-		Properties transportChannelNames) {
+		Map<String, String> channelPropertiesStrings,
+		Map<String, String> channelNames) {
 
 		_executorService = _portalExecutorManager.getPortalExecutor(
 			ClusterLinkImpl.class.getName());
 
 		try {
-			initChannels(transportChannelProperties, transportChannelNames);
+			initChannels(channelPropertiesStrings, channelNames);
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {

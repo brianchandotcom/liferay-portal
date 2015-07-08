@@ -239,13 +239,12 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		_enabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
-		String controlChannelProperties = getControlChannelProperties(
+		String channelPropertiesString = getChannelPropertiesString(
 			componentContext.getProperties());
 
-		String controlChannelName = getControlChannelName(
-			componentContext.getProperties());
+		String channelName = getChannelName(componentContext.getProperties());
 
-		initialize(controlChannelProperties, controlChannelName);
+		initialize(channelPropertiesString, channelName);
 
 		BundleContext bundleContext = componentContext.getBundleContext();
 
@@ -427,19 +426,19 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	}
 
 	protected void initialize(
-		String controlChannelProperties, String controlChannelName) {
+		String channelPropertiesString, String channelName) {
 
 		if (!isEnabled()) {
 			return;
 		}
 
-		if (Validator.isNull(controlChannelProperties)) {
+		if (Validator.isNull(channelPropertiesString)) {
 			throw new IllegalStateException(
 				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + " or " +
 					ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL + " not set.");
 		}
 
-		if (Validator.isNull(controlChannelName)) {
+		if (Validator.isNull(channelName)) {
 			throw new IllegalStateException(
 				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL + " or " +
 					ClusterPropsKeys.CHANNEL_NAME_CONTROL + " not set.");
@@ -452,7 +451,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			this);
 
 		_clusterChannel = _clusterChannelFactory.createClusterChannel(
-			controlChannelProperties, controlChannelName, clusterReceiver);
+			channelPropertiesString, channelName, clusterReceiver);
 
 		ClusterNode localClusterNode = new ClusterNode(
 			generateClusterNodeId(), _clusterChannel.getBindInetAddress());
@@ -582,32 +581,30 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return true;
 	}
 
-	private String getControlChannelName(
-		Dictionary<String, Object> properties) {
-
-		String controlChannelName = GetterUtil.getString(
+	private String getChannelName(Dictionary<String, Object> properties) {
+		String channelName = GetterUtil.getString(
 			properties.get(ClusterPropsKeys.CHANNEL_NAME_CONTROL));
 
-		if (Validator.isNull(controlChannelName)) {
-			controlChannelName = _props.get(
+		if (Validator.isNull(channelName)) {
+			channelName = _props.get(
 				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
 		}
 
-		return controlChannelName;
+		return channelName;
 	}
 
-	private String getControlChannelProperties(
+	private String getChannelPropertiesString(
 		Dictionary<String, Object> properties) {
 
-		String controlChannelProperties = GetterUtil.getString(
+		String channelPropertiesString = GetterUtil.getString(
 			properties.get(ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL));
 
-		if (Validator.isNull(controlChannelProperties)) {
-			controlChannelProperties = _props.get(
+		if (Validator.isNull(channelPropertiesString)) {
+			channelPropertiesString = _props.get(
 				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 		}
 
-		return controlChannelProperties;
+		return channelPropertiesString;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

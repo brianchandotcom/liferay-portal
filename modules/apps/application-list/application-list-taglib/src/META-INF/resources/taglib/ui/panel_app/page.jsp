@@ -19,22 +19,32 @@
 <%
 PanelApp panelApp = (PanelApp)request.getAttribute("application-list-ui:panel-app:panelApp");
 
-String ppid = themeDisplay.getPpid();
-
 PortletURL portletURL = PortletURLFactoryUtil.create(request, panelApp.getPortletId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-portletURL.setWindowState(WindowState.MAXIMIZED);
 %>
 
-<li
-	aria-selected="<%= ppid.equals(panelApp.getPortletId()) ? "true" : StringPool.BLANK %>"
-	class="<%= ppid.equals(panelApp.getPortletId()) ? "selected-portlet" : StringPool.BLANK %>"
-	role="presentation"
->
-	<aui:a
-		ariaRole="menuitem"
-		href="<%= portletURL.toString() %>"
-		id='<%= "portlet_" + panelApp.getPortletId() %>'
-		label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
-	/>
-</li>
+<c:if test="<%= portletURL != null %>">
+
+	<%
+	String ppid = themeDisplay.getPpid();
+	%>
+
+	<li
+		aria-selected="<%= ppid.equals(panelApp.getPortletId()) ? "true" : StringPool.BLANK %>"
+		class="<%= ppid.equals(panelApp.getPortletId()) ? "selected-portlet" : StringPool.BLANK %>"
+		role="presentation"
+	>
+
+		<%
+		portletURL.setWindowState(WindowState.MAXIMIZED);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), panelApp.getPortletId());
+		%>
+
+		<aui:a
+			ariaRole="menuitem"
+			href="<%= portletURL.toString() %>"
+			id='<%= "portlet_" + panelApp.getPortletId() %>'
+			label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+		/>
+	</li>
+</c:if>

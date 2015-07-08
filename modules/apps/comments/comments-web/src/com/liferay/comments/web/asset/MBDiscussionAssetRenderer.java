@@ -52,28 +52,28 @@ import javax.servlet.http.HttpServletResponse;
 public class MBDiscussionAssetRenderer
 	extends BaseJSPAssetRenderer implements TrashRenderer {
 
-	public MBDiscussionAssetRenderer(WorkflowableComment message) {
-		_message = message;
+	public MBDiscussionAssetRenderer(WorkflowableComment workflowableComment) {
+		_workflowableComment = workflowableComment;
 	}
 
 	@Override
 	public String getClassName() {
-		return _message.getModelClassName();
+		return _workflowableComment.getModelClassName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _message.getCommentId();
+		return _workflowableComment.getCommentId();
 	}
 
 	@Override
 	public Date getDisplayDate() {
-		return _message.getModifiedDate();
+		return _workflowableComment.getModifiedDate();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _message.getGroupId();
+		return _workflowableComment.getGroupId();
 	}
 
 	@Override
@@ -99,19 +99,19 @@ public class MBDiscussionAssetRenderer
 	@Override
 	public String getSearchSummary(Locale locale) {
 		return HtmlUtil.extractText(
-			_message.getTranslatedBody(StringPool.BLANK));
+			_workflowableComment.getTranslatedBody(StringPool.BLANK));
 	}
 
 	@Override
 	public int getStatus() {
-		return _message.getStatus();
+		return _workflowableComment.getStatus();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _message.getBody();
+		return _workflowableComment.getBody();
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class MBDiscussionAssetRenderer
 		editPortletURL.setParameter(
 			"struts_action", "/message_boards/edit_discussion");
 		editPortletURL.setParameter(
-			"commentId", String.valueOf(_message.getCommentId()));
+			"commentId", String.valueOf(_workflowableComment.getCommentId()));
 
 		return editPortletURL;
 	}
@@ -173,7 +173,7 @@ public class MBDiscussionAssetRenderer
 		portletURL.setParameter(
 			"struts_action", "/message_boards/view_message");
 		portletURL.setParameter(
-			"messageId", String.valueOf(_message.getCommentId()));
+			"messageId", String.valueOf(_workflowableComment.getCommentId()));
 		portletURL.setWindowState(windowState);
 
 		return portletURL;
@@ -190,17 +190,17 @@ public class MBDiscussionAssetRenderer
 
 	@Override
 	public long getUserId() {
-		return _message.getUserId();
+		return _workflowableComment.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _message.getUserName();
+		return _workflowableComment.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _message.getUuid();
+		return _workflowableComment.getUuid();
 	}
 
 	@Override
@@ -211,7 +211,7 @@ public class MBDiscussionAssetRenderer
 			CommentManagerUtil.getDiscussionPermission(permissionChecker);
 
 		return discussionPermission.hasUpdatePermission(
-			_message.getCommentId());
+			_workflowableComment.getCommentId());
 	}
 
 	@Override
@@ -222,7 +222,7 @@ public class MBDiscussionAssetRenderer
 			CommentManagerUtil.getDiscussionPermission(permissionChecker);
 
 		return discussionPermission.hasPermission(
-			_message.getCommentId(), ActionKeys.VIEW);
+			_workflowableComment.getCommentId(), ActionKeys.VIEW);
 	}
 
 	@Override
@@ -232,7 +232,7 @@ public class MBDiscussionAssetRenderer
 		throws Exception {
 
 		Comment comment = CommentManagerUtil.fetchComment(
-			_message.getCommentId());
+			_workflowableComment.getCommentId());
 
 		request.setAttribute(WebKeys.COMMENT, comment);
 
@@ -249,6 +249,6 @@ public class MBDiscussionAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/message.png";
 	}
 
-	private final WorkflowableComment _message;
+	private final WorkflowableComment _workflowableComment;
 
 }

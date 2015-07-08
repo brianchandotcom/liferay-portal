@@ -168,10 +168,9 @@ public class MBDiscussionAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
+		portletURL.setParameter("mvcPath", "/comments/view_comment.jsp");
 		portletURL.setParameter(
-			"struts_action", "/message_boards/view_message");
-		portletURL.setParameter(
-			"messageId", String.valueOf(_workflowableComment.getCommentId()));
+			"commentId", String.valueOf(_workflowableComment.getCommentId()));
 		portletURL.setWindowState(windowState);
 
 		return portletURL;

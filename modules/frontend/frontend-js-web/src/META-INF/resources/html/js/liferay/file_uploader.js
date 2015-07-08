@@ -47,6 +47,31 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					startUpload: function(uploadableItem) {
+						var instance = this;
+
+						var host = instance.get(STR_HOST);
+
+						var uploader = instance._getUploader(uploadableItem);
+
+						uploadableItem.uploader = uploader;
+
+						var originalFile = uploadableItem.value.file;
+
+						Object.setPrototypeOf(originalFile, File.prototype);
+
+						uploadableItem.value.file = new A.FileHTML5(originalFile);
+
+						uploader.upload(uploadableItem.value.file);
+
+						host.fire(
+							'selectedItemUploadStart',
+							{
+								data: uploadableItem
+							}
+						);
+					},
+
 					_getUploader: function(uploadableItem) {
 						var instance = this;
 
@@ -64,7 +89,12 @@ AUI.add(
 
 						if (uploadableItem) {
 							instance._uploader.set('uploadURL', uploadableItem.value.uploadURL);
-							instance._uploader.set('postVarsPerFile', { randomId: uploadableItem.value.id });
+							instance._uploader.set(
+								'postVarsPerFile',
+								{
+									randomId: uploadableItem.value.id
+								}
+							);
 						}
 
 						return uploader;
@@ -110,31 +140,6 @@ AUI.add(
 						var host = instance.get(STR_HOST);
 
 						host.fire('selectedItemUploadProgress', event.details[0]);
-					},
-
-					startUpload: function(uploadableItem) {
-						var instance = this;
-
-						var host = instance.get(STR_HOST);
-
-						var uploader = instance._getUploader(uploadableItem);
-
-						uploadableItem.uploader = uploader;
-
-						var originalFile = uploadableItem.value.file;
-
-						Object.setPrototypeOf(originalFile, File.prototype);
-
-						uploadableItem.value.file = new A.FileHTML5(originalFile);
-
-						uploader.upload(uploadableItem.value.file);
-
-						host.fire(
-							'selectedItemUploadStart',
-							{
-								data: uploadableItem
-							}
-						);
 					}
 				}
 			}

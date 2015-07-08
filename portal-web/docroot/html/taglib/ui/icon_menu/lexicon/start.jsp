@@ -13,16 +13,16 @@
  * details.
  */
 --%>
-
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconTracker" %><%@
-page import="com.liferay.util.PropertyComparator" %>
-
 <%
+String cssClass = (String)request.getAttribute("liferay-ui:icon-menu:css-class");
 String direction = (String)request.getAttribute("liferay-ui:icon:direction");
-boolean showArrow = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:showArrow"));
-String view = (String)request.getAttribute("liferay-ui:icon:view");
+String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
 %>
+
+<div class="dropdown <%= cssClass %>">
+	<a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" href="#1" title="<%= message %>">
+		<span class="icon-ellipsis-vertical icon-monospaced"></span>
+	</a>
+	<ul class="dropdown-menu dropdown-menu-<%= direction %>">

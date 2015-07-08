@@ -1,0 +1,58 @@
+#set ($portlet_display = $portletDisplay)
+
+#set ($portlet_icon_options_view = "lexicon")
+
+#set ($portlet_id = $htmlUtil.escapeAttribute($portlet_display.getId()))
+#set ($portlet_title = $htmlUtil.escape($portlet_display.getTitle()))
+#set ($portlet_title_icon_css_class = "")
+#set ($portlet_description = $portlet_display.getDescription())
+#set ($portlet_description_css_class = "alert alert-info lfr-control-panel-help-content lfr-message-content")
+#set ($portlet_back_url = $htmlUtil.escapeHREF($portlet_display.getURLBack()))
+#set ($enable_portlet_descriptions = $sessionClicks.get($request, "enable-portlet-descriptions", "1"))
+#set ($show_portlet_title = $portlet_display.getControlPanelCategory().startsWith("site_administration."))
+#set ($show_portlet_description = $enable_portlet_descriptions == "1" && $sessionClicks.get($request, "show-portlet-description-$portlet_id", "1") == "1")
+#set ($valid_portlet_description = $validator.isNotNull($portlet_description) && $portlet_description.indexOf('javax.portlet.description') == -1)
+
+#if ($show_portlet_description)
+	#set ($portlet_title_icon_css_class = "hide")
+#else
+	#set ($portlet_description_css_class = "${portlet_description_css_class} hide")
+#end
+
+#set ($portlet_topper_css_class = "portlet-topper")
+
+<section class="portlet" id="portlet_$portlet_id">
+	<header class="header-toolbar header-toolbar-default">
+		<div class="container-fluid-1280">
+			<div class="toolbar-group">
+				<div class="toolbar-group-content">
+					<a class="sidenav-toggler" href="#1"><span class="icon-align-justify icon-monospaced"></span></a>
+				</div>
+
+				#if ($portlet_display.isShowBackIcon())
+					<div class="hidden-xs toolbar-group-content">
+						<a href="$portlet_back_url"><span class="icon-angle-left icon-monospaced"></span></a>
+					</div>
+				#end
+			</div>
+
+			<div class="toolbar-group-right">
+				<div class="toolbar-group-content">
+					$theme.portletIconOptions("right", "lexicon")
+				</div>
+			</div>
+
+			<div class="text-center toolbar-group-expand-text">
+				<span class="header-toolbar-title" title="$portlet_title">$portlet_title</span>
+				#if ($valid_portlet_description)
+					$theme.iconHelp($portlet_description)
+				#end
+			</div>
+		</div>
+	</header>
+
+	<div class="portlet-content">
+		$portlet_display.writeContent($writer)
+	</div>
+
+</section>

@@ -231,22 +231,32 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		_useIconCaret = useIconCaret;
 	}
 
+	public void setView(String view) {
+		_view = view;
+	}
+
 	protected String getEndPage() {
-		if (Validator.isNull(_endPage)) {
-			return _END_PAGE;
-		}
-		else {
+		if (Validator.isNotNull(_endPage)) {
 			return _endPage;
 		}
+
+		if (Validator.isNotNull(_view)) {
+			return "/html/taglib/ui/icon_menu/" + _view + "/end.jsp";
+		}
+
+		return "/html/taglib/ui/icon_menu/end.jsp";
 	}
 
 	protected String getStartPage() {
-		if (Validator.isNull(_startPage)) {
-			return _START_PAGE;
-		}
-		else {
+		if (Validator.isNotNull(_startPage)) {
 			return _startPage;
 		}
+
+		if (Validator.isNotNull(_view)) {
+			return "/html/taglib/ui/icon_menu/" + _view + "/start.jsp";
+		}
+
+		return "/html/taglib/ui/icon_menu/start.jsp";
 	}
 
 	protected int processEndTag() throws Exception {
@@ -395,6 +405,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 				}
 			}
 			else {
+				setAttributes();
+
 				PortalIncludeUtil.include(pageContext, getStartPage());
 			}
 		}
@@ -429,15 +441,27 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		return EVAL_PAGE;
 	}
 
+	protected void setAttributes() {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		request.setAttribute("liferay-ui:icon-menu:css-class", _cssClass);
+
+		String message = _message;
+
+		if (_localizeMessage) {
+			message = LanguageUtil.get(request, _message);
+		}
+
+		request.setAttribute("liferay-ui:icon-menu:message", message);
+
+		request.setAttribute("liferay-ui:icon-menu:direction", _direction);
+	}
+
 	private static final String _AUI_PATH = "../aui/";
 
 	private static final int _DEFAULT_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
-
-	private static final String _END_PAGE = "/html/taglib/ui/icon_menu/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/ui/icon_menu/start.jsp";
 
 	private String _cssClass;
 	private String _direction = "left";
@@ -456,5 +480,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private String _startPage;
 	private String _triggerCssClass;
 	private boolean _useIconCaret;
+	private String _view;
 
 }

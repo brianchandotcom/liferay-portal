@@ -436,6 +436,11 @@
 		</execute>
 
 		<execute macro="SitePage#embeddedPageTypePG" />
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Site Page" />
+			<var name="url" value="http://localhost:8080/web/site-name" />
+		</execute>
 	</command>
 
 	<command name="SavePortletPageType" priority="4">

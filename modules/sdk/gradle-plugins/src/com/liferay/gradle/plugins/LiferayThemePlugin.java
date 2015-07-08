@@ -80,6 +80,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		return configuration;
 	}
 
+	@Override
 	protected void addConfigurations(Project project) {
 		super.addConfigurations(project);
 
@@ -138,6 +139,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		configureDependenciesRuntime(project);
 	}
 
+	@Override
 	protected void configureDependenciesProvided(Project project) {
 		super.configureDependenciesProvided(project);
 

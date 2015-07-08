@@ -28,10 +28,6 @@ portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
 %>
 
-<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="setup" />
-</liferay-util:include>
-
 <portlet:renderURL var="backURL">
 	<portlet:param name="mvcPath" value="/edit_configuration.jsp" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
@@ -49,6 +45,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 <portlet:actionURL name="updateArchivedSetup" var="updateArchivedSetupURL">
 	<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
+	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= updateArchivedSetupURL %>" method="post" name="fm">
@@ -97,7 +94,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 		// Action
 
-		row.addJSP("/archived_setup_action.jsp", "entry-action");
+		row.addJSP("/archived_setup_action.jsp", "entry-action", application, request, response);
 
 		// Add result row
 

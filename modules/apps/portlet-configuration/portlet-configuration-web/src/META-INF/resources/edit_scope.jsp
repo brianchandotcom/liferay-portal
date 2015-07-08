@@ -82,6 +82,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletResource %>" />
 					<portlet:param name="mvcPath" value="/edit_scope.jsp" />
+					<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 					<portlet:param name="scopeType" value="<%= availableGroupScopeType %>" />
 					<portlet:param name="scopeLayoutUuid" value="<%= availableGroupScopeLayoutUuid %>" />
 				</liferay-portlet:actionURL>

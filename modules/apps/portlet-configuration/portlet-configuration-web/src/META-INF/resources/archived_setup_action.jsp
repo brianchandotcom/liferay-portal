@@ -29,6 +29,7 @@ portletResource = (String)objects[1];
 	<portlet:actionURL name="restoreArchivedSetup" var="restoreArchivedSetupURL">
 		<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 		<portlet:param name="name" value="<%= archivedSettings.getName() %>" />
 	</portlet:actionURL>
@@ -42,6 +43,7 @@ portletResource = (String)objects[1];
 	<portlet:actionURL name="deleteArchivedSetup" var="deleteArchivedBackupURL">
 		<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 		<portlet:param name="name" value="<%= archivedSettings.getName() %>" />
 	</portlet:actionURL>

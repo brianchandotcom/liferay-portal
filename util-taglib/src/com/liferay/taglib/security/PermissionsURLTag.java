@@ -135,6 +135,8 @@ public class PermissionsURLTag extends TagSupport {
 		portletURL.setParameter(
 			"modelResourceDescription", modelResourceDescription);
 		portletURL.setParameter(
+			"portletConfiguration", Boolean.TRUE.toString());
+		portletURL.setParameter(
 			"resourceGroupId", String.valueOf(resourceGroupId));
 		portletURL.setParameter("resourcePrimKey", resourcePrimKey);
 

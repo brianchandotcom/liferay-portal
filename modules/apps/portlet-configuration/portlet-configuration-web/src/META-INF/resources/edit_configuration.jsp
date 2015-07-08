@@ -32,6 +32,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 		<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 	</portlet:renderURL>
 

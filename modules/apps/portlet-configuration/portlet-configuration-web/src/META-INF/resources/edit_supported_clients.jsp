@@ -29,6 +29,7 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 
 <portlet:actionURL name="editSupportedClients" var="editSupportedClientsURL">
 	<portlet:param name="mvcPath" value="/edit_supported_clients.jsp" />
+	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editSupportedClientsURL %>" method="post" name=">fm">

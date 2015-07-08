@@ -437,6 +437,7 @@ else {
 
 urlConfiguration.setParameter("redirect", currentURL);
 urlConfiguration.setParameter("returnToFullPageURL", currentURL);
+urlConfiguration.setParameter("portletConfiguration", Boolean.TRUE.toString());
 urlConfiguration.setParameter("portletResource", portletDisplay.getId());
 urlConfiguration.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimaryKey(plid, portlet.getPortletId()));
 

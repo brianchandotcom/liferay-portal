@@ -27,6 +27,7 @@ PortletURL configurationURL = renderResponse.createRenderURL();
 configurationURL.setParameter("mvcPath", "/edit_configuration.jsp");
 configurationURL.setParameter("redirect", redirect);
 configurationURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+configurationURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 configurationURL.setParameter("portletResource", portletResource);
 
 // Supported clients
@@ -36,6 +37,7 @@ PortletURL supportedClientsURL = renderResponse.createRenderURL();
 supportedClientsURL.setParameter("mvcPath", "/edit_supported_clients.jsp");
 supportedClientsURL.setParameter("redirect", redirect);
 supportedClientsURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+supportedClientsURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 supportedClientsURL.setParameter("portletResource", portletResource);
 
 // Permissions
@@ -45,6 +47,7 @@ PortletURL permissionsURL = renderResponse.createRenderURL();
 permissionsURL.setParameter("mvcPath", "/edit_permissions.jsp");
 permissionsURL.setParameter("redirect", redirect);
 permissionsURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+permissionsURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 permissionsURL.setParameter("portletResource", portletResource);
 permissionsURL.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimaryKey(layout.getPlid(), portletResource));
 
@@ -55,6 +58,7 @@ PortletURL publicRenderParametersURL = renderResponse.createRenderURL();
 publicRenderParametersURL.setParameter("mvcPath", "/edit_public_render_parameters.jsp");
 publicRenderParametersURL.setParameter("redirect", redirect);
 publicRenderParametersURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+publicRenderParametersURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 publicRenderParametersURL.setParameter("portletResource", portletResource);
 
 // Sharing
@@ -64,6 +68,7 @@ PortletURL sharingURL = renderResponse.createRenderURL();
 sharingURL.setParameter("mvcPath", "/edit_sharing.jsp");
 sharingURL.setParameter("redirect", redirect);
 sharingURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+sharingURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 sharingURL.setParameter("portletResource", portletResource);
 
 // Scope
@@ -73,6 +78,7 @@ PortletURL scopeURL = renderResponse.createRenderURL();
 scopeURL.setParameter("mvcPath", "/edit_scope.jsp");
 scopeURL.setParameter("redirect", redirect);
 scopeURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+scopeURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
 scopeURL.setParameter("portletResource", portletResource);
 
 int pos = 0;

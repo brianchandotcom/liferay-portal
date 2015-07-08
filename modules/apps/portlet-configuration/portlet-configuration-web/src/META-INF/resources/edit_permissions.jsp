@@ -119,6 +119,7 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 		<portlet:param name="mvcPath" value="/edit_permissions.jsp" />
 		<portlet:param name="tabs2" value="<%= tabs2 %>" />
 		<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 		<portlet:param name="modelResource" value="<%= modelResource %>" />
 		<portlet:param name="modelResourceDescription" value="<%= modelResourceDescription %>" />

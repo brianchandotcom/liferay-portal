@@ -43,6 +43,7 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 
 <portlet:actionURL name="editPublicRenderParameters" var="editPublicRenderParametersURL">
 	<portlet:param name="mvcPath" value="/edit_public_render_parameters.jsp" />
+	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editPublicRenderParametersURL %>" method="post" name="fm">

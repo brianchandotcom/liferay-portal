@@ -38,6 +38,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 
 <portlet:actionURL name="editSharing" var="editSharingURL">
 	<portlet:param name="mvcPath" value="/edit_sharing.jsp" />
+	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= editSharingURL %>" method="post" name="fm">

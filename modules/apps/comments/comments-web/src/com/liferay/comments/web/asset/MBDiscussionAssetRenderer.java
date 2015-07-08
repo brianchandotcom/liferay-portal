@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.asset;
+package com.liferay.comments.web.asset;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -22,6 +22,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.messageboards.asset.MBMessageAssetRenderer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
 import javax.portlet.PortletRequest;

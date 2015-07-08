@@ -31,7 +31,6 @@ import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
 import com.liferay.portlet.messageboards.asset.MBCategoryAssetRendererFactory;
-import com.liferay.portlet.messageboards.asset.MBDiscussionAssetRendererFactory;
 import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
 import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
 import com.liferay.portlet.messageboards.trash.MBMessageTrashHandler;
@@ -124,7 +123,6 @@ public class PortalRegisterTestUtil {
 		DLFileEntryAssetRendererFactory.class,
 		DLFolderAssetRendererFactory.class,
 		MBCategoryAssetRendererFactory.class,
-		MBDiscussionAssetRendererFactory.class,
 		MBMessageAssetRendererFactory.class, UserAssetRendererFactory.class
 	};
 

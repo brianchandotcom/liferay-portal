@@ -48,31 +48,26 @@ public class POPNotificationsMessageListener
 			com.liferay.portal.kernel.messaging.Message message)
 		throws Exception {
 
+		Store store = getStore();
+
+		Folder inboxFolder = getInboxFolder(store);
+
+		Message[] messages = inboxFolder.getMessages();
+
 		try {
-			Store store = getStore();
-
-			initInboxFolder(store);
-
-			Message[] messages = _inboxFolder.getMessages();
-
-			try {
-				notifyMessageListeners(messages);
-			}
-			finally {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Deleting messages");
-				}
-
-				_inboxFolder.setFlags(
-					messages, new Flags(Flags.Flag.DELETED), true);
-
-				_inboxFolder.close(true);
-
-				store.close();
-			}
+			notifyMessageListeners(messages);
 		}
 		finally {
-			_inboxFolder = null;
+			if (_log.isDebugEnabled()) {
+				_log.debug("Deleting messages");
+			}
+
+			inboxFolder.setFlags(
+				messages, new Flags(Flags.Flag.DELETED), true);
+
+			inboxFolder.close(true);
+
+			store.close();
 		}
 	}
 
@@ -86,20 +81,20 @@ public class POPNotificationsMessageListener
 		return internetAddress.getAddress();
 	}
 
-	protected void initInboxFolder(Store store) throws Exception {
-		if ((_inboxFolder == null) || !_inboxFolder.isOpen()) {
-			Folder defaultFolder = store.getDefaultFolder();
+	protected Folder getInboxFolder(Store store) throws Exception {
+		Folder defaultFolder = store.getDefaultFolder();
 
-			Folder[] folders = defaultFolder.list();
+		Folder[] folders = defaultFolder.list();
 
-			if (folders.length == 0) {
-				throw new MessagingException("Inbox not found");
-			}
-			else {
-				_inboxFolder = folders[0];
+		if (folders.length == 0) {
+			throw new MessagingException("Inbox not found");
+		}
+		else {
+			Folder inboxFolder = folders[0];
 
-				_inboxFolder.open(Folder.READ_WRITE);
-			}
+			inboxFolder.open(Folder.READ_WRITE);
+
+			return inboxFolder;
 		}
 	}
 
@@ -185,7 +180,5 @@ public class POPNotificationsMessageListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		POPNotificationsMessageListener.class);
-
-	private Folder _inboxFolder;
 
 }

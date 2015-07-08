@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowLocalRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
@@ -30,8 +32,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -40,6 +40,14 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
  */
 public class LiferayWorkflowCapability
 	implements RepositoryWrapperAware, WorkflowCapability, WorkflowSupport {
+
+	public LiferayWorkflowCapability(
+		DLFileEntryServiceAdapter dlFileEntryServiceAdapter,
+		DLFileVersionServiceAdapter dlFileVersionServiceAdapter) {
+
+		_dlFileEntryServiceAdapter = dlFileEntryServiceAdapter;
+		_dlFileVersionServiceAdapter = dlFileVersionServiceAdapter;
+	}
 
 	@Override
 	public void addFileEntry(
@@ -72,7 +80,7 @@ public class LiferayWorkflowCapability
 		throws PortalException {
 
 		boolean keepFileVersionLabel =
-			DLFileEntryLocalServiceUtil.isKeepFileVersionLabel(
+			_dlFileEntryServiceAdapter.isKeepFileVersionLabel(
 				fileEntry.getFileEntryId(), serviceContext);
 
 		if ((serviceContext.getWorkflowAction() ==
@@ -80,7 +88,7 @@ public class LiferayWorkflowCapability
 			!keepFileVersionLabel) {
 
 			DLFileVersion latestDLFileVersion =
-				DLFileVersionLocalServiceUtil.getLatestFileVersion(
+				_dlFileVersionServiceAdapter.getLatestFileVersion(
 					fileEntry.getFileEntryId(), false);
 
 			DLUtil.startWorkflowInstance(
@@ -128,7 +136,7 @@ public class LiferayWorkflowCapability
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+		DLFileEntry dlFileEntry = _dlFileEntryServiceAdapter.getDLFileEntry(
 			fileEntryId);
 
 		if (dlFileEntry.isCheckedOut()) {
@@ -136,7 +144,7 @@ public class LiferayWorkflowCapability
 		}
 
 		DLFileVersion dlFileVersion =
-			DLFileVersionLocalServiceUtil.getLatestFileVersion(
+			_dlFileVersionServiceAdapter.getLatestFileVersion(
 				fileEntryId, true);
 
 		if (dlFileVersion.isApproved() ||
@@ -179,5 +187,8 @@ public class LiferayWorkflowCapability
 
 		_startWorkflowInstance(userId, dlFileVersion, serviceContext);
 	}
+
+	private final DLFileEntryServiceAdapter _dlFileEntryServiceAdapter;
+	private final DLFileVersionServiceAdapter _dlFileVersionServiceAdapter;
 
 }

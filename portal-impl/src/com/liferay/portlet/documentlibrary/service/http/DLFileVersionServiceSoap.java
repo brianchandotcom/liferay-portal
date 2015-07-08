@@ -123,5 +123,20 @@ public class DLFileVersionServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersionSoap getLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy) throws RemoteException {
+		try {
+			com.liferay.portlet.documentlibrary.model.DLFileVersion returnValue = DLFileVersionServiceUtil.getLatestFileVersion(fileEntryId,
+					excludeWorkingCopy);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileVersionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DLFileVersionServiceSoap.class);
 }

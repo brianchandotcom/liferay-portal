@@ -14,16 +14,19 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -48,6 +51,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileEntryOrderByComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFolderOrderByComparator;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.File;
@@ -260,6 +264,33 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
+			long folderId, int status, int start, int end)
+		throws PortalException {
+
+		QueryDefinition<RepositoryEntry> queryDefinition =
+			new QueryDefinition<>(status, start, end, null);
+
+		List<Object> dlFileEntriesAndFileShortcuts =
+			dlFolderLocalService.getFileEntriesAndFileShortcuts(
+				getGroupId(), toFolderId(folderId), queryDefinition);
+
+		return RepositoryModelUtil.toRepositoryEntries(
+			dlFileEntriesAndFileShortcuts);
+	}
+
+	@Override
+	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
+		throws PortalException {
+
+		QueryDefinition<RepositoryEntry> queryDefinition =
+			new QueryDefinition<>(status);
+
+		return dlFolderLocalService.getFileEntriesAndFileShortcutsCount(
+			getGroupId(), toFolderId(folderId), queryDefinition);
+	}
+
+	@Override
 	public int getFileEntriesCount(long folderId) {
 		return dlFileEntryLocalService.getFileEntriesCount(
 			getGroupId(), toFolderId(folderId));
@@ -334,6 +365,50 @@ public class LiferayLocalRepository
 			getGroupId(), toFolderId(parentFolderId), name);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	@Override
+	public List<Folder> getFolders(
+			long parentFolderId, boolean includeMountfolders, int start,
+			int end, OrderByComparator<Folder> obc)
+		throws PortalException {
+
+		return getFolders(
+			parentFolderId, WorkflowConstants.STATUS_APPROVED,
+			includeMountfolders, start, end, obc);
+	}
+
+	@Override
+	public List<Folder> getFolders(
+			long parentFolderId, int status, boolean includeMountfolders,
+			int start, int end, OrderByComparator<Folder> obc)
+		throws PortalException {
+
+		List<DLFolder> dlFolders = dlFolderLocalService.getFolders(
+			getGroupId(), toFolderId(parentFolderId), status,
+			includeMountfolders, start, end,
+			DLFolderOrderByComparator.getOrderByComparator(obc));
+
+		return RepositoryModelUtil.toFolders(dlFolders);
+	}
+
+	@Override
+	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
+		throws PortalException {
+
+		return getFoldersCount(
+			parentFolderId, WorkflowConstants.STATUS_APPROVED,
+			includeMountfolders);
+	}
+
+	@Override
+	public int getFoldersCount(
+			long parentFolderId, int status, boolean includeMountfolders)
+		throws PortalException {
+
+		return dlFolderLocalService.getFoldersCount(
+			getGroupId(), toFolderId(parentFolderId), status,
+			includeMountfolders);
 	}
 
 	@Override

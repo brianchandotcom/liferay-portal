@@ -22,21 +22,25 @@ import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Repository;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 
 /**
  * @author Iván Zaera
  */
 public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 
-	public ConfigurationCapabilityImpl(DocumentRepository repository) {
+	public ConfigurationCapabilityImpl(
+		DocumentRepository repository,
+		RepositoryServiceAdapter repositoryServiceAdapter) {
+
 		_repository = repository;
+		_repositoryServiceAdapter = repositoryServiceAdapter;
 	}
 
 	@Override
 	public String getProperty(Class<? extends Capability> owner, String key) {
 		try {
-			Repository repository = RepositoryLocalServiceUtil.getRepository(
+			Repository repository = _repositoryServiceAdapter.getRepository(
 				_repository.getRepositoryId());
 
 			UnicodeProperties typeSettingsProperties =
@@ -56,7 +60,7 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 		Class<? extends Capability> owner, String key, String value) {
 
 		try {
-			Repository repository = RepositoryLocalServiceUtil.getRepository(
+			Repository repository = _repositoryServiceAdapter.getRepository(
 				_repository.getRepositoryId());
 
 			UnicodeProperties typeSettingsProperties =
@@ -67,7 +71,7 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 
 			repository.setTypeSettingsProperties(typeSettingsProperties);
 
-			RepositoryLocalServiceUtil.updateRepository(repository);
+			_repositoryServiceAdapter.updateRepository(repository);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -84,5 +88,6 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 	}
 
 	private final DocumentRepository _repository;
+	private final RepositoryServiceAdapter _repositoryServiceAdapter;
 
 }

@@ -72,4 +72,16 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 			getGuestOrUserId(), fileEntryId);
 	}
 
+	@Override
+	public DLFileVersion getLatestFileVersion(
+			long fileEntryId, boolean excludeWorkingCopy)
+		throws PortalException {
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+
+		return dlFileVersionLocalService.getLatestFileVersion(
+			fileEntryId, excludeWorkingCopy);
+	}
+
 }

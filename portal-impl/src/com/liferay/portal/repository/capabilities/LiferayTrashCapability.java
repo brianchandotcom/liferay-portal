@@ -28,21 +28,21 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
-import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryLocalService;
+import com.liferay.portlet.trash.service.TrashVersionLocalService;
 
 import java.util.List;
 
@@ -52,17 +52,35 @@ import java.util.List;
 public class LiferayTrashCapability
 	implements RepositoryEventAware, TrashCapability {
 
+	public LiferayTrashCapability(
+		DLAppServiceAdapter dlAppServiceAdapter,
+		DLAppHelperLocalService dlAppHelperLocalService,
+		DLFileEntryServiceAdapter dlFileEntryServiceAdapter,
+		DLFolderServiceAdapter dlFolderServiceAdapter,
+		RepositoryServiceAdapter repositoryServiceAdapter,
+		TrashEntryLocalService trashEntryLocalService,
+		TrashVersionLocalService trashVersionLocalService) {
+
+		_dlAppServiceAdapter = dlAppServiceAdapter;
+		_dlAppHelperLocalService = dlAppHelperLocalService;
+		_dlFileEntryServiceAdapter = dlFileEntryServiceAdapter;
+		_dlFolderServiceAdapter = dlFolderServiceAdapter;
+		_repositoryServiceAdapter = repositoryServiceAdapter;
+		_trashEntryLocalService = trashEntryLocalService;
+		_trashVersionLocalService = trashVersionLocalService;
+	}
+
 	@Override
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
 		deleteTrashEntry(fileEntry);
 
-		DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+		_dlAppServiceAdapter.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
 	@Override
 	public void deleteFolder(Folder folder) throws PortalException {
 		List<DLFileEntry> dlFileEntries =
-			DLFileEntryLocalServiceUtil.getGroupFileEntries(
+			_dlFileEntryServiceAdapter.getGroupFileEntries(
 				folder.getGroupId(), 0, folder.getRepositoryId(),
 				folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
@@ -70,16 +88,16 @@ public class LiferayTrashCapability
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
 
-			DLAppHelperLocalServiceUtil.deleteFileEntry(fileEntry);
+			_dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
 			deleteTrashEntry(fileEntry);
 		}
 
-		DLAppHelperLocalServiceUtil.deleteFolder(folder);
+		_dlAppHelperLocalService.deleteFolder(folder);
 
 		deleteTrashEntry(folder);
 
-		DLFolderLocalServiceUtil.deleteFolder(folder.getFolderId(), false);
+		_dlFolderServiceAdapter.deleteFolder(folder.getFolderId(), false);
 	}
 
 	@Override
@@ -101,7 +119,7 @@ public class LiferayTrashCapability
 			newFolderId = newFolder.getFolderId();
 		}
 
-		return DLAppHelperLocalServiceUtil.moveFileEntryFromTrash(
+		return _dlAppHelperLocalService.moveFileEntryFromTrash(
 			userId, fileEntry, newFolderId, serviceContext);
 	}
 
@@ -109,8 +127,7 @@ public class LiferayTrashCapability
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		return DLAppHelperLocalServiceUtil.moveFileEntryToTrash(
-			userId, fileEntry);
+		return _dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
 	}
 
 	@Override
@@ -125,7 +142,7 @@ public class LiferayTrashCapability
 			newFolderId = newFolder.getFolderId();
 		}
 
-		return DLAppHelperLocalServiceUtil.moveFileShortcutFromTrash(
+		return _dlAppHelperLocalService.moveFileShortcutFromTrash(
 			userId, fileShortcut, newFolderId, serviceContext);
 	}
 
@@ -134,7 +151,7 @@ public class LiferayTrashCapability
 			long userId, FileShortcut fileShortcut)
 		throws PortalException {
 
-		return DLAppHelperLocalServiceUtil.moveFileShortcutToTrash(
+		return _dlAppHelperLocalService.moveFileShortcutToTrash(
 			userId, fileShortcut);
 	}
 
@@ -150,7 +167,7 @@ public class LiferayTrashCapability
 			destinationFolderId = destinationFolder.getFolderId();
 		}
 
-		return DLAppHelperLocalServiceUtil.moveFolderFromTrash(
+		return _dlAppHelperLocalService.moveFolderFromTrash(
 			userId, folder, destinationFolderId, serviceContext);
 	}
 
@@ -158,7 +175,7 @@ public class LiferayTrashCapability
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException {
 
-		return DLAppHelperLocalServiceUtil.moveFolderToTrash(userId, folder);
+		return _dlAppHelperLocalService.moveFolderToTrash(userId, folder);
 	}
 
 	@Override
@@ -180,8 +197,7 @@ public class LiferayTrashCapability
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		DLAppHelperLocalServiceUtil.restoreFileEntryFromTrash(
-			userId, fileEntry);
+		_dlAppHelperLocalService.restoreFileEntryFromTrash(userId, fileEntry);
 	}
 
 	@Override
@@ -189,7 +205,7 @@ public class LiferayTrashCapability
 			long userId, FileShortcut fileShortcut)
 		throws PortalException {
 
-		DLAppHelperLocalServiceUtil.restoreFileShortcutFromTrash(
+		_dlAppHelperLocalService.restoreFileShortcutFromTrash(
 			userId, fileShortcut);
 	}
 
@@ -197,24 +213,25 @@ public class LiferayTrashCapability
 	public void restoreFolderFromTrash(long userId, Folder folder)
 		throws PortalException {
 
-		DLAppHelperLocalServiceUtil.restoreFolderFromTrash(userId, folder);
+		_dlAppHelperLocalService.restoreFolderFromTrash(userId, folder);
 	}
 
 	protected void deleteRepositoryTrashEntries(
-		long repositoryId, String className) {
+			long repositoryId, String className)
+		throws PortalException {
 
-		List<TrashEntry> trashEntries = TrashEntryLocalServiceUtil.getEntries(
+		List<TrashEntry> trashEntries = _trashEntryLocalService.getEntries(
 			repositoryId, className);
 
 		for (TrashEntry trashEntry : trashEntries) {
-			TrashEntryLocalServiceUtil.deleteTrashEntry(trashEntry);
+			_trashEntryLocalService.deleteTrashEntry(trashEntry);
 		}
 	}
 
 	protected void deleteTrashEntries(long repositoryId)
 		throws PortalException {
 
-		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+		Repository repository = _repositoryServiceAdapter.fetchRepository(
 			repositoryId);
 
 		if (repository == null) {
@@ -237,7 +254,7 @@ public class LiferayTrashCapability
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			DLFolderLocalServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlFolderServiceAdapter.getFoldersAndFileEntriesAndFileShortcuts(
 				groupId, dlFolderId, null, true, queryDefinition);
 
 		for (Object folderFileEntryOrFileShortcut :
@@ -265,7 +282,7 @@ public class LiferayTrashCapability
 		}
 
 		if (dlFileEntry.isInTrashExplicitly()) {
-			TrashEntryLocalServiceUtil.deleteEntry(
+			_trashEntryLocalService.deleteEntry(
 				DLFileEntryConstants.getClassName(),
 				dlFileEntry.getFileEntryId());
 		}
@@ -274,7 +291,7 @@ public class LiferayTrashCapability
 				WorkflowConstants.STATUS_ANY);
 
 			for (DLFileVersion dlFileVersion : dlFileVersions) {
-				TrashVersionLocalServiceUtil.deleteTrashVersion(
+				_trashVersionLocalService.deleteTrashVersion(
 					DLFileVersion.class.getName(),
 					dlFileVersion.getFileVersionId());
 			}
@@ -287,11 +304,11 @@ public class LiferayTrashCapability
 		}
 
 		if (dlFolder.isInTrashExplicitly()) {
-			TrashEntryLocalServiceUtil.deleteEntry(
+			_trashEntryLocalService.deleteEntry(
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 		else {
-			TrashVersionLocalServiceUtil.deleteTrashVersion(
+			_trashVersionLocalService.deleteTrashVersion(
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 	}
@@ -305,6 +322,14 @@ public class LiferayTrashCapability
 	protected void deleteTrashEntry(Folder folder) throws PortalException {
 		deleteTrashEntry((DLFolder)folder.getModel());
 	}
+
+	private final DLAppHelperLocalService _dlAppHelperLocalService;
+	private final DLAppServiceAdapter _dlAppServiceAdapter;
+	private final DLFileEntryServiceAdapter _dlFileEntryServiceAdapter;
+	private final DLFolderServiceAdapter _dlFolderServiceAdapter;
+	private final RepositoryServiceAdapter _repositoryServiceAdapter;
+	private final TrashEntryLocalService _trashEntryLocalService;
+	private final TrashVersionLocalService _trashVersionLocalService;
 
 	private class DeleteFileEntryRepositoryEventListener
 		implements RepositoryEventListener

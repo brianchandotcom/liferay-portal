@@ -768,7 +768,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				TrashCapability.class);
 
 			if (trashCapability.isInTrash(folder)) {
-				trashCapability.deleteFolder(folder);
+				trashEntryService.deleteEntry(
+					DLFolderConstants.getClassName(), folder.getFolderId());
 
 				return;
 			}
@@ -809,7 +810,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				TrashCapability.class);
 
 			if (trashCapability.isInTrash(folder)) {
-				trashCapability.deleteFolder(folder);
+				trashEntryService.deleteEntry(
+					DLFolderConstants.getClassName(), folder.getFolderId());
 
 				return;
 			}

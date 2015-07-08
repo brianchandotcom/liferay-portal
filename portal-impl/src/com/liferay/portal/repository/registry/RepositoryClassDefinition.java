@@ -31,6 +31,7 @@ import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
 import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
+import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 
 import java.util.Locale;
 
@@ -178,9 +179,13 @@ public class RepositoryClassDefinition
 		if (!capabilityRegistry.isCapabilityProvided(
 				ConfigurationCapability.class)) {
 
+			RepositoryServiceAdapter repositoryServiceAdapter =
+				RepositoryServiceAdapter.create(documentRepository);
+
 			capabilityRegistry.addExportedCapability(
 				ConfigurationCapability.class,
-				new ConfigurationCapabilityImpl(documentRepository));
+				new ConfigurationCapabilityImpl(
+					documentRepository, repositoryServiceAdapter));
 		}
 
 		if (!capabilityRegistry.isCapabilityProvided(

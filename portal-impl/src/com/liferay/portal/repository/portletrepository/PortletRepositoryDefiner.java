@@ -25,8 +25,15 @@ import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
+import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
+import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 /**
  * @author Adolfo Pérez
@@ -49,15 +56,37 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
+		DLAppServiceAdapter dlAppServiceAdapter = DLAppServiceAdapter.create(
+			documentRepository);
+
+		DLFileEntryServiceAdapter dlFileEntryServiceAdapter =
+			DLFileEntryServiceAdapter.create(documentRepository);
+
+		DLFolderServiceAdapter dlFolderServiceAdapter =
+			DLFolderServiceAdapter.create(documentRepository);
+
+		RepositoryServiceAdapter repositoryServiceAdapter =
+			RepositoryServiceAdapter.create(documentRepository);
+
 		capabilityRegistry.addExportedCapability(
 			RelatedModelCapability.class,
+
 			new LiferayRelatedModelCapability(
 				new RepositoryEntryConverter(),
 				new RepositoryEntryChecker(documentRepository)));
+
+		TrashCapability trashCapability = new LiferayTrashCapability(
+			dlAppServiceAdapter, DLAppHelperLocalServiceUtil.getService(),
+			dlFileEntryServiceAdapter, dlFolderServiceAdapter,
+			repositoryServiceAdapter, TrashEntryLocalServiceUtil.getService(),
+			TrashVersionLocalServiceUtil.getService());
+
 		capabilityRegistry.addExportedCapability(
-			TrashCapability.class, new LiferayTrashCapability());
+			TrashCapability.class, trashCapability);
+
 		capabilityRegistry.addExportedCapability(
-			WorkflowCapability.class, new MinimalWorkflowCapability());
+			WorkflowCapability.class,
+			new MinimalWorkflowCapability(dlFileEntryServiceAdapter));
 	}
 
 	@Override

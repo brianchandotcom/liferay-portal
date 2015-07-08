@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.trash;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
@@ -71,9 +72,9 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException {
 
-		Repository repository = getRepository(classPK);
+		DocumentRepository documentRepository = getDocumentRepository(classPK);
 
-		List<Folder> folders = repository.getFolders(
+		List<Folder> folders = documentRepository.getFolders(
 			parentContainerModelId, false, start, end, null);
 
 		List<ContainerModel> containerModels = new ArrayList<>(folders.size());
@@ -90,9 +91,10 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId)
 		throws PortalException {
 
-		Repository repository = getRepository(classPK);
+		DocumentRepository documentRepository = getDocumentRepository(classPK);
 
-		return repository.getFoldersCount(parentContainerModelId, false);
+		return documentRepository.getFoldersCount(
+			parentContainerModelId, false);
 	}
 
 	@Override
@@ -144,9 +146,9 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	public int getTrashContainedModelsCount(long classPK)
 		throws PortalException {
 
-		Repository repository = getRepository(classPK);
+		DocumentRepository documentRepository = getDocumentRepository(classPK);
 
-		return repository.getFileEntriesAndFileShortcutsCount(
+		return documentRepository.getFileEntriesAndFileShortcutsCount(
 			classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
@@ -157,10 +159,10 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
-		Repository repository = getRepository(classPK);
+		DocumentRepository documentRepository = getDocumentRepository(classPK);
 
 		List<RepositoryEntry> repositoryEntries =
-			repository.getFileEntriesAndFileShortcuts(
+			documentRepository.getFileEntriesAndFileShortcuts(
 				classPK, WorkflowConstants.STATUS_IN_TRASH, start, end);
 
 		for (RepositoryEntry repositoryEntry : repositoryEntries) {
@@ -204,9 +206,9 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	public int getTrashContainerModelsCount(long classPK)
 		throws PortalException {
 
-		Repository repository = getRepository(classPK);
+		DocumentRepository documentRepository = getDocumentRepository(classPK);
 
-		return repository.getFoldersCount(
+		return documentRepository.getFoldersCount(
 			classPK, WorkflowConstants.STATUS_IN_TRASH, false);
 	}
 
@@ -217,9 +219,9 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
-		Repository repository = getRepository(classPK);
+		DocumentRepository documentRepository = getDocumentRepository(classPK);
 
-		List<Folder> folders = repository.getFolders(
+		List<Folder> folders = documentRepository.getFolders(
 			classPK, WorkflowConstants.STATUS_IN_TRASH, false, start, end,
 			null);
 
@@ -270,7 +272,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 		return (DLFolder)folder.getModel();
 	}
 
-	protected abstract Repository getRepository(long classPK)
+	protected abstract DocumentRepository getDocumentRepository(long classPK)
 		throws PortalException;
 
 }

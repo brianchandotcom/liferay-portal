@@ -484,6 +484,23 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders, int start, int end,
+			OrderByComparator<DLFolder> obc)
+		throws PortalException {
+
+		if (includeMountfolders) {
+			return dlFolderPersistence.findByG_P_H_S(
+				groupId, parentFolderId, false, status, start, end, obc);
+		}
+		else {
+			return dlFolderPersistence.findByG_M_P_H_S(
+				groupId, false, parentFolderId, false, status, start, end, obc);
+		}
+	}
+
+	@Override
+	public List<DLFolder> getFolders(
 		long groupId, long parentFolderId, int start, int end,
 		OrderByComparator<DLFolder> obc) {
 

@@ -226,6 +226,38 @@ public class TrashEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String className)
+		throws com.liferay.portal.security.auth.PrincipalException {
+		try {
+			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
+					"getEntries", _getEntriesParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					className);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.security.auth.PrincipalException) {
+					throw (com.liferay.portal.security.auth.PrincipalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.trash.model.TrashEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void moveEntry(HttpPrincipal httpPrincipal,
 		java.lang.String className, long classPK,
 		long destinationContainerModelId,
@@ -233,7 +265,7 @@ public class TrashEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
-					"moveEntry", _moveEntryParameterTypes6);
+					"moveEntry", _moveEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK, destinationContainerModelId,
@@ -262,7 +294,7 @@ public class TrashEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
-					"restoreEntry", _restoreEntryParameterTypes7);
+					"restoreEntry", _restoreEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -294,7 +326,7 @@ public class TrashEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
-					"restoreEntry", _restoreEntryParameterTypes8);
+					"restoreEntry", _restoreEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					overrideClassPK, name);
@@ -326,7 +358,7 @@ public class TrashEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
-					"restoreEntry", _restoreEntryParameterTypes9);
+					"restoreEntry", _restoreEntryParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK);
@@ -359,7 +391,7 @@ public class TrashEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
-					"restoreEntry", _restoreEntryParameterTypes10);
+					"restoreEntry", _restoreEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK, overrideClassPK, name);
@@ -406,20 +438,23 @@ public class TrashEntryServiceHttp {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _moveEntryParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getEntriesParameterTypes6 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _moveEntryParameterTypes7 = new Class[] {
 			java.lang.String.class, long.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _restoreEntryParameterTypes7 = new Class[] {
+	private static final Class<?>[] _restoreEntryParameterTypes8 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _restoreEntryParameterTypes8 = new Class[] {
+	private static final Class<?>[] _restoreEntryParameterTypes9 = new Class[] {
 			long.class, long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _restoreEntryParameterTypes9 = new Class[] {
+	private static final Class<?>[] _restoreEntryParameterTypes10 = new Class[] {
 			java.lang.String.class, long.class
 		};
-	private static final Class<?>[] _restoreEntryParameterTypes10 = new Class[] {
+	private static final Class<?>[] _restoreEntryParameterTypes11 = new Class[] {
 			java.lang.String.class, long.class, long.class,
 			java.lang.String.class
 		};

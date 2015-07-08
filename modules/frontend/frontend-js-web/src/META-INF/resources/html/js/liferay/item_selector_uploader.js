@@ -1,15 +1,9 @@
 AUI.add(
 	'liferay-item-selector-uploader',
 	function(A) {
-		var Lang = A.Lang;
-
 		var NAME = 'itemselectoruploader';
 
-		var STR_BLANK = '';
-
 		var STR_HOST = 'host';
-
-		var STR_UNDERSCORE = '_';
 
 		var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
 
@@ -89,6 +83,7 @@ AUI.add(
 
 						if (uploadableItem) {
 							instance._uploader.set('uploadURL', uploadableItem.value.uploadURL);
+
 							instance._uploader.set(
 								'postVarsPerFile',
 								{
@@ -116,10 +111,6 @@ AUI.add(
 						var instance = this;
 
 						var host = instance.get(STR_HOST);
-
-						var eventData = {
-							uploadEvent: event
-						};
 
 						host.fire('selectedItemUploadComplete', event.details[0]);
 					},

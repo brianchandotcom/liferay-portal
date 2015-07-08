@@ -1,5 +1,4 @@
 ;(function() {
-	var Browser = Liferay.Browser;
 	var LiferayAUI = Liferay.AUI;
 
 	var COMBINE = LiferayAUI.getCombine();

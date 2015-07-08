@@ -11,8 +11,6 @@ AUI.add(
 
 		var STR_HOST = 'host';
 
-		var STR_UNDERSCORE = '_';
-
 		var TPL_IMAGE_CONTAINER = '<div class="uploading-image-container"></div>';
 
 		var TPL_PROGRESS_BAR = '<div class="progressbar"></div>';

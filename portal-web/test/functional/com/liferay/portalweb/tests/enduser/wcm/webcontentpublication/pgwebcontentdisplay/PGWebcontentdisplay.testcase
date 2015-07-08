@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53627" name="AddPortletWCDSite" priority="4">
+	<command name="AddPortletWCDSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -583,7 +583,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53627" name="ViewAllFileTypesEnabled" priority="4">
+	<command name="ViewAllFileTypesEnabled" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -625,7 +625,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53627" name="ViewAllSettingsEnabledWCDConfiguration" priority="4">
+	<command name="ViewAllSettingsEnabledWCDConfiguration" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

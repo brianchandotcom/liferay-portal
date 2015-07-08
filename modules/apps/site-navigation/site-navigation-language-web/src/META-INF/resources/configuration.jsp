@@ -40,7 +40,7 @@
 
 	<aui:fieldset>
 		<div class="display-template">
-			<liferay-ui:template-selector
+			<liferay-ddm:template-selector
 				className="<%= LanguageEntry.class.getName() %>"
 				displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= languageDisplayContext.getDisplayStyleGroupId() %>"

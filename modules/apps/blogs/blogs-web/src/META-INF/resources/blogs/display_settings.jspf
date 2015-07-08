@@ -43,7 +43,7 @@
 		displayStyles.add(BlogsUtil.DISPLAY_STYLE_TITLE);
 		%>
 
-		<liferay-ui:template-selector
+		<liferay-ddm:template-selector
 			className="<%= BlogsEntry.class.getName() %>"
 			displayStyle="<%= blogsPortletInstanceConfiguration.displayStyle() %>"
 			displayStyleGroupId="<%= blogsPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>"

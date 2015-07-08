@@ -66,7 +66,7 @@
 						displayStyles.add("cloud");
 						%>
 
-						<liferay-ui:template-selector
+						<liferay-ddm:template-selector
 							className="<%= AssetTag.class.getName() %>"
 							displayStyle="<%= displayStyle %>"
 							displayStyleGroupId="<%= displayStyleGroupId %>"

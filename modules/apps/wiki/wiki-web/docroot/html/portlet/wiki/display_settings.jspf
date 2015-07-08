@@ -26,7 +26,7 @@
 
 <aui:fieldset>
 	<div class="display-template">
-		<liferay-ui:template-selector
+		<liferay-ddm:template-selector
 			className="<%= WikiPage.class.getName() %>"
 			displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>"
 			displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>"

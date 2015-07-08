@@ -28,7 +28,7 @@
 
 			<aui:fieldset>
 				<div class="display-template">
-					<liferay-ui:template-selector
+					<liferay-ddm:template-selector
 						className="<%= BreadcrumbEntry.class.getName() %>"
 						displayStyle="<%= breadcrumbDisplayContext.getDisplayStyle() %>"
 						displayStyleGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>"

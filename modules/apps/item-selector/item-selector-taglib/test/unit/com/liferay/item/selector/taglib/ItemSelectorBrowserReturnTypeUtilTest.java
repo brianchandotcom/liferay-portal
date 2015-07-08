@@ -19,8 +19,8 @@ import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -79,15 +79,13 @@ public class ItemSelectorBrowserReturnTypeUtilTest {
 		Assert.assertEquals(3, _itemSelectorReturnTypeSet.size());
 	}
 
-	protected Set<ItemSelectorReturnType> populateItemSelectorReturnTypesSet() {
+	protected void populateItemSelectorReturnTypesSet() {
 		_itemSelectorReturnTypeSet.add(new Base64ItemSelectorReturnType());
 		_itemSelectorReturnTypeSet.add(new URLItemSelectorReturnType());
 		_itemSelectorReturnTypeSet.add(new UploadableFileReturnType());
-
-		return _itemSelectorReturnTypeSet;
 	}
 
-	private final Set<ItemSelectorReturnType> _itemSelectorReturnTypeSet =
-		new HashSet<>();
+	private final List<ItemSelectorReturnType> _itemSelectorReturnTypeSet =
+		new ArrayList<>();
 
 }

@@ -306,29 +306,6 @@ AUI.add(
 					return new PortletURL(PortletURL.ACTION_PHASE);
 				},
 
-				createPermissionURL: function(portletResource, modelResource, modelResourceDescription, resourcePrimKey) {
-					var redirect = location.href;
-
-					var portletURL = PortletURL.createRenderURL();
-
-					portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
-					portletURL.setParameter('mvcPath', '/html/portlet/portlet_configuration/edit_permissions.jsp');
-					portletURL.setParameter('redirect', redirect);
-
-					if (!themeDisplay.isStateMaximized()) {
-						portletURL.setParameter('returnToFullPageURL', redirect);
-					}
-
-					portletURL.setParameter('portletResource', portletResource);
-					portletURL.setParameter('modelResource', modelResource);
-					portletURL.setParameter('modelResourceDescription', modelResourceDescription);
-					portletURL.setParameter('resourcePrimKey', resourcePrimKey);
-					portletURL.setPortletId(Liferay.PortletKeys.PORTLET_CONFIGURATION);
-					portletURL.setWindowState('maximized');
-
-					return portletURL;
-				},
-
 				createRenderURL: function() {
 					return new PortletURL(PortletURL.RENDER_PHASE);
 				},

@@ -9,13 +9,19 @@ AUI.add(
 
 		var CSS_FIELD_CONTENT_TOOLBAR = A.getClassName('form', 'builder', 'field', 'content', 'toolbar');
 
-		var CSS_TOOLBAR_CONTAINER = A.getClassName('form', 'builder', 'field', 'toolbar', 'container');
+		var CSS_FIELD_REPEATABLE_TOOLBAR = A.getClassName('lfr', 'ddm', 'form', 'field', 'repeatable', 'toolbar');
 
-		var TPL_SETTINGS_CONTAINER = '<form action="javascript:;" class="hide"></form>';
+		var CSS_FIELD_TOOLBAR_CONTAINER = A.getClassName('form', 'builder', 'field', 'toolbar', 'container');
+
+		var CSS_FIELD_WRAPPER = A.getClassName('field', 'wrapper');
 
 		var FormBuilderFieldSupport = function() {};
 
 		FormBuilderFieldSupport.ATTRS = {
+			builder: {
+				value: null
+			},
+
 			content: {
 				getter: function() {
 					var instance = this;
@@ -26,10 +32,6 @@ AUI.add(
 
 			settingsForm: {
 				valueFn: '_valueSettingsForm'
-			},
-
-			settingsModal: {
-				valueFn: '_valueSettingsModal'
 			}
 		};
 
@@ -37,46 +39,21 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				var container = instance.get('container');
-
-				container.setData('field-instance', instance);
-
-				instance.after(instance._afterRenderUI, instance, 'renderUI');
+				instance._eventHandlers.push(
+					instance.after(instance._renderFormBuilderField, instance, 'render')
+				);
 			},
 
 			destructor: function() {
 				var instance = this;
 
 				instance.get('settingsForm').destroy();
-				instance.get('settingsModal').destroy();
 			},
 
-			showSettingsPanel: function(fieldTypeName) {
+			getSettings: function() {
 				var instance = this;
 
-				instance.set('fieldType', fieldTypeName);
-
-				instance._renderSettingsModal();
-			},
-
-			_afterRenderUI: function() {
-				var instance = this;
-
-				var container = instance.get('container');
-
-				container.addClass(CSS_FIELD);
-
-				var wrapper = container.one('.field-wrapper');
-
-				wrapper.append('<div class="' + CSS_TOOLBAR_CONTAINER + '"></div>');
-
-				wrapper.addClass(CSS_FIELD_CONTENT_TOOLBAR);
-			},
-
-			_getDefinitionFromSettingsForm: function() {
-				var instance = this;
-
-				var definition = {};
+				var settings = {};
 
 				var settingsForm = instance.get('settingsForm');
 
@@ -85,78 +62,32 @@ AUI.add(
 				AArray.each(
 					fieldSettingsJSON.fields,
 					function(item) {
-						definition[item.name] = item.value;
+						settings[item.name] = item.value;
 					}
 				);
 
-				definition.type = instance.get('fieldType');
+				settings.type = instance.get('type');
+				settings.visibilityExpression = 'true';
 
-				return definition;
+				return settings;
 			},
 
-			_getSettingsFormValuesFromDefinition: function() {
-				var instance = this;
-
-				var values = {
-					fields: []
-				};
-
-				A.each(
-					instance.get('definition'),
-					function(item, index) {
-						values.fields.push(
-							{
-								name: index,
-								value: item
-							}
-						);
-					}
-				);
-
-				return values;
-			},
-
-			_onSubmitSettings: function(event) {
-				var instance = this;
-
-				event.preventDefault();
-
-				instance._saveSettings();
-
-				var settingsModal = instance.get('settingsModal');
-
-				settingsModal.hide();
-			},
-
-			_renderSettingsModal: function() {
-				var instance = this;
-
-				var settingsModal = instance.get('settingsModal');
-
-				var settingsForm = instance.get('settingsForm');
-
-				var settingsFormContainer = settingsForm.get('container');
-
-				settingsFormContainer.show();
-
-				settingsModal.render();
-				settingsModal.show();
-
-				settingsModal.fillHeight(settingsModal.bodyNode);
-
-				settingsModal.align();
-
-				Liferay.Util.focusFormField(settingsFormContainer.one('input'));
-			},
-
-			_saveSettings: function() {
+			renderSettingsPanel: function(bodyNode) {
 				var instance = this;
 
 				var settingsForm = instance.get('settingsForm');
 
-				instance.set('definition', instance._getDefinitionFromSettingsForm());
-				instance.set('form', settingsForm);
-				instance.set('parent', settingsForm);
+				settingsForm.set('container', bodyNode);
+
+				instance._updateSettingsFormValues();
+			},
+
+			saveSettings: function() {
+				var instance = this;
+
+				instance.setAttrs(instance.getSettings());
+
+				instance.render();
 
 				instance.fire(
 					'field:saveSettings',
@@ -164,78 +95,72 @@ AUI.add(
 						field: instance
 					}
 				);
+			},
 
-				instance.render();
+			validateSettings: function() {
+				var instance = this;
+
+				var builder = instance.get('builder');
+
+				var settingsForm = instance.get('settingsForm');
+
+				var nameSettingsField = settingsForm.getField('name');
+
+				var field = builder.getField(nameSettingsField.getValue());
+
+				var hasField = !!field && field !== instance;
+
+				nameSettingsField.get('container').toggleClass('has-error', hasField);
+
+				return !hasField;
+			},
+
+			_renderFormBuilderField: function() {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				container.addClass(CSS_FIELD);
+
+				container.setData('field-instance', instance);
+
+				var wrapper = container.one('.' + CSS_FIELD_WRAPPER);
+
+				wrapper.append('<div class="' + CSS_FIELD_TOOLBAR_CONTAINER + '"></div>');
+
+				wrapper.addClass(CSS_FIELD_CONTENT_TOOLBAR);
+
+				if (instance.get('repeatable')) {
+					var toolbar = container.one('.' + CSS_FIELD_REPEATABLE_TOOLBAR);
+
+					toolbar.hide();
+				}
+			},
+
+			_updateSettingsFormValues: function() {
+				var instance = this;
+
+				var settingsForm = instance.get('settingsForm');
+
+				A.each(
+					settingsForm.get('fields'),
+					function(item, index) {
+						item.set('value', instance.get(item.get('name')));
+					}
+				);
 			},
 
 			_valueSettingsForm: function() {
 				var instance = this;
 
-				var container = A.Node.create(TPL_SETTINGS_CONTAINER);
-
-				var fieldType = FieldTypes.get(instance.get('fieldType'));
-
-				container.append('<button style="display: none;" type="submit" />');
-
-				container.attr('id', A.guid());
-
-				container.on('submit', A.bind('_onSubmitSettings', instance));
-
-				Liferay.Form.register(
-					{
-						id: container.attr('id')
-					}
-				);
+				var fieldType = FieldTypes.get(instance.get('type'));
 
 				return new Liferay.DDM.Renderer.Form(
 					{
-						container: container,
 						definition: fieldType.get('settings'),
-						portletNamespace: instance.get('portletNamespace'),
-						values: instance._getSettingsFormValuesFromDefinition()
+						portletNamespace: instance.get('portletNamespace')
 					}
 				);
-			},
-
-			_valueSettingsModal: function() {
-				var instance = this;
-
-				var settingsForm = instance.get('settingsForm');
-
-				var settingsModal = new A.Modal(
-					{
-						bodyContent: settingsForm.get('container'),
-						centered: true,
-						destroyOnHide: false,
-						draggable: false,
-						height: 500,
-						modal: true,
-						resizable: false,
-						toolbars: {},
-						visible: false,
-						zIndex: Liferay.zIndex.WINDOW
-					}
-				);
-
-				settingsModal.addToolbar(
-					[
-						{
-							label: Liferay.Language.get('cancel'),
-							on: {
-								click: A.bind('hide', settingsModal)
-							}
-						},
-						{
-							label: Liferay.Language.get('save'),
-							on: {
-								click: A.bind('_onSubmitSettings', instance)
-							},
-							primary: true
-						}
-					]
-				);
-
-				return settingsModal;
 			}
 		};
 

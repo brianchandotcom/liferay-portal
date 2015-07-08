@@ -46,7 +46,7 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 	</div>
 
 	<div class="col-md-12">
-		<aui:button cssClass="web-content-selector" name="webContentSelector" value="select" />
+		<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
 	</div>
 </div>
 

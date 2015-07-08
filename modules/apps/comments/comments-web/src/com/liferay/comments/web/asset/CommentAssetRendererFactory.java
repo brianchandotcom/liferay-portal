@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
 import javax.portlet.PortletRequest;
@@ -33,9 +34,19 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + CommentsPortletKeys.COMMENTS},
+	service = AssetRendererFactory.class
+)
 public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "discussion";
@@ -61,6 +72,7 @@ public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 			workflowableComment);
 
 		commentAssetRenderer.setAssetRendererType(type);
+		commentAssetRenderer.setServletContext(_servletContext);
 
 		return commentAssetRenderer;
 	}
@@ -119,6 +131,16 @@ public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.comments.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	private static final boolean _SELECTABLE = false;
+
+	private ServletContext _servletContext;
 
 }

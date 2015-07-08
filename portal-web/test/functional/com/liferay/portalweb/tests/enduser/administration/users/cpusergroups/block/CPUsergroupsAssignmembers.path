@@ -121,7 +121,16 @@
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>USER_TABLE_GENERIC_SCREEN_NAME_1</td>
+	<td>xpath=(//tr/td[3])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_GENERIC_SCREEN_NAME_2</td>
+	<td>xpath=(//tr/td[3])[2]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

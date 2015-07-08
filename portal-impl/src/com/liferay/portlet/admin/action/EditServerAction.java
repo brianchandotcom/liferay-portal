@@ -129,7 +129,8 @@ public class EditServerAction extends PortletAction {
 
 		if (!permissionChecker.isOmniadmin()) {
 			SessionErrors.add(
-				actionRequest, PrincipalException.class.getName());
+				actionRequest,
+				PrincipalException.MustBeOmniadmin.class.getName());
 
 			setForward(actionRequest, "portlet.admin.error");
 

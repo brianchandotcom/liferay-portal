@@ -57,7 +57,8 @@ public class EditSessionAction extends PortletAction {
 
 		if (!permissionChecker.isCompanyAdmin()) {
 			SessionErrors.add(
-				actionRequest, PrincipalException.class.getName());
+				actionRequest,
+				PrincipalException.MustBeCompanyAdmin.class.getName());
 
 			setForward(actionRequest, "portlet.monitoring.error");
 

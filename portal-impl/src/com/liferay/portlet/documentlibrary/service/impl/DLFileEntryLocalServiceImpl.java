@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dynamicdatamapping.storage.StorageEngineManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -107,7 +108,6 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.dynamicdatamapping.storage.StorageEngineManagerUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoRow;
@@ -2261,8 +2261,9 @@ public class DLFileEntryLocalServiceImpl
 				continue;
 			}
 
-			DDMFormValues ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
-				dlFileEntryMetadata.getDDMStorageId());
+			DDMFormValues ddmFormValues =
+				StorageEngineManagerUtil.getDDMFormValues(
+					dlFileEntryMetadata.getDDMStorageId());
 
 			ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
 		}

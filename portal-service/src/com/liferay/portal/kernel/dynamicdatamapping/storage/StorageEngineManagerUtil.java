@@ -64,25 +64,22 @@ public class StorageEngineManagerUtil {
 			serviceContext);
 	}
 
-	private static StorageEngineManager _getStorageEngineManager() {
-		
-		StorageEngineManager manager = _instance._serviceTracker.getService();
-		
-		if (manager == null) {
-			manager = _getDummyStorageEngineManager();
-		} 
-		
-		return manager;
-	}
-	
-	
-	private static StorageEngineManager _getDummyStorageEngineManager(){
-		
-		if(_dummyImpl == null) {
+	private static StorageEngineManager _getDummyStorageEngineManager() {
+		if (_dummyImpl == null) {
 			_dummyImpl = new DummyStorageEngineManagerImpl();
 		}
-		
+
 		return _dummyImpl;
+	}
+
+	private static StorageEngineManager _getStorageEngineManager() {
+		StorageEngineManager manager = _instance._serviceTracker.getService();
+
+		if (manager == null) {
+			manager = _getDummyStorageEngineManager();
+		}
+
+		return manager;
 	}
 
 	private StorageEngineManagerUtil() {

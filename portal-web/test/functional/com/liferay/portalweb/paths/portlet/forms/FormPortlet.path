@@ -13,6 +13,11 @@
 	<td>//span[contains(@class,'taglib-text') and contains(.,'Select Form')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FORM_PAGE</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'${key_formPageName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

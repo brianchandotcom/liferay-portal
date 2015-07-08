@@ -41,7 +41,7 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE_ADD</td>
-	<td>//a[contains(@class,'form-builder-pages-add-page')]</td>
+	<td>//a[contains(@class,'add-page')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,4 +1,10 @@
 <definition>
+	<command name="gotoFormPage">
+		<var name="key_formPageName" value="${formPageName}" />
+
+		<execute function="AssertClick" locator1="FormPortlet#FORM_PAGE" value1="${formPageName}" />
+	</command>
+
 	<command name="send">
 		<execute function="AssertClick" locator1="Button#SEND" value1="Send" />
 

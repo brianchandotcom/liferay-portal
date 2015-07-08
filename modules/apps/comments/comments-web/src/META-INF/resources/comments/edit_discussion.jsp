@@ -49,11 +49,9 @@ if (comment instanceof WorkflowableComment) {
 	title='<%= (comment == null) ? "new-message" : "edit-message" %>'
 />
 
-<portlet:actionURL var="editMessageURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_discussion" />
-</portlet:actionURL>
+<portlet:actionURL name="invokeTaglibDiscussion" var="editCommentURL" />
 
-<aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= editCommentURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commentId" type="hidden" value="<%= commentId %>" />

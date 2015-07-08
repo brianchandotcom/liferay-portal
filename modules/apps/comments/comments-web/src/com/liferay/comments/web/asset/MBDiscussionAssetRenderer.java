@@ -14,6 +14,7 @@
 
 package com.liferay.comments.web.asset;
 
+import com.liferay.comments.web.constants.CommentsPortletKeys;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -81,8 +81,7 @@ public class MBDiscussionAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			return "/html/portlet/message_boards/asset/discussion_" +
-				template + ".jsp";
+			return "/comments/asset/discussion_" + template + ".jsp";
 		}
 		else {
 			return null;
@@ -148,11 +147,10 @@ public class MBDiscussionAssetRenderer
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL editPortletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.MESSAGE_BOARDS,
+			request, CommentsPortletKeys.COMMENTS,
 			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
 
-		editPortletURL.setParameter(
-			"struts_action", "/message_boards/edit_discussion");
+		editPortletURL.setParameter("mvcPath", "/comments/edit_discussion.jsp");
 		editPortletURL.setParameter(
 			"commentId", String.valueOf(_workflowableComment.getCommentId()));
 

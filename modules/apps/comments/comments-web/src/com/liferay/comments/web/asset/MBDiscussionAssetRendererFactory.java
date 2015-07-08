@@ -14,6 +14,7 @@
 
 package com.liferay.comments.web.asset;
 
+import com.liferay.comments.web.constants.CommentsPortletKeys;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
@@ -87,7 +87,7 @@ public class MBDiscussionAssetRendererFactory extends BaseAssetRendererFactory {
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
+				CommentsPortletKeys.COMMENTS, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);

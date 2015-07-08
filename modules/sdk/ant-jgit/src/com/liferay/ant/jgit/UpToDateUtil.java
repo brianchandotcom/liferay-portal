@@ -23,8 +23,10 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.StatusCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.MaxCountRevFilter;
 import org.eclipse.jgit.submodule.SubmoduleWalk;
@@ -49,29 +51,40 @@ public class UpToDateUtil {
 
 		RevWalk revWalk = new RevWalk(repository);
 
-		revWalk.setRetainBody(false);
+		try {
+			RevCommit sinceRevCommit = null;
 
-		revWalk.markStart(
-			revWalk.parseCommit(repository.resolve(Constants.HEAD)));
-		revWalk.markUninteresting(
-			revWalk.parseCommit(repository.resolve(since)));
+			try {
+				sinceRevCommit = revWalk.parseCommit(repository.resolve(since));
+			}
+			catch (MissingObjectException moe) {
+				return true;
+			}
 
-		revWalk.setRevFilter(MaxCountRevFilter.create(2));
+			revWalk.setRetainBody(false);
 
-		revWalk.setTreeFilter(
-			AndTreeFilter.create(
-				PathFilter.create(path), TreeFilter.ANY_DIFF
-			));
+			revWalk.markStart(
+				revWalk.parseCommit(repository.resolve(Constants.HEAD)));
+			revWalk.markUninteresting(sinceRevCommit);
 
-		boolean changedSince = true;
+			revWalk.setRevFilter(MaxCountRevFilter.create(2));
 
-		if ((revWalk.next() != null) && (revWalk.next() == null)) {
-			changedSince = false;
+			revWalk.setTreeFilter(
+				AndTreeFilter.create(
+					PathFilter.create(path), TreeFilter.ANY_DIFF
+				));
+
+			boolean changedSince = true;
+
+			if ((revWalk.next() != null) && (revWalk.next() == null)) {
+				changedSince = false;
+			}
+
+			return changedSince;
 		}
-
-		revWalk.dispose();
-
-		return changedSince;
+		finally {
+			revWalk.dispose();
+		}
 	}
 
 	public static boolean isClean(Git git, String path) throws GitAPIException {

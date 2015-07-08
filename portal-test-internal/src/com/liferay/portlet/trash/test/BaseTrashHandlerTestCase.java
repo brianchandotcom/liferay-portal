@@ -46,7 +46,6 @@ import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -2174,7 +2173,8 @@ public abstract class BaseTrashHandlerTestCase {
 				(Long)parentBaseModel.getPrimaryKeyObj());
 
 		List<? extends WorkflowedModel> childrenWorkflowedModels =
-			getChildrenWorkflowedModels(parentBaseModel);
+			whenIsRestorableParentBaseModelFromTrash.
+				getChildrenWorkflowedModels(parentBaseModel);
 
 		for (int i = 1; i <= childrenWorkflowedModels.size(); i++) {
 			WorkflowedModel childrenWorkflowedModel =
@@ -2558,13 +2558,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 	protected String getBaseModelName(ClassedModel classedModel) {
 		return StringPool.BLANK;
-	}
-
-	protected List<? extends WorkflowedModel> getChildrenWorkflowedModels(
-			BaseModel<?> parentBaseModel)
-		throws Exception {
-
-		return Collections.emptyList();
 	}
 
 	protected long getDeletionSystemEventCount(

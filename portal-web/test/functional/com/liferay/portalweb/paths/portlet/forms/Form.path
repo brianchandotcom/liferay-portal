@@ -38,6 +38,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PAGE-->
+<tr>
+	<td>PAGE_ADD</td>
+	<td>//a[contains(@class,'form-builder-pages-add-page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADD_COLUMN-->
 <tr>
 	<td>ADD_COLUMN_LEFT</td>

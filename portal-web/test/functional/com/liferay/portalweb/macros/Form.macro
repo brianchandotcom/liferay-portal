@@ -2,6 +2,10 @@
 	<var name="formDescription" value="Created Form Name" />
 	<var name="formName" value="Created Form Name" />
 
+	<command name="addPage">
+		<execute function="Click" locator1="Form#PAGE_ADD" />
+	</command>
+
 	<command name="editDescription">
 		<execute function="Type#typeAceEditor" locator1="Form#DESCRIPTION_FIELD" value1="${formDescription}" />
 	</command>

@@ -606,12 +606,17 @@ public class JournalArticleIndexer
 			return;
 		}
 
-		if (allVersions || !JournalServiceConfigurationValues.
-				JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
+		if (allVersions) {
 			reindexArticleVersions(article);
 		}
 		else {
+			if (!JournalServiceConfigurationValues.
+					JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+
+				article = fetchLatestIndexableArticleVersion(
+					article.getResourcePrimKey());
+			}
+
 			SearchEngineUtil.updateDocument(
 				getSearchEngineId(), article.getCompanyId(),
 				getDocument(article), isCommitImmediately());

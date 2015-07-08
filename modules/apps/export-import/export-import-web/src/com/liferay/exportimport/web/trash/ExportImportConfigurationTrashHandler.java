@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.trash;
+package com.liferay.exportimport.web.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
@@ -30,12 +30,17 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Levente Hudák
  */
 @Component(
+	immediate = true,
 	property = {
 		"model.class.name=com.liferay.portlet.exportimport.model.ExportImportConfiguration"
 	},
@@ -79,8 +84,15 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			ExportImportConfigurationLocalServiceUtil.
 				getExportImportConfiguration(classPK);
 
-		return new ExportImportConfigurationTrashRenderer(
-			exportImportConfiguration);
+		ExportImportConfigurationTrashRenderer
+			exportImportConfigurationTrashRenderer =
+				new ExportImportConfigurationTrashRenderer(
+					exportImportConfiguration);
+
+		exportImportConfigurationTrashRenderer.setServletContext(
+			_servletContext);
+
+		return exportImportConfigurationTrashRenderer;
 	}
 
 	@Override
@@ -100,6 +112,19 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			restoreExportImportConfigurationFromTrash(userId, classPK);
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.exportimport.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
+	@Activate
+	protected void activate() {
+		System.out.println(_servletContext);
+	}
+
 	@Override
 	protected boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
@@ -114,5 +139,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
 		return GroupPermissionUtil.contains(permissionChecker, group, actionId);
 	}
+
+	protected ServletContext _servletContext;
 
 }

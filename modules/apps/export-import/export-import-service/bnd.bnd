@@ -7,6 +7,5 @@ Export-Package:\
 	com.liferay.exportimport.messaging,\
 	com.liferay.exportimport.search,\
 	com.liferay.exportimport.staging,\
-	com.liferay.exportimport.trash,\
 	com.liferay.exportimport.xstream
 Include-Resource: classes

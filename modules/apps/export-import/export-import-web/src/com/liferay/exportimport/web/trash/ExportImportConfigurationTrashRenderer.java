@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.trash;
+package com.liferay.exportimport.web.trash;
 
 import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -59,7 +59,7 @@ public class ExportImportConfigurationTrashRenderer
 
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
-		return "/html/portlet/export_import/view_configuration.jsp";
+		return "/view_configuration.jsp";
 	}
 
 	@Override

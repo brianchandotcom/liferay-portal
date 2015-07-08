@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -225,7 +225,7 @@ public class AssetCategoryLocalServiceImpl
 
 				final long groupId = category.getGroupId();
 
-				TransactionCommitCallbackRegistryUtil.registerCallback(
+				TransactionCommitCallbackUtil.registerCallback(
 					new Callable<Void>() {
 
 						@Override
@@ -286,7 +286,7 @@ public class AssetCategoryLocalServiceImpl
 		if (!categories.isEmpty() && !skipRebuildTree) {
 			final long groupId = category.getGroupId();
 
-			TransactionCommitCallbackRegistryUtil.registerCallback(
+			TransactionCommitCallbackUtil.registerCallback(
 				new Callable<Void>() {
 
 					@Override

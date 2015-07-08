@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
@@ -502,7 +502,7 @@ public class UserNotificationEventLocalServiceImpl
 	protected void sendPushNotification(
 		final NotificationEvent notificationEvent) {
 
-		TransactionCommitCallbackRegistryUtil.registerCallback(
+		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {
 
 				@Override

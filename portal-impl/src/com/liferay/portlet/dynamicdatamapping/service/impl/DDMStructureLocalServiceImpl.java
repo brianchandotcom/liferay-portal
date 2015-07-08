@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
@@ -1640,7 +1640,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected void syncStructureTemplatesFields(final DDMStructure structure) {
-		TransactionCommitCallbackRegistryUtil.registerCallback(
+		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {
 
 				@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.store.s3.test.activator.configuration;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.util.Dictionary;
@@ -34,6 +36,14 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
+		String dlStoreImpl = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
+
+		String s3StoreClassName = "com.liferay.portal.store.s3.S3Store";
+
+		if (!dlStoreImpl.equals(s3StoreClassName)) {
+			return;
+		}
+
 		ServiceReference<ConfigurationAdmin> serviceReference =
 			bundleContext.getServiceReference(ConfigurationAdmin.class);
 

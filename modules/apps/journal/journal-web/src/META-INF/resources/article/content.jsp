@@ -37,10 +37,10 @@ if (article != null) {
 	String content = article.getContent();
 
 	if (Validator.isNotNull(content)) {
-		Fields fields = _getJournalConverter().getDDMFields(ddmStructure, content);
+		Fields fields = JournalConverterUtil.getDDMFields(ddmStructure, content);
 
 		if (fields != null) {
-             ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+			 ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 		}
 	}
 }

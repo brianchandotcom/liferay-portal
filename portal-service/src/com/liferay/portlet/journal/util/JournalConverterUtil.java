@@ -29,31 +29,31 @@ import java.util.Locale;
 public class JournalConverterUtil {
 
 	public static String getDDMXSD(String journalXSD) throws Exception {
-		return _getJournalConverterManager().getDDMXSD(
+		JournalConverterManager journalConverterManager =
+			_getJournalConverterManager();
+
+		return journalConverterManager.getDDMXSD(
 			journalXSD, LocaleUtil.getSiteDefault());
 	}
 
 	public static String getDDMXSD(String journalXSD, Locale defaultLocale)
 		throws Exception {
 
-		return _getJournalConverterManager().getDDMXSD(
-			journalXSD, defaultLocale);
+		JournalConverterManager journalConverterManager =
+			_getJournalConverterManager();
+
+		return journalConverterManager.getDDMXSD(journalXSD, defaultLocale);
 	}
 
 	private static JournalConverterManager _getJournalConverterManager() {
-		JournalConverterManager manager =
+		JournalConverterManager journalConverterManager =
 			_instance._serviceTracker.getService();
 
-		if (manager != null) {
-			return manager;
+		if (journalConverterManager == null) {
+			return _dummyJournalConverterManagerImpl;
 		}
-		else {
-			if (_dummyImpl == null) {
-				_dummyImpl = new DummyJournalConverterManagerImpl();
-			}
 
-			return _dummyImpl;
-		}
+		return journalConverterManager;
 	}
 
 	private JournalConverterUtil() {
@@ -67,10 +67,11 @@ public class JournalConverterUtil {
 	private static final JournalConverterUtil _instance =
 		new JournalConverterUtil();
 
-	private static DummyJournalConverterManagerImpl _dummyImpl;
+	private static final DummyJournalConverterManagerImpl
+		_dummyJournalConverterManagerImpl =
+			new DummyJournalConverterManagerImpl();
 
-	private final
-		ServiceTracker<JournalConverterManager,
-			JournalConverterManager> _serviceTracker;
+	private final ServiceTracker
+		<JournalConverterManager, JournalConverterManager> _serviceTracker;
 
 }

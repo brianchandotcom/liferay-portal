@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.util.internal;
+package com.liferay.journal.internal;
 
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portlet.journal.util.JournalConverterManager;

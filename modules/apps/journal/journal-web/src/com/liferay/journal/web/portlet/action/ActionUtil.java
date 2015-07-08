@@ -25,7 +25,7 @@ import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFeedServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.journal.util.JournalConverter;
+import com.liferay.journal.util.JournalConverterUtil;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.portlet.JournalPortlet;
@@ -64,7 +64,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -384,7 +383,7 @@ public class ActionUtil {
 		Fields fields = DDMUtil.getFields(
 			ddmStructure.getStructureId(), serviceContext);
 
-		String content = getJournalConverter().getContent(ddmStructure, fields);
+		String content = JournalConverterUtil.getContent(ddmStructure, fields);
 
 		Map<String, byte[]> images = getImages(content, fields);
 
@@ -602,10 +601,6 @@ public class ActionUtil {
 		}
 
 		return images;
-	}
-
-	protected static JournalConverter getJournalConverter() {
-		return RegistryUtil.getRegistry().getService(JournalConverter.class);
 	}
 
 	protected static String getLanguageId(

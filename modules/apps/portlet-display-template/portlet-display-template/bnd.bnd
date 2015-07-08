@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portlet Display Template
+Bundle-SymbolicName: com.liferay.portlet.display.template
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portlet.display.template
+Include-Resource: classes

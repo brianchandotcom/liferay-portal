@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.service.internal;
+package com.liferay.portlet.display.template.internal;
 
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portlet.display.template.service.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
@@ -52,6 +52,11 @@ public class PortletDisplayTemplateManagerImpl
 	}
 
 	@Override
+	public String getDisplayStyle(String ddmTemplateKey) {
+		return _portletDisplayTemplate.getDisplayStyle(ddmTemplateKey);
+	}
+
+	@Override
 	public List<TemplateHandler> getPortletDisplayTemplateHandlers() {
 		return _portletDisplayTemplate.getPortletDisplayTemplateHandlers();
 	}
@@ -61,11 +66,6 @@ public class PortletDisplayTemplateManagerImpl
 		String language) {
 
 		return _portletDisplayTemplate.getTemplateVariableGroups(language);
-	}
-	
-	@Override
-	public String getDisplayStyle(String ddmTemplateKey) {
-		return _portletDisplayTemplate.getDisplayStyle(ddmTemplateKey);
 	}
 
 	@Override

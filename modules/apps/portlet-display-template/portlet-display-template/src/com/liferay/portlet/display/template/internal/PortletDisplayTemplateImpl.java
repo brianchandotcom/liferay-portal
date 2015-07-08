@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.service.internal;
+package com.liferay.portlet.display.template.internal;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,8 +39,8 @@ import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
-import com.liferay.portlet.display.template.service.PortletDisplayTemplate;
-import com.liferay.portlet.display.template.service.PortletDisplayTemplateConstants;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;

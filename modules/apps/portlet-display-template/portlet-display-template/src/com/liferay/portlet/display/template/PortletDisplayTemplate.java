@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.service;
+package com.liferay.portlet.display.template;
 
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;

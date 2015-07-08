@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.service;
+package com.liferay.portlet.display.template;
 
 import com.liferay.portal.kernel.template.TemplateConstants;
 
@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.template.TemplateConstants;
  * @author Eduardo García
  */
 public class PortletDisplayTemplateConstants {
-	
+
 	public static final String CURRENT_URL = "currentURL";
-	
+
 	public static final String DISPLAY_STYLE_PREFIX = "ddmTemplate_";
 
 	public static final String ENTRIES = "entries";

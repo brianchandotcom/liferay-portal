@@ -14,15 +14,18 @@
 
 package com.liferay.comments.web.asset;
 
+import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -32,10 +35,14 @@ import javax.portlet.WindowStateException;
 /**
  * @author Jorge Ferrer
  */
-public class MBDiscussionAssetRendererFactory
-	extends MBMessageAssetRendererFactory {
+public class MBDiscussionAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "discussion";
+
+	public MBDiscussionAssetRendererFactory() {
+		setCategorizable(false);
+		setLinkable(true);
+	}
 
 	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)
@@ -53,7 +60,12 @@ public class MBDiscussionAssetRendererFactory
 
 	@Override
 	public String getClassName() {
-		return MBDiscussion.class.getName();
+		return CommentConstants.getDiscussionClassName();
+	}
+
+	@Override
+	public String getIconCssClass() {
+		return "icon-comments";
 	}
 
 	@Override
@@ -80,8 +92,22 @@ public class MBDiscussionAssetRendererFactory
 	}
 
 	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws Exception {
+
+		return MBMessagePermission.contains(
+			permissionChecker, classPK, actionId);
+	}
+
+	@Override
 	public boolean isSelectable() {
 		return _SELECTABLE;
+	}
+
+	@Override
+	protected String getIconPath(ThemeDisplay themeDisplay) {
+		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
 
 	private static final boolean _SELECTABLE = false;

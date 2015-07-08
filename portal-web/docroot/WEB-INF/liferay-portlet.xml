@@ -870,7 +870,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>196</portlet-name>
-		<icon>/html/icons/page_comments.png</icon>
 		<user-notification-definitions>com/liferay/portlet/comments/comments-user-notification-definitions.xml</user-notification-definitions>
 		<user-notification-handler-class>com.liferay.portlet.comments.notifications.CommentsUserNotificationHandler</user-notification-handler-class>
 	</portlet>

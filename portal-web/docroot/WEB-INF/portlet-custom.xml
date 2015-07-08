@@ -1257,25 +1257,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>196</portlet-name>
-		<display-name>Comments</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>197</portlet-name>
 		<display-name>Shopping Admin</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

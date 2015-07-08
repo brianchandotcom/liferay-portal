@@ -53,10 +53,6 @@ public class POPNotificationsMessageListener
 
 			Message[] messages = _inboxFolder.getMessages();
 
-			if (ArrayUtil.isEmpty(messages)) {
-				return;
-			}
-
 			try {
 				notifyMessageListeners(messages);
 			}
@@ -169,6 +165,10 @@ public class POPNotificationsMessageListener
 	}
 
 	protected void notifyMessageListeners(Message[] messages) throws Exception {
+		if (ArrayUtil.isEmpty(messages)) {
+			return;
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Messages " + messages.length);
 		}

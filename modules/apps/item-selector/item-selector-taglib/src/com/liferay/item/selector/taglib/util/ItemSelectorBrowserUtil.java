@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -32,6 +33,8 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -49,16 +52,26 @@ public class ItemSelectorBrowserUtil {
 		throws Exception {
 
 		portletURL.setParameter("displayStyle", displayStyle);
-		portletURL.setParameter(
-			"folderId",
-			String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
-		PortalUtil.addPortletBreadcrumbEntry(
-			request, LanguageUtil.get(request, "home"), portletURL.toString());
+		addPortletBreadcrumbEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, request,
+			LanguageUtil.get(request, "home"), portletURL);
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLUtil.addPortletBreadcrumbEntries(
-				DLAppServiceUtil.getFolder(folderId), request, portletURL);
+			Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+			List<Folder> ancestorFolders = folder.getAncestors();
+
+			Collections.reverse(ancestorFolders);
+
+			for (Folder ancestorFolder : ancestorFolders) {
+				addPortletBreadcrumbEntry(
+					ancestorFolder.getFolderId(), request,
+					ancestorFolder.getName(), portletURL);
+			}
+
+			addPortletBreadcrumbEntry(
+				folder.getFolderId(), request, folder.getName(), portletURL);
 		}
 	}
 
@@ -132,6 +145,16 @@ public class ItemSelectorBrowserUtil {
 		itemMetadataJSONObject.put("groups", groupsJSONArray);
 
 		return itemMetadataJSONObject;
+	}
+
+	protected static void addPortletBreadcrumbEntry(
+		long folderId, HttpServletRequest request, String title,
+		PortletURL portletURL) {
+
+		portletURL.setParameter("folderId", String.valueOf(folderId));
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, title, portletURL.toString());
 	}
 
 	private static JSONObject _createJSONObject(String key, String value) {

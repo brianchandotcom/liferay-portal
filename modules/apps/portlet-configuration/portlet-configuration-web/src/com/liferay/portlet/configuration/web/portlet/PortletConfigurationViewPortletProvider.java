@@ -16,16 +16,18 @@ package com.liferay.portlet.configuration.web.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.configuration.web.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Juergen Kappler
  */
 
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
 		"model.class.name=" + PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME
 	},
@@ -36,7 +38,7 @@ public class PortletConfigurationViewPortletProvider
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.PORTLET_CONFIGURATION;
+		return PortletConfigurationPortletKeys.PORTLET_CONFIGURATION;
 	}
 
 	@Override

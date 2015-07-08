@@ -253,13 +253,14 @@
 				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
 					<fileset
 						dir="${themes.dir}/_unstyled"
-						excludes="templates/init.ftl,templates/init.vm"
+						excludes="package.json,templates/init.ftl,templates/init.vm"
 					/>
 				</copy>
 
 				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
 					<fileset
 						dir="${themes.dir}/_styled"
+						excludes="package.json"
 					/>
 				</copy>
 

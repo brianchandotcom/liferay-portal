@@ -54,6 +54,7 @@ public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 	public CommentAssetRendererFactory() {
 		setCategorizable(false);
 		setLinkable(true);
+		setPortletId(CommentsPortletKeys.COMMENTS);
 	}
 
 	@Override

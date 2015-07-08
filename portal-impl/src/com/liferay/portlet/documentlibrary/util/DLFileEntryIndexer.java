@@ -76,7 +76,7 @@ import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portal.kernel.dynamicdatamapping.storage.StorageEngineManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
@@ -347,7 +347,7 @@ public class DLFileEntryIndexer
 			DDMFormValues ddmFormValues = null;
 
 			try {
-				ddmFormValues = StorageEngineUtil.getDDMFormValues(
+				ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
@@ -579,7 +579,7 @@ public class DLFileEntryIndexer
 			DDMFormValues ddmFormValues = null;
 
 			try {
-				ddmFormValues = StorageEngineUtil.getDDMFormValues(
+				ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {

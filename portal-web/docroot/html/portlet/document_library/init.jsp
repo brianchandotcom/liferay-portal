@@ -80,7 +80,7 @@ page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearch" %><%
 page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearchTerms" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %><%@
+page import="com.liferay.portal.kernel.dynamicdatamapping.storage.StorageEngineManagerUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.comparator.StructureStructureKeyComparator" %>
 

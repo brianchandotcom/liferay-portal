@@ -55,7 +55,7 @@ import com.liferay.portlet.documentlibrary.util.DLProcessorThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portal.kernel.dynamicdatamapping.storage.StorageEngineManagerUtil;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
@@ -676,7 +676,7 @@ public class FileEntryStagedModelDataHandler
 			structureFields.addAttribute(
 				"structureUuid", ddmStructure.getUuid());
 
-			DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+			DDMFormValues ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
 				dlFileEntryMetadata.getDDMStorageId());
 
 			portletDataContext.addZipEntry(path, ddmFormValues);

@@ -107,7 +107,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portal.kernel.dynamicdatamapping.storage.StorageEngineManagerUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoRow;
@@ -2261,7 +2261,7 @@ public class DLFileEntryLocalServiceImpl
 				continue;
 			}
 
-			DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+			DDMFormValues ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
 				dlFileEntryMetadata.getDDMStorageId());
 
 			ddmFormValuesMap.put(ddmStructure.getStructureKey(), ddmFormValues);
@@ -2382,10 +2382,10 @@ public class DLFileEntryLocalServiceImpl
 					latestDLFileVersion.getFileVersionId());
 
 			DDMFormValues lastDDMFormValues =
-				StorageEngineUtil.getDDMFormValues(
+				StorageEngineManagerUtil.getDDMFormValues(
 					lastFileEntryMetadata.getDDMStorageId());
 			DDMFormValues latestDDMFormValues =
-				StorageEngineUtil.getDDMFormValues(
+				StorageEngineManagerUtil.getDDMFormValues(
 					latestFileEntryMetadata.getDDMStorageId());
 
 			if (!lastDDMFormValues.equals(latestDDMFormValues)) {

@@ -14,12 +14,6 @@
 
 package com.liferay.portal.kernel.transaction;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -34,7 +28,7 @@ public class TransactionLifecycleManager {
 		TransactionStatus transactionStatus) {
 
 		for (TransactionLifecycleListener transactionLifecycleListener :
-				_instance._transactionLifecycleListeners) {
+				_transactionLifecycleListeners) {
 
 			transactionLifecycleListener.committed(
 				transactionAttribute, transactionStatus);
@@ -46,7 +40,7 @@ public class TransactionLifecycleManager {
 		TransactionStatus transactionStatus) {
 
 		for (TransactionLifecycleListener transactionLifecycleListener :
-				_instance._transactionLifecycleListeners) {
+				_transactionLifecycleListeners) {
 
 			transactionLifecycleListener.created(
 				transactionAttribute, transactionStatus);
@@ -58,7 +52,7 @@ public class TransactionLifecycleManager {
 		TransactionStatus transactionStatus, Throwable throwable) {
 
 		for (TransactionLifecycleListener transactionLifecycleListener :
-				_instance._transactionLifecycleListeners) {
+				_transactionLifecycleListeners) {
 
 			transactionLifecycleListener.rollbacked(
 				transactionAttribute, transactionStatus, throwable);
@@ -68,74 +62,23 @@ public class TransactionLifecycleManager {
 	public static Set<TransactionLifecycleListener>
 		getRegisteredTransactionLifecycleListeners() {
 
-		return new LinkedHashSet<>(_instance._transactionLifecycleListeners);
+		return new LinkedHashSet<>(_transactionLifecycleListeners);
 	}
 
 	public static boolean register(
 		TransactionLifecycleListener transactionLifecycleListener) {
 
-		return _instance._transactionLifecycleListeners.add(
-			transactionLifecycleListener);
+		return _transactionLifecycleListeners.add(transactionLifecycleListener);
 	}
 
 	public static boolean unregister(
 		TransactionLifecycleListener transactionLifecycleListener) {
 
-		return _instance._transactionLifecycleListeners.remove(
+		return _transactionLifecycleListeners.remove(
 			transactionLifecycleListener);
 	}
 
-	private TransactionLifecycleManager() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			TransactionLifecycleListener.class,
-			new TransactionLifecycleListenerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	private static final TransactionLifecycleManager _instance =
-		new TransactionLifecycleManager();
-
-	private final ServiceTracker
-		<TransactionLifecycleListener, TransactionLifecycleListener>
-			_serviceTracker;
-	private final Set<TransactionLifecycleListener>
+	private static final Set<TransactionLifecycleListener>
 		_transactionLifecycleListeners = new CopyOnWriteArraySet<>();
-
-	private class TransactionLifecycleListenerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<TransactionLifecycleListener, TransactionLifecycleListener> {
-
-		@Override
-		public TransactionLifecycleListener addingService(
-			ServiceReference<TransactionLifecycleListener> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			TransactionLifecycleListener transactionLifecycleListener =
-				registry.getService(serviceReference);
-
-			_transactionLifecycleListeners.add(transactionLifecycleListener);
-
-			return transactionLifecycleListener;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<TransactionLifecycleListener> serviceReference,
-			TransactionLifecycleListener transactionLifecycleListener) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<TransactionLifecycleListener> serviceReference,
-			TransactionLifecycleListener transactionLifecycleListener) {
-
-			_transactionLifecycleListeners.remove(transactionLifecycleListener);
-		}
-
-	}
 
 }

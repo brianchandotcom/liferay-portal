@@ -16,40 +16,49 @@ package com.liferay.portal.search.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author Michael C. Han
  */
 public class IndexerRequestBuffer {
 
-	public static IndexerRequestBuffer get() {
-		return _indexerRequestBufferThreadLocal.get();
-	}
+	public static IndexerRequestBuffer create() {
+		List<IndexerRequestBuffer> indexerRequestBuffers =
+			_indexerRequestBufferListThreadLocal.get();
 
-	public static IndexerRequestBuffer getOrCreate() {
-		IndexerRequestBuffer indexerRequestBuffer = IndexerRequestBuffer.get();
+		IndexerRequestBuffer indexerRequestBuffer = new IndexerRequestBuffer();
 
-		if (indexerRequestBuffer == null) {
-			indexerRequestBuffer = new IndexerRequestBuffer();
-
-			_indexerRequestBufferThreadLocal.set(indexerRequestBuffer);
-		}
+		indexerRequestBuffers.add(indexerRequestBuffer);
 
 		return indexerRequestBuffer;
+	}
+
+	public static IndexerRequestBuffer get() {
+		List<IndexerRequestBuffer> indexerRequestBuffers =
+			_indexerRequestBufferListThreadLocal.get();
+
+		if (indexerRequestBuffers.isEmpty()) {
+			return null;
+		}
+
+		return indexerRequestBuffers.get(indexerRequestBuffers.size() - 1);
 	}
 
 	public static IndexerRequestBuffer remove() {
-		IndexerRequestBuffer indexerRequestBuffer =
-			_indexerRequestBufferThreadLocal.get();
+		List<IndexerRequestBuffer> indexerRequestBuffers =
+			_indexerRequestBufferListThreadLocal.get();
 
-		_indexerRequestBufferThreadLocal.remove();
+		if (indexerRequestBuffers.isEmpty()) {
+			return null;
+		}
 
-		return indexerRequestBuffer;
+		return indexerRequestBuffers.remove(indexerRequestBuffers.size() - 1);
 	}
 
 	public void add(IndexerRequest indexerRequest) {
@@ -102,6 +111,10 @@ public class IndexerRequestBuffer {
 		}
 	}
 
+	public boolean isEmpty() {
+		return _indexerRequests.isEmpty();
+	}
+
 	public int size() {
 		return _indexerRequests.size();
 	}
@@ -109,12 +122,18 @@ public class IndexerRequestBuffer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexerRequestBuffer.class);
 
-	private static final ThreadLocal<IndexerRequestBuffer>
-		_indexerRequestBufferThreadLocal =
-			new InitialThreadLocal<>(
-				IndexerRequestBuffer.class.getName() +
-					"._indexerRequestBufferThreadLocal",
-				null);
+	private static final ThreadLocal<List<IndexerRequestBuffer>>
+		_indexerRequestBufferListThreadLocal =
+			new AutoResetThreadLocal<List<IndexerRequestBuffer>>(
+				IndexerRequestBuffer.class +
+					"._indexerRequestBufferListThreadLocal") {
+
+				@Override
+				protected List<IndexerRequestBuffer> initialValue() {
+					return new ArrayList<>();
+				}
+
+			};
 
 	private final LinkedHashMap<IndexerRequest, IndexerRequest>
 		_indexerRequests = new LinkedHashMap<>();

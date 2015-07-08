@@ -184,7 +184,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							<div class="image-icon">
 								<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
 									<span class="image-thumbnail">
-										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="repository" />" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128,128) %>" />
+										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="repository" />" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
 									</span>
 
 									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>

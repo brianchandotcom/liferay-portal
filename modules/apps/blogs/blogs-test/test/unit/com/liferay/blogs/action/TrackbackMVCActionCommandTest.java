@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.blogs.action;
 
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.Http;
@@ -28,6 +28,8 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactory;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.blogs.NoSuchEntryException;
+import com.liferay.portlet.blogs.action.ActionUtil;
+import com.liferay.portlet.blogs.action.TrackbackMVCActionCommand;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.trackback.Trackback;
 

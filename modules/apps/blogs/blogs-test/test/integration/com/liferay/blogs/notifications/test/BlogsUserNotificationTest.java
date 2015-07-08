@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.notifications;
+package com.liferay.blogs.notifications.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -33,11 +33,13 @@ import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 @Sync
 public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 
@@ -45,8 +47,7 @@ public class BlogsUserNotificationTest extends BaseUserNotificationTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {

@@ -1707,6 +1707,42 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
+					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
+						previousLine.endsWith(StringPool.PLUS)) {
+
+						int x = -1;
+
+						while (true) {
+							x = strippedQuotesLine.indexOf(
+								StringPool.COMMA_AND_SPACE, x + 1);
+
+							if (x == -1) {
+								break;
+							}
+
+							int closeParenthesisCount = StringUtil.count(
+								strippedQuotesLine.substring(0, x),
+								StringPool.CLOSE_PARENTHESIS);
+							int openParenthesisCount = StringUtil.count(
+								strippedQuotesLine.substring(0, x),
+								StringPool.OPEN_PARENTHESIS);
+
+							if ((previousLine.endsWith(
+									StringPool.OPEN_PARENTHESIS) &&
+								 (openParenthesisCount <
+									 closeParenthesisCount)) ||
+								(previousLine.endsWith(StringPool.PLUS) &&
+								 (openParenthesisCount <=
+									 closeParenthesisCount))) {
+
+								processErrorMessage(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
+							}
+						}
+					}
+
 					int x = strippedQuotesLine.indexOf(", ");
 
 					if (x != -1) {

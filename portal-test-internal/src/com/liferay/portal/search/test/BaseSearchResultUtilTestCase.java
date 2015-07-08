@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.ClassName;
-import com.liferay.portal.search.IndexerRegistryImpl;
 import com.liferay.portal.search.SearchResultManagerImpl;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.util.Portal;
@@ -136,7 +135,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(
-			IndexerRegistry.class, new IndexerRegistryImpl());
+			IndexerRegistry.class, new TestIndexerRegistry());
 	}
 
 	protected void setUpPortalUtil() {

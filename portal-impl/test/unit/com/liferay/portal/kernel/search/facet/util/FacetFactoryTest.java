@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.search.IndexerRegistryImpl;
+import com.liferay.portal.search.test.TestIndexerRegistry;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
@@ -52,7 +52,7 @@ public class FacetFactoryTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(
-			IndexerRegistry.class, new IndexerRegistryImpl());
+			IndexerRegistry.class, new TestIndexerRegistry());
 	}
 
 	@Test(expected = NullPointerException.class)

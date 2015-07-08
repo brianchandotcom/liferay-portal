@@ -618,6 +618,12 @@ public class MBThreadLocalServiceUtil {
 		return getService().updateMBThread(mbThread);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBThread updateMessageCount(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateMessageCount(threadId);
+	}
+
 	public static void updateQuestion(long threadId, boolean question)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateQuestion(threadId, question);

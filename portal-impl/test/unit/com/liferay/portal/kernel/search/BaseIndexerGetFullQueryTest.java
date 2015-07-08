@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.search.IndexerRegistryImpl;
+import com.liferay.portal.search.test.TestIndexerRegistry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -143,7 +143,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		Registry registry = RegistryUtil.getRegistry();
 
 		registry.registerService(
-			IndexerRegistry.class, new IndexerRegistryImpl());
+			IndexerRegistry.class, new TestIndexerRegistry());
 	}
 
 	protected void setUpJSONFactoryUtil() {

@@ -500,6 +500,9 @@ public interface MBThreadLocalService extends BaseLocalService,
 	public com.liferay.portlet.messageboards.model.MBThread updateMBThread(
 		com.liferay.portlet.messageboards.model.MBThread mbThread);
 
+	public com.liferay.portlet.messageboards.model.MBThread updateMessageCount(
+		long threadId) throws PortalException;
+
 	public void updateQuestion(long threadId, boolean question)
 		throws PortalException;
 

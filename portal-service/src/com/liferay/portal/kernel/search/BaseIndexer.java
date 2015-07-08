@@ -736,10 +736,15 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			document.addDate(Field.PUBLISH_DATE, new Date(0));
 		}
 
-		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.getStats(
+		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
 			className, classPK);
 
-		document.addNumber(Field.RATINGS, ratingsStats.getAverageScore());
+		if (ratingsStats != null) {
+			document.addNumber(Field.RATINGS, ratingsStats.getAverageScore());
+		}
+		else {
+			document.addNumber(Field.RATINGS, 0.0f);
+		}
 
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 

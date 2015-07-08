@@ -461,6 +461,15 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public com.liferay.portlet.messageboards.model.MBCategory updateMBCategory(
 		com.liferay.portlet.messageboards.model.MBCategory mbCategory);
 
+	public com.liferay.portlet.messageboards.model.MBCategory updateMessageCount(
+		long categoryId) throws PortalException;
+
+	public com.liferay.portlet.messageboards.model.MBCategory updateStatistics(
+		long categoryId) throws PortalException;
+
 	public com.liferay.portlet.messageboards.model.MBCategory updateStatus(
 		long userId, long categoryId, int status) throws PortalException;
+
+	public com.liferay.portlet.messageboards.model.MBCategory updateThreadCount(
+		long categoryId) throws PortalException;
 }

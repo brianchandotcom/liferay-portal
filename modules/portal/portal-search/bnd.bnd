@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Search
+Bundle-SymbolicName: com.liferay.portal.search
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.search.*;version=${plugin.full.version}
+Include-Resource: classes

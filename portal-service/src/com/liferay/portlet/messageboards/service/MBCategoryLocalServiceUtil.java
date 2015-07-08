@@ -591,10 +591,28 @@ public class MBCategoryLocalServiceUtil {
 		return getService().updateMBCategory(mbCategory);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBCategory updateMessageCount(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateMessageCount(categoryId);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBCategory updateStatistics(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateStatistics(categoryId);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBCategory updateStatus(
 		long userId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, categoryId, status);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBCategory updateThreadCount(
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateThreadCount(categoryId);
 	}
 
 	public static MBCategoryLocalService getService() {

@@ -6177,22 +6177,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		indexer.reindex(users);
 	}
 
-	protected void reindex(final User user) {
-		final Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+	protected void reindex(final User user) throws SearchException {
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			User.class);
 
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				indexer.reindex(user);
-
-				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+		indexer.reindex(user);
 	}
 
 	protected void resetFailedLoginAttempts(User user) {

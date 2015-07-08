@@ -309,7 +309,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 		title = matcher.replaceAll(StringPool.BLANK);
 
-		return StringUtil.shorten(title, 75);
+		return StringUtil.shorten(title, 255);
 	}
 
 	protected void processImages(

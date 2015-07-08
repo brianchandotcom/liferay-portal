@@ -18,9 +18,8 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 
-import javax.portlet.RenderRequest;
-
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,7 +36,7 @@ public class BlogsConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
-	public String getJspPath(RenderRequest renderRequest) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/blogs/configuration.jsp";
 	}
 

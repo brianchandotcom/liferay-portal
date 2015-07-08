@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.util.Validator;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +43,7 @@ public class BlogsAdminConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
-	public String getJspPath(RenderRequest renderRequest) {
+	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/blogs_admin/configuration.jsp";
 	}
 

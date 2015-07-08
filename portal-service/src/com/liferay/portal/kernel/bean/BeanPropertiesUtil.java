@@ -39,10 +39,10 @@ public class BeanPropertiesUtil {
 		getBeanProperties().copyProperties(source, target, ignoreProperties);
 	}
 
-	public static <T> T deepCopyProperties(Class<T> toClazz, Object from)
+	public static <T> T deepCopyProperties(Object source, Class<T> targetClazz)
 		throws Exception {
 
-		return getBeanProperties().deepCopyProperties(toClazz, from);
+		return getBeanProperties().deepCopyProperties(source, targetClazz);
 	}
 
 	public static BeanProperties getBeanProperties() {

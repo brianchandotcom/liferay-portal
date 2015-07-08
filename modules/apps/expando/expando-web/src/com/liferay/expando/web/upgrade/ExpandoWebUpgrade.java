@@ -52,10 +52,7 @@ public class ExpandoWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
-						"139",
-						ExpandoPortletKeys.EXPANDO
-					}
+					new String[] {"139", ExpandoPortletKeys.EXPANDO}
 				};
 			}
 

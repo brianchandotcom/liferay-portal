@@ -8,11 +8,11 @@ Import-Package:\
 	!org.apache.tika.*,\
 	*
 Include-Resource:\
+	classes,\
 	@lib/concurrent.jar,\
 	@lib/jackrabbit-api.jar,\
 	@lib/jackrabbit-core.jar,\
 	@lib/jackrabbit-jcr-commons.jar,\
 	@lib/jackrabbit-spi.jar,\
 	@lib/jackrabbit-spi-commons.jar,\
-	@lib/jcr.jar,\
-	classes
+	@lib/jcr.jar

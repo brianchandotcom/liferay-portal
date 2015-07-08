@@ -14,16 +14,16 @@
 
 package com.liferay.item.selector;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Iván Zaera
  */
 public interface ItemSelectorCriterion {
 
-	public Set<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes();
+	public List<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes();
 
 	public void setDesiredItemSelectorReturnTypes(
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes);
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes);
 
 }

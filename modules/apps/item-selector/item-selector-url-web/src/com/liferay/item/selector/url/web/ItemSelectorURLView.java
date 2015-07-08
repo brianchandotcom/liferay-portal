@@ -20,13 +20,13 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.url.web.display.context.ItemSelectorURLViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -59,7 +59,7 @@ public class ItemSelectorURLView
 	}
 
 	@Override
-	public Set<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -98,9 +98,9 @@ public class ItemSelectorURLView
 		_servletContext = servletContext;
 	}
 
-	private static final Set<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
-			SetUtil.fromArray(
+	private static final List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
 					new URLItemSelectorReturnType()
 				}));

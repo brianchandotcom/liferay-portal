@@ -64,15 +64,56 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FOLDER_TABLE-->
+<tr>
+	<td>FOLDER_TABLE_FOLDER</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[1]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_NUMBER_OF_FOLDERS</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_NUMBER_OF_DOCUMENTS</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_TABLE_FOLDER_CHOOSE</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[4]/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DOCUMENTS_TABLE-->
 <tr>
 	<td>DOCUMENTS_TABLE_DOCUMENT</td>
-	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[1]/a|//tr[contains(.,'${key_documentTitle}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[1]/a | //tr[contains(.,'${key_documentTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_TABLE_SIZE</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_dmDocumentTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_TABLE_DOWNLOADS</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_dmDocumentTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_TABLE_LOCKED</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_dmDocumentTitle}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENTS_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td/button[contains(.,'Choose')]|//tr[contains(.,'${key_documentTitle}')]/td/button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td/button[contains(.,'Choose')] | //tr[contains(.,'${key_documentTitle}')]/td/button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

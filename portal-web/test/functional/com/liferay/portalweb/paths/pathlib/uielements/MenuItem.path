@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD_FOLDER</td>
-	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Folder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -171,6 +171,11 @@
 <tr>
 	<td>DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_VERSION</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete Version')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -416,6 +421,11 @@
 <tr>
 	<td>RESTORE</td>
 	<td>//a[@role='menuitem' and contains(.,'Restore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVERT</td>
+	<td>//a[@role='menuitem' and contains(.,'Revert')]</td>
 	<td></td>
 </tr>
 <tr>

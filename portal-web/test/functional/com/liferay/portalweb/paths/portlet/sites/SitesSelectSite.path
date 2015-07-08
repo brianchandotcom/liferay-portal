@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>SITES_TABLE_CHOOSE_BUTTON</td>
-	<td>//div[@id='_134_groupsSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[3]/button</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[3]/button</td>
 	<td></td>
 </tr>
 </tbody>

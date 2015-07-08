@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CHECKOUT_SUCCESS</td>
+	<td>//div[contains(@class,'lfr-asset-column-details')]/div[contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOMIZED_PAGE_INFO</td>
 	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
 	<td></td>

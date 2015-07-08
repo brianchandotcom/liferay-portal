@@ -64,7 +64,11 @@
 	<td>//button[contains(@id,'_removeParentStructureButton')]</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FIELDS-->
 <tr>
 	<td>FIELDS_LINK</td>

@@ -85,12 +85,22 @@
 </tr>
 <tr>
 	<td>CANCEL</td>
-	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]|//button[contains(.,'Cancel')]</td>
+	<td>//a[contains(@id,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKIN</td>
+	<td>//button[contains(.,'Checkin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_CHECKOUT</td>
 	<td>//button[contains(.,'Cancel Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT</td>
+	<td>//button[contains(.,'Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -164,8 +174,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOWNLOAD</td>
+	<td>//button[contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
-	<td>//a[contains(@id,'edit') and contains(@class,'btn')]</td>
+	<td>//a[contains(@id,'edit') and contains(@class,'btn')] | //button[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -186,6 +201,11 @@
 <tr>
 	<td>I_DISAGREE_BUTTON</td>
 	<td>//button[contains(.,'I Disagree')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVOKE</td>
+	<td>//button[contains(.,'Invoke')]</td>
 	<td></td>
 </tr>
 <tr>

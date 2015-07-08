@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BREADCRUMB_LAST</td>
+	<td>BREADCRUMB_FOLDER_NAME</td>
 	<td>//div[contains(@id,'breadcrumbContainer')]//li[contains(.,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
@@ -31,6 +31,11 @@
 <tr>
 	<td>NAVBAR_CONTAINER</td>
 	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIVE_BUTTON</td>
+	<td>//li[contains(@class,'live-link') and contains(@class,'staging-toggle')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -75,6 +80,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICON_DOCUMENT_SHORTCUT_ACTIONS</td>
+	<td>//div[contains(.,'${key_dmDocumentTitle}') and a/div/img[@class='shortcut-icon']]//span/div/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_DOCUMENT_TITLE</td>
 	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/a/span/span</td>
 	<td></td>
@@ -96,6 +106,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICON_FOLDER_THUMBNAIL_GENERIC</td>
+	<td>//a[@data-folder='true']/div[@class='entry-thumbnail']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_FOLDER_CHECKBOX</td>
 	<td>//div[@data-title='${key_dmFolderName}']//input[@type='checkbox']</td>
 	<td></td>
@@ -108,6 +123,42 @@
 <tr>
 	<td>ICON_FOLDER_TITLE</td>
 	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//span[@class='entry-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DESCRIPTIVE_LIST_DOCUMENT-->
+<tr>
+	<td>DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_LIST_DOCUMENT_ICON</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_LIST_DOCUMENT_TITLE</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'entry-title-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_LIST_DOCUMENT_WORKFLOW</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'workflow-status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_LIST_DOCUMENT_LOCKED</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//div[@class='entry-thumbnail']/img[@alt='Locked']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_LIST_DOCUMENT_ACTION</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'entry-action')]/div/a/</td>
 	<td></td>
 </tr>
 <tr>

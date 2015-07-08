@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>JSONWSUser</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">JSONWSUser</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>API_METHOD</td>
+	<td>//div[contains(@class,'lfr-api-method') and contains(@class,'lfr-api-section')]/h2</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--API_EXECUTE-->
+<tr>
+	<td>API_EXECUTE_USER_ID_FIELD</td>
+	<td>//input[@name='userId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_PASSWORD_RESET_FALSE_RADIO</td>
+	<td>//input[@name='passwordReset' and @value='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_SCREEN_NAME_FIELD</td>
+	<td>//input[@name='screenName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@name='emailAddress']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_FACEBOOK_ID_FIELD</td>
+	<td>//input[@name='facebookId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_FIRST_NAME_FIELD</td>
+	<td>//input[@name='firstName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_LAST_NAME_FIELD</td>
+	<td>//input[@name='lastName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_PREFIX_ID_FIELD</td>
+	<td>//input[@name='prefixId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_SUFFIX_ID_FIELD</td>
+	<td>//input[@name='suffixId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_MALE_TRUE_RADIO</td>
+	<td>//input[@name='male' and @value='true']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_BIRTHDAY_MONTH_FIELD</td>
+	<td>//input[@name='birthdayMonth']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_BIRTHDAY_DAY_FIELD</td>
+	<td>//input[@name='birthdayDay']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_EXECUTE_BIRTHDAY_YEAR_FIELD</td>
+	<td>//input[@name='birthdayYear']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

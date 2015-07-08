@@ -286,11 +286,6 @@
 	<bean id="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil">
 		<property name="springFactory" ref="com.liferay.portal.kernel.spring.util.SpringFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil" class="com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil">
-		<property name="transactionCallbackRegistry">
-			<bean class="com.liferay.portal.spring.transaction.TransactionCommitCallbackRegistryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.transaction.TransactionInvokerUtil" class="com.liferay.portal.kernel.transaction.TransactionInvokerUtil">
 		<property name="transactionInvoker">
 			<bean class="com.liferay.portal.spring.transaction.TransactionInvokerImpl" />

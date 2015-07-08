@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.spring.transaction;
+package com.liferay.portal.kernel.transaction;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.transaction.TransactionAttribute;
-import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
-import com.liferay.portal.kernel.transaction.TransactionStatus;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.ArrayList;

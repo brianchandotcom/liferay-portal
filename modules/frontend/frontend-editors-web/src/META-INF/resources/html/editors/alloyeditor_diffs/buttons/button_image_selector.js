@@ -86,7 +86,7 @@
 				else {
 					AUI().use(
 						'liferay-item-selector-dialog',
-						'liferay-file-uploader',
+						'liferay-item-selector-uploader',
 						function(A) {
 							var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
@@ -97,7 +97,7 @@
 										selectedItemUploadStart: A.bind('_onSelectedItemUploadStart', instance)
 									},
 									eventName: eventName,
-									plugins: [A.Plugin.LiferayFileUploader],
+									plugins: [A.Plugin.LiferayItemSelectorUploader],
 									url: editor.config.filebrowserImageBrowseUrl
 								}
 							);

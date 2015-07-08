@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-file-uploader',
+	'liferay-item-selector-uploader',
 	function(A) {
 		var Lang = A.Lang;
 
@@ -13,7 +13,7 @@ AUI.add(
 
 		var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
 
-		var FileUploader = A.Component.create(
+		var ItemUploader = A.Component.create(
 			{
 				EXTENDS: A.Plugin.Base,
 
@@ -145,7 +145,7 @@ AUI.add(
 			}
 		);
 
-		A.Plugin.LiferayFileUploader = FileUploader;
+		A.Plugin.LiferayItemSelectorUploader = ItemUploader;
 	},
 	'',
 	{

@@ -18,7 +18,7 @@ Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
-	@lib/ical4j.jar
+	@lib/net.fortuna.ical4j.jar
 Import-Package:\
 	!edu.emory.*,\
 	!groovy.*,\

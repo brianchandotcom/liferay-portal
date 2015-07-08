@@ -13,6 +13,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CHECKBOX-->
+<tr>
+	<td>CHECKBOX</td>
+	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_LABEL</td>
+	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}')]/../../label</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--OPTIONS-->
 <tr>
 	<td>OPTIONS_ADD_ROW_BUTTON</td>
@@ -56,8 +72,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHECKBOX</td>
-	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}')]</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 </tbody>

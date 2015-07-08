@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
@@ -31,7 +31,7 @@ Role role = RoleServiceUtil.fetchRole(roleId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_assignments.jsp");
+portletURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("tabs3", tabs3);
@@ -53,13 +53,13 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	title="<%= role.getTitle(locale) %>"
 />
 
-<liferay-util:include page="/html/portlet/roles_admin/edit_role_tabs.jsp">
+<liferay-util:include page="/edit_role_tabs.jsp">
 	<liferay-util:param name="tabs1" value="assign-members" />
 	<liferay-util:param name="backURL" value="<%= redirect %>" />
 </liferay-util:include>
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
-	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_assignments.jsp" />
+	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editRoleAssignmentsURL %>" method="post" name="fm">
@@ -121,7 +121,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 <%
 PortletURL assignMembersURL = renderResponse.createRenderURL();
 
-assignMembersURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_assignments.jsp");
+assignMembersURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 assignMembersURL.setParameter("redirect", redirect);
 assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 

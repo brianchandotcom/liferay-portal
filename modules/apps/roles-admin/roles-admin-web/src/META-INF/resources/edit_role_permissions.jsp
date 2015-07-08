@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
@@ -34,7 +34,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
+portletURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
 portletURL.setParameter(Constants.CMD, Constants.VIEW);
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
@@ -43,7 +43,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 %>
 
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsResourceURL">
-	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/view_resources.jsp" />
+	<portlet:param name="mvcPath" value="/view_resources.jsp" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 	<portlet:param name="tabs1" value="roles" />
 	<portlet:param name="redirect" value="<%= backURL %>" />
@@ -51,7 +51,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 </liferay-portlet:resourceURL>
 
 <liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsURL">
-	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/view_resources.jsp" />
+	<portlet:param name="mvcPath" value="/view_resources.jsp" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 	<portlet:param name="tabs1" value="roles" />
 	<portlet:param name="redirect" value="<%= backURL %>" />
@@ -67,7 +67,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			title="<%= role.getTitle(locale) %>"
 		/>
 
-		<liferay-util:include page="/html/portlet/roles_admin/edit_role_tabs.jsp">
+		<liferay-util:include page="/edit_role_tabs.jsp">
 			<liferay-util:param name="tabs1" value="define-permissions" />
 			<liferay-util:param name="backURL" value="<%= backURL %>" />
 		</liferay-util:include>
@@ -90,14 +90,14 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 	<aui:row>
 		<c:if test="<%= !portletName.equals(PortletKeys.ADMIN_SERVER) %>">
 			<aui:col width="<%= 25 %>">
-				<%@ include file="/html/portlet/roles_admin/edit_role_permissions_navigation.jspf" %>
+				<%@ include file="/edit_role_permissions_navigation.jspf" %>
 			</aui:col>
 		</c:if>
 
 		<aui:col id="permissionContentContainer" width="<%= portletName.equals(PortletKeys.ADMIN_SERVER) ? 100 : 75 %>">
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.VIEW) %>">
-					<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_summary.jsp" />
+					<liferay-util:include page="/edit_role_permissions_summary.jsp" />
 
 					<c:if test="<%= portletName.equals(PortletKeys.ADMIN_SERVER) %>">
 						<br />
@@ -106,7 +106,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_form.jsp" />
+					<liferay-util:include page="/edit_role_permissions_form.jsp" />
 				</c:otherwise>
 			</c:choose>
 		</aui:col>

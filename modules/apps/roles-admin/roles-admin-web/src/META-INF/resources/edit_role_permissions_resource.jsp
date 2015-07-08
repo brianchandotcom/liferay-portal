@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 Role role = (Role)request.getAttribute("edit_role_permissions.jsp-role");
@@ -148,7 +148,7 @@ for (int i = 0; i < results.size(); i++) {
 	row.addText(_getActionLabel(request, themeDisplay, curResource, actionId));
 
 	if (showScope) {
-		row.addJSP("/html/portlet/roles_admin/edit_role_permissions_resource_scope.jsp");
+		row.addJSP("/edit_role_permissions_resource_scope.jsp");
 	}
 
 	resultRows.add(row);

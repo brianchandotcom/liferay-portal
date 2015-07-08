@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
@@ -25,7 +25,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/roles_admin/select_site_role.jsp");
+portletURL.setParameter("mvcPath", "/select_site_role.jsp");
 
 if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
@@ -172,7 +172,7 @@ if (step == 1) {
 				searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
 			>
 				<liferay-ui:search-form
-					page="/html/portlet/roles_admin/role_search.jsp"
+					page="/role_search.jsp"
 				/>
 
 				<%

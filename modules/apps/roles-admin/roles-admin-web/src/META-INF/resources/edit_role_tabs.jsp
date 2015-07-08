@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -31,7 +31,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 PortletURL editRoleURL = renderResponse.createRenderURL();
 
-editRoleURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role.jsp");
+editRoleURL.setParameter("mvcPath", "/edit_role.jsp");
 editRoleURL.setParameter("redirect", backURL);
 editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
@@ -39,7 +39,7 @@ editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 PortletURL definePermissionsURL = renderResponse.createRenderURL();
 
-definePermissionsURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
+definePermissionsURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
@@ -48,7 +48,7 @@ definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 PortletURL assignMembersURL = renderResponse.createRenderURL();
 
-assignMembersURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_assignments.jsp");
+assignMembersURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 assignMembersURL.setParameter("redirect", backURL);
 assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 

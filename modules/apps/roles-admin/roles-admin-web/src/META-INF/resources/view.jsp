@@ -14,12 +14,12 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/roles_admin/view.jsp");
+portletURL.setParameter("mvcPath", "/view.jsp");
 
 pageContext.setAttribute("portletURL", portletURL);
 
@@ -38,11 +38,11 @@ String portletURLString = portletURL.toString();
 			<aui:nav cssClass="navbar-nav">
 				<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
 					<portlet:renderURL var="viewRolesURL">
-						<portlet:param name="mvcPath" value="/html/portlet/roles_admin/view.jsp" />
+						<portlet:param name="mvcPath" value="/view.jsp" />
 					</portlet:renderURL>
 
 					<liferay-portlet:renderURL varImpl="addRoleURL">
-						<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role.jsp" />
+						<portlet:param name="mvcPath" value="/edit_role.jsp" />
 						<portlet:param name="redirect" value="<%= viewRolesURL %>" />
 					</liferay-portlet:renderURL>
 
@@ -73,7 +73,7 @@ String portletURLString = portletURL.toString();
 				</c:if>
 			</aui:nav>
 
-			<aui:nav-bar-search file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search file="/role_search.jsp" searchContainer="<%= searchContainer %>" />
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
@@ -108,7 +108,7 @@ String portletURLString = portletURL.toString();
 			if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
 				rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role.jsp");
+				rowURL.setParameter("mvcPath", "/edit_role.jsp");
 				rowURL.setParameter("redirect", searchContainer.getIteratorURL().toString());
 				rowURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			}
@@ -147,7 +147,7 @@ String portletURLString = portletURL.toString();
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/roles_admin/role_action.jsp"
+				path="/role_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

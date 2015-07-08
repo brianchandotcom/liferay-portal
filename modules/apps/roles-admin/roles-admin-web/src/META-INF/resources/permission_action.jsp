@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -27,7 +27,7 @@ Role role = (Role)objArray[1];
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:actionURL name="deletePermission" var="deletePermissionURL">
-		<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
+		<portlet:param name="mvcPath" value="/edit_role_permissions.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		<portlet:param name="name" value="<%= permission.getName() %>" />

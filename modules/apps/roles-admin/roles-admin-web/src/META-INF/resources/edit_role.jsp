@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -36,14 +36,14 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 />
 
 <c:if test="<%= role != null %>">
-	<liferay-util:include page="/html/portlet/roles_admin/edit_role_tabs.jsp">
+	<liferay-util:include page="/edit_role_tabs.jsp">
 		<liferay-util:param name="tabs1" value="edit" />
 		<liferay-util:param name="backURL" value="<%= backURL %>" />
 	</liferay-util:include>
 </c:if>
 
 <portlet:actionURL name="editRole" var="editRoleURL">
-	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role.jsp" />
+	<portlet:param name="mvcPath" value="/edit_role.jsp" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:actionURL>
 

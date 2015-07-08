@@ -42,7 +42,7 @@ if (permissionChecker.isCompanyAdmin()) {
 }
 %>
 
-<%@ include file="/html/portlet/roles_admin/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>
 
 <%!
 private String _getActionLabel(HttpServletRequest request, ThemeDisplay themeDisplay, String resourceName, String actionId) throws SystemException {

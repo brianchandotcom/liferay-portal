@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/roles_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = "roles";
@@ -54,7 +54,7 @@ if (Validator.isNotNull(portletResource)) {
 %>
 
 <portlet:actionURL name="updateActions" var="editRolePermissionsURL">
-	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions_form.jsp" />
+	<portlet:param name="mvcPath" value="/edit_role_permissions_form.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editRolePermissionsURL %>" method="post" name="fm">
@@ -85,7 +85,7 @@ if (Validator.isNotNull(portletResource)) {
 		<h4><liferay-ui:message key="<%= applicationPermissionsLabel %>" /> <liferay-ui:icon-help message='<%= applicationPermissionsLabel + "-help" %>' /></h4>
 	</c:if>
 
-	<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_resource.jsp" />
+	<liferay-util:include page="/edit_role_permissions_resource.jsp" />
 
 	<c:if test="<%= (modelResources != null) && !modelResources.isEmpty() %>">
 		<h4><liferay-ui:message key="resource-permissions" /> <liferay-ui:icon-help message="resource-permissions-help" /></h4>
@@ -108,7 +108,7 @@ if (Validator.isNotNull(portletResource)) {
 				request.setAttribute("edit_role_permissions.jsp-curModelResourceName", curModelResourceName);
 				%>
 
-				<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_resource.jsp" />
+				<liferay-util:include page="/edit_role_permissions_resource.jsp" />
 
 			<%
 			}
@@ -163,7 +163,7 @@ if (Validator.isNotNull(portletResource)) {
 
 				row.addText(PortalUtil.getPortletLongTitle(curPortlet, application, locale) + ": " + _getActionLabel(request, themeDisplay, resource, actionId));
 
-				row.addJSP("/html/portlet/roles_admin/edit_role_permissions_resource_scope.jsp");
+				row.addJSP("/edit_role_permissions_resource_scope.jsp");
 
 				resultRows.add(row);
 			}
@@ -186,7 +186,7 @@ if (Validator.isNotNull(portletResource)) {
 <%
 PortletURL definePermissionsURL = liferayPortletResponse.createRenderURL();
 
-definePermissionsURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
+definePermissionsURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
@@ -196,7 +196,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "define-
 if (Validator.isNotNull(portletResource)) {
 	PortletURL resourceURL = liferayPortletResponse.createRenderURL();
 
-	resourceURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role.jsp");
+	resourceURL.setParameter("mvcPath", "/edit_role.jsp");
 	resourceURL.setParameter(Constants.CMD, Constants.EDIT);
 	resourceURL.setParameter("tabs1", tabs1);
 	resourceURL.setParameter("portletResource", portletResource);

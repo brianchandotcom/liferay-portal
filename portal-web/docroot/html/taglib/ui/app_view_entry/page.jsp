@@ -233,15 +233,13 @@ if (showLinkTitle) {
 							</c:if>
 						</c:if>
 
-						<c:if test="<%= Validator.isNotNull(version) || ((status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED)) %>">
+						<c:if test="<%= Validator.isNotNull(version) %>">
 							<dt>
-								<liferay-ui:message key='<%= Validator.isNotNull(version) ? "version" : "status" %>' />:
+								<liferay-ui:message key="version" />:
 							</dt>
 
 							<dd>
-								<c:if test="<%= Validator.isNotNull(version) %>">
-									<%= HtmlUtil.escape(version) %>
-								</c:if>
+								<%= HtmlUtil.escape(version) %>
 							</dd>
 						</c:if>
 

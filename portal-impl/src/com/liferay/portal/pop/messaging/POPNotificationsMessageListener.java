@@ -49,7 +49,29 @@ public class POPNotificationsMessageListener
 		throws Exception {
 
 		try {
-			pollPopServer();
+			initInboxFolder();
+
+			Message[] messages = _inboxFolder.getMessages();
+
+			if (ArrayUtil.isEmpty(messages)) {
+				return;
+			}
+
+			try {
+				notifyMessageListeners(messages);
+			}
+			finally {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Deleting messages");
+				}
+
+				_inboxFolder.setFlags(
+					messages, new Flags(Flags.Flag.DELETED), true);
+
+				_inboxFolder.close(true);
+
+				_store.close();
+			}
 		}
 		finally {
 			_store = null;
@@ -161,32 +183,6 @@ public class POPNotificationsMessageListener
 			}
 
 			notifyMessageListeners(messageListeners, message);
-		}
-	}
-
-	protected void pollPopServer() throws Exception {
-		initInboxFolder();
-
-		Message[] messages = _inboxFolder.getMessages();
-
-		if (ArrayUtil.isEmpty(messages)) {
-			return;
-		}
-
-		try {
-			notifyMessageListeners(messages);
-		}
-		finally {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Deleting messages");
-			}
-
-			_inboxFolder.setFlags(
-				messages, new Flags(Flags.Flag.DELETED), true);
-
-			_inboxFolder.close(true);
-
-			_store.close();
 		}
 	}
 

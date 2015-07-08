@@ -31,8 +31,8 @@ public class StorageEngineManagerUtil {
 			ServiceContext serviceContext)
 		throws StorageException {
 
-		return _getStorageEngineManager().create(companyId, ddmStructureId,
-			ddmFormValues, serviceContext);
+		return _getStorageEngineManager().create(
+			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
 	public static void deleteByClass(long classPK) throws StorageException {
@@ -60,8 +60,8 @@ public class StorageEngineManagerUtil {
 			ServiceContext serviceContext)
 		throws StorageException {
 
-		_getStorageEngineManager().update(classPK, ddmFormValues,
-			serviceContext);
+		_getStorageEngineManager().update(
+			classPK, ddmFormValues, serviceContext);
 	}
 
 	private static StorageEngineManager _getDummyStorageEngineManager() {

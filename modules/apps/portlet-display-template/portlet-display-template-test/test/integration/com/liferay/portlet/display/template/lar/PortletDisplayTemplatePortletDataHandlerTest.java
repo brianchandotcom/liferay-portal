@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portletdisplaytemplate.lar;
+package com.liferay.portlet.display.template.lar;
 
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;

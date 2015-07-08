@@ -94,6 +94,17 @@ public class JournalArticleTrashHandlerTest
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
+	public List<? extends WorkflowedModel> getChildrenWorkflowedModels(
+			BaseModel<?> parentBaseModel)
+		throws Exception {
+
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
+		return JournalArticleLocalServiceUtil.getArticles(
+			folder.getGroupId(), folder.getFolderId());
+	}
+
+	@Override
 	public int getRecentBaseModelsCount(long groupId) throws Exception {
 		return JournalArticleServiceUtil.getGroupArticlesCount(
 			groupId, 0, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -319,17 +330,6 @@ public class JournalArticleTrashHandlerTest
 		JournalArticle article = (JournalArticle)classedModel;
 
 		return article.getArticleId();
-	}
-
-	@Override
-	protected List<? extends WorkflowedModel> getChildrenWorkflowedModels(
-			BaseModel<?> parentBaseModel)
-		throws Exception {
-
-		JournalFolder folder = (JournalFolder)parentBaseModel;
-
-		return JournalArticleLocalServiceUtil.getArticles(
-			folder.getGroupId(), folder.getFolderId());
 	}
 
 	@Override

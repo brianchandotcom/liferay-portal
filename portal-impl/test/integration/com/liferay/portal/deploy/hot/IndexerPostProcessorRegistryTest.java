@@ -23,13 +23,12 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.util.BlogsEntryIndexer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
@@ -142,18 +141,18 @@ public class IndexerPostProcessorRegistryTest {
 
 	@Test
 	public void testSingleIndexerPostProcessor() throws Exception {
-		Indexer<BlogsEntry> blogsEntryIndexer = IndexerRegistryUtil.getIndexer(
-			BlogsEntryIndexer.class.getName());
+		Indexer<Organization> organizationIndexer =
+			IndexerRegistryUtil.getIndexer(Organization.class.getName());
 
-		IndexerPostProcessor[] blogIndexerPostProcessors =
-			blogsEntryIndexer.getIndexerPostProcessors();
+		IndexerPostProcessor[] organizationIndexerPostProcessors =
+			organizationIndexer.getIndexerPostProcessors();
 
-		assertEquals(1, blogIndexerPostProcessors.length);
+		assertEquals(1, organizationIndexerPostProcessors.length);
 
-		IndexerPostProcessor blogsIndexerPostProcessor =
-			blogIndexerPostProcessors[0];
+		IndexerPostProcessor organizationIndexerPostProcessor =
+			organizationIndexerPostProcessors[0];
 
-		assertNotNull(blogsIndexerPostProcessor);
+		assertNotNull(organizationIndexerPostProcessor);
 	}
 
 	@Test

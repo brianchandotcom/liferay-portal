@@ -25,13 +25,15 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ListTypeConstants;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -59,12 +61,15 @@ public class AssetCategoryLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_blogsEntryIndexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+		_organizationIndexer = IndexerRegistryUtil.getIndexer(
+			Organization.class);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		IndexerRegistryUtil.register(_blogsEntryIndexer);
+		IndexerRegistryUtil.register(_organizationIndexer);
+
+		OrganizationLocalServiceUtil.deleteOrganization(_organization);
 	}
 
 	@Test
@@ -91,23 +96,28 @@ public class AssetCategoryLocalServiceTest {
 		serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+		_organization = OrganizationLocalServiceUtil.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(),
+			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			RandomTestUtil.randomString(), true, serviceContext);
 
 		TestAssetIndexer testAssetIndexer = new TestAssetIndexer();
 
 		testAssetIndexer.setExpectedValues(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+			Organization.class.getName(), _organization.getOrganizationId());
 
 		IndexerRegistryUtil.register(testAssetIndexer);
 
 		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory, true);
 	}
 
-	private Indexer<BlogsEntry> _blogsEntryIndexer;
-
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Organization _organization;
+	private Indexer<Organization> _organizationIndexer;
 
 }

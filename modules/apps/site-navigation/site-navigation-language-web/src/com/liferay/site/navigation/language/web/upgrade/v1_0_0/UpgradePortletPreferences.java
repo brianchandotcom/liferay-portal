@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.display.template.service.PortletDisplayTemplateConstants;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 
 import javax.portlet.PortletPreferences;

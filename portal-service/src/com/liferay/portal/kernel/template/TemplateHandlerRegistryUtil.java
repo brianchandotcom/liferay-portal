@@ -96,7 +96,7 @@ public class TemplateHandlerRegistryUtil {
 	}
 
 	private static final String _PORTLET_DISPLAY_TEMPLATE_CLASS_NAME =
-		"com.liferay.portlet.display.template.service.PortletDisplayTemplate";
+		"com.liferay.portlet.display.template.PortletDisplayTemplate";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateHandlerRegistryUtil.class);

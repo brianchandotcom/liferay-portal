@@ -33,7 +33,7 @@ import com.liferay.portlet.asset.service.AssetTagService;
 import com.liferay.portlet.asset.service.AssetTagStatsLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyService;
-import com.liferay.portlet.display.template.service.PortletDisplayTemplateConstants;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 
 import java.util.HashMap;
 import java.util.List;

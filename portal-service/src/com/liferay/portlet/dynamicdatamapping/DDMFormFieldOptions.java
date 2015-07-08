@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -24,44 +24,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Pablo Carvalho
+ * @author Leonardo Barros
  */
 public class DDMFormFieldOptions implements Serializable {
 
 	public DDMFormFieldOptions() {
-	}
-
-	public DDMFormFieldOptions(DDMFormFieldOptions ddmFormFieldOptions) {
-		_defaultLocale = ddmFormFieldOptions._defaultLocale;
-
-		Map<String, LocalizedValue> options = ddmFormFieldOptions._options;
-
-		for (String optionValue : options.keySet()) {
-			LocalizedValue localizedValue = options.get(optionValue);
-
-			for (Locale locale : localizedValue.getAvailableLocales()) {
-				addOptionLabel(
-					optionValue, locale, localizedValue.getString(locale));
-			}
-		}
-	}
-
-	public void addOption(String value) {
-		_options.put(value, new LocalizedValue(_defaultLocale));
-	}
-
-	public void addOptionLabel(
-		String optionValue, Locale locale, String label) {
-
-		LocalizedValue labels = _options.get(optionValue);
-
-		if (labels == null) {
-			labels = new LocalizedValue(_defaultLocale);
-
-			_options.put(optionValue, labels);
-		}
-
-		labels.addString(locale, label);
 	}
 
 	public Locale getDefaultLocale() {
@@ -80,15 +47,15 @@ public class DDMFormFieldOptions implements Serializable {
 		return _options.keySet();
 	}
 
-	public void setDefaultLocale(Locale defaultLocale) {
-		_defaultLocale = defaultLocale;
+	public void setDefaultLocale(Locale locale) {
+		_defaultLocale = locale;
+	}
 
-		for (LocalizedValue localizedValue : _options.values()) {
-			localizedValue.setDefaultLocale(defaultLocale);
-		}
+	public void setOptions(Map<String, LocalizedValue> options) {
+		_options = options;
 	}
 
 	private Locale _defaultLocale = LocaleUtil.getDefault();
-	private final Map<String, LocalizedValue> _options = new LinkedHashMap<>();
+	private Map<String, LocalizedValue> _options = new LinkedHashMap<>();
 
 }

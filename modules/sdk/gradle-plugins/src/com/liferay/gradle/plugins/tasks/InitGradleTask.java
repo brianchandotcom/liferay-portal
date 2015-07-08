@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.tasks;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -193,6 +194,7 @@ public class InitGradleTask extends DefaultTask {
 		List<String> contents = new ArrayList<>();
 
 		addContents(contents, getBuildGradleDependencies());
+		addContents(contents, getBuildGradleDeploy());
 		addContents(contents, getBuildGradleLiferay());
 		addContents(contents, getBuildGradleProperties());
 
@@ -494,6 +496,29 @@ public class InitGradleTask extends DefaultTask {
 		addContents(contents, getBuildDependenciesTestCompile());
 
 		return wrapContents(contents, 0, " {", "dependencies", "}", false);
+	}
+
+	protected List<String> getBuildGradleDeploy() {
+		String osgiRuntimeDependencies = getBuildXmlProperty(
+			"osgi.runtime.dependencies");
+
+		if (Validator.isNull(osgiRuntimeDependencies)) {
+			return Collections.emptyList();
+		}
+
+		List<String> contents = new ArrayList<>();
+
+		String[] osgiRuntimeDependenciesArray = osgiRuntimeDependencies.split(
+			",");
+
+		for (String osgiRuntimeDependency : osgiRuntimeDependenciesArray) {
+			contents.add("\t\tinclude \"" + osgiRuntimeDependency + "\"");
+		}
+
+		contents = wrapContents(contents, 1, " {", "from(\"lib\")", "}", true);
+
+		return wrapContents(
+			contents, 0, " {", LiferayJavaPlugin.DEPLOY_TASK_NAME, "}", false);
 	}
 
 	protected List<String> getBuildGradleLiferay() {

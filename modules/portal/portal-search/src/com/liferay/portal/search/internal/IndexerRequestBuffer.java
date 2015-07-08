@@ -111,6 +111,10 @@ public class IndexerRequestBuffer {
 		}
 	}
 
+	public boolean isEmpty() {
+		return _indexerRequests.isEmpty();
+	}
+
 	public int size() {
 		return _indexerRequests.size();
 	}

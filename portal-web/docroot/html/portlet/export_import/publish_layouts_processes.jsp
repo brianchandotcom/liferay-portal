@@ -101,7 +101,7 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 		<liferay-ui:search-container-column-jsp
 			cssClass="background-task-status-column"
 			name="status"
-			path="/html/portlet/export_import/publish_process_message.jsp"
+			path="/html/portlet/background_task/background_task_status.jsp"
 		/>
 
 		<c:if test="<%= localPublishing %>">

@@ -55,16 +55,24 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 
 		backgroundTaskStatus.clearAttributes();
 
-		backgroundTaskStatus.setAttribute("allModelAdditionCountersTotal", 0L);
-		backgroundTaskStatus.setAttribute("allPortletAdditionCounter", 0L);
 		backgroundTaskStatus.setAttribute(
-			"allPortletModelAdditionCounters",
+			StagingBackgroundTaskConstants.ALL_MODEL_ADDITION_COUNTERS_TOTAL,
+			0L);
+		backgroundTaskStatus.setAttribute(
+			StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER, 0L);
+		backgroundTaskStatus.setAttribute(
+			StagingBackgroundTaskConstants.ALL_PORTLET_MODEL_ADDITION_COUNTERS,
 			new HashMap<String, LongWrapper>());
 		backgroundTaskStatus.setAttribute(
-			"currentModelAdditionCountersTotal", 0L);
-		backgroundTaskStatus.setAttribute("currentPortletAdditionCounter", 0L);
+			StagingBackgroundTaskConstants.
+				CURRENT_MODEL_ADDITION_COUNTERS_TOTAL,
+			0L);
 		backgroundTaskStatus.setAttribute(
-			"currentPortletModelAdditionCounters",
+			StagingBackgroundTaskConstants.CURRENT_PORTLET_ADDITION_COUNTER,
+			0L);
+		backgroundTaskStatus.setAttribute(
+			StagingBackgroundTaskConstants.
+				CURRENT_PORTLET_MODEL_ADDITION_COUNTERS,
 			new HashMap<String, LongWrapper>());
 	}
 
@@ -88,10 +96,12 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
 		Map<String, LongWrapper> modelAdditionCounters =
-			(Map<String, LongWrapper>)message.get("modelAdditionCounters");
+			(Map<String, LongWrapper>)message.get(
+				StagingBackgroundTaskConstants.MODEL_ADDITION_COUNTERS);
 
 		backgroundTaskStatus.setAttribute(
-			"allModelAdditionCountersTotal", getTotal(modelAdditionCounters));
+			StagingBackgroundTaskConstants.ALL_MODEL_ADDITION_COUNTERS_TOTAL,
+			getTotal(modelAdditionCounters));
 
 		long allPortletAdditionCounter = 0;
 
@@ -102,7 +112,8 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		}
 
 		backgroundTaskStatus.setAttribute(
-			"allPortletAdditionCounter", allPortletAdditionCounter);
+			StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER,
+			allPortletAdditionCounter);
 	}
 
 	protected synchronized void translatePortletMessage(
@@ -112,41 +123,52 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 
 		HashMap<String, Long> allPortletModelAdditionCounters =
 			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
-				"allPortletModelAdditionCounters");
+				StagingBackgroundTaskConstants.
+					ALL_PORTLET_MODEL_ADDITION_COUNTERS);
 
 		long portletModelAdditionCountersTotal = GetterUtil.getLong(
-			message.get("portletModelAdditionCountersTotal"));
+			message.get(
+				StagingBackgroundTaskConstants.
+					PORTLET_MODEL_ADDITION_COUNTERS_TOTAL));
 
 		allPortletModelAdditionCounters.put(
 			portletId, portletModelAdditionCountersTotal);
 
 		backgroundTaskStatus.setAttribute(
-			"allPortletModelAdditionCounters", allPortletModelAdditionCounters);
+			StagingBackgroundTaskConstants.ALL_PORTLET_MODEL_ADDITION_COUNTERS,
+			allPortletModelAdditionCounters);
 
 		long allPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER));
 		long currentPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.
+					CURRENT_PORTLET_ADDITION_COUNTER));
 
 		if (currentPortletAdditionCounter < allPortletAdditionCounter) {
 			backgroundTaskStatus.setAttribute(
-				"currentPortletAdditionCounter",
+				StagingBackgroundTaskConstants.CURRENT_PORTLET_ADDITION_COUNTER,
 				++currentPortletAdditionCounter);
 		}
 
 		HashMap<String, Long> currentPortletModelAdditionCounters =
 			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
-				"currentPortletModelAdditionCounters");
+				StagingBackgroundTaskConstants.
+					CURRENT_PORTLET_MODEL_ADDITION_COUNTERS);
 
 		currentPortletModelAdditionCounters.put(portletId, 0L);
 
 		backgroundTaskStatus.setAttribute(
-			"currentPortletModelAdditionCounters",
+			StagingBackgroundTaskConstants.
+				CURRENT_PORTLET_MODEL_ADDITION_COUNTERS,
 			currentPortletModelAdditionCounters);
 
 		backgroundTaskStatus.setAttribute("portletId", portletId);
-		backgroundTaskStatus.setAttribute("stagedModelName", StringPool.BLANK);
-		backgroundTaskStatus.setAttribute("stagedModelType", StringPool.BLANK);
+		backgroundTaskStatus.setAttribute(
+			StagingBackgroundTaskConstants.STAGED_MODEL_NAME, StringPool.BLANK);
+		backgroundTaskStatus.setAttribute(
+			StagingBackgroundTaskConstants.STAGED_MODEL_TYPE, StringPool.BLANK);
 		backgroundTaskStatus.setAttribute("uuid", StringPool.BLANK);
 	}
 
@@ -161,21 +183,26 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		}
 
 		long allModelAdditionCountersTotal = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.
+					ALL_MODEL_ADDITION_COUNTERS_TOTAL));
 		long currentModelAdditionCountersTotal = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute(
-				"currentModelAdditionCountersTotal"));
+				StagingBackgroundTaskConstants.
+					CURRENT_MODEL_ADDITION_COUNTERS_TOTAL));
 
 		Map<String, Long> allPortletModelAdditionCounters =
 			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
-				"allPortletModelAdditionCounters");
+				StagingBackgroundTaskConstants.
+					ALL_PORTLET_MODEL_ADDITION_COUNTERS);
 
 		long allPortletModelAdditionCounter = MapUtil.getLong(
 			allPortletModelAdditionCounters, portletId);
 
 		HashMap<String, Long> currentPortletModelAdditionCounters =
 			(HashMap<String, Long>)backgroundTaskStatus.getAttribute(
-				"currentPortletModelAdditionCounters");
+				StagingBackgroundTaskConstants.
+					CURRENT_PORTLET_MODEL_ADDITION_COUNTERS);
 
 		long currentPortletModelAdditionCounter = MapUtil.getLong(
 			currentPortletModelAdditionCounters, portletId);
@@ -186,21 +213,27 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 				currentPortletModelAdditionCounter)) {
 
 			backgroundTaskStatus.setAttribute(
-				"currentModelAdditionCountersTotal",
+				StagingBackgroundTaskConstants.
+					CURRENT_MODEL_ADDITION_COUNTERS_TOTAL,
 				++currentModelAdditionCountersTotal);
 
 			currentPortletModelAdditionCounters.put(
 				portletId, ++currentPortletModelAdditionCounter);
 
 			backgroundTaskStatus.setAttribute(
-				"currentPortletModelAdditionCounters",
+				StagingBackgroundTaskConstants.
+					CURRENT_PORTLET_MODEL_ADDITION_COUNTERS,
 				currentPortletModelAdditionCounters);
 		}
 
 		backgroundTaskStatus.setAttribute(
-			"stagedModelName", message.getString("stagedModelName"));
+			StagingBackgroundTaskConstants.STAGED_MODEL_NAME,
+			message.getString(
+				StagingBackgroundTaskConstants.STAGED_MODEL_NAME));
 		backgroundTaskStatus.setAttribute(
-			"stagedModelType", message.getString("stagedModelType"));
+			StagingBackgroundTaskConstants.STAGED_MODEL_TYPE,
+			message.getString(
+				StagingBackgroundTaskConstants.STAGED_MODEL_TYPE));
 		backgroundTaskStatus.setAttribute("uuid", message.getString("uuid"));
 	}
 

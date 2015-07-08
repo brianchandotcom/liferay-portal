@@ -33,10 +33,13 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 		BackgroundTaskStatus backgroundTaskStatus) {
 
 		long allModelAdditionCountersTotal = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("allModelAdditionCountersTotal"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.
+					ALL_MODEL_ADDITION_COUNTERS_TOTAL));
 		long currentModelAdditionCountersTotal = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute(
-				"currentModelAdditionCountersTotal"));
+				StagingBackgroundTaskConstants.
+					CURRENT_MODEL_ADDITION_COUNTERS_TOTAL));
 
 		return allModelAdditionCountersTotal +
 			currentModelAdditionCountersTotal;
@@ -46,9 +49,12 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 		BackgroundTaskStatus backgroundTaskStatus) {
 
 		long allPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER));
 		long currentPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.
+					CURRENT_PORTLET_ADDITION_COUNTER));
 
 		return allPortletAdditionCounter + currentPortletAdditionCounter;
 	}
@@ -58,7 +64,8 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
 		String phase = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute("phase"));
+			backgroundTaskStatus.getAttribute(
+				StagingBackgroundTaskConstants.PHASE));
 
 		if (Validator.isNull(phase)) {
 			clearBackgroundTaskStatus(backgroundTaskStatus);
@@ -69,22 +76,26 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 			phase = Constants.IMPORT;
 		}
 
-		backgroundTaskStatus.setAttribute("phase", phase);
+		backgroundTaskStatus.setAttribute(
+			StagingBackgroundTaskConstants.PHASE, phase);
 
 		super.translateLayoutMessage(backgroundTaskStatus, message);
 
 		if (phase.equals(Constants.IMPORT)) {
 			backgroundTaskStatus.setAttribute(
-				"allModelAdditionCountersTotal",
+				StagingBackgroundTaskConstants.
+					ALL_MODEL_ADDITION_COUNTERS_TOTAL,
 				getAllModelAdditionCountersTotal(backgroundTaskStatus));
 			backgroundTaskStatus.setAttribute(
-				"allPortletAdditionCounter",
+				StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER,
 				getAllPortletAdditionCounter(backgroundTaskStatus));
 			backgroundTaskStatus.setAttribute(
-				"allPortletModelAdditionCounters",
+				StagingBackgroundTaskConstants.
+					ALL_PORTLET_MODEL_ADDITION_COUNTERS,
 				new HashMap<String, LongWrapper>());
 			backgroundTaskStatus.setAttribute(
-				"currentPortletModelAdditionCounters",
+				StagingBackgroundTaskConstants.
+					CURRENT_PORTLET_MODEL_ADDITION_COUNTERS,
 				new HashMap<String, LongWrapper>());
 		}
 	}

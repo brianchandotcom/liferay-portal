@@ -6,15 +6,21 @@ AUI.add(
 
 		var OptionsField = A.Component.create(
 			{
+				ATTRS: {
+					type: {
+						value: 'options'
+					}
+				},
+
 				EXTENDS: Liferay.DDM.Renderer.Field,
 
 				NAME: 'liferay-ddm-form-field-options',
 
 				prototype: {
-					renderUI: function() {
+					render: function() {
 						var instance = this;
 
-						OptionsField.superclass.renderUI.apply(instance, arguments);
+						OptionsField.superclass.render.apply(instance, arguments);
 
 						var container = instance.get('container');
 
@@ -35,8 +41,10 @@ AUI.add(
 						return _.map(
 							instance.get('value'),
 							function(item) {
+								var label = item.label && item.label[instance.get('locale')] || '';
+
 								return {
-									label: item.label[instance.get('locale')],
+									label: label,
 									value: item.value
 								};
 							}
@@ -75,11 +83,13 @@ AUI.add(
 
 								var valueField = item.one('.ddm-options-field-value');
 
+								var label = {};
+
+								label[instance.get('locale')] = labelField.val();
+
 								serializedData.push(
 									{
-										label: {
-											en_US: labelField.val()
-										},
+										label: label,
 										value: valueField.val()
 									}
 								);

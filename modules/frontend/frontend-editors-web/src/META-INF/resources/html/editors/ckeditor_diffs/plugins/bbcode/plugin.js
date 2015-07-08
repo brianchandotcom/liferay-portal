@@ -22,7 +22,7 @@
 
 			preElement[elementAction](editor.document);
 
-			var preBlock = editor.document.findOne('pre')
+			var preBlock = editor.document.findOne('pre');
 
 			if (preBlock && preBlock.getChildCount() === 0) {
 				preBlock.appendBogus();

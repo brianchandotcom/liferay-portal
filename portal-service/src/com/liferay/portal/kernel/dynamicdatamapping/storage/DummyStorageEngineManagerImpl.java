@@ -26,23 +26,24 @@ public class DummyStorageEngineManagerImpl implements StorageEngineManager {
 	@Override
 	public long create(long companyId, long ddmStructureId,
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
-			throws StorageException {
+		throws StorageException {
+
 		return 0;
 	}
 
 	@Override
 	public void deleteByClass(long classPK) throws StorageException {
-
 	}
 
 	@Override
 	public void deleteByDDMStructure(long ddmStructureId)
-			throws StorageException {
-
+		throws StorageException {
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(long classPK) throws StorageException {
+	public DDMFormValues getDDMFormValues(long classPK)
+		throws StorageException {
+
 		return null;
 	}
 
@@ -54,7 +55,6 @@ public class DummyStorageEngineManagerImpl implements StorageEngineManager {
 	@Override
 	public void update(long classPK, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext) throws StorageException {
-
 	}
 
 }

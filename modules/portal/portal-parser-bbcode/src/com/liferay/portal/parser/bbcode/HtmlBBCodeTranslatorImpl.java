@@ -164,7 +164,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 				handleData(sb, bbCodeItems, tags, marker, bbCodeItem);
 			}
 			else if (type == BBCodeParser.TYPE_TAG_END) {
-				handleTagEnd(sb, tags, bbCodeItem);
+				handleTagEnd(sb, tags);
 			}
 			else if (type == BBCodeParser.TYPE_TAG_START) {
 				handleTagStart(sb, bbCodeItems, tags, marker, bbCodeItem);
@@ -606,14 +606,8 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		handleSimpleTag(sb, tags, "tr");
 	}
 
-	protected void handleTagEnd(
-		StringBundler sb, Stack<String> tags, BBCodeItem bbCodeItem) {
-
-		String tag = bbCodeItem.getValue();
-
-		if (isValidTag(tag)) {
-			sb.append(tags.pop());
-		}
+	protected void handleTagEnd(StringBundler sb, Stack<String> tags) {
+		sb.append(tags.pop());
 	}
 
 	protected void handleTagStart(
@@ -621,10 +615,6 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		IntegerWrapper marker, BBCodeItem bbCodeItem) {
 
 		String tag = bbCodeItem.getValue();
-
-		if (!isValidTag(tag)) {
-			return;
-		}
 
 		if (tag.equals("b")) {
 			handleBold(sb, tags);
@@ -719,16 +709,6 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		sb.append("\">");
 
 		tags.push("</a>");
-	}
-
-	protected boolean isValidTag(String tag) {
-		if ((tag != null) && (tag.length() > 0)) {
-			Matcher matcher = _tagPattern.matcher(tag);
-
-			return matcher.matches();
-		}
-
-		return false;
 	}
 
 	private static final String[][] _EMOTICONS = {

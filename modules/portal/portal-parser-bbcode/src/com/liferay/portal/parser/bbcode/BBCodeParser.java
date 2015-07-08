@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Iliyan Peychev
@@ -137,8 +139,10 @@ public class BBCodeParser {
 
 		int size = 0;
 
+		String endTag = null;
+
 		if (bbCodeToken != null) {
-			String endTag = bbCodeToken.getEndTag();
+			endTag = bbCodeToken.getEndTag();
 
 			for (size = tags.size() - 1; size >= 0; size--) {
 				if (endTag.equals(tags.elementAt(size))) {
@@ -147,7 +151,7 @@ public class BBCodeParser {
 			}
 		}
 
-		if (size >= 0) {
+		if ((size >= 0) && isValidTag(endTag)) {
 			for (int i = tags.size() - 1; i >= size; i--) {
 				BBCodeItem bbCodeItem = new BBCodeItem(
 					TYPE_TAG_END, null, tags.elementAt(i));
@@ -165,11 +169,12 @@ public class BBCodeParser {
 
 		String startTag = bbCodeToken.getStartTag();
 
-		if (!tags.isEmpty()) {
+		if (!tags.isEmpty() && isValidTag(startTag)) {
 			if (_blockElements.contains(startTag)) {
 				String currentTag = null;
 
-				while (((currentTag = tags.lastElement()) != null) &&
+				while (!tags.isEmpty() &&
+					   ((currentTag = tags.lastElement()) != null) &&
 					   _inlineElements.contains(currentTag)) {
 
 					BBCodeToken currentTagBBCodeToken = new BBCodeToken(
@@ -186,18 +191,32 @@ public class BBCodeParser {
 
 				handleTagEnd(bbCodeItems, tags, tagBBCodeToken);
 			}
+
+			tags.push(startTag);
+
+			BBCodeItem bbCodeItem = new BBCodeItem(
+				TYPE_TAG_START, bbCodeToken.getAttribute(), startTag);
+
+			bbCodeItems.add(bbCodeItem);
+		}
+	}
+
+	protected boolean isValidTag(String tag) {
+		if ((tag != null) && (tag.length() > 0)) {
+			Matcher matcher = _tagPattern.matcher(tag);
+
+			return matcher.matches();
 		}
 
-		tags.push(startTag);
-
-		BBCodeItem bbCodeItem = new BBCodeItem(
-			TYPE_TAG_START, bbCodeToken.getAttribute(), startTag);
-
-		bbCodeItems.add(bbCodeItem);
+		return false;
 	}
 
 	private final Set<String> _blockElements;
 	private final Set<String> _inlineElements;
 	private final Set<String> _selfCloseElements;
+	private final Pattern _tagPattern = Pattern.compile(
+		"^/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|" +
+			"right|\\*|s|size|table|tr|th|td|li|list|font|u|url)$",
+		Pattern.CASE_INSENSITIVE);
 
 }

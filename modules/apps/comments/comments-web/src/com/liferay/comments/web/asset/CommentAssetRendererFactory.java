@@ -53,6 +53,7 @@ public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public CommentAssetRendererFactory() {
 		setCategorizable(false);
+		setClassName(CommentConstants.getDiscussionClassName());
 		setLinkable(true);
 		setPortletId(CommentsPortletKeys.COMMENTS);
 	}
@@ -76,11 +77,6 @@ public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 		commentAssetRenderer.setServletContext(_servletContext);
 
 		return commentAssetRenderer;
-	}
-
-	@Override
-	public String getClassName() {
-		return CommentConstants.getDiscussionClassName();
 	}
 
 	@Override

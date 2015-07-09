@@ -21,18 +21,16 @@ String backURL = ParamUtil.getString(request, "backURL");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
-
-long repositoryId = BeanParamUtil.getLong(fileEntry, request, "repositoryId");
+long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
 if (repositoryId <= 0) {
 
 	// <liferay-ui:asset_add_button /> only passes in groupId
 
-	repositoryId = BeanParamUtil.getLong(fileEntry, request, "groupId");
+	repositoryId = ParamUtil.getLong(request, "groupId");
 }
 
-long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
+long folderId = ParamUtil.getLong(request, "folderId");
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
@@ -71,7 +69,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 							decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
-							deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />',
+							deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />',
 							fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
 							maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %> B',
 							metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
@@ -85,8 +83,8 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 									groupId: <%= scopeGroupId %>
 								}
 							},
-							tempRandomSuffix: '<%= EditFileEntryAction.TEMP_RANDOM_SUFFIX %>',
-							uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />'
+							tempRandomSuffix: '<%= EditFileEntryMVCActionCommand.TEMP_RANDOM_SUFFIX %>',
+							uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />'
 						}
 					);
 				</aui:script>
@@ -171,7 +169,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 													var originalFileName = item.originalFileName;
 
-													var pos = originalFileName.indexOf('<%= EditFileEntryAction.TEMP_RANDOM_SUFFIX %>');
+													var pos = originalFileName.indexOf('<%= EditFileEntryMVCActionCommand.TEMP_RANDOM_SUFFIX %>');
 
 													if (pos != -1) {
 														originalFileName = originalFileName.substr(0, pos);
@@ -195,7 +193,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 											}
 
 											<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="uploadMultipleFileEntries">
-												<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
+												<portlet:param name="mvcRenderCommandName" value="/document_library/upload_multiple_file_entries" />
 												<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 												<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 											</liferay-portlet:resourceURL>

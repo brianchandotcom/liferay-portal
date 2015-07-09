@@ -33,7 +33,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-displayStyleURL.setParameter("struts_action", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
+displayStyleURL.setParameter("mvcRenderCommandName", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
 displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
 displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 

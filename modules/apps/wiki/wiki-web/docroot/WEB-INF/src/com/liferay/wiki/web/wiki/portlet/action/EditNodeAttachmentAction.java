@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
@@ -41,7 +41,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Eudaldo Alonso
  */
-public class EditNodeAttachmentAction extends EditFileEntryAction {
+public class EditNodeAttachmentAction extends PortletAction {
 
 	@Override
 	public void processAction(

@@ -220,98 +220,6 @@
 
 	<definition name="portlet.dockbar.view" path="/portlet/dockbar/view.jsp" />
 
-	<!-- Document Library -->
-
-	<definition name="portlet.document_library" extends="portlet" />
-
-	<definition name="portlet.document_library.compare_versions" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/compare_versions.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.edit_file_entry" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/edit_file_entry.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.edit_file_entry_type" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/edit_file_entry_type.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.edit_file_shortcut" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/edit_file_shortcut.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.edit_file_version" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/edit_file_version.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.edit_folder" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/edit_folder.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.edit_repository" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/edit_repository.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.error" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/error.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.move_entries" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/move_entries.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.search" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/search.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.select_file_entry" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/select_file_entry.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.select_folder" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/select_folder.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.select_group" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/select_group.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.select_restricted_file_entry_type" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/select_restricted_file_entry_type.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.upload_multiple_file_entries" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/upload_multiple_file_entries.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.view" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/view.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.view_file_entry" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/view_file_entry.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.view_file_entry_type" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/view_file_entry_type.jsp" />
-	</definition>
-
-	<!-- Document Library Display-->
-
-	<definition name="portlet.document_library_display" extends="portlet" />
-
-	<definition name="portlet.document_library_display.search" extends="portlet.document_library_display">
-		<put name="portlet_content" value="/portlet/document_library_display/search.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library_display.select_add_file_entry_type" extends="portlet.document_library_display">
-		<put name="portlet_content" value="/portlet/document_library_display/select_add_file_entry_type.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library_display.view" extends="portlet.document_library_display">
-		<put name="portlet_content" value="/portlet/document_library_display/view.jsp" />
-	</definition>
-
 	<!-- Export Import -->
 
 	<definition name="portlet.export_import" extends="portlet" />
@@ -362,30 +270,6 @@
 
 	<definition name="portlet.group_statistics.add_activity_counter" extends="portlet.group_statistics">
 		<put name="portlet_content" value="/portlet/group_statistics/add_activity_counter.jsp" />
-	</definition>
-
-	<!-- Image Gallery Display -->
-
-	<definition name="portlet.image_gallery_display" extends="portlet" />
-
-	<definition name="portlet.image_gallery_display.embedded_player" extends="portlet.image_gallery_display">
-		<put name="portlet_content" value="/portlet/image_gallery_display/embedded_player.jsp" />
-	</definition>
-
-	<definition name="portlet.image_gallery_display.search" extends="portlet.image_gallery_display">
-		<put name="portlet_content" value="/portlet/image_gallery_display/search.jsp" />
-	</definition>
-
-	<definition name="portlet.image_gallery_display.select_folder" extends="portlet.image_gallery_display">
-		<put name="portlet_content" value="/portlet/image_gallery_display/select_folder.jsp" />
-	</definition>
-
-	<definition name="portlet.image_gallery_display.view" extends="portlet.image_gallery_display">
-		<put name="portlet_content" value="/portlet/image_gallery_display/view.jsp" />
-	</definition>
-
-	<definition name="portlet.image_gallery_display.view_slide_show" extends="portlet.image_gallery_display">
-		<put name="portlet_content" value="/portlet/image_gallery_display/view_slide_show.jsp" />
 	</definition>
 
 	<!-- Image Uploader -->

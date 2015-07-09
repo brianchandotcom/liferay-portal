@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 String tabs2 = ParamUtil.getString(request, "tabs2", "version-history");
 
@@ -60,7 +60,7 @@ if (toFileEntryId > 0) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", strutsAction);
+portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
@@ -68,9 +68,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
-<portlet:actionURL var="editFileShortcutURL">
-	<portlet:param name="struts_action" value="/document_library/edit_file_shortcut" />
-</portlet:actionURL>
+<portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL" />
 
 <aui:form action="<%= editFileShortcutURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileShortcut();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -146,7 +144,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					title: '<liferay-ui:message arguments="site" key="select-x" />',
 
 					<portlet:renderURL var="selectGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/document_library/select_group" />
+						<portlet:param name="mvcPath" value="/html/portlet/document_library/select_group.jsp" />
 					</portlet:renderURL>
 
 					uri: '<%= selectGroupURL.toString() %>'
@@ -181,7 +179,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					title: '<liferay-ui:message arguments="file" key="select-x" />',
 
 					<portlet:renderURL var="selectFileEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/document_library/select_file_entry" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_entry" />
 					</portlet:renderURL>
 
 					uri: <portlet:namespace />createSelectFileEntryURL('<%= selectFileEntryURL.toString() %>')

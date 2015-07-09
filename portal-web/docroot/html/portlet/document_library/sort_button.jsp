@@ -34,7 +34,7 @@ if (orderByType.equals("asc")) {
 
 <aui:nav-item dropdown="<%= true %>" id="sortButtonContainer" label="sort-by">
 	<portlet:renderURL var="sortTitleURL">
-		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
@@ -45,7 +45,7 @@ if (orderByType.equals("asc")) {
 	<aui:nav-item href="<%= sortTitleURL %>" iconCssClass="icon-calendar" label="title" />
 
 	<portlet:renderURL var="sortDisplayDateURL">
-		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
@@ -56,7 +56,7 @@ if (orderByType.equals("asc")) {
 	<aui:nav-item href="<%= sortDisplayDateURL %>" iconCssClass="icon-calendar" label="create-date" />
 
 	<portlet:renderURL var="sortModifiedDateURL">
-		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
@@ -67,7 +67,7 @@ if (orderByType.equals("asc")) {
 	<aui:nav-item href="<%= sortModifiedDateURL %>" iconCssClass="icon-calendar" label="modified-date" />
 
 	<portlet:renderURL var="sortDownloadsURL">
-		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
@@ -78,7 +78,7 @@ if (orderByType.equals("asc")) {
 	<aui:nav-item href="<%= sortDownloadsURL %>" iconCssClass="icon-calendar" label="downloads" />
 
 	<portlet:renderURL var="sortSizeURL">
-		<portlet:param name="struts_action" value="/document_library/view" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />

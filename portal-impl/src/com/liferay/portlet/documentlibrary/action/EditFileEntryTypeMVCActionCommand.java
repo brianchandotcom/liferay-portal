@@ -14,19 +14,22 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -34,19 +37,15 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.Locale;
@@ -54,26 +53,37 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Alexander Chow
  * @author Sergio González
  */
-public class EditFileEntryTypeAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
+		"mvc.command.name=/document_library/edit_file_entry_type"
+	},
+	service = MVCActionCommand.class
+)
+public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteFileEntryType(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			actionRequest, "fileEntryTypeId");
+
+		DLFileEntryTypeServiceUtil.deleteFileEntryType(fileEntryTypeId);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -98,9 +108,14 @@ public class EditFileEntryTypeAction extends PortletAction {
 					PortalUtil.getPortletId(actionRequest) +
 						SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
 					PortletKeys.DOCUMENT_LIBRARY);
-			}
 
-			sendRedirect(actionRequest, actionResponse);
+				String redirect = PortalUtil.escapeRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
+
+				if (Validator.isNotNull(redirect)) {
+					actionResponse.sendRedirect(redirect);
+				}
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof DuplicateFileEntryTypeException ||
@@ -117,84 +132,16 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.document_library.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/document_library/error.jsp");
 			}
 			else if (e instanceof RequiredStructureException) {
 				SessionErrors.add(actionRequest, e.getClass());
-
-				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				throw e;
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		DLFileEntryType dlFileEntryType = null;
-
-		try {
-			long fileEntryTypeId = ParamUtil.getLong(
-				renderRequest, "fileEntryTypeId");
-
-			if (fileEntryTypeId > 0) {
-				dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
-					fileEntryTypeId);
-
-				renderRequest.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, dlFileEntryType);
-
-				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.fetchStructure(
-						dlFileEntryType.getGroupId(),
-						PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-						DLUtil.getDDMStructureKey(dlFileEntryType));
-
-				if (ddmStructure == null) {
-					ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-						dlFileEntryType.getGroupId(),
-						PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-						DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
-				}
-
-				renderRequest.setAttribute(
-					WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, ddmStructure);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryTypeException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.document_library.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.document_library.edit_file_entry_type"));
-	}
-
-	protected void deleteFileEntryType(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long fileEntryTypeId = ParamUtil.getLong(
-			actionRequest, "fileEntryTypeId");
-
-		DLFileEntryTypeServiceUtil.deleteFileEntryType(fileEntryTypeId);
 	}
 
 	protected long[] getLongArray(PortletRequest portletRequest, String name) {

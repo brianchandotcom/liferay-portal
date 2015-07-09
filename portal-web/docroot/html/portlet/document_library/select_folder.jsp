@@ -46,7 +46,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 	<aui:button-row>
 		<c:if test="<%= dlVisualizationHelper.isAddFolderButtonVisible() && DLFolderPermission.contains(permissionChecker, repositoryId, folderId, ActionKeys.ADD_FOLDER) %>">
 			<portlet:renderURL var="editFolderURL">
-				<portlet:param name="struts_action" value="/document_library/edit_folder" />
+				<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 				<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
@@ -70,7 +70,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library/select_folder");
+	portletURL.setParameter("mvcRenderCommandName", "/document_library/select_folder");
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 	portletURL.setParameter("ignoreRootFolder", Boolean.TRUE.toString());
 	%>
@@ -91,7 +91,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 			rowVar="row"
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/document_library/select_folder" />
+				<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
 				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 			</liferay-portlet:renderURL>

@@ -34,7 +34,7 @@ long folderId = fileEntry.getFolderId();
 if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library/view");
+	portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 
 	redirect = portletURL.toString();
@@ -88,9 +88,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 %>
 
-<portlet:actionURL var="editFileEntry">
-	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 <aui:form action="<%= editFileEntry %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -247,13 +245,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
 					<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
-						<portlet:actionURL var="discussionURL">
-							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
-						</portlet:actionURL>
+						<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
-						<portlet:resourceURL var="discussionPaginationURL">
-							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
-						</portlet:resourceURL>
+						<portlet:resourceURL id="invokeTaglibDiscussionPagination" var="discussionPaginationURL" />
 
 						<liferay-ui:discussion
 							className="<%= DLFileEntryConstants.getClassName() %>"
@@ -472,7 +466,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 								PortletURL viewFileEntryURL = renderResponse.createRenderURL();
 
-								viewFileEntryURL.setParameter("struts_action", "/document_library/view_file_entry");
+								viewFileEntryURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 								viewFileEntryURL.setParameter("redirect", currentURL);
 								viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
@@ -540,9 +534,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 									FileVersion curFileVersion = (FileVersion)fileVersions.get(0);
 								%>
 
-									<portlet:actionURL var="compareVersionsURL">
-										<portlet:param name="struts_action" value="/document_library/compare_versions" />
-									</portlet:actionURL>
+									<portlet:renderURL var="compareVersionsURL">
+										<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
+									</portlet:renderURL>
 
 									<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
 										<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />

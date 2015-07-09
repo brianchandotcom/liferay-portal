@@ -61,7 +61,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileE
 			portletURL.setParameter('folderId', '<%= folderId %>');
 			portletURL.setParameter('redirect', '<%= HtmlUtil.escape(redirect) %>');
 			portletURL.setParameter('repositoryId', '<%= repositoryId %>');
-			portletURL.setParameter('struts_action', '/document_library/edit_file_entry');
+			portletURL.setParameter('mvcRenderCommandName', '/document_library/edit_file_entry');
 
 			Liferay.Util.getOpener().location.href = portletURL.toString();
 

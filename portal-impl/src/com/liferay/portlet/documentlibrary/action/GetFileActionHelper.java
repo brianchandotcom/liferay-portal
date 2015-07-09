@@ -30,8 +30,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -50,82 +48,16 @@ import java.io.InputStream;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
- * @author Brian Wing Shun Chan
- * @author Jorge Ferrer
- * @author Charles May
- * @author Bruno Farache
+ * @author Iván Zaera
  */
-public class GetFileAction extends PortletAction {
+public class GetFileActionHelper {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
-
-		try {
-			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
-			long folderId = ParamUtil.getLong(actionRequest, "folderId");
-			String name = ParamUtil.getString(actionRequest, "name");
-			String title = ParamUtil.getString(actionRequest, "title");
-			String version = ParamUtil.getString(actionRequest, "version");
-
-			long fileShortcutId = ParamUtil.getLong(
-				actionRequest, "fileShortcutId");
-
-			String uuid = ParamUtil.getString(actionRequest, "uuid");
-
-			String targetExtension = ParamUtil.getString(
-				actionRequest, "targetExtension");
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			long groupId = ParamUtil.getLong(
-				actionRequest, "groupId", themeDisplay.getScopeGroupId());
-
-			getFile(
-				fileEntryId, folderId, name, title, version, fileShortcutId,
-				uuid, groupId, targetExtension, request, response);
-
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsfee, actionRequest,
-				actionResponse);
-		}
-		catch (PrincipalException pe) {
-			processPrincipalException(pe, request, response);
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, actionRequest, actionResponse);
-		}
-	}
-
-	@Override
-	public ActionForward strutsExecute(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public void processRequest(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -153,18 +85,16 @@ public class GetFileAction extends PortletAction {
 			getFile(
 				fileEntryId, folderId, name, title, version, fileShortcutId,
 				uuid, groupId, targetExtension, request, response);
-
-			return null;
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND, nsfee, request, response);
 		}
 		catch (PrincipalException pe) {
 			processPrincipalException(pe, request, response);
-
-			return null;
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);
-
-			return null;
 		}
 	}
 
@@ -298,11 +228,6 @@ public class GetFileAction extends PortletAction {
 			request, response, fileName, is, contentLength, contentType);
 	}
 
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
 	protected void processPrincipalException(
 			Throwable t, HttpServletRequest request,
 			HttpServletResponse response)
@@ -332,7 +257,5 @@ public class GetFileAction extends PortletAction {
 
 		response.sendRedirect(redirect);
 	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 }

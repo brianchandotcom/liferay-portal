@@ -45,7 +45,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 <aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
 	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 		<portlet:renderURL var="addFolderURL">
-			<portlet:param name="struts_action" value="/document_library/edit_folder" />
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
@@ -61,7 +61,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 
 	<c:if test="<%= ((folder == null) || folder.isSupportsShortcuts()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
 		<portlet:renderURL var="editFileShortcutURL">
-			<portlet:param name="struts_action" value="/document_library/edit_file_shortcut" />
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
@@ -72,7 +72,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 
 	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY)) %>">
 		<portlet:renderURL var="addRepositoryURL">
-			<portlet:param name="struts_action" value="/document_library/edit_repository" />
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
@@ -81,7 +81,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 
 	<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) && hasAddDocumentPermission && !fileEntryTypes.isEmpty() %>">
 		<portlet:renderURL var="editFileEntryURL">
-			<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
+			<portlet:param name="mvcPath" value="/html/portlet/document_library/upload_multiple_file_entries.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -94,7 +94,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 	<c:choose>
 		<c:when test="<%= hasAddDocumentPermission && (repositoryId != scopeGroupId) %>">
 			<portlet:renderURL var="editFileEntryURL">
-				<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+				<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -111,7 +111,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 			%>
 
 				<portlet:renderURL var="addFileEntryTypeURL">
-					<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

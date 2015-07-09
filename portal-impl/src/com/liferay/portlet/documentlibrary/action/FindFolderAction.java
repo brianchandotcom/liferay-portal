@@ -14,53 +14,37 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.struts.FindAction;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.struts.FindActionHelper;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindFolderAction extends FindAction {
+@OSGiBeanProperties(
+	property = {
+		"path=/document_library/find_folder",
+		"path=/image_gallery_display/find_folder"
+	},
+	service = StrutsAction.class
+)
+public class FindFolderAction extends BaseStrutsAction {
 
 	@Override
-	protected long getGroupId(long primaryKey) throws Exception {
-		Folder folder = DLAppLocalServiceUtil.getFolder(primaryKey);
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
 
-		return folder.getRepositoryId();
+		_findActionHelper.execute(request, response);
+
+		return null;
 	}
 
-	@Override
-	protected String getPrimaryKeyParameterName() {
-		return "folderId";
-	}
-
-	@Override
-	protected String getStrutsAction(
-		HttpServletRequest request, String portletId) {
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (rootPortletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-			return "/document_library_display/view";
-		}
-		else if (rootPortletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-			return "/image_gallery_display/view";
-		}
-
-		return "/document_library/view";
-	}
-
-	@Override
-	protected String[] initPortletIds() {
-		return new String[] {
-			PortletKeys.DOCUMENT_LIBRARY, PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-			PortletKeys.MEDIA_GALLERY_DISPLAY
-		};
-	}
+	private final FindActionHelper _findActionHelper =
+		new DLFindFolderActionHelper();
 
 }

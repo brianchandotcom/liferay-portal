@@ -173,8 +173,7 @@ else {
 	/>
 </c:if>
 
-<liferay-portlet:actionURL varImpl="editFileEntryURL">
-	<liferay-portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+<liferay-portlet:actionURL name="/document_library/edit_file_entry" varImpl="editFileEntryURL">
 	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </liferay-portlet:actionURL>
 
@@ -298,7 +297,7 @@ else {
 									title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 									<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-										<portlet:param name="struts_action" value='<%= "/document_library/select_folder" %>' />
+										<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
 									</liferay-portlet:renderURL>
 
 									uri: '<%= selectFolderURL.toString() %>'
@@ -506,7 +505,7 @@ else {
 	}
 
 	function <portlet:namespace />cancelCheckOut() {
-		submitForm(document.hrefFm, '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CANCEL_CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
+		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CANCEL_CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
 	}
 
 	function <portlet:namespace />checkIn() {
@@ -516,7 +515,7 @@ else {
 	}
 
 	function <portlet:namespace />checkOut() {
-		submitForm(document.hrefFm, '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
+		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
 	}
 
 	function <portlet:namespace />getSuggestionsContent() {

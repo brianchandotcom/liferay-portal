@@ -12,52 +12,50 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.action;
+package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.NoSuchRepositoryEntryException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.action.ActionUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
-public class ViewAction extends PortletAction {
+public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		try {
-			ActionUtil.getFolder(renderRequest);
+			ActionUtil.getFileEntry(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
+			if (e instanceof NoSuchFileEntryException ||
+				e instanceof NoSuchFileVersionException ||
+				e instanceof NoSuchRepositoryEntryException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.image_gallery_display.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward("portlet.image_gallery_display.view");
+		return getPath();
 	}
+
+	protected abstract String getPath();
 
 }

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
@@ -27,7 +27,7 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-boolean search = strutsAction.equals("/document_library/search");
+boolean search = mvcRenderCommandName.equals("/document_library/search");
 %>
 
 <aui:nav-bar>
@@ -112,7 +112,7 @@ boolean search = strutsAction.equals("/document_library/search");
 		<aui:nav-bar-search>
 			<div class="form-search">
 				<liferay-portlet:renderURL varImpl="searchURL">
-					<portlet:param name="struts_action" value="/document_library/search" />
+					<portlet:param name="mvcRenderCommandName" value="/document_library/search" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
@@ -159,7 +159,7 @@ boolean search = strutsAction.equals("/document_library/search");
 				},
 				id: '<portlet:namespace />openFileEntryTypeView',
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/view_file_entry_type" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
+				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/document_library/view_file_entry_type.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
 			}
 		);
 	}

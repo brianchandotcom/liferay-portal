@@ -112,7 +112,7 @@
 	<portlet>
 		<portlet-name>20</portlet-name>
 		<display-name>Documents and Media</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.documentlibrary.portlet.DLPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/document_library/configuration.jsp</value>
@@ -123,7 +123,7 @@
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/document_library/</value>
+			<value>/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>
@@ -150,14 +150,14 @@
 	<portlet>
 		<portlet-name>31</portlet-name>
 		<display-name>Media Gallery</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.imagegallerydisplay.portlet.IGDisplayPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/image_gallery_display/configuration.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/image_gallery_display/</value>
+			<value>/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>
@@ -483,14 +483,14 @@
 	<portlet>
 		<portlet-name>110</portlet-name>
 		<display-name>Documents and Media Display</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.documentlibrarydisplay.portlet.DLDisplayPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/document_library_display/configuration.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/document_library_display/</value>
+			<value>/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>
@@ -1303,14 +1303,14 @@
 	<portlet>
 		<portlet-name>199</portlet-name>
 		<display-name>Documents and Media Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.documentlibraryadmin.portlet.DLAdminPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/document_library_admin/configuration.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/document_library_admin/</value>
+			<value>/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>

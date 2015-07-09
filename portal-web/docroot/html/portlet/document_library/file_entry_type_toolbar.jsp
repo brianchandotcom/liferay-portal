@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "strutsAction", "/document_library/view_file_entry_type");
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/html/portlet/document_library/view_file_entry_type.jsp");
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
@@ -27,13 +27,13 @@ boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicF
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewFileEntryTypesURL">
-			<portlet:param name="struts_action" value="<%= strutsAction %>" />
+			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 			<portlet:param name="includeBasicFileEntryType" value="<%= String.valueOf(includeBasicFileEntryType) %>" />
 		</portlet:renderURL>
 
 		<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DOCUMENT_TYPE) %>">
 			<portlet:renderURL var="addFileEntryTypeURL">
-				<portlet:param name="struts_action" value="/document_library/edit_file_entry_type" />
+				<portlet:param name="mvcPath" value="/document_library/edit_file_entry_type" />
 				<portlet:param name="redirect" value="<%= viewFileEntryTypesURL %>" />
 			</portlet:renderURL>
 
@@ -44,7 +44,7 @@ boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicF
 	<aui:nav-bar-search>
 		<div class="form-search">
 			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="struts_action" value="<%= strutsAction %>" />
+				<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 			</liferay-portlet:renderURL>
 
 			<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">

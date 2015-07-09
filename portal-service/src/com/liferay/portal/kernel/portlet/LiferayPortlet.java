@@ -98,14 +98,13 @@ public class LiferayPortlet extends GenericPortlet {
 				addSuccessMessage(actionRequest, actionResponse);
 			}
 
-			if (!SessionMessages.contains(
+			if (emptySessionMessages || isAlwaysSendRedirect() ||
+				SessionMessages.contains(
 					actionRequest,
 					PortalUtil.getPortletId(actionRequest) +
 						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT)) {
 
-				if (emptySessionMessages || isAlwaysSendRedirect()) {
-					sendRedirect(actionRequest, actionResponse);
-				}
+				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 		catch (PortletException pe) {
@@ -440,6 +439,14 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 
 		int sessionMessagesSize = SessionMessages.size(actionRequest);
+
+		if (SessionMessages.contains(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA)) {
+
+			sessionMessagesSize--;
+		}
 
 		if (SessionMessages.contains(
 				actionRequest,

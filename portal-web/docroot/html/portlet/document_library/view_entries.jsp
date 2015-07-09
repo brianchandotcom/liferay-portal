@@ -51,7 +51,7 @@ String displayStyle = GetterUtil.getString((String)request.getAttribute("view.js
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/document_library/view");
+portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -204,8 +204,7 @@ dlSearchContainer.setResults(results);
 			<c:when test="<%= subscribed %>">
 				<c:choose>
 					<c:when test="<%= unsubscribable %>">
-						<portlet:actionURL var="unsubscribeURL">
-							<portlet:param name="struts_action" value='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' />
+						<portlet:actionURL name='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' var="unsubscribeURL">
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 
@@ -236,8 +235,7 @@ dlSearchContainer.setResults(results);
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' />
+				<portlet:actionURL name='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' var="subscribeURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 
@@ -293,7 +291,7 @@ dlSearchContainer.setResults(results);
 								<%
 								PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
-								tempRowURL.setParameter("struts_action", "/document_library/view_file_entry");
+								tempRowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 								tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 								tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
@@ -331,7 +329,7 @@ dlSearchContainer.setResults(results);
 
 						PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
-						tempRowURL.setParameter("struts_action", "/document_library/view");
+						tempRowURL.setParameter("mvcRenderCommandName", "/document_library/view");
 						tempRowURL.setParameter("redirect", currentURL);
 						tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 
@@ -423,7 +421,7 @@ dlSearchContainer.setResults(results);
 
 									PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-									rowURL.setParameter("struts_action", "/document_library/view_file_entry");
+									rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 									rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 									rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 									%>
@@ -510,7 +508,7 @@ dlSearchContainer.setResults(results);
 
 									PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-									rowURL.setParameter("struts_action", "/document_library/view");
+									rowURL.setParameter("mvcRenderCommandName", "/document_library/view");
 									rowURL.setParameter("redirect", currentURL);
 									rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 									%>

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 
 import javax.portlet.PortletPreferences;
@@ -52,25 +52,25 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		if (displayStyle == LIST_ICON) {
 			portletPreferences.setValue(
 				"displayStyle",
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX +
 					"language-icon-ftl");
 		}
 		else if (displayStyle == LIST_LONG_TEXT) {
 			portletPreferences.setValue(
 				"displayStyle",
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX +
 					"language-long-text-ftl");
 		}
 		else if (displayStyle == LIST_SHORT_TEXT) {
 			portletPreferences.setValue(
 				"displayStyle",
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX +
 					"language-short-text-ftl");
 		}
 		else if (displayStyle == SELECT_BOX) {
 			portletPreferences.setValue(
 				"displayStyle",
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX +
 					"language-select-box-ftl");
 		}
 		else {

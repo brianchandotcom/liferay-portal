@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../journal/journal-api" />
+	<property name="import.shared" value="../journal/journal-api,../portlet-display-template/portlet-display-template" />
 
 	<property name="osgi.ide.dependencies" value="rome.jar" />
 

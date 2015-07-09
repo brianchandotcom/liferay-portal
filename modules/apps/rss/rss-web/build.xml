@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="import.shared" value="../portlet-display-template/portlet-display-template" />
+
 	<property name="osgi.ide.dependencies" value="commons-httpclient.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />

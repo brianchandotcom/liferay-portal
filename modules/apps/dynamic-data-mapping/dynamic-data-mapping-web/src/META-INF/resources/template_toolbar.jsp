@@ -93,7 +93,9 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 					}
 				}
 				else {
-					templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
+					PortletDisplayTemplate portletDisplayTemplate = _getPortletDisplayTemplate();
+
+					templateHandlers = portletDisplayTemplate.getPortletDisplayTemplateHandlers();
 
 					Iterator<TemplateHandler> itr = templateHandlers.iterator();
 

@@ -14,13 +14,13 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -93,7 +93,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		if (Validator.isNull(displayStyle) &&
 			(portletDisplayDDMTemplate != null)) {
 
-			displayStyle = PortletDisplayTemplateUtil.getDisplayStyle(
+			displayStyle = PortletDisplayTemplateManagerUtil.getDisplayStyle(
 				portletDisplayDDMTemplate.getTemplateKey());
 		}
 
@@ -124,7 +124,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		}
 
 		DDMTemplate portletDisplayDDMTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
 				getDisplayStyleGroupId(), PortalUtil.getClassNameId(_className),
 				displayStyle, true);
 

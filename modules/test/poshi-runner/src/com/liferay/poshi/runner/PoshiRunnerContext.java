@@ -201,6 +201,7 @@ public class PoshiRunnerContext {
 
 		PoshiRunnerValidation.validate();
 
+		_writeTestCaseMethodGroupProperties();
 		_writeTestCaseMethodNamesProperties();
 		_writeTestGeneratedProperties();
 	}
@@ -600,6 +601,89 @@ public class PoshiRunnerContext {
 		}
 
 		_seleniumParameterCounts.put("open", 1);
+	}
+
+	private static void _writeTestCaseMethodGroupProperties() throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		for (String productName : _productNames) {
+			if (_productClassCommandNames.containsKey(productName)) {
+				Set<String> classCommandNames = _productClassCommandNames.get(
+					productName);
+
+				int groupsSize =
+					(classCommandNames.size() + 99) / 100;
+
+				List<List<String>> classCommandNameGroups = new ArrayList(
+					groupsSize);
+
+				for (int i = 0; i < groupsSize; i++) {
+					classCommandNameGroups.add(new ArrayList());
+				}
+
+				int j = 0;
+
+				Iterator<String> iterator = classCommandNames.iterator();
+
+				while (iterator.hasNext()) {
+					List classCommandNameGroup = classCommandNameGroups.get(
+						j++ % groupsSize);
+
+					classCommandNameGroup.add(iterator.next());
+				}
+
+				for (int i = 0; i < groupsSize; i++) {
+					String productNameKey =
+						productName + "_TEST_CASE_METHOD_GROUP_";
+
+					productNameKey = StringUtil.upperCase(
+						productNameKey.replace("-", "_"));
+
+					sb.append(productNameKey);
+					sb.append(i);
+					sb.append("=");
+
+					List<String> classCommandNameGroup =
+						classCommandNameGroups.get(i);
+
+					for (String testCaseClassCommandName :
+							classCommandNameGroup) {
+
+						sb.append(testCaseClassCommandName);
+						sb.append(" ");
+					}
+
+					if (!classCommandNameGroup.isEmpty()) {
+						sb.setLength(sb.length() - 1);
+
+					sb.append("\n\n");
+					}
+				}
+
+				String productGroupsKey =
+					productName + "_TEST_CASE_METHOD_GROUPS";
+
+				productGroupsKey = StringUtil.upperCase(
+					productGroupsKey.replace("-", "_"));
+
+				sb.append(productGroupsKey);
+				sb.append("=");
+
+				for (int i = 0; i < groupsSize; i++) {
+					sb.append(i);
+					sb.append(" ");
+				}
+
+				if (groupsSize > 0) {
+					sb.setLength(sb.length() - 1);
+				}
+
+				sb.append("\n\n");
+			}
+		}
+
+		FileUtil.write(
+			"test.case.method.names.groups.properties", sb.toString());
 	}
 
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {

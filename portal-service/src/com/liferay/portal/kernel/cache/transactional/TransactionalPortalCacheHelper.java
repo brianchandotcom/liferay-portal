@@ -227,6 +227,11 @@ public class TransactionalPortalCacheHelper {
 			AggregatedPortalCacheListener.isRemoteInvoke());
 	}
 
+	protected static class PortalCacheMap
+		extends HashMap
+			<PortalCache<? extends Serializable, ?>, UncommittedBuffer> {
+	}
+
 	private static boolean _isTransactionalCacheEnabled() {
 		if (_transactionalCacheEnabled == null) {
 			_transactionalCacheEnabled = GetterUtil.getBoolean(
@@ -268,11 +273,6 @@ public class TransactionalPortalCacheHelper {
 				new ArrayList<PortalCacheMap>());
 
 	private volatile static Boolean _transactionalCacheEnabled;
-
-	private static class PortalCacheMap
-		extends HashMap
-			<PortalCache<? extends Serializable, ?>, UncommittedBuffer> {
-	}
 
 	private static class UncommittedBuffer {
 

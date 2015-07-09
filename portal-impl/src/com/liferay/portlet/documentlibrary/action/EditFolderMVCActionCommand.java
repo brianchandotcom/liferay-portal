@@ -142,8 +142,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
-
-			forceSendRedirect(actionRequest);
 		}
 	}
 

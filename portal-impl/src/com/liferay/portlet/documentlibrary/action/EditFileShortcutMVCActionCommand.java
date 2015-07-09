@@ -69,8 +69,6 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			hideDefaultSuccessMessage(actionRequest);
-
-			forceSendRedirect(actionRequest);
 		}
 		else {
 			DLAppServiceUtil.deleteFileShortcut(fileShortcutId);

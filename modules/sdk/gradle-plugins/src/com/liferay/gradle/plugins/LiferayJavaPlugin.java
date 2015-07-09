@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
+import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
@@ -83,6 +84,7 @@ import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
@@ -123,6 +125,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String FORMAT_XSD_TASK_NAME = "formatXSD";
 
 	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
+
+	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
 
 	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
 
@@ -407,12 +411,67 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return initGradleTask;
 	}
 
+	protected Jar addTaskJarSources(Project project) {
+		final Jar jar = GradleUtil.addTask(
+			project, JAR_SOURCES_TASK_NAME, Jar.class);
+
+		jar.setClassifier("sources");
+		jar.setGroup(BasePlugin.BUILD_GROUP);
+		jar.setDescription(
+			"Assembles a jar archive containing the main source files.");
+		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+
+		File docrootDir = project.file("docroot");
+
+		if (docrootDir.exists()) {
+			jar.from(docrootDir);
+		}
+		else {
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+			jar.from(sourceSet.getAllSource());
+		}
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			PatchTask.class,
+			new Action<PatchTask>() {
+
+				@Override
+				public void execute(final PatchTask patchTask) {
+					jar.from(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return patchTask.getPatchesDir();
+							}
+
+						},
+						new Closure<Void>(null) {
+
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								copySpec.into("META-INF/patches");
+							}
+
+						});
+				}
+
+			});
+
+		return jar;
+	}
+
 	protected void addTasks(Project project) {
 		addTaskDeploy(project);
 		addTaskExpandPortalWeb(project);
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
+		addTaskJarSources(project);
 		addTaskSetupArquillian(project);
 		addTaskSetupTestableTomcat(project);
 		addTaskStartTestableTomcat(project);

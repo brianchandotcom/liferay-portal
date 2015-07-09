@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -45,7 +44,7 @@ public class CommentsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public CommentsUserNotificationHandler() {
-		setPortletId(PortletKeys.COMMENTS);
+		setPortletId(CommentsPortletKeys.COMMENTS);
 	}
 
 	protected MBDiscussion fetchDiscussion(JSONObject jsonObject) {

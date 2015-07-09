@@ -42,6 +42,20 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-build-selenium">
+		<sequential>
+			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-source-formatter">
+		<sequential>
+			<antcall target="test-package" inheritAll="false">
+				<param name="test.package" value="com.liferay.source.formatter" />
+			</antcall>
+		</sequential>
+	</macrodef>
+
 	<target name="integration-mysql">
 		<if>
 			<not>
@@ -80,6 +94,23 @@
 				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
 					<property name="test.plugin.group.index" value="${jenkins.axis.variable}" />
 				</ant>
+			</then>
+		</if>
+	</target>
+
+	<target name="portal-web">
+		<if>
+			<not>
+				<equals arg1="${jenkins.axis.variable}" arg2="default" />
+			</not>
+			<then>
+				<prepare-test-build />
+
+				<run-build-selenium />
+
+				<run-source-formatter />
+
+				<merge-test-results />
 			</then>
 		</if>
 	</target>

@@ -628,6 +628,14 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testray-case-defect">
+		<sequential>
+			<condition property="testray.case.defect" value="${known.issues}" else="">
+				<isset property="known.issues" />
+			</condition>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testray-components">
 		<sequential>
 			<property file="${basedir}/test.run.properties" />
@@ -2214,6 +2222,7 @@ go]]></replacevalue>
 				<property name="testray.testcase.name" value="${poshi.test.name}" />
 
 				<get-testcase-property property.name="description" />
+				<get-testcase-property property.name="known.issues" />
 				<get-testcase-property property.name="priority" />
 
 				<property name="testray.testcase.priority" value="${priority}" />
@@ -2224,6 +2233,7 @@ go]]></replacevalue>
 			</then>
 		</if>
 
+		<get-testray-case-defect />
 		<get-testray-components />
 		<get-testray-logs />
 		<get-testray-project-name />
@@ -2271,6 +2281,7 @@ go]]></replacevalue>
 		<property name="test.case.properties">
 			<![CDATA[
 				<properties>
+					<property name="testray.case.defect" value="${testray.case.defect}" />
 					<property name="testray.component.names" value="${testray.component.names}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
 					<property name="testray.team.name" value="${testray.team.name}" />

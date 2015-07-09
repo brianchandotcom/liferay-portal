@@ -37,11 +37,11 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		_remoteInvokeThreadLocal.set(remoteInvoke);
 	}
 
-	public void addCacheListener(PortalCacheListener<K, V> cacheListener) {
-		addCacheListener(cacheListener, PortalCacheListenerScope.ALL);
+	public void addPortalCacheListener(PortalCacheListener<K, V> cacheListener) {
+		addPortalCacheListener(cacheListener, PortalCacheListenerScope.ALL);
 	}
 
-	public void addCacheListener(
+	public void addPortalCacheListener(
 		PortalCacheListener<K, V> cacheListener,
 		PortalCacheListenerScope cacheListenerScope) {
 
@@ -61,7 +61,7 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		}
 	}
 
-	public Map<PortalCacheListener<K, V>, PortalCacheListenerScope> getCacheListeners() {
+	public Map<PortalCacheListener<K, V>, PortalCacheListenerScope> getPortalCacheListeners() {
 		return Collections.unmodifiableMap(_cacheListeners);
 	}
 
@@ -169,7 +169,7 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		}
 	}
 
-	public void removeCacheListener(PortalCacheListener<K, V> cacheListener) {
+	public void removePortalCacheListener(PortalCacheListener<K, V> cacheListener) {
 		cacheListener.dispose();
 
 		_cacheListeners.remove(cacheListener);

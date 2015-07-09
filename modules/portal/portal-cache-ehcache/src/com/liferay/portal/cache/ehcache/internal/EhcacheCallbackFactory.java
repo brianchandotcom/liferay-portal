@@ -47,7 +47,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 	public static final CallbackFactory INSTANCE = new EhcacheCallbackFactory();
 
 	@Override
-	public PortalCacheBootstrapLoader createBootstrapLoader(Properties properties) {
+	public PortalCacheBootstrapLoader createPortalCacheBootstrapLoader(Properties properties) {
 		String className = properties.getProperty(
 			EhcacheConstants.BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME);
 
@@ -75,7 +75,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 	}
 
 	@Override
-	public <K extends Serializable, V> PortalCacheListener<K, V> createCacheListener(
+	public <K extends Serializable, V> PortalCacheListener<K, V> createPortalCacheListener(
 		Properties properties) {
 
 		String className = properties.getProperty(
@@ -112,7 +112,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 	}
 
 	@Override
-	public PortalCacheManagerListener createCacheManagerListener(
+	public PortalCacheManagerListener createPortalCacheManagerListener(
 		Properties properties) {
 
 		String className = properties.getProperty(

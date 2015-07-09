@@ -33,12 +33,12 @@ public class ClusterLinkCallbackFactory implements CallbackFactory {
 		new ClusterLinkCallbackFactory();
 
 	@Override
-	public PortalCacheBootstrapLoader createBootstrapLoader(Properties properties) {
+	public PortalCacheBootstrapLoader createPortalCacheBootstrapLoader(Properties properties) {
 		return new ClusterLinkPortalCacheBootstrapLoader(properties);
 	}
 
 	@Override
-	public <K extends Serializable, V> PortalCacheListener<K, V> createCacheListener(
+	public <K extends Serializable, V> PortalCacheListener<K, V> createPortalCacheListener(
 		Properties properties) {
 
 		return (PortalCacheListener<K, V>)
@@ -46,7 +46,7 @@ public class ClusterLinkCallbackFactory implements CallbackFactory {
 	}
 
 	@Override
-	public PortalCacheManagerListener createCacheManagerListener(
+	public PortalCacheManagerListener createPortalCacheManagerListener(
 		Properties properties) {
 
 		throw new UnsupportedOperationException();

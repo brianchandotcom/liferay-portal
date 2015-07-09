@@ -17,9 +17,9 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
-	<classpathentry kind="lib" path="lib/com.liferay.item.selector.api.jar" />
-	<classpathentry kind="lib" path="lib/com.liferay.item.selector.criteria.api.jar" />
-	<classpathentry kind="lib" path="lib/com.liferay.item.selector.web.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.application.list.api.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.blogs.web.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.osgi.service.tracker.map.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />

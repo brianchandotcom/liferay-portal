@@ -31,8 +31,8 @@ public class PortalCacheConfiguration {
 	public PortalCacheConfiguration(
 		String portalCacheName,
 		Map<CallbackConfiguration, PortalCacheListenerScope>
-			cacheListenerConfigurations,
-		CallbackConfiguration bootstrapLoaderConfiguration) {
+			portalCacheListenerConfigurations,
+		CallbackConfiguration portalCacheBootstrapLoaderConfiguration) {
 
 		if (portalCacheName == null) {
 			throw new NullPointerException("Portal cache name is null");
@@ -40,25 +40,25 @@ public class PortalCacheConfiguration {
 
 		_portalCacheName = portalCacheName;
 
-		if (cacheListenerConfigurations == null) {
-			_cacheListenerConfigurations = Collections.emptyMap();
+		if (portalCacheListenerConfigurations == null) {
+			_portalCacheListenerConfigurations = Collections.emptyMap();
 		}
 		else {
-			_cacheListenerConfigurations = new HashMap<>(
-				cacheListenerConfigurations);
+			_portalCacheListenerConfigurations = new HashMap<>(
+				portalCacheListenerConfigurations);
 		}
 
-		_bootstrapLoaderConfiguration = bootstrapLoaderConfiguration;
+		_portalCacheBootstrapLoaderConfiguration = portalCacheBootstrapLoaderConfiguration;
 	}
 
 	public CallbackConfiguration getPortalCacheBootstrapLoaderConfiguration() {
-		return _bootstrapLoaderConfiguration;
+		return _portalCacheBootstrapLoaderConfiguration;
 	}
 
 	public Map<CallbackConfiguration, PortalCacheListenerScope>
 		getPortalCacheListenerConfigurations() {
 
-		return Collections.unmodifiableMap(_cacheListenerConfigurations);
+		return Collections.unmodifiableMap(_portalCacheListenerConfigurations);
 	}
 
 	public String getPortalCacheName() {
@@ -69,13 +69,13 @@ public class PortalCacheConfiguration {
 		String portalCacheName) {
 
 		return new PortalCacheConfiguration(
-			portalCacheName, _cacheListenerConfigurations,
-			_bootstrapLoaderConfiguration);
+			portalCacheName, _portalCacheListenerConfigurations,
+			_portalCacheBootstrapLoaderConfiguration);
 	}
 
-	private final CallbackConfiguration _bootstrapLoaderConfiguration;
+	private final CallbackConfiguration _portalCacheBootstrapLoaderConfiguration;
 	private final Map<CallbackConfiguration, PortalCacheListenerScope>
-		_cacheListenerConfigurations;
+		_portalCacheListenerConfigurations;
 	private final String _portalCacheName;
 
 }

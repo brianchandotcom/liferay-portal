@@ -23,69 +23,69 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class AggregatedPortalCacheManagerListener implements PortalCacheManagerListener {
 
-	public boolean addPortalCacheListener(PortalCacheManagerListener cacheManagerListener) {
-		if (cacheManagerListener == null) {
+	public boolean addPortalCacheListener(PortalCacheManagerListener portalCacheManagerListener) {
+		if (portalCacheManagerListener == null) {
 			return false;
 		}
 
-		return _cacheManagerListeners.add(cacheManagerListener);
+		return _portalCacheManagerListeners.add(portalCacheManagerListener);
 	}
 
 	public void clearAll() {
-		_cacheManagerListeners.clear();
+		_portalCacheManagerListeners.clear();
 	}
 
 	@Override
 	public void dispose() throws PortalCacheException {
-		for (PortalCacheManagerListener cacheManagerListener :
-				_cacheManagerListeners) {
+		for (PortalCacheManagerListener portalCacheManagerListener :
+				_portalCacheManagerListeners) {
 
-			cacheManagerListener.dispose();
+			portalCacheManagerListener.dispose();
 		}
 	}
 
 	public Set<PortalCacheManagerListener> getPortalCacheManagerListeners() {
-		return Collections.unmodifiableSet(_cacheManagerListeners);
+		return Collections.unmodifiableSet(_portalCacheManagerListeners);
 	}
 
 	@Override
 	public void init() throws PortalCacheException {
-		for (PortalCacheManagerListener cacheManagerListener :
-				_cacheManagerListeners) {
+		for (PortalCacheManagerListener portalCacheManagerListener :
+				_portalCacheManagerListeners) {
 
-			cacheManagerListener.init();
+			portalCacheManagerListener.init();
 		}
 	}
 
 	@Override
 	public void notifyPortalCacheAdded(String portalCacheName) {
-		for (PortalCacheManagerListener cacheManagerListener :
-				_cacheManagerListeners) {
+		for (PortalCacheManagerListener portalCacheManagerListener :
+				_portalCacheManagerListeners) {
 
-			cacheManagerListener.notifyPortalCacheAdded(portalCacheName);
+			portalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 		}
 	}
 
 	@Override
 	public void notifyPortalCacheRemoved(String portalCacheName) {
-		for (PortalCacheManagerListener cacheManagerListener :
-				_cacheManagerListeners) {
+		for (PortalCacheManagerListener portalCacheManagerListener :
+				_portalCacheManagerListeners) {
 
-			cacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
+			portalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 		}
 	}
 
 	public boolean removePortalCacheListener(
-		PortalCacheManagerListener cacheManagerListener) {
+		PortalCacheManagerListener portalCacheManagerListener) {
 
-		if (cacheManagerListener == null) {
+		if (portalCacheManagerListener == null) {
 			return false;
 		}
 
-		return _cacheManagerListeners.remove(cacheManagerListener);
+		return _portalCacheManagerListeners.remove(portalCacheManagerListener);
 	}
 
-	private final Set<PortalCacheManagerListener> _cacheManagerListeners =
+	private final Set<PortalCacheManagerListener> _portalCacheManagerListeners =
 		new CopyOnWriteArraySet<>();
 
 }

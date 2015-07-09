@@ -28,12 +28,12 @@ public class EhcachePortalCacheConfiguration extends PortalCacheConfiguration {
 	public EhcachePortalCacheConfiguration(
 		String portalCacheName,
 		Map<CallbackConfiguration, PortalCacheListenerScope>
-			cacheListenerConfigurations,
+			portalCacheListenerConfigurations,
 		CallbackConfiguration bootstrapLoaderConfiguration,
 		boolean requireSerialization) {
 
 		super(
-			portalCacheName, cacheListenerConfigurations,
+			portalCacheName, portalCacheListenerConfigurations,
 			bootstrapLoaderConfiguration);
 
 		_requireSerialization = requireSerialization;

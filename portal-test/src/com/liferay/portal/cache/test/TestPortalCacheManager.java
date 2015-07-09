@@ -70,7 +70,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 			_testPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
+			aggregatedPortalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -96,7 +96,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 			testPortalCache.removeAll();
 		}
 
-		aggregatedCacheManagerListener.dispose();
+		aggregatedPortalCacheManagerListener.dispose();
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 
 		testPortalCache.removeAll();
 
-		aggregatedCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
+		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	protected void initPortalCacheManager() {
 		_testPortalCaches = new ConcurrentHashMap<>();
 
-		aggregatedCacheManagerListener.init();
+		aggregatedPortalCacheManagerListener.init();
 	}
 
 	private ConcurrentMap<String, TestPortalCache<K, V>> _testPortalCaches;

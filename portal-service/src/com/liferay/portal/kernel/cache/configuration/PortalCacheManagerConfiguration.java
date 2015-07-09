@@ -26,16 +26,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortalCacheManagerConfiguration {
 
 	public PortalCacheManagerConfiguration(
-		Set<CallbackConfiguration> cacheManagerListenerConfigurations,
+		Set<CallbackConfiguration> portalCacheManagerListenerConfigurations,
 		PortalCacheConfiguration defaultPortalCacheConfiguration,
 		Set<PortalCacheConfiguration> portalCacheConfigurations) {
 
-		if (cacheManagerListenerConfigurations == null) {
-			_cacheManagerListenerConfigurations = Collections.emptySet();
+		if (portalCacheManagerListenerConfigurations == null) {
+			_portalCacheManagerListenerConfigurations = Collections.emptySet();
 		}
 		else {
-			_cacheManagerListenerConfigurations = new HashSet<>(
-				cacheManagerListenerConfigurations);
+			_portalCacheManagerListenerConfigurations = new HashSet<>(
+				portalCacheManagerListenerConfigurations);
 		}
 
 		_defaultPortalCacheConfiguration = defaultPortalCacheConfiguration;
@@ -56,7 +56,7 @@ public class PortalCacheManagerConfiguration {
 	public Set<CallbackConfiguration>
 		getPortalCacheManagerListenerConfigurations() {
 
-		return Collections.unmodifiableSet(_cacheManagerListenerConfigurations);
+		return Collections.unmodifiableSet(_portalCacheManagerListenerConfigurations);
 	}
 
 	public PortalCacheConfiguration getDefaultPortalCacheConfiguration() {
@@ -82,7 +82,7 @@ public class PortalCacheManagerConfiguration {
 	}
 
 	private final Set<CallbackConfiguration>
-		_cacheManagerListenerConfigurations;
+		_portalCacheManagerListenerConfigurations;
 	private final PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private final Map<String, PortalCacheConfiguration>
 		_portalCacheConfigurations;

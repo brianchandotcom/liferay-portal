@@ -26,14 +26,14 @@ public class PortalCacheManagerEventListener
 	implements CacheManagerEventListener {
 
 	public PortalCacheManagerEventListener(
-		PortalCacheManagerListener cacheManagerListener) {
+		PortalCacheManagerListener portalCacheManagerListener) {
 
-		_cacheManagerListener = cacheManagerListener;
+		_portalCacheManagerListener = portalCacheManagerListener;
 	}
 
 	@Override
 	public void dispose() {
-		_cacheManagerListener.dispose();
+		_portalCacheManagerListener.dispose();
 	}
 
 	@Override
@@ -49,12 +49,11 @@ public class PortalCacheManagerEventListener
 		PortalCacheManagerEventListener portalCacheManagerEventListener =
 			(PortalCacheManagerEventListener)obj;
 
-		return _cacheManagerListener.equals(
-			portalCacheManagerEventListener._cacheManagerListener);
+		return _portalCacheManagerListener.equals(portalCacheManagerEventListener._portalCacheManagerListener);
 	}
 
 	public PortalCacheManagerListener getCacheManagerListener() {
-		return _cacheManagerListener;
+		return _portalCacheManagerListener;
 	}
 
 	@Override
@@ -64,24 +63,24 @@ public class PortalCacheManagerEventListener
 
 	@Override
 	public int hashCode() {
-		return _cacheManagerListener.hashCode();
+		return _portalCacheManagerListener.hashCode();
 	}
 
 	@Override
 	public void init() {
-		_cacheManagerListener.init();
+		_portalCacheManagerListener.init();
 	}
 
 	@Override
 	public void notifyCacheAdded(String portalCacheName) {
-		_cacheManagerListener.notifyPortalCacheAdded(portalCacheName);
+		_portalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 	}
 
 	@Override
 	public void notifyCacheRemoved(String portalCacheName) {
-		_cacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
+		_portalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
-	private final PortalCacheManagerListener _cacheManagerListener;
+	private final PortalCacheManagerListener _portalCacheManagerListener;
 
 }

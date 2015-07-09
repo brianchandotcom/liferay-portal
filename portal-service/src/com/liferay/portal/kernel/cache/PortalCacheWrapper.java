@@ -63,16 +63,16 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	@Override
-	public void registerPortalCacheListener(PortalCacheListener<K, V> cacheListener) {
-		portalCache.registerPortalCacheListener(cacheListener);
+	public void registerPortalCacheListener(PortalCacheListener<K, V> portalCacheListener) {
+		portalCache.registerPortalCacheListener(portalCacheListener);
 	}
 
 	@Override
 	public void registerPortalCacheListener(
-		PortalCacheListener<K, V> cacheListener,
-		PortalCacheListenerScope cacheListenerScope) {
+		PortalCacheListener<K, V> portalCacheListener,
+		PortalCacheListenerScope portalCacheListenerScope) {
 
-		portalCache.registerPortalCacheListener(cacheListener, cacheListenerScope);
+		portalCache.registerPortalCacheListener(portalCacheListener, portalCacheListenerScope);
 	}
 
 	@Override
@@ -90,8 +90,8 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	@Override
-	public void unregisterPortalCacheListener(PortalCacheListener<K, V> cacheListener) {
-		portalCache.unregisterPortalCacheListener(cacheListener);
+	public void unregisterPortalCacheListener(PortalCacheListener<K, V> portalCacheListener) {
+		portalCache.unregisterPortalCacheListener(portalCacheListener);
 	}
 
 	@Override

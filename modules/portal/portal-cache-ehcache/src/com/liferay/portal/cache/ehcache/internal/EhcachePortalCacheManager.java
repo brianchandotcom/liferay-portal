@@ -244,7 +244,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		cacheManagerEventListenerRegistry.registerListener(
 			new PortalCacheManagerEventListener(
-				aggregatedCacheManagerListener));
+				aggregatedPortalCacheManagerListener));
 
 		if (GetterUtil.getBoolean(
 				props.get(

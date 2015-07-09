@@ -54,12 +54,12 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public void reconfigurePortalCaches(URL configurationURL);
 
 	public boolean registerPortalCacheManagerListener(
-		PortalCacheManagerListener cacheManagerListener);
+		PortalCacheManagerListener portalCacheManagerListener);
 
 	public void removePortalCache(String portalCacheName);
 
 	public boolean unregisterPortalCacheManagerListener(
-		PortalCacheManagerListener cacheManagerListener);
+		PortalCacheManagerListener portalCacheManagerListener);
 
 	public void unregisterPortalCacheManagerListeners();
 

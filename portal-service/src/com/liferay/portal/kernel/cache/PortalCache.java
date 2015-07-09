@@ -47,11 +47,11 @@ public interface PortalCache<K extends Serializable, V> {
 	@Proxy
 	public void put(K key, V value, int timeToLive);
 
-	public void registerPortalCacheListener(PortalCacheListener<K, V> cacheListener);
+	public void registerPortalCacheListener(PortalCacheListener<K, V> portalCacheListener);
 
 	public void registerPortalCacheListener(
-		PortalCacheListener<K, V> cacheListener,
-		PortalCacheListenerScope cacheListenerScope);
+		PortalCacheListener<K, V> portalCacheListener,
+		PortalCacheListenerScope portalCacheListenerScope);
 
 	@Proxy
 	public void remove(K key);
@@ -59,7 +59,7 @@ public interface PortalCache<K extends Serializable, V> {
 	@Proxy
 	public void removeAll();
 
-	public void unregisterPortalCacheListener(PortalCacheListener<K, V> cacheListener);
+	public void unregisterPortalCacheListener(PortalCacheListener<K, V> portalCacheListener);
 
 	public void unregisterPortalCacheListeners();
 

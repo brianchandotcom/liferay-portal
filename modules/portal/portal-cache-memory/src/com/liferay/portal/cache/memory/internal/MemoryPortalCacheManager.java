@@ -78,7 +78,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			_memoryPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
+			aggregatedPortalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -104,7 +104,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			memoryPortalCache.destroy();
 		}
 
-		aggregatedCacheManagerListener.dispose();
+		aggregatedPortalCacheManagerListener.dispose();
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 		memoryPortalCache.destroy();
 
-		aggregatedCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
+		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		_memoryPortalCaches = new ConcurrentHashMap<>(
 			_cacheManagerInitialCapacity);
 
-		aggregatedCacheManagerListener.init();
+		aggregatedPortalCacheManagerListener.init();
 	}
 
 	protected volatile Props props;

@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="jericho-html" org="net.htmlparser.jericho" rev="3.1" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>

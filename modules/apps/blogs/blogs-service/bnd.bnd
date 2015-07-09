@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.blogs.service
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	@../../../../lib/portal/jericho-html.jar
+	@lib/jericho-html.jar

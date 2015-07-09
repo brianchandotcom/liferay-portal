@@ -191,16 +191,17 @@ public class JniSassCompiler implements SassCompiler {
 			else {
 				modifySourceMap = true;
 
-				String fileName = inputFileName.substring(
-					inputFileName.lastIndexOf("/"));
-
 				tempFile = new File(parentFile.getCanonicalPath(), "tmp.scss");
 
 				if ((sourceMapFileName == null) ||
 					sourceMapFileName.equals("")) {
 
+					String outputFileName = getOutputFileName(
+						inputFileName.substring(
+							inputFileName.lastIndexOf("/")));
+
 					sourceMapFileName =
-						parentFile.getPath() + fileName + ".map";
+						parentFile.getPath() + outputFileName + ".map";
 				}
 			}
 
@@ -214,7 +215,7 @@ public class JniSassCompiler implements SassCompiler {
 
 			if (modifySourceMap) {
 				String fileName = inputFileName.substring(
-					inputFileName.lastIndexOf("/"));
+					inputFileName.lastIndexOf("/") + 1);
 				File sourceMapFile = new File(sourceMapFileName);
 				String sourceMapContent = new String(
 					Files.readAllBytes(sourceMapFile.toPath()));

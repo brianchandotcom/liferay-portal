@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -53,6 +54,12 @@ public class TransactionalPortalCacheTest {
 
 				assertClasses.add(clazz);
 				assertClasses.addAll(Arrays.asList(clazz.getDeclaredClasses()));
+
+				TransactionLifecycleListener transactionLifecycleListener =
+					TransactionalPortalCacheHelper.
+						TRANSACTION_LIFECYCLE_LISTENER;
+
+				assertClasses.add(transactionLifecycleListener.getClass());
 			}
 
 		};

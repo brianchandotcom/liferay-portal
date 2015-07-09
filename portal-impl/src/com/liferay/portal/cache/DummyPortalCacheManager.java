@@ -37,7 +37,7 @@ public class DummyPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void reconfigureCaches(URL configurationURL) {
+	public void reconfigurePortalCaches(URL configurationURL) {
 	}
 
 	@Override

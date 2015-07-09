@@ -67,7 +67,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void reconfigureCaches(URL configurationURL) {
+	public void reconfigurePortalCaches(URL configurationURL) {
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
 				EhcacheConfigurationHelperUtil.getConfigurationObjectValuePair(
@@ -221,7 +221,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_portalCacheManagerConfiguration =
 			configurationObjectValuePair.getValue();
 
-		_cacheManager.setName(getName());
+		_cacheManager.setName(getPortalCacheManagerName());
 
 		if (_stopCacheManagerTimer) {
 			FailSafeTimer failSafeTimer = _cacheManager.getTimer();
@@ -324,11 +324,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		try {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Reconfiguring caches in cache manager " + getName() +
+					"Reconfiguring caches in cache manager " + getPortalCacheManagerName() +
 						" using " + url);
 			}
 
-			reconfigureCaches(url);
+			reconfigurePortalCaches(url);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

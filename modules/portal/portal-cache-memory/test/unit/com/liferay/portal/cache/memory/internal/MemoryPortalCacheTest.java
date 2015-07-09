@@ -176,7 +176,7 @@ public class MemoryPortalCacheTest {
 		PortalCacheManager<String, String> portalCacheManager =
 			_memoryPortalCache.getPortalCacheManager();
 
-		Assert.assertEquals(_CACHE_MANAGER_NAME, portalCacheManager.getName());
+		Assert.assertEquals(_CACHE_MANAGER_NAME, portalCacheManager.getPortalCacheManagerName());
 	}
 
 	@Test

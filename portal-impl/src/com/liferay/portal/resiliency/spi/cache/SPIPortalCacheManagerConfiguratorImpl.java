@@ -61,7 +61,7 @@ public class SPIPortalCacheManagerConfiguratorImpl
 			IntrabandProxyInstallationUtil.installSkeleton(
 				registrationReference, PortalCache.class,
 				new IntrabandPortalCacheTargetLocator(
-					portalCacheManager.getName(), false));
+					portalCacheManager.getPortalCacheManagerName(), false));
 
 		String[] skeletonProxyMethodSignatures = future.get();
 
@@ -75,7 +75,7 @@ public class SPIPortalCacheManagerConfiguratorImpl
 		future = IntrabandProxyInstallationUtil.installSkeleton(
 			registrationReference, PortalCacheManager.class,
 			new IntrabandPortalCacheTargetLocator(
-				portalCacheManager.getName(), true));
+				portalCacheManager.getPortalCacheManagerName(), true));
 
 		skeletonProxyMethodSignatures = future.get();
 
@@ -115,7 +115,7 @@ public class SPIPortalCacheManagerConfiguratorImpl
 				return _portalCacheManager;
 			}
 
-			return _portalCacheManager.getCache(id);
+			return _portalCacheManager.getPortalCache(id);
 		}
 
 		private void readObject(ObjectInputStream objectInputStream)

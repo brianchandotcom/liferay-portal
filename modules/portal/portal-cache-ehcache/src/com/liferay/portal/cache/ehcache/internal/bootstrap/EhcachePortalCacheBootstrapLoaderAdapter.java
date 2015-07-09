@@ -53,7 +53,7 @@ public class EhcachePortalCacheBootstrapLoaderAdapter implements PortalCacheBoot
 			return;
 		}
 
-		PortalCache<?, ?> portalCache = portalCacheManager.getCache(
+		PortalCache<?, ?> portalCache = portalCacheManager.getPortalCache(
 			portalCacheName);
 
 		_bootstrapCacheLoader.load(EhcacheUnwrapUtil.getEhcache(portalCache));

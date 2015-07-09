@@ -43,7 +43,22 @@
 	</macrodef>
 
 	<target name="integration-mysql">
-		<echo>${jenkins.axis.variable}</echo>
+		<if>
+			<not>
+				<equals arg1="${jenkins.axis.variable}" arg2="default" />
+			</not>
+			<then>
+				<prepare-test-build />
+
+				<antcall target="test-class-group">
+					<param name="test.class.group.index" value="${jenkins.axis.variable}" />
+				</antcall>
+
+				<merge-test-results />
+
+				<check-deprecated-method />
+			</then>
+		</if>
 	</target>
 
 	<target name="integration-oracle">
@@ -55,7 +70,18 @@
 	</target>
 
 	<target name="plugins">
-		<echo>${jenkins.axis.variable}</echo>
+		<if>
+			<not>
+				<equals arg1="${jenkins.axis.variable}" arg2="default" />
+			</not>
+			<then>
+				<prepare-test-build />
+
+				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
+					<property name="test.plugin.group.index" value="${jenkins.axis.variable}" />
+				</ant>
+			</then>
+		</if>
 	</target>
 
 	<target name="unit">

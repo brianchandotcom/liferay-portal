@@ -28,6 +28,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.MethodInterceptorInvocationHandler;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -68,7 +72,7 @@ public class StoreFactory {
 		boolean found = false;
 
 		for (String key : _serviceTrackerMap.keySet()) {
-			Store storeEntry = _serviceTrackerMap.getService(key);
+			Store storeEntry = getStoreInstance(key);
 
 			String className = storeEntry.getClass().getName();
 
@@ -144,19 +148,7 @@ public class StoreFactory {
 	public String[] getStoreTypes() {
 		Set<String> keySet = _serviceTrackerMap.keySet();
 
-		String[] storesTypes = new String[keySet.size()];
-
-		int i = 0;
-
-		for (String key : keySet) {
-			Store store = _serviceTrackerMap.getService(key);
-
-			storesTypes[i] = store.getType();
-
-			i++;
-		}
-
-		return storesTypes;
+		return keySet.toArray(new String[keySet.size()]);
 	}
 
 	public void setStoreInstance(Store store) {
@@ -227,7 +219,69 @@ public class StoreFactory {
 	private static StoreFactory _instance;
 	private static boolean _warned;
 
-	private static final ServiceTrackerMap<String, Store> _serviceTrackerMap =
-		ServiceTrackerCollections.singleValueMap(Store.class, "store.type");
+	private final ServiceTrackerMap<String, Store> _serviceTrackerMap =
+		ServiceTrackerCollections.singleValueMap(
+			Store.class, "store.type", new StoreServiceTrackerCustomizer());
+
+	private class StoreServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Store, Store> {
+
+		@Override
+		public Store addingService(ServiceReference<Store> serviceReference) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			Store store = registry.getService(serviceReference);
+
+			if (store == null) {
+				return null;
+			}
+
+			Class<? extends Store> clazz = store.getClass();
+
+			String storeType = clazz.getName();
+
+			if ((_store == null) ||
+				storeType.equals(PropsValues.DL_STORE_IMPL)) {
+
+				_store = store;
+			}
+
+			return store;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Store> serviceReference, Store store) {
+
+			Class<? extends Store> clazz = _store.getClass();
+
+			String currentType = clazz.getName();
+
+			String type = (String)serviceReference.getProperty("store.type");
+
+			if (currentType.equals(type)) {
+				_store = store;
+			}
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Store> serviceReference, Store service) {
+
+			String type = (String)serviceReference.getProperty("store.type");
+
+			Class<? extends Store> clazz = _store.getClass();
+
+			String currentType = clazz.getName();
+
+			if ((_store != null) && currentType.equals(type)) {
+				_store = null;
+			}
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+	}
 
 }

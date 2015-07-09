@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../blogs/blogs-web,blogs-item-selector-api,../item-selector/item-selector-api,../item-selector/item-selector-criteria-api" />
+	<property name="import.shared" value="blogs-item-selector-api,../blogs/blogs-web,../item-selector/item-selector-api,../item-selector/item-selector-criteria-api" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

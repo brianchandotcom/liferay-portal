@@ -19,13 +19,26 @@ import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.transactional.TransactionalPortalCacheHelper.PortalCacheMap;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
+import com.liferay.portal.kernel.transaction.TransactionStatus;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,6 +48,7 @@ import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -63,6 +77,43 @@ public class TransactionalPortalCacheTest {
 			}
 
 		};
+
+	@BeforeClass
+	public static void setUpClass() {
+		EntityCacheUtil entityCacheUtil = new EntityCacheUtil();
+
+		entityCacheUtil.setEntityCache(
+			(EntityCache)ProxyUtil.newProxyInstance(
+				EntityCache.class.getClassLoader(),
+				new Class<?>[] {EntityCache.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+						Object proxy, Method method, Object[] args) {
+
+						return null;
+					}
+
+				}));
+
+		FinderCacheUtil finderCacheUtil = new FinderCacheUtil();
+
+		finderCacheUtil.setFinderCache(
+			(FinderCache)ProxyUtil.newProxyInstance(
+				FinderCache.class.getClassLoader(),
+				new Class<?>[] {FinderCache.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+						Object proxy, Method method, Object[] args) {
+
+						return null;
+					}
+
+				}));
+	}
 
 	@Before
 	public void setUp() {
@@ -195,6 +246,78 @@ public class TransactionalPortalCacheTest {
 		}
 
 		TransactionalPortalCacheHelper.commit();
+	}
+
+	@Test
+	public void testTransactionLifecycleListenerDisabled() {
+		setEnableTransactionalCache(false);
+
+		TransactionLifecycleListener transactionLifecycleListener =
+			TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER;
+
+		transactionLifecycleListener.created(null, null);
+
+		transactionLifecycleListener.committed(null, null);
+
+		transactionLifecycleListener.rollbacked(null, null, null);
+	}
+
+	@Test
+	public void testTransactionLifecycleListenerEnabledWithBarrier() {
+		doTestTransactionLifecycleListenerEnabledWithBarrier(
+			Propagation.NOT_SUPPORTED);
+		doTestTransactionLifecycleListenerEnabledWithBarrier(Propagation.NEVER);
+		doTestTransactionLifecycleListenerEnabledWithBarrier(
+			Propagation.NESTED);
+	}
+
+	@Test
+	public void testTransactionLifecycleListenerEnabledWithExistTransaction() {
+		setEnableTransactionalCache(true);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		TransactionLifecycleListener transactionLifecycleListener =
+			TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER;
+
+		Builder builder = new Builder();
+
+		TransactionAttribute transactionAttribute = builder.build();
+
+		TransactionStatus transactionStatus = new TransactionStatus(
+			false, false, false);
+
+		transactionLifecycleListener.created(
+			transactionAttribute, transactionStatus);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		transactionLifecycleListener.committed(
+			transactionAttribute, transactionStatus);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		transactionLifecycleListener.created(
+			transactionAttribute, transactionStatus);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		transactionLifecycleListener.rollbacked(
+			transactionAttribute, transactionStatus, null);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+	}
+
+	@Test
+	public void testTransactionLifecycleListenerEnabledWithoutBarrier() {
+		doTestTransactionLifecycleListenerEnabledWithoutBarrier(
+			Propagation.REQUIRED);
+		doTestTransactionLifecycleListenerEnabledWithoutBarrier(
+			Propagation.SUPPORTS);
+		doTestTransactionLifecycleListenerEnabledWithoutBarrier(
+			Propagation.MANDATORY);
+		doTestTransactionLifecycleListenerEnabledWithoutBarrier(
+			Propagation.REQUIRES_NEW);
 	}
 
 	protected void doTestNoneTransactionalCache() {
@@ -762,6 +885,205 @@ public class TransactionalPortalCacheTest {
 		_testCacheListener.reset();
 
 		_testCacheReplicator.assertActionsCount(0);
+	}
+
+	protected void doTestTransactionLifecycleListenerEnabledWithBarrier(
+		Propagation propagation) {
+
+		setEnableTransactionalCache(true);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		TransactionLifecycleListener transactionLifecycleListener =
+			TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER;
+
+		// Start parent transaction
+
+		Builder parentBuilder = new Builder();
+
+		TransactionAttribute parentTransactionAttribute = parentBuilder.build();
+
+		TransactionStatus parentTransactionStatus = new TransactionStatus(
+			true, false, false);
+
+		transactionLifecycleListener.created(
+			parentTransactionAttribute, parentTransactionStatus);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Start child transaction with barrier
+
+		Builder childBuilder = new Builder();
+
+		childBuilder.setPropagation(propagation);
+
+		TransactionAttribute childTransactionAttribute = childBuilder.build();
+
+		TransactionStatus childTransactionStatus = new TransactionStatus(
+			true, false, false);
+
+		transactionLifecycleListener.created(
+			childTransactionAttribute, childTransactionStatus);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		// Start grandchild transaction
+
+		Builder grandchildBuilder = new Builder();
+
+		TransactionAttribute grandchildTransactionAttribute =
+			grandchildBuilder.build();
+
+		TransactionStatus grandchildTransactionStatus = new TransactionStatus(
+			true, false, false);
+
+		transactionLifecycleListener.created(
+			grandchildTransactionAttribute, grandchildTransactionStatus);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Commit grandchild transaction
+
+		transactionLifecycleListener.committed(
+			grandchildTransactionAttribute, grandchildTransactionStatus);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		// Start grandchild transaction again
+
+		transactionLifecycleListener.created(
+			grandchildTransactionAttribute, grandchildTransactionStatus);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Rollback grandchild transaction
+
+		transactionLifecycleListener.rollbacked(
+			grandchildTransactionAttribute, grandchildTransactionStatus, null);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		// Commit child transaction
+
+		transactionLifecycleListener.committed(
+			childTransactionAttribute, childTransactionStatus);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Start child transaction with barrier with barrier again
+
+		transactionLifecycleListener.created(
+			childTransactionAttribute, childTransactionStatus);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		// Rollback child transaction
+
+		transactionLifecycleListener.rollbacked(
+			childTransactionAttribute, childTransactionStatus, null);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Commit parent transaction
+
+		transactionLifecycleListener.committed(
+			parentTransactionAttribute, parentTransactionStatus);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+	}
+
+	protected void doTestTransactionLifecycleListenerEnabledWithoutBarrier(
+		Propagation propagation) {
+
+		setEnableTransactionalCache(true);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		TransactionLifecycleListener transactionLifecycleListener =
+			TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER;
+
+		// Start parent transaction
+
+		Builder parentBuilder = new Builder();
+
+		TransactionAttribute parentTransactionAttribute = parentBuilder.build();
+
+		TransactionStatus parentTransactionStatus = new TransactionStatus(
+			true, false, false);
+
+		transactionLifecycleListener.created(
+			parentTransactionAttribute, parentTransactionStatus);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Start child transaction
+
+		Builder childBuilder = new Builder();
+
+		childBuilder.setPropagation(propagation);
+
+		TransactionAttribute childTransactionAttribute = parentBuilder.build();
+
+		TransactionStatus childTransactionStatus = new TransactionStatus(
+			true, false, false);
+
+		transactionLifecycleListener.created(
+			childTransactionAttribute, childTransactionStatus);
+
+		Assert.assertEquals(2, getTransactionStackSize());
+
+		// Commit child transaction
+
+		transactionLifecycleListener.committed(
+			childTransactionAttribute, childTransactionStatus);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Start child transaction again
+
+		transactionLifecycleListener.created(
+			childTransactionAttribute, childTransactionStatus);
+
+		Assert.assertEquals(2, getTransactionStackSize());
+
+		// Rollback child transaction
+
+		transactionLifecycleListener.rollbacked(
+			childTransactionAttribute, childTransactionStatus, null);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Commit parent transaction
+
+		transactionLifecycleListener.committed(
+			parentTransactionAttribute, parentTransactionStatus);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+
+		// Start parent transaction again
+
+		transactionLifecycleListener.created(
+			parentTransactionAttribute, parentTransactionStatus);
+
+		Assert.assertEquals(1, getTransactionStackSize());
+
+		// Rollback parent transaction
+
+		transactionLifecycleListener.rollbacked(
+			parentTransactionAttribute, parentTransactionStatus, null);
+
+		Assert.assertEquals(0, getTransactionStackSize());
+	}
+
+	protected int getTransactionStackSize() {
+		ThreadLocal<List<PortalCacheMap>>
+			portalCacheMapsThreadLocal = ReflectionTestUtil.getFieldValue(
+				TransactionalPortalCacheHelper.class,
+				"_portalCacheMapsThreadLocal");
+
+		List<PortalCacheMap> portalCacheMaps = portalCacheMapsThreadLocal.get();
+
+		return portalCacheMaps.size();
 	}
 
 	private void setEnableTransactionalCache(boolean enabled) {

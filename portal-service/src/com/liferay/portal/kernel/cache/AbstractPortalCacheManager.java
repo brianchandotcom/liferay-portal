@@ -114,7 +114,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 						bootstrapLoaderConfiguration.getProperties());
 
 				if (bootstrapLoader != null) {
-					bootstrapLoader.load(getPortalCacheManagerName(), portalCacheName);
+					bootstrapLoader.loadPortalCache(getPortalCacheManagerName(), portalCacheName);
 				}
 			}
 		}

@@ -21,6 +21,6 @@ public interface PortalCacheBootstrapLoader {
 
 	public boolean isAsynchronous();
 
-	public void load(String portalCacheManagerName, String portalCacheName);
+	public void loadPortalCache(String portalCacheManagerName, String portalCacheName);
 
 }

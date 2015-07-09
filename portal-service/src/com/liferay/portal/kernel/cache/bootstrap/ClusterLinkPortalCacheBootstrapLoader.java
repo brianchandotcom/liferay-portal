@@ -42,7 +42,7 @@ public class ClusterLinkPortalCacheBootstrapLoader implements PortalCacheBootstr
 	}
 
 	@Override
-	public void load(String portalCacheManagerName, String portalCacheName) {
+	public void loadPortalCache(String portalCacheManagerName, String portalCacheName) {
 		if (ClusterLinkBootstrapLoaderHelperUtil.isSkipped()) {
 			return;
 		}

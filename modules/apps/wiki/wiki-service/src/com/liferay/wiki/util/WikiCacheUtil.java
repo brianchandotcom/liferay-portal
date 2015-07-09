@@ -144,7 +144,7 @@ public class WikiCacheUtil {
 	private static final Log _log = LogFactoryUtil.getLog(WikiCacheUtil.class);
 
 	private static final PortalCache<String, Serializable> _portalCache =
-		MultiVMPoolUtil.getCache(_CACHE_NAME);
+		MultiVMPoolUtil.getPortalCache(_CACHE_NAME);
 
 	static {
 		_portalCache.removeAll();

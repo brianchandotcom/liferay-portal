@@ -302,7 +302,7 @@ public class JournalContentImpl implements JournalContent {
 			_getPortalCache() {
 
 		if (_portalCache == null) {
-			_portalCache = MultiVMPoolUtil.getCache(CACHE_NAME);
+			_portalCache = MultiVMPoolUtil.getPortalCache(CACHE_NAME);
 		}
 
 		return _portalCache;

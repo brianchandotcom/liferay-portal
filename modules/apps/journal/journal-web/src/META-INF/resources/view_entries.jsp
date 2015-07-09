@@ -189,12 +189,6 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 
 <div class="subscribe-action">
 
-	<%
-	JournalWebRequestHelper journalWebRequestHelper = new JournalWebRequestHelper(request);
-
-	JournalGroupServiceConfiguration journalGroupServiceConfiguration = journalWebRequestHelper.getJournalGroupServiceConfiguration();
-	%>
-
 	<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && JournalUtil.getEmailArticleAnyEventEnabled(journalGroupServiceConfiguration) %>">
 
 		<%

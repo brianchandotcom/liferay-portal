@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalWebRequestHelper journalWebRequestHelper = new JournalWebRequestHelper(request);
-
-JournalGroupServiceConfiguration journalGroupServiceConfiguration = journalWebRequestHelper.getJournalGroupServiceConfiguration();
-
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", journalGroupServiceConfiguration.emailFromName());
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", journalGroupServiceConfiguration.emailFromAddress());
 %>

@@ -222,6 +222,10 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 JournalDisplayContext journalDisplayContext = new JournalDisplayContext(liferayPortletRequest, portletPreferences);
 
+JournalWebRequestHelper journalWebRequestHelper = new JournalWebRequestHelper(request);
+
+JournalGroupServiceConfiguration journalGroupServiceConfiguration = journalWebRequestHelper.getJournalGroupServiceConfiguration();
+
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 

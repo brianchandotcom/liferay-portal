@@ -53,7 +53,7 @@ public class POPServerUtil {
 		_instance._deleteListener(listener);
 	}
 
-	public static List<MessageListener> getListeners() throws Exception {
+	public static List<MessageListener> getListeners() {
 		return _instance._getListeners();
 	}
 

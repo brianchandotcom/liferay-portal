@@ -12,11 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.instances.web.permission;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Represents the omni administrator control panel entry for portlets that shall
@@ -28,6 +33,10 @@ import com.liferay.portal.security.permission.PermissionChecker;
  *
  * @author Jorge Ferrer
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.PORTAL_INSTANCES},
+	service = ControlPanelEntry.class
+)
 public class OmniadminControlPanelEntry extends BaseControlPanelEntry {
 
 	/**

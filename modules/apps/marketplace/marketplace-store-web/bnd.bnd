@@ -4,5 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.license.util
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/META-INF/resources,\
+	@lib/scribe.jar
 Web-ContextPath: /marketplace-store-web

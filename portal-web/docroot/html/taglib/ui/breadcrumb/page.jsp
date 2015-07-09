@@ -20,7 +20,7 @@
 	<h1 class="hide-accessible"><liferay-ui:message key="breadcrumbs" /></h1>
 
 	<c:if test="<%= !breadcrumbEntries.isEmpty() %>">
-		<liferay-ui:ddm-template-renderer
+		<liferay-ui:template-renderer
 			className="<%= BreadcrumbEntry.class.getName() %>"
 			displayStyle="<%= displayStyle %>"
 			displayStyleGroupId="<%= displayStyleGroupId %>"

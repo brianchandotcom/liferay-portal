@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.util.mail.MailEngine;
 
-import java.util.List;
-
 import javax.mail.Address;
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -143,31 +141,6 @@ public class POPNotificationsMessageListener
 		return store;
 	}
 
-	protected void notifyMessageListeners(
-			List<MessageListener> messageListeners, Message message)
-		throws MessagingException {
-
-		String from = getEmailAddress(message.getFrom());
-		String recipient = getEmailAddress(
-			message.getRecipients(RecipientType.TO));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("From " + from);
-			_log.debug("Recipient " + recipient);
-		}
-
-		for (MessageListener messageListener : messageListeners) {
-			try {
-				if (messageListener.accept(from, recipient, message)) {
-					messageListener.deliver(from, recipient, message);
-				}
-			}
-			catch (MessageListenerException mle) {
-				_log.error(mle, mle);
-			}
-		}
-	}
-
 	protected void notifyMessageListeners(Message[] messages)
 		throws MessagingException {
 
@@ -179,14 +152,32 @@ public class POPNotificationsMessageListener
 			_log.debug("Messages " + messages.length);
 		}
 
-		List<MessageListener> messageListeners = POPServerUtil.getListeners();
-
 		for (Message message : messages) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Message " + message);
 			}
 
-			notifyMessageListeners(messageListeners, message);
+			String from = getEmailAddress(message.getFrom());
+			String recipient = getEmailAddress(
+				message.getRecipients(RecipientType.TO));
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("From " + from);
+				_log.debug("Recipient " + recipient);
+			}
+
+			for (MessageListener messageListener :
+					POPServerUtil.getListeners()) {
+
+				try {
+					if (messageListener.accept(from, recipient, message)) {
+						messageListener.deliver(from, recipient, message);
+					}
+				}
+				catch (MessageListenerException mle) {
+					_log.error(mle, mle);
+				}
+			}
 		}
 	}
 

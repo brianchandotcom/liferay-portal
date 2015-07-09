@@ -304,7 +304,7 @@ public abstract class AbstractTemplate implements Template {
 			cacheTemplateResource.getInnerTemplateResource();
 
 		if (innerTemplateResource instanceof URLTemplateResource) {
-			return SingleVMPoolUtil.getCache(portalCacheName);
+			return SingleVMPoolUtil.getPortalCache(portalCacheName);
 		}
 
 		return MultiVMPoolUtil.getPortalCache(portalCacheName);

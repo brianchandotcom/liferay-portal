@@ -944,7 +944,7 @@ public class PortletPreferencesFactoryImpl
 	private final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesFactoryImpl.class);
 	private final PortalCache<String, Map<String, Preference>>
-		_preferencesMapPortalCache = SingleVMPoolUtil.getCache(
+		_preferencesMapPortalCache = SingleVMPoolUtil.getPortalCache(
 			PortletPreferencesFactoryImpl.class.getName());
 
 }

@@ -1,3 +1,9 @@
+buildCSS {
+	ext {
+		autoClean = false
+	}
+}
+
 dependencies {
 	compile group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.5-atlassian-2"
 	compile group: "commons-io", name: "commons-io", version: "2.4"

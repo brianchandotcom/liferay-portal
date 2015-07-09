@@ -4,6 +4,13 @@ dependencies {
 	compile group: "org.tukaani", name: "xz", version: "1.5"
 }
 
+deploy {
+	from("lib") {
+		include "geoip-api.jar"
+		include "xz.jar"
+	}
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }

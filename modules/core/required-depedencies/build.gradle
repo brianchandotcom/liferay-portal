@@ -14,6 +14,12 @@ dependencies {
 	compile group: "org.eclipse.equinox", name: "org.eclipse.equinox.console", version: "1.1.100-SNAPSHOT"
 }
 
+deploy {
+	from("lib") {
+		include "*.jar"
+	}
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/static")
 }

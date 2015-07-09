@@ -16,6 +16,10 @@ targetCompatibility = "1.6"
 task patch(type: PatchTask)
 
 patch {
+	ext {
+		autoClean = false
+	}
+
 	fileNames "**/DebugBreak.java"
 	fileNames "**/DebuggerServer.java"
 	fileNames "**/DebuggerService.java"

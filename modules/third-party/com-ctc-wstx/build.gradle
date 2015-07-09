@@ -13,19 +13,31 @@ liferay {
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
+task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 deploy {
-	into("../../../lib/portal") {
-		from jar.outputs
+	finalizedBy deployJar
+}
 
-		rename {
-			"wstx.jar"
-		}
+deployJar {
+	ext {
+		autoClean = false
+	}
+
+	from jar.outputs
+	into "../../../lib/portal"
+
+	rename {
+		"wstx.jar"
 	}
 }
 
 patch {
+	ext {
+		autoClean = false
+	}
+
 	fileNames "**/com/ctc/wstx/sw/BufferingXmlWriter.java"
 	originalLibModuleName = "wstx-asl"
 	originalLibSrcDirName = "src/java"

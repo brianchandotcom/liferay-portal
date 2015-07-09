@@ -16,6 +16,10 @@ targetCompatibility = "1.6"
 task patch(type: PatchTask)
 
 patch {
+	ext {
+		autoClean = false
+	}
+
 	fileNames "**/name/pachler/nio/file/impl/BSDPathWatchService.java"
 	fileNames "**/name/pachler/nio/file/impl/LinuxPathWatchService.java"
 

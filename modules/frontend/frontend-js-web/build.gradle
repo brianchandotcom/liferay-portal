@@ -1,3 +1,7 @@
+plugins {
+	id "com.moowork.node" version "0.10"
+}
+
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
@@ -20,6 +24,8 @@ File thirdPartyDir = file("../../../portal-web/third-party")
 
 task buildAlloy(type: Copy)
 task buildAlloyBootstrap(type: Copy)
+task buildLfrAMDLoader(type: Copy)
+task downloadLfrAMDLoader(type: NpmTask)
 
 buildAlloy {
 	File alloyDestinationDir = new File(jsDestinationDir, "aui")
@@ -69,7 +75,19 @@ buildAlloyBootstrap {
 	into alloyBootstrapDestinationDir
 }
 
+buildLfrAMDLoader {
+	dependsOn downloadLfrAMDLoader
+	from new File(node.nodeModulesDir, "node_modules/lfr-amd-loader/dist/loader.js")
+	into "tmp/META-INF/resources/html/js/loader"
+}
+
+downloadLfrAMDLoader {
+	args = ["install", "lfr-amd-loader"]
+	workingDir = node.nodeModulesDir
+}
+
 classes {
 	dependsOn buildAlloy
 	dependsOn buildAlloyBootstrap
+	dependsOn buildLfrAMDLoader
 }

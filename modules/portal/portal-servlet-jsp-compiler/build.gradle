@@ -26,6 +26,15 @@ classes {
 	dependsOn downloadSchemas
 }
 
+deploy {
+	from("lib") {
+		include "javax.el.jar"
+		include "javax.servlet.jsp-api.jar"
+		include "javax.servlet.jsp.jstl-api.jar"
+		include "phidias.jar"
+	}
+}
+
 downloadSchemas {
 	File schemasDir = file("src/javax/servlet/jsp/resources")
 

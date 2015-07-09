@@ -5,6 +5,12 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }
 
+deploy {
+	from("lib") {
+		include "org.eclipse.gemini.*.jar"
+	}
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }

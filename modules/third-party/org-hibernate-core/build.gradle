@@ -13,19 +13,31 @@ liferay {
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
+task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 deploy {
-	into("../../../lib/portal") {
-		from jar.outputs
+	finalizedBy deployJar
+}
 
-		rename {
-			"hibernate-core.jar"
-		}
+deployJar {
+	ext {
+		autoClean = false
+	}
+
+	from jar.outputs
+	into "../../../lib/portal"
+
+	rename {
+		"hibernate-core.jar"
 	}
 }
 
 patch {
+	ext {
+		autoClean = false
+	}
+
 	fileNames "org/hibernate/cache/UpdateTimestampsCache.java"
 	fileNames "org/hibernate/intercept/FieldInterceptionHelper.java"
 

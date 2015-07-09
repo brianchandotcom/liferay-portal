@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.tasks;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -193,6 +194,7 @@ public class InitGradleTask extends DefaultTask {
 		List<String> contents = new ArrayList<>();
 
 		addContents(contents, getBuildGradleDependencies());
+		addContents(contents, getBuildGradleDeploy());
 		addContents(contents, getBuildGradleLiferay());
 		addContents(contents, getBuildGradleProperties());
 
@@ -281,7 +283,8 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 
 				boolean optional = false;
-				boolean transitive = true;
+				boolean transitive = getNodeAttribute(
+					dependencyNode, "transitive", true);
 
 				if (Validator.isNotNull(conf)) {
 					if (conf.startsWith("default")) {
@@ -468,12 +471,14 @@ public class InitGradleTask extends DefaultTask {
 
 				String group = (String)dependencyNode.attribute("org");
 				String name = (String)dependencyNode.attribute("name");
+				boolean transitive = getNodeAttribute(
+					dependencyNode, "transitive", true);
 				String version = (String)dependencyNode.attribute("rev");
 
 				contents.add(
 					wrapDependency(
 						JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, group, name,
-						true, version));
+						transitive, version));
 			}
 		}
 
@@ -491,6 +496,29 @@ public class InitGradleTask extends DefaultTask {
 		addContents(contents, getBuildDependenciesTestCompile());
 
 		return wrapContents(contents, 0, " {", "dependencies", "}", false);
+	}
+
+	protected List<String> getBuildGradleDeploy() {
+		String osgiRuntimeDependencies = getBuildXmlProperty(
+			"osgi.runtime.dependencies");
+
+		if (Validator.isNull(osgiRuntimeDependencies)) {
+			return Collections.emptyList();
+		}
+
+		List<String> contents = new ArrayList<>();
+
+		String[] osgiRuntimeDependenciesArray = osgiRuntimeDependencies.split(
+			",");
+
+		for (String osgiRuntimeDependency : osgiRuntimeDependenciesArray) {
+			contents.add("\t\tinclude \"" + osgiRuntimeDependency + "\"");
+		}
+
+		contents = wrapContents(contents, 1, " {", "from(\"lib\")", "}", true);
+
+		return wrapContents(
+			contents, 0, " {", LiferayJavaPlugin.DEPLOY_TASK_NAME, "}", false);
 	}
 
 	protected List<String> getBuildGradleLiferay() {
@@ -605,6 +633,18 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return (Node)nodeList.get(0);
+	}
+
+	protected boolean getNodeAttribute(
+		Node node, String name, boolean defaultValue) {
+
+		String value = (String)node.attribute(name);
+
+		if (Validator.isNull(value)) {
+			return defaultValue;
+		}
+
+		return Boolean.parseBoolean(value);
 	}
 
 	protected String getServiceJarFileName(String deploymentContext) {

@@ -54,7 +54,6 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
-import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.invocation.Gradle;
@@ -631,24 +630,22 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		super.configureTaskDeploy(project, liferayExtension);
 
-		Copy deployTask = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
 
-		configureTaskDeployRename(deployTask);
+		configureTaskDeployFrom(copy);
+		configureTaskDeployRename(copy);
 	}
 
-	@Override
-	protected void configureTaskDeployFrom(Copy copy, CopySpec copySpec) {
-		super.configureTaskDeployFrom(copy, copySpec);
-
+	protected void configureTaskDeployFrom(Copy copy) {
 		File wsddJarFile = getWSDDJarFile(copy.getProject());
 
 		if (wsddJarFile.exists()) {
-			copySpec.from(wsddJarFile);
+			copy.from(wsddJarFile);
 		}
 	}
 
-	protected void configureTaskDeployRename(Copy deployTask) {
-		final Project project = deployTask.getProject();
+	protected void configureTaskDeployRename(Copy copy) {
+		final Project project = copy.getProject();
 
 		Closure<String> closure = new Closure<String>(null) {
 
@@ -661,7 +658,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		};
 
-		deployTask.rename(closure);
+		copy.rename(closure);
 	}
 
 	@Override

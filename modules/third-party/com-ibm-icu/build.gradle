@@ -8,18 +8,7 @@ liferay {
 }
 
 task jar(type: Jar, overwrite: true)
-
-deploy {
-	into("../../../lib/portal") {
-		from {
-			jar.archivePath
-		}
-
-		rename {
-			"liferay-icu4j.jar"
-		}
-	}
-}
+task deployJar(type: Copy)
 
 jar {
 	deleteAllActions()
@@ -37,5 +26,25 @@ jar {
 			rule pattern: "com.**", result: "com.liferay.@1"
 			zipfileset src: jarFiles.find()
 		}
+	}
+}
+
+deploy {
+	finalizedBy deployJar
+}
+
+deployJar {
+	ext {
+		autoClean = false
+	}
+
+	from {
+		jar.archivePath
+	}
+
+	into "../../../lib/portal"
+
+	rename {
+		"liferay-icu4j.jar"
 	}
 }

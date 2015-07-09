@@ -390,7 +390,8 @@ public class PDFProcessorImpl
 					destinationFileVersion.getVersion());
 
 				if (Validator.equals(
-						"PWC", destinationFileVersion.getVersion())) {
+						"PWC", destinationFileVersion.getVersion()) ||
+					destinationFileVersion.isPending()) {
 
 					File file = new File(
 						DocumentConversionUtil.getFilePath(tempFileId, "pdf"));

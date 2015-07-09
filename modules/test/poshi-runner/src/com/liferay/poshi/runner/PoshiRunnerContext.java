@@ -290,6 +290,28 @@ public class PoshiRunnerContext {
 		return relatedClassCommandNames;
 	}
 
+	private static void _initProductClassCommandNamesMap() {
+		for (String productName : _productNames) {
+			for (String componentName : _componentNames) {
+				Set<String> classCommandNames = _testCaseClassCommandNames.get(
+					componentName);
+
+				if (Validator.isNotNull(classCommandNames) &&
+					!classCommandNames.isEmpty() &&
+					componentName.startsWith(productName)) {
+
+					if (_productClassCommandNames.containsKey(productName)) {
+						classCommandNames.addAll(
+							_productClassCommandNames.get(productName));
+					}
+
+					_productClassCommandNames.put(
+						productName, classCommandNames);
+				}
+			}
+		}
+	}
+
 	private static void _initTestClassCommandNamesMap() {
 		for (String testCaseClassName : _testCaseClassNames) {
 			Element rootElement = getTestCaseRootElement(testCaseClassName);
@@ -564,6 +586,7 @@ public class PoshiRunnerContext {
 		}
 
 		_initTestClassCommandNamesMap();
+		_initProductClassCommandNamesMap();
 	}
 
 	private static void _readSeleniumFiles() throws Exception {
@@ -683,6 +706,8 @@ public class PoshiRunnerContext {
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();
+	private static final Map<String, Set<String>> _productClassCommandNames =
+		new TreeMap<>();
 	private static final List<String> _productNames = new ArrayList<>();
 	private static final Map<String, Element> _rootElements = new HashMap<>();
 	private static final Map<String, Integer> _seleniumParameterCounts =

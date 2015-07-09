@@ -95,7 +95,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		PortalCacheListener<String, TemplateResource> cacheListener =
 			new TemplateResourcePortalCacheListener(name);
 
-		_multiVMPortalCache.registerCacheListener(cacheListener, PortalCacheListenerScope.ALL);
+		_multiVMPortalCache.registerPortalCacheListener(cacheListener, PortalCacheListenerScope.ALL);
 
 		_singleVMPool = singleVMPool;
 
@@ -103,7 +103,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			(PortalCache<String, TemplateResource>)_singleVMPool.getCache(
 				portalCacheName);
 
-		_singleVMPortalCache.registerCacheListener(cacheListener, PortalCacheListenerScope.ALL);
+		_singleVMPortalCache.registerPortalCacheListener(cacheListener, PortalCacheListenerScope.ALL);
 	}
 
 	@Override
@@ -120,8 +120,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void destroy() {
-		_multiVMPool.removeCache(_multiVMPortalCache.getName());
-		_singleVMPool.removeCache(_singleVMPortalCache.getName());
+		_multiVMPool.removeCache(_multiVMPortalCache.getPortalCacheName());
+		_singleVMPool.removeCache(_singleVMPortalCache.getPortalCacheName());
 
 		_templateResourceParsers.clear();
 	}

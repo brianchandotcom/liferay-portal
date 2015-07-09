@@ -98,7 +98,7 @@ public class FreeMarkerTemplateTest {
 						InvocationOnMock invocationOnMock)
 					throws Throwable {
 
-					return portalCacheManager.getCache(
+					return portalCacheManager.getPortalCache(
 						RandomTestUtil.randomString());
 				}
 
@@ -121,7 +121,7 @@ public class FreeMarkerTemplateTest {
 						InvocationOnMock invocationOnMock)
 					throws Throwable {
 
-					return portalCacheManager.getCache("test");
+					return portalCacheManager.getPortalCache("test");
 				}
 
 			}

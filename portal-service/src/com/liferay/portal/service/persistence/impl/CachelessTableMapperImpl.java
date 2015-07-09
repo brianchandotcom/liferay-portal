@@ -53,10 +53,10 @@ public class CachelessTableMapperImpl
 			new int[] {Types.BIGINT, Types.BIGINT}, RowMapper.COUNT);
 
 		leftToRightPortalCache = new DummyPortalCache(
-			leftToRightPortalCache.getName(),
+			leftToRightPortalCache.getPortalCacheName(),
 			leftToRightPortalCache.getPortalCacheManager());
 		rightToLeftPortalCache = new DummyPortalCache(
-			rightToLeftPortalCache.getName(),
+			rightToLeftPortalCache.getPortalCacheName(),
 			rightToLeftPortalCache.getPortalCacheManager());
 
 		destroy();
@@ -105,7 +105,7 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public String getName() {
+		public String getPortalCacheName() {
 			return portalCacheName;
 		}
 
@@ -123,12 +123,12 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public void registerCacheListener(
+		public void registerPortalCacheListener(
 			PortalCacheListener<Long, long[]> cacheListener) {
 		}
 
 		@Override
-		public void registerCacheListener(
+		public void registerPortalCacheListener(
 			PortalCacheListener<Long, long[]> cacheListener,
 			PortalCacheListenerScope cacheListenerScope) {
 		}
@@ -142,12 +142,12 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public void unregisterCacheListener(
+		public void unregisterPortalCacheListener(
 			PortalCacheListener<Long, long[]> cacheListener) {
 		}
 
 		@Override
-		public void unregisterCacheListeners() {
+		public void unregisterPortalCacheListeners() {
 		}
 
 		protected DummyPortalCache(

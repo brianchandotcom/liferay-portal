@@ -76,11 +76,11 @@ public class TransactionalPortalCacheTest {
 
 		_testCacheListener = new TestPortalCacheListener<>();
 
-		_portalCache.registerCacheListener(_testCacheListener);
+		_portalCache.registerPortalCacheListener(_testCacheListener);
 
 		_testCacheReplicator = new TestPortalCacheReplicator<>();
 
-		_portalCache.registerCacheListener(_testCacheReplicator);
+		_portalCache.registerPortalCacheListener(_testCacheReplicator);
 	}
 
 	@NewEnv(type = NewEnv.Type.NONE)

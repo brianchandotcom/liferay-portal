@@ -73,7 +73,7 @@ public class ClusterLinkPortalCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getPortalCacheManagerName(), portalCache.getName(), key,
+				portalCacheManager.getPortalCacheManagerName(), portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.PUT);
 
 		if (_replicatePutsViaCopy) {
@@ -98,7 +98,7 @@ public class ClusterLinkPortalCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getPortalCacheManagerName(), portalCache.getName(), key,
+				portalCacheManager.getPortalCacheManagerName(), portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.REMOVE);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
@@ -118,7 +118,7 @@ public class ClusterLinkPortalCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getPortalCacheManagerName(), portalCache.getName(), key,
+				portalCacheManager.getPortalCacheManagerName(), portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.UPDATE);
 
 		if (_replicateUpdatesViaCopy) {
@@ -142,7 +142,7 @@ public class ClusterLinkPortalCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getPortalCacheManagerName(), portalCache.getName(), null,
+				portalCacheManager.getPortalCacheManagerName(), portalCache.getPortalCacheName(), null,
 				PortalCacheClusterEventType.REMOVE_ALL);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);

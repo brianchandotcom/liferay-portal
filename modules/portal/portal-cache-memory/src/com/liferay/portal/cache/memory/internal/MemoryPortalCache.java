@@ -62,7 +62,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public String getName() {
+	public String getPortalCacheName() {
 		return _portalCacheName;
 	}
 

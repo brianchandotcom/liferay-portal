@@ -83,11 +83,11 @@ public class EhcachePortalCacheTest {
 
 		_defaultCacheListener = new TestPortalCacheListener<>();
 
-		_ehcachePortalCache.registerCacheListener(_defaultCacheListener);
+		_ehcachePortalCache.registerPortalCacheListener(_defaultCacheListener);
 
 		_defaultCacheReplicator = new TestPortalCacheReplicator<>();
 
-		_ehcachePortalCache.registerCacheListener(_defaultCacheReplicator);
+		_ehcachePortalCache.registerPortalCacheListener(_defaultCacheReplicator);
 	}
 
 	@After
@@ -103,7 +103,7 @@ public class EhcachePortalCacheTest {
 		TestPortalCacheListener<String, String> localCacheListener =
 			new TestPortalCacheListener<>();
 
-		_ehcachePortalCache.registerCacheListener(localCacheListener, PortalCacheListenerScope.LOCAL);
+		_ehcachePortalCache.registerPortalCacheListener(localCacheListener, PortalCacheListenerScope.LOCAL);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
 
@@ -127,7 +127,7 @@ public class EhcachePortalCacheTest {
 		TestPortalCacheListener<String, String> remoteCacheListener =
 			new TestPortalCacheListener<>();
 
-		_ehcachePortalCache.registerCacheListener(remoteCacheListener, PortalCacheListenerScope.REMOTE);
+		_ehcachePortalCache.registerPortalCacheListener(remoteCacheListener, PortalCacheListenerScope.REMOTE);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_1);
 
@@ -150,7 +150,7 @@ public class EhcachePortalCacheTest {
 
 		// Register 3
 
-		_ehcachePortalCache.registerCacheListener(remoteCacheListener, PortalCacheListenerScope.ALL);
+		_ehcachePortalCache.registerPortalCacheListener(remoteCacheListener, PortalCacheListenerScope.ALL);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
 
@@ -173,7 +173,7 @@ public class EhcachePortalCacheTest {
 
 		// Unregister 1
 
-		_ehcachePortalCache.unregisterCacheListener(localCacheListener);
+		_ehcachePortalCache.unregisterPortalCacheListener(localCacheListener);
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_2);
 
@@ -193,7 +193,7 @@ public class EhcachePortalCacheTest {
 
 		// Unregister 2
 
-		_ehcachePortalCache.unregisterCacheListener(new TestPortalCacheListener<String, String>());
+		_ehcachePortalCache.unregisterPortalCacheListener(new TestPortalCacheListener<String, String>());
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
@@ -213,7 +213,7 @@ public class EhcachePortalCacheTest {
 
 		// Unregister 3
 
-		_ehcachePortalCache.unregisterCacheListeners();
+		_ehcachePortalCache.unregisterPortalCacheListeners();
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_2);
 
@@ -236,7 +236,7 @@ public class EhcachePortalCacheTest {
 
 	@Test
 	public void testGetName() {
-		Assert.assertEquals(_PORTAL_CACHE_NAME, _ehcachePortalCache.getName());
+		Assert.assertEquals(_PORTAL_CACHE_NAME, _ehcachePortalCache.getPortalCacheName());
 	}
 
 	@Test

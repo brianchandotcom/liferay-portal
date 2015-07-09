@@ -611,8 +611,11 @@ public class PoshiRunnerContext {
 				Set<String> classCommandNames = _productClassCommandNames.get(
 					productName);
 
+				int maxGroupSize = PropsValues.MAX_GROUP_SIZE;
+
 				int groupsSize =
-					(classCommandNames.size() + 99) / 100;
+					(classCommandNames.size() + maxGroupSize - 1) /
+						maxGroupSize;
 
 				List<List<String>> classCommandNameGroups = new ArrayList(
 					groupsSize);

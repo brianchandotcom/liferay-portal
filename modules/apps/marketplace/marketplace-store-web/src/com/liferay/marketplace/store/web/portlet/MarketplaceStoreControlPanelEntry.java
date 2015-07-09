@@ -14,7 +14,6 @@
 
 package com.liferay.marketplace.store.web.portlet;
 
-import com.liferay.marketplace.store.web.configuration.MarketplaceWebConfigurationValues;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
@@ -41,10 +40,6 @@ public class MarketplaceStoreControlPanelEntry extends BaseControlPanelEntry {
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
-
-		if (!MarketplaceWebConfigurationValues.MARKETPLACE_STORE_ENABLED) {
-			return false;
-		}
 
 		return permissionChecker.isOmniadmin();
 	}

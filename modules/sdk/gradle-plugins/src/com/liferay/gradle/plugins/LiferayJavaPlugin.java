@@ -103,6 +103,8 @@ import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.api.tasks.bundling.Zip;
+import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 
@@ -145,6 +147,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"testIntegration";
 
 	public static final String TEST_INTEGRATION_TASK_NAME = "testIntegration";
+
+	public static final String ZIP_JAVADOC_TASK_NAME = "zipJavadoc";
 
 	@Override
 	public void apply(Project project) {
@@ -478,6 +482,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskStopTestableTomcat(project);
 		addTaskTestIntegration(project);
 		addTaskWar(project);
+		addTaskZipJavadoc(project);
 	}
 
 	protected Task addTaskSetupArquillian(Project project) {
@@ -761,6 +766,24 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		task.setGroup(BasePlugin.BUILD_GROUP);
 
 		return task;
+	}
+
+	protected Zip addTaskZipJavadoc(Project project) {
+		Zip zip = GradleUtil.addTask(project, ZIP_JAVADOC_TASK_NAME, Zip.class);
+
+		zip.setClassifier("javadoc");
+		zip.setDescription(
+			"Assembles a zip archive containing the Javadoc files for this " +
+				"project.");
+		zip.setGroup(BasePlugin.BUILD_GROUP);
+
+		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		zip.dependsOn(javadoc);
+		zip.from(javadoc.getDestinationDir());
+
+		return zip;
 	}
 
 	protected void applyConfigScripts(Project project) {

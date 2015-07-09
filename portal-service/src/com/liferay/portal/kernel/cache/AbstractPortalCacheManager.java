@@ -103,7 +103,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				 (portalCacheConfiguration != null)) {
 
 			CallbackConfiguration bootstrapLoaderConfiguration =
-				portalCacheConfiguration.getBootstrapLoaderConfiguration();
+				portalCacheConfiguration.getPortalCacheBootstrapLoaderConfiguration();
 
 			if (bootstrapLoaderConfiguration != null) {
 				CallbackFactory callbackFactory =
@@ -318,7 +318,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		Map<CallbackConfiguration, PortalCacheListenerScope>
 			cacheListenerConfigurations =
-				portalCacheConfiguration.getCacheListenerConfigurations();
+				portalCacheConfiguration.getPortalCacheListenerConfigurations();
 
 		for (Map.Entry<CallbackConfiguration, PortalCacheListenerScope> entry :
 				cacheListenerConfigurations.entrySet()) {

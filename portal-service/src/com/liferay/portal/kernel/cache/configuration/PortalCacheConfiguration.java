@@ -51,12 +51,12 @@ public class PortalCacheConfiguration {
 		_bootstrapLoaderConfiguration = bootstrapLoaderConfiguration;
 	}
 
-	public CallbackConfiguration getBootstrapLoaderConfiguration() {
+	public CallbackConfiguration getPortalCacheBootstrapLoaderConfiguration() {
 		return _bootstrapLoaderConfiguration;
 	}
 
 	public Map<CallbackConfiguration, PortalCacheListenerScope>
-		getCacheListenerConfigurations() {
+		getPortalCacheListenerConfigurations() {
 
 		return Collections.unmodifiableMap(_cacheListenerConfigurations);
 	}

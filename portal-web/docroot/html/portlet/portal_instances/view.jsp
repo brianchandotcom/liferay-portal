@@ -20,39 +20,22 @@
 	<c:when test="<%= permissionChecker.isOmniadmin() %>">
 
 		<%
-		String tabs1 = ParamUtil.getString(request, "tabs1", "instances");
-		String tabs2 = ParamUtil.getString(request, "tabs2");
-		String tabs3 = ParamUtil.getString(request, "tabs3");
 		int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
-		portletURL.setParameter("tabs1", tabs1);
-		portletURL.setParameter("tabs2", tabs2);
-		portletURL.setParameter("tabs3", tabs3);
 		%>
 
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcRenderCommandName" value="/portal_instances/view" />
-			<portlet:param name="tabs1" value="<%= tabs1 %>" />
-			<portlet:param name="tabs2" value="<%= tabs2 %>" />
-			<portlet:param name="tabs3" value="<%= tabs3 %>" />
 			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
 		</portlet:renderURL>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-			<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 			<aui:input name="className" type="hidden" />
-
-			<liferay-ui:tabs
-				names="server,instances,plugins"
-				url="<%= portletURL.toString() %>"
-			/>
 
 			<%@ include file="/html/portlet/portal_instances/instances.jspf" %>
 		</aui:form>

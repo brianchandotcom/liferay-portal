@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-ddl-portlet',
 	function(A) {
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
-		var Lang = A.Lang;
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
 		var DDLPortlet = A.Component.create(

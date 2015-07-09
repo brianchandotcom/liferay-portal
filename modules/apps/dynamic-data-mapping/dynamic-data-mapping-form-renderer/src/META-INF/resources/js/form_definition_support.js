@@ -4,7 +4,6 @@ AUI.add(
 		var AArray = A.Array;
 		var Renderer = Liferay.DDM.Renderer;
 
-		var FieldTypes = Renderer.FieldTypes;
 		var Util = Renderer.Util;
 
 		var DefinitionSupport = function() {

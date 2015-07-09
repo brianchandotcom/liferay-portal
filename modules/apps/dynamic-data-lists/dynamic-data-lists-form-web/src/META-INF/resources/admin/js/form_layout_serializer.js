@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
-		var Field = Liferay.DDM.Renderer.Field;
-
 		var LayoutSerializer = A.Component.create(
 			{
 				ATTRS: {

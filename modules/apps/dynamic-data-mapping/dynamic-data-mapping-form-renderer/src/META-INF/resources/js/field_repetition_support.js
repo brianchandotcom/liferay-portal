@@ -4,7 +4,6 @@ AUI.add(
 		var AArray = A.Array;
 		var Renderer = Liferay.DDM.Renderer;
 
-		var FieldTypes = Renderer.FieldTypes;
 		var Util = Renderer.Util;
 
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-form-field-repeatable-add-button, .lfr-ddm-form-field-repeatable-delete-button';

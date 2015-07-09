@@ -4,7 +4,6 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
-		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
 		var RendererUtil = Liferay.DDM.Renderer.Util;
 

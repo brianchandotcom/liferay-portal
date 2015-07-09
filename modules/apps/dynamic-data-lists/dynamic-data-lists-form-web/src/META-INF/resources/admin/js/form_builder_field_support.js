@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-ddl-form-builder-field-support',
 	function(A) {
 		var AArray = A.Array;
-		var AObject = A.Object;
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');

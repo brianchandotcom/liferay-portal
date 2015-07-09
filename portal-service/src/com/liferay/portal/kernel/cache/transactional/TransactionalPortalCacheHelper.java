@@ -49,6 +49,10 @@ public class TransactionalPortalCacheHelper {
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
+
 				Propagation propagation = transactionAttribute.getPropagation();
 
 				if (propagation.value() >=
@@ -70,6 +74,10 @@ public class TransactionalPortalCacheHelper {
 			public void created(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
+
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
 
 				Propagation propagation = transactionAttribute.getPropagation();
 
@@ -94,6 +102,10 @@ public class TransactionalPortalCacheHelper {
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus, Throwable throwable) {
 
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
+
 				Propagation propagation = transactionAttribute.getPropagation();
 
 				if (propagation.value() >=
@@ -117,18 +129,13 @@ public class TransactionalPortalCacheHelper {
 		};
 
 	public static void begin() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
+		List<PortalCacheMap> portalCacheMaps =
+			_portalCacheMapsThreadLocal.get();
 
-		_pushPortalCacheMap();
+		portalCacheMaps.add(new PortalCacheMap());
 	}
 
 	public static void commit() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
-
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
 		for (Map.Entry
@@ -159,10 +166,6 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	public static void rollback() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
-
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
 		portalCacheMap.clear();
@@ -245,13 +248,6 @@ public class TransactionalPortalCacheHelper {
 			_portalCacheMapsThreadLocal.get();
 
 		return portalCacheMaps.remove(portalCacheMaps.size() - 1);
-	}
-
-	private static void _pushPortalCacheMap() {
-		List<PortalCacheMap> portalCacheMaps =
-			_portalCacheMapsThreadLocal.get();
-
-		portalCacheMaps.add(new PortalCacheMap());
 	}
 
 	private static final ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(

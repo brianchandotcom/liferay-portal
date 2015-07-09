@@ -186,6 +186,8 @@ public class TransactionalPortalCacheTest {
 		catch (NullPointerException npe) {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
+
+		TransactionalPortalCacheHelper.commit();
 	}
 
 	protected void doTestNoneTransactionalCache() {

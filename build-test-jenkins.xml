@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-jenkins" basedir="." xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
+	<import file="build.xml" />
+
+	<condition property="jenkins.axis.variable" value="${env.AXIS_VARIABLE}" else="0">
+		<isset property="env.AXIS_VARIABLE" />
+	</condition>
+
+	<target name="integration-mysql">
+		<echo>${jenkins.axis.variable}</echo>
+	</target>
+
+	<target name="integration-postgresql">
+		<echo>${jenkins.axis.variable}</echo>
+	</target>
+
+	<target name="integration-oracle">
+		<echo>${jenkins.axis.variable}</echo>
+	</target>
+
+	<target name="plugins">
+		<echo>${jenkins.axis.variable}</echo>
+	</target>
+
+	<target name="unit">
+		<echo>${jenkins.axis.variable}</echo>
+	</target>
+</project>

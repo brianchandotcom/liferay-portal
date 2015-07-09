@@ -16,12 +16,10 @@ package com.liferay.dynamic.data.mapping.internal;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,34 +31,33 @@ import java.util.Map;
  */
 public class DDMStructureImpl implements DDMStructure {
 
-	public DDMStructureImpl() {
-		Registry registry = RegistryUtil.getRegistry();
+	public DDMStructureImpl(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure) {
 
-		_serviceTracker = registry.trackServices(
-			DDMStructureLocalService.class);
-
-		_serviceTracker.open();
+		_structure = structure;
 	}
 
 	@Override
 	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields) {
-		List<com.liferay.portlet.dynamicdatamapping.model.DDMFormField>
-			fields = _structure.getDDMFormFields(includeTransientFields);
-
-		List<DDMFormField> ddmFormFields = new ArrayList<>();
-
 		try {
+			List<DDMFormField> ddmFormFields = new ArrayList<>();
+
 			for (com.liferay.portlet.dynamicdatamapping.model.DDMFormField
-				field : fields) {
+					ddmFormField :
+						_structure.getDDMFormFields(includeTransientFields)) {
 
 				ddmFormFields.add(
 					BeanPropertiesUtil.deepCopyProperties(
-						field, DDMFormField.class));
+						ddmFormField, DDMFormField.class));
 			}
-		}
-		catch (Exception e) { }
 
-		return ddmFormFields;
+			return ddmFormFields;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -90,16 +87,13 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public void setStructureId(long structureId) {
-		_structure = _getDDMStructureLocalService().fetchStructure(structureId);
+		_structure.setStructureId(structureId);
 	}
 
-	private DDMStructureLocalService _getDDMStructureLocalService() {
-		return _serviceTracker.getService();
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMStructureImpl.class);
 
-	private final ServiceTracker<DDMStructureLocalService,
-		DDMStructureLocalService> _serviceTracker;
-	private com.liferay.portlet.dynamicdatamapping.model.DDMStructure
+	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructure
 		_structure;
 
 }

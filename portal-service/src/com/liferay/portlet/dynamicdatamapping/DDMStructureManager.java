@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.util;
+package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 
 import java.util.List;
 import java.util.Locale;
@@ -30,30 +27,34 @@ import java.util.Map;
 public interface DDMStructureManager {
 
 	public DDMStructure addStructure(
-			long userId, long groupId, java.lang.String parentStructureKey,
+			long userId, long groupId, String parentStructureKey,
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
 			DDMFormLayout ddmFormLayout, String storageType, int type,
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteDDMStructure(long structureId) throws PortalException;
+	public void deleteStructure(long structureId) throws PortalException;
+
+	public DDMStructure fetchStructure(
+		long groupId, long classNameId, String structureKey);
+
+	public DDMStructure fetchStructureByUuidAndGroupId(
+		String uuid, long groupId);
 
 	public List<DDMStructure> getClassStructures(
 		long companyId, long classNameId, int start, int end);
 
-	public DDMStructure getDDMStructure(long structureId)
+	public DDMStructure getStructure(long structureId) throws PortalException;
+
+	public DDMStructure getStructure(
+			long groupId, long classNameId, String structureKey)
 		throws PortalException;
 
-	public DDMStructure getDDMStructure(
-			long groupId, long classNameId, String structureKey, boolean fetch)
+	public DDMStructure getStructureByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
-	public DDMStructure getDDMStructureByUuidAndGroupId(
-			String uuid, long groupId, boolean fetch)
-		throws PortalException;
-
-	public DDMStructure updateDDMStructure(
+	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,

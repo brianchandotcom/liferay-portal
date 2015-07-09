@@ -185,13 +185,13 @@
 		<if>
 			<isset var="webContentSearchValue" />
 			<then>
-				<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
+				<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 				<execute function="SelectFrame" value1="relative=top" />
 				<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
 				<execute function="Type" locator1="PGWebcontentdisplayConfiguration#SEARCH_FIELD" value1="${webContentSearchValue}" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
+				<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 				<execute function="SelectFrame" value1="relative=top" />
 				<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
 				<execute function="Type" locator1="PGWebcontentdisplayConfiguration#SEARCH_FIELD" value1="${webContentTitle}" />
@@ -227,7 +227,7 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select Web Content" />
+		<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
 
@@ -249,7 +249,7 @@
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="AssertClick" locator1="WCDConfiguration#CHANGE_WEB_CONTENT_BUTTON" value1="Change" />
+		<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
@@ -288,13 +288,15 @@
 	</command>
 
 	<command name="viewConfigureScopePG">
+		<var name="key_portletName" value="Web Content Display" />
+
 		<if>
 			<equals arg1="${scopeSelectionDefault}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#TITLE" value1="Web Content Display" />
+				<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Web Content Display" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#TITLE" value1="Web Content Display (${scopeSelection})" />
+				<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Web Content Display (${scopeSelection})" />
 			</else>
 		</if>
 

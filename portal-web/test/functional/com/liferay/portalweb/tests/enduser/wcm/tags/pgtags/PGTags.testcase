@@ -65,7 +65,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFrontPageTag" priority="4">
+	<command known-issues="LPS-56922" name="AddFrontPageTag" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -839,7 +839,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchMultipleTagsViaBlogs" priority="4">
+	<command known-issues="LPS-56879" name="SearchMultipleTagsViaBlogs" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -22,7 +22,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddCategorywithLocalization" priority="4">
+	<command known-issues="LPS-56879" name="AddCategorywithLocalization" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -163,7 +163,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategorywithSiteRole" priority="4">
+	<command known-issues="LPS-56956" name="AddCategorywithSiteRole" priority="4">
 		<var name="pageName" value="Test Page Name" />
 		<var name="siteName" value="Test Site Name" />
 
@@ -372,7 +372,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
+	<command known-issues="LPS-56665" name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -416,7 +416,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWCWithOptionalVocabularyAssetType" priority="3">
+	<command known-issues="LPS-56665" name="AddWCWithOptionalVocabularyAssetType" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -457,7 +457,7 @@
 		</execute>
 	</command>
 
-	<command name="DeletePartialCategory" priority="4">
+	<command known-issues="LPS-56956" name="DeletePartialCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -907,7 +907,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchCategory" priority="4">
+	<command known-issues="LPS-56879" name="SearchCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1013,7 +1013,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchEditedCategory" priority="4">
+	<command known-issues="LPS-56879" name="SearchEditedCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

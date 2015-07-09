@@ -115,6 +115,10 @@
 	</command>
 
 	<command name="AddWebContentPortalScopeCurrentPage" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page1" />
 		</execute>
@@ -264,7 +268,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWithStructure" priority="4">
+	<command known-issues="LPS-56568" name="AddWithStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -332,7 +336,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeTemplate" priority="4">
+	<command known-issues="LPS-56568" name="ChangeTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -710,7 +714,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewArticleWithGuestViewPermission" priority="4">
+	<command known-issues="LPS-56722" name="ViewArticleWithGuestViewPermission" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

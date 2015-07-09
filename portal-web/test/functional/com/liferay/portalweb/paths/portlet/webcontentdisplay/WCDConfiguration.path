@@ -39,7 +39,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE_WEB_CONTENT_BUTTON</td>
+	<td>SELECT_WEB_CONTENT_BUTTON</td>
 	<td>//button[contains(@id,'webContentSelector')]</td>
 	<td></td>
 </tr>

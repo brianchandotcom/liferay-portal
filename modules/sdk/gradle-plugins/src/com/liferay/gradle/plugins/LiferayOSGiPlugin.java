@@ -57,6 +57,7 @@ import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.invocation.Gradle;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
@@ -87,6 +88,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureBundleExtension(project);
+
+		configureArchivesBaseName(project);
+		configureVersion(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -483,6 +487,16 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.applyPlugins(project);
 	}
 
+	protected void configureArchivesBaseName(Project project) {
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		String bundleSymbolicName = getBundleInstruction(
+			project, Constants.BUNDLE_SYMBOLICNAME);
+
+		basePluginConvention.setArchivesBaseName(bundleSymbolicName);
+	}
+
 	protected void configureBundleExtension(Project project) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
@@ -662,34 +676,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskJar(Project project) {
-		super.configureTaskJar(project);
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		configureTaskJarArchiveName(jar);
-	}
-
-	protected void configureTaskJarArchiveName(Jar jar) {
-		String bundleSymbolicName = getBundleInstruction(
-			jar.getProject(), Constants.BUNDLE_SYMBOLICNAME);
-
-		if (Validator.isNull(bundleSymbolicName)) {
-			return;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(bundleSymbolicName);
-		sb.append("-");
-		sb.append(jar.getVersion());
-		sb.append(".");
-		sb.append(jar.getExtension());
-
-		jar.setArchiveName(sb.toString());
-	}
-
-	@Override
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -700,20 +686,16 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureTaskAutoUpdateXml(project);
 	}
 
-	@Override
-	protected void configureVersion(
-		Project project, LiferayExtension liferayExtension) {
-
+	protected void configureVersion(Project project) {
 		String bundleVersion = getBundleInstruction(
 			project, Constants.BUNDLE_VERSION);
 
-		if (Validator.isNotNull(bundleVersion)) {
-			project.setVersion(bundleVersion);
+		project.setVersion(bundleVersion);
+	}
 
-			return;
-		}
-
-		super.configureVersion(project, liferayExtension);
+	@Override
+	protected void configureVersion(
+		Project project, LiferayExtension liferayExtension) {
 	}
 
 	protected String getBundleInstruction(Project project, String key) {

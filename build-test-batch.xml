@@ -42,6 +42,27 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-batch-test">
+		<attribute name="test.class.group.index" />
+		<element name="test-action" />
+		<sequential>
+			<if>
+				<not>
+					<equals arg1="@{test.class.group.index}" arg2="default" />
+				</not>
+				<then>
+					<prepare-test-build />
+
+					<test-action />
+
+					<merge-test-results />
+
+					<check-deprecated-method />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-build-selenium">
 		<sequential>
 			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
@@ -57,22 +78,13 @@
 	</macrodef>
 
 	<target name="integration-mysql">
-		<if>
-			<not>
-				<equals arg1="${jenkins.axis.variable}" arg2="default" />
-			</not>
-			<then>
-				<prepare-test-build />
-
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
 				<antcall target="test-class-group">
-					<param name="test.class.group.index" value="${jenkins.axis.variable}" />
+					<param name="test.class.group.index" value="@{test.class.group.index}" />
 				</antcall>
-
-				<merge-test-results />
-
-				<check-deprecated-method />
-			</then>
-		</if>
+			</test-action>
+		</run-batch-test>
 	</target>
 
 	<target name="integration-oracle">
@@ -84,35 +96,23 @@
 	</target>
 
 	<target name="plugins">
-		<if>
-			<not>
-				<equals arg1="${jenkins.axis.variable}" arg2="default" />
-			</not>
-			<then>
-				<prepare-test-build />
-
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
 				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
-					<property name="test.plugin.group.index" value="${jenkins.axis.variable}" />
+					<property name="test.plugin.group.index" value="@{test.class.group.index}" />
 				</ant>
-			</then>
-		</if>
+			</test-action>
+		</run-batch-test>
 	</target>
 
 	<target name="portal-web">
-		<if>
-			<not>
-				<equals arg1="${jenkins.axis.variable}" arg2="default" />
-			</not>
-			<then>
-				<prepare-test-build />
-
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
 				<run-build-selenium />
 
 				<run-source-formatter />
-
-				<merge-test-results />
-			</then>
-		</if>
+			</test-action>
+		</run-batch-test>
 	</target>
 
 	<target name="unit">

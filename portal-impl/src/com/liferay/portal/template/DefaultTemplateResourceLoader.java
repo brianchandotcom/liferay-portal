@@ -93,7 +93,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 				portalCacheName);
 
 		PortalCacheListener<String, TemplateResource> cacheListener =
-			new TemplateResourceCacheListener(name);
+			new TemplateResourcePortalCacheListener(name);
 
 		_multiVMPortalCache.registerCacheListener(
 			cacheListener, CacheListenerScope.ALL);

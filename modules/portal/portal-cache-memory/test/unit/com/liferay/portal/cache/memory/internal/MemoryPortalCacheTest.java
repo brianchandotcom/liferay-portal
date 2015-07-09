@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.memory.internal;
 
-import com.liferay.portal.cache.test.TestCacheListener;
+import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCacheManager;
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
@@ -57,7 +57,7 @@ public class MemoryPortalCacheTest {
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_1);
 
-		_defaultCacheListener = new TestCacheListener<>();
+		_defaultCacheListener = new TestPortalCacheListener<>();
 
 		_memoryPortalCache.registerCacheListener(_defaultCacheListener);
 
@@ -71,8 +71,8 @@ public class MemoryPortalCacheTest {
 
 		// Register
 
-		TestCacheListener<String, String> cacheListener =
-			new TestCacheListener<>();
+		TestPortalCacheListener<String, String> cacheListener =
+			new TestPortalCacheListener<>();
 
 		_memoryPortalCache.registerCacheListener(
 			cacheListener, CacheListenerScope.ALL);
@@ -771,7 +771,7 @@ public class MemoryPortalCacheTest {
 
 	private static final String _VALUE_2 = "VALUE_2";
 
-	private TestCacheListener<String, String> _defaultCacheListener;
+	private TestPortalCacheListener<String, String> _defaultCacheListener;
 	private TestCacheReplicator<String, String> _defaultCacheReplicator;
 	private MemoryPortalCache<String, String> _memoryPortalCache;
 

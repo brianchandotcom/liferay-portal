@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.util.StringPool;
 /**
  * @author Tina Tian
  */
-public class TemplateResourceCacheListener
+public class TemplateResourcePortalCacheListener
 	implements PortalCacheListener<String, TemplateResource> {
 
-	public TemplateResourceCacheListener(String templateResourceLoaderName) {
+	public TemplateResourcePortalCacheListener(String templateResourceLoaderName) {
 		String portalCacheName = TemplateResource.class.getName();
 
 		portalCacheName = portalCacheName.concat(StringPool.POUND).concat(

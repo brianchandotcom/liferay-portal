@@ -16,7 +16,7 @@ package com.liferay.portal.cache.ehcache.internal.event;
 
 import com.liferay.portal.cache.ehcache.internal.SerializableEhcachePortalCache;
 import com.liferay.portal.cache.ehcache.internal.SerializableObjectWrapper;
-import com.liferay.portal.kernel.cache.AggregatedCacheListener;
+import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
@@ -37,7 +37,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	implements CacheEventListener {
 
 	public PortalCacheCacheEventListener(
-		AggregatedCacheListener<K, V> aggregatedCacheListener,
+		AggregatedPortalCacheListener<K, V> aggregatedCacheListener,
 		PortalCache<K, V> portalCache) {
 
 		_aggregatedCacheListener = aggregatedCacheListener;
@@ -203,7 +203,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCacheCacheEventListener.class);
 
-	private final AggregatedCacheListener<K, V> _aggregatedCacheListener;
+	private final AggregatedPortalCacheListener<K, V> _aggregatedCacheListener;
 	private final PortalCache<K, V> _portalCache;
 	private final boolean _requireSerialization;
 

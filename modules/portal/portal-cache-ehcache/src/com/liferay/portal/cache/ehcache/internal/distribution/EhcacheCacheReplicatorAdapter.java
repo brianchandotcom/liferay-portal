@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal.distribution;
 
-import com.liferay.portal.cache.ehcache.internal.event.EhcacheCacheListenerAdapter;
+import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheListenerAdapter;
 import com.liferay.portal.kernel.cache.CacheReplicator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,7 +32,7 @@ import net.sf.ehcache.event.CacheEventListener;
  */
 public class EhcacheCacheReplicatorAdapter
 	<K extends Serializable, V extends Serializable>
-		extends EhcacheCacheListenerAdapter<K, V> implements CacheReplicator {
+		extends EhcachePortalCacheListenerAdapter<K, V> implements CacheReplicator {
 
 	public EhcacheCacheReplicatorAdapter(
 		CacheEventListener cacheEventListener) {

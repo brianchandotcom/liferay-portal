@@ -38,7 +38,7 @@ public class PortalCacheIndexer<I, K extends Serializable, V> {
 
 		_portalCache = portalCache;
 
-		_portalCache.registerCacheListener(new IndexerCacheListener());
+		_portalCache.registerCacheListener(new IndexerPortalCacheListener());
 
 		for (K indexedCacheKey : _portalCache.getKeys()) {
 			_addIndexedCacheKey(indexedCacheKey);
@@ -110,7 +110,7 @@ public class PortalCacheIndexer<I, K extends Serializable, V> {
 	private final IndexEncoder<I, K> _indexEncoder;
 	private final PortalCache<K, V> _portalCache;
 
-	private class IndexerCacheListener implements PortalCacheListener<K, V> {
+	private class IndexerPortalCacheListener implements PortalCacheListener<K, V> {
 
 		@Override
 		public void dispose() {

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.cache.test.TestCacheListener;
+import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCacheManager;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
@@ -81,7 +81,7 @@ public class EhcachePortalCacheTest {
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
-		_defaultCacheListener = new TestCacheListener<>();
+		_defaultCacheListener = new TestPortalCacheListener<>();
 
 		_ehcachePortalCache.registerCacheListener(_defaultCacheListener);
 
@@ -100,8 +100,8 @@ public class EhcachePortalCacheTest {
 
 		// Register 1
 
-		TestCacheListener<String, String> localCacheListener =
-			new TestCacheListener<>();
+		TestPortalCacheListener<String, String> localCacheListener =
+			new TestPortalCacheListener<>();
 
 		_ehcachePortalCache.registerCacheListener(
 			localCacheListener, CacheListenerScope.LOCAL);
@@ -125,8 +125,8 @@ public class EhcachePortalCacheTest {
 
 		// Register 2
 
-		TestCacheListener<String, String> remoteCacheListener =
-			new TestCacheListener<>();
+		TestPortalCacheListener<String, String> remoteCacheListener =
+			new TestPortalCacheListener<>();
 
 		_ehcachePortalCache.registerCacheListener(
 			remoteCacheListener, CacheListenerScope.REMOTE);
@@ -196,8 +196,7 @@ public class EhcachePortalCacheTest {
 
 		// Unregister 2
 
-		_ehcachePortalCache.unregisterCacheListener(
-			new TestCacheListener<String, String>());
+		_ehcachePortalCache.unregisterCacheListener(new TestPortalCacheListener<String, String>());
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
@@ -618,7 +617,7 @@ public class EhcachePortalCacheTest {
 
 	private static CacheManager _cacheManager;
 
-	private TestCacheListener<String, String> _defaultCacheListener;
+	private TestPortalCacheListener<String, String> _defaultCacheListener;
 	private TestCacheReplicator<String, String> _defaultCacheReplicator;
 	private EhcachePortalCache<String, String> _ehcachePortalCache;
 

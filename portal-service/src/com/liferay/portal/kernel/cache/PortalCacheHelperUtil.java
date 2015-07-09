@@ -31,10 +31,10 @@ public class PortalCacheHelperUtil {
 	public static <K extends Serializable, V> void putWithoutReplicator(
 		PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 
-		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
+		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
 
 		if (!remoteInvoke) {
-			AggregatedCacheListener.setRemoteInvoke(true);
+			AggregatedPortalCacheListener.setRemoteInvoke(true);
 		}
 
 		try {
@@ -42,7 +42,7 @@ public class PortalCacheHelperUtil {
 		}
 		finally {
 			if (!remoteInvoke) {
-				AggregatedCacheListener.setRemoteInvoke(false);
+				AggregatedPortalCacheListener.setRemoteInvoke(false);
 			}
 		}
 	}
@@ -50,10 +50,10 @@ public class PortalCacheHelperUtil {
 	public static void removeAllWithoutReplicator(
 		PortalCache<?, ?> portalCache) {
 
-		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
+		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
 
 		if (!remoteInvoke) {
-			AggregatedCacheListener.setRemoteInvoke(true);
+			AggregatedPortalCacheListener.setRemoteInvoke(true);
 		}
 
 		try {
@@ -61,7 +61,7 @@ public class PortalCacheHelperUtil {
 		}
 		finally {
 			if (!remoteInvoke) {
-				AggregatedCacheListener.setRemoteInvoke(false);
+				AggregatedPortalCacheListener.setRemoteInvoke(false);
 			}
 		}
 	}
@@ -69,10 +69,10 @@ public class PortalCacheHelperUtil {
 	public static <K extends Serializable> void removeWithoutReplicator(
 		PortalCache<K, ?> portalCache, K key) {
 
-		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
+		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
 
 		if (!remoteInvoke) {
-			AggregatedCacheListener.setRemoteInvoke(true);
+			AggregatedPortalCacheListener.setRemoteInvoke(true);
 		}
 
 		try {
@@ -80,7 +80,7 @@ public class PortalCacheHelperUtil {
 		}
 		finally {
 			if (!remoteInvoke) {
-				AggregatedCacheListener.setRemoteInvoke(false);
+				AggregatedPortalCacheListener.setRemoteInvoke(false);
 			}
 		}
 	}

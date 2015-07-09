@@ -29,7 +29,7 @@ import org.junit.Assert;
 /**
  * @author Tina Tian
  */
-public class TestCacheListener<K extends Serializable, V>
+public class TestPortalCacheListener<K extends Serializable, V>
 	implements PortalCacheListener<K, V> {
 
 	public void assertActionsCount(int count) {

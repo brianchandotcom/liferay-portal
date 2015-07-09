@@ -193,8 +193,8 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	protected abstract boolean doReplace(
 		K key, V oldValue, V newValue, int timeToLive);
 
-	protected final AggregatedCacheListener<K, V> aggregatedCacheListener =
-		new AggregatedCacheListener<>();
+	protected final AggregatedPortalCacheListener<K, V> aggregatedCacheListener =
+		new AggregatedPortalCacheListener<>();
 
 	private final PortalCacheManager<K, V> _portalCacheManager;
 

@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Tina Tian
  */
-public class AggregatedCacheListener<K extends Serializable, V>
+public class AggregatedPortalCacheListener<K extends Serializable, V>
 	implements PortalCacheListener<K, V> {
 
 	public static boolean isRemoteInvoke() {
@@ -204,7 +204,7 @@ public class AggregatedCacheListener<K extends Serializable, V>
 
 	private static final ThreadLocal<Boolean> _remoteInvokeThreadLocal =
 		new InitialThreadLocal<>(
-			AggregatedCacheListener.class + "._remoteInvokeThreadLocal", false);
+			AggregatedPortalCacheListener.class + "._remoteInvokeThreadLocal", false);
 
 	private final ConcurrentMap<PortalCacheListener<K, V>, CacheListenerScope>
 		_cacheListeners = new ConcurrentHashMap<>();

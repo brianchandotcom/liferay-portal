@@ -18,5 +18,6 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
+		<dependency name="scribe" org="org.scribe" rev="1.3.6" />
 	</dependencies>
 </ivy-module>

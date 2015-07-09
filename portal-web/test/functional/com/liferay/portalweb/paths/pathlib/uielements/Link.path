@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MANAGE_DISPLAY_TEMPLATES_FOR_LIFERAY</td>
+	<td>//a[contains(.,'Manage Display Templates for Liferay')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE_TO_THE_RECYCLING_BIN</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>

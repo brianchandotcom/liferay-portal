@@ -224,6 +224,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHOW_ACTIONS_CHECKBOX</td>
+	<td>//input[@id='_86_showActions']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHOW_ADD_CONTENT_BUTTON</td>
 	<td>//label[contains(.,'Show Add Content Button')]/input[@type='checkbox']</td>
 	<td></td>
@@ -231,6 +236,21 @@
 <tr>
 	<td>SHOW_AVAILABLE_LOCALES</td>
 	<td>//label[contains(.,'Show Available Locales')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_FOLDER_MENU_CHECKBOX</td>
+	<td>//input[@id='_86_showFolderMenu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_NAVIGATION_LINKS_CHECKBOX</td>
+	<td>//input[@id='_86_showTabs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_SEARCH_CHECKBOX</td>
+	<td>//input[@id='_86_showFoldersSearch']</td>
 	<td></td>
 </tr>
 <tr>

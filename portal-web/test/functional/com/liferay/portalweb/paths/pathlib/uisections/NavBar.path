@@ -39,6 +39,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HOME</td>
+	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT</td>
+	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Recent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINE</td>
+	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Mine')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_TOGGLE_ADVANCED</td>
 	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>

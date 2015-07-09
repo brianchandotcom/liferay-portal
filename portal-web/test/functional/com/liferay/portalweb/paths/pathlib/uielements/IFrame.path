@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_MEDIA_TYPE</td>
+	<td>//iframe[contains(@id,'selectFileEntryType_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_SITES</td>
 	<td>//iframe[contains(@src,'selectSite')]</td>
 	<td></td>

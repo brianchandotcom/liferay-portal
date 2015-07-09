@@ -471,7 +471,7 @@
 
 		<var name="key_portletName" value="${localizedPortletName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#CONTROL_PANEL_NAVIGATION" />
+		<execute function="AssertClick" locator1="Home#CONTROL_PANEL_NAVIGATION" value1="${localizedPortletName}" />
 	</command>
 
 	<command name="gotoEdit">

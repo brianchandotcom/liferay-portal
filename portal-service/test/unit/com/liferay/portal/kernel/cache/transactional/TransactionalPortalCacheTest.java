@@ -88,11 +88,7 @@ public class TransactionalPortalCacheTest {
 	public void testNoneTransactionalCache1() {
 		setEnableTransactionalCache(false);
 
-		TransactionalPortalCacheHelper.begin();
-
-		TransactionalPortalCacheHelper.rollback();
-
-		TransactionalPortalCacheHelper.commit();
+		Assert.assertFalse(TransactionalPortalCacheHelper.isEnabled());
 
 		doTestNoneTransactionalCache();
 	}

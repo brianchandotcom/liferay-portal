@@ -51,7 +51,7 @@ public interface PortalCache<K extends Serializable, V> {
 
 	public void registerCacheListener(
 		PortalCacheListener<K, V> cacheListener,
-		CacheListenerScope cacheListenerScope);
+		PortalCacheListenerScope cacheListenerScope);
 
 	@Proxy
 	public void remove(K key);

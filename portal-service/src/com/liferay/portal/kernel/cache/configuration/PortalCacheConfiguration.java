@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.cache.configuration;
 
-import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class PortalCacheConfiguration {
 
 	public PortalCacheConfiguration(
 		String portalCacheName,
-		Map<CallbackConfiguration, CacheListenerScope>
+		Map<CallbackConfiguration, PortalCacheListenerScope>
 			cacheListenerConfigurations,
 		CallbackConfiguration bootstrapLoaderConfiguration) {
 
@@ -55,7 +55,7 @@ public class PortalCacheConfiguration {
 		return _bootstrapLoaderConfiguration;
 	}
 
-	public Map<CallbackConfiguration, CacheListenerScope>
+	public Map<CallbackConfiguration, PortalCacheListenerScope>
 		getCacheListenerConfigurations() {
 
 		return Collections.unmodifiableMap(_cacheListenerConfigurations);
@@ -74,7 +74,7 @@ public class PortalCacheConfiguration {
 	}
 
 	private final CallbackConfiguration _bootstrapLoaderConfiguration;
-	private final Map<CallbackConfiguration, CacheListenerScope>
+	private final Map<CallbackConfiguration, PortalCacheListenerScope>
 		_cacheListenerConfigurations;
 	private final String _portalCacheName;
 

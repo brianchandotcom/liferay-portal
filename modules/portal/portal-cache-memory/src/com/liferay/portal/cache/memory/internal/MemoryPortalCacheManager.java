@@ -15,7 +15,7 @@
 package com.liferay.portal.cache.memory.internal;
 
 import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
-import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.cluster.ClusterLinkCallbackFactory;
@@ -121,7 +121,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		Map<CallbackConfiguration, CacheListenerScope>
+		Map<CallbackConfiguration, PortalCacheListenerScope>
 			cacheListenerConfigurations = null;
 		CallbackConfiguration bootstrapLoaderConfiguration = null;
 
@@ -134,8 +134,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 			cacheListenerConfigurations = new HashMap<>();
 
-			cacheListenerConfigurations.put(
-				cacheListenerConfiguration, CacheListenerScope.ALL);
+			cacheListenerConfigurations.put(cacheListenerConfiguration, PortalCacheListenerScope.ALL);
 
 			bootstrapLoaderConfiguration = new CallbackConfiguration(
 				ClusterLinkCallbackFactory.INSTANCE, new Properties());

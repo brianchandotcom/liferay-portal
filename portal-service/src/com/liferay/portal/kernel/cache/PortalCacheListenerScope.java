@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.cache;
 /**
  * @author Edward Han
  */
-public enum CacheListenerScope {
+public enum PortalCacheListenerScope {
 
 	ALL, LOCAL, REMOTE
 

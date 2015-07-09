@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 
@@ -27,7 +27,7 @@ public class EhcachePortalCacheConfiguration extends PortalCacheConfiguration {
 
 	public EhcachePortalCacheConfiguration(
 		String portalCacheName,
-		Map<CallbackConfiguration, CacheListenerScope>
+		Map<CallbackConfiguration, PortalCacheListenerScope>
 			cacheListenerConfigurations,
 		CallbackConfiguration bootstrapLoaderConfiguration,
 		boolean requireSerialization) {

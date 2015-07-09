@@ -18,7 +18,7 @@ import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCacheManager;
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
-import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -74,8 +74,7 @@ public class MemoryPortalCacheTest {
 		TestPortalCacheListener<String, String> cacheListener =
 			new TestPortalCacheListener<>();
 
-		_memoryPortalCache.registerCacheListener(
-			cacheListener, CacheListenerScope.ALL);
+		_memoryPortalCache.registerCacheListener(cacheListener, PortalCacheListenerScope.ALL);
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_2);
 

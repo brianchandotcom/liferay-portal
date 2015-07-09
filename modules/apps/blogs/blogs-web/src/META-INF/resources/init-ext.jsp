@@ -13,11 +13,3 @@
  * details.
  */
 --%>
-
-<%@ include file="/init.jsp" %>
-
-<%
-BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
-%>
-
-<%@ include file="/blogs_admin/init-ext.jsp" %>

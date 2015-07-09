@@ -150,7 +150,7 @@ public class CounterLocalServiceTest {
 
 			System.setProperty("catalina.base", ".");
 			System.setProperty("external-properties", "portal-test.properties");
-			System.setProperty("portal:jdbc.default.maxPoolSize", "5");
+			System.setProperty("portal:jdbc.default.maxPoolSize", "3");
 			System.setProperty("portal:jdbc.default.minPoolSize", "1");
 
 			CacheKeyGeneratorUtil cacheKeyGeneratorUtil =

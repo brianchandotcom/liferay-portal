@@ -341,6 +341,7 @@
 		</execute>
 
 		<execute macro="SitePage#copyApplicationsFromPageToPagePG">
+			<var name="pageName" value="Blog Page" />
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 	</command>

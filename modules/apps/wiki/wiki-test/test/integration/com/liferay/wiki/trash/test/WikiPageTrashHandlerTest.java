@@ -144,32 +144,7 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashParentAndRestoreIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashParentIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashParentWithBaseModelIsInTrashContainer()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashParentWithBaseModelIsIsNotVisible() throws Exception {
 	}
 
 	@Override

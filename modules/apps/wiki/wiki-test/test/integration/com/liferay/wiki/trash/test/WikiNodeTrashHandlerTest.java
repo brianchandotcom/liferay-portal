@@ -32,9 +32,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -57,12 +55,6 @@ public class WikiNodeTrashHandlerTest
 		WikiNode node = (WikiNode)classedModel;
 
 		return node.getName();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelIsInTrashContainer() throws Exception {
 	}
 
 	@Override

@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="=mentions-api,../blogs/blogs-web" />
+	<property name="import.shared" value="mentions-api,../blogs/blogs-web" />
 	<property name="osgi.ide.dependencies" value="rome.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />

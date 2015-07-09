@@ -23,6 +23,11 @@ public class UpgradeCalendarBooking extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (!tableHasColumn("CalendarBooking", "vEventUid")) {
+			runSQL(
+				"alter table CalendarBooking add vEventUid VARCHAR(255) null");
+		}
+
 		runSQL(
 			"update CalendarBooking set vEventUid = uuid_ where vEventUid is " +
 				"NULL or vEventUid = ''");

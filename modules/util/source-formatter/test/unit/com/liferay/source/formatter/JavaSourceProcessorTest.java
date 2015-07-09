@@ -223,6 +223,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testThrowsExceptionWithSpace() throws Exception {
+		test("ThrowsExceptionWithSpace.testjava");
+	}
+
+	@Test
 	public void testThrowsSystemException() throws Exception {
 		test("ThrowsSystemException.testjava");
 	}

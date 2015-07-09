@@ -19,8 +19,9 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.transaction.NewTransactionLifecycleListener;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionDefinition;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,33 +42,76 @@ import java.util.Map;
 public class TransactionalPortalCacheHelper {
 
 	public static final TransactionLifecycleListener
-		TRANSACTION_LIFECYCLE_LISTENER = new NewTransactionLifecycleListener() {
+		TRANSACTION_LIFECYCLE_LISTENER = new TransactionLifecycleListener() {
 
 			@Override
-			protected void doCreated(
+			public void committed(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
-				begin();
+				Propagation propagation = transactionAttribute.getPropagation();
+
+				if (propagation.value() >=
+						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
+
+					List<List<PortalCacheMap>> backupPortalCacheMaps =
+						_backupPortalCacheMapsThreadLocal.get();
+
+					_portalCacheMapsThreadLocal.set(
+						backupPortalCacheMaps.remove(
+							backupPortalCacheMaps.size() - 1));
+				}
+				else if (transactionStatus.isNewTransaction()) {
+					commit();
+				}
 			}
 
 			@Override
-			protected void doCommitted(
+			public void created(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
-				commit();
+				Propagation propagation = transactionAttribute.getPropagation();
+
+				if (propagation.value() >=
+						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
+
+					List<List<PortalCacheMap>> backupPortalCacheMaps =
+						_backupPortalCacheMapsThreadLocal.get();
+
+					backupPortalCacheMaps.add(
+						_portalCacheMapsThreadLocal.get());
+
+					_portalCacheMapsThreadLocal.remove();
+				}
+				else if (transactionStatus.isNewTransaction()) {
+					begin();
+				}
 			}
 
 			@Override
-			protected void doRollbacked(
+			public void rollbacked(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus, Throwable throwable) {
 
-				rollback();
+				Propagation propagation = transactionAttribute.getPropagation();
 
-				EntityCacheUtil.clearLocalCache();
-				FinderCacheUtil.clearLocalCache();
+				if (propagation.value() >=
+						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
+
+					List<List<PortalCacheMap>> backupPortalCacheMaps =
+						_backupPortalCacheMapsThreadLocal.get();
+
+					_portalCacheMapsThreadLocal.set(
+						backupPortalCacheMaps.remove(
+							backupPortalCacheMaps.size() - 1));
+				}
+				else if (transactionStatus.isNewTransaction()) {
+					rollback();
+
+					EntityCacheUtil.clearLocalCache();
+					FinderCacheUtil.clearLocalCache();
+				}
 			}
 
 		};
@@ -213,6 +257,12 @@ public class TransactionalPortalCacheHelper {
 		TransactionalPortalCache.NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE,
 		false);
 
+	private static final ThreadLocal<List<List<PortalCacheMap>>>
+		_backupPortalCacheMapsThreadLocal =
+			new InitialThreadLocal<List<List<PortalCacheMap>>>(
+				TransactionalPortalCacheHelper.class.getName() +
+					"._backupPortalCacheMapsThreadLocal",
+				new ArrayList<List<PortalCacheMap>>());
 	private static final ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal =
 			new InitialThreadLocal<List<PortalCacheMap>>(

@@ -39,9 +39,7 @@ import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
@@ -112,12 +110,6 @@ public class BlogsEntryTrashHandlerTest
 		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
 
 		super.setUp();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelIsInTrashContainer() throws Exception {
 	}
 
 	@Override

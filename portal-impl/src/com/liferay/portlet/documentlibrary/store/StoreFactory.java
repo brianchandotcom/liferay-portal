@@ -186,30 +186,35 @@ public class StoreFactory {
 			return _store;
 		}
 
+		_wrapDatabaseStore();
+
+		return _store;
+	}
+
+	private void _wrapDatabaseStore() {
 		DB db = DBFactoryUtil.getDB();
 
 		String dbType = db.getType();
 
-		if (dbType.equals(DB.TYPE_POSTGRESQL)) {
-			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-			MethodInterceptor transactionAdviceMethodInterceptor =
-				(MethodInterceptor)PortalBeanLocatorUtil.locate(
-					"transactionAdvice");
-
-			MethodInterceptor tempFileMethodInterceptor =
-				new TempFileMethodInterceptor();
-
-			List<MethodInterceptor> methodInterceptors = Arrays.asList(
-				transactionAdviceMethodInterceptor, tempFileMethodInterceptor);
-
-			_store = (Store)ProxyUtil.newProxyInstance(
-				classLoader, new Class<?>[] {Store.class},
-				new MethodInterceptorInvocationHandler(
-					_store, methodInterceptors));
+		if (!dbType.equals(DB.TYPE_POSTGRESQL)) {
+			return;
 		}
 
-		return _store;
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+
+		MethodInterceptor transactionAdviceMethodInterceptor =
+			(MethodInterceptor)PortalBeanLocatorUtil.locate(
+				"transactionAdvice");
+
+		MethodInterceptor tempFileMethodInterceptor =
+			new TempFileMethodInterceptor();
+
+		List<MethodInterceptor> methodInterceptors = Arrays.asList(
+			transactionAdviceMethodInterceptor, tempFileMethodInterceptor);
+
+		_store = (Store)ProxyUtil.newProxyInstance(
+			classLoader, new Class<?>[] {Store.class},
+			new MethodInterceptorInvocationHandler(_store, methodInterceptors));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);

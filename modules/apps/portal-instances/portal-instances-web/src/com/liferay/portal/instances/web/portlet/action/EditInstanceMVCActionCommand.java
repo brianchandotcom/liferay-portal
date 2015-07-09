@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portalinstances.action;
+package com.liferay.portal.instances.web.portlet.action;
 
 import com.liferay.portal.CompanyMxException;
 import com.liferay.portal.CompanyVirtualHostException;

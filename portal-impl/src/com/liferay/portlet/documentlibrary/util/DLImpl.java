@@ -281,7 +281,6 @@ public class DLImpl implements DL {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(request, "strutsAction");
 		String mvcRenderCommandName = ParamUtil.getString(
 			request, "mvcRenderCommandName");
 
@@ -301,11 +300,6 @@ public class DLImpl implements DL {
 
 			_addPortletBreadcrumbEntry(
 				request, "mvcRenderCommandName", mvcRenderCommandName, groupId,
-				ignoreRootFolder, portletURL);
-		}
-		else if (strutsAction.equals("/item_selector/view")) {
-			_addPortletBreadcrumbEntry(
-				request, "strutsAction", strutsAction, groupId,
 				ignoreRootFolder, portletURL);
 		}
 		else {

@@ -15,7 +15,7 @@
 package com.liferay.portal.cache.ehcache.internal.bootstrap;
 
 import com.liferay.portal.cache.ehcache.internal.EhcacheUnwrapUtil;
-import com.liferay.portal.kernel.cache.BootstrapLoader;
+import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
@@ -27,7 +27,7 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 /**
  * @author Tina Tian
  */
-public class EhcacheBootstrapLoaderAdapter implements BootstrapLoader {
+public class EhcacheBootstrapLoaderAdapter implements PortalCacheBootstrapLoader {
 
 	public EhcacheBootstrapLoaderAdapter(
 		BootstrapCacheLoader bootstrapCacheLoader) {

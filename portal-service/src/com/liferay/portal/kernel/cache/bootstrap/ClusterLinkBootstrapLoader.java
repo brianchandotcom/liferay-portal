@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.cache.bootstrap;
 
-import com.liferay.portal.kernel.cache.BootstrapLoader;
+import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,7 +24,7 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public class ClusterLinkBootstrapLoader implements BootstrapLoader {
+public class ClusterLinkBootstrapLoader implements PortalCacheBootstrapLoader {
 
 	public ClusterLinkBootstrapLoader(Properties properties) {
 		if (properties != null) {

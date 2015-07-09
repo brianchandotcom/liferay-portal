@@ -49,7 +49,7 @@ public class SingleVMMemoryPortalCacheManager<K extends Serializable, V>
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		setName(PortalCacheManagerNames.SINGLE_VM);
+		setPortalCacheManagerName(PortalCacheManagerNames.SINGLE_VM);
 
 		initialize();
 

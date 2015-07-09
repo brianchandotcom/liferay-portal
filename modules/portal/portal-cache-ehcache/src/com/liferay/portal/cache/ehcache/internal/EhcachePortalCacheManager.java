@@ -165,7 +165,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemoveCache(String portalCacheName) {
+	protected void doRemovePortalCache(String portalCacheName) {
 		_cacheManager.removeCache(portalCacheName);
 	}
 
@@ -177,22 +177,22 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected String getType() {
+	protected String getPortalCacheManagerType() {
 		return PortalCacheManagerTypes.EHCACHE;
 	}
 
 	@Override
 	protected void initPortalCacheManager() {
-		setBlockingCacheAllowed(
+		setBlockingPortalCacheAllowed(
 			GetterUtil.getBoolean(
 				props.get(PropsKeys.EHCACHE_BLOCKING_CACHE_ALLOWED)));
-		setBootstrapCacheLoaderEnabled(
+		setPortalCacheBootstrapLoaderEnabled(
 			GetterUtil.getBoolean(
 				props.get(PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED)));
-		setTransactionalCacheEnabled(
+		setTransactionalPortalCacheEnabled(
 			GetterUtil.getBoolean(
 				props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED)));
-		setTransactionalCacheNames(
+		setTransactionalPortalCacheNames(
 			GetterUtil.getStringValues(
 				props.getArray(PropsKeys.TRANSACTIONAL_CACHE_NAMES)));
 

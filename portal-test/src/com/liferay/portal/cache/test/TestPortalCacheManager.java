@@ -39,7 +39,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 		TestPortalCacheManager<K, V> testPortalCacheManager =
 			new TestPortalCacheManager<>();
 
-		testPortalCacheManager.setName(portalCacheManagerName);
+		testPortalCacheManager.setPortalCacheManagerName(portalCacheManagerName);
 
 		testPortalCacheManager.initialize();
 
@@ -100,7 +100,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemoveCache(String portalCacheName) {
+	protected void doRemovePortalCache(String portalCacheName) {
 		TestPortalCache<K, V> testPortalCache = _testPortalCaches.remove(
 			portalCacheName);
 
@@ -121,7 +121,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected String getType() {
+	protected String getPortalCacheManagerType() {
 		return PortalCacheManagerTypes.TEST;
 	}
 

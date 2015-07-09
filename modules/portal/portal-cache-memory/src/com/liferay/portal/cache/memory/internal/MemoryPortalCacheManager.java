@@ -108,7 +108,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemoveCache(String portalCacheName) {
+	protected void doRemovePortalCache(String portalCacheName) {
 		MemoryPortalCache<K, V> memoryPortalCache = _memoryPortalCaches.remove(
 			portalCacheName);
 
@@ -149,7 +149,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected String getType() {
+	protected String getPortalCacheManagerType() {
 		return PortalCacheManagerTypes.MEMORY;
 	}
 

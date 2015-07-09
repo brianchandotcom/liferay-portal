@@ -62,7 +62,7 @@ public class MultiVMEhcachePortalCacheManager
 		setConfigFile(props.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
 		setMpiOnly(true);
-		setName(PortalCacheManagerNames.MULTI_VM);
+		setPortalCacheManagerName(PortalCacheManagerNames.MULTI_VM);
 
 		Thread currentThread = Thread.currentThread();
 

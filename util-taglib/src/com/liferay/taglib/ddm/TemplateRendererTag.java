@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eduardo Garcia
  */
-public class DDMTemplateRendererTag extends IncludeTag {
+public class TemplateRendererTag extends IncludeTag {
 
 	@Override
 	public int processStartTag() throws Exception {

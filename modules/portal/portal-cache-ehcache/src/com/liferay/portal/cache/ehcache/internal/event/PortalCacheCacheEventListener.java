@@ -17,7 +17,7 @@ package com.liferay.portal.cache.ehcache.internal.event;
 import com.liferay.portal.cache.ehcache.internal.SerializableEhcachePortalCache;
 import com.liferay.portal.cache.ehcache.internal.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.AggregatedCacheListener;
-import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,7 +67,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		_aggregatedCacheListener.dispose();
 	}
 
-	public CacheListener<K, V> getCacheListener() {
+	public PortalCacheListener<K, V> getCacheListener() {
 		return _aggregatedCacheListener;
 	}
 

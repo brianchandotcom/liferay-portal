@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -124,12 +124,12 @@ public class CachelessTableMapperImpl
 
 		@Override
 		public void registerCacheListener(
-			CacheListener<Long, long[]> cacheListener) {
+			PortalCacheListener<Long, long[]> cacheListener) {
 		}
 
 		@Override
 		public void registerCacheListener(
-			CacheListener<Long, long[]> cacheListener,
+			PortalCacheListener<Long, long[]> cacheListener,
 			CacheListenerScope cacheListenerScope) {
 		}
 
@@ -143,7 +143,7 @@ public class CachelessTableMapperImpl
 
 		@Override
 		public void unregisterCacheListener(
-			CacheListener<Long, long[]> cacheListener) {
+			PortalCacheListener<Long, long[]> cacheListener) {
 		}
 
 		@Override

@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.cache.index;
 
 import com.liferay.portal.cache.test.TestPortalCache;
-import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.concurrent.test.MappedMethodCallableInvocationHandler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -323,7 +323,7 @@ public class PortalCacheIndexerTest {
 	private static final IndexEncoder<Long, TestKey> _indexEncoder =
 		new TestKeyIndexEncoder();
 
-	private CacheListener<TestKey, String> _cacheListener;
+	private PortalCacheListener<TestKey, String> _cacheListener;
 	private MappedMethodCallableInvocationHandler
 		_mappedMethodCallableInvocationHandler;
 	private PortalCache<TestKey, String> _portalCache;

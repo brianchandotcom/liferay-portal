@@ -329,7 +329,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			CallbackFactory callbackFactory =
 				callbackConfiguration.getCallbackFactory();
 
-			CacheListener<K, V> cacheListener =
+			PortalCacheListener<K, V> cacheListener =
 				callbackFactory.createCacheListener(
 					callbackConfiguration.getProperties());
 

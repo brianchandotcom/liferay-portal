@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.cache.cluster;
 
 import com.liferay.portal.kernel.cache.BootstrapLoader;
-import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CallbackFactory;
 import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkBootstrapLoader;
@@ -38,10 +38,10 @@ public class ClusterLinkCallbackFactory implements CallbackFactory {
 	}
 
 	@Override
-	public <K extends Serializable, V> CacheListener<K, V> createCacheListener(
+	public <K extends Serializable, V> PortalCacheListener<K, V> createCacheListener(
 		Properties properties) {
 
-		return (CacheListener<K, V>)
+		return (PortalCacheListener<K, V>)
 			new ClusterLinkCacheReplicator<K, Serializable>(properties);
 	}
 

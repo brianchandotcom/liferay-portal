@@ -25,7 +25,7 @@ public interface CallbackFactory {
 
 	public BootstrapLoader createBootstrapLoader(Properties properties);
 
-	public <K extends Serializable, V> CacheListener<K, V> createCacheListener(
+	public <K extends Serializable, V> PortalCacheListener<K, V> createCacheListener(
 		Properties properties);
 
 	public CacheManagerListener createCacheManagerListener(

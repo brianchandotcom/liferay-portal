@@ -14,7 +14,7 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
  * @author Tina Tian
  */
 public class TemplateResourceCacheListener
-	implements CacheListener<String, TemplateResource> {
+	implements PortalCacheListener<String, TemplateResource> {
 
 	public TemplateResourceCacheListener(String templateResourceLoaderName) {
 		String portalCacheName = TemplateResource.class.getName();

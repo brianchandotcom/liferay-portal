@@ -15,7 +15,7 @@
 package com.liferay.portal.template;
 
 import com.liferay.portal.deploy.sandbox.SandboxHandler;
-import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -92,7 +92,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			(PortalCache<String, TemplateResource>)_multiVMPool.getCache(
 				portalCacheName);
 
-		CacheListener<String, TemplateResource> cacheListener =
+		PortalCacheListener<String, TemplateResource> cacheListener =
 			new TemplateResourceCacheListener(name);
 
 		_multiVMPortalCache.registerCacheListener(

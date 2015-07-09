@@ -129,7 +129,10 @@ public class TransactionalPortalCacheHelper {
 		};
 
 	public static void begin() {
-		_pushPortalCacheMap();
+		List<PortalCacheMap> portalCacheMaps =
+			_portalCacheMapsThreadLocal.get();
+
+		portalCacheMaps.add(new PortalCacheMap());
 	}
 
 	public static void commit() {
@@ -245,13 +248,6 @@ public class TransactionalPortalCacheHelper {
 			_portalCacheMapsThreadLocal.get();
 
 		return portalCacheMaps.remove(portalCacheMaps.size() - 1);
-	}
-
-	private static void _pushPortalCacheMap() {
-		List<PortalCacheMap> portalCacheMaps =
-			_portalCacheMapsThreadLocal.get();
-
-		portalCacheMaps.add(new PortalCacheMap());
 	}
 
 	private static final ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(

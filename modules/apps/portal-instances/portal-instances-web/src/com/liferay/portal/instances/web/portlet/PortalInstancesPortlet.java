@@ -16,8 +16,37 @@ package com.liferay.portal.instances.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pei-Jung Lan
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.control-panel-entry-category=configuration",
+		"com.liferay.portlet.control-panel-entry-weight=4.0",
+		"com.liferay.portlet.css-class-wrapper=portlet-admin",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.icon=/icons/portal_instances.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.struts-path=portal_instances",
+		"com.liferay.portlet.use-default-template=false",
+		"javax.portlet.description=javax.portlet.description.135",
+		"javax.portlet.display-name=Portal Instances",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.name=135",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class PortalInstancesPortlet extends MVCPortlet {
 }

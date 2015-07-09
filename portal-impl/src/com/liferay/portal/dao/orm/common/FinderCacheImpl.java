@@ -14,7 +14,7 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.kernel.cache.CacheManagerListener;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -54,7 +54,7 @@ import org.apache.commons.collections.map.LRUMap;
  */
 @DoPrivileged
 public class FinderCacheImpl
-	implements CacheManagerListener, CacheRegistryItem, FinderCache {
+	implements PortalCacheManagerListener, CacheRegistryItem, FinderCache {
 
 	public static final String CACHE_NAME = FinderCache.class.getName();
 

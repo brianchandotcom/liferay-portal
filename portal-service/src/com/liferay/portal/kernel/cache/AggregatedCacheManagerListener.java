@@ -21,9 +21,9 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * @author Tina Tian
  */
-public class AggregatedCacheManagerListener implements CacheManagerListener {
+public class AggregatedCacheManagerListener implements PortalCacheManagerListener {
 
-	public boolean addCacheListener(CacheManagerListener cacheManagerListener) {
+	public boolean addCacheListener(PortalCacheManagerListener cacheManagerListener) {
 		if (cacheManagerListener == null) {
 			return false;
 		}
@@ -37,20 +37,20 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 
 	@Override
 	public void dispose() throws PortalCacheException {
-		for (CacheManagerListener cacheManagerListener :
+		for (PortalCacheManagerListener cacheManagerListener :
 				_cacheManagerListeners) {
 
 			cacheManagerListener.dispose();
 		}
 	}
 
-	public Set<CacheManagerListener> getCacheManagerListeners() {
+	public Set<PortalCacheManagerListener> getCacheManagerListeners() {
 		return Collections.unmodifiableSet(_cacheManagerListeners);
 	}
 
 	@Override
 	public void init() throws PortalCacheException {
-		for (CacheManagerListener cacheManagerListener :
+		for (PortalCacheManagerListener cacheManagerListener :
 				_cacheManagerListeners) {
 
 			cacheManagerListener.init();
@@ -59,7 +59,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 
 	@Override
 	public void notifyCacheAdded(String portalCacheName) {
-		for (CacheManagerListener cacheManagerListener :
+		for (PortalCacheManagerListener cacheManagerListener :
 				_cacheManagerListeners) {
 
 			cacheManagerListener.notifyCacheAdded(portalCacheName);
@@ -68,7 +68,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 
 	@Override
 	public void notifyCacheRemoved(String portalCacheName) {
-		for (CacheManagerListener cacheManagerListener :
+		for (PortalCacheManagerListener cacheManagerListener :
 				_cacheManagerListeners) {
 
 			cacheManagerListener.notifyCacheRemoved(portalCacheName);
@@ -76,7 +76,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 	}
 
 	public boolean removeCacheListener(
-		CacheManagerListener cacheManagerListener) {
+		PortalCacheManagerListener cacheManagerListener) {
 
 		if (cacheManagerListener == null) {
 			return false;
@@ -85,7 +85,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 		return _cacheManagerListeners.remove(cacheManagerListener);
 	}
 
-	private final Set<CacheManagerListener> _cacheManagerListeners =
+	private final Set<PortalCacheManagerListener> _cacheManagerListeners =
 		new CopyOnWriteArraySet<>();
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.cache.mvcc.MVCCPortalCacheFactory;
-import com.liferay.portal.kernel.cache.CacheManagerListener;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -53,7 +53,7 @@ import org.apache.commons.collections.map.LRUMap;
  */
 @DoPrivileged
 public class EntityCacheImpl
-	implements CacheManagerListener, CacheRegistryItem, EntityCache {
+	implements PortalCacheManagerListener, CacheRegistryItem, EntityCache {
 
 	public static final String CACHE_NAME = EntityCache.class.getName();
 

@@ -44,7 +44,7 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public PortalCache<K, V> getCache(String portalCacheName, boolean blocking)
 		throws PortalCacheException;
 
-	public Set<CacheManagerListener> getCacheManagerListeners();
+	public Set<PortalCacheManagerListener> getCacheManagerListeners();
 
 	public String getName();
 
@@ -54,12 +54,12 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public void reconfigureCaches(URL configurationURL);
 
 	public boolean registerCacheManagerListener(
-		CacheManagerListener cacheManagerListener);
+		PortalCacheManagerListener cacheManagerListener);
 
 	public void removeCache(String portalCacheName);
 
 	public boolean unregisterCacheManagerListener(
-		CacheManagerListener cacheManagerListener);
+		PortalCacheManagerListener cacheManagerListener);
 
 	public void unregisterCacheManagerListeners();
 

@@ -20,7 +20,7 @@ import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheListene
 import com.liferay.portal.cache.ehcache.internal.event.EhcacheCacheManagerListenerAdapter;
 import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.CacheManagerListener;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.CallbackFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
@@ -112,7 +112,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 	}
 
 	@Override
-	public CacheManagerListener createCacheManagerListener(
+	public PortalCacheManagerListener createCacheManagerListener(
 		Properties properties) {
 
 		String className = properties.getProperty(

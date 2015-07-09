@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
-import com.liferay.portal.kernel.cache.CacheManagerListener;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 
 import net.sf.ehcache.Status;
 import net.sf.ehcache.event.CacheManagerEventListener;
@@ -26,7 +26,7 @@ public class PortalCacheManagerEventListener
 	implements CacheManagerEventListener {
 
 	public PortalCacheManagerEventListener(
-		CacheManagerListener cacheManagerListener) {
+		PortalCacheManagerListener cacheManagerListener) {
 
 		_cacheManagerListener = cacheManagerListener;
 	}
@@ -53,7 +53,7 @@ public class PortalCacheManagerEventListener
 			portalCacheManagerEventListener._cacheManagerListener);
 	}
 
-	public CacheManagerListener getCacheManagerListener() {
+	public PortalCacheManagerListener getCacheManagerListener() {
 		return _cacheManagerListener;
 	}
 
@@ -82,6 +82,6 @@ public class PortalCacheManagerEventListener
 		_cacheManagerListener.notifyCacheRemoved(portalCacheName);
 	}
 
-	private final CacheManagerListener _cacheManagerListener;
+	private final PortalCacheManagerListener _cacheManagerListener;
 
 }

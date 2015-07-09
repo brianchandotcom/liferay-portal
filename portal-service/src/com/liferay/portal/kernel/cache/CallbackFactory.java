@@ -28,7 +28,7 @@ public interface CallbackFactory {
 	public <K extends Serializable, V> PortalCacheListener<K, V> createCacheListener(
 		Properties properties);
 
-	public CacheManagerListener createCacheManagerListener(
+	public PortalCacheManagerListener createCacheManagerListener(
 		Properties properties);
 
 }

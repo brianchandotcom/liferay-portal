@@ -248,8 +248,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				getDefaultPortalCacheConfiguration();
 
 		for (CallbackConfiguration callbackConfiguration :
-				_portalCacheManagerConfiguration.
-					getCacheManagerListenerConfigurations()) {
+				_portalCacheManagerConfiguration.getPortalCacheManagerListenerConfigurations()) {
 
 			CallbackFactory callbackFactory =
 				callbackConfiguration.getCallbackFactory();

@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-renderer',
 	function(A) {
-		var _ = AUI._;
+		var AArray = A.Array;
 		var Renderer = Liferay.DDM.Renderer;
 
 		var Form = A.Component.create(
@@ -56,7 +56,7 @@ AUI.add(
 						var instance = this;
 
 						return {
-							fields: _.invoke(instance.get('fields'), 'toJSON')
+							fields: AArray.invoke(instance.get('fields'), 'toJSON')
 						};
 					},
 

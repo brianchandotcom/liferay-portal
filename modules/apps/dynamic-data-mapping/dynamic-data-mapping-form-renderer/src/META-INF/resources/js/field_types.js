@@ -3,8 +3,31 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
+		var _fieldTypes = [];
+
 		var FieldTypes = {
-			_fieldTypes: [],
+			get: function(type) {
+				var instance = this;
+
+				return AArray.find(
+					_fieldTypes,
+					function(item, index) {
+						return item.get('name') === type;
+					}
+				);
+			},
+
+			getAll: function() {
+				var instance = this;
+
+				return _fieldTypes;
+			},
+
+			register: function(fieldTypes) {
+				var instance = this;
+
+				_fieldTypes = AArray(fieldTypes).map(instance._getFieldType);
+			},
 
 			_getFieldType: function(config) {
 				var instance = this;
@@ -31,29 +54,6 @@ AUI.add(
 				fieldType.set('templateNamespace', config.templateNamespace);
 
 				return fieldType;
-			},
-
-			get: function(type) {
-				var instance = this;
-
-				return AArray.find(
-					instance._fieldTypes,
-					function(item, index) {
-						return item.get('name') === type;
-					}
-				);
-			},
-
-			getAll: function() {
-				var instance = this;
-
-				return instance._fieldTypes;
-			},
-
-			register: function(fieldTypes) {
-				var instance = this;
-
-				instance._fieldTypes = AArray(fieldTypes).map(instance._getFieldType);
 			}
 		};
 

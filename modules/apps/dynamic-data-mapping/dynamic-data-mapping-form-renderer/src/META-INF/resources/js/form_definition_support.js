@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-renderer-definition',
 	function(A) {
-		var _ = AUI._;
+		var AArray = A.Array;
 		var Renderer = Liferay.DDM.Renderer;
 
 		var FieldTypes = Renderer.FieldTypes;
@@ -46,7 +46,7 @@ AUI.add(
 			_afterDefinitionChange: function(event) {
 				var instance = this;
 
-				_.invoke(instance.get('fields'), 'destroy');
+				AArray.invoke(instance.get('fields'), 'destroy');
 
 				instance.set('fields', instance._createFieldsFromDefinition(event.newVal));
 			},
@@ -54,7 +54,7 @@ AUI.add(
 			_afterValuesChange: function(event) {
 				var instance = this;
 
-				_.invoke(instance.get('fields'), 'destroy');
+				AArray.invoke(instance.get('fields'), 'destroy');
 
 				instance.set('fields', instance._createFieldsFromValues(event.newVal));
 			},
@@ -64,7 +64,7 @@ AUI.add(
 
 				var portletNamespace = instance.get('portletNamespace');
 
-				return _.map(
+				return A.map(
 					definition.fields,
 					function(item) {
 						var fieldClass = Util.getFieldClass(item.type);
@@ -89,7 +89,7 @@ AUI.add(
 
 				var definition = instance.get('definition');
 
-				return _.map(
+				return A.map(
 					values.fieldValues,
 					function(item) {
 						var siblings = Util.searchFieldsByKey(values, item.name);
@@ -99,7 +99,7 @@ AUI.add(
 							{
 								parent: instance,
 								portletNamespace: portletNamespace,
-								repeatedIndex: _.indexOf(siblings, item)
+								repeatedIndex: AArray.indexOf(siblings, item)
 							}
 						);
 

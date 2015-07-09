@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddl-form-builder',
 	function(A) {
-		var _ = AUI._;
+		var AArray = A.Array;
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
 		var Lang = A.Lang;
@@ -31,7 +31,7 @@ AUI.add(
 
 					pages: {
 						validator: function(val) {
-							return Lang.isArray(val);
+							return Array.isArray(val);
 						},
 						value: []
 					},
@@ -106,7 +106,7 @@ AUI.add(
 					getField: function(name) {
 						var instance = this;
 
-						return _.find(
+						return AArray.find(
 							instance.getFields(),
 							function(item) {
 								return item.get('name') === name;

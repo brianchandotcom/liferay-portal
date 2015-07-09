@@ -108,11 +108,10 @@
 
 	.modal-body {
 		max-height: 500px;
-		overflow-x: hidden;
-		overflow-y: hidden;
+		overflow: hidden;
 
 		&:hover {
-			overflow-y: scroll;
+			overflow-y: auto;
 		}
 	}
 

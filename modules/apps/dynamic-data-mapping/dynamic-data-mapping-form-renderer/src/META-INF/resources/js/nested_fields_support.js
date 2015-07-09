@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-renderer-nested-fields',
 	function(A) {
-		var _ = AUI._;
+		var AArray = A.Array;
 
 		var NestedFieldsSupport = function() {
 		};
@@ -29,7 +29,7 @@ AUI.add(
 			destructor: function() {
 				var instance = this;
 
-				_.invoke(instance.get('fields'), 'destroy');
+				AArray.invoke(instance.get('fields'), 'destroy');
 			},
 
 			appendChild: function(field) {
@@ -101,7 +101,7 @@ AUI.add(
 			indexOf: function(field) {
 				var instance = this;
 
-				return _.indexOf(instance.get('fields'), field);
+				return AArray.indexOf(instance.get('fields'), field);
 			},
 
 			insert: function(index, field) {
@@ -133,7 +133,7 @@ AUI.add(
 			_afterContainerChange: function(event) {
 				var instance = this;
 
-				_.each(
+				A.each(
 					instance.get('fields'),
 					function(item) {
 						event.newVal.append(item.get('container'));

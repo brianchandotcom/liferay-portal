@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-renderer-field',
 	function(A) {
-		var _ = AUI._;
+		var AArray = A.Array;
 		var AObject = A.Object;
 		var Lang = A.Lang;
 		var Renderer = Liferay.DDM.Renderer;
@@ -195,7 +195,7 @@ AUI.add(
 
 						var fieldType = FieldTypes.get(instance.get('type'));
 
-						_.each(
+						A.each(
 							fieldType.get('settings').fields,
 							function(item, index) {
 								context[item.name] = instance.get(item.name);
@@ -272,7 +272,7 @@ AUI.add(
 						var fields = instance.get('fields');
 
 						if (fields.length > 0) {
-							fieldJSON.nestedFieldValues = _.invoke(fields, 'toJSON');
+							fieldJSON.nestedFieldValues = AArray.invoke(fields, 'toJSON');
 						}
 
 						return fieldJSON;

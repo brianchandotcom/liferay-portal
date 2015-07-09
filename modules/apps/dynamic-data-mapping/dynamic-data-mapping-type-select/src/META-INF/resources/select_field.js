@@ -1,9 +1,6 @@
 AUI.add(
 	'liferay-ddm-form-field-select',
 	function(A) {
-		var AArray = A.Array;
-		var Lang = A.Lang;
-
 		var SelectField = A.Component.create(
 			{
 				ATTRS: {
@@ -13,7 +10,7 @@ AUI.add(
 
 					type: {
 						value: 'select'
-					},
+					}
 				},
 
 				EXTENDS: Liferay.DDM.Renderer.Field,
@@ -30,7 +27,7 @@ AUI.add(
 							value = value[instance.get('locale')];
 						}
 
-						return _.map(
+						return A.map(
 							instance.get('options'),
 							function(item) {
 								return {

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.CallbackFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheProvider;
+import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -130,7 +130,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 		}
 
 		PortalCacheManager<?, ?> portalCacheManager =
-			PortalCacheProvider.getPortalCacheManager(portalCacheManagerName);
+			PortalCacheManagerProvider.getPortalCacheManager(portalCacheManagerName);
 
 		if (!(portalCacheManager instanceof EhcachePortalCacheManager)) {
 			throw new IllegalArgumentException(

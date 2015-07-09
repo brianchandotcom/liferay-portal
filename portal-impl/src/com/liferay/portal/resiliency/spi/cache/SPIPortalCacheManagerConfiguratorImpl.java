@@ -16,7 +16,7 @@ package com.liferay.portal.resiliency.spi.cache;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheProvider;
+import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.proxy.TargetLocator;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
@@ -123,7 +123,7 @@ public class SPIPortalCacheManagerConfiguratorImpl
 
 			objectInputStream.defaultReadObject();
 
-			_portalCacheManager = PortalCacheProvider.getPortalCacheManager(
+			_portalCacheManager = PortalCacheManagerProvider.getPortalCacheManager(
 				_portalCacheManagerName);
 		}
 

@@ -3,6 +3,7 @@
 
 <project>
 	<property name="import.shared" value="../application-list/application-list-api" />
+	<property name="osgi.ide.dependencies" value="spring-tx.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

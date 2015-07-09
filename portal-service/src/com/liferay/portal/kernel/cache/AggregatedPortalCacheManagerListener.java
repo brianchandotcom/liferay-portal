@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * @author Tina Tian
  */
-public class AggregatedCacheManagerListener implements PortalCacheManagerListener {
+public class AggregatedPortalCacheManagerListener implements PortalCacheManagerListener {
 
 	public boolean addCacheListener(PortalCacheManagerListener cacheManagerListener) {
 		if (cacheManagerListener == null) {

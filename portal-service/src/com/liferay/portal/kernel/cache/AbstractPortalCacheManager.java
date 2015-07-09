@@ -304,8 +304,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected final AggregatedCacheManagerListener
-		aggregatedCacheManagerListener = new AggregatedCacheManagerListener();
+	protected final AggregatedPortalCacheManagerListener
+		aggregatedCacheManagerListener = new AggregatedPortalCacheManagerListener();
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();
 

@@ -22,10 +22,10 @@ import net.sf.ehcache.event.CacheManagerEventListener;
 /**
  * @author Tina Tian
  */
-public class EhcacheCacheManagerListenerAdapter
+public class EhcachePortalCacheManagerListenerAdapter
 	implements PortalCacheManagerListener {
 
-	public EhcacheCacheManagerListenerAdapter(
+	public EhcachePortalCacheManagerListenerAdapter(
 		CacheManagerEventListener cacheManagerEventListener) {
 
 		_cacheManagerEventListener = cacheManagerEventListener;

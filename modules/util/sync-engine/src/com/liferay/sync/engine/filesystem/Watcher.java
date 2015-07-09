@@ -274,7 +274,9 @@ public abstract class Watcher implements Runnable {
 			SyncSite syncSite = SyncSiteService.fetchSyncSite(
 				missingFilePath.toString(), syncAccount.getSyncAccountId());
 
-			if ((syncSite != null) && Files.notExists(missingFilePath)) {
+			if ((syncSite != null) && syncSite.isActive() &&
+				Files.notExists(missingFilePath)) {
+
 				if (_logger.isTraceEnabled()) {
 					_logger.trace(
 						"Missing sync site file path {}", missingFilePath);

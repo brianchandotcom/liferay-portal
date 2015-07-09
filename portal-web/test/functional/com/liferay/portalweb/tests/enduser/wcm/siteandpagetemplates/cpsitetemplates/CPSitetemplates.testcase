@@ -114,7 +114,11 @@
 			<var name="successMessage" value="Su petición ha terminado con éxito." />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="Page#gotoCPLocalized">
+			<var name="localizedAdmin" value="Administración" />
+			<var name="localizedControlPanel" value="Panel de control" />\
+			<var name="localizedPortletName" value="Plantillas de sitio web" />
+		</execute>
 
 		<execute macro="SiteTemplates#viewDefaultDataLocalizedCP">
 			<var name="communitySiteDescriptionTranslation" value="Sitio con foros y Wiki" />

@@ -234,7 +234,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="ApproveBlogsEntryCP" priority="4">
+	<command name="ApproveBlogsEntryCP" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -295,7 +295,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="RejectBlogsEntryCP" priority="4">
+	<command name="RejectBlogsEntryCP" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

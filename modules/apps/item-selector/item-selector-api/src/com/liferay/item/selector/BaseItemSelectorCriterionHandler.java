@@ -39,33 +39,49 @@ public abstract class BaseItemSelectorCriterionHandler
 		List<ItemSelectorView<T>> filteredItemSelectedViews = new ArrayList<>();
 
 		for (ItemSelectorView itemSelectorView : _itemSelectorViews) {
-			Set<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-				itemSelectorView.getSupportedItemSelectorReturnTypes();
-
 			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 				itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 			for (ItemSelectorReturnType desiredItemSelectorReturnType :
 					desiredItemSelectorReturnTypes) {
 
-				for (ItemSelectorReturnType supportedItemSelectorReturnType :
-						supportedItemSelectorReturnTypes) {
+				if (_isItemSelectorViewSupported(
+						itemSelectorView, desiredItemSelectorReturnType)) {
 
-					String desiredItemSelectorReturnTypeClassName =
-						ClassUtil.getClassName(desiredItemSelectorReturnType);
-					String supportedItemSelectorReturnTypeClassName =
-						ClassUtil.getClassName(supportedItemSelectorReturnType);
+					filteredItemSelectedViews.add(itemSelectorView);
 
-					if (desiredItemSelectorReturnTypeClassName.equals(
-							supportedItemSelectorReturnTypeClassName)) {
-
-						filteredItemSelectedViews.add(itemSelectorView);
-					}
+					break;
 				}
 			}
 		}
 
 		return (List)Collections.unmodifiableList(filteredItemSelectedViews);
+	}
+
+	private boolean _isItemSelectorViewSupported(
+		ItemSelectorView itemSelectorView,
+		ItemSelectorReturnType itemSelectorReturnType) {
+
+		String itemSelectorReturnTypeClassName = ClassUtil.getClassName(
+			itemSelectorReturnType);
+
+		Set<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+			itemSelectorView.getSupportedItemSelectorReturnTypes();
+
+		for (ItemSelectorReturnType supportedItemSelectorReturnType :
+				supportedItemSelectorReturnTypes) {
+
+			String supportedItemSelectorReturnTypeClassName =
+				ClassUtil.getClassName(supportedItemSelectorReturnType);
+
+			if (itemSelectorReturnTypeClassName.equals(
+					supportedItemSelectorReturnTypeClassName)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final ServiceTrackerList<ItemSelectorView> _itemSelectorViews =

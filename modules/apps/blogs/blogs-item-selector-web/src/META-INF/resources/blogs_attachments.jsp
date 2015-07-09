@@ -83,6 +83,7 @@ searchContainer.setResults(results);
 	searchContainer="<%= searchContainer %>"
 	searchURL="<%= PortletURLUtil.clone(blogsItemSelectorViewDisplayContext.getPortletURL(), liferayPortletResponse) %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
+	uploadURL="<%= blogsItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />
 
 <%!

@@ -18,9 +18,11 @@ AUI.add(
 
 		var STR_SELECTED_ITEM = 'selectedItem';
 
+		var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
+
 		var STR_VISIBLE_CHANGE = 'visibleChange';
 
-		var UPLOAD_ITEM_LINK_TPL = '<a data-returnType="Base64" data-value="{value}" href="{preview}" title="{title}"></a>';
+		var UPLOAD_ITEM_LINK_TPL = '<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
 
 		var ItemSelectorBrowser = A.Component.create(
 			{
@@ -55,6 +57,8 @@ AUI.add(
 								renderControls: false
 							}
 						);
+
+						instance._dropArea = A.one('.drop-zone');
 
 						instance._bindUI();
 						instance._renderUI();
@@ -152,7 +156,7 @@ AUI.add(
 							STR_SELECTED_ITEM,
 							{
 								data: {
-									returnType: link.getData('returnType'),
+									returnType: link.getData('returntype'),
 									value: link.getData('value')
 								}
 							}
@@ -188,16 +192,33 @@ AUI.add(
 					_showFile: function(file, preview) {
 						var instance = this;
 
+						var dropArea = instance._dropArea;
+
+						var returnType = dropArea.getData('returntype');
+
+						var value = preview;
+
+						if (returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+							value = {
+								base64: preview,
+								file: file,
+								id: A.guid(),
+								uploadURL: dropArea.getData('uploadurl')
+							};
+						}
+
 						var linkNode = A.Node.create(
 							Lang.sub(
 								UPLOAD_ITEM_LINK_TPL,
 								{
 									preview: preview,
-									title: file.name,
-									value: preview
+									returnType: returnType,
+									title: file.name
 								}
 							)
 						);
+
+						linkNode.setData('value', value);
 
 						instance._uploadItemViewer.set(STR_LINKS, new A.NodeList(linkNode));
 						instance._uploadItemViewer.show();

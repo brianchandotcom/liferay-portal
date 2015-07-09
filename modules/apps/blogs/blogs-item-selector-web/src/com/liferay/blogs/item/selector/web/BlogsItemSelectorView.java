@@ -20,6 +20,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
@@ -110,6 +111,7 @@ public class BlogsItemSelectorView
 			SetUtil.fromArray(
 				new ItemSelectorReturnType[] {
 					new FileEntryItemSelectorReturnType(),
+					new UploadableFileReturnType(),
 					new URLItemSelectorReturnType()
 				}));
 

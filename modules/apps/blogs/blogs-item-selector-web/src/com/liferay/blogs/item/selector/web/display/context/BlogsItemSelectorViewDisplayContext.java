@@ -16,12 +16,15 @@ package com.liferay.blogs.item.selector.web.display.context;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.BlogsItemSelectorView;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,6 +68,18 @@ public class BlogsItemSelectorViewDisplayContext {
 
 	public String getTitle(Locale locale) {
 		return _blogsItemSelectorView.getTitle(locale);
+	}
+
+	public PortletURL getUploadURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		PortletURL portletURL = liferayPortletResponse.createActionURL(
+			PortletKeys.BLOGS);
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
+
+		return portletURL;
 	}
 
 	private final BlogsItemSelectorCriterion _blogsItemSelectorCriterion;

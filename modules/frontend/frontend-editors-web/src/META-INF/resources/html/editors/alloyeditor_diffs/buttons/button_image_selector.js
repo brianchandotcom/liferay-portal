@@ -14,14 +14,6 @@
 				imageTPL: React.PropTypes.string
 			},
 
-			componentWillUnmount: function() {
-				var instance = this;
-
-				if (instance._itemSelectorDialog) {
-					instance._itemSelectorDialog.destroy();
-				}
-			},
-
 			getDefaultProps: function() {
 				return {
 					imageTPL: new CKEDITOR.template('<img src="{src}" />')
@@ -50,6 +42,37 @@
 				);
 			},
 
+			_createEl: function(imageSrc) {
+				var instance = this;
+
+				var editor = instance.props.editor.get('nativeEditor');
+
+				var el = CKEDITOR.dom.element.createFromHtml(
+					instance.props.imageTPL.output(
+						{
+							src: imageSrc
+						}
+					)
+				);
+
+				editor.insertElement(el);
+
+				return el;
+			},
+
+			_destroyItemSelectorDialog: function() {
+				var instance = this;
+
+				if (instance._itemSelectorDialog) {
+					setTimeout(
+						function() {
+							instance._itemSelectorDialog.destroy();
+						},
+						0
+					);
+				}
+			},
+
 			_handleClick: function() {
 				var instance = this;
 
@@ -63,13 +86,18 @@
 				else {
 					AUI().use(
 						'liferay-item-selector-dialog',
+						'liferay-item-selector-uploader',
 						function(A) {
 							var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
-									eventName: eventName,
-									on: {
-										selectedItemChange: A.bind('_onSelectedItemChange', instance)
+									after: {
+										selectedItemChange: A.bind('_onSelectedItemChange', instance),
+										selectedItemUploadComplete: A.bind('_destroyItemSelectorDialog', instance),
+										selectedItemUploadError: A.bind('_destroyItemSelectorDialog', instance),
+										selectedItemUploadStart: A.bind('_onSelectedItemUploadStart', instance)
 									},
+									eventName: eventName,
+									plugins: [A.Plugin.LiferayItemSelectorUploader],
 									url: editor.config.filebrowserImageBrowseUrl
 								}
 							);
@@ -95,18 +123,41 @@
 					Util.getWindow(eventName).onceAfter(
 						'visibleChange',
 						function() {
-							var image = CKEDITOR.dom.element.createFromHtml(
-								instance.props.imageTPL.output(
-									{
-										src: selectedItem.value
-									}
-								)
-							);
-
-							editor.insertElement(image);
+							instance._createEl(selectedItem.value);
 						}
 					);
 				}
+
+				instance._destroyItemSelectorDialog();
+			},
+
+			_onSelectedItemUploadStart: function(event) {
+				var instance = this;
+
+				var editor = instance.props.editor.get('nativeEditor');
+
+				var eventName = editor.name + 'selectDocument';
+
+				var uploadableItem = event.data;
+
+				var uploadableItemValue = uploadableItem.value;
+
+				Util.getWindow(eventName).onceAfter(
+					'visibleChange',
+					function() {
+						var el = instance._createEl(uploadableItemValue.base64);
+
+						editor.fire(
+							'imagedrop',
+							{
+								el: el,
+								file: uploadableItemValue.file,
+								randomId: uploadableItemValue.id,
+								uploader: uploadableItem.uploader
+							}
+						);
+					}
+				);
 			}
 		}
 	);

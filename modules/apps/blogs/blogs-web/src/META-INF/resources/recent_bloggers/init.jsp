@@ -29,8 +29,6 @@ if (organizationId == 0) {
 		organizationId = group.getOrganizationId();
 	}
 }
-
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 
 <%@ include file="/recent_bloggers/init-ext.jsp" %>

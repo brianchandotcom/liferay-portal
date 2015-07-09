@@ -32,8 +32,6 @@ BlogsPortletInstanceSettings blogsPortletInstanceSettings = BlogsPortletInstance
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
 
 boolean showEditEntryPermissions = true;
-
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <%@ include file="/blogs/init-ext.jsp" %>

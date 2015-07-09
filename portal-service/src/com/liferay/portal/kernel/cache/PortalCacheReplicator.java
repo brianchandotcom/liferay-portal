@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.cache;
 /**
  * @author Tina Tian
  */
-public interface CacheReplicator {
+public interface PortalCacheReplicator {
 
 	public static final boolean DEFAULT_REPLICATE_PUTS = true;
 

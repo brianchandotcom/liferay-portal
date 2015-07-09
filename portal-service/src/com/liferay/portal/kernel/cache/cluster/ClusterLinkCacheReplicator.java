@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.cache.cluster;
 
 import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.CacheReplicator;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -30,24 +30,19 @@ import java.util.Properties;
  */
 public class ClusterLinkCacheReplicator
 	<K extends Serializable, V extends Serializable>
-		implements PortalCacheListener<K, V>, CacheReplicator {
+		implements PortalCacheListener<K, V>, PortalCacheReplicator {
 
 	public ClusterLinkCacheReplicator(Properties properties) {
-		_replicatePuts = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_PUTS),
-			CacheReplicator.DEFAULT_REPLICATE_PUTS);
-		_replicatePutsViaCopy = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_PUTS_VIA_COPY),
-			CacheReplicator.DEFAULT_REPLICATE_PUTS_VIA_COPY);
-		_replicateRemovals = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_REMOVALS),
-			CacheReplicator.DEFAULT_REPLICATE_REMOVALS);
-		_replicateUpdates = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_UPDATES),
-			CacheReplicator.DEFAULT_REPLICATE_UPDATES);
-		_replicateUpdatesViaCopy = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_UPDATES_VIA_COPY),
-			CacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
+		_replicatePuts = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
+			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS);
+		_replicatePutsViaCopy = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS_VIA_COPY),
+			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS_VIA_COPY);
+		_replicateRemovals = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_REMOVALS),
+			PortalCacheReplicator.DEFAULT_REPLICATE_REMOVALS);
+		_replicateUpdates = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES),
+			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES);
+		_replicateUpdatesViaCopy = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES_VIA_COPY),
+			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
 	}
 
 	@Override

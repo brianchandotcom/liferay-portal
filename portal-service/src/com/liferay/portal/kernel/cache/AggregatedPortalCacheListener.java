@@ -180,7 +180,7 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		CacheListenerScope cacheListenerScope) {
 
 		if (_remoteInvokeThreadLocal.get()) {
-			if (cacheListener instanceof CacheReplicator) {
+			if (cacheListener instanceof PortalCacheReplicator) {
 				return false;
 			}
 

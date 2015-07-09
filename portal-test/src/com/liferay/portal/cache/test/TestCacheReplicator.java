@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.test;
 
-import com.liferay.portal.kernel.cache.CacheReplicator;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 
 import java.io.Serializable;
 
@@ -22,5 +22,5 @@ import java.io.Serializable;
  * @author Tina Tian
  */
 public class TestCacheReplicator<K extends Serializable, V>
-	extends TestPortalCacheListener<K, V> implements CacheReplicator {
+	extends TestPortalCacheListener<K, V> implements PortalCacheReplicator {
 }

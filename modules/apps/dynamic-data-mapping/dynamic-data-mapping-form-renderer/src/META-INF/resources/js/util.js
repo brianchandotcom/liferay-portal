@@ -51,10 +51,12 @@ AUI.add(
 					queue.add(item);
 				};
 
+				searchKey = searchKey || 'name';
+
 				while (queue.size() > 0) {
 					var next = queue.next();
 
-					if (next[searchKey || 'name'] === needle) {
+					if (next[searchKey] === needle) {
 						results.push(next);
 					}
 					else {

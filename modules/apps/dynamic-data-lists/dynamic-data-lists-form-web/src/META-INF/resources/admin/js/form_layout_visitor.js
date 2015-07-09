@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-layout-visitor',
 	function(A) {
-		var AArray = A.Array;
 		var EMPTY_FN = A.Lang.emptyFn;
 
 		var LayoutVisitor = A.Component.create(
@@ -16,6 +15,7 @@ AUI.add(
 					},
 
 					pages: {
+						validator: Array.isArray,
 						value: []
 					},
 
@@ -56,7 +56,7 @@ AUI.add(
 					_visitColumns: function(columns) {
 						var instance = this;
 
-						return AArray.map(columns, A.bind('_visitColumn', instance));
+						return columns.map(A.bind('_visitColumn', instance));
 					},
 
 					_visitField: function(field) {
@@ -70,7 +70,7 @@ AUI.add(
 					_visitFields: function(fields) {
 						var instance = this;
 
-						return AArray.map(fields, A.bind('_visitField', instance));
+						return fields.map(A.bind('_visitField', instance));
 					},
 
 					_visitPage: function(page, index) {
@@ -86,7 +86,7 @@ AUI.add(
 					_visitPages: function(pages) {
 						var instance = this;
 
-						return AArray.map(pages, A.bind('_visitPage', instance));
+						return pages.map(A.bind('_visitPage', instance));
 					},
 
 					_visitRow: function(row) {
@@ -102,7 +102,7 @@ AUI.add(
 					_visitRows: function(rows) {
 						var instance = this;
 
-						return AArray.map(rows, A.bind('_visitRow', instance));
+						return rows.map(A.bind('_visitRow', instance));
 					}
 				}
 			}

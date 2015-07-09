@@ -5,6 +5,7 @@ AUI.add(
 			{
 				ATTRS: {
 					options: {
+						validator: Array.isArray,
 						value: []
 					},
 

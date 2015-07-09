@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-field-support',
 	function(A) {
-		var AArray = A.Array;
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
@@ -58,14 +57,14 @@ AUI.add(
 
 				var fieldSettingsJSON = settingsForm.toJSON();
 
-				AArray.each(
-					fieldSettingsJSON.fields,
+				fieldSettingsJSON.fields.forEach(
 					function(item) {
 						settings[item.name] = item.value;
 					}
 				);
 
 				settings.type = instance.get('type');
+
 				settings.visibilityExpression = 'true';
 
 				return settings;
@@ -141,8 +140,7 @@ AUI.add(
 
 				var settingsForm = instance.get('settingsForm');
 
-				A.each(
-					settingsForm.get('fields'),
+				settingsForm.get('fields').forEach(
 					function(item, index) {
 						item.set('value', instance.get(item.get('name')));
 					}

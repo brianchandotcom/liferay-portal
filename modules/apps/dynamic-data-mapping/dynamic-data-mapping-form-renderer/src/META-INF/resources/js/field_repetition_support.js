@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-ddm-form-renderer-field-repetition',
 	function(A) {
-		var AArray = A.Array;
 		var Renderer = Liferay.DDM.Renderer;
 
 		var Util = Renderer.Util;
@@ -48,8 +47,7 @@ AUI.add(
 
 				var parent = instance.get('parent');
 
-				return AArray.filter(
-					parent.get('fields'),
+				return parent.get('fields').filter(
 					function(item) {
 						return item.get('name') === instance.get('name');
 					}
@@ -85,9 +83,8 @@ AUI.add(
 			repeat: function() {
 				var instance = this;
 
-				var type = instance.get('type');
-
 				var parent = instance.get('parent');
+				var type = instance.get('type');
 
 				var fieldClass = Util.getFieldClass(type);
 
@@ -148,7 +145,7 @@ AUI.add(
 
 				var repeatedSiblings = instance.getRepeatedSiblings();
 
-				field.set('repeatedIndex', AArray.indexOf(repeatedSiblings, field));
+				field.set('repeatedIndex', repeatedSiblings.indexOf(field));
 			}
 		};
 

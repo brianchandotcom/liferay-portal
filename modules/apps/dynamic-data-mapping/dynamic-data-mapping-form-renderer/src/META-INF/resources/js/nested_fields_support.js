@@ -9,6 +9,7 @@ AUI.add(
 		NestedFieldsSupport.ATTRS = {
 			fields: {
 				setter: '_setFields',
+				validator: Array.isArray,
 				value: []
 			}
 		};
@@ -101,7 +102,7 @@ AUI.add(
 			indexOf: function(field) {
 				var instance = this;
 
-				return AArray.indexOf(instance.get('fields'), field);
+				return instance.get('fields').indexOf(field);
 			},
 
 			insert: function(index, field) {

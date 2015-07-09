@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-layout-serializer',
 	function(A) {
-		var AArray = A.Array;
-
 		var LayoutSerializer = A.Component.create(
 			{
 				ATTRS: {
@@ -118,8 +116,7 @@ AUI.add(
 					_visitColumns: function(rows) {
 						var instance = this;
 
-						return AArray.filter(
-							LayoutSerializer.superclass._visitColumns.apply(instance, arguments),
+						return LayoutSerializer.superclass._visitColumns.apply(instance, arguments).filter(
 							function(item) {
 								return item.fieldNames.length > 0;
 							}
@@ -129,8 +126,7 @@ AUI.add(
 					_visitRows: function(rows) {
 						var instance = this;
 
-						return AArray.filter(
-							LayoutSerializer.superclass._visitRows.apply(instance, arguments),
+						return LayoutSerializer.superclass._visitRows.apply(instance, arguments).filter(
 							function(item) {
 								return item.columns.length > 0;
 							}

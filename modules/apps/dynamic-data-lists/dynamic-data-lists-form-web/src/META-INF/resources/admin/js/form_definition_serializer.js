@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-definition-serializer',
 	function(A) {
-		var AArray = A.Array;
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
 		var DefinitionSerializer = A.Component.create(
@@ -12,6 +11,7 @@ AUI.add(
 					},
 
 					fields: {
+						validator: Array.isArray,
 						value: []
 					}
 				},
@@ -46,8 +46,7 @@ AUI.add(
 
 						var fieldType = FieldTypes.get(field.get('type'));
 
-						AArray.each(
-							fieldType.get('settings').fields,
+						fieldType.get('settings').fields.forEach(
 							function(item, index) {
 								config[item.name] = field.get(item.name);
 							}

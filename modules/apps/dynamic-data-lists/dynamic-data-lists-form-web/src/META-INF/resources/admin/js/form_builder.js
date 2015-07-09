@@ -10,9 +10,7 @@ AUI.add(
 			{
 				ATTRS: {
 					definition: {
-						validator: function(val) {
-							return Lang.isObject(val);
-						}
+						validator: Lang.isObject
 					},
 
 					deserializer: {
@@ -30,9 +28,7 @@ AUI.add(
 					},
 
 					pages: {
-						validator: function(val) {
-							return Array.isArray(val);
-						},
+						validator: Array.isArray,
 						value: []
 					},
 

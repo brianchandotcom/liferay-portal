@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-layout-deserializer',
 	function(A) {
-		var AArray = A.Array;
 		var Lang = A.Lang;
 
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
@@ -11,20 +10,21 @@ AUI.add(
 			{
 				ATTRS: {
 					definition: {
-						validator: function(val) {
-							return Lang.isObject(val);
-						}
+						validator: Lang.isObject
 					},
 
 					descriptions: {
+						validator: Array.isArray,
 						value: []
 					},
 
 					pages: {
+						validator: Array.isArray,
 						value: []
 					},
 
 					titles: {
+						validator: Array.isArray,
 						value: []
 					}
 				},
@@ -67,7 +67,7 @@ AUI.add(
 					_deserializeColumns: function(columns) {
 						var instance = this;
 
-						return AArray.map(columns, A.bind('_deserializeColumn', instance));
+						return columns.map(A.bind('_deserializeColumn', instance));
 					},
 
 					_deserializeField: function(deserializedColumn, fieldName) {
@@ -85,7 +85,7 @@ AUI.add(
 					_deserializeFields: function(deserializedColumn, fieldNames) {
 						var instance = this;
 
-						return AArray.map(fieldNames, A.bind('_deserializeField', instance, deserializedColumn));
+						return fieldNames.map(A.bind('_deserializeField', instance, deserializedColumn));
 					},
 
 					_deserializePage: function(page) {
@@ -114,7 +114,7 @@ AUI.add(
 						var deserializedPages;
 
 						if (pages.length) {
-							deserializedPages = AArray.map(pages, A.bind('_deserializePage', instance));
+							deserializedPages = pages.map(A.bind('_deserializePage', instance));
 						}
 						else {
 							deserializedPages = [
@@ -144,7 +144,7 @@ AUI.add(
 					_deserializeRows: function(rows) {
 						var instance = this;
 
-						return AArray.map(rows, A.bind('_deserializeRow', instance));
+						return rows.map(A.bind('_deserializeRow', instance));
 					}
 				}
 			}

@@ -25,9 +25,8 @@ AUI.add(
 
 				var definition = instance.get('definition');
 
-				var values = instance.get('values');
-
 				var fields = instance.get('fields');
+				var values = instance.get('values');
 
 				if (values.fieldValues) {
 					fields = instance._createFieldsFromValues(values);
@@ -84,9 +83,8 @@ AUI.add(
 			_createFieldsFromValues: function(values) {
 				var instance = this;
 
-				var portletNamespace = instance.get('portletNamespace');
-
 				var definition = instance.get('definition');
+				var portletNamespace = instance.get('portletNamespace');
 
 				return A.map(
 					values.fieldValues,
@@ -98,7 +96,7 @@ AUI.add(
 							{
 								parent: instance,
 								portletNamespace: portletNamespace,
-								repeatedIndex: AArray.indexOf(siblings, item)
+								repeatedIndex: siblings.indexOf(item)
 							}
 						);
 

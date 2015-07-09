@@ -24,7 +24,8 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public class ClusterLinkPortalCacheBootstrapLoader implements PortalCacheBootstrapLoader {
+public class ClusterLinkPortalCacheBootstrapLoader
+	implements PortalCacheBootstrapLoader {
 
 	public ClusterLinkPortalCacheBootstrapLoader(Properties properties) {
 		if (properties != null) {
@@ -42,7 +43,9 @@ public class ClusterLinkPortalCacheBootstrapLoader implements PortalCacheBootstr
 	}
 
 	@Override
-	public void loadPortalCache(String portalCacheManagerName, String portalCacheName) {
+	public void loadPortalCache(
+		String portalCacheManagerName, String portalCacheName) {
+
 		if (ClusterLinkBootstrapLoaderHelperUtil.isSkipped()) {
 			return;
 		}
@@ -77,7 +80,8 @@ public class ClusterLinkPortalCacheBootstrapLoader implements PortalCacheBootstr
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ClusterLinkPortalCacheBootstrapLoader.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClusterLinkPortalCacheBootstrapLoader.class);
 
 	private final boolean _bootstrapAsynchronously;
 

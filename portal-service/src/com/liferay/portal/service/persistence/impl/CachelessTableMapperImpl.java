@@ -14,9 +14,9 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
@@ -105,13 +105,13 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public String getPortalCacheName() {
-			return portalCacheName;
+		public PortalCacheManager<Long, long[]> getPortalCacheManager() {
+			return portalCacheManager;
 		}
 
 		@Override
-		public PortalCacheManager<Long, long[]> getPortalCacheManager() {
-			return portalCacheManager;
+		public String getPortalCacheName() {
+			return portalCacheName;
 		}
 
 		@Override

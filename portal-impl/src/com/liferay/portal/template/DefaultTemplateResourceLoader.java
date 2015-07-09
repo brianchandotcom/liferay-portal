@@ -15,10 +15,10 @@
 package com.liferay.portal.template;
 
 import com.liferay.portal.deploy.sandbox.SandboxHandler;
-import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -95,7 +95,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		PortalCacheListener<String, TemplateResource> cacheListener =
 			new TemplateResourcePortalCacheListener(name);
 
-		_multiVMPortalCache.registerPortalCacheListener(cacheListener, PortalCacheListenerScope.ALL);
+		_multiVMPortalCache.registerPortalCacheListener(
+			cacheListener, PortalCacheListenerScope.ALL);
 
 		_singleVMPool = singleVMPool;
 
@@ -103,7 +104,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			(PortalCache<String, TemplateResource>)_singleVMPool.getPortalCache(
 				portalCacheName);
 
-		_singleVMPortalCache.registerPortalCacheListener(cacheListener, PortalCacheListenerScope.ALL);
+		_singleVMPortalCache.registerPortalCacheListener(
+			cacheListener, PortalCacheListenerScope.ALL);
 	}
 
 	@Override
@@ -120,8 +122,10 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void destroy() {
-		_multiVMPool.removePortalCache(_multiVMPortalCache.getPortalCacheName());
-		_singleVMPool.removePortalCache(_singleVMPortalCache.getPortalCacheName());
+		_multiVMPool.removePortalCache(
+			_multiVMPortalCache.getPortalCacheName());
+		_singleVMPool.removePortalCache(
+			_singleVMPortalCache.getPortalCacheName());
 
 		_templateResourceParsers.clear();
 	}

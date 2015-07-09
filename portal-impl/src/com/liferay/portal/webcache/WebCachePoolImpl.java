@@ -49,8 +49,8 @@ public class WebCachePoolImpl implements WebCachePool {
 						SingleVMPool.class);
 
 					_portalCache =
-						(PortalCache<String, Object>)singleVMPool.getPortalCache(
-							_CACHE_NAME);
+						(PortalCache<String, Object>)
+							singleVMPool.getPortalCache(_CACHE_NAME);
 				}
 
 				@Override

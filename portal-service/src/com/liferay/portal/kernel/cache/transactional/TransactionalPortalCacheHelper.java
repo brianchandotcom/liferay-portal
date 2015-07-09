@@ -201,7 +201,8 @@ public class TransactionalPortalCacheHelper {
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
 
-		uncommittedBuffer.put(key,
+		uncommittedBuffer.put(
+			key,
 			new ValueEntry(
 				value, ttl, AggregatedPortalCacheListener.isRemoteInvoke()));
 	}
@@ -219,7 +220,8 @@ public class TransactionalPortalCacheHelper {
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
 
-		uncommittedBuffer.removeAll(AggregatedPortalCacheListener.isRemoteInvoke());
+		uncommittedBuffer.removeAll(
+			AggregatedPortalCacheListener.isRemoteInvoke());
 	}
 
 	private static boolean _isTransactionalCacheEnabled() {

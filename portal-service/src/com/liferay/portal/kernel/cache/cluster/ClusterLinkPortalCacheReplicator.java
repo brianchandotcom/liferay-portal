@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.cache.cluster;
 
-import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
@@ -33,15 +33,22 @@ public class ClusterLinkPortalCacheReplicator
 		implements PortalCacheListener<K, V>, PortalCacheReplicator {
 
 	public ClusterLinkPortalCacheReplicator(Properties properties) {
-		_replicatePuts = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
+		_replicatePuts = GetterUtil.getBoolean(
+			properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
 			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS);
-		_replicatePutsViaCopy = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS_VIA_COPY),
+		_replicatePutsViaCopy = GetterUtil.getBoolean(
+			properties.getProperty(
+				PortalCacheReplicator.REPLICATE_PUTS_VIA_COPY),
 			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS_VIA_COPY);
-		_replicateRemovals = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_REMOVALS),
+		_replicateRemovals = GetterUtil.getBoolean(
+			properties.getProperty(PortalCacheReplicator.REPLICATE_REMOVALS),
 			PortalCacheReplicator.DEFAULT_REPLICATE_REMOVALS);
-		_replicateUpdates = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES),
+		_replicateUpdates = GetterUtil.getBoolean(
+			properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES),
 			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES);
-		_replicateUpdatesViaCopy = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES_VIA_COPY),
+		_replicateUpdatesViaCopy = GetterUtil.getBoolean(
+			properties.getProperty(
+				PortalCacheReplicator.REPLICATE_UPDATES_VIA_COPY),
 			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
 	}
 
@@ -73,7 +80,8 @@ public class ClusterLinkPortalCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getPortalCacheManagerName(), portalCache.getPortalCacheName(), key,
+				portalCacheManager.getPortalCacheManagerName(),
+				portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.PUT);
 
 		if (_replicatePutsViaCopy) {
@@ -98,7 +106,8 @@ public class ClusterLinkPortalCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getPortalCacheManagerName(), portalCache.getPortalCacheName(), key,
+				portalCacheManager.getPortalCacheManagerName(),
+				portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.REMOVE);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
@@ -118,7 +127,8 @@ public class ClusterLinkPortalCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getPortalCacheManagerName(), portalCache.getPortalCacheName(), key,
+				portalCacheManager.getPortalCacheManagerName(),
+				portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.UPDATE);
 
 		if (_replicateUpdatesViaCopy) {
@@ -142,7 +152,8 @@ public class ClusterLinkPortalCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getPortalCacheManagerName(), portalCache.getPortalCacheName(), null,
+				portalCacheManager.getPortalCacheManagerName(),
+				portalCache.getPortalCacheName(), null,
 				PortalCacheClusterEventType.REMOVE_ALL);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);

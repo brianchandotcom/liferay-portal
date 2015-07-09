@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.mvcc;
 
+import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;
-import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -128,12 +128,14 @@ public class MVCCPortalCacheTest {
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
 		_testPortalCacheListener.assertActionsCount(1);
-		_testPortalCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
+		_testPortalCacheListener.assertPut(
+			_KEY_1, new MockMVCCModel(_VERSION_1));
 
 		_testPortalCacheListener.reset();
 
 		_testPortalCacheReplicator.assertActionsCount(1);
-		_testPortalCacheReplicator.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
+		_testPortalCacheReplicator.assertPut(
+			_KEY_1, new MockMVCCModel(_VERSION_1));
 
 		_testPortalCacheReplicator.reset();
 
@@ -178,7 +180,8 @@ public class MVCCPortalCacheTest {
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
 		_testPortalCacheListener.assertActionsCount(1);
-		_testPortalCacheListener.assertUpdated(_KEY_1, new MockMVCCModel(_VERSION_2));
+		_testPortalCacheListener.assertUpdated(
+			_KEY_1, new MockMVCCModel(_VERSION_2));
 
 		_testPortalCacheListener.reset();
 
@@ -277,7 +280,8 @@ public class MVCCPortalCacheTest {
 				_KEY_1, new MockMVCCModel(_VERSION_1), 10);
 		}
 		else {
-			_testPortalCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
+			_testPortalCacheListener.assertPut(
+				_KEY_1, new MockMVCCModel(_VERSION_1));
 		}
 
 		_testPortalCacheListener.reset();
@@ -368,7 +372,8 @@ public class MVCCPortalCacheTest {
 	private MVCCPortalCache<String, MVCCModel> _mvccPortalCache;
 	private PortalCache<String, MVCCModel> _portalCache;
 	private TestPortalCacheListener<String, MVCCModel> _testPortalCacheListener;
-	private TestPortalCacheReplicator<String, MVCCModel> _testPortalCacheReplicator;
+	private TestPortalCacheReplicator<String, MVCCModel>
+		_testPortalCacheReplicator;
 
 	private static class MockMVCCModel implements MVCCModel {
 

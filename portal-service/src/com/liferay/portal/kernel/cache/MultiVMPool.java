@@ -24,11 +24,11 @@ public interface MultiVMPool {
 
 	public void clear();
 
-	public PortalCache<? extends Serializable, ? extends Serializable> getPortalCache(
-		String portalCacheName);
+	public PortalCache<? extends Serializable, ? extends Serializable>
+		getPortalCache(String portalCacheName);
 
-	public PortalCache<? extends Serializable, ? extends Serializable> getPortalCache(
-		String portalCacheName, boolean blocking);
+	public PortalCache<? extends Serializable, ? extends Serializable>
+		getPortalCache(String portalCacheName, boolean blocking);
 
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
 		getPortalCacheManager();

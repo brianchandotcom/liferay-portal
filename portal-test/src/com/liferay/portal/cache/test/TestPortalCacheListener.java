@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.test;
 
-import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.util.HashUtil;
 
 import java.io.Serializable;

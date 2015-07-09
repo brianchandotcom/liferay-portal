@@ -15,11 +15,11 @@
 package com.liferay.portal.cache.memory.internal;
 
 import com.liferay.portal.cache.test.TestPortalCacheListener;
-import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCacheManager;
+import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -59,11 +59,13 @@ public class MemoryPortalCacheTest {
 
 		_defaultPortalCacheListener = new TestPortalCacheListener<>();
 
-		_memoryPortalCache.registerPortalCacheListener(_defaultPortalCacheListener);
+		_memoryPortalCache.registerPortalCacheListener(
+			_defaultPortalCacheListener);
 
 		_defaultPortalCacheReplicator = new TestPortalCacheReplicator<>();
 
-		_memoryPortalCache.registerPortalCacheListener(_defaultPortalCacheReplicator);
+		_memoryPortalCache.registerPortalCacheListener(
+			_defaultPortalCacheReplicator);
 	}
 
 	@Test
@@ -74,7 +76,8 @@ public class MemoryPortalCacheTest {
 		TestPortalCacheListener<String, String> testPortalCacheListener =
 			new TestPortalCacheListener<>();
 
-		_memoryPortalCache.registerPortalCacheListener(testPortalCacheListener, PortalCacheListenerScope.ALL);
+		_memoryPortalCache.registerPortalCacheListener(
+			testPortalCacheListener, PortalCacheListenerScope.ALL);
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_2);
 
@@ -95,7 +98,8 @@ public class MemoryPortalCacheTest {
 
 		// Unregister
 
-		_memoryPortalCache.unregisterPortalCacheListener(testPortalCacheListener);
+		_memoryPortalCache.unregisterPortalCacheListener(
+			testPortalCacheListener);
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_1);
 
@@ -168,7 +172,8 @@ public class MemoryPortalCacheTest {
 
 	@Test
 	public void testGetName() {
-		Assert.assertEquals(_CACHE_NAME, _memoryPortalCache.getPortalCacheName());
+		Assert.assertEquals(
+			_CACHE_NAME, _memoryPortalCache.getPortalCacheName());
 	}
 
 	@Test
@@ -176,7 +181,9 @@ public class MemoryPortalCacheTest {
 		PortalCacheManager<String, String> portalCacheManager =
 			_memoryPortalCache.getPortalCacheManager();
 
-		Assert.assertEquals(_CACHE_MANAGER_NAME, portalCacheManager.getPortalCacheManagerName());
+		Assert.assertEquals(
+			_CACHE_MANAGER_NAME,
+			portalCacheManager.getPortalCacheManagerName());
 	}
 
 	@Test
@@ -771,7 +778,8 @@ public class MemoryPortalCacheTest {
 	private static final String _VALUE_2 = "VALUE_2";
 
 	private TestPortalCacheListener<String, String> _defaultPortalCacheListener;
-	private TestPortalCacheReplicator<String, String> _defaultPortalCacheReplicator;
+	private TestPortalCacheReplicator<String, String>
+		_defaultPortalCacheReplicator;
 	private MemoryPortalCache<String, String> _memoryPortalCache;
 
 }

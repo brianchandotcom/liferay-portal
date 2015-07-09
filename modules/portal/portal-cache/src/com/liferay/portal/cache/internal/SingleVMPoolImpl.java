@@ -56,7 +56,9 @@ public class SingleVMPoolImpl implements SingleVMPool {
 	}
 
 	@Override
-	public PortalCacheManager<? extends Serializable, ?> getPortalCacheManager() {
+	public PortalCacheManager<? extends Serializable, ?>
+		getPortalCacheManager() {
+
 		return _portalCacheManager;
 	}
 

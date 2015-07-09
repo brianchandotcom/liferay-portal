@@ -41,7 +41,8 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public PortalCache<K, V> getPortalCache(String portalCacheName)
 		throws PortalCacheException;
 
-	public PortalCache<K, V> getPortalCache(String portalCacheName, boolean blocking)
+	public PortalCache<K, V> getPortalCache(
+			String portalCacheName, boolean blocking)
 		throws PortalCacheException;
 
 	public Set<PortalCacheManagerListener> getPortalCacheManagerListeners();

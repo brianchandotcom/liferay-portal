@@ -27,31 +27,38 @@ public class RMICacheReplicatorFactory
 
 	@Override
 	protected boolean extractReplicatePuts(Properties properties) {
-		return GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
+		return GetterUtil.getBoolean(
+			properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
 			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS);
 	}
 
 	@Override
 	protected boolean extractReplicatePutsViaCopy(Properties properties) {
-		return GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS_VIA_COPY),
+		return GetterUtil.getBoolean(
+			properties.getProperty(
+				PortalCacheReplicator.REPLICATE_PUTS_VIA_COPY),
 			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS_VIA_COPY);
 	}
 
 	@Override
 	protected boolean extractReplicateRemovals(Properties properties) {
-		return GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_REMOVALS),
+		return GetterUtil.getBoolean(
+			properties.getProperty(PortalCacheReplicator.REPLICATE_REMOVALS),
 			PortalCacheReplicator.DEFAULT_REPLICATE_REMOVALS);
 	}
 
 	@Override
 	protected boolean extractReplicateUpdates(Properties properties) {
-		return GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES),
+		return GetterUtil.getBoolean(
+			properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES),
 			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES);
 	}
 
 	@Override
 	protected boolean extractReplicateUpdatesViaCopy(Properties properties) {
-		return GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES_VIA_COPY),
+		return GetterUtil.getBoolean(
+			properties.getProperty(
+				PortalCacheReplicator.REPLICATE_UPDATES_VIA_COPY),
 			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
 	}
 

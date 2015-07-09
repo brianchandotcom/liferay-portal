@@ -229,8 +229,10 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public void destroy() {
-		MultiVMPoolUtil.removePortalCache(leftToRightPortalCache.getPortalCacheName());
-		MultiVMPoolUtil.removePortalCache(rightToLeftPortalCache.getPortalCacheName());
+		MultiVMPoolUtil.removePortalCache(
+			leftToRightPortalCache.getPortalCacheName());
+		MultiVMPoolUtil.removePortalCache(
+			rightToLeftPortalCache.getPortalCacheName());
 	}
 
 	@Override

@@ -286,8 +286,9 @@ public class EhcacheConfigurationHelperUtil {
 				cacheEventListenerFactoryConfiguration. getPropertySeparator(),
 				props);
 
-			PortalCacheListenerScope portalCacheListenerScope = _portalCacheListenerScopes.get(
-				cacheEventListenerFactoryConfiguration.getListenFor());
+			PortalCacheListenerScope portalCacheListenerScope =
+				_portalCacheListenerScopes.get(
+					cacheEventListenerFactoryConfiguration.getListenFor());
 
 			if (factoryClassName.equals(
 					props.get(
@@ -343,8 +344,9 @@ public class EhcacheConfigurationHelperUtil {
 
 			if (clusterAware && clusterEnabled) {
 				if (clusterLinkReplicationEnabled) {
-					portalCacheBootstrapLoaderConfiguration = new CallbackConfiguration(
-						ClusterLinkCallbackFactory.INSTANCE, properties);
+					portalCacheBootstrapLoaderConfiguration =
+						new CallbackConfiguration(
+							ClusterLinkCallbackFactory.INSTANCE, properties);
 				}
 				else {
 					properties.put(
@@ -354,8 +356,9 @@ public class EhcacheConfigurationHelperUtil {
 							bootstrapCacheLoaderFactoryConfiguration.
 								getFullyQualifiedClassPath(), props));
 
-					portalCacheBootstrapLoaderConfiguration = new CallbackConfiguration(
-						EhcacheCallbackFactory.INSTANCE, properties);
+					portalCacheBootstrapLoaderConfiguration =
+						new CallbackConfiguration(
+							EhcacheCallbackFactory.INSTANCE, properties);
 				}
 			}
 
@@ -462,9 +465,12 @@ public class EhcacheConfigurationHelperUtil {
 	private static final Map<String, String> _unescapeMap = new HashMap<>();
 
 	static {
-		_portalCacheListenerScopes.put(NotificationScope.ALL, PortalCacheListenerScope.ALL);
-		_portalCacheListenerScopes.put(NotificationScope.LOCAL, PortalCacheListenerScope.LOCAL);
-		_portalCacheListenerScopes.put(NotificationScope.REMOTE, PortalCacheListenerScope.REMOTE);
+		_portalCacheListenerScopes.put(
+			NotificationScope.ALL, PortalCacheListenerScope.ALL);
+		_portalCacheListenerScopes.put(
+			NotificationScope.LOCAL, PortalCacheListenerScope.LOCAL);
+		_portalCacheListenerScopes.put(
+			NotificationScope.REMOTE, PortalCacheListenerScope.REMOTE);
 
 		_unescapeMap.put("amp", "&");
 		_unescapeMap.put("gt", ">");

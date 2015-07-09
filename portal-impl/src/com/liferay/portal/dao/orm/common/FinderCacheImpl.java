@@ -14,13 +14,13 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -75,7 +75,8 @@ public class FinderCacheImpl
 
 					PortalCacheManager
 						<? extends Serializable, ? extends Serializable>
-							portalCacheManager = _multiVMPool.getPortalCacheManager();
+							portalCacheManager =
+								_multiVMPool.getPortalCacheManager();
 
 					portalCacheManager.registerPortalCacheManagerListener(
 						FinderCacheImpl.this);
@@ -279,8 +280,10 @@ public class FinderCacheImpl
 			String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 			portalCache =
-				(PortalCache<Serializable, Serializable>)_multiVMPool.getPortalCache(
-					groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
+				(PortalCache<Serializable, Serializable>)
+					_multiVMPool.getPortalCache(
+						groupKey,
+						PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
 			PortalCache<Serializable, Serializable> previousPortalCache =
 				_portalCaches.putIfAbsent(className, portalCache);

@@ -1847,7 +1847,8 @@ public class TableMapperTest {
 
 		@Override
 		public PortalCacheManager
-			<? extends Serializable, ? extends Serializable> getPortalCacheManager() {
+			<? extends Serializable, ? extends Serializable>
+			 getPortalCacheManager() {
 
 			return null;
 		}

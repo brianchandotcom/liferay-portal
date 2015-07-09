@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
-import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 
 import net.sf.ehcache.event.CacheManagerEventListener;
 

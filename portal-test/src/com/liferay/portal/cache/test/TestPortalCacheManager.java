@@ -39,7 +39,8 @@ public class TestPortalCacheManager<K extends Serializable, V>
 		TestPortalCacheManager<K, V> testPortalCacheManager =
 			new TestPortalCacheManager<>();
 
-		testPortalCacheManager.setPortalCacheManagerName(portalCacheManagerName);
+		testPortalCacheManager.setPortalCacheManagerName(
+			portalCacheManagerName);
 
 		testPortalCacheManager.initialize();
 
@@ -70,7 +71,8 @@ public class TestPortalCacheManager<K extends Serializable, V>
 			_testPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedPortalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
+			aggregatedPortalCacheManagerListener.notifyPortalCacheAdded(
+				portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -106,7 +108,8 @@ public class TestPortalCacheManager<K extends Serializable, V>
 
 		testPortalCache.removeAll();
 
-		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
+		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(
+			portalCacheName);
 	}
 
 	@Override

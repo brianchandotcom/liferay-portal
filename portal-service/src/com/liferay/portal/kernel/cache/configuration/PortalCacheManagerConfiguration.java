@@ -53,12 +53,6 @@ public class PortalCacheManagerConfiguration {
 		}
 	}
 
-	public Set<CallbackConfiguration>
-		getPortalCacheManagerListenerConfigurations() {
-
-		return Collections.unmodifiableSet(_portalCacheManagerListenerConfigurations);
-	}
-
 	public PortalCacheConfiguration getDefaultPortalCacheConfiguration() {
 		return _defaultPortalCacheConfiguration;
 	}
@@ -67,6 +61,13 @@ public class PortalCacheManagerConfiguration {
 		String portalCacheName) {
 
 		return _portalCacheConfigurations.get(portalCacheName);
+	}
+
+	public Set<CallbackConfiguration>
+		getPortalCacheManagerListenerConfigurations() {
+
+		return Collections.unmodifiableSet(
+			_portalCacheManagerListenerConfigurations);
 	}
 
 	public Set<String> getPortalCacheNames() {
@@ -81,10 +82,10 @@ public class PortalCacheManagerConfiguration {
 			portalCacheName, portalCacheConfiguration);
 	}
 
-	private final Set<CallbackConfiguration>
-		_portalCacheManagerListenerConfigurations;
 	private final PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private final Map<String, PortalCacheConfiguration>
 		_portalCacheConfigurations;
+	private final Set<CallbackConfiguration>
+		_portalCacheManagerListenerConfigurations;
 
 }

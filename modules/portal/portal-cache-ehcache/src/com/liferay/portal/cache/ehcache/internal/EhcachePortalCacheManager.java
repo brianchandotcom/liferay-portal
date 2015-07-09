@@ -324,8 +324,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		try {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Reconfiguring caches in cache manager " + getPortalCacheManagerName() +
-						" using " + url);
+					"Reconfiguring caches in cache manager " +
+						getPortalCacheManagerName() + " using " + url);
 			}
 
 			reconfigurePortalCaches(url);

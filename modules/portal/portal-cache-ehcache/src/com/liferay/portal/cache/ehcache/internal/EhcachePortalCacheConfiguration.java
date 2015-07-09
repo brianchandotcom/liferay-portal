@@ -49,7 +49,8 @@ public class EhcachePortalCacheConfiguration extends PortalCacheConfiguration {
 
 		return new EhcachePortalCacheConfiguration(
 			portalCacheName, getPortalCacheListenerConfigurations(),
-			getPortalCacheBootstrapLoaderConfiguration(), _requireSerialization);
+			getPortalCacheBootstrapLoaderConfiguration(),
+			_requireSerialization);
 	}
 
 	private final boolean _requireSerialization;

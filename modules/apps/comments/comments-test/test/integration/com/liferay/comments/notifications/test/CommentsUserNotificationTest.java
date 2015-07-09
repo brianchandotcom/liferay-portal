@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.comments.notifications;
+package com.liferay.comments.notifications.test;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

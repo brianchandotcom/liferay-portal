@@ -243,6 +243,12 @@ public class SitesUtil {
 		return getSites().isLayoutUpdateable(layout);
 	}
 
+	public static boolean isUserGroupLayout(Layout layout)
+		throws PortalException {
+
+		return getSites().isUserGroupLayout(layout);
+	}
+
 	public static boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException {

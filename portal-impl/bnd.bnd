@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.portal.freemarker,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.messaging.async,\
+	com.liferay.portal.model.impl,\
 	com.liferay.portal.monitoring.statistics.service,\
 	com.liferay.portal.plugin,\
 	com.liferay.portal.resiliency.service,\

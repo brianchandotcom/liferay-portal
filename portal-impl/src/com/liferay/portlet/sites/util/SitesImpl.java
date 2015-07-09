@@ -1175,6 +1175,25 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
+	public boolean isUserGroupLayout(Layout layout) throws PortalException {
+		if (!(layout instanceof VirtualLayout)) {
+			return false;
+		}
+
+		VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+		Layout sourceLayout = virtualLayout.getSourceLayout();
+
+		Group sourceGroup = sourceLayout.getGroup();
+
+		if (sourceGroup.isUserGroup()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException {

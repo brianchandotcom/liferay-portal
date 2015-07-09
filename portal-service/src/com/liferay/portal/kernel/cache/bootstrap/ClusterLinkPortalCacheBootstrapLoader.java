@@ -24,9 +24,9 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public class ClusterLinkBootstrapLoader implements PortalCacheBootstrapLoader {
+public class ClusterLinkPortalCacheBootstrapLoader implements PortalCacheBootstrapLoader {
 
-	public ClusterLinkBootstrapLoader(Properties properties) {
+	public ClusterLinkPortalCacheBootstrapLoader(Properties properties) {
 		if (properties != null) {
 			_bootstrapAsynchronously = GetterUtil.getBoolean(
 				properties.getProperty("bootstrapAsynchronously"));
@@ -77,8 +77,7 @@ public class ClusterLinkBootstrapLoader implements PortalCacheBootstrapLoader {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ClusterLinkBootstrapLoader.class);
+	private static final Log _log = LogFactoryUtil.getLog(ClusterLinkPortalCacheBootstrapLoader.class);
 
 	private final boolean _bootstrapAsynchronously;
 

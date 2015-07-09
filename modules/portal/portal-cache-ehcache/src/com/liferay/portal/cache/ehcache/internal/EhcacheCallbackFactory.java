@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.cache.ehcache.internal.bootstrap.EhcacheBootstrapLoaderAdapter;
+import com.liferay.portal.cache.ehcache.internal.bootstrap.EhcachePortalCacheBootstrapLoaderAdapter;
 import com.liferay.portal.cache.ehcache.internal.distribution.EhcachePortalCacheReplicatorAdapter;
 import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheListenerAdapter;
 import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheManagerListenerAdapter;
@@ -60,7 +60,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 				(BootstrapCacheLoaderFactory<?>)InstanceFactory.newInstance(
 					getClassLoader(), className);
 
-			return new EhcacheBootstrapLoaderAdapter(
+			return new EhcachePortalCacheBootstrapLoaderAdapter(
 				bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
 					properties));
 		}

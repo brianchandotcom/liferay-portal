@@ -569,7 +569,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		String newContent = content;
+		String newContent = trimContent(content, false);
 
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);
@@ -1411,8 +1411,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
-
-				line = trimLine(line, false);
 
 				if (line.startsWith("package ")) {
 					packageName = line.substring(8, line.length() - 1);

@@ -17,7 +17,7 @@ package com.liferay.marketplace.store.web.portlet;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.AppServiceUtil;
-import com.liferay.marketplace.store.web.configuration.MarketplaceWebConfigurationValues;
+import com.liferay.marketplace.store.web.configuration.MarketplaceStoreWebConfigurationValues;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.marketplace.store.web.util.MarketplaceLicenseUtil;
 import com.liferay.marketplace.util.MarketplaceUtil;
@@ -96,7 +96,7 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 		String version = ParamUtil.getString(actionRequest, "version");
 
 		if (!url.startsWith(
-				MarketplaceWebConfigurationValues.MARKETPLACE_URL)) {
+				MarketplaceStoreWebConfigurationValues.MARKETPLACE_URL)) {
 
 			JSONObject jsonObject = getAppJSONObject(remoteAppId);
 
@@ -268,7 +268,7 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 			actionRequest, "productEntryName");
 
 		if (!url.startsWith(
-				MarketplaceWebConfigurationValues.MARKETPLACE_URL)) {
+				MarketplaceStoreWebConfigurationValues.MARKETPLACE_URL)) {
 
 			JSONObject jsonObject = getAppJSONObject(remoteAppId);
 

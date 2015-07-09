@@ -14,20 +14,15 @@
 
 package com.liferay.marketplace.store.web.configuration;
 
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-
 /**
- * @author Joan Kim
+ * @author Ryan Park
  */
-public class MarketplaceWebConfigurationUtil {
+public class MarketplaceStoreWebConfigurationKeys {
 
-	public static String get(String key) {
-		return _configuration.get(key);
-	}
+	public static final String MARKETPLACE_KEY = "marketplace.key";
 
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			MarketplaceWebConfigurationUtil.class.getClassLoader(), "portlet");
+	public static final String MARKETPLACE_SECRET = "marketplace.secret";
+
+	public static final String MARKETPLACE_URL = "marketplace.url";
 
 }

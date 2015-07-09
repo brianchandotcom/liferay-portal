@@ -74,9 +74,9 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%
-BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
-
 WindowState windowState = liferayPortletRequest.getWindowState();
+
+BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
 %>
 
 <%@ include file="/blogs_admin/init-ext.jsp" %>

@@ -1958,8 +1958,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (Validator.isNull(portletId)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Not pinging Google because there is no Blogs Portlet " +
-						"Provider");
+					"Not pinging Google because there is no blogs portlet " +
+						"provider");
 			}
 
 			return;

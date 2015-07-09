@@ -64,6 +64,8 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%
+WindowState windowState = liferayPortletRequest.getWindowState();
+
 String selectionMethod = portletPreferences.getValue("selectionMethod", "users");
 long organizationId = GetterUtil.getLong(portletPreferences.getValue("organizationId", "0"));
 String displayStyle = portletPreferences.getValue("displayStyle", "abstract");
@@ -82,7 +84,6 @@ if (organizationId == 0) {
 		organizationId = group.getOrganizationId();
 	}
 }
-WindowState windowState = liferayPortletRequest.getWindowState();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

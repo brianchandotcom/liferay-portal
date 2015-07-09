@@ -110,6 +110,8 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%
+WindowState windowState = liferayPortletRequest.getWindowState();
+
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
@@ -129,8 +131,6 @@ BlogsPortletInstanceSettings blogsPortletInstanceSettings = BlogsPortletInstance
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
 
 boolean showEditEntryPermissions = true;
-
-WindowState windowState = liferayPortletRequest.getWindowState();
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

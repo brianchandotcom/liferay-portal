@@ -75,7 +75,7 @@ public class FinderCacheImpl
 
 					PortalCacheManager
 						<? extends Serializable, ? extends Serializable>
-							portalCacheManager = _multiVMPool.getCacheManager();
+							portalCacheManager = _multiVMPool.getPortalCacheManager();
 
 					portalCacheManager.registerPortalCacheManagerListener(
 						FinderCacheImpl.this);
@@ -241,7 +241,7 @@ public class FinderCacheImpl
 
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-		_multiVMPool.removeCache(groupKey);
+		_multiVMPool.removePortalCache(groupKey);
 	}
 
 	@Override
@@ -279,7 +279,7 @@ public class FinderCacheImpl
 			String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 			portalCache =
-				(PortalCache<Serializable, Serializable>)_multiVMPool.getCache(
+				(PortalCache<Serializable, Serializable>)_multiVMPool.getPortalCache(
 					groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
 			PortalCache<Serializable, Serializable> previousPortalCache =

@@ -102,7 +102,7 @@ public class LanguageImpl implements Language, Serializable {
 						MultiVMPool.class);
 
 					_portalCache =
-						(PortalCache<Long, Serializable>)multiVMPool.getCache(
+						(PortalCache<Long, Serializable>)multiVMPool.getPortalCache(
 							LanguageImpl.class.getName());
 
 					PortalCacheMapSynchronizeUtil.synchronize(

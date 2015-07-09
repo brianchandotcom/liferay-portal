@@ -213,27 +213,27 @@ public class ToolDependencies {
 
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
-			getCache(String portalCacheName) {
+			getPortalCache(String portalCacheName) {
 
 			return _portalCacheManager.getPortalCache(portalCacheName);
 		}
 
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
-			getCache(String portalCacheName, boolean blocking) {
+			getPortalCache(String portalCacheName, boolean blocking) {
 
 			return _portalCacheManager.getPortalCache(portalCacheName, blocking);
 		}
 
 		@Override
 		public PortalCacheManager
-			<? extends Serializable, ? extends Serializable> getCacheManager() {
+			<? extends Serializable, ? extends Serializable> getPortalCacheManager() {
 
 			return _portalCacheManager;
 		}
 
 		@Override
-		public void removeCache(String portalCacheName) {
+		public void removePortalCache(String portalCacheName) {
 			_portalCacheManager.removePortalCache(portalCacheName);
 		}
 

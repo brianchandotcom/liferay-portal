@@ -89,7 +89,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			StringPool.PERIOD).concat(name);
 
 		_multiVMPortalCache =
-			(PortalCache<String, TemplateResource>)_multiVMPool.getCache(
+			(PortalCache<String, TemplateResource>)_multiVMPool.getPortalCache(
 				portalCacheName);
 
 		PortalCacheListener<String, TemplateResource> cacheListener =
@@ -120,7 +120,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void destroy() {
-		_multiVMPool.removeCache(_multiVMPortalCache.getPortalCacheName());
+		_multiVMPool.removePortalCache(_multiVMPortalCache.getPortalCacheName());
 		_singleVMPool.removeCache(_singleVMPortalCache.getPortalCacheName());
 
 		_templateResourceParsers.clear();

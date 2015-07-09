@@ -403,7 +403,7 @@ public class VelocityTemplateTest {
 						RandomTestUtil.randomString());
 
 			Mockito.when(
-				multiVMPool.getCache(Mockito.anyString())
+				multiVMPool.getPortalCache(Mockito.anyString())
 			).thenAnswer(
 				new Answer
 					<PortalCache

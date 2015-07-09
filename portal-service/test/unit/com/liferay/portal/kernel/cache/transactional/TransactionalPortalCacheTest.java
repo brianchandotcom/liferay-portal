@@ -20,10 +20,8 @@ import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -37,33 +35,27 @@ import java.util.Properties;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
-@NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class TransactionalPortalCacheTest {
 
 	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new CodeCoverageAssertor() {
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
 
-				@Override
-				public void appendAssertClasses(List<Class<?>> assertClasses) {
-					Class<TransactionalPortalCacheHelper> clazz =
-						TransactionalPortalCacheHelper.class;
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				Class<TransactionalPortalCacheHelper> clazz =
+					TransactionalPortalCacheHelper.class;
 
-					assertClasses.add(clazz);
-					assertClasses.addAll(
-						Arrays.asList(clazz.getDeclaredClasses()));
-				}
+				assertClasses.add(clazz);
+				assertClasses.addAll(Arrays.asList(clazz.getDeclaredClasses()));
+			}
 
-			},
-			NewEnvTestRule.INSTANCE);
+		};
 
 	@Before
 	public void setUp() {
@@ -81,9 +73,12 @@ public class TransactionalPortalCacheTest {
 		_testCacheReplicator = new TestPortalCacheReplicator<>();
 
 		_portalCache.registerPortalCacheListener(_testCacheReplicator);
+
+		ReflectionTestUtil.setFieldValue(
+			TransactionalPortalCacheHelper.class, "_transactionalCacheEnabled",
+			null);
 	}
 
-	@NewEnv(type = NewEnv.Type.NONE)
 	@Test
 	public void testConstructor() {
 		new TransactionalPortalCacheHelper();

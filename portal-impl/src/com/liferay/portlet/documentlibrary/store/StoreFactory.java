@@ -121,6 +121,10 @@ public class StoreFactory {
 		return _store;
 	}
 
+	public static Store getInstance(String key) {
+		return _serviceTrackerMap.getService(key);
+	}
+
 	public static void setInstance(Store store) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Set " + ClassUtil.getClassName(store));

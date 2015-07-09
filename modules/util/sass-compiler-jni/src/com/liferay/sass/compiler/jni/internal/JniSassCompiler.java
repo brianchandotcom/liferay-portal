@@ -215,7 +215,7 @@ public class JniSassCompiler implements SassCompiler {
 
 			if (modifySourceMap) {
 				String fileName = inputFileName.substring(
-					inputFileName.lastIndexOf("/"));
+					inputFileName.lastIndexOf("/") + 1);
 				File sourceMapFile = new File(sourceMapFileName);
 				String sourceMapContent = new String(
 					Files.readAllBytes(sourceMapFile.toPath()));

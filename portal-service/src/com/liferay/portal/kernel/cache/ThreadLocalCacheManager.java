@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.cache;
 
+import com.liferay.portal.kernel.transaction.NewTransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
@@ -31,10 +32,10 @@ import java.util.Map;
 public class ThreadLocalCacheManager {
 
 	public static final TransactionLifecycleListener
-		TRANSACTION_LIFECYCLE_LISTENER = new TransactionLifecycleListener() {
+		TRANSACTION_LIFECYCLE_LISTENER = new NewTransactionLifecycleListener() {
 
 		@Override
-		public void committed(
+		protected void doCommitted(
 			TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus) {
 
@@ -44,7 +45,7 @@ public class ThreadLocalCacheManager {
 		}
 
 		@Override
-		public void created(
+		protected void doCreated(
 			TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus) {
 
@@ -54,7 +55,7 @@ public class ThreadLocalCacheManager {
 		}
 
 		@Override
-		public void rollbacked(
+		protected void doRollbacked(
 			TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus, Throwable throwable) {
 

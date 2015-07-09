@@ -212,16 +212,17 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 			else {
 				modifySourceMap = true;
 
-				String fileName = inputFileName.substring(
-					inputFileName.lastIndexOf("/"));
-
 				tempFile = new File(parentFile.getCanonicalPath(), "tmp.scss");
 
 				if ((sourceMapFileName == null) ||
 					sourceMapFileName.equals("")) {
 
+					String outputFileName = getOutputFileName(
+						inputFileName.substring(
+							inputFileName.lastIndexOf("/")));
+
 					sourceMapFileName =
-						parentFile.getPath() + fileName + ".map";
+						parentFile.getPath() + outputFileName + ".map";
 				}
 			}
 

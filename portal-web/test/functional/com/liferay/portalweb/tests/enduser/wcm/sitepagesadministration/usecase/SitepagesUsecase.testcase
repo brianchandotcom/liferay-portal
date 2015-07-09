@@ -238,7 +238,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56625" name="SitesPanelLayout" priority="4">
+	<command name="SitesPanelLayout" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

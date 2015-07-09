@@ -49,6 +49,10 @@ public class TransactionalPortalCacheHelper {
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
+
 				Propagation propagation = transactionAttribute.getPropagation();
 
 				if (propagation.value() >=
@@ -70,6 +74,10 @@ public class TransactionalPortalCacheHelper {
 			public void created(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
+
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
 
 				Propagation propagation = transactionAttribute.getPropagation();
 
@@ -94,6 +102,10 @@ public class TransactionalPortalCacheHelper {
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus, Throwable throwable) {
 
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
+
 				Propagation propagation = transactionAttribute.getPropagation();
 
 				if (propagation.value() >=
@@ -117,18 +129,10 @@ public class TransactionalPortalCacheHelper {
 		};
 
 	public static void begin() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
-
 		_pushPortalCacheMap();
 	}
 
 	public static void commit() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
-
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
 		for (Map.Entry
@@ -159,10 +163,6 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	public static void rollback() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
-
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
 		portalCacheMap.clear();

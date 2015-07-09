@@ -2205,6 +2205,11 @@ closeTemplate()
 					</replacevalue>
 				</replace>
 
+				<replace file="${app.server.weblogic.instance.dir}/bin/setDomainEnv.sh">
+					<replacetoken><![CDATA[JAVA_PROPERTIES="${JAVA_PROPERTIES} ${CLUSTER_PROPERTIES}"]]></replacetoken>
+					<replacevalue><![CDATA[JAVA_PROPERTIES="-Dfile.encoding=utf8 ${JAVA_PROPERTIES} ${CLUSTER_PROPERTIES}"]]></replacevalue>
+				</replace>
+
 				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.sh">
 					<replacefilter token="$${app.server.weblogic.dir}" value="${app.server.weblogic.dir}" />
 				</replace>

@@ -49,33 +49,36 @@ public class POPNotificationsMessageListener
 
 		Store store = null;
 
-		Folder inboxFolder = null;
-
-		Message[] messages = null;
-
 		try {
 			store = getStore();
 
-			inboxFolder = getInboxFolder(store);
+			Folder inboxFolder = getInboxFolder(store);
 
-			messages = inboxFolder.getMessages();
-
-			notifyMessageListeners(messages);
-		}
-		finally {
-			if (inboxFolder != null) {
-				if (messages != null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Deleting messages");
-					}
-
-					inboxFolder.setFlags(
-						messages, new Flags(Flags.Flag.DELETED), true);
-				}
-
-				inboxFolder.close(true);
+			if (inboxFolder == null) {
+				return;
 			}
 
+			try {
+				Message[] messages = inboxFolder.getMessages();
+
+				if (messages == null) {
+					return;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Deleting messages");
+				}
+
+				inboxFolder.setFlags(
+					messages, new Flags(Flags.Flag.DELETED), true);
+
+				notifyMessageListeners(messages);
+			}
+			finally {
+				inboxFolder.close(true);
+			}
+		}
+		finally {
 			if (store != null) {
 				store.close();
 			}
@@ -143,10 +146,6 @@ public class POPNotificationsMessageListener
 
 	protected void notifyMessageListeners(Message[] messages)
 		throws MessagingException {
-
-		if (ArrayUtil.isEmpty(messages)) {
-			return;
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Messages " + messages.length);

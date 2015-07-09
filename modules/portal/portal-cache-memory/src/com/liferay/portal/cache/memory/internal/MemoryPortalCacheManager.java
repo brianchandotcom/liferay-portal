@@ -78,7 +78,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			_memoryPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedCacheManagerListener.notifyCacheAdded(portalCacheName);
+			aggregatedCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -114,7 +114,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 		memoryPortalCache.destroy();
 
-		aggregatedCacheManagerListener.notifyCacheRemoved(portalCacheName);
+		aggregatedCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
 	@Override

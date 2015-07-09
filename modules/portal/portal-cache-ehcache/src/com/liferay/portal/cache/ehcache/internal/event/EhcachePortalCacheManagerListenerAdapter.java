@@ -42,12 +42,12 @@ public class EhcachePortalCacheManagerListenerAdapter
 	}
 
 	@Override
-	public void notifyCacheAdded(String portalCacheName) {
+	public void notifyPortalCacheAdded(String portalCacheName) {
 		_cacheManagerEventListener.notifyCacheAdded(portalCacheName);
 	}
 
 	@Override
-	public void notifyCacheRemoved(String portalCacheName) {
+	public void notifyPortalCacheRemoved(String portalCacheName) {
 		_cacheManagerEventListener.notifyCacheRemoved(portalCacheName);
 	}
 

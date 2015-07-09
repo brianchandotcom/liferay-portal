@@ -70,7 +70,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 			_testPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedCacheManagerListener.notifyCacheAdded(portalCacheName);
+			aggregatedCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -106,7 +106,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 
 		testPortalCache.removeAll();
 
-		aggregatedCacheManagerListener.notifyCacheRemoved(portalCacheName);
+		aggregatedCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
 	@Override

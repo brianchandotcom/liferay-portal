@@ -23,8 +23,8 @@ public interface PortalCacheManagerListener {
 
 	public void init() throws PortalCacheException;
 
-	public void notifyCacheAdded(String portalCacheName);
+	public void notifyPortalCacheAdded(String portalCacheName);
 
-	public void notifyCacheRemoved(String portalCacheName);
+	public void notifyPortalCacheRemoved(String portalCacheName);
 
 }

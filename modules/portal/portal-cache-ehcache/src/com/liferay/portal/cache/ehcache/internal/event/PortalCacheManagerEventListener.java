@@ -74,12 +74,12 @@ public class PortalCacheManagerEventListener
 
 	@Override
 	public void notifyCacheAdded(String portalCacheName) {
-		_cacheManagerListener.notifyCacheAdded(portalCacheName);
+		_cacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 	}
 
 	@Override
 	public void notifyCacheRemoved(String portalCacheName) {
-		_cacheManagerListener.notifyCacheRemoved(portalCacheName);
+		_cacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
 	private final PortalCacheManagerListener _cacheManagerListener;

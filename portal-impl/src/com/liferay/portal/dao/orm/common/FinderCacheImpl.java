@@ -187,11 +187,11 @@ public class FinderCacheImpl
 	}
 
 	@Override
-	public void notifyCacheAdded(String portalCacheName) {
+	public void notifyPortalCacheAdded(String portalCacheName) {
 	}
 
 	@Override
-	public void notifyCacheRemoved(String portalCacheName) {
+	public void notifyPortalCacheRemoved(String portalCacheName) {
 		_portalCaches.remove(portalCacheName);
 	}
 

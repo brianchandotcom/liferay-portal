@@ -58,20 +58,20 @@ public class AggregatedPortalCacheManagerListener implements PortalCacheManagerL
 	}
 
 	@Override
-	public void notifyCacheAdded(String portalCacheName) {
+	public void notifyPortalCacheAdded(String portalCacheName) {
 		for (PortalCacheManagerListener cacheManagerListener :
 				_cacheManagerListeners) {
 
-			cacheManagerListener.notifyCacheAdded(portalCacheName);
+			cacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 		}
 	}
 
 	@Override
-	public void notifyCacheRemoved(String portalCacheName) {
+	public void notifyPortalCacheRemoved(String portalCacheName) {
 		for (PortalCacheManagerListener cacheManagerListener :
 				_cacheManagerListeners) {
 
-			cacheManagerListener.notifyCacheRemoved(portalCacheName);
+			cacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 		}
 	}
 

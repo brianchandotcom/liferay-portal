@@ -23,7 +23,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class AggregatedPortalCacheManagerListener implements PortalCacheManagerListener {
 
-	public boolean addCacheListener(PortalCacheManagerListener cacheManagerListener) {
+	public boolean addPortalCacheListener(PortalCacheManagerListener cacheManagerListener) {
 		if (cacheManagerListener == null) {
 			return false;
 		}
@@ -44,7 +44,7 @@ public class AggregatedPortalCacheManagerListener implements PortalCacheManagerL
 		}
 	}
 
-	public Set<PortalCacheManagerListener> getCacheManagerListeners() {
+	public Set<PortalCacheManagerListener> getPortalCacheManagerListeners() {
 		return Collections.unmodifiableSet(_cacheManagerListeners);
 	}
 
@@ -75,7 +75,7 @@ public class AggregatedPortalCacheManagerListener implements PortalCacheManagerL
 		}
 	}
 
-	public boolean removeCacheListener(
+	public boolean removePortalCacheListener(
 		PortalCacheManagerListener cacheManagerListener) {
 
 		if (cacheManagerListener == null) {

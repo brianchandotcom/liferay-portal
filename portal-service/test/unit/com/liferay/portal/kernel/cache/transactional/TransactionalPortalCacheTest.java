@@ -99,13 +99,105 @@ public class TransactionalPortalCacheTest {
 
 		TransactionalPortalCacheHelper.commit();
 
-		testNoneTransactionalCache2();
+		doTestNoneTransactionalCache();
 	}
 
 	@Test
 	public void testNoneTransactionalCache2() {
 		setEnableTransactionalCache(true);
 
+		doTestNoneTransactionalCache();
+	}
+
+	@Test
+	public void testTransactionalCacheWithoutTTL() {
+		setEnableTransactionalCache(true);
+
+		doTestTransactionalCache(false);
+	}
+
+	@Test
+	public void testTransactionalCacheWithParameterValidation() {
+		setEnableTransactionalCache(true);
+
+		TransactionalPortalCacheHelper.begin();
+
+		// Get
+
+		Assert.assertEquals(_VALUE_1, _transactionalPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
+
+		// Get with null key
+
+		try {
+			_transactionalPortalCache.get(null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+
+		// Put
+
+		_transactionalPortalCache.put(_KEY_1, _VALUE_2);
+
+		Assert.assertEquals(_VALUE_2, _transactionalPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
+
+		// Put with null key
+
+		try {
+			_transactionalPortalCache.put(null, _VALUE_1);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+
+		// Put with null value
+
+		try {
+			_transactionalPortalCache.put(_KEY_1, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Value is null", npe.getMessage());
+		}
+
+		// Put with negative ttl
+
+		try {
+			_transactionalPortalCache.put(_KEY_1, _VALUE_1, -1);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Time to live is negative", iae.getMessage());
+		}
+
+		// Remove
+
+		_transactionalPortalCache.remove(_KEY_1);
+
+		Assert.assertNull(_transactionalPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
+
+		// Remove with null key
+
+		try {
+			_transactionalPortalCache.remove(null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+	}
+
+	protected void doTestNoneTransactionalCache() {
 		Assert.assertEquals(_VALUE_1, _transactionalPortalCache.get(_KEY_1));
 		Assert.assertNull(_transactionalPortalCache.get(_KEY_2));
 		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
@@ -289,94 +381,6 @@ public class TransactionalPortalCacheTest {
 		_testCacheReplicator.assertPut(_KEY_2, _VALUE_2);
 
 		_testCacheReplicator.reset();
-	}
-
-	@Test
-	public void testTransactionalCacheWithoutTTL() {
-		setEnableTransactionalCache(true);
-
-		doTestTransactionalCache(false);
-	}
-
-	@Test
-	public void testTransactionalCacheWithParameterValidation() {
-		setEnableTransactionalCache(true);
-
-		TransactionalPortalCacheHelper.begin();
-
-		// Get
-
-		Assert.assertEquals(_VALUE_1, _transactionalPortalCache.get(_KEY_1));
-		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
-
-		// Get with null key
-
-		try {
-			_transactionalPortalCache.get(null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Key is null", npe.getMessage());
-		}
-
-		// Put
-
-		_transactionalPortalCache.put(_KEY_1, _VALUE_2);
-
-		Assert.assertEquals(_VALUE_2, _transactionalPortalCache.get(_KEY_1));
-		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
-
-		// Put with null key
-
-		try {
-			_transactionalPortalCache.put(null, _VALUE_1);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Key is null", npe.getMessage());
-		}
-
-		// Put with null value
-
-		try {
-			_transactionalPortalCache.put(_KEY_1, null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Value is null", npe.getMessage());
-		}
-
-		// Put with negative ttl
-
-		try {
-			_transactionalPortalCache.put(_KEY_1, _VALUE_1, -1);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Time to live is negative", iae.getMessage());
-		}
-
-		// Remove
-
-		_transactionalPortalCache.remove(_KEY_1);
-
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_1));
-		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
-
-		// Remove with null key
-
-		try {
-			_transactionalPortalCache.remove(null);
-
-			Assert.fail();
-		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Key is null", npe.getMessage());
-		}
 	}
 
 	protected void doTestTransactionalCache(boolean ttl) {

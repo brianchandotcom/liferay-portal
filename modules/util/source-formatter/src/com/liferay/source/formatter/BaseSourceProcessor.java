@@ -71,7 +71,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public final void format() throws Exception {
 		for (String fileName : getFileNames()) {
-			format(fileName);
+			try {
+				format(fileName);
+			}
+			catch (Exception e) {
+				throw new RuntimeException("Unable to format " + fileName, e);
+			}
 		}
 
 		_sourceFormatterHelper.close();

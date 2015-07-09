@@ -294,7 +294,7 @@ public class TableMapperTest {
 		Assert.assertTrue(leftToRightPortalCache instanceof TestPortalCache);
 		Assert.assertEquals(
 			TableMapper.class.getName() + "-" + _TABLE_NAME + "-LeftToRight",
-			leftToRightPortalCache.getName());
+			leftToRightPortalCache.getPortalCacheName());
 
 		Assert.assertSame(
 			_rightBasePersistence, _tableMapperImpl.rightBasePersistence);
@@ -307,7 +307,7 @@ public class TableMapperTest {
 		Assert.assertTrue(rightToLeftPortalCache instanceof TestPortalCache);
 		Assert.assertEquals(
 			TableMapper.class.getName() + "-" + _TABLE_NAME + "-RightToLeft",
-			rightToLeftPortalCache.getName());
+			rightToLeftPortalCache.getPortalCacheName());
 	}
 
 	@Test
@@ -1824,7 +1824,7 @@ public class TableMapperTest {
 
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
-			getCache(String name) {
+			getPortalCache(String name) {
 
 			PortalCache<?, ?> portalCache = _portalCaches.get(name);
 
@@ -1840,14 +1840,15 @@ public class TableMapperTest {
 
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
-			getCache(String name, boolean blocking) {
+			getPortalCache(String name, boolean blocking) {
 
-			return getCache(name);
+			return getPortalCache(name);
 		}
 
 		@Override
 		public PortalCacheManager
-			<? extends Serializable, ? extends Serializable> getCacheManager() {
+			<? extends Serializable, ? extends Serializable>
+			 getPortalCacheManager() {
 
 			return null;
 		}
@@ -1857,7 +1858,7 @@ public class TableMapperTest {
 		}
 
 		@Override
-		public void removeCache(String name) {
+		public void removePortalCache(String name) {
 			_portalCaches.remove(name);
 		}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal.distribution;
 
-import com.liferay.portal.kernel.cache.CacheReplicator;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Properties;
@@ -28,36 +28,38 @@ public class RMICacheReplicatorFactory
 	@Override
 	protected boolean extractReplicatePuts(Properties properties) {
 		return GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_PUTS),
-			CacheReplicator.DEFAULT_REPLICATE_PUTS);
+			properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
+			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS);
 	}
 
 	@Override
 	protected boolean extractReplicatePutsViaCopy(Properties properties) {
 		return GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_PUTS_VIA_COPY),
-			CacheReplicator.DEFAULT_REPLICATE_PUTS_VIA_COPY);
+			properties.getProperty(
+				PortalCacheReplicator.REPLICATE_PUTS_VIA_COPY),
+			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS_VIA_COPY);
 	}
 
 	@Override
 	protected boolean extractReplicateRemovals(Properties properties) {
 		return GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_REMOVALS),
-			CacheReplicator.DEFAULT_REPLICATE_REMOVALS);
+			properties.getProperty(PortalCacheReplicator.REPLICATE_REMOVALS),
+			PortalCacheReplicator.DEFAULT_REPLICATE_REMOVALS);
 	}
 
 	@Override
 	protected boolean extractReplicateUpdates(Properties properties) {
 		return GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_UPDATES),
-			CacheReplicator.DEFAULT_REPLICATE_UPDATES);
+			properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES),
+			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES);
 	}
 
 	@Override
 	protected boolean extractReplicateUpdatesViaCopy(Properties properties) {
 		return GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_UPDATES_VIA_COPY),
-			CacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
+			properties.getProperty(
+				PortalCacheReplicator.REPLICATE_UPDATES_VIA_COPY),
+			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
 	}
 
 }

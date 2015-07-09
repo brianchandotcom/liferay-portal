@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.cache.bootstrap;
 
-import com.liferay.portal.kernel.cache.BootstrapLoader;
+import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,9 +24,10 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public class ClusterLinkBootstrapLoader implements BootstrapLoader {
+public class ClusterLinkPortalCacheBootstrapLoader
+	implements PortalCacheBootstrapLoader {
 
-	public ClusterLinkBootstrapLoader(Properties properties) {
+	public ClusterLinkPortalCacheBootstrapLoader(Properties properties) {
 		if (properties != null) {
 			_bootstrapAsynchronously = GetterUtil.getBoolean(
 				properties.getProperty("bootstrapAsynchronously"));
@@ -42,7 +43,9 @@ public class ClusterLinkBootstrapLoader implements BootstrapLoader {
 	}
 
 	@Override
-	public void load(String portalCacheManagerName, String portalCacheName) {
+	public void loadPortalCache(
+		String portalCacheManagerName, String portalCacheName) {
+
 		if (ClusterLinkBootstrapLoaderHelperUtil.isSkipped()) {
 			return;
 		}
@@ -78,7 +81,7 @@ public class ClusterLinkBootstrapLoader implements BootstrapLoader {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClusterLinkBootstrapLoader.class);
+		ClusterLinkPortalCacheBootstrapLoader.class);
 
 	private final boolean _bootstrapAsynchronously;
 

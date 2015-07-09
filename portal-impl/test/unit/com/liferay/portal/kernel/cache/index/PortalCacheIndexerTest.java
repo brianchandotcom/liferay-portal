@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.cache.index;
 
 import com.liferay.portal.cache.test.TestPortalCache;
-import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.concurrent.test.MappedMethodCallableInvocationHandler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -50,7 +50,7 @@ public class PortalCacheIndexerTest {
 			_indexEncoder, _portalCache);
 
 		_cacheListener = ReflectionTestUtil.getFieldValue(
-			_portalCache, "aggregatedCacheListener");
+			_portalCache, "aggregatedPortalCacheListener");
 
 		_mappedMethodCallableInvocationHandler =
 			new MappedMethodCallableInvocationHandler(
@@ -129,7 +129,7 @@ public class PortalCacheIndexerTest {
 	public void testDispose() {
 		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
 
-		_portalCache.unregisterCacheListeners();
+		_portalCache.unregisterPortalCacheListeners();
 
 		Set<TestKey> testKeys = _portalCacheIndexer.getKeys(
 			_indexEncoder.encode(_INDEX_1_KEY_1));
@@ -323,7 +323,7 @@ public class PortalCacheIndexerTest {
 	private static final IndexEncoder<Long, TestKey> _indexEncoder =
 		new TestKeyIndexEncoder();
 
-	private CacheListener<TestKey, String> _cacheListener;
+	private PortalCacheListener<TestKey, String> _cacheListener;
 	private MappedMethodCallableInvocationHandler
 		_mappedMethodCallableInvocationHandler;
 	private PortalCache<TestKey, String> _portalCache;

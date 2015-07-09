@@ -31,13 +31,13 @@ public class DummyPortalCacheManager<K extends Serializable, V>
 	extends AbstractPortalCacheManager<K, V> {
 
 	public DummyPortalCacheManager(String portalCacheManagerName) {
-		setName(portalCacheManagerName);
+		setPortalCacheManagerName(portalCacheManagerName);
 
 		initialize();
 	}
 
 	@Override
-	public void reconfigureCaches(URL configurationURL) {
+	public void reconfigurePortalCaches(URL configurationURL) {
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class DummyPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemoveCache(String portalCacheName) {
+	protected void doRemovePortalCache(String portalCacheName) {
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class DummyPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected String getType() {
+	protected String getPortalCacheManagerType() {
 		return PortalCacheManagerTypes.TEST;
 	}
 

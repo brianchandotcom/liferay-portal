@@ -16,9 +16,9 @@ package com.liferay.portal.cache.ehcache.internal.event;
 
 import com.liferay.portal.cache.ehcache.internal.EhcacheUnwrapUtil;
 import com.liferay.portal.cache.ehcache.internal.SerializableObjectWrapper;
-import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 
 import java.io.Serializable;
 
@@ -28,10 +28,12 @@ import net.sf.ehcache.event.CacheEventListener;
 /**
  * @author Tina Tian
  */
-public class EhcacheCacheListenerAdapter<K extends Serializable, V>
-	implements CacheListener<K, V> {
+public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
+	implements PortalCacheListener<K, V> {
 
-	public EhcacheCacheListenerAdapter(CacheEventListener cacheEventListener) {
+	public EhcachePortalCacheListenerAdapter(
+		CacheEventListener cacheEventListener) {
+
 		this.cacheEventListener = cacheEventListener;
 	}
 

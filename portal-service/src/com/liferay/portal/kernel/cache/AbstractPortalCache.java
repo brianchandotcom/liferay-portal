@@ -85,17 +85,20 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void registerCacheListener(CacheListener<K, V> cacheListener) {
-		aggregatedCacheListener.addCacheListener(cacheListener);
+	public void registerPortalCacheListener(
+		PortalCacheListener<K, V> portalCacheListener) {
+
+		aggregatedPortalCacheListener.addPortalCacheListener(
+			portalCacheListener);
 	}
 
 	@Override
-	public void registerCacheListener(
-		CacheListener<K, V> cacheListener,
-		CacheListenerScope cacheListenerScope) {
+	public void registerPortalCacheListener(
+		PortalCacheListener<K, V> portalCacheListener,
+		PortalCacheListenerScope portalCacheListenerScope) {
 
-		aggregatedCacheListener.addCacheListener(
-			cacheListener, cacheListenerScope);
+		aggregatedPortalCacheListener.addPortalCacheListener(
+			portalCacheListener, portalCacheListenerScope);
 	}
 
 	@Override
@@ -169,13 +172,16 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
-		aggregatedCacheListener.removeCacheListener(cacheListener);
+	public void unregisterPortalCacheListener(
+		PortalCacheListener<K, V> portalCacheListener) {
+
+		aggregatedPortalCacheListener.removePortalCacheListener(
+			portalCacheListener);
 	}
 
 	@Override
-	public void unregisterCacheListeners() {
-		aggregatedCacheListener.clearAll();
+	public void unregisterPortalCacheListeners() {
+		aggregatedPortalCacheListener.clearAll();
 	}
 
 	protected abstract V doGet(K key);
@@ -193,8 +199,8 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	protected abstract boolean doReplace(
 		K key, V oldValue, V newValue, int timeToLive);
 
-	protected final AggregatedCacheListener<K, V> aggregatedCacheListener =
-		new AggregatedCacheListener<>();
+	protected final AggregatedPortalCacheListener<K, V>
+		aggregatedPortalCacheListener = new AggregatedPortalCacheListener<>();
 
 	private final PortalCacheManager<K, V> _portalCacheManager;
 

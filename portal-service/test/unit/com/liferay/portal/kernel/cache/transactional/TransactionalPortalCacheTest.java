@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.cache.transactional;
 
-import com.liferay.portal.cache.test.TestCacheListener;
-import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCache;
+import com.liferay.portal.cache.test.TestPortalCacheListener;
+import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -74,13 +74,13 @@ public class TransactionalPortalCacheTest {
 
 		_portalCache.put(_KEY_1, _VALUE_1);
 
-		_testCacheListener = new TestCacheListener<>();
+		_testCacheListener = new TestPortalCacheListener<>();
 
-		_portalCache.registerCacheListener(_testCacheListener);
+		_portalCache.registerPortalCacheListener(_testCacheListener);
 
-		_testCacheReplicator = new TestCacheReplicator<>();
+		_testCacheReplicator = new TestPortalCacheReplicator<>();
 
-		_portalCache.registerCacheListener(_testCacheReplicator);
+		_portalCache.registerPortalCacheListener(_testCacheReplicator);
 	}
 
 	@NewEnv(type = NewEnv.Type.NONE)
@@ -780,8 +780,8 @@ public class TransactionalPortalCacheTest {
 	private static final String _VALUE_2 = "VALUE_2";
 
 	private PortalCache<String, String> _portalCache;
-	private TestCacheListener<String, String> _testCacheListener;
-	private TestCacheReplicator<String, String> _testCacheReplicator;
+	private TestPortalCacheListener<String, String> _testCacheListener;
+	private TestPortalCacheReplicator<String, String> _testCacheReplicator;
 	private TransactionalPortalCache<String, String> _transactionalPortalCache;
 
 	private class TestProps implements Props {

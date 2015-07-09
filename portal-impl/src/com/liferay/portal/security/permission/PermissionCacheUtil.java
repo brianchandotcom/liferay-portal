@@ -232,14 +232,14 @@ public class PermissionCacheUtil {
 	}
 
 	private static final PortalCache<BagKey, PermissionCheckerBag>
-		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
+		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getPortalCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCacheIndexer<Long, BagKey, PermissionCheckerBag>
 		_permissionCheckerBagPortalCacheIndexer = new PortalCacheIndexer<>(
 			new BagKeyIndexEncoder(), _permissionCheckerBagPortalCache);
 	private static final PortalCache<PermissionKey, Boolean>
-		_permissionPortalCache = MultiVMPoolUtil.getCache(
+		_permissionPortalCache = MultiVMPoolUtil.getPortalCache(
 			PERMISSION_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCacheIndexer<Long, PermissionKey, Boolean>
@@ -250,7 +250,7 @@ public class PermissionCacheUtil {
 			new PermissionKeyNamePrimKeyIndexEncoder(), _permissionPortalCache);
 	private static final
 		PortalCache<ResourceBlockIdsBagKey, ResourceBlockIdsBag>
-			_resourceBlockIdsBagCache = MultiVMPoolUtil.getCache(
+			_resourceBlockIdsBagCache = MultiVMPoolUtil.getPortalCache(
 				RESOURCE_BLOCK_IDS_BAG_CACHE_NAME,
 				PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCacheIndexer
@@ -259,11 +259,11 @@ public class PermissionCacheUtil {
 				new ResourceBlockIdsBagKeyIndexEncoder(),
 				_resourceBlockIdsBagCache);
 	private static final PortalCache<Long, UserPermissionCheckerBag>
-		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
+		_userPermissionCheckerBagPortalCache = MultiVMPoolUtil.getPortalCache(
 			USER_PERMISSION_CHECKER_BAG_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCache<UserRoleKey, Boolean>
-		_userRolePortalCache = MultiVMPoolUtil.getCache(
+		_userRolePortalCache = MultiVMPoolUtil.getPortalCache(
 			USER_ROLE_CACHE_NAME,
 			PropsValues.PERMISSIONS_OBJECT_BLOCKING_CACHE);
 	private static final PortalCacheIndexer<Long, UserRoleKey, Boolean>

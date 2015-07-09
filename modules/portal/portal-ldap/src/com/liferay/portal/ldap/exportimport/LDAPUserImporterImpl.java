@@ -474,7 +474,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	@Reference
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache = (PortalCache<String, Long>)singleVMPool.getCache(
+		_portalCache = (PortalCache<String, Long>)singleVMPool.getPortalCache(
 			UserImporter.class.getName(), false);
 	}
 

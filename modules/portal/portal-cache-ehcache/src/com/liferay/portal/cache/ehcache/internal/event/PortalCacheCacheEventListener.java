@@ -16,9 +16,9 @@ package com.liferay.portal.cache.ehcache.internal.event;
 
 import com.liferay.portal.cache.ehcache.internal.SerializableEhcachePortalCache;
 import com.liferay.portal.cache.ehcache.internal.SerializableObjectWrapper;
-import com.liferay.portal.kernel.cache.AggregatedCacheListener;
-import com.liferay.portal.kernel.cache.CacheListener;
+import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -37,10 +37,10 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	implements CacheEventListener {
 
 	public PortalCacheCacheEventListener(
-		AggregatedCacheListener<K, V> aggregatedCacheListener,
+		AggregatedPortalCacheListener<K, V> aggregatedPortalCacheListener,
 		PortalCache<K, V> portalCache) {
 
-		_aggregatedCacheListener = aggregatedCacheListener;
+		_aggregatedPortalCacheListener = aggregatedPortalCacheListener;
 		_portalCache = portalCache;
 
 		boolean requireSerialization = false;
@@ -55,20 +55,20 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	@Override
 	public Object clone() {
 		return new PortalCacheCacheEventListener<>(
-			_aggregatedCacheListener, _portalCache);
+			_aggregatedPortalCacheListener, _portalCache);
 	}
 
 	@Override
 	public void dispose() {
-		if (_aggregatedCacheListener.isEmpty()) {
+		if (_aggregatedPortalCacheListener.isEmpty()) {
 			return;
 		}
 
-		_aggregatedCacheListener.dispose();
+		_aggregatedPortalCacheListener.dispose();
 	}
 
-	public CacheListener<K, V> getCacheListener() {
-		return _aggregatedCacheListener;
+	public PortalCacheListener<K, V> getCacheListener() {
+		return _aggregatedPortalCacheListener;
 	}
 
 	public PortalCache<K, V> getPortalCache() {
@@ -77,7 +77,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	@Override
 	public void notifyElementEvicted(Ehcache ehcache, Element element) {
-		if (_aggregatedCacheListener.isEmpty()) {
+		if (_aggregatedPortalCacheListener.isEmpty()) {
 			return;
 		}
 
@@ -85,7 +85,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
-		_aggregatedCacheListener.notifyEntryEvicted(
+		_aggregatedPortalCacheListener.notifyEntryEvicted(
 			_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
@@ -95,7 +95,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	@Override
 	public void notifyElementExpired(Ehcache ehcache, Element element) {
-		if (_aggregatedCacheListener.isEmpty()) {
+		if (_aggregatedPortalCacheListener.isEmpty()) {
 			return;
 		}
 
@@ -103,7 +103,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
-		_aggregatedCacheListener.notifyEntryExpired(
+		_aggregatedPortalCacheListener.notifyEntryExpired(
 			_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
@@ -115,7 +115,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void notifyElementPut(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		if (_aggregatedCacheListener.isEmpty()) {
+		if (_aggregatedPortalCacheListener.isEmpty()) {
 			return;
 		}
 
@@ -123,7 +123,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
-		_aggregatedCacheListener.notifyEntryPut(
+		_aggregatedPortalCacheListener.notifyEntryPut(
 			_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
@@ -135,7 +135,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void notifyElementRemoved(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		if (_aggregatedCacheListener.isEmpty()) {
+		if (_aggregatedPortalCacheListener.isEmpty()) {
 			return;
 		}
 
@@ -143,7 +143,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
-		_aggregatedCacheListener.notifyEntryRemoved(
+		_aggregatedPortalCacheListener.notifyEntryRemoved(
 			_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
@@ -155,7 +155,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void notifyElementUpdated(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		if (_aggregatedCacheListener.isEmpty()) {
+		if (_aggregatedPortalCacheListener.isEmpty()) {
 			return;
 		}
 
@@ -163,7 +163,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
-		_aggregatedCacheListener.notifyEntryUpdated(
+		_aggregatedPortalCacheListener.notifyEntryUpdated(
 			_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
@@ -173,11 +173,11 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	@Override
 	public void notifyRemoveAll(Ehcache ehcache) {
-		if (_aggregatedCacheListener.isEmpty()) {
+		if (_aggregatedPortalCacheListener.isEmpty()) {
 			return;
 		}
 
-		_aggregatedCacheListener.notifyRemoveAll(_portalCache);
+		_aggregatedPortalCacheListener.notifyRemoveAll(_portalCache);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Cleared " + ehcache.getName());
@@ -203,7 +203,8 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCacheCacheEventListener.class);
 
-	private final AggregatedCacheListener<K, V> _aggregatedCacheListener;
+	private final AggregatedPortalCacheListener<K, V>
+		_aggregatedPortalCacheListener;
 	private final PortalCache<K, V> _portalCache;
 	private final boolean _requireSerialization;
 

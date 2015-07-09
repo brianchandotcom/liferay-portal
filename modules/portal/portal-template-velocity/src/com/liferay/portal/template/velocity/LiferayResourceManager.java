@@ -59,7 +59,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		portalCacheName = portalCacheName.concat(StringPool.POUND).concat(
 			TemplateConstants.LANG_TYPE_VM);
 
-		_portalCache = SingleVMPoolUtil.getCache(portalCacheName);
+		_portalCache = SingleVMPoolUtil.getPortalCache(portalCacheName);
 	}
 
 	@Override

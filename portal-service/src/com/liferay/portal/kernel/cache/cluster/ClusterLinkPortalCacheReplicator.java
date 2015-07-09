@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.cache.cluster;
 
-import com.liferay.portal.kernel.cache.CacheListener;
-import com.liferay.portal.kernel.cache.CacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
@@ -28,26 +28,28 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public class ClusterLinkCacheReplicator
+public class ClusterLinkPortalCacheReplicator
 	<K extends Serializable, V extends Serializable>
-		implements CacheListener<K, V>, CacheReplicator {
+		implements PortalCacheListener<K, V>, PortalCacheReplicator {
 
-	public ClusterLinkCacheReplicator(Properties properties) {
+	public ClusterLinkPortalCacheReplicator(Properties properties) {
 		_replicatePuts = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_PUTS),
-			CacheReplicator.DEFAULT_REPLICATE_PUTS);
+			properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
+			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS);
 		_replicatePutsViaCopy = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_PUTS_VIA_COPY),
-			CacheReplicator.DEFAULT_REPLICATE_PUTS_VIA_COPY);
+			properties.getProperty(
+				PortalCacheReplicator.REPLICATE_PUTS_VIA_COPY),
+			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS_VIA_COPY);
 		_replicateRemovals = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_REMOVALS),
-			CacheReplicator.DEFAULT_REPLICATE_REMOVALS);
+			properties.getProperty(PortalCacheReplicator.REPLICATE_REMOVALS),
+			PortalCacheReplicator.DEFAULT_REPLICATE_REMOVALS);
 		_replicateUpdates = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_UPDATES),
-			CacheReplicator.DEFAULT_REPLICATE_UPDATES);
+			properties.getProperty(PortalCacheReplicator.REPLICATE_UPDATES),
+			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES);
 		_replicateUpdatesViaCopy = GetterUtil.getBoolean(
-			properties.getProperty(CacheReplicator.REPLICATE_UPDATES_VIA_COPY),
-			CacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
+			properties.getProperty(
+				PortalCacheReplicator.REPLICATE_UPDATES_VIA_COPY),
+			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
 	}
 
 	@Override
@@ -78,7 +80,8 @@ public class ClusterLinkCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getName(), portalCache.getName(), key,
+				portalCacheManager.getPortalCacheManagerName(),
+				portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.PUT);
 
 		if (_replicatePutsViaCopy) {
@@ -103,7 +106,8 @@ public class ClusterLinkCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getName(), portalCache.getName(), key,
+				portalCacheManager.getPortalCacheManagerName(),
+				portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.REMOVE);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
@@ -123,7 +127,8 @@ public class ClusterLinkCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getName(), portalCache.getName(), key,
+				portalCacheManager.getPortalCacheManagerName(),
+				portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.UPDATE);
 
 		if (_replicateUpdatesViaCopy) {
@@ -147,7 +152,8 @@ public class ClusterLinkCacheReplicator
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				portalCacheManager.getName(), portalCache.getName(), null,
+				portalCacheManager.getPortalCacheManagerName(),
+				portalCache.getPortalCacheName(), null,
 				PortalCacheClusterEventType.REMOVE_ALL);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);

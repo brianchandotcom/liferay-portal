@@ -39,7 +39,8 @@ public class TestPortalCacheManager<K extends Serializable, V>
 		TestPortalCacheManager<K, V> testPortalCacheManager =
 			new TestPortalCacheManager<>();
 
-		testPortalCacheManager.setName(portalCacheManagerName);
+		testPortalCacheManager.setPortalCacheManagerName(
+			portalCacheManagerName);
 
 		testPortalCacheManager.initialize();
 
@@ -47,7 +48,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void reconfigureCaches(URL configurationURL) {
+	public void reconfigurePortalCaches(URL configurationURL) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -70,7 +71,8 @@ public class TestPortalCacheManager<K extends Serializable, V>
 			_testPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedCacheManagerListener.notifyCacheAdded(portalCacheName);
+			aggregatedPortalCacheManagerListener.notifyPortalCacheAdded(
+				portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -96,17 +98,18 @@ public class TestPortalCacheManager<K extends Serializable, V>
 			testPortalCache.removeAll();
 		}
 
-		aggregatedCacheManagerListener.dispose();
+		aggregatedPortalCacheManagerListener.dispose();
 	}
 
 	@Override
-	protected void doRemoveCache(String portalCacheName) {
+	protected void doRemovePortalCache(String portalCacheName) {
 		TestPortalCache<K, V> testPortalCache = _testPortalCaches.remove(
 			portalCacheName);
 
 		testPortalCache.removeAll();
 
-		aggregatedCacheManagerListener.notifyCacheRemoved(portalCacheName);
+		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(
+			portalCacheName);
 	}
 
 	@Override
@@ -121,7 +124,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected String getType() {
+	protected String getPortalCacheManagerType() {
 		return PortalCacheManagerTypes.TEST;
 	}
 
@@ -129,7 +132,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	protected void initPortalCacheManager() {
 		_testPortalCaches = new ConcurrentHashMap<>();
 
-		aggregatedCacheManagerListener.init();
+		aggregatedPortalCacheManagerListener.init();
 	}
 
 	private ConcurrentMap<String, TestPortalCache<K, V>> _testPortalCaches;

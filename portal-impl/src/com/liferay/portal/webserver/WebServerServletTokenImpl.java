@@ -45,7 +45,7 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 						MultiVMPool.class);
 
 					_portalCache =
-						(PortalCache<Long, String>)multiVMPool.getCache(
+						(PortalCache<Long, String>)multiVMPool.getPortalCache(
 							_CACHE_NAME);
 				}
 

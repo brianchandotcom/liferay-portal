@@ -63,6 +63,6 @@ public class CalEventLocalUtil {
 	private static final String _CACHE_NAME = CalEventLocalUtil.class.getName();
 
 	private static final PortalCache<String, Serializable> _portalCache =
-		MultiVMPoolUtil.getCache(_CACHE_NAME);
+		MultiVMPoolUtil.getPortalCache(_CACHE_NAME);
 
 }

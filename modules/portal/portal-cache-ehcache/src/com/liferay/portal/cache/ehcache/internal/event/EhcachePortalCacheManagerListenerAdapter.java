@@ -14,18 +14,18 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
-import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCacheException;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 
 import net.sf.ehcache.event.CacheManagerEventListener;
 
 /**
  * @author Tina Tian
  */
-public class EhcacheCacheManagerListenerAdapter
-	implements CacheManagerListener {
+public class EhcachePortalCacheManagerListenerAdapter
+	implements PortalCacheManagerListener {
 
-	public EhcacheCacheManagerListenerAdapter(
+	public EhcachePortalCacheManagerListenerAdapter(
 		CacheManagerEventListener cacheManagerEventListener) {
 
 		_cacheManagerEventListener = cacheManagerEventListener;
@@ -42,12 +42,12 @@ public class EhcacheCacheManagerListenerAdapter
 	}
 
 	@Override
-	public void notifyCacheAdded(String portalCacheName) {
+	public void notifyPortalCacheAdded(String portalCacheName) {
 		_cacheManagerEventListener.notifyCacheAdded(portalCacheName);
 	}
 
 	@Override
-	public void notifyCacheRemoved(String portalCacheName) {
+	public void notifyPortalCacheRemoved(String portalCacheName) {
 		_cacheManagerEventListener.notifyCacheRemoved(portalCacheName);
 	}
 

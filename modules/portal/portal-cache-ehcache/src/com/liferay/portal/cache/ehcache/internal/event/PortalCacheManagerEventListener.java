@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
-import com.liferay.portal.kernel.cache.CacheManagerListener;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 
 import net.sf.ehcache.Status;
 import net.sf.ehcache.event.CacheManagerEventListener;
@@ -26,14 +26,14 @@ public class PortalCacheManagerEventListener
 	implements CacheManagerEventListener {
 
 	public PortalCacheManagerEventListener(
-		CacheManagerListener cacheManagerListener) {
+		PortalCacheManagerListener portalCacheManagerListener) {
 
-		_cacheManagerListener = cacheManagerListener;
+		_portalCacheManagerListener = portalCacheManagerListener;
 	}
 
 	@Override
 	public void dispose() {
-		_cacheManagerListener.dispose();
+		_portalCacheManagerListener.dispose();
 	}
 
 	@Override
@@ -49,12 +49,12 @@ public class PortalCacheManagerEventListener
 		PortalCacheManagerEventListener portalCacheManagerEventListener =
 			(PortalCacheManagerEventListener)obj;
 
-		return _cacheManagerListener.equals(
-			portalCacheManagerEventListener._cacheManagerListener);
+		return _portalCacheManagerListener.equals(
+			portalCacheManagerEventListener._portalCacheManagerListener);
 	}
 
-	public CacheManagerListener getCacheManagerListener() {
-		return _cacheManagerListener;
+	public PortalCacheManagerListener getCacheManagerListener() {
+		return _portalCacheManagerListener;
 	}
 
 	@Override
@@ -64,24 +64,24 @@ public class PortalCacheManagerEventListener
 
 	@Override
 	public int hashCode() {
-		return _cacheManagerListener.hashCode();
+		return _portalCacheManagerListener.hashCode();
 	}
 
 	@Override
 	public void init() {
-		_cacheManagerListener.init();
+		_portalCacheManagerListener.init();
 	}
 
 	@Override
 	public void notifyCacheAdded(String portalCacheName) {
-		_cacheManagerListener.notifyCacheAdded(portalCacheName);
+		_portalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 	}
 
 	@Override
 	public void notifyCacheRemoved(String portalCacheName) {
-		_cacheManagerListener.notifyCacheRemoved(portalCacheName);
+		_portalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
-	private final CacheManagerListener _cacheManagerListener;
+	private final PortalCacheManagerListener _portalCacheManagerListener;
 
 }

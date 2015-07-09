@@ -15,10 +15,10 @@
 package com.liferay.portal.template;
 
 import com.liferay.portal.deploy.sandbox.SandboxHandler;
-import com.liferay.portal.kernel.cache.CacheListener;
-import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -89,23 +89,23 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			StringPool.PERIOD).concat(name);
 
 		_multiVMPortalCache =
-			(PortalCache<String, TemplateResource>)_multiVMPool.getCache(
+			(PortalCache<String, TemplateResource>)_multiVMPool.getPortalCache(
 				portalCacheName);
 
-		CacheListener<String, TemplateResource> cacheListener =
-			new TemplateResourceCacheListener(name);
+		PortalCacheListener<String, TemplateResource> cacheListener =
+			new TemplateResourcePortalCacheListener(name);
 
-		_multiVMPortalCache.registerCacheListener(
-			cacheListener, CacheListenerScope.ALL);
+		_multiVMPortalCache.registerPortalCacheListener(
+			cacheListener, PortalCacheListenerScope.ALL);
 
 		_singleVMPool = singleVMPool;
 
 		_singleVMPortalCache =
-			(PortalCache<String, TemplateResource>)_singleVMPool.getCache(
+			(PortalCache<String, TemplateResource>)_singleVMPool.getPortalCache(
 				portalCacheName);
 
-		_singleVMPortalCache.registerCacheListener(
-			cacheListener, CacheListenerScope.ALL);
+		_singleVMPortalCache.registerPortalCacheListener(
+			cacheListener, PortalCacheListenerScope.ALL);
 	}
 
 	@Override
@@ -122,8 +122,10 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void destroy() {
-		_multiVMPool.removeCache(_multiVMPortalCache.getName());
-		_singleVMPool.removeCache(_singleVMPortalCache.getName());
+		_multiVMPool.removePortalCache(
+			_multiVMPortalCache.getPortalCacheName());
+		_singleVMPool.removePortalCache(
+			_singleVMPortalCache.getPortalCacheName());
 
 		_templateResourceParsers.clear();
 	}

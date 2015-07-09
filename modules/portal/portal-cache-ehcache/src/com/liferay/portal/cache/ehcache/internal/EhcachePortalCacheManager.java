@@ -67,7 +67,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void reconfigureCaches(URL configurationURL) {
+	public void reconfigurePortalCaches(URL configurationURL) {
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
 				EhcacheConfigurationHelperUtil.getConfigurationObjectValuePair(
@@ -165,7 +165,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemoveCache(String portalCacheName) {
+	protected void doRemovePortalCache(String portalCacheName) {
 		_cacheManager.removeCache(portalCacheName);
 	}
 
@@ -177,22 +177,22 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected String getType() {
+	protected String getPortalCacheManagerType() {
 		return PortalCacheManagerTypes.EHCACHE;
 	}
 
 	@Override
 	protected void initPortalCacheManager() {
-		setBlockingCacheAllowed(
+		setBlockingPortalCacheAllowed(
 			GetterUtil.getBoolean(
 				props.get(PropsKeys.EHCACHE_BLOCKING_CACHE_ALLOWED)));
-		setBootstrapCacheLoaderEnabled(
+		setPortalCacheBootstrapLoaderEnabled(
 			GetterUtil.getBoolean(
 				props.get(PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED)));
-		setTransactionalCacheEnabled(
+		setTransactionalPortalCacheEnabled(
 			GetterUtil.getBoolean(
 				props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED)));
-		setTransactionalCacheNames(
+		setTransactionalPortalCacheNames(
 			GetterUtil.getStringValues(
 				props.getArray(PropsKeys.TRANSACTIONAL_CACHE_NAMES)));
 
@@ -221,7 +221,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_portalCacheManagerConfiguration =
 			configurationObjectValuePair.getValue();
 
-		_cacheManager.setName(getName());
+		_cacheManager.setName(getPortalCacheManagerName());
 
 		if (_stopCacheManagerTimer) {
 			FailSafeTimer failSafeTimer = _cacheManager.getTimer();
@@ -244,7 +244,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		cacheManagerEventListenerRegistry.registerListener(
 			new PortalCacheManagerEventListener(
-				aggregatedCacheManagerListener));
+				aggregatedPortalCacheManagerListener));
 
 		if (GetterUtil.getBoolean(
 				props.get(
@@ -324,11 +324,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		try {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Reconfiguring caches in cache manager " + getName() +
-						" using " + url);
+					"Reconfiguring caches in cache manager " +
+						getPortalCacheManagerName() + " using " + url);
 			}
 
-			reconfigureCaches(url);
+			reconfigurePortalCaches(url);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

@@ -32,6 +32,7 @@ import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.PortalIncludeUtil;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -280,7 +281,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			((singleIcon == null) || _showWhenSingleIcon)) {
 
 			if (!FileAvailabilityUtil.isAvailable(
-					pageContext.getServletContext(), getStartPage())) {
+					(ServletContext)request.getAttribute(WebKeys.CTX),
+					getStartPage())) {
 
 				if (_showExpanded) {
 					jspWriter.write("<ul class=\"lfr-menu-expanded ");
@@ -417,7 +419,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			((singleIcon == null) || _showWhenSingleIcon)) {
 
 			if (!FileAvailabilityUtil.isAvailable(
-					pageContext.getServletContext(), getEndPage())) {
+					(ServletContext)request.getAttribute(WebKeys.CTX),
+					getEndPage())) {
 
 				jspWriter.write("</ul>");
 

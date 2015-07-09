@@ -17,7 +17,7 @@
 
 <%
 String cssClass = (String)request.getAttribute("liferay-ui:icon-menu:css-class");
-String direction = (String)request.getAttribute("liferay-ui:icon:direction");
+String direction = (String)request.getAttribute("liferay-ui:icon-menu:direction");
 String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
 %>
 

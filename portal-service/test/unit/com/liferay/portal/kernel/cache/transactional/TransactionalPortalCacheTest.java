@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.cache.transactional;
 
 import com.liferay.portal.cache.test.TestPortalCacheListener;
-import com.liferay.portal.cache.test.TestCacheReplicator;
+import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -78,7 +78,7 @@ public class TransactionalPortalCacheTest {
 
 		_portalCache.registerCacheListener(_testCacheListener);
 
-		_testCacheReplicator = new TestCacheReplicator<>();
+		_testCacheReplicator = new TestPortalCacheReplicator<>();
 
 		_portalCache.registerCacheListener(_testCacheReplicator);
 	}
@@ -781,7 +781,7 @@ public class TransactionalPortalCacheTest {
 
 	private PortalCache<String, String> _portalCache;
 	private TestPortalCacheListener<String, String> _testCacheListener;
-	private TestCacheReplicator<String, String> _testCacheReplicator;
+	private TestPortalCacheReplicator<String, String> _testCacheReplicator;
 	private TransactionalPortalCache<String, String> _transactionalPortalCache;
 
 	private class TestProps implements Props {

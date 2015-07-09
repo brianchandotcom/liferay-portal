@@ -15,7 +15,7 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.test.TestPortalCacheListener;
-import com.liferay.portal.cache.test.TestCacheReplicator;
+import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCacheManager;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -85,7 +85,7 @@ public class EhcachePortalCacheTest {
 
 		_ehcachePortalCache.registerCacheListener(_defaultCacheListener);
 
-		_defaultCacheReplicator = new TestCacheReplicator<>();
+		_defaultCacheReplicator = new TestPortalCacheReplicator<>();
 
 		_ehcachePortalCache.registerCacheListener(_defaultCacheReplicator);
 	}
@@ -618,7 +618,7 @@ public class EhcachePortalCacheTest {
 	private static CacheManager _cacheManager;
 
 	private TestPortalCacheListener<String, String> _defaultCacheListener;
-	private TestCacheReplicator<String, String> _defaultCacheReplicator;
+	private TestPortalCacheReplicator<String, String> _defaultCacheReplicator;
 	private EhcachePortalCache<String, String> _ehcachePortalCache;
 
 }

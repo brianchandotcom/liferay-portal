@@ -21,6 +21,6 @@ import java.io.Serializable;
 /**
  * @author Tina Tian
  */
-public class TestCacheReplicator<K extends Serializable, V>
+public class TestPortalCacheReplicator<K extends Serializable, V>
 	extends TestPortalCacheListener<K, V> implements PortalCacheReplicator {
 }

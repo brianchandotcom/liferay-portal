@@ -30,11 +30,11 @@ import net.sf.ehcache.event.CacheEventListener;
 /**
  * @author Tina Tian
  */
-public class EhcacheCacheReplicatorAdapter
+public class EhcachePortalCacheReplicatorAdapter
 	<K extends Serializable, V extends Serializable>
 		extends EhcachePortalCacheListenerAdapter<K, V> implements PortalCacheReplicator {
 
-	public EhcacheCacheReplicatorAdapter(
+	public EhcachePortalCacheReplicatorAdapter(
 		CacheEventListener cacheEventListener) {
 
 		super(cacheEventListener);
@@ -79,8 +79,7 @@ public class EhcacheCacheReplicatorAdapter
 
 	private static final long _WAIT_TIME = 1000;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		EhcacheCacheReplicatorAdapter.class);
+	private static final Log _log = LogFactoryUtil.getLog(EhcachePortalCacheReplicatorAdapter.class);
 
 	static {
 		try {

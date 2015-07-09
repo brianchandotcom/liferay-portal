@@ -152,7 +152,7 @@ public class PythonExecutor extends BaseScriptingExecutor {
 
 	@Reference(unbind = "-")
 	protected void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache = (PortalCache<String, PyCode>)singleVMPool.getCache(
+		_portalCache = (PortalCache<String, PyCode>)singleVMPool.getPortalCache(
 			_CACHE_NAME);
 	}
 

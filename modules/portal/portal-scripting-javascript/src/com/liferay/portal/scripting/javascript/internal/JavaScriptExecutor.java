@@ -191,7 +191,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 	@Reference(unbind = "-")
 	protected void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache = (PortalCache<String, Script>)singleVMPool.getCache(
+		_portalCache = (PortalCache<String, Script>)singleVMPool.getPortalCache(
 			_CACHE_NAME);
 	}
 

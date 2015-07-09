@@ -426,7 +426,7 @@ public class VelocityTemplateTest {
 			SingleVMPool singleVMPool = Mockito.mock(SingleVMPool.class);
 
 			Mockito.when(
-				singleVMPool.getCache(Mockito.anyString())
+				singleVMPool.getPortalCache(Mockito.anyString())
 			).thenAnswer(
 				new Answer
 					<PortalCache

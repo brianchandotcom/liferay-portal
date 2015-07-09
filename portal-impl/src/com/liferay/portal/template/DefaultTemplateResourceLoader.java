@@ -100,7 +100,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		_singleVMPool = singleVMPool;
 
 		_singleVMPortalCache =
-			(PortalCache<String, TemplateResource>)_singleVMPool.getCache(
+			(PortalCache<String, TemplateResource>)_singleVMPool.getPortalCache(
 				portalCacheName);
 
 		_singleVMPortalCache.registerPortalCacheListener(cacheListener, PortalCacheListenerScope.ALL);
@@ -121,7 +121,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	@Override
 	public void destroy() {
 		_multiVMPool.removePortalCache(_multiVMPortalCache.getPortalCacheName());
-		_singleVMPool.removeCache(_singleVMPortalCache.getPortalCacheName());
+		_singleVMPool.removePortalCache(_singleVMPortalCache.getPortalCacheName());
 
 		_templateResourceParsers.clear();
 	}

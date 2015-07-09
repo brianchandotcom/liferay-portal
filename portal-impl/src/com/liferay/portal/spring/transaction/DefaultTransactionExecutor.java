@@ -66,15 +66,13 @@ public class DefaultTransactionExecutor
 			throw e;
 		}
 		finally {
-			if (transactionStatus.isNewTransaction()) {
-				if (throwable != null) {
-					fireTransactionRollbackedEvent(
-						transactionAttribute, transactionStatus, throwable);
-				}
-				else {
-					fireTransactionCommittedEvent(
-						transactionAttribute, transactionStatus);
-				}
+			if (throwable != null) {
+				fireTransactionRollbackedEvent(
+					transactionAttribute, transactionStatus, throwable);
+			}
+			else {
+				fireTransactionCommittedEvent(
+					transactionAttribute, transactionStatus);
 			}
 		}
 	}
@@ -139,10 +137,8 @@ public class DefaultTransactionExecutor
 				throw e;
 			}
 			finally {
-				if (transactionStatus.isNewTransaction()) {
-					fireTransactionRollbackedEvent(
-						transactionAttribute, transactionStatus, throwable);
-				}
+				fireTransactionRollbackedEvent(
+					transactionAttribute, transactionStatus, throwable);
 			}
 		}
 		else {
@@ -162,10 +158,7 @@ public class DefaultTransactionExecutor
 		TransactionStatus transactionStatus =
 			platformTransactionManager.getTransaction(transactionAttribute);
 
-		if (transactionStatus.isNewTransaction()) {
-			fireTransactionCreatedEvent(
-				transactionAttribute, transactionStatus);
-		}
+		fireTransactionCreatedEvent(transactionAttribute, transactionStatus);
 
 		return transactionStatus;
 	}

@@ -28,7 +28,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * @author Shuyang Zhou
  */
 public class CounterTransactionExecutor
-	extends BaseTransactionExecutor implements TransactionHandler {
+	implements TransactionExecutor, TransactionHandler {
 
 	@Override
 	public void commit(

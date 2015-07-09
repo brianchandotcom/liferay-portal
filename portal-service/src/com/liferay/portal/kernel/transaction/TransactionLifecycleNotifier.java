@@ -29,10 +29,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class TransactionLifecycleNotifier {
 
 	public static final TransactionLifecycleListener
-		TRANSACTION_LIFECYCLE_LISTENER = new TransactionLifecycleListener() {
+		TRANSACTION_LIFECYCLE_LISTENER = new NewTransactionLifecycleListener() {
 
 			@Override
-			public void created(
+			protected void doCreated(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
@@ -41,7 +41,7 @@ public class TransactionLifecycleNotifier {
 			}
 
 			@Override
-			public void committed(
+			protected void doCommitted(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
@@ -50,7 +50,7 @@ public class TransactionLifecycleNotifier {
 			}
 
 			@Override
-			public void rollbacked(
+			protected void doRollbacked(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus, Throwable throwable) {
 

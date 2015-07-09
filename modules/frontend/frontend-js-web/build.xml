@@ -196,6 +196,7 @@
 		<sequential>
 			<download-node-module
 				node.module.name="lfr-amd-loader"
+				node.module.version="${nodejs.modules.version[lfr-amd-loader]}"
 			/>
 
 			<copy

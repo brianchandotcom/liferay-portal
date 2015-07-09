@@ -4918,6 +4918,11 @@ module.framework.properties.osgi.console=11312</echo>
 		<antcall target="record-test-class-file-names" inheritAll="false" />
 
 		<antcall target="record-test-plugin-names" inheritAll="false" />
+
+		<echo if:set="env.JENKINS_HOME">
+ANT_OPTS=${env.ANT_OPTS}</echo>
+
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 	</target>
 
 	<target name="prepare-test-build-tomcat-dependents">
@@ -6407,11 +6412,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="test-class-group">
-		<echo if:set="env.JENKINS_HOME">
-ANT_OPTS=${env.ANT_OPTS}</echo>
-
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
-
 		<ant dir="portal-service" target="test-class-group" inheritAll="false" />
 
 		<ant dir="portal-impl" target="test-class-group" inheritAll="false">

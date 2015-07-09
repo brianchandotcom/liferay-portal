@@ -564,7 +564,7 @@ public class SyncFileService {
 		String sourceFilePathName, String targetFilePathName) {
 
 		try {
-			_syncFilePersistence.renameByFilePathName(
+			_syncFilePersistence.renameByParentFilePathName(
 				sourceFilePathName, targetFilePathName);
 		}
 		catch (SQLException sqle) {
@@ -588,8 +588,15 @@ public class SyncFileService {
 		SyncFile parentSyncFile, int state, int uiEvent) {
 
 		try {
-			_syncFilePersistence.updateByFilePathName(
-				parentSyncFile.getFilePathName(), state, uiEvent);
+			parentSyncFile.setState(state);
+			parentSyncFile.setUiEvent(uiEvent);
+
+			update(parentSyncFile);
+
+			if (parentSyncFile.isFolder()) {
+				_syncFilePersistence.updateByParentFilePathName(
+					parentSyncFile.getFilePathName(), state, uiEvent);
+			}
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {

@@ -221,8 +221,9 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return where.query();
 	}
 
-	public void renameByFilePathName(
-			final String sourceFilePathName, final String targetFilePathName)
+	public void renameByParentFilePathName(
+			final String sourceParentFilePathName,
+			final String targetParentFilePathName)
 		throws SQLException {
 
 		Callable<Object> callable = new Callable<Object>() {
@@ -232,15 +233,15 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 				FileSystem fileSystem = FileSystems.getDefault();
 
 				List<SyncFile> syncFiles = findByParentFilePathName(
-					sourceFilePathName);
+					sourceParentFilePathName);
 
 				for (SyncFile syncFile : syncFiles) {
 					String filePathName = syncFile.getFilePathName();
 
 					filePathName = StringUtils.replaceOnce(
 						filePathName,
-						sourceFilePathName + fileSystem.getSeparator(),
-						targetFilePathName + fileSystem.getSeparator());
+						sourceParentFilePathName + fileSystem.getSeparator(),
+						targetParentFilePathName + fileSystem.getSeparator());
 
 					syncFile.setFilePathName(filePathName);
 
@@ -255,8 +256,8 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		callBatchTasks(callable);
 	}
 
-	public void updateByFilePathName(
-			String filePathName, int state, int uiEvent)
+	public void updateByParentFilePathName(
+			String parentFilePathName, int state, int uiEvent)
 		throws SQLException {
 
 		UpdateBuilder<SyncFile, Long> updateBuilder = updateBuilder();
@@ -266,9 +267,12 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 
 		Where<SyncFile, Long> where = updateBuilder.where();
 
-		filePathName = StringUtils.replace(filePathName, "\\", "\\\\");
+		FileSystem fileSystem = FileSystems.getDefault();
 
-		where.like("filePathName", new SelectArg(filePathName + "%"));
+		parentFilePathName = StringUtils.replace(
+			parentFilePathName + fileSystem.getSeparator(), "\\", "\\\\");
+
+		where.like("filePathName", new SelectArg(parentFilePathName + "%"));
 
 		updateBuilder.update();
 	}

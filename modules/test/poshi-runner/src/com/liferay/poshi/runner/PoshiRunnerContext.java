@@ -291,28 +291,6 @@ public class PoshiRunnerContext {
 		return relatedClassCommandNames;
 	}
 
-	private static void _initProductClassCommandNamesMap() {
-		for (String productName : _productNames) {
-			for (String componentName : _componentNames) {
-				Set<String> classCommandNames = _componentClassCommandNames.get(
-					componentName);
-
-				if (Validator.isNotNull(classCommandNames) &&
-					!classCommandNames.isEmpty() &&
-					componentName.startsWith(productName)) {
-
-					if (_productClassCommandNames.containsKey(productName)) {
-						classCommandNames.addAll(
-							_productClassCommandNames.get(productName));
-					}
-
-					_productClassCommandNames.put(
-						productName, classCommandNames);
-				}
-			}
-		}
-	}
-
 	private static void _initComponentCommandNamesMap() {
 		for (String testCaseClassName : _testCaseClassNames) {
 			Element rootElement = getTestCaseRootElement(testCaseClassName);
@@ -381,6 +359,28 @@ public class PoshiRunnerContext {
 				else {
 					_addComponentClassCommandNames(
 						componentName, classCommandName);
+				}
+			}
+		}
+	}
+
+	private static void _initProductClassCommandNamesMap() {
+		for (String productName : _productNames) {
+			for (String componentName : _componentNames) {
+				Set<String> classCommandNames = _componentClassCommandNames.get(
+					componentName);
+
+				if (Validator.isNotNull(classCommandNames) &&
+					!classCommandNames.isEmpty() &&
+					componentName.startsWith(productName)) {
+
+					if (_productClassCommandNames.containsKey(productName)) {
+						classCommandNames.addAll(
+							_productClassCommandNames.get(productName));
+					}
+
+					_productClassCommandNames.put(
+						productName, classCommandNames);
 				}
 			}
 		}
@@ -787,6 +787,8 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final Map<String, String> _commandSummaries =
 		new HashMap<>();
+	private static final Map<String, Set<String>> _componentClassCommandNames =
+		new TreeMap<>();
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final Map<String, String> _filePaths = new HashMap<>();
 	private static String[] _filePathsArray;
@@ -801,8 +803,6 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final List<String> _testCaseAvailablePropertyNames =
 		new ArrayList<>();
-	private static final Map<String, Set<String>> _componentClassCommandNames =
-		new TreeMap<>();
 	private static final List<String> _testCaseClassNames = new ArrayList<>();
 	private static final List<String> _testCaseRequiredPropertyNames =
 		new ArrayList<>();

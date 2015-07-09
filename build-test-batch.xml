@@ -7,8 +7,72 @@
 		<isset property="env.AXIS_VARIABLE" />
 	</condition>
 
+	<macrodef name="check-deprecated-method">
+		<sequential>
+			<if>
+				<and>
+					<available file="javac.output.txt" />
+					<isset property="env.TOP_LEVEL_SHARED_DIR" />
+				</and>
+				<then>
+					<copy file="javac.output.txt" tofile="${env.TOP_LEVEL_SHARED_DIR}/javac.output.txt" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="merge-test-results">
+		<sequential>
+			<antcall target="merge-test-results" />
+
+			<if>
+				<isset property="env.WORKSPACE" />
+				<then>
+					<mkdir dir="${env.WORKSPACE}/test-results" />
+
+					<copy file="test-results/TESTS-TestSuites.xml" tofile="${env.WORKSPACE}/test-results/TESTS-TestSuites.xml" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-test-build">
+		<sequential>
+			<antcall target="prepare-test-build" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-build-selenium">
+		<sequential>
+			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-source-formatter">
+		<sequential>
+			<antcall target="test-package" inheritAll="false">
+				<param name="test.package" value="com.liferay.source.formatter" />
+			</antcall>
+		</sequential>
+	</macrodef>
+
 	<target name="integration-mysql">
-		<echo>${jenkins.axis.variable}</echo>
+		<if>
+			<not>
+				<equals arg1="${jenkins.axis.variable}" arg2="default" />
+			</not>
+			<then>
+				<prepare-test-build />
+
+				<antcall target="test-class-group">
+					<param name="test.class.group.index" value="${jenkins.axis.variable}" />
+				</antcall>
+
+				<merge-test-results />
+
+				<check-deprecated-method />
+			</then>
+		</if>
 	</target>
 
 	<target name="integration-oracle">
@@ -20,7 +84,35 @@
 	</target>
 
 	<target name="plugins">
-		<echo>${jenkins.axis.variable}</echo>
+		<if>
+			<not>
+				<equals arg1="${jenkins.axis.variable}" arg2="default" />
+			</not>
+			<then>
+				<prepare-test-build />
+
+				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
+					<property name="test.plugin.group.index" value="${jenkins.axis.variable}" />
+				</ant>
+			</then>
+		</if>
+	</target>
+
+	<target name="portal-web">
+		<if>
+			<not>
+				<equals arg1="${jenkins.axis.variable}" arg2="default" />
+			</not>
+			<then>
+				<prepare-test-build />
+
+				<run-build-selenium />
+
+				<run-source-formatter />
+
+				<merge-test-results />
+			</then>
+		</if>
 	</target>
 
 	<target name="unit">

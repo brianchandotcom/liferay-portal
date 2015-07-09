@@ -87,7 +87,7 @@ public class RubySassCompilerTest {
 
 		Class<?> clazz = getClass();
 
-		URL url = clazz.getResource("dependencies/sourceMaps");
+		URL url = clazz.getResource("dependencies/sourcemaps");
 
 		File sourceMapsDir = new File(url.toURI());
 
@@ -134,7 +134,7 @@ public class RubySassCompilerTest {
 
 		Class<?> clazz = getClass();
 
-		URL url = clazz.getResource("dependencies/sourceMaps");
+		URL url = clazz.getResource("dependencies/sourcemaps");
 
 		File sourceMapsDir = new File(url.toURI());
 

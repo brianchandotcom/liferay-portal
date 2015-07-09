@@ -7,16 +7,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portlet.documentlibrary.action.EditEntryMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditEntryMVCActionCommand" />
-	<bean id="com.liferay.portlet.documentlibrary.action.EditFileShortcutMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileShortcutMVCActionCommand" />
-	<bean id="com.liferay.portlet.documentlibrary.action.EditFileShortcutMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileShortcutMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.CompareVersionsMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.CompareVersionsMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditEntryMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditEntryMVCActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeMVCActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileShortcutMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileShortcutMVCActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileShortcutMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileShortcutMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderMVCActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderMVCResourceCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderMVCResourceCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryMVCActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" class="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" />
@@ -27,6 +28,7 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectFolderMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFolderMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.UploadMultipleFileEntriesMVCResourceCommand" class="com.liferay.portlet.documentlibrary.action.UploadMultipleFileEntriesMVCResourceCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.ViewFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewFileEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.ViewMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrarydisplay.action.ViewMVCRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.ViewMVCRenderCommand" />

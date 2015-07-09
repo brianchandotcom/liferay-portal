@@ -30,11 +30,25 @@ public class TeamServiceWrapper implements TeamService,
 		_teamService = teamService;
 	}
 
+	/**
+	* @throws PortalException
+	* @deprecated As of 7.0.0, replaced by {@link
+	#addTeam(long,long,String,String,ServiceContext)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Team addTeam(long groupId,
 		java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamService.addTeam(groupId, name, description);
+	}
+
+	@Override
+	public com.liferay.portal.model.Team addTeam(long groupId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamService.addTeam(groupId, name, description, serviceContext);
 	}
 
 	@Override

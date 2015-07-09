@@ -64,12 +64,35 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class TeamServiceSoap {
+	/**
+	* @throws PortalException
+	* @deprecated As of 7.0.0, replaced by {@link
+	#addTeam(long,long,String,String,ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.portal.model.TeamSoap addTeam(long groupId,
 		java.lang.String name, java.lang.String description)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Team returnValue = TeamServiceUtil.addTeam(groupId,
 					name, description);
+
+			return com.liferay.portal.model.TeamSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.model.TeamSoap addTeam(long groupId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.model.Team returnValue = TeamServiceUtil.addTeam(groupId,
+					name, description, serviceContext);
 
 			return com.liferay.portal.model.TeamSoap.toSoapModel(returnValue);
 		}

@@ -905,6 +905,7 @@
 	</model>
 	<model name="com.liferay.portal.model.Team">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="teamId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

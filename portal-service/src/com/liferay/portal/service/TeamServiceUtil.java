@@ -40,10 +40,24 @@ public class TeamServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.TeamServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* @throws PortalException
+	* @deprecated As of 7.0.0, replaced by {@link
+	#addTeam(long,long,String,String,ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.portal.model.Team addTeam(long groupId,
 		java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addTeam(groupId, name, description);
+	}
+
+	public static com.liferay.portal.model.Team addTeam(long groupId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addTeam(groupId, name, description, serviceContext);
 	}
 
 	public static void deleteTeam(long teamId)

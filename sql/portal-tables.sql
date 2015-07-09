@@ -1934,6 +1934,7 @@ create table SystemEvent (
 
 create table Team (
 	mvccVersion LONG default 0,
+	uuid_ VARCHAR(75) null,
 	teamId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

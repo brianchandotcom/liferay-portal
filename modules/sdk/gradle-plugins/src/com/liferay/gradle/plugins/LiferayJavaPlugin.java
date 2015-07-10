@@ -75,6 +75,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
+import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ModuleVersionSelector;
@@ -82,6 +83,7 @@ import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvedArtifact;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
+import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
@@ -167,6 +169,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTasks(project);
 
 		applyConfigScripts(project);
+
+		configureArtifacts(project);
 
 		configureTaskBuildService(project);
 		configureTaskBuildWSDD(project);
@@ -817,6 +821,20 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
+	}
+
+	protected void configureArtifacts(Project project) {
+		ArtifactHandler artifactHandler = project.getArtifacts();
+
+		Task jarSourcesTask = GradleUtil.getTask(
+			project, JAR_SOURCES_TASK_NAME);
+
+		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
+
+		Task zipJavadocTask = GradleUtil.getTask(
+			project, ZIP_JAVADOC_TASK_NAME);
+
+		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, zipJavadocTask);
 	}
 
 	protected void configureConfigurations(final Project project) {

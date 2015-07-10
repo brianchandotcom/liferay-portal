@@ -95,19 +95,28 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				Folder folder = null;
 				boolean searchEverywhere = true;
 
-				if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-					searchEverywhere = false;
+				String searchInfoMessage = StringPool.BLANK;
 
-					folder = DLAppServiceUtil.getFolder(folderId);
+				if (!showBreadcrumb) {
+					searchInfoMessage = LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(tabName)}, false);
 				}
 				else {
 					long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
 
-					folderId = searchFolderId;
+					if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+						searchEverywhere = false;
+
+						folder = DLAppServiceUtil.getFolder(folderId);
+					}
+					else {
+						folderId = searchFolderId;
+					}
+
+					searchInfoMessage = !searchEverywhere ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false);
 				}
 				%>
 
-				<%= !searchEverywhere ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
+				<%= searchInfoMessage %>
 			</span>
 
 			<span class="change-search-folder">
@@ -135,7 +144,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 	}
 	%>
 
-	<c:if test="<%= (draggableFileReturnType != null) && !showSearchInfo%>">
+	<c:if test="<%= (draggableFileReturnType != null) && !showSearchInfo %>">
 		<div class="drop-enabled drop-zone" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
 			<label class="btn btn-primary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 

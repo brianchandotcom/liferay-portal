@@ -20,8 +20,8 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 

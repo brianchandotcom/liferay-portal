@@ -77,7 +77,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 					},
 					width: 1024
 				},
-				title: '<liferay-ui:message key="javax.portlet.title.178" />'
+				title: '<liferay-ui:message key="javax.portlet.title.com_liferay_mobile_device_rules_web_portlet_MobileDeviceSiteAdminPortlet" />'
 			}
 		);
 

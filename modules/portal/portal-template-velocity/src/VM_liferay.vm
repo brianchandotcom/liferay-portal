@@ -2,6 +2,10 @@
 	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW)
 #end
 
+#macro (control_menu)
+	$theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", $portletProviderAction.VIEW)
+#end
+
 #macro (css $file_name)
 	#if ($file_name == $css_main_file)
 		<link class="lfr-css-file" href="$file_name" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />

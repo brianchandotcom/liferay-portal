@@ -2225,7 +2225,7 @@ closeTemplate()
 
 				<chmod
 					dir="${app.server.weblogic.instance.dir}"
-					includes="*.sh"
+					includes="**/*.sh"
 					perm="744"
 				/>
 			</else>

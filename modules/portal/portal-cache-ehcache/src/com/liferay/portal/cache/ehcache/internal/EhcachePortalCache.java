@@ -57,7 +57,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public String getPortalCacheName() {
+	public String getName() {
 		return ehcache.getName();
 	}
 

@@ -126,11 +126,11 @@ public class TransactionalPortalCacheTest {
 
 		_testCacheListener = new TestPortalCacheListener<>();
 
-		_portalCache.registerPortalCacheListener(_testCacheListener);
+		_portalCache.registerCacheListener(_testCacheListener);
 
 		_testCacheReplicator = new TestPortalCacheReplicator<>();
 
-		_portalCache.registerPortalCacheListener(_testCacheReplicator);
+		_portalCache.registerCacheListener(_testCacheReplicator);
 
 		ReflectionTestUtil.setFieldValue(
 			TransactionalPortalCacheHelper.class, "_transactionalCacheEnabled",

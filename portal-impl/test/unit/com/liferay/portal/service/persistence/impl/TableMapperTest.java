@@ -294,7 +294,7 @@ public class TableMapperTest {
 		Assert.assertTrue(leftToRightPortalCache instanceof TestPortalCache);
 		Assert.assertEquals(
 			TableMapper.class.getName() + "-" + _TABLE_NAME + "-LeftToRight",
-			leftToRightPortalCache.getPortalCacheName());
+			leftToRightPortalCache.getName());
 
 		Assert.assertSame(
 			_rightBasePersistence, _tableMapperImpl.rightBasePersistence);
@@ -307,7 +307,7 @@ public class TableMapperTest {
 		Assert.assertTrue(rightToLeftPortalCache instanceof TestPortalCache);
 		Assert.assertEquals(
 			TableMapper.class.getName() + "-" + _TABLE_NAME + "-RightToLeft",
-			rightToLeftPortalCache.getPortalCacheName());
+			rightToLeftPortalCache.getName());
 	}
 
 	@Test

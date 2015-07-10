@@ -60,7 +60,7 @@ public class TestPortalCache <K extends Serializable, V>
 	}
 
 	@Override
-	public String getPortalCacheName() {
+	public String getName() {
 		return _portalCacheName;
 	}
 

@@ -59,11 +59,11 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener = new TestPortalCacheListener<>();
 
-		_memoryPortalCache.registerPortalCacheListener(_defaultCacheListener);
+		_memoryPortalCache.registerCacheListener(_defaultCacheListener);
 
 		_defaultCacheReplicator = new TestPortalCacheReplicator<>();
 
-		_memoryPortalCache.registerPortalCacheListener(_defaultCacheReplicator);
+		_memoryPortalCache.registerCacheListener(_defaultCacheReplicator);
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class MemoryPortalCacheTest {
 		TestPortalCacheListener<String, String> cacheListener =
 			new TestPortalCacheListener<>();
 
-		_memoryPortalCache.registerPortalCacheListener(cacheListener, PortalCacheListenerScope.ALL);
+		_memoryPortalCache.registerCacheListener(cacheListener, PortalCacheListenerScope.ALL);
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_2);
 
@@ -95,7 +95,7 @@ public class MemoryPortalCacheTest {
 
 		// Unregister
 
-		_memoryPortalCache.unregisterPortalCacheListener(cacheListener);
+		_memoryPortalCache.unregisterCacheListener(cacheListener);
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_1);
 
@@ -113,7 +113,7 @@ public class MemoryPortalCacheTest {
 
 		// unregister all
 
-		_memoryPortalCache.unregisterPortalCacheListeners();
+		_memoryPortalCache.unregisterCacheListeners();
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_2);
 
@@ -168,7 +168,7 @@ public class MemoryPortalCacheTest {
 
 	@Test
 	public void testGetName() {
-		Assert.assertEquals(_CACHE_NAME, _memoryPortalCache.getPortalCacheName());
+		Assert.assertEquals(_CACHE_NAME, _memoryPortalCache.getName());
 	}
 
 	@Test

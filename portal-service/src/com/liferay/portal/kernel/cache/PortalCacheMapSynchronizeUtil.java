@@ -27,7 +27,7 @@ public class PortalCacheMapSynchronizeUtil {
 		PortalCache<K, V> portalCache, Map<? extends K, ? extends V> map,
 		Synchronizer<K, V> synchronizer) {
 
-		portalCache.registerPortalCacheListener(
+		portalCache.registerCacheListener(
 			new SynchronizePortalCacheListener<K, V>(map, synchronizer));
 	}
 

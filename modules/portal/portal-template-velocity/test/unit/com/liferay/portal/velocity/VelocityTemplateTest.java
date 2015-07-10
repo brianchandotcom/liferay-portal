@@ -415,7 +415,7 @@ public class VelocityTemplateTest {
 							InvocationOnMock invocationOnMock)
 						throws Throwable {
 
-						return portalCacheManager.getPortalCache(
+						return portalCacheManager.getCache(
 							RandomTestUtil.randomString());
 					}
 
@@ -438,7 +438,7 @@ public class VelocityTemplateTest {
 							InvocationOnMock invocationOnMock)
 						throws Throwable {
 
-						return portalCacheManager.getPortalCache("test");
+						return portalCacheManager.getCache("test");
 					}
 
 				});

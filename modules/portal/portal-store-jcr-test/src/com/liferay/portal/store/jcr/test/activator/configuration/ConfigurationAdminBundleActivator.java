@@ -41,9 +41,12 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			ConfigurationAdmin configurationAdmin = bundleContext.getService(
 				serviceReference);
 
-			_jcrConfiguration = configurationAdmin.getConfiguration(
+			String jcrConfigurationPid =
 				"com.liferay.portal.store.jcr.configuration." +
-					"JCRStoreConfiguration", null);
+					"JCRStoreConfiguration";
+
+			_jcrConfiguration = configurationAdmin.getConfiguration(
+				jcrConfigurationPid, null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 

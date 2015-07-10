@@ -50,9 +50,11 @@ public class S3StoreTest extends BaseStoreTestCase {
 
 		String s3StoreClassName = "com.liferay.portal.store.s3.S3Store";
 
-		Assume.assumeTrue(
+		String message =
 			"Property '" + PropsKeys.DL_STORE_IMPL + "' must be equals to '" +
-				s3StoreClassName + "'", dlStoreImpl.equals(s3StoreClassName));
+				s3StoreClassName + "'";
+
+		Assume.assumeTrue(message, dlStoreImpl.equals(s3StoreClassName));
 	}
 
 	@Override

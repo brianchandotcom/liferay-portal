@@ -86,7 +86,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 
 	@Override
 	public void registerPortalCacheListener(PortalCacheListener<K, V> cacheListener) {
-		aggregatedCacheListener.addPortalCacheListener(cacheListener);
+		aggregatedCacheListener.addCacheListener(cacheListener);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 		PortalCacheListener<K, V> cacheListener,
 		PortalCacheListenerScope cacheListenerScope) {
 
-		aggregatedCacheListener.addPortalCacheListener(
+		aggregatedCacheListener.addCacheListener(
 			cacheListener, cacheListenerScope);
 	}
 
@@ -170,7 +170,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 
 	@Override
 	public void unregisterPortalCacheListener(PortalCacheListener<K, V> cacheListener) {
-		aggregatedCacheListener.removePortalCacheListener(cacheListener);
+		aggregatedCacheListener.removeCacheListener(cacheListener);
 	}
 
 	@Override

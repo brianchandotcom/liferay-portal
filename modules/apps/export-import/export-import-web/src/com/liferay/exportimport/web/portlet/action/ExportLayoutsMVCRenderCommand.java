@@ -15,14 +15,7 @@
 package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.security.auth.PrincipalException;
-
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,29 +30,10 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class ExportLayoutsMVCRenderCommand implements MVCRenderCommand {
+public class ExportLayoutsMVCRenderCommand extends GetGroupMVCRenderCommand {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			ActionUtil.getGroup(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
-
+	protected String getPath() {
 		return "/export_layouts.jsp";
 	}
 

@@ -29,6 +29,10 @@ AUI.add(
 
 		var CSS_LOADING_ICON = A.getClassName(CSS_IMAGE_VIEWER_BASE, 'loading', 'icon');
 
+		var CSS_SIDENAV_CONTAINER = 'sidenav-container';
+
+		var CSS_SIDENAV_MENU_SLIDER = 'sidenav-menu-slider';
+
 		var STR_BLANK = '';
 
 		var STR_DATA_METADATA_RENDERED = 'data-metadata-rendered';
@@ -41,13 +45,11 @@ AUI.add(
 
 		var TPL_INFO_ICON = '<span class="glyphicon glyphicon-info-sign lfr-item-viewer-icon-info"></span>';
 
-		var TPL_INFO_LAYER = '<div class="tab-group"><ul class="nav nav-tabs"></ul><div class="tab-content"></div></div>';
+		var TPL_INFO_TAB_BODY = '<div class="{className} fade in tab-pane" id="{tabId}">{content}</div>';
 
-		var TPL_INFO_LAYER_TAB_TITLE = '<li class="{className}"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
+		var TPL_INFO_TAB_BODY_CONTENT = '<h5>{h5}</h5><p>{p}</p>';
 
-		var TPL_INFO_LAYER_TAB_SECTION = '<div class="{className} fade in tab-pane" id="{tabId}"><dl>{content}</dl></div>';
-
-		var TPL_INFO_LAYER_TAB_SECTION_CONTENT = '<dt>{dt}</dt><dd>{dd}</dd>';
+		var TPL_INFO_TAB_TITLE = '<li class="{className} col-xs-6"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
 
 		var LiferayItemViewer = A.Component.create(
 			{
@@ -98,8 +100,13 @@ AUI.add(
 						'<span class="glyphicon glyphicon-chevron-right"></span>' +
 					'</a>',
 
-					TPL_IMAGE_CONTAINER: '<div class="' + CSS_IMAGE_CONTAINER + '">' +
-						'<div class="' + CSS_IMAGE_INFO + ' hide"></div>' +
+					TPL_IMAGE_CONTAINER: '<div class="closed ' + CSS_IMAGE_CONTAINER + ' ' + CSS_SIDENAV_CONTAINER + ' sidenav-right">' +
+						'<div class="' + CSS_SIDENAV_MENU_SLIDER + '">' +
+							'<div class="' + CSS_IMAGE_INFO + ' sidebar sidebar-inverse sidebar-menu">' +
+								'<div class="sidebar-header"><ul class="nav nav-tabs product-menu-tabs"></ul></div>' +
+								'<div class="sidebar-body"><div class="tab-content"></div></div>' +
+							'</div>' +
+						'</div>' +
 						'<span class="glyphicon glyphicon-time ' + CSS_LOADING_ICON + '"></span>' +
 					'</div>',
 
@@ -122,11 +129,19 @@ AUI.add(
 					_afterBindUI: function() {
 						var instance = this;
 
-						instance._eventHandles.push(
-							instance._infoIconEl.on('click', instance._onClickInfoIcon, instance)
-						);
-
 						instance._eventHandles = instance._eventHandles.concat(instance._displacedMethodHandles);
+
+						var infoIconNode = AUI.$(instance._infoIconEl.getDOMNode());
+
+						var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
+
+						sidebarNode.sideNavigation(
+							{
+								content: sidebarNode.find('.image-viewer-base-image'),
+								toggler: infoIconNode,
+								width: '300px'
+							}
+						);
 					},
 
 					_afterShowCurrentImage: function() {
@@ -174,9 +189,9 @@ AUI.add(
 					},
 
 					_populateImageMetadata: function(image, metadata) {
-						var imageInfoNode = image.siblings(STR_DOT + CSS_IMAGE_INFO);
+						var instance = this;
 
-						imageInfoNode.setHTML(A.Node.create(TPL_INFO_LAYER));
+						var imageInfoNode = image.siblings(STR_DOT + CSS_SIDENAV_MENU_SLIDER).one(STR_DOT + CSS_IMAGE_INFO);
 
 						var imageInfoNodeTabContent = imageInfoNode.one('.tab-content');
 						var imageInfoNodeTabList = imageInfoNode.one('ul');
@@ -189,7 +204,7 @@ AUI.add(
 
 								var tabTitleNode = A.Node.create(
 									Lang.sub(
-										TPL_INFO_LAYER_TAB_TITLE,
+										TPL_INFO_TAB_TITLE,
 										{
 											className: index === 0 ? CSS_ACTIVE : STR_BLANK,
 											tabId: groupId,
@@ -203,10 +218,10 @@ AUI.add(
 								var dataStr = group.data.reduce(
 									function(previousValue, currentValue) {
 										return previousValue + Lang.sub(
-											TPL_INFO_LAYER_TAB_SECTION_CONTENT,
+											TPL_INFO_TAB_BODY_CONTENT,
 												{
-													dd: currentValue.value,
-													dt: currentValue.key
+													h5: currentValue.key,
+													p: currentValue.value
 												}
 											);
 									},
@@ -215,7 +230,7 @@ AUI.add(
 
 								var tabContentNode = A.Node.create(
 									Lang.sub(
-										TPL_INFO_LAYER_TAB_SECTION,
+										TPL_INFO_TAB_BODY,
 										{
 											className: index === 0 ? CSS_ACTIVE : STR_BLANK,
 											content: dataStr,

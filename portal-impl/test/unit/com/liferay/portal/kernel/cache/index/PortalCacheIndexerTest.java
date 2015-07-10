@@ -50,7 +50,7 @@ public class PortalCacheIndexerTest {
 			_indexEncoder, _portalCache);
 
 		_cacheListener = ReflectionTestUtil.getFieldValue(
-			_portalCache, "aggregatedPortalCacheListener");
+			_portalCache, "aggregatedCacheListener");
 
 		_mappedMethodCallableInvocationHandler =
 			new MappedMethodCallableInvocationHandler(

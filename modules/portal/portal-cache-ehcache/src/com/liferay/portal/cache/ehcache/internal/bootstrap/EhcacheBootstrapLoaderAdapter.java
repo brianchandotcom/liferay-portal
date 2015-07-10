@@ -27,9 +27,9 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 /**
  * @author Tina Tian
  */
-public class EhcachePortalCacheBootstrapLoaderAdapter implements PortalCacheBootstrapLoader {
+public class EhcacheBootstrapLoaderAdapter implements PortalCacheBootstrapLoader {
 
-	public EhcachePortalCacheBootstrapLoaderAdapter(
+	public EhcacheBootstrapLoaderAdapter(
 		BootstrapCacheLoader bootstrapCacheLoader) {
 
 		_bootstrapCacheLoader = bootstrapCacheLoader;
@@ -59,7 +59,8 @@ public class EhcachePortalCacheBootstrapLoaderAdapter implements PortalCacheBoot
 		_bootstrapCacheLoader.load(EhcacheUnwrapUtil.getEhcache(portalCache));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(EhcachePortalCacheBootstrapLoaderAdapter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EhcacheBootstrapLoaderAdapter.class);
 
 	private final BootstrapCacheLoader _bootstrapCacheLoader;
 

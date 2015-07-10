@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.CallbackFactory;
-import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkPortalCacheBootstrapLoader;
+import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkBootstrapLoader;
 
 import java.io.Serializable;
 
@@ -34,7 +34,7 @@ public class ClusterLinkCallbackFactory implements CallbackFactory {
 
 	@Override
 	public PortalCacheBootstrapLoader createBootstrapLoader(Properties properties) {
-		return new ClusterLinkPortalCacheBootstrapLoader(properties);
+		return new ClusterLinkBootstrapLoader(properties);
 	}
 
 	@Override

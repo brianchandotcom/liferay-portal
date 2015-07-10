@@ -200,6 +200,13 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion fetchLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy) {
+		return _dlFileVersionLocalService.fetchLatestFileVersion(fileEntryId,
+			excludeWorkingCopy);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _dlFileVersionLocalService.getActionableDynamicQuery();
 	}

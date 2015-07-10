@@ -38,6 +38,34 @@ public class DLFileVersionLocalServiceImpl
 	extends DLFileVersionLocalServiceBaseImpl {
 
 	@Override
+	public DLFileVersion fetchLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy) {
+
+		List<DLFileVersion> dlFileVersions =
+			dlFileVersionPersistence.findByFileEntryId(fileEntryId);
+
+		if (dlFileVersions.isEmpty()) {
+			return null;
+		}
+
+		dlFileVersions = ListUtil.copy(dlFileVersions);
+
+		Collections.sort(dlFileVersions, new DLFileVersionVersionComparator());
+
+		DLFileVersion dlFileVersion = dlFileVersions.get(0);
+
+		String version = dlFileVersion.getVersion();
+
+		if (excludeWorkingCopy &&
+			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+			return dlFileVersions.get(1);
+		}
+
+		return dlFileVersion;
+	}
+
+	@Override
 	public DLFileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 
@@ -88,26 +116,12 @@ public class DLFileVersionLocalServiceImpl
 			long fileEntryId, boolean excludeWorkingCopy)
 		throws PortalException {
 
-		List<DLFileVersion> dlFileVersions =
-			dlFileVersionPersistence.findByFileEntryId(fileEntryId);
+		DLFileVersion dlFileVersion = fetchLatestFileVersion(
+			fileEntryId, excludeWorkingCopy);
 
-		if (dlFileVersions.isEmpty()) {
+		if (dlFileVersion == null) {
 			throw new NoSuchFileVersionException(
 				"No file versions found for fileEntryId " + fileEntryId);
-		}
-
-		dlFileVersions = ListUtil.copy(dlFileVersions);
-
-		Collections.sort(dlFileVersions, new DLFileVersionVersionComparator());
-
-		DLFileVersion dlFileVersion = dlFileVersions.get(0);
-
-		String version = dlFileVersion.getVersion();
-
-		if (excludeWorkingCopy &&
-			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
-			return dlFileVersions.get(1);
 		}
 
 		return dlFileVersion;

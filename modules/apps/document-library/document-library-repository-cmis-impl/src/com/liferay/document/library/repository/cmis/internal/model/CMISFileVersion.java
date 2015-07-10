@@ -170,6 +170,9 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 			return getFileEntry().getFileEntryId();
 		}
 		catch (NoSuchFileEntryException nsfee) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

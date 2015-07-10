@@ -89,9 +89,8 @@ public class TrashUtil {
 	}
 
 	public static void deleteEntriesAttachments(
-			long companyId, long repositoryId, Date date,
-			String[] attachmentFileNames)
-		throws PortalException {
+		long companyId, long repositoryId, Date date,
+		String[] attachmentFileNames) {
 
 		getTrash().deleteEntriesAttachments(
 			companyId, repositoryId, date, attachmentFileNames);

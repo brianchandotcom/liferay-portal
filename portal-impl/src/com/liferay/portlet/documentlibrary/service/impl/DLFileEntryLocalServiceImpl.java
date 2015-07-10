@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -90,8 +89,6 @@ import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -111,8 +108,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
-import com.liferay.portlet.expando.NoSuchRowException;
-import com.liferay.portlet.expando.NoSuchTableException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoRow;
@@ -354,13 +349,9 @@ public class DLFileEntryLocalServiceImpl
 
 				// File
 
-				try {
-					DLStoreUtil.deleteFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), lastDLFileVersion.getVersion());
-				}
-				catch (NoSuchModelException nsme) {
-				}
+				DLStoreUtil.deleteFile(
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName(), lastDLFileVersion.getVersion());
 
 				DLStoreUtil.copyFileVersion(
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
@@ -584,14 +575,10 @@ public class DLFileEntryLocalServiceImpl
 					dlFileVersion.getFileVersionId());
 			}
 
-			try {
-				DLStoreUtil.deleteFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-			}
-			catch (NoSuchModelException nsme) {
-			}
+			DLStoreUtil.deleteFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(),
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
 			DLStoreUtil.copyFileVersion(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
@@ -923,11 +910,11 @@ public class DLFileEntryLocalServiceImpl
 			latestVersion = version.equals(dlFileEntry.getVersion());
 
 			if (latestVersion) {
-				try {
-					DLFileVersion dlLatestFileVersion =
-						dlFileVersionLocalService.getLatestFileVersion(
-							dlFileEntry.getFileEntryId(), true);
+				DLFileVersion dlLatestFileVersion =
+					dlFileVersionLocalService.fetchLatestFileVersion(
+						dlFileEntry.getFileEntryId(), true);
 
+				if (dlLatestFileVersion != null) {
 					dlLatestFileVersion.setModifiedDate(new Date());
 					dlLatestFileVersion.setStatusDate(new Date());
 
@@ -950,18 +937,11 @@ public class DLFileEntryLocalServiceImpl
 
 					dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 				}
-				catch (NoSuchFileVersionException nsfve) {
-				}
 			}
 
-			try {
-				DLStoreUtil.deleteFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					version);
-			}
-			catch (NoSuchModelException nsme) {
-			}
+			DLStoreUtil.deleteFile(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				dlFileEntry.getName(), version);
 		}
 		finally {
 			unlockFileEntry(fileEntryId);
@@ -2239,38 +2219,31 @@ public class DLFileEntryLocalServiceImpl
 			long destinationFileVersionId)
 		throws PortalException {
 
-		ExpandoTable expandoTable = null;
+		ExpandoTable expandoTable = expandoTableLocalService.fetchDefaultTable(
+			companyId, DLFileEntry.class.getName());
 
-		try {
-			expandoTable = expandoTableLocalService.getDefaultTable(
-				companyId, DLFileEntry.class.getName());
-		}
-		catch (NoSuchTableException nste) {
+		if (expandoTable == null) {
 			return;
 		}
 
-		Date sourceModifiedDate = null;
+		ExpandoRow sourceExpandoRow = expandoRowLocalService.fetchRow(
+			expandoTable.getTableId(), sourceFileVersionId);
 
-		try {
-			ExpandoRow sourceExpandoRow = expandoRowLocalService.getRow(
-				expandoTable.getTableId(), sourceFileVersionId);
-
-			sourceModifiedDate = sourceExpandoRow.getModifiedDate();
-		}
-		catch (NoSuchRowException nsre) {
+		if (sourceExpandoRow == null) {
 			return;
 		}
 
-		try {
-			ExpandoRow destinationExpandoRow = expandoRowLocalService.getRow(
-				expandoTable.getTableId(), destinationFileVersionId);
+		ExpandoRow destinationExpandoRow = expandoRowLocalService.fetchRow(
+			expandoTable.getTableId(), destinationFileVersionId);
 
-			destinationExpandoRow.setModifiedDate(sourceModifiedDate);
+		if (destinationExpandoRow == null) {
+			return;
+		}
 
-			expandoRowLocalService.updateExpandoRow(destinationExpandoRow);
-		}
-		catch (NoSuchRowException nsre) {
-		}
+		destinationExpandoRow.setModifiedDate(
+			sourceExpandoRow.getModifiedDate());
+
+		expandoRowLocalService.updateExpandoRow(destinationExpandoRow);
 	}
 
 	protected void copyFileEntryMetadata(
@@ -2319,14 +2292,12 @@ public class DLFileEntryLocalServiceImpl
 
 		String version = dlFileEntry.getVersion();
 
-		try {
-			DLFileVersion dlFileVersion =
-				dlFileVersionLocalService.getLatestFileVersion(
-					dlFileEntry.getFileEntryId(), true);
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.fetchLatestFileVersion(
+				dlFileEntry.getFileEntryId(), true);
 
+		if (dlFileVersion != null) {
 			version = dlFileVersion.getVersion();
-		}
-		catch (NoSuchFileVersionException nsfve) {
 		}
 
 		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
@@ -2398,15 +2369,12 @@ public class DLFileEntryLocalServiceImpl
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata lastFileEntryMetadata = null;
+			DLFileEntryMetadata lastFileEntryMetadata =
+				dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+					ddmStructure.getStructureId(),
+					lastDLFileVersion.getFileVersionId());
 
-			try {
-				lastFileEntryMetadata =
-					dlFileEntryMetadataLocalService.getFileEntryMetadata(
-						ddmStructure.getStructureId(),
-						lastDLFileVersion.getFileVersionId());
-			}
-			catch (NoSuchFileEntryMetadataException nsfeme) {
+			if (lastFileEntryMetadata == null) {
 				return false;
 			}
 
@@ -2585,14 +2553,10 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntryMetadataLocalService.deleteFileVersionFileEntryMetadata(
 			dlFileVersion.getFileVersionId());
 
-		try {
-			DLStoreUtil.deleteFile(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(),
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-		}
-		catch (NoSuchModelException nsme) {
-		}
+		DLStoreUtil.deleteFile(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(),
+			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
 		unlockFileEntry(dlFileEntry.getFileEntryId());
 	}
@@ -2703,13 +2667,9 @@ public class DLFileEntryLocalServiceImpl
 			// File
 
 			if ((file != null) || (is != null)) {
-				try {
-					DLStoreUtil.deleteFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), version);
-				}
-				catch (NoSuchModelException nsme) {
-				}
+				DLStoreUtil.deleteFile(
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName(), version);
 
 				if (file != null) {
 					DLStoreUtil.updateFile(

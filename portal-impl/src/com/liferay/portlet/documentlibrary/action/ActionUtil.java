@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -68,6 +70,9 @@ public class ActionUtil {
 				fileEntries.add(fileEntry);
 			}
 			catch (NoSuchFileEntryException nsfee) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfee, nsfee);
+				}
 			}
 		}
 
@@ -254,7 +259,10 @@ public class ActionUtil {
 
 				folders.add(folder);
 			}
-			catch (NoSuchFolderException nsfee) {
+			catch (NoSuchFolderException nsfe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfe, nsfe);
+				}
 			}
 		}
 
@@ -300,5 +308,7 @@ public class ActionUtil {
 
 		getRepository(request);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ActionUtil.class);
 
 }

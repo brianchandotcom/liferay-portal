@@ -601,6 +601,14 @@ public abstract class BaseStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
+		logFailedDeletion(
+			companyId, repositoryId, fileName, versionLabel, null);
+	}
+
+	protected void logFailedDeletion(
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		Exception cause) {
+
 		if (_log.isWarnEnabled()) {
 			StringBundler sb = new StringBundler(9);
 
@@ -618,7 +626,12 @@ public abstract class BaseStore implements Store {
 
 			sb.append("} because it does not exist");
 
-			_log.warn(sb.toString());
+			if (cause == null) {
+				_log.warn(sb.toString());
+			}
+			else {
+				_log.warn(sb.toString(), cause);
+			}
 		}
 	}
 

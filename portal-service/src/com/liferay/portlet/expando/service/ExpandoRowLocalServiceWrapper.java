@@ -229,6 +229,12 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.expando.model.ExpandoRow fetchRow(long tableId,
+		long classPK) {
+		return _expandoRowLocalService.fetchRow(tableId, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _expandoRowLocalService.getActionableDynamicQuery();
 	}

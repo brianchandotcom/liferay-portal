@@ -81,19 +81,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		long[] companyIds = PortalUtil.getCompanyIds();
 
 		for (long companyId : companyIds) {
-			try {
-				DLStoreUtil.deleteDirectory(
-					companyId, REPOSITORY_ID, PREVIEW_PATH);
-			}
-			catch (Exception e) {
-			}
-
-			try {
-				DLStoreUtil.deleteDirectory(
-					companyId, REPOSITORY_ID, THUMBNAIL_PATH);
-			}
-			catch (Exception e) {
-			}
+			DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, PREVIEW_PATH);
+			DLStoreUtil.deleteDirectory(
+				companyId, REPOSITORY_ID, THUMBNAIL_PATH);
 		}
 	}
 
@@ -322,12 +312,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		String previewFilePath = getPreviewFilePath(
 			groupId, fileEntryId, fileVersionId, null);
 
-		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, REPOSITORY_ID, previewFilePath);
-		}
-		catch (Exception e) {
-		}
+		DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, previewFilePath);
 	}
 
 	protected void deleteThumbnail(

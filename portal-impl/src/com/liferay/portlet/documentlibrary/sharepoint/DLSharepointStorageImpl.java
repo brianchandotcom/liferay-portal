@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.sharepoint;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -374,6 +376,10 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 					changeLog, false, file, serviceContext);
 			}
 			catch (NoSuchFileEntryException nsfee) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfee, nsfee);
+				}
+
 				DLAppServiceUtil.addFileEntry(
 					groupId, parentFolderId, title, contentType, title,
 					description, changeLog, file, serviceContext);
@@ -493,5 +499,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 			folderPath, folder.getCreateDate(), folder.getModifiedDate(),
 			folder.getLastPostDate());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLSharepointStorageImpl.class);
 
 }

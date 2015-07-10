@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -56,6 +58,10 @@ public class InvalidFolderException extends PortalException {
 			return folder.getName();
 		}
 		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
 			return StringPool.BLANK;
 		}
 	}
@@ -70,6 +76,9 @@ public class InvalidFolderException extends PortalException {
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InvalidFolderException.class);
 
 	private final long _folderId;
 	private final int _type;

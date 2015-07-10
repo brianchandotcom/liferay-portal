@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.BaseModel;
@@ -42,6 +41,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1268,7 +1268,7 @@ public abstract class BaseTrashHandlerTestCase {
 		String baseModelName = whenCanBeDuplicatedInTrash.getBaseModelName(
 			baseModel);
 
-		Assert.assertTrue(baseModelName.startsWith(StringPool.SLASH));
+		Assert.assertTrue(TrashUtil.isValidTrashTitle(baseModelName));
 
 		BaseModel<?> duplicateBaseModel = addBaseModel(
 			parentBaseModel, serviceContext);
@@ -1288,7 +1288,7 @@ public abstract class BaseTrashHandlerTestCase {
 		String duplicateBaseModelName =
 			whenCanBeDuplicatedInTrash.getBaseModelName(duplicateBaseModel);
 
-		Assert.assertTrue(duplicateBaseModelName.startsWith(StringPool.SLASH));
+		Assert.assertTrue(TrashUtil.isValidTrashTitle(duplicateBaseModelName));
 	}
 
 	@Test

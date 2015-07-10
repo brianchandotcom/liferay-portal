@@ -15,10 +15,10 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.test.TestPortalCacheListener;
-import com.liferay.portal.cache.test.TestPortalCacheManager;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;
-import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.cache.test.TestPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -83,13 +83,11 @@ public class EhcachePortalCacheTest {
 
 		_defaultPortalCacheListener = new TestPortalCacheListener<>();
 
-		_ehcachePortalCache.registerPortalCacheListener(
-			_defaultPortalCacheListener);
+		_ehcachePortalCache.registerPortalCacheListener(_defaultPortalCacheListener);
 
 		_defaultPortalCacheReplicator = new TestPortalCacheReplicator<>();
 
-		_ehcachePortalCache.registerPortalCacheListener(
-			_defaultPortalCacheReplicator);
+		_ehcachePortalCache.registerPortalCacheListener(_defaultPortalCacheReplicator);
 	}
 
 	@After
@@ -105,8 +103,7 @@ public class EhcachePortalCacheTest {
 		TestPortalCacheListener<String, String> localPortalCacheListener =
 			new TestPortalCacheListener<>();
 
-		_ehcachePortalCache.registerPortalCacheListener(
-			localPortalCacheListener, PortalCacheListenerScope.LOCAL);
+		_ehcachePortalCache.registerPortalCacheListener(localPortalCacheListener, PortalCacheListenerScope.LOCAL);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
 
@@ -130,8 +127,7 @@ public class EhcachePortalCacheTest {
 		TestPortalCacheListener<String, String> remotePortalCacheListener =
 			new TestPortalCacheListener<>();
 
-		_ehcachePortalCache.registerPortalCacheListener(
-			remotePortalCacheListener, PortalCacheListenerScope.REMOTE);
+		_ehcachePortalCache.registerPortalCacheListener(remotePortalCacheListener, PortalCacheListenerScope.REMOTE);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_1);
 
@@ -154,8 +150,7 @@ public class EhcachePortalCacheTest {
 
 		// Register 3
 
-		_ehcachePortalCache.registerPortalCacheListener(
-			remotePortalCacheListener, PortalCacheListenerScope.ALL);
+		_ehcachePortalCache.registerPortalCacheListener(remotePortalCacheListener, PortalCacheListenerScope.ALL);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
 
@@ -178,8 +173,7 @@ public class EhcachePortalCacheTest {
 
 		// Unregister 1
 
-		_ehcachePortalCache.unregisterPortalCacheListener(
-			localPortalCacheListener);
+		_ehcachePortalCache.unregisterPortalCacheListener(localPortalCacheListener);
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_2);
 
@@ -199,8 +193,7 @@ public class EhcachePortalCacheTest {
 
 		// Unregister 2
 
-		_ehcachePortalCache.unregisterPortalCacheListener(
-			new TestPortalCacheListener<String, String>());
+		_ehcachePortalCache.unregisterPortalCacheListener(new TestPortalCacheListener<String, String>());
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
@@ -243,8 +236,7 @@ public class EhcachePortalCacheTest {
 
 	@Test
 	public void testGetName() {
-		Assert.assertEquals(
-			_PORTAL_CACHE_NAME, _ehcachePortalCache.getPortalCacheName());
+		Assert.assertEquals(_PORTAL_CACHE_NAME, _ehcachePortalCache.getPortalCacheName());
 	}
 
 	@Test
@@ -578,8 +570,7 @@ public class EhcachePortalCacheTest {
 
 		_defaultPortalCacheListener.reset();
 
-		_defaultPortalCacheReplicator.assertUpdated(
-			_KEY_1, _VALUE_2, timeToLive);
+		_defaultPortalCacheReplicator.assertUpdated(_KEY_1, _VALUE_2, timeToLive);
 
 		_defaultPortalCacheReplicator.reset();
 
@@ -603,8 +594,7 @@ public class EhcachePortalCacheTest {
 		_defaultPortalCacheListener.reset();
 
 		_defaultPortalCacheReplicator.assertPut(_KEY_1, _VALUE_1);
-		_defaultPortalCacheReplicator.assertUpdated(
-			_KEY_1, _VALUE_2, timeToLive);
+		_defaultPortalCacheReplicator.assertUpdated(_KEY_1, _VALUE_2, timeToLive);
 
 		_defaultPortalCacheReplicator.reset();
 	}
@@ -625,8 +615,7 @@ public class EhcachePortalCacheTest {
 	private static CacheManager _cacheManager;
 
 	private TestPortalCacheListener<String, String> _defaultPortalCacheListener;
-	private TestPortalCacheReplicator<String, String>
-		_defaultPortalCacheReplicator;
+	private TestPortalCacheReplicator<String, String> _defaultPortalCacheReplicator;
 	private EhcachePortalCache<String, String> _ehcachePortalCache;
 
 }

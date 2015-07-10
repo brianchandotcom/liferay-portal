@@ -15,8 +15,8 @@
 package com.liferay.portal.cache.ehcache.internal.bootstrap;
 
 import com.liferay.portal.cache.ehcache.internal.EhcacheUnwrapUtil;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.log.Log;
@@ -27,8 +27,7 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 /**
  * @author Tina Tian
  */
-public class EhcachePortalCacheBootstrapLoaderAdapter
-	implements PortalCacheBootstrapLoader {
+public class EhcachePortalCacheBootstrapLoaderAdapter implements PortalCacheBootstrapLoader {
 
 	public EhcachePortalCacheBootstrapLoaderAdapter(
 		BootstrapCacheLoader bootstrapCacheLoader) {
@@ -42,12 +41,9 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 	}
 
 	@Override
-	public void loadPortalCache(
-		String portalCacheManagerName, String portalCacheName) {
-
+	public void loadPortalCache(String portalCacheManagerName, String portalCacheName) {
 		PortalCacheManager<?, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
-				portalCacheManagerName);
+			PortalCacheManagerProvider.getPortalCacheManager(portalCacheManagerName);
 
 		if (!portalCacheManager.isClusterAware()) {
 			_log.error(
@@ -63,8 +59,7 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 		_bootstrapCacheLoader.load(EhcacheUnwrapUtil.getEhcache(portalCache));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheBootstrapLoaderAdapter.class);
+	private static final Log _log = LogFactoryUtil.getLog(EhcachePortalCacheBootstrapLoaderAdapter.class);
 
 	private final BootstrapCacheLoader _bootstrapCacheLoader;
 

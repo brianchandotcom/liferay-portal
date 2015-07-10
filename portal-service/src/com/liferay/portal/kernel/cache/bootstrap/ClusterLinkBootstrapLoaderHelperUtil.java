@@ -134,8 +134,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		}
 
 		PortalCacheManager<? extends Serializable, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
-				portalCacheManagerName);
+			PortalCacheManagerProvider.getPortalCacheManager(portalCacheManagerName);
 
 		if (!portalCacheManager.isClusterAware()) {
 			return;
@@ -229,8 +228,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 						try {
 							portalCache =
 								(PortalCache<Serializable, Serializable>)
-									portalCacheManager.getPortalCache(
-										(String)object);
+									portalCacheManager.getPortalCache((String)object);
 						}
 						finally {
 							_skipBootstrapLoaderThreadLocal.remove();
@@ -399,8 +397,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 							_skipBootstrapLoaderThreadLocal.set(Boolean.TRUE);
 
 							try {
-								portalCacheManager.getPortalCache(
-									portalCacheName);
+								portalCacheManager.getPortalCache(portalCacheName);
 							}
 							finally {
 								_skipBootstrapLoaderThreadLocal.remove();

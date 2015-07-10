@@ -48,13 +48,10 @@ public class PortalCacheConfiguration {
 				portalCacheListenerConfigurations);
 		}
 
-		_portalCacheBootstrapLoaderConfiguration =
-			portalCacheBootstrapLoaderConfiguration;
+		_portalCacheBootstrapLoaderConfiguration = portalCacheBootstrapLoaderConfiguration;
 	}
 
-	public CallbackConfiguration
-		getPortalCacheBootstrapLoaderConfiguration() {
-
+	public CallbackConfiguration getPortalCacheBootstrapLoaderConfiguration() {
 		return _portalCacheBootstrapLoaderConfiguration;
 	}
 
@@ -76,8 +73,7 @@ public class PortalCacheConfiguration {
 			_portalCacheBootstrapLoaderConfiguration);
 	}
 
-	private final CallbackConfiguration
-		_portalCacheBootstrapLoaderConfiguration;
+	private final CallbackConfiguration _portalCacheBootstrapLoaderConfiguration;
 	private final Map<CallbackConfiguration, PortalCacheListenerScope>
 		_portalCacheListenerConfigurations;
 	private final String _portalCacheName;

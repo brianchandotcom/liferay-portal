@@ -123,9 +123,8 @@ public class SPIPortalCacheManagerConfiguratorImpl
 
 			objectInputStream.defaultReadObject();
 
-			_portalCacheManager =
-				PortalCacheManagerProvider.getPortalCacheManager(
-					_portalCacheManagerName);
+			_portalCacheManager = PortalCacheManagerProvider.getPortalCacheManager(
+				_portalCacheManagerName);
 		}
 
 		private final boolean _manager;

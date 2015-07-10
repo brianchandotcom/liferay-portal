@@ -96,8 +96,7 @@ public class PortalCacheManagerProvider {
 				serviceReference);
 
 			_portalCacheManagers.put(
-				portalCacheManager.getPortalCacheManagerName(),
-				portalCacheManager);
+				portalCacheManager.getPortalCacheManagerName(), portalCacheManager);
 
 			return portalCacheManager;
 		}
@@ -115,8 +114,7 @@ public class PortalCacheManagerProvider {
 				serviceReference,
 			PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
 
-			_portalCacheManagers.remove(
-				portalCacheManager.getPortalCacheManagerName());
+			_portalCacheManagers.remove(portalCacheManager.getPortalCacheManagerName());
 		}
 
 	}

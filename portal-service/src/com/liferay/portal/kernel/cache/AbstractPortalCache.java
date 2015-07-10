@@ -85,11 +85,8 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void registerPortalCacheListener(
-		PortalCacheListener<K, V> portalCacheListener) {
-
-		aggregatedPortalCacheListener.addPortalCacheListener(
-			portalCacheListener);
+	public void registerPortalCacheListener(PortalCacheListener<K, V> portalCacheListener) {
+		aggregatedPortalCacheListener.addPortalCacheListener(portalCacheListener);
 	}
 
 	@Override
@@ -172,11 +169,8 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void unregisterPortalCacheListener(
-		PortalCacheListener<K, V> portalCacheListener) {
-
-		aggregatedPortalCacheListener.removePortalCacheListener(
-			portalCacheListener);
+	public void unregisterPortalCacheListener(PortalCacheListener<K, V> portalCacheListener) {
+		aggregatedPortalCacheListener.removePortalCacheListener(portalCacheListener);
 	}
 
 	@Override
@@ -199,8 +193,8 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	protected abstract boolean doReplace(
 		K key, V oldValue, V newValue, int timeToLive);
 
-	protected final AggregatedPortalCacheListener<K, V>
-		aggregatedPortalCacheListener = new AggregatedPortalCacheListener<>();
+	protected final AggregatedPortalCacheListener<K, V> aggregatedPortalCacheListener =
+		new AggregatedPortalCacheListener<>();
 
 	private final PortalCacheManager<K, V> _portalCacheManager;
 

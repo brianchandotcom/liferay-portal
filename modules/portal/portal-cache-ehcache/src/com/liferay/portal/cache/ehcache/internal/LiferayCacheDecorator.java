@@ -51,8 +51,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public void put(Element element, boolean doNotNotifyCacheReplicators) {
 		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.put(element, doNotNotifyCacheReplicators);
@@ -68,8 +67,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 
 		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			return super.putIfAbsent(element, doNotNotifyCacheReplicators);
@@ -83,8 +81,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public boolean remove(Object key, boolean doNotNotifyCacheReplicators) {
 		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			return super.remove(key, doNotNotifyCacheReplicators);
@@ -105,8 +102,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public void removeAll(boolean doNotNotifyCacheReplicators) {
 		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.removeAll(doNotNotifyCacheReplicators);
@@ -122,8 +118,7 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 
 		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(
-			doNotNotifyCacheReplicators);
+		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.removeAll(keys, doNotNotifyCacheReplicators);

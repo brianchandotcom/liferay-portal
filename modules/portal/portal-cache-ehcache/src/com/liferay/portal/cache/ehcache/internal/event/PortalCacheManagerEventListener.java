@@ -49,8 +49,7 @@ public class PortalCacheManagerEventListener
 		PortalCacheManagerEventListener portalCacheManagerEventListener =
 			(PortalCacheManagerEventListener)obj;
 
-		return _portalCacheManagerListener.equals(
-			portalCacheManagerEventListener._portalCacheManagerListener);
+		return _portalCacheManagerListener.equals(portalCacheManagerEventListener._portalCacheManagerListener);
 	}
 
 	public PortalCacheManagerListener getCacheManagerListener() {

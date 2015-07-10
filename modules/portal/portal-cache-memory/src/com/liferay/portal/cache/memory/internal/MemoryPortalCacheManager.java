@@ -15,8 +15,8 @@
 package com.liferay.portal.cache.memory.internal;
 
 import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.cluster.ClusterLinkCallbackFactory;
 import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
@@ -78,8 +78,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			_memoryPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedPortalCacheManagerListener.notifyPortalCacheAdded(
-				portalCacheName);
+			aggregatedPortalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -115,8 +114,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 		memoryPortalCache.destroy();
 
-		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(
-			portalCacheName);
+		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
 	@Override
@@ -136,8 +134,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 			cacheListenerConfigurations = new HashMap<>();
 
-			cacheListenerConfigurations.put(
-				cacheListenerConfiguration, PortalCacheListenerScope.ALL);
+			cacheListenerConfigurations.put(cacheListenerConfiguration, PortalCacheListenerScope.ALL);
 
 			bootstrapLoaderConfiguration = new CallbackConfiguration(
 				ClusterLinkCallbackFactory.INSTANCE, new Properties());

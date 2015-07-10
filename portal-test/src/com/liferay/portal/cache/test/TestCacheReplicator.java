@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
+package com.liferay.portal.cache.test;
+
+import com.liferay.portal.kernel.cache.CacheReplicator;
+
+import java.io.Serializable;
 
 /**
- * @author Edward Han
+ * @author Tina Tian
  */
-public enum PortalCacheListenerScope {
-
-	ALL, LOCAL, REMOTE
-
+public class TestCacheReplicator<K extends Serializable, V>
+	extends TestCacheListener<K, V> implements CacheReplicator {
 }

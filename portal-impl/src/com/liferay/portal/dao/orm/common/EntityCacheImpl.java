@@ -15,13 +15,13 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.cache.mvcc.MVCCPortalCacheFactory;
+import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -53,7 +53,7 @@ import org.apache.commons.collections.map.LRUMap;
  */
 @DoPrivileged
 public class EntityCacheImpl
-	implements PortalCacheManagerListener, CacheRegistryItem, EntityCache {
+	implements CacheManagerListener, CacheRegistryItem, EntityCache {
 
 	public static final String CACHE_NAME = EntityCache.class.getName();
 
@@ -74,10 +74,9 @@ public class EntityCacheImpl
 
 					PortalCacheManager
 						<? extends Serializable, ? extends Serializable>
-							portalCacheManager =
-								_multiVMPool.getPortalCacheManager();
+							portalCacheManager = _multiVMPool.getCacheManager();
 
-					portalCacheManager.registerPortalCacheManagerListener(
+					portalCacheManager.registerCacheManagerListener(
 						EntityCacheImpl.this);
 				}
 
@@ -273,11 +272,11 @@ public class EntityCacheImpl
 	}
 
 	@Override
-	public void notifyPortalCacheAdded(String portalCacheName) {
+	public void notifyCacheAdded(String portalCacheName) {
 	}
 
 	@Override
-	public void notifyPortalCacheRemoved(String portalCacheName) {
+	public void notifyCacheRemoved(String portalCacheName) {
 		_portalCaches.remove(portalCacheName);
 	}
 
@@ -332,7 +331,7 @@ public class EntityCacheImpl
 
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-		_multiVMPool.removePortalCache(groupKey);
+		_multiVMPool.removeCache(groupKey);
 	}
 
 	@Override
@@ -384,10 +383,8 @@ public class EntityCacheImpl
 			String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 			portalCache =
-				(PortalCache<Serializable, Serializable>)
-					_multiVMPool.getPortalCache(
-						groupKey,
-						PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
+				(PortalCache<Serializable, Serializable>)_multiVMPool.getCache(
+					groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
 			if (PropsValues.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED &&
 				MVCCModel.class.isAssignableFrom(clazz)) {

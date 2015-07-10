@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.test;
 
+import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
-import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.util.HashUtil;
 
 import java.io.Serializable;
@@ -29,8 +29,8 @@ import org.junit.Assert;
 /**
  * @author Tina Tian
  */
-public class TestPortalCacheListener<K extends Serializable, V>
-	implements PortalCacheListener<K, V> {
+public class TestCacheListener<K extends Serializable, V>
+	implements CacheListener<K, V> {
 
 	public void assertActionsCount(int count) {
 		Assert.assertEquals(count, _actions.size());

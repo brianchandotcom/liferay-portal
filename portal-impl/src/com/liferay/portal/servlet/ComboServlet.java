@@ -461,9 +461,9 @@ public class ComboServlet extends HttpServlet {
 	private static final Log _log = LogFactoryUtil.getLog(ComboServlet.class);
 
 	private static final PortalCache<String, byte[][]> _bytesArrayPortalCache =
-		SingleVMPoolUtil.getPortalCache(ComboServlet.class.getName());
+		SingleVMPoolUtil.getCache(ComboServlet.class.getName());
 	private static final PortalCache<String, FileContentBag>
-		_fileContentBagPortalCache = SingleVMPoolUtil.getPortalCache(
+		_fileContentBagPortalCache = SingleVMPoolUtil.getCache(
 			FileContentBag.class.getName());
 
 	private final Set<String> _protectedParameters = SetUtil.fromArray(

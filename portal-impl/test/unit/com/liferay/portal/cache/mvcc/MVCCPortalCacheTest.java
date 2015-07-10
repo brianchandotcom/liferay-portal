@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.mvcc;
 
+import com.liferay.portal.cache.test.TestCacheListener;
+import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCache;
-import com.liferay.portal.cache.test.TestPortalCacheListener;
-import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -59,13 +59,13 @@ public class MVCCPortalCacheTest {
 		_mvccPortalCache = new MVCCPortalCache<>(
 			(LowLevelCache<String, MVCCModel>)_portalCache);
 
-		_testPortalCacheListener = new TestPortalCacheListener<>();
+		_testCacheListener = new TestCacheListener<>();
 
-		_portalCache.registerPortalCacheListener(_testPortalCacheListener);
+		_portalCache.registerCacheListener(_testCacheListener);
 
-		_testPortalCacheReplicator = new TestPortalCacheReplicator<>();
+		_testCacheReplicator = new TestCacheReplicator<>();
 
-		_portalCache.registerPortalCacheListener(_testPortalCacheReplicator);
+		_portalCache.registerCacheListener(_testCacheReplicator);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -127,17 +127,15 @@ public class MVCCPortalCacheTest {
 		_assertVersion(_VERSION_1, _mvccPortalCache.get(_KEY_1));
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
-		_testPortalCacheListener.assertActionsCount(1);
-		_testPortalCacheListener.assertPut(
-			_KEY_1, new MockMVCCModel(_VERSION_1));
+		_testCacheListener.assertActionsCount(1);
+		_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
 
-		_testPortalCacheListener.reset();
+		_testCacheListener.reset();
 
-		_testPortalCacheReplicator.assertActionsCount(1);
-		_testPortalCacheReplicator.assertPut(
-			_KEY_1, new MockMVCCModel(_VERSION_1));
+		_testCacheReplicator.assertActionsCount(1);
+		_testCacheReplicator.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
 
-		_testPortalCacheReplicator.reset();
+		_testCacheReplicator.reset();
 
 		// Concurrent put 2
 
@@ -179,13 +177,12 @@ public class MVCCPortalCacheTest {
 		_assertVersion(_VERSION_2, _mvccPortalCache.get(_KEY_1));
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
-		_testPortalCacheListener.assertActionsCount(1);
-		_testPortalCacheListener.assertUpdated(
-			_KEY_1, new MockMVCCModel(_VERSION_2));
+		_testCacheListener.assertActionsCount(1);
+		_testCacheListener.assertUpdated(_KEY_1, new MockMVCCModel(_VERSION_2));
 
-		_testPortalCacheListener.reset();
+		_testCacheListener.reset();
 
-		_testPortalCacheReplicator.assertActionsCount(0);
+		_testCacheReplicator.assertActionsCount(0);
 	}
 
 	@Test
@@ -273,31 +270,30 @@ public class MVCCPortalCacheTest {
 		_assertVersion(_VERSION_1, _mvccPortalCache.get(_KEY_1));
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
-		_testPortalCacheListener.assertActionsCount(1);
+		_testCacheListener.assertActionsCount(1);
 
 		if (timeToLive) {
-			_testPortalCacheListener.assertPut(
+			_testCacheListener.assertPut(
 				_KEY_1, new MockMVCCModel(_VERSION_1), 10);
 		}
 		else {
-			_testPortalCacheListener.assertPut(
-				_KEY_1, new MockMVCCModel(_VERSION_1));
+			_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
 		}
 
-		_testPortalCacheListener.reset();
+		_testCacheListener.reset();
 
-		_testPortalCacheReplicator.assertActionsCount(1);
+		_testCacheReplicator.assertActionsCount(1);
 
 		if (timeToLive) {
-			_testPortalCacheReplicator.assertPut(
+			_testCacheReplicator.assertPut(
 				_KEY_1, new MockMVCCModel(_VERSION_1), 10);
 		}
 		else {
-			_testPortalCacheReplicator.assertPut(
+			_testCacheReplicator.assertPut(
 				_KEY_1, new MockMVCCModel(_VERSION_1));
 		}
 
-		_testPortalCacheReplicator.reset();
+		_testCacheReplicator.reset();
 
 		// Put 2
 
@@ -311,8 +307,8 @@ public class MVCCPortalCacheTest {
 		_assertVersion(_VERSION_1, _mvccPortalCache.get(_KEY_1));
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
-		_testPortalCacheListener.assertActionsCount(0);
-		_testPortalCacheReplicator.assertActionsCount(0);
+		_testCacheListener.assertActionsCount(0);
+		_testCacheReplicator.assertActionsCount(0);
 
 		// Put 3
 
@@ -326,31 +322,31 @@ public class MVCCPortalCacheTest {
 		_assertVersion(_VERSION_2, _mvccPortalCache.get(_KEY_1));
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
-		_testPortalCacheListener.assertActionsCount(1);
+		_testCacheListener.assertActionsCount(1);
 
 		if (timeToLive) {
-			_testPortalCacheListener.assertUpdated(
+			_testCacheListener.assertUpdated(
 				_KEY_1, new MockMVCCModel(_VERSION_2), 10);
 		}
 		else {
-			_testPortalCacheListener.assertUpdated(
+			_testCacheListener.assertUpdated(
 				_KEY_1, new MockMVCCModel(_VERSION_2));
 		}
 
-		_testPortalCacheListener.reset();
+		_testCacheListener.reset();
 
-		_testPortalCacheReplicator.assertActionsCount(1);
+		_testCacheReplicator.assertActionsCount(1);
 
 		if (timeToLive) {
-			_testPortalCacheReplicator.assertUpdated(
+			_testCacheReplicator.assertUpdated(
 				_KEY_1, new MockMVCCModel(_VERSION_2), 10);
 		}
 		else {
-			_testPortalCacheReplicator.assertUpdated(
+			_testCacheReplicator.assertUpdated(
 				_KEY_1, new MockMVCCModel(_VERSION_2));
 		}
 
-		_testPortalCacheReplicator.reset();
+		_testCacheReplicator.reset();
 	}
 
 	private void _assertVersion(long version, MVCCModel mvccModel) {
@@ -371,9 +367,8 @@ public class MVCCPortalCacheTest {
 
 	private MVCCPortalCache<String, MVCCModel> _mvccPortalCache;
 	private PortalCache<String, MVCCModel> _portalCache;
-	private TestPortalCacheListener<String, MVCCModel> _testPortalCacheListener;
-	private TestPortalCacheReplicator<String, MVCCModel>
-		_testPortalCacheReplicator;
+	private TestCacheListener<String, MVCCModel> _testCacheListener;
+	private TestCacheReplicator<String, MVCCModel> _testCacheReplicator;
 
 	private static class MockMVCCModel implements MVCCModel {
 

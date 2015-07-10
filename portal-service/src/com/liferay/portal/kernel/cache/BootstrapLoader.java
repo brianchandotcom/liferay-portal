@@ -15,16 +15,12 @@
 package com.liferay.portal.kernel.cache;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
-public interface PortalCacheManagerListener {
+public interface BootstrapLoader {
 
-	public void dispose() throws PortalCacheException;
+	public boolean isAsynchronous();
 
-	public void init() throws PortalCacheException;
-
-	public void notifyPortalCacheAdded(String portalCacheName);
-
-	public void notifyPortalCacheRemoved(String portalCacheName);
+	public void load(String portalCacheManagerName, String portalCacheName);
 
 }

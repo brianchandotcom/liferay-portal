@@ -15,8 +15,8 @@
 package com.liferay.portal.cache.memory.internal;
 
 import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
+import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.cluster.ClusterLinkCallbackFactory;
 import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
@@ -44,7 +44,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	extends AbstractPortalCacheManager<K, V> {
 
 	@Override
-	public void reconfigurePortalCaches(URL configurationURL) {
+	public void reconfigureCaches(URL configurationURL) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -78,8 +78,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			_memoryPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedPortalCacheManagerListener.notifyPortalCacheAdded(
-				portalCacheName);
+			aggregatedCacheManagerListener.notifyCacheAdded(portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -105,25 +104,24 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			memoryPortalCache.destroy();
 		}
 
-		aggregatedPortalCacheManagerListener.dispose();
+		aggregatedCacheManagerListener.dispose();
 	}
 
 	@Override
-	protected void doRemovePortalCache(String portalCacheName) {
+	protected void doRemoveCache(String portalCacheName) {
 		MemoryPortalCache<K, V> memoryPortalCache = _memoryPortalCaches.remove(
 			portalCacheName);
 
 		memoryPortalCache.destroy();
 
-		aggregatedPortalCacheManagerListener.notifyPortalCacheRemoved(
-			portalCacheName);
+		aggregatedCacheManagerListener.notifyCacheRemoved(portalCacheName);
 	}
 
 	@Override
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		Map<CallbackConfiguration, PortalCacheListenerScope>
+		Map<CallbackConfiguration, CacheListenerScope>
 			cacheListenerConfigurations = null;
 		CallbackConfiguration bootstrapLoaderConfiguration = null;
 
@@ -137,7 +135,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			cacheListenerConfigurations = new HashMap<>();
 
 			cacheListenerConfigurations.put(
-				cacheListenerConfiguration, PortalCacheListenerScope.ALL);
+				cacheListenerConfiguration, CacheListenerScope.ALL);
 
 			bootstrapLoaderConfiguration = new CallbackConfiguration(
 				ClusterLinkCallbackFactory.INSTANCE, new Properties());
@@ -152,7 +150,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected String getPortalCacheManagerType() {
+	protected String getType() {
 		return PortalCacheManagerTypes.MEMORY;
 	}
 
@@ -161,7 +159,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		_memoryPortalCaches = new ConcurrentHashMap<>(
 			_cacheManagerInitialCapacity);
 
-		aggregatedPortalCacheManagerListener.init();
+		aggregatedCacheManagerListener.init();
 	}
 
 	protected volatile Props props;

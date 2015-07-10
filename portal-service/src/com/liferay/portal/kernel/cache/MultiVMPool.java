@@ -24,15 +24,15 @@ public interface MultiVMPool {
 
 	public void clear();
 
-	public PortalCache<? extends Serializable, ? extends Serializable>
-		getPortalCache(String portalCacheName);
+	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
+		String portalCacheName);
 
-	public PortalCache<? extends Serializable, ? extends Serializable>
-		getPortalCache(String portalCacheName, boolean blocking);
+	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
+		String portalCacheName, boolean blocking);
 
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
-		getPortalCacheManager();
+		getCacheManager();
 
-	public void removePortalCache(String portalCacheName);
+	public void removeCache(String portalCacheName);
 
 }

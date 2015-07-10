@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @author Edward Han
  * @author Shuyang Zhou
  */
-public interface PortalCacheListener<K extends Serializable, V> {
+public interface CacheListener<K extends Serializable, V> {
 
 	public void dispose();
 

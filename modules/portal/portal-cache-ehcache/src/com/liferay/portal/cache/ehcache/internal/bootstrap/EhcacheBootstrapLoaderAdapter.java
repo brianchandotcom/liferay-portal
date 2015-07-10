@@ -15,10 +15,10 @@
 package com.liferay.portal.cache.ehcache.internal.bootstrap;
 
 import com.liferay.portal.cache.ehcache.internal.EhcacheUnwrapUtil;
+import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -27,10 +27,9 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 /**
  * @author Tina Tian
  */
-public class EhcachePortalCacheBootstrapLoaderAdapter
-	implements PortalCacheBootstrapLoader {
+public class EhcacheBootstrapLoaderAdapter implements BootstrapLoader {
 
-	public EhcachePortalCacheBootstrapLoaderAdapter(
+	public EhcacheBootstrapLoaderAdapter(
 		BootstrapCacheLoader bootstrapCacheLoader) {
 
 		_bootstrapCacheLoader = bootstrapCacheLoader;
@@ -42,12 +41,9 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 	}
 
 	@Override
-	public void loadPortalCache(
-		String portalCacheManagerName, String portalCacheName) {
-
+	public void load(String portalCacheManagerName, String portalCacheName) {
 		PortalCacheManager<?, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
-				portalCacheManagerName);
+			PortalCacheProvider.getPortalCacheManager(portalCacheManagerName);
 
 		if (!portalCacheManager.isClusterAware()) {
 			_log.error(
@@ -57,14 +53,14 @@ public class EhcachePortalCacheBootstrapLoaderAdapter
 			return;
 		}
 
-		PortalCache<?, ?> portalCache = portalCacheManager.getPortalCache(
+		PortalCache<?, ?> portalCache = portalCacheManager.getCache(
 			portalCacheName);
 
 		_bootstrapCacheLoader.load(EhcacheUnwrapUtil.getEhcache(portalCache));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheBootstrapLoaderAdapter.class);
+		EhcacheBootstrapLoaderAdapter.class);
 
 	private final BootstrapCacheLoader _bootstrapCacheLoader;
 

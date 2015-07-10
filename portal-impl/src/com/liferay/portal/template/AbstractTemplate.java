@@ -294,7 +294,7 @@ public abstract class AbstractTemplate implements Template {
 		TemplateResource templateResource, String portalCacheName) {
 
 		if (!(templateResource instanceof CacheTemplateResource)) {
-			return MultiVMPoolUtil.getPortalCache(portalCacheName);
+			return MultiVMPoolUtil.getCache(portalCacheName);
 		}
 
 		CacheTemplateResource cacheTemplateResource =
@@ -304,10 +304,10 @@ public abstract class AbstractTemplate implements Template {
 			cacheTemplateResource.getInnerTemplateResource();
 
 		if (innerTemplateResource instanceof URLTemplateResource) {
-			return SingleVMPoolUtil.getPortalCache(portalCacheName);
+			return SingleVMPoolUtil.getCache(portalCacheName);
 		}
 
-		return MultiVMPoolUtil.getPortalCache(portalCacheName);
+		return MultiVMPoolUtil.getCache(portalCacheName);
 	}
 
 	private final TemplateContextHelper _templateContextHelper;

@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.cache.test;
-
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
-
-import java.io.Serializable;
+package com.liferay.portal.kernel.cache;
 
 /**
- * @author Tina Tian
+ * @author Shuyang Zhou
  */
-public class TestPortalCacheReplicator<K extends Serializable, V>
-	extends TestPortalCacheListener<K, V> implements PortalCacheReplicator {
+public interface CacheManagerListener {
+
+	public void dispose() throws PortalCacheException;
+
+	public void init() throws PortalCacheException;
+
+	public void notifyCacheAdded(String portalCacheName);
+
+	public void notifyCacheRemoved(String portalCacheName);
+
 }

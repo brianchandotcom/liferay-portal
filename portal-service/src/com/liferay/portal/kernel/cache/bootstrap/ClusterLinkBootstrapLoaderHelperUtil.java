@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.cache.bootstrap;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
@@ -134,8 +134,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		}
 
 		PortalCacheManager<? extends Serializable, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
-				portalCacheManagerName);
+			PortalCacheProvider.getPortalCacheManager(portalCacheManagerName);
 
 		if (!portalCacheManager.isClusterAware()) {
 			return;
@@ -229,8 +228,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 						try {
 							portalCache =
 								(PortalCache<Serializable, Serializable>)
-									portalCacheManager.getPortalCache(
-										(String)object);
+									portalCacheManager.getCache((String)object);
 						}
 						finally {
 							_skipBootstrapLoaderThreadLocal.remove();
@@ -387,20 +385,19 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 
 					PortalCacheManager<? extends Serializable, ?>
 						portalCacheManager =
-							PortalCacheManagerProvider.getPortalCacheManager(
+							PortalCacheProvider.getPortalCacheManager(
 								_portalCacheManagerName);
 
 					for (String portalCacheName : _portalCacheNames) {
 						PortalCache<Serializable, Serializable> portalCache =
 							(PortalCache<Serializable, Serializable>)
-							portalCacheManager.getPortalCache(portalCacheName);
+							portalCacheManager.getCache(portalCacheName);
 
 						if (portalCache == null) {
 							_skipBootstrapLoaderThreadLocal.set(Boolean.TRUE);
 
 							try {
-								portalCacheManager.getPortalCache(
-									portalCacheName);
+								portalCacheManager.getCache(portalCacheName);
 							}
 							finally {
 								_skipBootstrapLoaderThreadLocal.remove();

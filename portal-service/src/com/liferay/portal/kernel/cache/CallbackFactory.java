@@ -23,13 +23,12 @@ import java.util.Properties;
  */
 public interface CallbackFactory {
 
-	public PortalCacheBootstrapLoader createPortalCacheBootstrapLoader(
+	public BootstrapLoader createBootstrapLoader(Properties properties);
+
+	public <K extends Serializable, V> CacheListener<K, V> createCacheListener(
 		Properties properties);
 
-	public <K extends Serializable, V> PortalCacheListener<K, V>
-		createPortalCacheListener(Properties properties);
-
-	public PortalCacheManagerListener createPortalCacheManagerListener(
+	public CacheManagerListener createCacheManagerListener(
 		Properties properties);
 
 }

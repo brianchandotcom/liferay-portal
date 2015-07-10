@@ -1200,7 +1200,7 @@ public class SocialActivityCounterLocalServiceImpl
 
 	protected void clearFinderCache() {
 		PortalCache<String, SocialActivityCounter> portalCache =
-			MultiVMPoolUtil.getPortalCache(
+			MultiVMPoolUtil.getCache(
 				SocialActivityCounterFinder.class.getName());
 
 		portalCache.removeAll();

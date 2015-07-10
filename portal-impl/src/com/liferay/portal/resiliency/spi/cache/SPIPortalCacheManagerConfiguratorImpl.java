@@ -16,7 +16,7 @@ package com.liferay.portal.resiliency.spi.cache;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.proxy.TargetLocator;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
@@ -61,7 +61,7 @@ public class SPIPortalCacheManagerConfiguratorImpl
 			IntrabandProxyInstallationUtil.installSkeleton(
 				registrationReference, PortalCache.class,
 				new IntrabandPortalCacheTargetLocator(
-					portalCacheManager.getPortalCacheManagerName(), false));
+					portalCacheManager.getName(), false));
 
 		String[] skeletonProxyMethodSignatures = future.get();
 
@@ -75,7 +75,7 @@ public class SPIPortalCacheManagerConfiguratorImpl
 		future = IntrabandProxyInstallationUtil.installSkeleton(
 			registrationReference, PortalCacheManager.class,
 			new IntrabandPortalCacheTargetLocator(
-				portalCacheManager.getPortalCacheManagerName(), true));
+				portalCacheManager.getName(), true));
 
 		skeletonProxyMethodSignatures = future.get();
 
@@ -115,7 +115,7 @@ public class SPIPortalCacheManagerConfiguratorImpl
 				return _portalCacheManager;
 			}
 
-			return _portalCacheManager.getPortalCache(id);
+			return _portalCacheManager.getCache(id);
 		}
 
 		private void readObject(ObjectInputStream objectInputStream)
@@ -123,9 +123,8 @@ public class SPIPortalCacheManagerConfiguratorImpl
 
 			objectInputStream.defaultReadObject();
 
-			_portalCacheManager =
-				PortalCacheManagerProvider.getPortalCacheManager(
-					_portalCacheManagerName);
+			_portalCacheManager = PortalCacheProvider.getPortalCacheManager(
+				_portalCacheManagerName);
 		}
 
 		private final boolean _manager;

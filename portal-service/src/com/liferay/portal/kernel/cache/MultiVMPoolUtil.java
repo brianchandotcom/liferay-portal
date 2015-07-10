@@ -35,6 +35,25 @@ public class MultiVMPoolUtil {
 		getMultiVMPool().clear();
 	}
 
+	public static <K extends Serializable, V extends Serializable>
+		PortalCache<K, V> getCache(String portalCacheName) {
+
+		return (PortalCache<K, V>)getMultiVMPool().getCache(portalCacheName);
+	}
+
+	public static <K extends Serializable, V extends Serializable>
+		PortalCache<K, V> getCache(String portalCacheName, boolean blocking) {
+
+		return (PortalCache<K, V>)getMultiVMPool().getCache(
+			portalCacheName, blocking);
+	}
+
+	public static <K extends Serializable, V extends Serializable>
+		PortalCacheManager<K, V> getCacheManager() {
+
+		return (PortalCacheManager<K, V>)getMultiVMPool().getCacheManager();
+	}
+
 	public static MultiVMPool getMultiVMPool() {
 		PortalRuntimePermission.checkGetBeanProperty(MultiVMPoolUtil.class);
 
@@ -51,30 +70,8 @@ public class MultiVMPoolUtil {
 		return multiVMPool;
 	}
 
-	public static <K extends Serializable, V extends Serializable>
-		PortalCache<K, V> getPortalCache(String portalCacheName) {
-
-		return (PortalCache<K, V>)getMultiVMPool().getPortalCache(
-			portalCacheName);
-	}
-
-	public static <K extends Serializable, V extends Serializable>
-		PortalCache<K, V> getPortalCache(
-			String portalCacheName, boolean blocking) {
-
-		return (PortalCache<K, V>)getMultiVMPool().getPortalCache(
-			portalCacheName, blocking);
-	}
-
-	public static <K extends Serializable, V extends Serializable>
-		PortalCacheManager<K, V> getPortalCacheManager() {
-
-		return (PortalCacheManager<K, V>)getMultiVMPool().
-			getPortalCacheManager();
-	}
-
-	public static void removePortalCache(String portalCacheName) {
-		getMultiVMPool().removePortalCache(portalCacheName);
+	public static void removeCache(String portalCacheName) {
+		getMultiVMPool().removeCache(portalCacheName);
 	}
 
 	private MultiVMPoolUtil() {

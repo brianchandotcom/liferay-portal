@@ -15,13 +15,10 @@
 package com.liferay.portal.kernel.cache;
 
 /**
- * @author Tina Tian
+ * @author Edward Han
  */
-public interface PortalCacheBootstrapLoader {
+public enum CacheListenerScope {
 
-	public boolean isAsynchronous();
-
-	public void loadPortalCache(
-		String portalCacheManagerName, String portalCacheName);
+	ALL, LOCAL, REMOTE
 
 }

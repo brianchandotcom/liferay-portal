@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.ehcache.internal.distribution;
 
-import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheListenerAdapter;
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
+import com.liferay.portal.cache.ehcache.internal.event.EhcacheCacheListenerAdapter;
+import com.liferay.portal.kernel.cache.CacheReplicator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -30,12 +30,11 @@ import net.sf.ehcache.event.CacheEventListener;
 /**
  * @author Tina Tian
  */
-public class EhcachePortalCacheReplicatorAdapter
+public class EhcacheCacheReplicatorAdapter
 	<K extends Serializable, V extends Serializable>
-		extends EhcachePortalCacheListenerAdapter<K, V>
-		implements PortalCacheReplicator {
+		extends EhcacheCacheListenerAdapter<K, V> implements CacheReplicator {
 
-	public EhcachePortalCacheReplicatorAdapter(
+	public EhcacheCacheReplicatorAdapter(
 		CacheEventListener cacheEventListener) {
 
 		super(cacheEventListener);
@@ -81,7 +80,7 @@ public class EhcachePortalCacheReplicatorAdapter
 	private static final long _WAIT_TIME = 1000;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheReplicatorAdapter.class);
+		EhcacheCacheReplicatorAdapter.class);
 
 	static {
 		try {

@@ -90,6 +90,6 @@ public class JavaScriptBundleUtil {
 		JavaScriptBundleUtil.class.getName();
 
 	private static final PortalCache<String, String[]> _portalCache =
-		SingleVMPoolUtil.getPortalCache(_CACHE_NAME);
+		SingleVMPoolUtil.getCache(_CACHE_NAME);
 
 }

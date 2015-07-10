@@ -61,7 +61,7 @@ public class JavaScriptExecutorTest extends ScriptingExecutorTestCase {
 		SingleVMPool singleVMPool = Mockito.mock(SingleVMPool.class);
 
 		Mockito.when(
-			singleVMPool.getPortalCache(Mockito.anyString())
+			singleVMPool.getCache(Mockito.anyString())
 		).thenReturn(
 			portalCache
 		);

@@ -403,7 +403,7 @@ public class VelocityTemplateTest {
 						RandomTestUtil.randomString());
 
 			Mockito.when(
-				multiVMPool.getPortalCache(Mockito.anyString())
+				multiVMPool.getCache(Mockito.anyString())
 			).thenAnswer(
 				new Answer
 					<PortalCache
@@ -415,7 +415,7 @@ public class VelocityTemplateTest {
 							InvocationOnMock invocationOnMock)
 						throws Throwable {
 
-						return portalCacheManager.getPortalCache(
+						return portalCacheManager.getCache(
 							RandomTestUtil.randomString());
 					}
 
@@ -426,7 +426,7 @@ public class VelocityTemplateTest {
 			SingleVMPool singleVMPool = Mockito.mock(SingleVMPool.class);
 
 			Mockito.when(
-				singleVMPool.getPortalCache(Mockito.anyString())
+				singleVMPool.getCache(Mockito.anyString())
 			).thenAnswer(
 				new Answer
 					<PortalCache
@@ -438,7 +438,7 @@ public class VelocityTemplateTest {
 							InvocationOnMock invocationOnMock)
 						throws Throwable {
 
-						return portalCacheManager.getPortalCache("test");
+						return portalCacheManager.getCache("test");
 					}
 
 				});

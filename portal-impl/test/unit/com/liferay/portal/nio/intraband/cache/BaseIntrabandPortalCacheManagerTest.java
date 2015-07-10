@@ -53,7 +53,7 @@ public class BaseIntrabandPortalCacheManagerTest {
 				new MockRegistrationReference(new MockIntraband()),
 				WarnLogExceptionHandler.INSTANCE);
 
-		Assert.assertNotNull(portalCacheManager.getPortalCache("PortalCache"));
+		Assert.assertNotNull(portalCacheManager.getCache("PortalCache"));
 	}
 
 }

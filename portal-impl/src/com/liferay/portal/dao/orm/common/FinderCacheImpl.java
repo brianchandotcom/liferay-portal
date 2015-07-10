@@ -14,13 +14,13 @@
 
 package com.liferay.portal.dao.orm.common;
 
+import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -54,7 +54,7 @@ import org.apache.commons.collections.map.LRUMap;
  */
 @DoPrivileged
 public class FinderCacheImpl
-	implements PortalCacheManagerListener, CacheRegistryItem, FinderCache {
+	implements CacheManagerListener, CacheRegistryItem, FinderCache {
 
 	public static final String CACHE_NAME = FinderCache.class.getName();
 
@@ -75,10 +75,9 @@ public class FinderCacheImpl
 
 					PortalCacheManager
 						<? extends Serializable, ? extends Serializable>
-							portalCacheManager =
-								_multiVMPool.getPortalCacheManager();
+							portalCacheManager = _multiVMPool.getCacheManager();
 
-					portalCacheManager.registerPortalCacheManagerListener(
+					portalCacheManager.registerCacheManagerListener(
 						FinderCacheImpl.this);
 				}
 
@@ -188,11 +187,11 @@ public class FinderCacheImpl
 	}
 
 	@Override
-	public void notifyPortalCacheAdded(String portalCacheName) {
+	public void notifyCacheAdded(String portalCacheName) {
 	}
 
 	@Override
-	public void notifyPortalCacheRemoved(String portalCacheName) {
+	public void notifyCacheRemoved(String portalCacheName) {
 		_portalCaches.remove(portalCacheName);
 	}
 
@@ -242,7 +241,7 @@ public class FinderCacheImpl
 
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-		_multiVMPool.removePortalCache(groupKey);
+		_multiVMPool.removeCache(groupKey);
 	}
 
 	@Override
@@ -280,10 +279,8 @@ public class FinderCacheImpl
 			String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 			portalCache =
-				(PortalCache<Serializable, Serializable>)
-					_multiVMPool.getPortalCache(
-						groupKey,
-						PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
+				(PortalCache<Serializable, Serializable>)_multiVMPool.getCache(
+					groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
 			PortalCache<Serializable, Serializable> previousPortalCache =
 				_portalCaches.putIfAbsent(className, portalCache);

@@ -55,9 +55,11 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			ConfigurationAdmin configurationAdmin = bundleContext.getService(
 				serviceReference);
 
+			String cmisConfigurationPid =
+				"com.liferay.portal.store.cmis.configuration.CMISConfiguration";
+
 			_cmisConfiguration = configurationAdmin.getConfiguration(
-				"com.liferay.portal.store.cmis.configuration." +
-					"CMISConfiguration", null);
+				cmisConfigurationPid, null);
 
 			Dictionary<String, Object> properties = new Hashtable<>();
 

@@ -10,6 +10,12 @@
 	.item-preview:hover {
 		cursor: pointer;
 	}
+
+	.aspect-ratio  a.item-preview {
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 }
 
 .lfr-item-viewer-close {

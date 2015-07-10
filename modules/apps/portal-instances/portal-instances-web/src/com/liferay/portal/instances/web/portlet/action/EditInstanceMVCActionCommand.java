@@ -21,8 +21,8 @@ import com.liferay.portal.NoSuchCompanyException;
 import com.liferay.portal.RequiredCompanyException;
 import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Company;
@@ -36,14 +36,18 @@ import javax.portlet.ActionResponse;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES,
 		"mvc.command.name=/portal_instances/edit_instance"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 

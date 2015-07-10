@@ -63,6 +63,11 @@ public class CommentsUserNotificationHandler
 	}
 
 	@Override
+	protected String getBodyContent(JSONObject jsonObject) {
+		return HtmlUtil.stripHtml(super.getBodyContent(jsonObject));
+	}
+
+	@Override
 	protected String getTitle(
 		JSONObject jsonObject, AssetRenderer assetRenderer,
 		ServiceContext serviceContext) {

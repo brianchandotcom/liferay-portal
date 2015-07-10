@@ -4845,8 +4845,6 @@ module.framework.properties.osgi.console=11312</echo>
 				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
-				<property name="test.app.server.jboss.eap.version" value="6.1" />
-
 				<app-server-properties-update>
 					app.server.type=jboss
 					app.server.jboss.version=6.1.0
@@ -4862,8 +4860,6 @@ module.framework.properties.osgi.console=11312</echo>
 				</antcall>
 
 				<app-server-properties-reset />
-
-				<var name="test.app.server.jboss.eap.version" unset="true" />
 			</then>
 			<elseif>
 				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
@@ -5145,7 +5141,7 @@ plugins.includes=marketplace-portlet</echo>
 				<if>
 					<and>
 						<equals arg1="${app.server.type}" arg2="jboss" />
-						<equals arg1="${test.app.server.jboss.eap.version}" arg2="6.1" />
+						<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
 					</and>
 					<then>
 						<ant antfile="build-dist.xml" target="unzip-jboss" inheritAll="false" />

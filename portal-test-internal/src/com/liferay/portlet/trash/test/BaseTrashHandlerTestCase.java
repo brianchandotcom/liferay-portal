@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.BaseModel;
@@ -69,6 +70,9 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -81,9 +85,6 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -142,12 +143,6 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testMoveBaseModelToTrashIndexable() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -155,9 +150,15 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
@@ -167,7 +168,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount + 1,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -178,6 +178,9 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testMoveBaseModelToTrashIsNotVisible() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 
+		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
+			(WhenIsAssetableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -187,9 +190,6 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
-			(WhenIsAssetableBaseModel)this;
 
 		Assert.assertFalse(
 			whenIsAssetableBaseModel.isAssetEntryVisible(
@@ -275,12 +275,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -288,9 +282,15 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
@@ -307,7 +307,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -319,6 +318,9 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+
+		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
+			(WhenIsAssetableBaseModel)this;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -336,9 +338,6 @@ public abstract class BaseTrashHandlerTestCase {
 			getBaseModelClassName());
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
-
-		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
-			(WhenIsAssetableBaseModel)this;
 
 		Assert.assertNull(whenIsAssetableBaseModel.fetchAssetEntry(baseModel));
 	}
@@ -370,7 +369,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount,
 			getNotInTrashBaseModelsCount(parentBaseModel));
-
 		Assert.assertEquals(1, getDeletionSystemEventCount(trashHandler, -1));
 	}
 
@@ -379,12 +377,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasDraftStatus);
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -392,9 +384,15 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
 
 		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
@@ -411,7 +409,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -422,6 +419,9 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasDraftStatus);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+
+		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
+			(WhenIsAssetableBaseModel)this;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -439,9 +439,6 @@ public abstract class BaseTrashHandlerTestCase {
 			getBaseModelClassName());
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
-
-		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
-			(WhenIsAssetableBaseModel)this;
 
 		Assert.assertNull(whenIsAssetableBaseModel.fetchAssetEntry(baseModel));
 	}
@@ -484,12 +481,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -497,9 +488,15 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
@@ -517,7 +514,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount + 1,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -529,6 +525,9 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+
+		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
+			(WhenIsAssetableBaseModel)this;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -549,9 +548,6 @@ public abstract class BaseTrashHandlerTestCase {
 			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
-		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
-			(WhenIsAssetableBaseModel)this;
 
 		Assert.assertTrue(
 			whenIsAssetableBaseModel.isAssetEntryVisible(
@@ -657,12 +653,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasDraftStatus);
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -670,9 +660,15 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
 
 		baseModel = addDraftBaseModel(parentBaseModel, serviceContext);
 
@@ -688,7 +684,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -701,6 +696,9 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenHasDraftStatus);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
+
+		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
+			(WhenIsAssetableBaseModel)this;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -719,9 +717,6 @@ public abstract class BaseTrashHandlerTestCase {
 			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
-		WhenIsAssetableBaseModel whenIsAssetableBaseModel =
-			(WhenIsAssetableBaseModel)this;
 
 		Assert.assertFalse(
 			whenIsAssetableBaseModel.isAssetEntryVisible(
@@ -827,19 +822,19 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashBaseModelAndParent() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -852,7 +847,8 @@ public abstract class BaseTrashHandlerTestCase {
 			TrashHandlerRegistryUtil.getTrashHandler(
 				whenHasParent.getParentBaseModelClassName());
 
-		if (getBaseModelClassName().equals(
+		if (Validator.equals(
+				getBaseModelClassName(),
 				whenHasParent.getParentBaseModelClassName())) {
 
 			Assert.assertEquals(
@@ -882,6 +878,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenHasParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -891,8 +889,6 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -915,6 +911,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsMoveableFromTrashBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -929,8 +927,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
-		WhenHasParent whenHasParent = (WhenHasParent)this;
-
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
 
@@ -944,7 +940,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount,
 			getNotInTrashBaseModelsCount(parentBaseModel));
-
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
@@ -965,6 +960,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeFalse(this instanceof WhenIsMoveableFromTrashBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -978,8 +975,6 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1012,6 +1007,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsMoveableFromTrashBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1025,8 +1022,6 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1054,6 +1049,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsMoveableFromTrashBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1063,8 +1060,6 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1089,6 +1084,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenHasParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1098,8 +1095,6 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1112,6 +1107,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1121,8 +1118,6 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1142,6 +1137,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1149,8 +1146,6 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1180,6 +1175,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsRestorableBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1187,8 +1184,6 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1246,6 +1241,9 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashDuplicate() throws Exception {
 		Assume.assumeTrue(this instanceof WhenCanBeDuplicatedInTrash);
 
+		WhenCanBeDuplicatedInTrash whenCanBeDuplicatedInTrash =
+			(WhenCanBeDuplicatedInTrash)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1261,9 +1259,6 @@ public abstract class BaseTrashHandlerTestCase {
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
-		WhenCanBeDuplicatedInTrash whenCanBeDuplicatedInTrash =
-			(WhenCanBeDuplicatedInTrash)this;
 
 		String baseModelName = whenCanBeDuplicatedInTrash.getBaseModelName(
 			baseModel);
@@ -1295,6 +1290,8 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashGrandparentBaseModel() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1311,9 +1308,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		WhenHasParent whenHasParent = (WhenHasParent)this;
-
-		if (getBaseModelClassName().equals(
+		if (Validator.equals(
+				getBaseModelClassName(),
 				whenHasParent.getParentBaseModelClassName())) {
 
 			Assert.assertEquals(
@@ -1345,6 +1341,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1358,8 +1356,6 @@ public abstract class BaseTrashHandlerTestCase {
 			serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
@@ -1382,6 +1378,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1393,8 +1391,6 @@ public abstract class BaseTrashHandlerTestCase {
 			serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
@@ -1418,6 +1414,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1429,8 +1427,6 @@ public abstract class BaseTrashHandlerTestCase {
 			serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
@@ -1458,6 +1454,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableParentModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1469,8 +1467,6 @@ public abstract class BaseTrashHandlerTestCase {
 			serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
@@ -1496,6 +1492,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1507,8 +1505,6 @@ public abstract class BaseTrashHandlerTestCase {
 			serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
@@ -1528,6 +1524,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableParentModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1539,8 +1537,6 @@ public abstract class BaseTrashHandlerTestCase {
 			serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
@@ -1575,19 +1571,19 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashMyBaseModel() throws Exception {
-		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenHasMyBaseModel);
+		Assume.assumeTrue(this instanceof WhenHasParent);
+
+		WhenHasMyBaseModel whenHasMyBaseModel = (WhenHasMyBaseModel)this;
+
+		int initialBaseModelsCount = whenHasMyBaseModel.getMineBaseModelsCount(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
-
-		WhenHasMyBaseModel whenHasMyBaseModel = (WhenHasMyBaseModel)this;
-
-		int initialBaseModelsCount = whenHasMyBaseModel.getMineBaseModelsCount(
-			group.getGroupId(), TestPropsValues.getUserId());
 
 		addBaseModel(parentBaseModel, serviceContext);
 
@@ -1611,6 +1607,8 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashParent() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1622,8 +1620,6 @@ public abstract class BaseTrashHandlerTestCase {
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1639,7 +1635,8 @@ public abstract class BaseTrashHandlerTestCase {
 			TrashHandlerRegistryUtil.getTrashHandler(
 				whenHasParent.getParentBaseModelClassName());
 
-		if (getBaseModelClassName().equals(
+		if (Validator.equals(
+				getBaseModelClassName(),
 				whenHasParent.getParentBaseModelClassName())) {
 
 			Assert.assertEquals(
@@ -1667,6 +1664,8 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashParentAndDeleteGroupTrashEntries() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1674,8 +1673,6 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1697,6 +1694,8 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashParentAndDeleteParent() throws Exception {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1708,8 +1707,6 @@ public abstract class BaseTrashHandlerTestCase {
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1743,6 +1740,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsMoveableFromTrashBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1750,8 +1749,6 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1776,9 +1773,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsMoveableFromTrashBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -1786,12 +1780,15 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1821,9 +1818,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -1831,12 +1825,15 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1852,6 +1849,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1859,8 +1858,6 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1879,6 +1876,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenHasParent);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1886,8 +1885,6 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1900,6 +1897,8 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1907,8 +1906,6 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1926,12 +1923,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenHasParent);
 		Assume.assumeTrue(this instanceof WhenHasRecentBaseModelCount);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenHasRecentBaseModelCount whenHasRecentBaseModelCount =
 			(WhenHasRecentBaseModelCount)this;
 
@@ -1939,14 +1930,20 @@ public abstract class BaseTrashHandlerTestCase {
 			whenHasRecentBaseModelCount.getRecentBaseModelsCount(
 				group.getGroupId());
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
 		addBaseModel(parentBaseModel, serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
 			whenHasRecentBaseModelCount.getRecentBaseModelsCount(
 				group.getGroupId()));
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -1961,6 +1958,9 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashVersionBaseModel() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1972,9 +1972,6 @@ public abstract class BaseTrashHandlerTestCase {
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -1993,6 +1990,9 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2004,9 +2004,6 @@ public abstract class BaseTrashHandlerTestCase {
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2030,12 +2027,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -2043,14 +2034,20 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
 		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
 			(WhenIsUpdatableBaseModel)this;
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2066,7 +2063,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -2080,6 +2076,9 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2087,9 +2086,6 @@ public abstract class BaseTrashHandlerTestCase {
 			group, serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2111,6 +2107,9 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2122,9 +2121,6 @@ public abstract class BaseTrashHandlerTestCase {
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2151,12 +2147,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -2164,14 +2154,20 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
 		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
 			(WhenIsUpdatableBaseModel)this;
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2188,7 +2184,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount + 1,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -2202,6 +2197,9 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2210,11 +2208,11 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
-
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		WhenIsAssetableBaseModel whenIsAssetableModel =
+			(WhenIsAssetableBaseModel)this;
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
@@ -2223,9 +2221,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
-
-		WhenIsAssetableBaseModel whenIsAssetableModel =
-			(WhenIsAssetableBaseModel)this;
 
 		Assert.assertTrue(
 			whenIsAssetableModel.isAssetEntryVisible(
@@ -2237,12 +2232,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -2250,14 +2239,20 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
 
-		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
 		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
 			(WhenIsUpdatableBaseModel)this;
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2268,7 +2263,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount + 1,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -2280,6 +2274,9 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsAssetableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2288,16 +2285,13 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
-
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
 		WhenIsAssetableBaseModel whenIsAssetableModel =
 			(WhenIsAssetableBaseModel)this;
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertFalse(
 			whenIsAssetableModel.isAssetEntryVisible(
@@ -2310,32 +2304,32 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsVersionableBaseModel);
 
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
+		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-
-		List<Integer> originalStatuses = new ArrayList<>();
-
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
-			(WhenIsVersionableBaseModel)this;
 
 		baseModel = whenIsVersionableBaseModel.expireBaseModel(
 			baseModel, serviceContext);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		List<Integer> originalStatuses = new ArrayList<>();
 
 		originalStatuses.add(workflowedModel.getStatus());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2349,11 +2343,11 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		workflowedModel = getWorkflowedModel(baseModel);
 
 		originalStatuses.add(workflowedModel.getStatus());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -2369,11 +2363,14 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenHasParent);
-		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeFalse(this instanceof WhenIsMoveableFromTrashBaseModel);
 		Assume.assumeTrue(
 			this instanceof WhenIsRestorableParentBaseModelFromTrash);
+		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsVersionableBaseModel);
+
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -2381,24 +2378,21 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		List<Integer> originalStatuses = new ArrayList<>();
-
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
-			(WhenIsVersionableBaseModel)this;
 
 		baseModel = whenIsVersionableBaseModel.expireBaseModel(
 			baseModel, serviceContext);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		List<Integer> originalStatuses = new ArrayList<>();
 
 		originalStatuses.add(workflowedModel.getStatus());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2412,11 +2406,11 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		workflowedModel = getWorkflowedModel(baseModel);
 
 		originalStatuses.add(workflowedModel.getStatus());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -2452,6 +2446,9 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsVersionableBaseModel);
 
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -2462,24 +2459,21 @@ public abstract class BaseTrashHandlerTestCase {
 			parentBaseModel);
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
-		List<Integer> originalStatuses = new ArrayList<>();
-
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
-			(WhenIsVersionableBaseModel)this;
 
 		baseModel = whenIsVersionableBaseModel.expireBaseModel(
 			baseModel, serviceContext);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		List<Integer> originalStatuses = new ArrayList<>();
 
 		originalStatuses.add(workflowedModel.getStatus());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2493,11 +2487,11 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		workflowedModel = getWorkflowedModel(baseModel);
 
 		originalStatuses.add(workflowedModel.getStatus());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -2528,30 +2522,30 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsVersionableBaseModel);
 
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		List<Integer> originalStatuses = new ArrayList<>();
-
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
-			(WhenIsVersionableBaseModel)this;
 
 		baseModel = whenIsVersionableBaseModel.expireBaseModel(
 			baseModel, serviceContext);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		List<Integer> originalStatuses = new ArrayList<>();
 
 		originalStatuses.add(workflowedModel.getStatus());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2565,11 +2559,11 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		workflowedModel = getWorkflowedModel(baseModel);
 
 		originalStatuses.add(workflowedModel.getStatus());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -2595,30 +2589,30 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsVersionableBaseModel);
 
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		List<Integer> originalStatuses = new ArrayList<>();
-
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
-			(WhenIsVersionableBaseModel)this;
 
 		baseModel = whenIsVersionableBaseModel.expireBaseModel(
 			baseModel, serviceContext);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		List<Integer> originalStatuses = new ArrayList<>();
 
 		originalStatuses.add(workflowedModel.getStatus());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2632,11 +2626,11 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		workflowedModel = getWorkflowedModel(baseModel);
 
 		originalStatuses.add(workflowedModel.getStatus());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());
@@ -2647,10 +2641,10 @@ public abstract class BaseTrashHandlerTestCase {
 		whenIsMoveableFromTrashBaseModel.moveBaseModelFromTrash(
 			baseModel, group, serviceContext);
 
-		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
 		WhenIsAssetableBaseModel whenIsAssetableModel =
 			(WhenIsAssetableBaseModel)this;
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertTrue(
 			whenIsAssetableModel.isAssetEntryVisible(
@@ -2663,12 +2657,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsVersionableBaseModel);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
 
@@ -2676,28 +2664,34 @@ public abstract class BaseTrashHandlerTestCase {
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		int initialTrashEntriesSearchCount =
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
 				whenIsIndexableBaseModel.getSearchKeywords(), serviceContext);
 
-		List<Integer> originalStatuses = new ArrayList<>();
-
-		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
 		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
 			(WhenIsVersionableBaseModel)this;
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
 		baseModel = whenIsVersionableBaseModel.expireBaseModel(
 			baseModel, serviceContext);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		List<Integer> originalStatuses = new ArrayList<>();
 
 		originalStatuses.add(workflowedModel.getStatus());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2719,7 +2713,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsSearchCount + 1,
 			whenIsIndexableBaseModel.searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId()));
-
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			whenIsIndexableBaseModel.searchTrashEntriesCount(
@@ -2733,30 +2726,30 @@ public abstract class BaseTrashHandlerTestCase {
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsVersionableBaseModel);
 
+		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
+			(WhenIsVersionableBaseModel)this;
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		List<Integer> originalStatuses = new ArrayList<>();
-
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
-
-		WhenIsVersionableBaseModel whenIsVersionableBaseModel =
-			(WhenIsVersionableBaseModel)this;
 
 		baseModel = whenIsVersionableBaseModel.expireBaseModel(
 			baseModel, serviceContext);
 
+		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
+			(WhenIsUpdatableBaseModel)this;
+
 		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		List<Integer> originalStatuses = new ArrayList<>();
 
 		originalStatuses.add(workflowedModel.getStatus());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		WhenIsUpdatableBaseModel whenIsUpdatableBaseModel =
-			(WhenIsUpdatableBaseModel)this;
 
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
@@ -2770,11 +2763,11 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = whenIsUpdatableBaseModel.updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
+		WhenHasParent whenHasParent = (WhenHasParent)this;
+
 		workflowedModel = getWorkflowedModel(baseModel);
 
 		originalStatuses.add(workflowedModel.getStatus());
-
-		WhenHasParent whenHasParent = (WhenHasParent)this;
 
 		whenHasParent.moveParentBaseModelToTrash(
 			(Long)parentBaseModel.getPrimaryKeyObj());

@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -77,8 +77,9 @@ public class BlogsContentEditorConfigContributor
 		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
 		String eventName) {
 
-		Set<ItemSelectorReturnType>
-			blogsContentEditorDesiredItemSelectorReturnTypes = new HashSet<>();
+		List<ItemSelectorReturnType>
+			blogsContentEditorDesiredItemSelectorReturnTypes =
+				new ArrayList<>();
 
 		blogsContentEditorDesiredItemSelectorReturnTypes.add(
 			new UploadableFileReturnType());

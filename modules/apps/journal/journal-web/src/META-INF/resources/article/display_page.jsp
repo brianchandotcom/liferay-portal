@@ -113,7 +113,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion();
 
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new ArrayList<ItemSelectorReturnType>();
 
 		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
 

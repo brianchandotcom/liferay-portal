@@ -27,9 +27,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -83,8 +83,8 @@ public class WikiAttachmentEditorConfigContributor
 		ItemSelectorCriterion attachmentItemSelectorCriterion =
 			new WikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey);
 
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new HashSet<>();
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 

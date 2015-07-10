@@ -21,14 +21,14 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -61,7 +61,7 @@ public class BlogsItemSelectorView
 	}
 
 	@Override
-	public Set<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -106,9 +106,9 @@ public class BlogsItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	private static final Set<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
-			SetUtil.fromArray(
+	private static final List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
 					new FileEntryItemSelectorReturnType(),
 					new UploadableFileReturnType(),

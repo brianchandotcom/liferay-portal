@@ -14,7 +14,7 @@
 
 package com.liferay.item.selector;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -23,17 +23,17 @@ public abstract class BaseItemSelectorCriterion
 	implements ItemSelectorCriterion {
 
 	@Override
-	public Set<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
+	public List<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
 		return _desiredItemSelectorReturnTypes;
 	}
 
 	@Override
 	public void setDesiredItemSelectorReturnTypes(
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
 	}
 
-	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
+	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 
 }

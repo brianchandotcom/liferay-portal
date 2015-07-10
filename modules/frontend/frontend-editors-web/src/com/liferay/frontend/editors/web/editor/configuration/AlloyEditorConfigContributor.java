@@ -32,11 +32,11 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -305,8 +305,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
 		String eventName) {
 
-		Set<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
-			new HashSet<>();
+		List<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
+			new ArrayList<>();
 
 		ItemSelectorReturnType urlItemSelectorReturnType =
 			new URLItemSelectorReturnType();
@@ -328,8 +328,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
 
-		Set<ItemSelectorReturnType> imageDesiredItemSelectorReturnTypes =
-			new HashSet<>();
+		List<ItemSelectorReturnType> imageDesiredItemSelectorReturnTypes =
+			new ArrayList<>();
 
 		imageDesiredItemSelectorReturnTypes.add(urlItemSelectorReturnType);
 

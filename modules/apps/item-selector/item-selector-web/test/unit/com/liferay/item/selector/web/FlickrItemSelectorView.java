@@ -16,14 +16,14 @@ package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -42,7 +42,7 @@ public class FlickrItemSelectorView
 	}
 
 	@Override
-	public Set<ItemSelectorReturnType>
+	public List<ItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
 		return _supportedItemSelectorReturnTypes;
@@ -66,9 +66,9 @@ public class FlickrItemSelectorView
 			"<html>" + FlickrItemSelectorView.class.getName() + "</html>");
 	}
 
-	private static final Set<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
-			SetUtil.fromArray(
+	private static final List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
 					new TestURLItemSelectorReturnType()
 				}));

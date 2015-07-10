@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -37,7 +37,7 @@ import javax.servlet.jsp.PageContext;
 public class BrowserTag extends IncludeTag {
 
 	public void setDesiredItemSelectorReturnTypes(
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
 	}
@@ -149,8 +149,9 @@ public class BrowserTag extends IncludeTag {
 			getDraggableFileReturnType());
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:existingFileEntryReturnType",
-			ItemSelectorBrowserReturnTypeUtil.getExistingFileEntryReturnType(
-				_desiredItemSelectorReturnTypes));
+			ItemSelectorBrowserReturnTypeUtil.
+				getFirstAvailableExistingFileEntryReturnType(
+					_desiredItemSelectorReturnTypes));
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);
@@ -172,7 +173,7 @@ public class BrowserTag extends IncludeTag {
 
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
-	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
+	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
 	private PortletURL _displayStyleURL;
 	private String _itemSelectedEventName;

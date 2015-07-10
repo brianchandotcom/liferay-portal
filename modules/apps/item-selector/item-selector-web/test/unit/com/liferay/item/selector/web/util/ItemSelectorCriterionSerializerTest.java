@@ -22,10 +22,10 @@ import com.liferay.item.selector.web.TestURLItemSelectorReturnType;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
@@ -41,8 +41,8 @@ public class ItemSelectorCriterionSerializerTest {
 	public void setUp() {
 		_flickrItemSelectorCriterion = new FlickrItemSelectorCriterion();
 
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new HashSet<>();
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(_testStringItemSelectorReturnType);
 		desiredItemSelectorReturnTypes.add(_testURLItemSelectorReturnType);
@@ -64,8 +64,8 @@ public class ItemSelectorCriterionSerializerTest {
 
 	@Test
 	public void testGetProperties() {
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new HashSet<>();
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(_testURLItemSelectorReturnType);
 
@@ -119,8 +119,8 @@ public class ItemSelectorCriterionSerializerTest {
 			new String[] {"tag1", "tag2", "tag3"},
 			_flickrItemSelectorCriterion.getTags());
 
-		Set<ItemSelectorReturnType> expectedDesiredItemSelectorReturnTypes =
-			new HashSet<>();
+		List<ItemSelectorReturnType> expectedDesiredItemSelectorReturnTypes =
+			new ArrayList<>();
 
 		expectedDesiredItemSelectorReturnTypes.add(
 			_testURLItemSelectorReturnType);

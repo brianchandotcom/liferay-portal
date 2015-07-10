@@ -194,7 +194,6 @@ page import="com.liferay.util.RSSUtil" %>
 page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
-page import="java.util.HashSet" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@

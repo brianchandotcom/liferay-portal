@@ -28,10 +28,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactory;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -53,8 +52,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void setUp() {
 		_flickrItemSelectorCriterion = new FlickrItemSelectorCriterion();
 
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new HashSet<>();
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(_testURLItemSelectorReturnType);
 
@@ -78,7 +77,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		_mediaItemSelectorCriterion.setFileExtension("jpg");
 		_mediaItemSelectorCriterion.setMaxSize(2048);
 
-		desiredItemSelectorReturnTypes = new HashSet<>();
+		desiredItemSelectorReturnTypes = new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(
 			new TestFileEntryItemSelectorReturnType());

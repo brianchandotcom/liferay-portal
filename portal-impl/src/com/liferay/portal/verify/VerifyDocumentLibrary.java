@@ -461,7 +461,6 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		DLFileEntryMetadataLocalServiceUtil.deleteFileEntryMetadata(
 			dlFileEntryMetadata);
-
 	}
 
 	@Override

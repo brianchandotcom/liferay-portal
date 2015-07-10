@@ -51,10 +51,14 @@
 }
 
 .lfr-item-viewer-close {
-	font-size: 24px;
 	left: 20px;
 	margin-top: 5px;
 	text-shadow: none;
+
+	&.image-viewer-close {
+		font-size: 16px;
+		padding-bottom: 3px;
+	}
 
 	.glyphicon {
 		font-size: 0.8em;
@@ -71,4 +75,8 @@
 	float: right;
 	text-align: left;
 	width: 300px;
+
+	p {
+		line-height: 16px;
+	}
 }

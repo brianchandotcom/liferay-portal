@@ -7,6 +7,8 @@ AUI.add(
 
 		var CSS_ACTIVE = 'active';
 
+		var CSS_CAPTION = A.getClassName('image', 'viewer', 'caption');
+
 		var CSS_IMAGE_VIEWER = A.getClassName('image', 'viewer');
 
 		var CSS_IMAGE_VIEWER_BASE = A.getClassName(CSS_IMAGE_VIEWER, 'base');
@@ -92,6 +94,8 @@ AUI.add(
 				NS: 'lfr-item-viewer',
 
 				prototype: {
+					TPL_CAPTION: '<p class="' + CSS_CAPTION + '"></p>',
+
 					TPL_CONTROL_LEFT: '<a class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_LEFT_BASE + ' ' + CSS_FOOTER_CONTROL_LEFT + '" href="javascript:;">' +
 						'<span class="glyphicon glyphicon-chevron-left"></span>' +
 					'</a>',

@@ -2437,8 +2437,8 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(App app, boolean isNew) {
-		if (isNew) {
+	protected void cacheUniqueFindersCache(App app) {
+		if (app.isNew()) {
 			Object[] args = new Object[] { app.getRemoteAppId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args,
@@ -2715,7 +2715,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			AppImpl.class, app.getPrimaryKey(), app, false);
 
 		clearUniqueFindersCache(app);
-		cacheUniqueFindersCache(app, isNew);
+		cacheUniqueFindersCache(app);
 
 		app.resetOriginalValues();
 
@@ -3102,11 +3102,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
-	}
-
-	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
-		return AppModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

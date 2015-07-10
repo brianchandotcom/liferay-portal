@@ -43,15 +43,7 @@ public interface DDMTemplateManager {
 	public DDMTemplate fetchTemplate(
 		long groupId, long classNameId, String templateKey);
 
-	public DDMTemplate fetchTemplate(
-			long groupId, long classNameId, String templateKey,
-			boolean includeAncestorTemplates)
-		throws PortalException;
-
 	public DDMTemplate getTemplate(long templateId) throws PortalException;
-
-	public DDMTemplate getTemplateByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException;
 
 	public List<DDMTemplate> getTemplates(
 		long[] groupIds, long classNameId, long classPK);

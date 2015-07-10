@@ -56,8 +56,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 					translate(ddmFormLayout), storageType, type,
 					serviceContext);
 
-			return BeanPropertiesUtil.deepCopyProperties(
-				structure, DDMStructureImpl.class);
+			return new DDMStructureImpl(structure);
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -83,8 +82,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 				structure = _ddmStructureLocalService.fetchStructure(
 					groupId, classNameId, structureKey);
 
-			return BeanPropertiesUtil.deepCopyProperties(
-				structure, DDMStructureImpl.class);
+			return new DDMStructureImpl(structure);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -103,8 +101,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 					_ddmStructureLocalService.fetchDDMStructureByUuidAndGroupId(
 						uuid, groupId);
 
-			return BeanPropertiesUtil.deepCopyProperties(
-				structure, DDMStructureImpl.class);
+			return new DDMStructureImpl(structure);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -127,9 +124,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			for (com.liferay.portlet.dynamicdatamapping.model.DDMStructure
 					structure : structures) {
 
-				ddmStructures.add(
-					BeanPropertiesUtil.deepCopyProperties(
-						structure, DDMStructureImpl.class));
+				ddmStructures.add(new DDMStructureImpl(structure));
 			}
 
 			return ddmStructures;
@@ -147,8 +142,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			com.liferay.portlet.dynamicdatamapping.model.DDMStructure
 				structure = _ddmStructureLocalService.getStructure(structureId);
 
-			return BeanPropertiesUtil.deepCopyProperties(
-				structure, DDMStructureImpl.class);
+			return new DDMStructureImpl(structure);
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -170,8 +164,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 				structure = _ddmStructureLocalService.getStructure(
 					groupId, classNameId, structureKey);
 
-			return BeanPropertiesUtil.deepCopyProperties(
-				structure, DDMStructureImpl.class);
+			return new DDMStructureImpl(structure);
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -193,8 +186,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 					_ddmStructureLocalService.getDDMStructureByUuidAndGroupId(
 						uuid, groupId);
 
-			return BeanPropertiesUtil.deepCopyProperties(
-				structure, DDMStructureImpl.class);
+			return new DDMStructureImpl(structure);
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -220,8 +212,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 					userId, parentStructureId, translate(ddmForm),
 					translate(ddmFormLayout), serviceContext);
 
-			return BeanPropertiesUtil.deepCopyProperties(
-				structure, DDMStructureImpl.class);
+			return new DDMStructureImpl(structure);
 		}
 		catch (PortalException pe) {
 			throw pe;

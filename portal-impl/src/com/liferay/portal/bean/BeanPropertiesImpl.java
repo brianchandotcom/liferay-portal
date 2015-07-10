@@ -123,6 +123,10 @@ public class BeanPropertiesImpl implements BeanProperties {
 			PropertyDescriptor sourcePropertyDescriptor = getPropertyDescriptor(
 				source.getClass(), targetPropertyDescriptor.getName());
 
+			if (sourcePropertyDescriptor == null) {
+				continue;
+			}
+
 			Class<?> sourcePropertyType =
 				sourcePropertyDescriptor.getPropertyType();
 
@@ -778,8 +782,10 @@ public class BeanPropertiesImpl implements BeanProperties {
 		else {
 			Object value = sourceReadMethod.invoke(source);
 
-			targetWriteMethod.invoke(
-				target, deepCopyProperties(value, targetPropertyType));
+			if (value != null) {
+				targetWriteMethod.invoke(
+					target, deepCopyProperties(value, targetPropertyType));
+			}
 		}
 	}
 

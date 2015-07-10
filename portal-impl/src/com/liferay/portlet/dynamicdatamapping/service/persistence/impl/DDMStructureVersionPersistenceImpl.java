@@ -1443,8 +1443,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	protected void cacheUniqueFindersCache(
-		DDMStructureVersion ddmStructureVersion) {
-		if (ddmStructureVersion.isNew()) {
+		DDMStructureVersion ddmStructureVersion, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					ddmStructureVersion.getStructureId(),
 					ddmStructureVersion.getVersion()
@@ -1684,7 +1684,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 			ddmStructureVersion, false);
 
 		clearUniqueFindersCache(ddmStructureVersion);
-		cacheUniqueFindersCache(ddmStructureVersion);
+		cacheUniqueFindersCache(ddmStructureVersion, isNew);
 
 		ddmStructureVersion.resetOriginalValues();
 

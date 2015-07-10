@@ -896,8 +896,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		}
 	}
 
-	protected void cacheUniqueFindersCache(PasswordPolicyRel passwordPolicyRel) {
-		if (passwordPolicyRel.isNew()) {
+	protected void cacheUniqueFindersCache(
+		PasswordPolicyRel passwordPolicyRel, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					passwordPolicyRel.getClassNameId(),
 					passwordPolicyRel.getClassPK()
@@ -1113,7 +1114,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 			passwordPolicyRel, false);
 
 		clearUniqueFindersCache(passwordPolicyRel);
-		cacheUniqueFindersCache(passwordPolicyRel);
+		cacheUniqueFindersCache(passwordPolicyRel, isNew);
 
 		passwordPolicyRel.resetOriginalValues();
 

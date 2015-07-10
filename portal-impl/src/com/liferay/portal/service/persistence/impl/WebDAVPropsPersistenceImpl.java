@@ -396,8 +396,9 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(WebDAVProps webDAVProps) {
-		if (webDAVProps.isNew()) {
+	protected void cacheUniqueFindersCache(WebDAVProps webDAVProps,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					webDAVProps.getClassNameId(), webDAVProps.getClassPK()
 				};
@@ -609,7 +610,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			false);
 
 		clearUniqueFindersCache(webDAVProps);
-		cacheUniqueFindersCache(webDAVProps);
+		cacheUniqueFindersCache(webDAVProps, isNew);
 
 		webDAVProps.resetOriginalValues();
 

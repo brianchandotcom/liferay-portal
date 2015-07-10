@@ -4750,8 +4750,9 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ExpandoValue expandoValue) {
-		if (expandoValue.isNew()) {
+	protected void cacheUniqueFindersCache(ExpandoValue expandoValue,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					expandoValue.getColumnId(), expandoValue.getRowId()
 				};
@@ -5143,7 +5144,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 			false);
 
 		clearUniqueFindersCache(expandoValue);
-		cacheUniqueFindersCache(expandoValue);
+		cacheUniqueFindersCache(expandoValue, isNew);
 
 		expandoValue.resetOriginalValues();
 

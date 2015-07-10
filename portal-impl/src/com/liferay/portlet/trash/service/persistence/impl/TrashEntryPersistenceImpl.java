@@ -2404,8 +2404,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(TrashEntry trashEntry) {
-		if (trashEntry.isNew()) {
+	protected void cacheUniqueFindersCache(TrashEntry trashEntry, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					trashEntry.getClassNameId(), trashEntry.getClassPK()
 				};
@@ -2651,7 +2651,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			TrashEntryImpl.class, trashEntry.getPrimaryKey(), trashEntry, false);
 
 		clearUniqueFindersCache(trashEntry);
-		cacheUniqueFindersCache(trashEntry);
+		cacheUniqueFindersCache(trashEntry, isNew);
 
 		trashEntry.resetOriginalValues();
 

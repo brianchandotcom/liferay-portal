@@ -4534,8 +4534,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	}
 
 	protected void cacheUniqueFindersCache(
-		JournalContentSearch journalContentSearch) {
-		if (journalContentSearch.isNew()) {
+		JournalContentSearch journalContentSearch, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					journalContentSearch.getGroupId(),
 					journalContentSearch.getPrivateLayout(),
@@ -4896,7 +4896,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			journalContentSearch.getPrimaryKey(), journalContentSearch, false);
 
 		clearUniqueFindersCache(journalContentSearch);
-		cacheUniqueFindersCache(journalContentSearch);
+		cacheUniqueFindersCache(journalContentSearch, isNew);
 
 		journalContentSearch.resetOriginalValues();
 

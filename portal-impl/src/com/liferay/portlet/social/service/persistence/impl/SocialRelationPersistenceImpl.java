@@ -5500,8 +5500,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		}
 	}
 
-	protected void cacheUniqueFindersCache(SocialRelation socialRelation) {
-		if (socialRelation.isNew()) {
+	protected void cacheUniqueFindersCache(SocialRelation socialRelation,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					socialRelation.getUserId1(), socialRelation.getUserId2(),
 					socialRelation.getType()
@@ -5899,7 +5900,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			socialRelation, false);
 
 		clearUniqueFindersCache(socialRelation);
-		cacheUniqueFindersCache(socialRelation);
+		cacheUniqueFindersCache(socialRelation, isNew);
 
 		socialRelation.resetOriginalValues();
 

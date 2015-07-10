@@ -1358,8 +1358,9 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetTagStats assetTagStats) {
-		if (assetTagStats.isNew()) {
+	protected void cacheUniqueFindersCache(AssetTagStats assetTagStats,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					assetTagStats.getTagId(), assetTagStats.getClassNameId()
 				};
@@ -1586,7 +1587,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 			assetTagStats, false);
 
 		clearUniqueFindersCache(assetTagStats);
-		cacheUniqueFindersCache(assetTagStats);
+		cacheUniqueFindersCache(assetTagStats, isNew);
 
 		assetTagStats.resetOriginalValues();
 

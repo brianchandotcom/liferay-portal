@@ -5220,8 +5220,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CalEvent calEvent) {
-		if (calEvent.isNew()) {
+	protected void cacheUniqueFindersCache(CalEvent calEvent, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					calEvent.getUuid(), calEvent.getGroupId()
 				};
@@ -5606,7 +5606,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			CalEventImpl.class, calEvent.getPrimaryKey(), calEvent, false);
 
 		clearUniqueFindersCache(calEvent);
-		cacheUniqueFindersCache(calEvent);
+		cacheUniqueFindersCache(calEvent, isNew);
 
 		calEvent.resetOriginalValues();
 

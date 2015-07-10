@@ -903,8 +903,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Portlet portlet) {
-		if (portlet.isNew()) {
+	protected void cacheUniqueFindersCache(Portlet portlet, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					portlet.getCompanyId(), portlet.getPortletId()
 				};
@@ -1111,7 +1111,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			PortletImpl.class, portlet.getPrimaryKey(), portlet, false);
 
 		clearUniqueFindersCache(portlet);
-		cacheUniqueFindersCache(portlet);
+		cacheUniqueFindersCache(portlet, isNew);
 
 		portlet.resetOriginalValues();
 

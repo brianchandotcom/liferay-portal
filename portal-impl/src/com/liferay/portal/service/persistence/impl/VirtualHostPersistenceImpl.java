@@ -634,8 +634,9 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(VirtualHost virtualHost) {
-		if (virtualHost.isNew()) {
+	protected void cacheUniqueFindersCache(VirtualHost virtualHost,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { virtualHost.getHostname() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_HOSTNAME, args,
@@ -853,7 +854,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			false);
 
 		clearUniqueFindersCache(virtualHost);
-		cacheUniqueFindersCache(virtualHost);
+		cacheUniqueFindersCache(virtualHost, isNew);
 
 		virtualHost.resetOriginalValues();
 

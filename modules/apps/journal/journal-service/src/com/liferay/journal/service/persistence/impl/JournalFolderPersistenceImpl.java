@@ -7117,8 +7117,9 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		}
 	}
 
-	protected void cacheUniqueFindersCache(JournalFolder journalFolder) {
-		if (journalFolder.isNew()) {
+	protected void cacheUniqueFindersCache(JournalFolder journalFolder,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					journalFolder.getUuid(), journalFolder.getGroupId()
 				};
@@ -7541,7 +7542,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			journalFolder, false);
 
 		clearUniqueFindersCache(journalFolder);
-		cacheUniqueFindersCache(journalFolder);
+		cacheUniqueFindersCache(journalFolder, isNew);
 
 		journalFolder.resetOriginalValues();
 

@@ -1717,8 +1717,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	}
 
 	protected void cacheUniqueFindersCache(
-		JournalArticleResource journalArticleResource) {
-		if (journalArticleResource.isNew()) {
+		JournalArticleResource journalArticleResource, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					journalArticleResource.getUuid(),
 					journalArticleResource.getGroupId()
@@ -2003,7 +2003,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			false);
 
 		clearUniqueFindersCache(journalArticleResource);
-		cacheUniqueFindersCache(journalArticleResource);
+		cacheUniqueFindersCache(journalArticleResource, isNew);
 
 		journalArticleResource.resetOriginalValues();
 

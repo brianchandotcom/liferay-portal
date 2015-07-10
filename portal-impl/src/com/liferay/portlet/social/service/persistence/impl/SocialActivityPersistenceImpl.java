@@ -5971,8 +5971,9 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		}
 	}
 
-	protected void cacheUniqueFindersCache(SocialActivity socialActivity) {
-		if (socialActivity.isNew()) {
+	protected void cacheUniqueFindersCache(SocialActivity socialActivity,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { socialActivity.getMirrorActivityId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_MIRRORACTIVITYID,
@@ -6425,7 +6426,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			socialActivity, false);
 
 		clearUniqueFindersCache(socialActivity);
-		cacheUniqueFindersCache(socialActivity);
+		cacheUniqueFindersCache(socialActivity, isNew);
 
 		socialActivity.resetOriginalValues();
 

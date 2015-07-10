@@ -1886,8 +1886,9 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBStatsUser mbStatsUser) {
-		if (mbStatsUser.isNew()) {
+	protected void cacheUniqueFindersCache(MBStatsUser mbStatsUser,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					mbStatsUser.getGroupId(), mbStatsUser.getUserId()
 				};
@@ -2112,7 +2113,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			false);
 
 		clearUniqueFindersCache(mbStatsUser);
-		cacheUniqueFindersCache(mbStatsUser);
+		cacheUniqueFindersCache(mbStatsUser, isNew);
 
 		mbStatsUser.resetOriginalValues();
 

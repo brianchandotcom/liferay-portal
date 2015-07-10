@@ -9456,8 +9456,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBCategory mbCategory) {
-		if (mbCategory.isNew()) {
+	protected void cacheUniqueFindersCache(MBCategory mbCategory, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					mbCategory.getUuid(), mbCategory.getGroupId()
 				};
@@ -9839,7 +9839,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			MBCategoryImpl.class, mbCategory.getPrimaryKey(), mbCategory, false);
 
 		clearUniqueFindersCache(mbCategory);
-		cacheUniqueFindersCache(mbCategory);
+		cacheUniqueFindersCache(mbCategory, isNew);
 
 		mbCategory.resetOriginalValues();
 

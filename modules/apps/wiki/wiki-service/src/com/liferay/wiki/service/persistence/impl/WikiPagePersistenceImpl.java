@@ -21125,8 +21125,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(WikiPage wikiPage) {
-		if (wikiPage.isNew()) {
+	protected void cacheUniqueFindersCache(WikiPage wikiPage, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					wikiPage.getUuid(), wikiPage.getGroupId()
 				};
@@ -22072,7 +22072,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			WikiPageImpl.class, wikiPage.getPrimaryKey(), wikiPage, false);
 
 		clearUniqueFindersCache(wikiPage);
-		cacheUniqueFindersCache(wikiPage);
+		cacheUniqueFindersCache(wikiPage, isNew);
 
 		wikiPage.resetOriginalValues();
 

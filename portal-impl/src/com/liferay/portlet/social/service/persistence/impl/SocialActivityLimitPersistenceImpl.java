@@ -2032,8 +2032,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	}
 
 	protected void cacheUniqueFindersCache(
-		SocialActivityLimit socialActivityLimit) {
-		if (socialActivityLimit.isNew()) {
+		SocialActivityLimit socialActivityLimit, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					socialActivityLimit.getGroupId(),
 					socialActivityLimit.getUserId(),
@@ -2302,7 +2302,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			socialActivityLimit, false);
 
 		clearUniqueFindersCache(socialActivityLimit);
-		cacheUniqueFindersCache(socialActivityLimit);
+		cacheUniqueFindersCache(socialActivityLimit, isNew);
 
 		socialActivityLimit.resetOriginalValues();
 

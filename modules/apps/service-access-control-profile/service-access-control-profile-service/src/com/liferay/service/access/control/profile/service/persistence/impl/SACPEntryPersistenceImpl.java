@@ -3164,8 +3164,8 @@ public class SACPEntryPersistenceImpl extends BasePersistenceImpl<SACPEntry>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(SACPEntry sacpEntry) {
-		if (sacpEntry.isNew()) {
+	protected void cacheUniqueFindersCache(SACPEntry sacpEntry, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					sacpEntry.getCompanyId(), sacpEntry.getName()
 				};
@@ -3443,7 +3443,7 @@ public class SACPEntryPersistenceImpl extends BasePersistenceImpl<SACPEntry>
 			SACPEntryImpl.class, sacpEntry.getPrimaryKey(), sacpEntry, false);
 
 		clearUniqueFindersCache(sacpEntry);
-		cacheUniqueFindersCache(sacpEntry);
+		cacheUniqueFindersCache(sacpEntry, isNew);
 
 		sacpEntry.resetOriginalValues();
 

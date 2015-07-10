@@ -10324,8 +10324,9 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetCategory assetCategory) {
-		if (assetCategory.isNew()) {
+	protected void cacheUniqueFindersCache(AssetCategory assetCategory,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					assetCategory.getUuid(), assetCategory.getGroupId()
 				};
@@ -10852,7 +10853,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			assetCategory, false);
 
 		clearUniqueFindersCache(assetCategory);
-		cacheUniqueFindersCache(assetCategory);
+		cacheUniqueFindersCache(assetCategory, isNew);
 
 		assetCategory.resetOriginalValues();
 

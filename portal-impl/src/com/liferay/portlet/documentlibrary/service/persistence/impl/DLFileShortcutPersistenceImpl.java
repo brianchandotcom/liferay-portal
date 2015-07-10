@@ -5855,8 +5855,9 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileShortcut dlFileShortcut) {
-		if (dlFileShortcut.isNew()) {
+	protected void cacheUniqueFindersCache(DLFileShortcut dlFileShortcut,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					dlFileShortcut.getUuid(), dlFileShortcut.getGroupId()
 				};
@@ -6226,7 +6227,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			dlFileShortcut, false);
 
 		clearUniqueFindersCache(dlFileShortcut);
-		cacheUniqueFindersCache(dlFileShortcut);
+		cacheUniqueFindersCache(dlFileShortcut, isNew);
 
 		dlFileShortcut.resetOriginalValues();
 

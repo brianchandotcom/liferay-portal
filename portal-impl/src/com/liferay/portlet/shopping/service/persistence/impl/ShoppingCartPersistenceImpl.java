@@ -1350,8 +1350,9 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ShoppingCart shoppingCart) {
-		if (shoppingCart.isNew()) {
+	protected void cacheUniqueFindersCache(ShoppingCart shoppingCart,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					shoppingCart.getGroupId(), shoppingCart.getUserId()
 				};
@@ -1598,7 +1599,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			false);
 
 		clearUniqueFindersCache(shoppingCart);
-		cacheUniqueFindersCache(shoppingCart);
+		cacheUniqueFindersCache(shoppingCart, isNew);
 
 		shoppingCart.resetOriginalValues();
 

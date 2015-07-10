@@ -891,8 +891,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ShoppingCoupon shoppingCoupon) {
-		if (shoppingCoupon.isNew()) {
+	protected void cacheUniqueFindersCache(ShoppingCoupon shoppingCoupon,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { shoppingCoupon.getCode() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CODE, args,
@@ -1114,7 +1115,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			shoppingCoupon, false);
 
 		clearUniqueFindersCache(shoppingCoupon);
-		cacheUniqueFindersCache(shoppingCoupon);
+		cacheUniqueFindersCache(shoppingCoupon, isNew);
 
 		shoppingCoupon.resetOriginalValues();
 

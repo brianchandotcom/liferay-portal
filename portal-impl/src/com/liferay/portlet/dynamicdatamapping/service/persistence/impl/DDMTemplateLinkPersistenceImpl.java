@@ -1366,8 +1366,9 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDMTemplateLink ddmTemplateLink) {
-		if (ddmTemplateLink.isNew()) {
+	protected void cacheUniqueFindersCache(DDMTemplateLink ddmTemplateLink,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					ddmTemplateLink.getClassNameId(),
 					ddmTemplateLink.getClassPK()
@@ -1599,7 +1600,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 			ddmTemplateLink, false);
 
 		clearUniqueFindersCache(ddmTemplateLink);
-		cacheUniqueFindersCache(ddmTemplateLink);
+		cacheUniqueFindersCache(ddmTemplateLink, isNew);
 
 		ddmTemplateLink.resetOriginalValues();
 

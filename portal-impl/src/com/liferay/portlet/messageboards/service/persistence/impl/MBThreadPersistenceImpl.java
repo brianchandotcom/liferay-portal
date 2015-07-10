@@ -12532,8 +12532,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBThread mbThread) {
-		if (mbThread.isNew()) {
+	protected void cacheUniqueFindersCache(MBThread mbThread, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					mbThread.getUuid(), mbThread.getGroupId()
 				};
@@ -12968,7 +12968,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			MBThreadImpl.class, mbThread.getPrimaryKey(), mbThread, false);
 
 		clearUniqueFindersCache(mbThread);
-		cacheUniqueFindersCache(mbThread);
+		cacheUniqueFindersCache(mbThread, isNew);
 
 		mbThread.resetOriginalValues();
 

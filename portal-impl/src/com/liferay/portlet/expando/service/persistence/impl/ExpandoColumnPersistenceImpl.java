@@ -1742,8 +1742,9 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ExpandoColumn expandoColumn) {
-		if (expandoColumn.isNew()) {
+	protected void cacheUniqueFindersCache(ExpandoColumn expandoColumn,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					expandoColumn.getTableId(), expandoColumn.getName()
 				};
@@ -1972,7 +1973,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			expandoColumn, false);
 
 		clearUniqueFindersCache(expandoColumn);
-		cacheUniqueFindersCache(expandoColumn);
+		cacheUniqueFindersCache(expandoColumn, isNew);
 
 		expandoColumn.resetOriginalValues();
 

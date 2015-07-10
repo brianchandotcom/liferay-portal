@@ -5297,8 +5297,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CalendarBooking calendarBooking) {
-		if (calendarBooking.isNew()) {
+	protected void cacheUniqueFindersCache(CalendarBooking calendarBooking,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					calendarBooking.getUuid(), calendarBooking.getGroupId()
 				};
@@ -5768,7 +5769,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 			calendarBooking, false);
 
 		clearUniqueFindersCache(calendarBooking);
-		cacheUniqueFindersCache(calendarBooking);
+		cacheUniqueFindersCache(calendarBooking, isNew);
 
 		calendarBooking.resetOriginalValues();
 

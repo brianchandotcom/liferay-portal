@@ -2605,8 +2605,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(JournalFeed journalFeed) {
-		if (journalFeed.isNew()) {
+	protected void cacheUniqueFindersCache(JournalFeed journalFeed,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					journalFeed.getUuid(), journalFeed.getGroupId()
 				};
@@ -2921,7 +2922,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			false);
 
 		clearUniqueFindersCache(journalFeed);
-		cacheUniqueFindersCache(journalFeed);
+		cacheUniqueFindersCache(journalFeed, isNew);
 
 		journalFeed.resetOriginalValues();
 

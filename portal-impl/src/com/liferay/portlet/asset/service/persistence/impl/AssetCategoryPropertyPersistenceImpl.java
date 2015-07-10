@@ -1980,8 +1980,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	}
 
 	protected void cacheUniqueFindersCache(
-		AssetCategoryProperty assetCategoryProperty) {
-		if (assetCategoryProperty.isNew()) {
+		AssetCategoryProperty assetCategoryProperty, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					assetCategoryProperty.getCategoryId(),
 					assetCategoryProperty.getKey()
@@ -2266,7 +2266,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			assetCategoryProperty.getPrimaryKey(), assetCategoryProperty, false);
 
 		clearUniqueFindersCache(assetCategoryProperty);
-		cacheUniqueFindersCache(assetCategoryProperty);
+		cacheUniqueFindersCache(assetCategoryProperty, isNew);
 
 		assetCategoryProperty.resetOriginalValues();
 

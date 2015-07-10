@@ -1382,8 +1382,9 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDMStorageLink ddmStorageLink) {
-		if (ddmStorageLink.isNew()) {
+	protected void cacheUniqueFindersCache(DDMStorageLink ddmStorageLink,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { ddmStorageLink.getClassPK() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSPK, args,
@@ -1612,7 +1613,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 			ddmStorageLink, false);
 
 		clearUniqueFindersCache(ddmStorageLink);
-		cacheUniqueFindersCache(ddmStorageLink);
+		cacheUniqueFindersCache(ddmStorageLink, isNew);
 
 		ddmStorageLink.resetOriginalValues();
 

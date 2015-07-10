@@ -402,8 +402,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ClassName className) {
-		if (className.isNew()) {
+	protected void cacheUniqueFindersCache(ClassName className, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { className.getValue() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VALUE, args,
@@ -580,7 +580,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			ClassNameImpl.class, className.getPrimaryKey(), className, false);
 
 		clearUniqueFindersCache(className);
-		cacheUniqueFindersCache(className);
+		cacheUniqueFindersCache(className, isNew);
 
 		className.resetOriginalValues();
 

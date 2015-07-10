@@ -7696,8 +7696,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Group group) {
-		if (group.isNew()) {
+	protected void cacheUniqueFindersCache(Group group, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { group.getUuid(), group.getGroupId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -8325,7 +8325,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			GroupImpl.class, group.getPrimaryKey(), group, false);
 
 		clearUniqueFindersCache(group);
-		cacheUniqueFindersCache(group);
+		cacheUniqueFindersCache(group, isNew);
 
 		group.resetOriginalValues();
 

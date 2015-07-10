@@ -3140,8 +3140,8 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	protected void cacheUniqueFindersCache(
-		SocialActivityAchievement socialActivityAchievement) {
-		if (socialActivityAchievement.isNew()) {
+		SocialActivityAchievement socialActivityAchievement, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					socialActivityAchievement.getGroupId(),
 					socialActivityAchievement.getUserId(),
@@ -3451,7 +3451,7 @@ public class SocialActivityAchievementPersistenceImpl
 			socialActivityAchievement, false);
 
 		clearUniqueFindersCache(socialActivityAchievement);
-		cacheUniqueFindersCache(socialActivityAchievement);
+		cacheUniqueFindersCache(socialActivityAchievement, isNew);
 
 		socialActivityAchievement.resetOriginalValues();
 

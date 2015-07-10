@@ -923,8 +923,9 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		}
 	}
 
-	protected void cacheUniqueFindersCache(SCProductVersion scProductVersion) {
-		if (scProductVersion.isNew()) {
+	protected void cacheUniqueFindersCache(SCProductVersion scProductVersion,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { scProductVersion.getDirectDownloadURL() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_DIRECTDOWNLOADURL,
@@ -1161,7 +1162,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			scProductVersion, false);
 
 		clearUniqueFindersCache(scProductVersion);
-		cacheUniqueFindersCache(scProductVersion);
+		cacheUniqueFindersCache(scProductVersion, isNew);
 
 		scProductVersion.resetOriginalValues();
 

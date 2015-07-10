@@ -962,8 +962,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Ticket ticket) {
-		if (ticket.isNew()) {
+	protected void cacheUniqueFindersCache(Ticket ticket, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { ticket.getKey() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KEY, args,
@@ -1162,7 +1162,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			TicketImpl.class, ticket.getPrimaryKey(), ticket, false);
 
 		clearUniqueFindersCache(ticket);
-		cacheUniqueFindersCache(ticket);
+		cacheUniqueFindersCache(ticket, isNew);
 
 		ticket.resetOriginalValues();
 

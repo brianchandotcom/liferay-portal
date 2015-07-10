@@ -374,8 +374,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		}
 	}
 
-	protected void cacheUniqueFindersCache(BrowserTracker browserTracker) {
-		if (browserTracker.isNew()) {
+	protected void cacheUniqueFindersCache(BrowserTracker browserTracker,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { browserTracker.getUserId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERID, args,
@@ -554,7 +555,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			browserTracker, false);
 
 		clearUniqueFindersCache(browserTracker);
-		cacheUniqueFindersCache(browserTracker);
+		cacheUniqueFindersCache(browserTracker, isNew);
 
 		browserTracker.resetOriginalValues();
 

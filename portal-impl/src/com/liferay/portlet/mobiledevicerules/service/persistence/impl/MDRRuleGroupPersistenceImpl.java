@@ -2777,8 +2777,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MDRRuleGroup mdrRuleGroup) {
-		if (mdrRuleGroup.isNew()) {
+	protected void cacheUniqueFindersCache(MDRRuleGroup mdrRuleGroup,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()
 				};
@@ -3057,7 +3058,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			false);
 
 		clearUniqueFindersCache(mdrRuleGroup);
-		cacheUniqueFindersCache(mdrRuleGroup);
+		cacheUniqueFindersCache(mdrRuleGroup, isNew);
 
 		mdrRuleGroup.resetOriginalValues();
 

@@ -1345,8 +1345,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ExpandoRow expandoRow) {
-		if (expandoRow.isNew()) {
+	protected void cacheUniqueFindersCache(ExpandoRow expandoRow, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					expandoRow.getTableId(), expandoRow.getClassPK()
 				};
@@ -1568,7 +1568,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 			ExpandoRowImpl.class, expandoRow.getPrimaryKey(), expandoRow, false);
 
 		clearUniqueFindersCache(expandoRow);
-		cacheUniqueFindersCache(expandoRow);
+		cacheUniqueFindersCache(expandoRow, isNew);
 
 		expandoRow.resetOriginalValues();
 

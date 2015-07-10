@@ -5539,8 +5539,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileVersion dlFileVersion) {
-		if (dlFileVersion.isNew()) {
+	protected void cacheUniqueFindersCache(DLFileVersion dlFileVersion,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					dlFileVersion.getUuid(), dlFileVersion.getGroupId()
 				};
@@ -5967,7 +5968,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			dlFileVersion, false);
 
 		clearUniqueFindersCache(dlFileVersion);
-		cacheUniqueFindersCache(dlFileVersion);
+		cacheUniqueFindersCache(dlFileVersion, isNew);
 
 		dlFileVersion.resetOriginalValues();
 

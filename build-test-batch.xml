@@ -128,6 +128,28 @@
 		</run-batch-test>
 	</target>
 
+	<target name="tck">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<exec executable="service" failonerror="true">
+					<arg line="${database.mysql.service.name} start" />
+				</exec>
+
+				<antcall target="rebuild-database" inheritAll="false" />
+
+				<antcall target="delete-liferay-home" />
+
+				<ant antfile="build-test-tck.xml" target="record-test-tck-package-names">
+					<property name="test.class.groups.size" value="${test.batch.size}" />
+				</ant>
+
+				<ant antfile="build-test-tck.xml" target="test-class-group">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+				</ant>
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="unit">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>

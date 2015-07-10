@@ -108,6 +108,28 @@
 		<echo>${jenkins.axis.variable}</echo>
 	</target>
 
+	<target name="modules">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<exec executable="service" failonerror="true">
+					<arg line="${database.mysql.service.name} start" />
+				</exec>
+
+				<antcall target="rebuild-database" inheritAll="false" />
+
+				<antcall target="delete-liferay-home" />
+
+				<ant dir="modules" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+				</ant>
+
+				<ant dir="portal-service" target="test-class" inheritAll="false">
+					<property name="test.class" value="PortalLogAssertorTest" />
+				</ant>
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="plugins">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>

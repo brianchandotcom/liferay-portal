@@ -546,6 +546,10 @@ public class TrashImpl implements Trash {
 		return isTrashEnabled(GroupLocalServiceUtil.getGroup(groupId));
 	}
 
+	public boolean isValidTrashTitle(String title) {
+		return isValidTrashTitle(title, TRASH_PREFIX);
+	}
+
 	protected void addBreadcrumbEntries(
 			HttpServletRequest request,
 			LiferayPortletResponse liferayPortletResponse, String className,
@@ -604,7 +608,7 @@ public class TrashImpl implements Trash {
 	protected String getOriginalTitle(
 		String title, String paramName, String prefix) {
 
-		if (!title.startsWith(prefix)) {
+		if (!isValidTrashTitle(title, prefix)) {
 			return title;
 		}
 
@@ -643,6 +647,14 @@ public class TrashImpl implements Trash {
 
 	protected String getTrashTitle(long trashEntryId, String prefix) {
 		return prefix.concat(String.valueOf(trashEntryId));
+	}
+
+	protected boolean isValidTrashTitle(String title, String prefix) {
+		if (title.startsWith(prefix)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected final String TRASH_PREFIX = StringPool.SLASH;

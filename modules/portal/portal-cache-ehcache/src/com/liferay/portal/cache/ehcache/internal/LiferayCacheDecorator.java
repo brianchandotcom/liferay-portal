@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
+import com.liferay.portal.kernel.cache.AggregatedCacheListener;
 
 import java.io.Serializable;
 
@@ -49,15 +49,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 
 	@Override
 	public void put(Element element, boolean doNotNotifyCacheReplicators) {
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.put(element, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 
@@ -65,29 +65,29 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public Element putIfAbsent(
 		Element element, boolean doNotNotifyCacheReplicators) {
 
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			return super.putIfAbsent(element, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 
 	@Override
 	public boolean remove(Object key, boolean doNotNotifyCacheReplicators) {
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			return super.remove(key, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 
@@ -100,15 +100,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 
 	@Override
 	public void removeAll(boolean doNotNotifyCacheReplicators) {
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.removeAll(doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 
@@ -116,15 +116,15 @@ public class LiferayCacheDecorator extends EhcacheDecoratorAdapter {
 	public void removeAll(
 		Collection<?> keys, boolean doNotNotifyCacheReplicators) {
 
-		boolean remoteInvoke = AggregatedPortalCacheListener.isRemoteInvoke();
+		boolean remoteInvoke = AggregatedCacheListener.isRemoteInvoke();
 
-		AggregatedPortalCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
+		AggregatedCacheListener.setRemoteInvoke(doNotNotifyCacheReplicators);
 
 		try {
 			super.removeAll(keys, doNotNotifyCacheReplicators);
 		}
 		finally {
-			AggregatedPortalCacheListener.setRemoteInvoke(remoteInvoke);
+			AggregatedCacheListener.setRemoteInvoke(remoteInvoke);
 		}
 	}
 

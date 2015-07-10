@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.cache.transactional;
 
-import com.liferay.portal.cache.test.TestPortalCacheListener;
+import com.liferay.portal.cache.test.TestCacheListener;
 import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -124,7 +124,7 @@ public class TransactionalPortalCacheTest {
 
 		_portalCache.put(_KEY_1, _VALUE_1);
 
-		_testCacheListener = new TestPortalCacheListener<>();
+		_testCacheListener = new TestCacheListener<>();
 
 		_portalCache.registerCacheListener(_testCacheListener);
 
@@ -1106,7 +1106,7 @@ public class TransactionalPortalCacheTest {
 	private static final String _VALUE_2 = "VALUE_2";
 
 	private PortalCache<String, String> _portalCache;
-	private TestPortalCacheListener<String, String> _testCacheListener;
+	private TestCacheListener<String, String> _testCacheListener;
 	private TestCacheReplicator<String, String> _testCacheReplicator;
 	private TransactionalPortalCache<String, String> _transactionalPortalCache;
 

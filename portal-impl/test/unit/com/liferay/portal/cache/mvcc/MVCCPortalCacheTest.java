@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.mvcc;
 
-import com.liferay.portal.cache.test.TestPortalCacheListener;
+import com.liferay.portal.cache.test.TestCacheListener;
 import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.cache.LowLevelCache;
@@ -59,7 +59,7 @@ public class MVCCPortalCacheTest {
 		_mvccPortalCache = new MVCCPortalCache<>(
 			(LowLevelCache<String, MVCCModel>)_portalCache);
 
-		_testCacheListener = new TestPortalCacheListener<>();
+		_testCacheListener = new TestCacheListener<>();
 
 		_portalCache.registerCacheListener(_testCacheListener);
 
@@ -367,7 +367,7 @@ public class MVCCPortalCacheTest {
 
 	private MVCCPortalCache<String, MVCCModel> _mvccPortalCache;
 	private PortalCache<String, MVCCModel> _portalCache;
-	private TestPortalCacheListener<String, MVCCModel> _testCacheListener;
+	private TestCacheListener<String, MVCCModel> _testCacheListener;
 	private TestCacheReplicator<String, MVCCModel> _testCacheReplicator;
 
 	private static class MockMVCCModel implements MVCCModel {

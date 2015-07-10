@@ -28,10 +28,10 @@ import net.sf.ehcache.event.CacheEventListener;
 /**
  * @author Tina Tian
  */
-public class EhcachePortalCacheListenerAdapter<K extends Serializable, V>
+public class EhcacheCacheListenerAdapter<K extends Serializable, V>
 	implements PortalCacheListener<K, V> {
 
-	public EhcachePortalCacheListenerAdapter(CacheEventListener cacheEventListener) {
+	public EhcacheCacheListenerAdapter(CacheEventListener cacheEventListener) {
 		this.cacheEventListener = cacheEventListener;
 	}
 

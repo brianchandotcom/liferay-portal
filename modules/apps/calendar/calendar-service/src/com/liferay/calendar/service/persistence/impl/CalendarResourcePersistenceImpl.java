@@ -6358,8 +6358,9 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CalendarResource calendarResource) {
-		if (calendarResource.isNew()) {
+	protected void cacheUniqueFindersCache(CalendarResource calendarResource,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					calendarResource.getUuid(), calendarResource.getGroupId()
 				};
@@ -6761,7 +6762,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			calendarResource, false);
 
 		clearUniqueFindersCache(calendarResource);
-		cacheUniqueFindersCache(calendarResource);
+		cacheUniqueFindersCache(calendarResource, isNew);
 
 		calendarResource.resetOriginalValues();
 

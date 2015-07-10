@@ -1386,8 +1386,9 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		}
 	}
 
-	protected void cacheUniqueFindersCache(TrashVersion trashVersion) {
-		if (trashVersion.isNew()) {
+	protected void cacheUniqueFindersCache(TrashVersion trashVersion,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					trashVersion.getClassNameId(), trashVersion.getClassPK()
 				};
@@ -1616,7 +1617,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			false);
 
 		clearUniqueFindersCache(trashVersion);
-		cacheUniqueFindersCache(trashVersion);
+		cacheUniqueFindersCache(trashVersion, isNew);
 
 		trashVersion.resetOriginalValues();
 

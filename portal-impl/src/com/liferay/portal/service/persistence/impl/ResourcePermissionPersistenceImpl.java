@@ -3981,8 +3981,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	}
 
 	protected void cacheUniqueFindersCache(
-		ResourcePermission resourcePermission) {
-		if (resourcePermission.isNew()) {
+		ResourcePermission resourcePermission, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					resourcePermission.getCompanyId(),
 					resourcePermission.getName(), resourcePermission.getScope(),
@@ -4299,7 +4299,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			resourcePermission, false);
 
 		clearUniqueFindersCache(resourcePermission);
-		cacheUniqueFindersCache(resourcePermission);
+		cacheUniqueFindersCache(resourcePermission, isNew);
 
 		resourcePermission.resetOriginalValues();
 

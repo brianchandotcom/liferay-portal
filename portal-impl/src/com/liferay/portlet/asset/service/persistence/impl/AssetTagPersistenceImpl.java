@@ -4516,8 +4516,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetTag assetTag) {
-		if (assetTag.isNew()) {
+	protected void cacheUniqueFindersCache(AssetTag assetTag, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					assetTag.getUuid(), assetTag.getGroupId()
 				};
@@ -4825,7 +4825,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			AssetTagImpl.class, assetTag.getPrimaryKey(), assetTag, false);
 
 		clearUniqueFindersCache(assetTag);
-		cacheUniqueFindersCache(assetTag);
+		cacheUniqueFindersCache(assetTag, isNew);
 
 		assetTag.resetOriginalValues();
 

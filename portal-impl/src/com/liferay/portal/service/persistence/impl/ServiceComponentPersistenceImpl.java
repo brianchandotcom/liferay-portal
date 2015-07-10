@@ -974,8 +974,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ServiceComponent serviceComponent) {
-		if (serviceComponent.isNew()) {
+	protected void cacheUniqueFindersCache(ServiceComponent serviceComponent,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					serviceComponent.getBuildNamespace(),
 					serviceComponent.getBuildNumber()
@@ -1191,7 +1192,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			serviceComponent, false);
 
 		clearUniqueFindersCache(serviceComponent);
-		cacheUniqueFindersCache(serviceComponent);
+		cacheUniqueFindersCache(serviceComponent, isNew);
 
 		serviceComponent.resetOriginalValues();
 

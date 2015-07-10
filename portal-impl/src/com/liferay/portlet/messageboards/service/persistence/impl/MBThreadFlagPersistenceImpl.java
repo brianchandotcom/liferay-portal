@@ -2693,8 +2693,9 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBThreadFlag mbThreadFlag) {
-		if (mbThreadFlag.isNew()) {
+	protected void cacheUniqueFindersCache(MBThreadFlag mbThreadFlag,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					mbThreadFlag.getUuid(), mbThreadFlag.getGroupId()
 				};
@@ -3027,7 +3028,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			false);
 
 		clearUniqueFindersCache(mbThreadFlag);
-		cacheUniqueFindersCache(mbThreadFlag);
+		cacheUniqueFindersCache(mbThreadFlag, isNew);
 
 		mbThreadFlag.resetOriginalValues();
 

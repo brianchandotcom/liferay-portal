@@ -2427,8 +2427,9 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBDiscussion mbDiscussion) {
-		if (mbDiscussion.isNew()) {
+	protected void cacheUniqueFindersCache(MBDiscussion mbDiscussion,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					mbDiscussion.getUuid(), mbDiscussion.getGroupId()
 				};
@@ -2778,7 +2779,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 			false);
 
 		clearUniqueFindersCache(mbDiscussion);
-		cacheUniqueFindersCache(mbDiscussion);
+		cacheUniqueFindersCache(mbDiscussion, isNew);
 
 		mbDiscussion.resetOriginalValues();
 

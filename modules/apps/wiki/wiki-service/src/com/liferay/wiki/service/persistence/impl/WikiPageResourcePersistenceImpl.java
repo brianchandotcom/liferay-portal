@@ -1217,8 +1217,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		}
 	}
 
-	protected void cacheUniqueFindersCache(WikiPageResource wikiPageResource) {
-		if (wikiPageResource.isNew()) {
+	protected void cacheUniqueFindersCache(WikiPageResource wikiPageResource,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					wikiPageResource.getUuid(), wikiPageResource.getGroupId()
 				};
@@ -1478,7 +1479,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			wikiPageResource, false);
 
 		clearUniqueFindersCache(wikiPageResource);
-		cacheUniqueFindersCache(wikiPageResource);
+		cacheUniqueFindersCache(wikiPageResource, isNew);
 
 		wikiPageResource.resetOriginalValues();
 

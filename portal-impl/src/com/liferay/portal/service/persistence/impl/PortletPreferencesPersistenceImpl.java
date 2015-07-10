@@ -4400,8 +4400,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	}
 
 	protected void cacheUniqueFindersCache(
-		PortletPreferences portletPreferences) {
-		if (portletPreferences.isNew()) {
+		PortletPreferences portletPreferences, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					portletPreferences.getOwnerId(),
 					portletPreferences.getOwnerType(),
@@ -4752,7 +4752,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			portletPreferences, false);
 
 		clearUniqueFindersCache(portletPreferences);
-		cacheUniqueFindersCache(portletPreferences);
+		cacheUniqueFindersCache(portletPreferences, isNew);
 
 		portletPreferences.resetOriginalValues();
 

@@ -395,8 +395,9 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		}
 	}
 
-	protected void cacheUniqueFindersCache(RatingsStats ratingsStats) {
-		if (ratingsStats.isNew()) {
+	protected void cacheUniqueFindersCache(RatingsStats ratingsStats,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					ratingsStats.getClassNameId(), ratingsStats.getClassPK()
 				};
@@ -583,7 +584,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 			false);
 
 		clearUniqueFindersCache(ratingsStats);
-		cacheUniqueFindersCache(ratingsStats);
+		cacheUniqueFindersCache(ratingsStats, isNew);
 
 		ratingsStats.resetOriginalValues();
 

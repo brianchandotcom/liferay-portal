@@ -2012,8 +2012,9 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		}
 	}
 
-	protected void cacheUniqueFindersCache(LayoutBranch layoutBranch) {
-		if (layoutBranch.isNew()) {
+	protected void cacheUniqueFindersCache(LayoutBranch layoutBranch,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					layoutBranch.getLayoutSetBranchId(), layoutBranch.getPlid(),
 					layoutBranch.getName()
@@ -2272,7 +2273,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			false);
 
 		clearUniqueFindersCache(layoutBranch);
-		cacheUniqueFindersCache(layoutBranch);
+		cacheUniqueFindersCache(layoutBranch, isNew);
 
 		layoutBranch.resetOriginalValues();
 

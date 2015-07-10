@@ -11539,8 +11539,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDMTemplate ddmTemplate) {
-		if (ddmTemplate.isNew()) {
+	protected void cacheUniqueFindersCache(DDMTemplate ddmTemplate,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					ddmTemplate.getUuid(), ddmTemplate.getGroupId()
 				};
@@ -12103,7 +12104,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			false);
 
 		clearUniqueFindersCache(ddmTemplate);
-		cacheUniqueFindersCache(ddmTemplate);
+		cacheUniqueFindersCache(ddmTemplate, isNew);
 
 		ddmTemplate.resetOriginalValues();
 

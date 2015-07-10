@@ -2185,8 +2185,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ShoppingCategory shoppingCategory) {
-		if (shoppingCategory.isNew()) {
+	protected void cacheUniqueFindersCache(ShoppingCategory shoppingCategory,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					shoppingCategory.getGroupId(), shoppingCategory.getName()
 				};
@@ -2440,7 +2441,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			shoppingCategory, false);
 
 		clearUniqueFindersCache(shoppingCategory);
-		cacheUniqueFindersCache(shoppingCategory);
+		cacheUniqueFindersCache(shoppingCategory, isNew);
 
 		shoppingCategory.resetOriginalValues();
 

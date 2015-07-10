@@ -919,8 +919,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	}
 
 	protected void cacheUniqueFindersCache(
-		AnnouncementsDelivery announcementsDelivery) {
-		if (announcementsDelivery.isNew()) {
+		AnnouncementsDelivery announcementsDelivery, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					announcementsDelivery.getUserId(),
 					announcementsDelivery.getType()
@@ -1135,7 +1135,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			announcementsDelivery.getPrimaryKey(), announcementsDelivery, false);
 
 		clearUniqueFindersCache(announcementsDelivery);
-		cacheUniqueFindersCache(announcementsDelivery);
+		cacheUniqueFindersCache(announcementsDelivery, isNew);
 
 		announcementsDelivery.resetOriginalValues();
 

@@ -11880,8 +11880,9 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		}
 	}
 
-	protected void cacheUniqueFindersCache(BookmarksEntry bookmarksEntry) {
-		if (bookmarksEntry.isNew()) {
+	protected void cacheUniqueFindersCache(BookmarksEntry bookmarksEntry,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					bookmarksEntry.getUuid(), bookmarksEntry.getGroupId()
 				};
@@ -12294,7 +12295,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			bookmarksEntry, false);
 
 		clearUniqueFindersCache(bookmarksEntry);
-		cacheUniqueFindersCache(bookmarksEntry);
+		cacheUniqueFindersCache(bookmarksEntry, isNew);
 
 		bookmarksEntry.resetOriginalValues();
 

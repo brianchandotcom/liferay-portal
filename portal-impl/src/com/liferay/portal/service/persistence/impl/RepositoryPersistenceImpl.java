@@ -2302,8 +2302,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Repository repository) {
-		if (repository.isNew()) {
+	protected void cacheUniqueFindersCache(Repository repository, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					repository.getUuid(), repository.getGroupId()
 				};
@@ -2624,7 +2624,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 			RepositoryImpl.class, repository.getPrimaryKey(), repository, false);
 
 		clearUniqueFindersCache(repository);
-		cacheUniqueFindersCache(repository);
+		cacheUniqueFindersCache(repository, isNew);
 
 		repository.resetOriginalValues();
 

@@ -1339,8 +1339,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	}
 
 	protected void cacheUniqueFindersCache(
-		SCProductScreenshot scProductScreenshot) {
-		if (scProductScreenshot.isNew()) {
+		SCProductScreenshot scProductScreenshot, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { scProductScreenshot.getThumbnailId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_THUMBNAILID, args,
@@ -1627,7 +1627,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 			scProductScreenshot, false);
 
 		clearUniqueFindersCache(scProductScreenshot);
-		cacheUniqueFindersCache(scProductScreenshot);
+		cacheUniqueFindersCache(scProductScreenshot, isNew);
 
 		scProductScreenshot.resetOriginalValues();
 

@@ -3039,8 +3039,9 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDLRecordSet ddlRecordSet) {
-		if (ddlRecordSet.isNew()) {
+	protected void cacheUniqueFindersCache(DDLRecordSet ddlRecordSet,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					ddlRecordSet.getUuid(), ddlRecordSet.getGroupId()
 				};
@@ -3359,7 +3360,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 			false);
 
 		clearUniqueFindersCache(ddlRecordSet);
-		cacheUniqueFindersCache(ddlRecordSet);
+		cacheUniqueFindersCache(ddlRecordSet, isNew);
 
 		ddlRecordSet.resetOriginalValues();
 

@@ -2816,8 +2816,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Module module) {
-		if (module.isNew()) {
+	protected void cacheUniqueFindersCache(Module module, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					module.getAppId(), module.getContextName()
 				};
@@ -3123,7 +3123,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 			ModuleImpl.class, module.getPrimaryKey(), module, false);
 
 		clearUniqueFindersCache(module);
-		cacheUniqueFindersCache(module);
+		cacheUniqueFindersCache(module, isNew);
 
 		module.resetOriginalValues();
 

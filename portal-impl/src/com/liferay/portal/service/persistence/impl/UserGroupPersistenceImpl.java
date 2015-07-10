@@ -4052,8 +4052,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(UserGroup userGroup) {
-		if (userGroup.isNew()) {
+	protected void cacheUniqueFindersCache(UserGroup userGroup, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					userGroup.getCompanyId(), userGroup.getName()
 				};
@@ -4358,7 +4358,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			UserGroupImpl.class, userGroup.getPrimaryKey(), userGroup, false);
 
 		clearUniqueFindersCache(userGroup);
-		cacheUniqueFindersCache(userGroup);
+		cacheUniqueFindersCache(userGroup, isNew);
 
 		userGroup.resetOriginalValues();
 

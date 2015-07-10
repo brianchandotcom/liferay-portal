@@ -2916,8 +2916,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetLink assetLink) {
-		if (assetLink.isNew()) {
+	protected void cacheUniqueFindersCache(AssetLink assetLink, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					assetLink.getEntryId1(), assetLink.getEntryId2(),
 					assetLink.getType()
@@ -3207,7 +3207,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			AssetLinkImpl.class, assetLink.getPrimaryKey(), assetLink, false);
 
 		clearUniqueFindersCache(assetLink);
-		cacheUniqueFindersCache(assetLink);
+		cacheUniqueFindersCache(assetLink, isNew);
 
 		assetLink.resetOriginalValues();
 

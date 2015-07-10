@@ -8468,8 +8468,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDMStructure ddmStructure) {
-		if (ddmStructure.isNew()) {
+	protected void cacheUniqueFindersCache(DDMStructure ddmStructure,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					ddmStructure.getUuid(), ddmStructure.getGroupId()
 				};
@@ -8934,7 +8935,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			false);
 
 		clearUniqueFindersCache(ddmStructure);
-		cacheUniqueFindersCache(ddmStructure);
+		cacheUniqueFindersCache(ddmStructure, isNew);
 
 		ddmStructure.resetOriginalValues();
 

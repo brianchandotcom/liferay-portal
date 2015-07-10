@@ -1916,8 +1916,9 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDMStructureLink ddmStructureLink) {
-		if (ddmStructureLink.isNew()) {
+	protected void cacheUniqueFindersCache(DDMStructureLink ddmStructureLink,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					ddmStructureLink.getClassNameId(),
 					ddmStructureLink.getClassPK(),
@@ -2174,7 +2175,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			ddmStructureLink, false);
 
 		clearUniqueFindersCache(ddmStructureLink);
-		cacheUniqueFindersCache(ddmStructureLink);
+		cacheUniqueFindersCache(ddmStructureLink, isNew);
 
 		ddmStructureLink.resetOriginalValues();
 

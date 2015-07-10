@@ -8336,8 +8336,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Role role) {
-		if (role.isNew()) {
+	protected void cacheUniqueFindersCache(Role role, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { role.getCompanyId(), role.getName() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
@@ -8731,7 +8731,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			RoleImpl.class, role.getPrimaryKey(), role, false);
 
 		clearUniqueFindersCache(role);
-		cacheUniqueFindersCache(role);
+		cacheUniqueFindersCache(role, isNew);
 
 		role.resetOriginalValues();
 

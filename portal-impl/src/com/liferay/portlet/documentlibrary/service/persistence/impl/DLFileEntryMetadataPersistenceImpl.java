@@ -1912,8 +1912,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	}
 
 	protected void cacheUniqueFindersCache(
-		DLFileEntryMetadata dlFileEntryMetadata) {
-		if (dlFileEntryMetadata.isNew()) {
+		DLFileEntryMetadata dlFileEntryMetadata, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					dlFileEntryMetadata.getDDMStructureId(),
 					dlFileEntryMetadata.getFileVersionId()
@@ -2180,7 +2180,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			dlFileEntryMetadata, false);
 
 		clearUniqueFindersCache(dlFileEntryMetadata);
-		cacheUniqueFindersCache(dlFileEntryMetadata);
+		cacheUniqueFindersCache(dlFileEntryMetadata, isNew);
 
 		dlFileEntryMetadata.resetOriginalValues();
 

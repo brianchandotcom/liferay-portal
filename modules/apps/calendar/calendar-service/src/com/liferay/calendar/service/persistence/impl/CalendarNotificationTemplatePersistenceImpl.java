@@ -2397,8 +2397,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 	protected void cacheUniqueFindersCache(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
-		if (calendarNotificationTemplate.isNew()) {
+		CalendarNotificationTemplate calendarNotificationTemplate, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					calendarNotificationTemplate.getUuid(),
 					calendarNotificationTemplate.getGroupId()
@@ -2744,7 +2744,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			calendarNotificationTemplate, false);
 
 		clearUniqueFindersCache(calendarNotificationTemplate);
-		cacheUniqueFindersCache(calendarNotificationTemplate);
+		cacheUniqueFindersCache(calendarNotificationTemplate, isNew);
 
 		calendarNotificationTemplate.resetOriginalValues();
 

@@ -1995,8 +1995,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MDRAction mdrAction) {
-		if (mdrAction.isNew()) {
+	protected void cacheUniqueFindersCache(MDRAction mdrAction, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					mdrAction.getUuid(), mdrAction.getGroupId()
 				};
@@ -2273,7 +2273,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			MDRActionImpl.class, mdrAction.getPrimaryKey(), mdrAction, false);
 
 		clearUniqueFindersCache(mdrAction);
-		cacheUniqueFindersCache(mdrAction);
+		cacheUniqueFindersCache(mdrAction, isNew);
 
 		mdrAction.resetOriginalValues();
 

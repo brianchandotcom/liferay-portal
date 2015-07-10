@@ -3169,8 +3169,9 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		}
 	}
 
-	protected void cacheUniqueFindersCache(LayoutSetBranch layoutSetBranch) {
-		if (layoutSetBranch.isNew()) {
+	protected void cacheUniqueFindersCache(LayoutSetBranch layoutSetBranch,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					layoutSetBranch.getGroupId(),
 					layoutSetBranch.getPrivateLayout(),
@@ -3452,7 +3453,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 			layoutSetBranch, false);
 
 		clearUniqueFindersCache(layoutSetBranch);
-		cacheUniqueFindersCache(layoutSetBranch);
+		cacheUniqueFindersCache(layoutSetBranch, isNew);
 
 		layoutSetBranch.resetOriginalValues();
 

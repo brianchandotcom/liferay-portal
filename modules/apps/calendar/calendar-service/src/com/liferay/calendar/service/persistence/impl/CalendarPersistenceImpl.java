@@ -3733,8 +3733,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Calendar calendar) {
-		if (calendar.isNew()) {
+	protected void cacheUniqueFindersCache(Calendar calendar, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					calendar.getUuid(), calendar.getGroupId()
 				};
@@ -4053,7 +4053,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 			CalendarImpl.class, calendar.getPrimaryKey(), calendar, false);
 
 		clearUniqueFindersCache(calendar);
-		cacheUniqueFindersCache(calendar);
+		cacheUniqueFindersCache(calendar, isNew);
 
 		calendar.resetOriginalValues();
 

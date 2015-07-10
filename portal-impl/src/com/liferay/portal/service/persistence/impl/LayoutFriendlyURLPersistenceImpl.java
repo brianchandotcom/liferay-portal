@@ -4762,8 +4762,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		}
 	}
 
-	protected void cacheUniqueFindersCache(LayoutFriendlyURL layoutFriendlyURL) {
-		if (layoutFriendlyURL.isNew()) {
+	protected void cacheUniqueFindersCache(
+		LayoutFriendlyURL layoutFriendlyURL, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					layoutFriendlyURL.getUuid(), layoutFriendlyURL.getGroupId()
 				};
@@ -5216,7 +5217,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			layoutFriendlyURL, false);
 
 		clearUniqueFindersCache(layoutFriendlyURL);
-		cacheUniqueFindersCache(layoutFriendlyURL);
+		cacheUniqueFindersCache(layoutFriendlyURL, isNew);
 
 		layoutFriendlyURL.resetOriginalValues();
 

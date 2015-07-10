@@ -1257,8 +1257,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Team team) {
-		if (team.isNew()) {
+	protected void cacheUniqueFindersCache(Team team, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { team.getGroupId(), team.getName() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
@@ -1478,7 +1478,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			TeamImpl.class, team.getPrimaryKey(), team, false);
 
 		clearUniqueFindersCache(team);
-		cacheUniqueFindersCache(team);
+		cacheUniqueFindersCache(team, isNew);
 
 		team.resetOriginalValues();
 

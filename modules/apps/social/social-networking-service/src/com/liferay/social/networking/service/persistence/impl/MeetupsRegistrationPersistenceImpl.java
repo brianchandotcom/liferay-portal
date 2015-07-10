@@ -1431,8 +1431,8 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	}
 
 	protected void cacheUniqueFindersCache(
-		MeetupsRegistration meetupsRegistration) {
-		if (meetupsRegistration.isNew()) {
+		MeetupsRegistration meetupsRegistration, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					meetupsRegistration.getUserId(),
 					meetupsRegistration.getMeetupsEntryId()
@@ -1696,7 +1696,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 			meetupsRegistration, false);
 
 		clearUniqueFindersCache(meetupsRegistration);
-		cacheUniqueFindersCache(meetupsRegistration);
+		cacheUniqueFindersCache(meetupsRegistration, isNew);
 
 		meetupsRegistration.resetOriginalValues();
 

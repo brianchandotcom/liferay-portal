@@ -10792,8 +10792,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFolder dlFolder) {
-		if (dlFolder.isNew()) {
+	protected void cacheUniqueFindersCache(DLFolder dlFolder, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					dlFolder.getUuid(), dlFolder.getGroupId()
 				};
@@ -11349,7 +11349,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			DLFolderImpl.class, dlFolder.getPrimaryKey(), dlFolder, false);
 
 		clearUniqueFindersCache(dlFolder);
-		cacheUniqueFindersCache(dlFolder);
+		cacheUniqueFindersCache(dlFolder, isNew);
 
 		dlFolder.resetOriginalValues();
 

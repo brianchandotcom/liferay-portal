@@ -4478,8 +4478,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(WikiNode wikiNode) {
-		if (wikiNode.isNew()) {
+	protected void cacheUniqueFindersCache(WikiNode wikiNode, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					wikiNode.getUuid(), wikiNode.getGroupId()
 				};
@@ -4846,7 +4846,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			WikiNodeImpl.class, wikiNode.getPrimaryKey(), wikiNode, false);
 
 		clearUniqueFindersCache(wikiNode);
-		cacheUniqueFindersCache(wikiNode);
+		cacheUniqueFindersCache(wikiNode, isNew);
 
 		wikiNode.resetOriginalValues();
 

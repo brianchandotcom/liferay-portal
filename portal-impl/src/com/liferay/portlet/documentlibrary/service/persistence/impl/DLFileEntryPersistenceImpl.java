@@ -11425,8 +11425,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileEntry dlFileEntry) {
-		if (dlFileEntry.isNew()) {
+	protected void cacheUniqueFindersCache(DLFileEntry dlFileEntry,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					dlFileEntry.getUuid(), dlFileEntry.getGroupId()
 				};
@@ -12037,7 +12038,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			false);
 
 		clearUniqueFindersCache(dlFileEntry);
-		cacheUniqueFindersCache(dlFileEntry);
+		cacheUniqueFindersCache(dlFileEntry, isNew);
 
 		dlFileEntry.resetOriginalValues();
 

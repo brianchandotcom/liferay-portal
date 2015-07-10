@@ -17653,8 +17653,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(BlogsEntry blogsEntry) {
-		if (blogsEntry.isNew()) {
+	protected void cacheUniqueFindersCache(BlogsEntry blogsEntry, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					blogsEntry.getUuid(), blogsEntry.getGroupId()
 				};
@@ -18125,7 +18125,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), blogsEntry, false);
 
 		clearUniqueFindersCache(blogsEntry);
-		cacheUniqueFindersCache(blogsEntry);
+		cacheUniqueFindersCache(blogsEntry, isNew);
 
 		blogsEntry.resetOriginalValues();
 

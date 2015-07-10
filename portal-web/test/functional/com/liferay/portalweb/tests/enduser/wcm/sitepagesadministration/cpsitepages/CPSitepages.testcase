@@ -341,6 +341,7 @@
 		</execute>
 
 		<execute macro="SitePage#copyApplicationsFromPageToPagePG">
+			<var name="pageName" value="Blog Page" />
 			<var name="sitePageName" value="Site Page" />
 		</execute>
 	</command>
@@ -436,6 +437,13 @@
 		</execute>
 
 		<execute macro="SitePage#embeddedPageTypePG" />
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Site Page" />
+			<var name="url" value="http://localhost:8080/web/site-name" />
+		</execute>
+
+		<execute macro="Page#viewEmbeddedPagePG" />
 	</command>
 
 	<command name="SavePortletPageType" priority="4">

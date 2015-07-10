@@ -115,6 +115,7 @@
 		</execute>
 
 		<execute macro="Site#viewVirtualHostsURLPG">
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Public Page" />
 			<var name="sitePageURL" value="http://www.able.com:8080/public-page" />
 		</execute>

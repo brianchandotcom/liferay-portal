@@ -342,8 +342,6 @@
 		<execute function="AssertClick" locator1="DockbarEditpanel#DETAILS_TYPE_PAGE_OPTIONS" value1="Embedded" />
 		<execute function="Type" locator1="DockbarEditpanel#DETAILS_TYPE_PAGE_URL" value1="http://www.liferay.com" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
-
-		<execute function="AssertTextPresent" locator1="Home#EMBEDDED_SITE_LIFERAY_BANNER_LOGO" value1="Liferay" />
 	</command>
 
 	<command name="expandRootCP">

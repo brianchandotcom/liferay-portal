@@ -58,7 +58,15 @@
 
 	<command name="addPG" summary="Add a page named '${pageName}'">
 		<execute macro="Page#gotoPagesCP">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletName" value="Site Pages" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
@@ -463,7 +471,7 @@
 
 		<var name="key_portletName" value="${localizedPortletName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#CONTROL_PANEL_NAVIGATION" />
+		<execute function="AssertClick" locator1="Home#CONTROL_PANEL_NAVIGATION" value1="${localizedPortletName}" />
 	</command>
 
 	<command name="gotoEdit">
@@ -852,6 +860,10 @@
 	<command name="viewDefaultLogoPG">
 		<execute function="AssertElementPresent" locator1="Home#DEFAULT_LOGO" />
 		<execute function="AssertElementNotPresent" locator1="Home#CUSTOM_LOGO" />
+	</command>
+
+	<command name="viewEmbeddedPagePG">
+		<execute function="AssertTextPresent" locator1="Home#EMBEDDED_SITE_LIFERAY_BANNER_LOGO" value1="Liferay" />
 	</command>
 
 	<command name="viewFriendlyURLLanguageOptionsPG">

@@ -28,11 +28,11 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public class ClusterLinkPortalCacheReplicator
+public class ClusterLinkCacheReplicator
 	<K extends Serializable, V extends Serializable>
 		implements PortalCacheListener<K, V>, PortalCacheReplicator {
 
-	public ClusterLinkPortalCacheReplicator(Properties properties) {
+	public ClusterLinkCacheReplicator(Properties properties) {
 		_replicatePuts = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
 			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS);
 		_replicatePutsViaCopy = GetterUtil.getBoolean(properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS_VIA_COPY),

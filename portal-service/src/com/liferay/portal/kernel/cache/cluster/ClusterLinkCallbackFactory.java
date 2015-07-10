@@ -42,7 +42,7 @@ public class ClusterLinkCallbackFactory implements CallbackFactory {
 		Properties properties) {
 
 		return (PortalCacheListener<K, V>)
-			new ClusterLinkPortalCacheReplicator<K, Serializable>(properties);
+			new ClusterLinkCacheReplicator<K, Serializable>(properties);
 	}
 
 	@Override

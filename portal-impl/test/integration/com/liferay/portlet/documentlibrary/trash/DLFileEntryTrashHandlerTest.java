@@ -70,7 +70,6 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -192,15 +191,6 @@ public class DLFileEntryTrashHandlerTest
 
 		return _whenIsIndexableBaseModel.searchTrashEntriesCount(
 			keywords, serviceContext);
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_whenIsAssetable = new DefaultWhenIsAssetable();
-
-		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
-
-		super.setUp();
 	}
 
 	@Test
@@ -433,7 +423,8 @@ public class DLFileEntryTrashHandlerTest
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
-	private WhenIsAssetable _whenIsAssetable;
-	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
+	private WhenIsAssetable _whenIsAssetable = new DefaultWhenIsAssetable();
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
+		new DefaultWhenIsIndexableBaseModel();
 
 }

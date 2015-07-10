@@ -37,7 +37,6 @@ import com.liferay.portlet.trash.test.WhenIsAssetable;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -103,15 +102,6 @@ public class BlogsEntryTrashHandlerTest
 			keywords, serviceContext);
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		_whenIsAssetable = new DefaultWhenIsAssetable();
-
-		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
-
-		super.setUp();
-	}
-
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
@@ -154,7 +144,8 @@ public class BlogsEntryTrashHandlerTest
 			TestPropsValues.getUserId(), primaryKey);
 	}
 
-	private WhenIsAssetable _whenIsAssetable;
-	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
+	private WhenIsAssetable _whenIsAssetable = new DefaultWhenIsAssetable();
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
+		new DefaultWhenIsIndexableBaseModel();
 
 }

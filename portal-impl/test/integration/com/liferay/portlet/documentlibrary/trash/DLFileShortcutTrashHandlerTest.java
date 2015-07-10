@@ -52,7 +52,6 @@ import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -118,13 +117,6 @@ public class DLFileShortcutTrashHandlerTest
 	@Override
 	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_whenIsAssetable = new DefaultWhenIsAssetable();
-
-		super.setUp();
 	}
 
 	@Test
@@ -291,6 +283,6 @@ public class DLFileShortcutTrashHandlerTest
 			getNotInTrashBaseModelsCount(parentBaseModel));
 	}
 
-	private WhenIsAssetable _whenIsAssetable;
+	private WhenIsAssetable _whenIsAssetable = new DefaultWhenIsAssetable();
 
 }

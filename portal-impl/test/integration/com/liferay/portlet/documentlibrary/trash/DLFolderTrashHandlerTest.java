@@ -47,7 +47,6 @@ import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -138,15 +137,6 @@ public class DLFolderTrashHandlerTest
 
 		return _whenIsIndexableBaseModel.searchTrashEntriesCount(
 			keywords, serviceContext);
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_whenIsAssetable = new DefaultWhenIsAssetable();
-
-		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
-
-		super.setUp();
 	}
 
 	@Override
@@ -273,7 +263,8 @@ public class DLFolderTrashHandlerTest
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
-	private WhenIsAssetable _whenIsAssetable;
-	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
+	private WhenIsAssetable _whenIsAssetable = new DefaultWhenIsAssetable();
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
+		new DefaultWhenIsIndexableBaseModel();
 
 }

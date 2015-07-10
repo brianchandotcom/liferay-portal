@@ -233,10 +233,6 @@ public class JournalArticleTrashHandlerTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		_whenIsAssetable = new DefaultWhenIsAssetable();
-
-		_whenIsIndexableBaseModel = new DefaultWhenIsIndexableBaseModel();
-
 		_testMode = PortalRunMode.isTestMode();
 
 		PortalRunMode.setTestMode(true);
@@ -448,7 +444,8 @@ public class JournalArticleTrashHandlerTest
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
 	private boolean _testMode;
-	private WhenIsAssetable _whenIsAssetable;
-	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel;
+	private WhenIsAssetable _whenIsAssetable = new DefaultWhenIsAssetable();
+	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
+		new DefaultWhenIsIndexableBaseModel();
 
 }

@@ -85,6 +85,8 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("resize_enabled", resizable);
 
+		jsonObject.put("title", Boolean.FALSE);
+
 		HttpServletResponse response =
 			liferayPortletResponse.getHttpServletResponse();
 

@@ -54,7 +54,7 @@ public class PortalCacheManagerConfiguration {
 	}
 
 	public Set<CallbackConfiguration>
-		getPortalCacheManagerListenerConfigurations() {
+		getCacheManagerListenerConfigurations() {
 
 		return Collections.unmodifiableSet(_cacheManagerListenerConfigurations);
 	}

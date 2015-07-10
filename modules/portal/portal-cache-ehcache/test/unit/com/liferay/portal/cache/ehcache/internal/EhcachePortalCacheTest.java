@@ -17,7 +17,7 @@ package com.liferay.portal.cache.ehcache.internal;
 import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -103,7 +103,8 @@ public class EhcachePortalCacheTest {
 		TestPortalCacheListener<String, String> localCacheListener =
 			new TestPortalCacheListener<>();
 
-		_ehcachePortalCache.registerCacheListener(localCacheListener, PortalCacheListenerScope.LOCAL);
+		_ehcachePortalCache.registerCacheListener(
+			localCacheListener, CacheListenerScope.LOCAL);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
 
@@ -127,7 +128,8 @@ public class EhcachePortalCacheTest {
 		TestPortalCacheListener<String, String> remoteCacheListener =
 			new TestPortalCacheListener<>();
 
-		_ehcachePortalCache.registerCacheListener(remoteCacheListener, PortalCacheListenerScope.REMOTE);
+		_ehcachePortalCache.registerCacheListener(
+			remoteCacheListener, CacheListenerScope.REMOTE);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_1);
 
@@ -150,7 +152,8 @@ public class EhcachePortalCacheTest {
 
 		// Register 3
 
-		_ehcachePortalCache.registerCacheListener(remoteCacheListener, PortalCacheListenerScope.ALL);
+		_ehcachePortalCache.registerCacheListener(
+			remoteCacheListener, CacheListenerScope.ALL);
 
 		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
 

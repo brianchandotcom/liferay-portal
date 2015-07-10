@@ -70,7 +70,7 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	@Override
 	public void registerCacheListener(
 		PortalCacheListener<K, V> cacheListener,
-		PortalCacheListenerScope cacheListenerScope) {
+		CacheListenerScope cacheListenerScope) {
 
 		portalCache.registerCacheListener(cacheListener, cacheListenerScope);
 	}

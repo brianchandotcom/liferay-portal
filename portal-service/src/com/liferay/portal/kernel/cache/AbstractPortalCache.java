@@ -92,7 +92,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	@Override
 	public void registerCacheListener(
 		PortalCacheListener<K, V> cacheListener,
-		PortalCacheListenerScope cacheListenerScope) {
+		CacheListenerScope cacheListenerScope) {
 
 		aggregatedCacheListener.addCacheListener(
 			cacheListener, cacheListenerScope);

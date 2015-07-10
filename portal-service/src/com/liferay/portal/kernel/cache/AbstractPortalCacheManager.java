@@ -317,11 +317,11 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		Map<CallbackConfiguration, PortalCacheListenerScope>
+		Map<CallbackConfiguration, CacheListenerScope>
 			cacheListenerConfigurations =
 				portalCacheConfiguration.getCacheListenerConfigurations();
 
-		for (Map.Entry<CallbackConfiguration, PortalCacheListenerScope> entry :
+		for (Map.Entry<CallbackConfiguration, CacheListenerScope> entry :
 				cacheListenerConfigurations.entrySet()) {
 
 			CallbackConfiguration callbackConfiguration = entry.getKey();

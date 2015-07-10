@@ -1,7 +1,7 @@
 AUI.add(
-	'liferay-dockbar-add-content-preview',
+	'liferay-control-menu-add-content-preview',
 	function(A) {
-		var Dockbar = Liferay.Dockbar;
+		var ControlMenu = Liferay.ControlMenu;
 		var Lang = A.Lang;
 
 		var BODY_CONTENT = 'bodyContent';
@@ -94,7 +94,7 @@ AUI.add(
 				instance._eventHandles = instance._eventHandles || [];
 
 				instance._eventHandles.push(
-					Liferay.Dockbar.getPanelNode(Liferay.Dockbar.ADD_PANEL).delegate(
+					Liferay.ControlMenu.getPanelNode(Liferay.ControlMenu.ADD_PANEL).delegate(
 						STR_MOUSEENTER,
 						instance._showTooltip,
 						'.has-preview',
@@ -193,7 +193,7 @@ AUI.add(
 			}
 		};
 
-		Dockbar.AddContentPreview = AddContentPreview;
+		ControlMenu.AddContentPreview = AddContentPreview;
 	},
 	'',
 	{

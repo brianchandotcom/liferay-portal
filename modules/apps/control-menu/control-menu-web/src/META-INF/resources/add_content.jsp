@@ -82,12 +82,12 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 	</div>
 </aui:form>
 
-<aui:script use="liferay-dockbar-add-content">
-	var Dockbar = Liferay.Dockbar;
+<aui:script use="liferay-control-menu-add-content">
+	var ControlMenu = Liferay.ControlMenu;
 
 	var searchContent = A.one('#<portlet:namespace />searchContent');
 
-	var addContent = new Dockbar.AddContent(
+	var addContent = new ControlMenu.AddContent(
 		{
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			focusItem: searchContent,
@@ -97,9 +97,9 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 		}
 	);
 
-	if (Dockbar.PortletDragDrop) {
+	if (ControlMenu.PortletDragDrop) {
 		addContent.plug(
-			Dockbar.PortletDragDrop,
+			ControlMenu.PortletDragDrop,
 			{
 				on: {
 					dragEnd: function(event) {

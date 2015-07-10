@@ -1,71 +1,71 @@
 ;(function() {
-	var PATH_DOCKBAR_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferaycontrolmenuweb';
+	var PATH_CONTROL_MENU_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferaycontrolmenuweb';
 
 	AUI().applyConfig(
 		{
 			groups: {
 				controlmenu: {
-					base: PATH_DOCKBAR_WEB + '/js/',
+					base: PATH_CONTROL_MENU_WEB + '/js/',
 					modules: {
-						'liferay-dockbar': {
-							path: 'dockbar.js',
+						'liferay-control-menu': {
+							path: 'control_menu.js',
 							requires: [
 								'aui-node',
 								'event-touch'
 							]
 						},
-						'liferay-dockbar-add-application': {
-							path: 'dockbar_add_application.js',
+						'liferay-control-menu-add-application': {
+							path: 'control_menu_add_application.js',
 							requires: [
 								'aui-io-request',
 								'event-key',
 								'event-mouseenter',
-								'liferay-dockbar',
-								'liferay-dockbar-add-base',
+								'liferay-control-menu',
+								'liferay-control-menu-add-base',
 								'liferay-panel-search',
 								'liferay-portlet-base',
 								'liferay-toggler-interaction'
 							]
 						},
-						'liferay-dockbar-add-base': {
-							path: 'dockbar_add_base.js',
+						'liferay-control-menu-add-base': {
+							path: 'control_menu_add_base.js',
 							requires: [
 								'anim',
 								'aui-base',
-								'liferay-dockbar',
+								'liferay-control-menu',
 								'liferay-layout',
 								'transition'
 							]
 						},
-						'liferay-dockbar-add-content': {
-							path: 'dockbar_add_content.js',
+						'liferay-control-menu-add-content': {
+							path: 'control_menu_add_content.js',
 							requires: [
 								'aui-io-request',
 								'event-mouseenter',
-								'liferay-dockbar',
-								'liferay-dockbar-add-content-preview',
-								'liferay-dockbar-add-content-search',
+								'liferay-control-menu',
+								'liferay-control-menu-add-content-preview',
+								'liferay-control-menu-add-content-search',
 								'liferay-portlet-base'
 							]
 						},
-						'liferay-dockbar-add-content-preview': {
-							path: 'dockbar_add_content_preview.js',
+						'liferay-control-menu-add-content-preview': {
+							path: 'control_menu_add_content_preview.js',
 							requires: [
 								'aui-debounce',
 								'aui-io-request',
 								'event-mouseenter'
 							]
 						},
-						'liferay-dockbar-add-content-search': {
-							path: 'dockbar_add_content_search.js',
+						'liferay-control-menu-add-content-search': {
+							path: 'control_menu_add_content_search.js',
 							requires: [
 								'aui-base',
-								'liferay-dockbar',
+								'liferay-control-menu',
 								'liferay-search-filter'
 							]
 						},
-						'liferay-dockbar-device-preview': {
-							path: 'dockbar_device_preview.js',
+						'liferay-control-menu-device-preview': {
+							path: 'control_menu_device_preview.js',
 							requires: [
 								'aui-dialog-iframe-deprecated',
 								'aui-event-input',
@@ -75,19 +75,19 @@
 								'liferay-widget-size-animation-plugin'
 							]
 						},
-						'liferay-dockbar-portlet-dd': {
+						'liferay-control-menu-portlet-dd': {
 							condition: {
-								name: 'liferay-dockbar-portlet-dd',
+								name: 'liferay-control-menu-portlet-dd',
 								test: function(A) {
 									return !A.UA.mobile;
 								},
-								trigger: ['liferay-dockbar-add-application', 'liferay-dockbar-add-content']
+								trigger: ['liferay-control-menu-add-application', 'liferay-control-menu-add-content']
 							},
-							path: 'dockbar_portlet_dd.js',
+							path: 'control_menu_portlet_dd.js',
 							requires: [
 								'aui-base',
 								'dd',
-								'liferay-dockbar',
+								'liferay-control-menu',
 								'liferay-layout',
 								'liferay-layout-column',
 								'liferay-layout-freeform',
@@ -95,7 +95,7 @@
 							]
 						}
 					},
-					root: PATH_DOCKBAR_WEB + '/js/'
+					root: PATH_CONTROL_MENU_WEB + '/js/'
 				}
 			}
 		}

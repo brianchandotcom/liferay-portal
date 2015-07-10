@@ -71,8 +71,8 @@
 	</div>
 </div>
 
-<aui:script use="liferay-dockbar-device-preview">
-	var devicePreview = new Liferay.Dockbar.DevicePreview(
+<aui:script use="liferay-control-menu-device-preview">
+	var devicePreview = new Liferay.ControlMenu.DevicePreview(
 		{
 			devices: {
 				autosize: {

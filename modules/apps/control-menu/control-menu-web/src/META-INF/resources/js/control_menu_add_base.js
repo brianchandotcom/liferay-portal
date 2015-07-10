@@ -1,9 +1,9 @@
 AUI.add(
-	'liferay-dockbar-add-base',
+	'liferay-control-menu-add-base',
 	function(A) {
 		var DDM = A.DD.DDM;
 		var Lang = A.Lang;
-		var Dockbar = Liferay.Dockbar;
+		var ControlMenu = Liferay.ControlMenu;
 		var Layout = Liferay.Layout;
 		var Portlet = Liferay.Portlet;
 		var Util = Liferay.Util;
@@ -449,12 +449,12 @@ AUI.add(
 			}
 		);
 
-		Dockbar.AddBase = AddBase;
-		Dockbar.FreeFormPortletItem = FreeFormPortletItem;
-		Dockbar.PortletItem = PortletItem;
+		ControlMenu.AddBase = AddBase;
+		ControlMenu.FreeFormPortletItem = FreeFormPortletItem;
+		ControlMenu.PortletItem = PortletItem;
 	},
 	'',
 	{
-		requires: ['anim', 'aui-base', 'liferay-dockbar', 'liferay-layout', 'transition']
+		requires: ['anim', 'aui-base', 'liferay-control-menu', 'liferay-layout', 'transition']
 	}
 );

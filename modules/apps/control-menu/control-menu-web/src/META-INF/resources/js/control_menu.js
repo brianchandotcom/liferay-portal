@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-dockbar',
+	'liferay-control-menu',
 	function(A) {
 		var AObject = A.Object;
 
@@ -25,13 +25,13 @@ AUI.add(
 
 		var TPL_PREVIEW_PANEL = '<div class="lfr-admin-panel lfr-device-preview-panel" id="{0}" />';
 
-		var Dockbar = {
+		var ControlMenu = {
 			getPanelNode: function(panelId) {
 				var instance = this;
 
 				var panelNode = null;
 
-				var panel = DOCKBAR_PANELS[panelId];
+				var panel = CONTROL_MENU_PANELS[panelId];
 
 				if (panel) {
 					panelNode = panel.node;
@@ -63,19 +63,19 @@ AUI.add(
 			toggleAddPanel: function() {
 				var instance = this;
 
-				Dockbar._togglePanel(STR_ADD_PANEL);
+				ControlMenu._togglePanel(STR_ADD_PANEL);
 			},
 
 			toggleEditLayoutPanel: function() {
 				var instance = this;
 
-				Dockbar._togglePanel(STR_EDIT_LAYOUT_PANEL);
+				ControlMenu._togglePanel(STR_EDIT_LAYOUT_PANEL);
 			},
 
 			togglePreviewPanel: function() {
 				var instance = this;
 
-				Dockbar._togglePanel(STR_PREVIEW_PANEL);
+				ControlMenu._togglePanel(STR_PREVIEW_PANEL);
 			},
 
 			_registerPanels: function() {
@@ -84,7 +84,7 @@ AUI.add(
 				var namespace = instance._namespace;
 
 				AObject.each(
-					DOCKBAR_PANELS,
+					CONTROL_MENU_PANELS,
 					function(item, index) {
 						var panelId = item.id;
 
@@ -119,7 +119,7 @@ AUI.add(
 				var instance = this;
 
 				AObject.each(
-					DOCKBAR_PANELS,
+					CONTROL_MENU_PANELS,
 					function(item, index) {
 						if (item.id !== panelId) {
 							BODY.removeClass(item.css);
@@ -133,7 +133,7 @@ AUI.add(
 					}
 				);
 
-				var panel = DOCKBAR_PANELS[panelId];
+				var panel = CONTROL_MENU_PANELS[panelId];
 
 				var namespace = instance._namespace;
 
@@ -226,7 +226,7 @@ AUI.add(
 		};
 
 		Liferay.provide(
-			Dockbar,
+			ControlMenu,
 			'_showPanel',
 			function(panelId) {
 				var instance = this;
@@ -259,9 +259,9 @@ AUI.add(
 			['aui-io-request', 'aui-parse-content', 'event-outside']
 		);
 
-		var showPanelFn = A.bind('_showPanel', Dockbar);
+		var showPanelFn = A.bind('_showPanel', ControlMenu);
 
-		var DOCKBAR_PANELS = {
+		var CONTROL_MENU_PANELS = {
 			'addPanel': {
 				css: CSS_ADD_CONTENT,
 				id: STR_ADD_PANEL,
@@ -278,11 +278,11 @@ AUI.add(
 			}
 		};
 
-		Liferay.Dockbar = Dockbar;
+		Liferay.ControlMenu = ControlMenu;
 
-		Liferay.Dockbar.ADD_PANEL = STR_ADD_PANEL;
+		Liferay.ControlMenu.ADD_PANEL = STR_ADD_PANEL;
 
-		Liferay.Dockbar.PREVIEW_PANEL = STR_PREVIEW_PANEL;
+		Liferay.ControlMenu.PREVIEW_PANEL = STR_PREVIEW_PANEL;
 	},
 	'',
 	{

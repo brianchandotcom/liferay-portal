@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-dockbar-add-content-search',
+	'liferay-control-menu-add-content-search',
 	function(A) {
 		var AddContentSearch = function() {
 		};
@@ -37,10 +37,10 @@ AUI.add(
 			}
 		};
 
-		Liferay.Dockbar.AddContentSearch = AddContentSearch;
+		Liferay.ControlMenu.AddContentSearch = AddContentSearch;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-dockbar', 'liferay-search-filter']
+		requires: ['aui-base', 'liferay-control-menu', 'liferay-search-filter']
 	}
 );

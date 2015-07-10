@@ -126,6 +126,6 @@
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="liferay-dockbar">
-	A.one('#<portlet:namespace />closePanelAdd').on('click', Liferay.Dockbar.toggleAddPanel, Liferay.Dockbar);
+<aui:script use="liferay-control-menu">
+	A.one('#<portlet:namespace />closePanelAdd').on('click', Liferay.ControlMenu.toggleAddPanel, Liferay.ControlMenu);
 </aui:script>

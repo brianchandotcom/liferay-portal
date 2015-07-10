@@ -44,7 +44,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 		modelVar="mdrRuleGroupInstance"
 	>
 		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL" windowState="<%= (themeDisplay.isStateExclusive() || Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.MY)) ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
-			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/view_actions" />
 			<portlet:param name="redirect" value='<%= currentURL + "#tab=mobileDeviceRules" %>' />
 			<portlet:param name="showBackURL" value="<%= themeDisplay.isStateExclusive() ? Boolean.FALSE.toString() : Boolean.TRUE.toString() %>" />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />

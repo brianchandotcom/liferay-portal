@@ -96,9 +96,12 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				boolean searchEverywhere = true;
 
 				String searchInfoMessage = StringPool.BLANK;
+				boolean showRerunSearchButton = true;
 
 				if (!showBreadcrumb) {
 					searchInfoMessage = LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(tabName)}, false);
+
+					showRerunSearchButton = false;
 				}
 				else {
 					long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
@@ -112,6 +115,10 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 						folderId = searchFolderId;
 					}
 
+					if ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (searchFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+						showRerunSearchButton = false;
+					}
+
 					searchInfoMessage = !searchEverywhere ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false);
 				}
 				%>
@@ -119,7 +126,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				<%= searchInfoMessage %>
 			</span>
 
-			<c:if test="<%= !showBreadcrumb %>">
+			<c:if test="<%= showRerunSearchButton %>">
 				<span class="change-search-folder">
 
 					<%

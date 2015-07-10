@@ -109,7 +109,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				CallbackFactory callbackFactory =
 					bootstrapLoaderConfiguration.getCallbackFactory();
 
-				PortalCacheBootstrapLoader bootstrapLoader =
+				BootstrapLoader bootstrapLoader =
 					callbackFactory.createBootstrapLoader(
 						bootstrapLoaderConfiguration.getProperties());
 

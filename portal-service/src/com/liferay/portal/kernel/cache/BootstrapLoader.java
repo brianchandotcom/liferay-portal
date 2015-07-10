@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.cache;
 /**
  * @author Tina Tian
  */
-public interface PortalCacheBootstrapLoader {
+public interface BootstrapLoader {
 
 	public boolean isAsynchronous();
 

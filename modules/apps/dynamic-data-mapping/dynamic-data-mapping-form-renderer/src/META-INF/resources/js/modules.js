@@ -35,6 +35,7 @@
 							},
 							path: 'options_field.js',
 							requires: [
+								'liferay-auto-fields',
 								'liferay-ddm-form-renderer-field'
 							]
 						},

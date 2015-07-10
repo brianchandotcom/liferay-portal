@@ -14,6 +14,7 @@
 
 package com.liferay.portal.instances.web.portlet;
 
+import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -37,11 +38,12 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.struts-path=portal_instances",
 		"com.liferay.portlet.use-default-template=false",
-		"javax.portlet.description=javax.portlet.description.135",
+		"javax.portlet.description=javax.portlet.description." +
+			PortalInstancesPortletKeys.PORTAL_INSTANCES,
 		"javax.portlet.display-name=Portal Instances",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.name=135",
+		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

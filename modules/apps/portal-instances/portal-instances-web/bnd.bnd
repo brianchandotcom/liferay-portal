@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Instances Web
 Bundle-SymbolicName: com.liferay.portal.instances.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.instances.web.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources

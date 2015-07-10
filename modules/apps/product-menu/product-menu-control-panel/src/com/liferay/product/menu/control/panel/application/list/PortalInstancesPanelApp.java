@@ -17,8 +17,8 @@ package com.liferay.product.menu.control.panel.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +43,7 @@ public class PortalInstancesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.PORTAL_INSTANCES;
+		return PortalInstancesPortletKeys.PORTAL_INSTANCES;
 	}
 
 	@Reference(unbind = "-")

@@ -19,6 +19,7 @@ import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.NoSuchCompanyException;
 import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -28,7 +29,6 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -41,7 +41,7 @@ import javax.servlet.ServletContext;
  */
 @OSGiBeanProperties(
 	property = {
-		"javax.portlet.name=" + PortletKeys.PORTAL_INSTANCES,
+		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES,
 		"mvc.command.name=/portal_instances/edit_instance"
 	}
 )

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.instances.web.permission;
 
+import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.BaseControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
 
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.PORTAL_INSTANCES},
+	property = {"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES},
 	service = ControlPanelEntry.class
 )
 public class OmniadminControlPanelEntry extends BaseControlPanelEntry {

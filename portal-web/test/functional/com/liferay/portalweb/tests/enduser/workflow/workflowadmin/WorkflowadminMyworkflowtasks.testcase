@@ -34,7 +34,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LRQA-12687" name="AddCommentToTaskAssignedToMe" priority="4">
+	<command name="AddCommentToTaskAssignedToMe" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowComment" value="Workflow Comment" />
@@ -77,7 +77,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="AddCommentToTaskAssignedToMyRoles" priority="4">
+	<command name="AddCommentToTaskAssignedToMyRoles" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowComment" value="Workflow Comment" />
@@ -110,7 +110,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="AddCommentToTaskCompleted" priority="4">
+	<command name="AddCommentToTaskCompleted" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowComment" value="Workflow Comment" />
@@ -165,7 +165,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="ApproveResubmitTaskByActions" priority="4">
+	<command name="ApproveResubmitTaskByActions" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -240,7 +240,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="ApproveTaskByDetails" priority="4">
+	<command name="ApproveTaskByDetails" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -284,7 +284,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="AssignToMeTaskByDetails" priority="4">
+	<command name="AssignToMeTaskByDetails" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -318,7 +318,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="RejectTaskByDetails" priority="4">
+	<command name="RejectTaskByDetails" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -371,7 +371,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="ResubmitTaskByActions" priority="4">
+	<command name="ResubmitTaskByActions" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -436,7 +436,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="ResubmitTaskByDetails" priority="4">
+	<command name="ResubmitTaskByDetails" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -491,7 +491,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="ReviewerApproveResubmitTaskByActionsUser" priority="4">
+	<command name="ReviewerApproveResubmitTaskByActionsUser" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="userEmailAddress1" value="userea1@liferay.com" />
@@ -681,7 +681,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="UpdateDueDateTaskByActions" priority="4">
+	<command name="UpdateDueDateTaskByActions" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowDueDate" value="10/02/2015" />

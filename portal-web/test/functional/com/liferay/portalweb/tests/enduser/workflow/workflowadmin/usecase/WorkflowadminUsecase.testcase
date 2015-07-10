@@ -34,7 +34,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LRQA-12687" name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="4">
+	<command name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
@@ -185,7 +185,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope" priority="4">
+	<command name="AddBlogsEntriesWithSiteScopeWorkflowAndAssertWorkflowScope" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -510,7 +510,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-12687" name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
+	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoConfigurationCP">

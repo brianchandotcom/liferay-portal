@@ -762,7 +762,7 @@
 		<execute macro="Site#viewDefaultThemePG" />
 	</command>
 
-	<command known-issues="LPS-56625" name="SiteFriendlyURLLayoutImporter" priority="3">
+	<command name="SiteFriendlyURLLayoutImporter" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>

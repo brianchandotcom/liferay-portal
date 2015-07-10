@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL refererURL = renderResponse.createActionURL();
@@ -134,7 +134,7 @@ refererURL.setParameter("updateLayout", "true");
 				request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
 			%>
 
-			<liferay-util:include page="/html/portlet/dockbar/view_category.jsp">
+			<liferay-util:include page="/view_category.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="panelContainerId" value="<%= panelContainerId %>" />
 			</liferay-util:include>
 

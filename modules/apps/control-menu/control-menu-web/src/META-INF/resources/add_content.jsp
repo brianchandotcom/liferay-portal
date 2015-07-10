@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
@@ -78,7 +78,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />entriesContainer">
-		<liferay-util:include page="/html/portlet/dockbar/view_resources.jsp" />
+		<liferay-util:include page="/view_resources.jsp" servletContext="<%= application %>" />
 	</div>
 </aui:form>
 

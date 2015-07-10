@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <div id="<portlet:namespace />devicePreviewContainer">
 	<aui:button cssClass="close" name="closePanelPreview" value="&times;" />

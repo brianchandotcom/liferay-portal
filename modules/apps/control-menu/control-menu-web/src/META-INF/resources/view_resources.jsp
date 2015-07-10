@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 boolean viewEntries = ParamUtil.getBoolean(request, "viewEntries");

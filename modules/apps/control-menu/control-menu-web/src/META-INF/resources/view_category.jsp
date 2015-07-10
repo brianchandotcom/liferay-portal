@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String panelContainerId = ParamUtil.getString(request, "panelContainerId");
@@ -90,7 +90,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 					request.setAttribute(WebKeys.PORTLET_CATEGORY_PATH, newCategoryPath);
 				%>
 
-					<liferay-util:include page="/html/portlet/dockbar/view_category.jsp">
+					<liferay-util:include page="/view_category.jsp" servletContext="<%= application %>">
 						<liferay-util:param name="panelContainerId" value="<%= panelContainerId %>" />
 					</liferay-util:include>
 

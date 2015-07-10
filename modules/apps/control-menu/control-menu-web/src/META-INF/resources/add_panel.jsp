@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
@@ -72,11 +72,11 @@
 					>
 						<c:if test="<%= hasAddContentAndApplicationsPermission %>">
 							<liferay-ui:section>
-								<liferay-util:include page="/html/portlet/dockbar/add_content.jsp" />
+								<liferay-util:include page="/add_content.jsp" servletContext="<%= application %>" />
 							</liferay-ui:section>
 
 							<liferay-ui:section>
-								<liferay-util:include page="/html/portlet/dockbar/add_application.jsp" />
+								<liferay-util:include page="/add_application.jsp" servletContext="<%= application %>" />
 							</liferay-ui:section>
 						</c:if>
 

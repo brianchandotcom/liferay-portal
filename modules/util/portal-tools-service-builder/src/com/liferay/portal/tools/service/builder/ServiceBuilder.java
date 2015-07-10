@@ -905,6 +905,12 @@ public class ServiceBuilder {
 								entity, modelImplJavaClass);
 							_createExtendedModelImpl(entity);
 
+							if (modelImplJavaClass == null) {
+								modelImplJavaClass = _getJavaClass(
+									_outputPath + "/model/impl/" +
+										entity.getName() + "Impl.java");
+							}
+
 							entity.setTransients(_getTransients(entity, false));
 							entity.setParentTransients(
 								_getTransients(entity, true));

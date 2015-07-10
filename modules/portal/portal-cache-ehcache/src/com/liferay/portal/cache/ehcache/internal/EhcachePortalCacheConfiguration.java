@@ -48,8 +48,8 @@ public class EhcachePortalCacheConfiguration extends PortalCacheConfiguration {
 		String portalCacheName) {
 
 		return new EhcachePortalCacheConfiguration(
-			portalCacheName, getPortalCacheListenerConfigurations(),
-			getPortalCacheBootstrapLoaderConfiguration(), _requireSerialization);
+			portalCacheName, getCacheListenerConfigurations(),
+			getBootstrapLoaderConfiguration(), _requireSerialization);
 	}
 
 	private final boolean _requireSerialization;

@@ -12,6 +12,7 @@
 		<dirset dir="apps/calendar" includes="*" />
 		<dirset dir="apps/comments" includes="*" />
 		<dirset dir="apps/configuration-admin" includes="*" />
+		<dirset dir="apps/control-menu" includes="*" />
 		<dirset dir="apps/control-panel" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />

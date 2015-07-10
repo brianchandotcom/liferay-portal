@@ -18,6 +18,8 @@ import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,6 +32,11 @@ public class URLItemSelectorCriterionHandler
 	@Override
 	public Class<URLItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return URLItemSelectorCriterion.class;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
 	}
 
 }

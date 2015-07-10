@@ -30,9 +30,11 @@ Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
 int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();
 
+String curTabName = ParamUtil.getString(request, "tabName");
 String keywords = ParamUtil.getString(request, "keywords");
+String tabName = wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale);
 
-if (Validator.isNotNull(keywords)) {
+if (Validator.isNotNull(keywords) && curTabName.equals(tabName)) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setEnd(searchContainer.getEnd());
@@ -82,7 +84,7 @@ searchContainer.setResults(results);
 	itemSelectedEventName="<%= wikiAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	searchContainer="<%= searchContainer %>"
 	searchURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
-	tabName="<%= wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
+	tabName="<%= tabName %>"
 />
 
 <%!

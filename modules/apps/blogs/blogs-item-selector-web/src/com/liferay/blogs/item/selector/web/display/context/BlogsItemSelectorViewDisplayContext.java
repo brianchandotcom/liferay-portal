@@ -73,6 +73,8 @@ public class BlogsItemSelectorViewDisplayContext {
 			_portletURL, liferayPortletResponse);
 
 		portletURL.setParameter("displayStyle", getDisplayStyle(request));
+		portletURL.setParameter(
+			"tabName", String.valueOf(getTitle(request.getLocale())));
 
 		return portletURL;
 	}

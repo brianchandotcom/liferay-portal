@@ -77,6 +77,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		portletURL.setParameter("displayStyle", getDisplayStyle(request));
 		portletURL.setParameter(
 			"folderId", String.valueOf(getFolderId(request)));
+		portletURL.setParameter(
+			"tabName", String.valueOf(getTitle(request.getLocale())));
 
 		return portletURL;
 	}

@@ -28,10 +28,13 @@ Folder folder = blogsItemSelectorViewDisplayContext.fetchAttachmentsFolder(theme
 int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();
 
+String tabName = blogsItemSelectorViewDisplayContext.getTitle(locale);
+
 if (folder != null) {
+	String curTabName = ParamUtil.getString(request, "tabName");
 	String keywords = ParamUtil.getString(request, "keywords");
 
-	if (Validator.isNotNull(keywords)) {
+	if (Validator.isNotNull(keywords) && curTabName.equals(tabName)) {
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 		searchContext.setEnd(searchContainer.getEnd());
@@ -82,7 +85,7 @@ searchContainer.setResults(results);
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	searchContainer="<%= searchContainer %>"
 	searchURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
-	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
+	tabName="<%= tabName %>"
 	uploadURL="<%= blogsItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />
 

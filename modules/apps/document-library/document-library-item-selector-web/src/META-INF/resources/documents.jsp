@@ -30,9 +30,11 @@ long repositoryId = dlItemSelectorViewDisplayContext.getRepositoryId(request);
 long folderId = dlItemSelectorViewDisplayContext.getFolderId(request);
 String[] mimeTypes = dlItemSelectorViewDisplayContext.getMimeTypes();
 
+String curTabName = ParamUtil.getString(request, "tabName");
 String keywords = ParamUtil.getString(request, "keywords");
+String tabName = dlItemSelectorViewDisplayContext.getTitle(locale);
 
-if (Validator.isNotNull(keywords)) {
+if (Validator.isNotNull(keywords) && curTabName.equals(tabName)) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute("mimeTypes", mimeTypes);
@@ -74,8 +76,7 @@ else {
 	results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
-searchContainer.
-	setTotal(total);
+searchContainer.setTotal(total);
 searchContainer.setResults(results);
 %>
 
@@ -87,5 +88,5 @@ searchContainer.setResults(results);
 	searchContainer="<%= searchContainer %>"
 	searchURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	showBreadcrumb="<%= true %>"
-	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
+	tabName="<%= tabName %>"
 />

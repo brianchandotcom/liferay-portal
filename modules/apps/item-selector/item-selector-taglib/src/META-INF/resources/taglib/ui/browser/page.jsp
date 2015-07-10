@@ -62,10 +62,17 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 	</c:if>
 
 	<%
+	String curTabName = ParamUtil.getString(request, "tabName");
 	long folderId = ParamUtil.getLong(request, "folderId");
 	String keywords = ParamUtil.getString(request, "keywords");
 
-	if (showBreadcrumb && Validator.isNull(keywords)) {
+	boolean showSearchInfo = false;
+
+	if (curTabName.equals(tabName) && Validator.isNotNull(keywords)) {
+		showSearchInfo = true;
+	}
+
+	if (showBreadcrumb && !showSearchInfo) {
 		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, searchContainer.getIteratorURL());
 	%>
 
@@ -78,7 +85,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 
 	<%
 	}
-	else if (Validator.isNotNull(keywords)) {
+	else if (showSearchInfo) {
 	%>
 
 		<div class="search-info">
@@ -214,6 +221,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 								PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
 
 								viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+								viewFolderURL.setParameter("keywords", StringPool.BLANK);
 							%>
 
 								<liferay-ui:search-container-column-text name="title">

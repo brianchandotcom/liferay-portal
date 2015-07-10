@@ -166,7 +166,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 			fileVersionId, ddmFormValuesMap, serviceContext);
 	}
 
-	protected void deleteFileEntryMetadata(
+	@Override
+	public void deleteFileEntryMetadata(
 			DLFileEntryMetadata fileEntryMetadata)
 		throws PortalException {
 

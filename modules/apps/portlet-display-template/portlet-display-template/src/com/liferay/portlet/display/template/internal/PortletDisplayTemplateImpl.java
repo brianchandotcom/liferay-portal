@@ -43,7 +43,10 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
 
@@ -65,6 +68,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -76,6 +80,24 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true)
 @DoPrivileged
 public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
+
+	@Override
+	public void exportDDMTemplateStagedModel(
+			PortletDataContext portletDataContext, String portletId,
+			long ddmTemplateId)
+		throws PortletDataException {
+
+		try {
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
+				ddmTemplateId);
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, ddmTemplate);
+		}
+		catch (PortalException pe) {
+			throw new PortletDataException(pe);
+		}
+	}
 
 	@Override
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle) {
@@ -92,17 +114,15 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			}
 
 			try {
-				return
-					DDMTemplateLocalServiceUtil.getDDMTemplateByUuidAndGroupId(
-						uuid, groupId);
+				return _ddmTemplateLocalService.getDDMTemplateByUuidAndGroupId(
+					uuid, groupId);
 			}
-			catch (NoSuchTemplateException nste) {
+			catch (PortalException pe) {
 			}
 
 			try {
-				return
-					DDMTemplateLocalServiceUtil.getDDMTemplateByUuidAndGroupId(
-						uuid, companyGroup.getGroupId());
+				return _ddmTemplateLocalService.getDDMTemplateByUuidAndGroupId(
+					uuid, companyGroup.getGroupId());
 			}
 			catch (NoSuchTemplateException nste) {
 			}
@@ -153,6 +173,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		}
 
 		return displayStyle.substring(DISPLAY_STYLE_PREFIX.length());
+	}
+
+	@Override
+	public Class<?> getDDMTemplateStagedModelClass() {
+		return DDMTemplate.class;
 	}
 
 	@Deprecated
@@ -207,7 +232,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			if (Validator.isNotNull(ddmTemplateKey)) {
 				try {
 					portletDisplayDDMTemplate =
-						DDMTemplateLocalServiceUtil.fetchTemplate(
+						_ddmTemplateLocalService.fetchTemplate(
 							portletDisplayDDMTemplateGroupId, classNameId,
 							ddmTemplateKey, true);
 				}
@@ -474,11 +499,18 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			Map<String, Object> contextObjects)
 		throws Exception {
 
-		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
 			ddmTemplateId);
 
 		return renderDDMTemplate(
 			request, response, ddmTemplate, entries, contextObjects);
+	}
+
+	@Reference
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
 	private Map<String, Object> _getPortletPreferences(
@@ -514,6 +546,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDisplayTemplateImpl.class);
+
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	private static class TransformerHolder {
 

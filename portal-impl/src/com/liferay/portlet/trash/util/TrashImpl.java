@@ -381,12 +381,12 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public String getOriginalTitle(String title) {
-		return getOriginalTitle(title, "title", StringPool.SLASH);
+		return getOriginalTitle(title, "title", TRASH_PREFIX);
 	}
 
 	@Override
 	public String getOriginalTitle(String title, String paramName) {
-		return getOriginalTitle(title, paramName, StringPool.SLASH);
+		return getOriginalTitle(title, paramName, TRASH_PREFIX);
 	}
 
 	@Override
@@ -402,7 +402,7 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public String getTrashTitle(long trashEntryId) {
-		return getTrashTitle(trashEntryId, StringPool.SLASH);
+		return getTrashTitle(trashEntryId, TRASH_PREFIX);
 	}
 
 	@Override
@@ -644,6 +644,8 @@ public class TrashImpl implements Trash {
 	protected String getTrashTitle(long trashEntryId, String prefix) {
 		return prefix.concat(String.valueOf(trashEntryId));
 	}
+
+	protected final String TRASH_PREFIX = StringPool.SLASH;
 
 	private static final Log _log = LogFactoryUtil.getLog(TrashImpl.class);
 

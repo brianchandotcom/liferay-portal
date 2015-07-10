@@ -14,15 +14,17 @@
 
 package com.liferay.item.selector;
 
-import com.liferay.portal.kernel.registry.ServiceTrackerCustomizerFactory;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Roberto Díaz
@@ -57,6 +59,14 @@ public abstract class BaseItemSelectorCriterionHandler
 		return (List)Collections.unmodifiableList(filteredItemSelectedViews);
 	}
 
+	protected void activate(BundleContext bundleContext) {
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, ItemSelectorView.class,
+			new ItemSelectorViewServiceTrackerCustomizer(bundleContext));
+
+		_serviceTracker.open();
+	}
+
 	private boolean _isItemSelectorViewSupported(
 		ItemSelectorView itemSelectorView,
 		ItemSelectorReturnType itemSelectorReturnType) {
@@ -83,22 +93,62 @@ public abstract class BaseItemSelectorCriterionHandler
 		return false;
 	}
 
-	private final ServiceTrackerList<ItemSelectorView> _itemSelectorViews =
-		ServiceTrackerCollections.list(
-			ItemSelectorView.class,
-			ServiceTrackerCustomizerFactory.create(
-				new PredicateFilter<ItemSelectorView>() {
+	private final List<ItemSelectorView<?>> _itemSelectorViews =
+		new CopyOnWriteArrayList<>();
+	private ServiceTracker _serviceTracker;
 
-					@Override
-					public boolean filter(ItemSelectorView itemSelectorView) {
-						Class<?> itemSelectorCriterionClass =
-							itemSelectorView.getItemSelectorCriterionClass();
+	private class ItemSelectorViewServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ItemSelectorView, ItemSelectorView> {
 
-						return itemSelectorCriterionClass.isAssignableFrom(
-							BaseItemSelectorCriterionHandler.this.
-								getItemSelectorCriterionClass());
-					}
+		public ItemSelectorViewServiceTrackerCustomizer(
+			BundleContext bundleContext) {
 
-				}));
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public ItemSelectorView addingService(
+			ServiceReference<ItemSelectorView> reference) {
+
+			ItemSelectorView service = _bundleContext.getService(reference);
+
+			Class<?> itemSelectorCriterionClass =
+				service.getItemSelectorCriterionClass();
+
+			if (!itemSelectorCriterionClass.isAssignableFrom(
+					BaseItemSelectorCriterionHandler.this.
+						getItemSelectorCriterionClass())) {
+
+				return null;
+			}
+
+			_itemSelectorViews.add(service);
+
+			return service;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ItemSelectorView> serviceReference,
+			ItemSelectorView itemSelectorView) {
+
+			removedService(serviceReference, itemSelectorView);
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ItemSelectorView> serviceReference,
+			ItemSelectorView itemSelectorView) {
+
+			_itemSelectorViews.remove(itemSelectorView);
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+
+	}
 
 }

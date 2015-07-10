@@ -378,6 +378,52 @@
 		</execute>
 	</command>
 
+	<command known-issues="LPS-56919" name="SearchCurrentMembersAssignedToUserGroup" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="UserGroup#searchMembersInUserGroupCP">
+			<var name="searchTerm" value="usersn" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="CPUsergroupsAssignmembers#USER_TABLE_GENERIC_SCREEN_NAME_1" value1="usersn" />
+		<execute function="AssertNotVisible" locator1="CPUsergroupsAssignmembers#USER_TABLE_GENERIC_SCREEN_NAME_2" />
+	</command>
+
 	<command name="SearchUserGroup" priority="4">
 		<var name="userGroupName" value="UG UserGroup Name" />
 

@@ -390,6 +390,16 @@
 		<execute function="Click" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_ACTIONS" />
 	</command>
 
+	<command name="gotoCP">
+		<execute function="Type" locator1="CPUsersandorganizations#SEARCH_FIELD" value1="${searchToken}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+	</command>
+
 	<command name="manageMembershipOptionsInSites">
 		<execute macro="Organization#gotoActionsCmd" />
 
@@ -518,14 +528,6 @@
 	</command>
 
 	<command name="viewAssignMemberCP">
-		<execute function="Type" locator1="CPUsersandorganizations#SEARCH_FIELD" value1="${searchToken}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_BUTTON" value1="Search" />
-
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganization#USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganization#USER_TABLE_LAST_NAME_1" value1="${userLastName}" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganization#USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
@@ -578,6 +580,10 @@
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
 		<execute function="AssertTextEquals#assertValue" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#ORGANIZATION_NAME" value1="${orgNameEdit}" />
+	</command>
+
+	<command name="viewMembersNotFoundCP">
+		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganization#INFO_MESSAGE" value1="This organization does not have any users. " />
 	</command>
 
 	<command name="viewParentOrganizationCP">

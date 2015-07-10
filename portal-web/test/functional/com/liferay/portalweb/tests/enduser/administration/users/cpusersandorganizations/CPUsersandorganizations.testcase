@@ -151,9 +151,12 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Organization#viewAssignMemberCP">
+		<execute macro="Organization#gotoCP">
 			<var name="orgName" value="${orgName}" />
 			<var name="searchToken" value="${searchToken}" />
+		</execute>
+
+		<execute macro="Organization#viewAssignMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
@@ -2067,6 +2070,60 @@
 		<execute function="AssertTextNotPresent" locator1="CPUsersandorganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName2}" />
 		<execute function="AssertTextNotPresent" locator1="CPUsersandorganizations#USER_TABLE_LAST_NAME" value1="${userLastName2}" />
 		<execute function="AssertTextNotPresent" locator1="CPUsersandorganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName2}" />
+	</command>
+
+	<command name="SearchUsersInOrganization" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#gotoCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchToken" value="Organization Name" />
+		</execute>
+
+		<execute macro="User#searchCP">
+			<var name="searchToken" value="usersn" />
+		</execute>
+
+		<execute macro="Organization#viewAssignMemberCP">
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#searchCP">
+			<var name="searchToken" value="test" />
+		</execute>
+
+		<execute macro="Organization#viewMembersNotFoundCP" />
 	</command>
 
 	<command name="ViewBack" priority="4">

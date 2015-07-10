@@ -265,6 +265,12 @@
 		<execute function="AssertTextNotPresent" locator1="CPUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
+	<command name="searchMembersInUserGroupCP">
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchTerm}" />
+
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />

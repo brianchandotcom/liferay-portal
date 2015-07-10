@@ -1638,6 +1638,12 @@
 		</if>
 	</command>
 
+	<command name="searchCP">
+		<execute function="Type" locator1="CPUsersandorganizations#SEARCH_FIELD" value1="${searchToken}" />
+
+		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_BUTTON" value1="Search" />
+	</command>
+
 	<command name="signInPG">
 		<execute function="AssertClick" locator1="Dockbar#USER_SIGN_IN" value1="Sign In" />
 

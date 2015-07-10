@@ -157,6 +157,7 @@ public class StoreFactory {
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static StoreFactory _instance;
+
 	private static boolean _warned;
 
 	private volatile Store _store = null;

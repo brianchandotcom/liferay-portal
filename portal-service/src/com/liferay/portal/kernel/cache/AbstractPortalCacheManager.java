@@ -110,7 +110,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 					bootstrapLoaderConfiguration.getCallbackFactory();
 
 				PortalCacheBootstrapLoader bootstrapLoader =
-					callbackFactory.createPortalCacheBootstrapLoader(
+					callbackFactory.createBootstrapLoader(
 						bootstrapLoaderConfiguration.getProperties());
 
 				if (bootstrapLoader != null) {
@@ -255,7 +255,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				callbackConfiguration.getCallbackFactory();
 
 			PortalCacheManagerListener cacheManagerListener =
-				callbackFactory.createPortalCacheManagerListener(
+				callbackFactory.createCacheManagerListener(
 					callbackConfiguration.getProperties());
 
 			if (cacheManagerListener != null) {
@@ -330,7 +330,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				callbackConfiguration.getCallbackFactory();
 
 			PortalCacheListener<K, V> cacheListener =
-				callbackFactory.createPortalCacheListener(
+				callbackFactory.createCacheListener(
 					callbackConfiguration.getProperties());
 
 			portalCache.registerPortalCacheListener(cacheListener, entry.getValue());

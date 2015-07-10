@@ -1290,9 +1290,12 @@ public class LiferaySeleniumHelper {
 
 		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
-		screenRegion = screenRegion.find(imageTarget);
+		List<ScreenRegion> imageTargetScreenRegions = screenRegion.findAll(
+			imageTarget);
 
-		mouse.click(screenRegion.getCenter());
+		for (ScreenRegion imageTargetScreenRegion : imageTargetScreenRegions) {
+			mouse.click(imageTargetScreenRegion.getCenter());
+		}
 	}
 
 	public static void sikuliDragAndDrop(

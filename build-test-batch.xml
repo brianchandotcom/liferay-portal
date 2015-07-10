@@ -61,6 +61,15 @@
 
 					<check-deprecated-method />
 
+					<if>
+						<available file=".testable.portal.started" />
+						<then>
+							<antcall target="stop-app-server" />
+
+							<delete file=".testable.portal.started" failonerror="false" />
+						</then>
+					</if>
+
 					<print-gc-logs />
 				</then>
 			</if>

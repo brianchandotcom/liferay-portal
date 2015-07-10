@@ -79,7 +79,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
-			String mvcPath = "/html/portlet/portal_instances/error.jsp";
+			String mvcPath = "/error.jsp";
 
 			if (e instanceof NoSuchCompanyException ||
 				e instanceof PrincipalException) {
@@ -92,7 +92,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				mvcPath = "/html/portlet/portal_instances/edit_instance.jsp";
+				mvcPath = "/edit_instance.jsp";
 			}
 			else if (e instanceof RequiredCompanyException) {
 				SessionErrors.add(actionRequest, e.getClass());

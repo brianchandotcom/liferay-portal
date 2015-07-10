@@ -22,4 +22,4 @@ page import="com.liferay.portal.CompanyWebIdException" %><%@
 page import="com.liferay.portal.RequiredCompanyException" %><%@
 page import="com.liferay.portal.util.PortalInstances" %>
 
-<%@ include file="/html/portlet/portal_instances/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

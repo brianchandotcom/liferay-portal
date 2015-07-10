@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portal_instances/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:choose>
 	<c:when test="<%= permissionChecker.isOmniadmin() %>">
@@ -37,7 +37,7 @@
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 			<aui:input name="className" type="hidden" />
 
-			<%@ include file="/html/portlet/portal_instances/instances.jspf" %>
+			<%@ include file="/instances.jspf" %>
 		</aui:form>
 	</c:when>
 	<c:otherwise>

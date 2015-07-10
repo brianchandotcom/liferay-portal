@@ -39,7 +39,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/portal_instances/view.jsp";
+		return "/view.jsp";
 	}
 
 }

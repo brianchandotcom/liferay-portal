@@ -53,14 +53,14 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/portal_instances/error.jsp";
+				return "/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/portal_instances/edit_instance.jsp";
+		return "/edit_instance.jsp";
 	}
 
 }

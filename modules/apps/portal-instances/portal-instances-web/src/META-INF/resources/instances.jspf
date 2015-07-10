@@ -98,7 +98,7 @@
 
 		<liferay-ui:search-container-column-jsp
 			cssClass="entry-action"
-			path="/html/portlet/portal_instances/instance_actions.jsp"
+			path="/instance_actions.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

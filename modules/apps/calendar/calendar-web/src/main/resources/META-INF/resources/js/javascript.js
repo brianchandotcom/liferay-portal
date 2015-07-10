@@ -1661,6 +1661,8 @@ AUI.add(
 					_onClickPermissions: function(event) {
 						var instance = this;
 
+						var recorder = instance.get('eventRecorder');
+
 						var permissionsURL = decodeURIComponent(recorder.get('permissionsURL'));
 
 						Liferay.Util.openWindow(

@@ -1230,6 +1230,122 @@ ${tomcat-gc-log}
 		</sequential>
 	</macrodef>
 
+	<macrodef name="record-test-class-file-names">
+		<sequential>
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					import org.apache.tools.ant.DirectoryScanner;
+
+					List getClassGroups(List classFileNames, int groupsSize) {
+						List classFileNameGroups = new ArrayList(groupsSize);
+
+						for (int i = 0; i < groupsSize; i++) {
+							classFileNameGroups.add(new ArrayList());
+						}
+
+						int i = 0;
+
+						for (String classFileName : classFileNames) {
+							List classFileNameGroup = classFileNameGroups.get(i++ % groupsSize);
+
+							classFileNameGroup.add(classFileName);
+						}
+
+						return classFileNameGroups;
+					}
+
+					List getClassFileNames() {
+						DirectoryScanner directoryScanner = new DirectoryScanner();
+
+						directoryScanner.setBasedir(project.getBaseDir());
+						directoryScanner.setExcludes(
+							new String[] {
+								"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
+								"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
+								"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
+								"modules/util/osgi-util/test/integration/**/*Test.java",
+								"portal-service/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
+								"*/pacl/test/[\\w]+Test.class",
+								"**/*ServiceHttpTest.java",
+								"**/*ServiceJsonTest.java",
+								"**/*ServiceSoapTest.java"
+							});
+						directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+
+						directoryScanner.scan();
+
+						List classFileNames = new ArrayList();
+
+						for (String fileName : directoryScanner.getIncludedFiles()) {
+							String classFileName = fileName.substring(fileName.indexOf("com" + File.separator), fileName.length() - 4);
+
+							classFileName = classFileName.concat("class");
+
+							classFileNames.add(classFileName);
+						}
+
+						Collections.sort(classFileNames);
+
+						return classFileNames;
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
+
+					String autoBalanceTestClassNamesString = project.getProperty("test.class.names.auto.balance");
+
+					String[] autoBalanceTestClassNames = autoBalanceTestClassNamesString.split(",");
+
+					List classFileNames = getClassFileNames();
+
+					List testClassGroups = getClassGroups(classFileNames, allTestClassGroupsSize);
+
+					for (i = 0; i < allTestClassGroupsSize; i++) {
+						List testClassGroup = testClassGroups.get(i);
+
+						sb.append("TEST_CLASS_GROUP_");
+						sb.append(i);
+						sb.append("=");
+
+						for (String testClass : testClassGroup) {
+							sb.append(testClass);
+							sb.append(",");
+						}
+
+						for (String testClass : autoBalanceTestClassNames) {
+							if (!testClassGroup.contains(testClass)) {
+								sb.append(testClass);
+								sb.append(",");
+							}
+						}
+
+						if (!testClassGroup.isEmpty() || autoBalanceTestClassNames.length > 0) {
+							sb.setLength(sb.length() - 1);
+						}
+
+						sb.append("\n\n");
+					}
+
+					sb.append("TEST_CLASS_GROUPS=");
+
+					for (int i = 0; i < allTestClassGroupsSize; i++) {
+						sb.append(i);
+						sb.append(" ");
+					}
+
+					if (allTestClassGroupsSize > 0) {
+						sb.setLength(sb.length() - 1);
+					}
+
+					project.setProperty("test.class.file.names.properties.content", sb.toString());
+				]]>
+			</script>
+
+			<echo file="test.class.file.names.properties">${test.class.file.names.properties.content}</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-app-server-properties">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -4915,7 +5031,7 @@ module.framework.properties.osgi.console=11312</echo>
 
 		<antcall target="compile-test" inheritAll="false" />
 
-		<antcall target="record-test-class-file-names" inheritAll="false" />
+		<record-test-class-file-names />
 
 		<antcall target="record-test-plugin-names" inheritAll="false" />
 
@@ -5351,117 +5467,7 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-class-file-names">
-		<script classpathref="project.classpath" language="beanshell">
-			<![CDATA[
-				import org.apache.tools.ant.DirectoryScanner;
-
-				List getClassGroups(List classFileNames, int groupsSize) {
-					List classFileNameGroups = new ArrayList(groupsSize);
-
-					for (int i = 0; i < groupsSize; i++) {
-						classFileNameGroups.add(new ArrayList());
-					}
-
-					int i = 0;
-
-					for (String classFileName : classFileNames) {
-						List classFileNameGroup = classFileNameGroups.get(i++ % groupsSize);
-
-						classFileNameGroup.add(classFileName);
-					}
-
-					return classFileNameGroups;
-				}
-
-				List getClassFileNames() {
-					DirectoryScanner directoryScanner = new DirectoryScanner();
-
-					directoryScanner.setBasedir(project.getBaseDir());
-					directoryScanner.setExcludes(
-						new String[] {
-							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
-							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
-							"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
-							"modules/util/osgi-util/test/integration/**/*Test.java",
-							"portal-service/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
-							"*/pacl/test/[\\w]+Test.class",
-							"**/*ServiceHttpTest.java",
-							"**/*ServiceJsonTest.java",
-							"**/*ServiceSoapTest.java"
-						});
-					directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
-
-					directoryScanner.scan();
-
-					List classFileNames = new ArrayList();
-
-					for (String fileName : directoryScanner.getIncludedFiles()) {
-						String classFileName = fileName.substring(fileName.indexOf("com" + File.separator), fileName.length() - 4);
-
-						classFileName = classFileName.concat("class");
-
-						classFileNames.add(classFileName);
-					}
-
-					Collections.sort(classFileNames);
-
-					return classFileNames;
-				}
-
-				StringBuilder sb = new StringBuilder();
-
-				int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
-
-				String autoBalanceTestClassNamesString = project.getProperty("test.class.names.auto.balance");
-
-				String[] autoBalanceTestClassNames = autoBalanceTestClassNamesString.split(",");
-
-				List classFileNames = getClassFileNames();
-
-				List testClassGroups = getClassGroups(classFileNames, allTestClassGroupsSize);
-
-				for (i = 0; i < allTestClassGroupsSize; i++) {
-					List testClassGroup = testClassGroups.get(i);
-
-					sb.append("TEST_CLASS_GROUP_");
-					sb.append(i);
-					sb.append("=");
-
-					for (String testClass : testClassGroup) {
-						sb.append(testClass);
-						sb.append(",");
-					}
-
-					for (String testClass : autoBalanceTestClassNames) {
-						if (!testClassGroup.contains(testClass)) {
-							sb.append(testClass);
-							sb.append(",");
-						}
-					}
-
-					if (!testClassGroup.isEmpty() || autoBalanceTestClassNames.length > 0) {
-						sb.setLength(sb.length() - 1);
-					}
-
-					sb.append("\n\n");
-				}
-
-				sb.append("TEST_CLASS_GROUPS=");
-
-				for (int i = 0; i < allTestClassGroupsSize; i++) {
-					sb.append(i);
-					sb.append(" ");
-				}
-
-				if (allTestClassGroupsSize > 0) {
-					sb.setLength(sb.length() - 1);
-				}
-
-				project.setProperty("test.class.file.names.properties.content", sb.toString());
-			]]>
-		</script>
-
-		<echo file="test.class.file.names.properties">${test.class.file.names.properties.content}</echo>
+		<record-test-class-file-names />
 	</target>
 
 	<target name="record-test-plugin-names">

@@ -26,9 +26,11 @@ boolean hideDayView = ParamUtil.getBoolean(request, "hideDayView");
 boolean hideMonthView = ParamUtil.getBoolean(request, "hideMonthView");
 boolean hideWeekView = ParamUtil.getBoolean(request, "hideWeekView");
 String permissionsCalendarBookingURL = ParamUtil.getString(request, "permissionsCalendarBookingURL");
+String permissionsURL = ParamUtil.getString(request, "permissionsURL");
 boolean preventPersistence = ParamUtil.getBoolean(request, "preventPersistence");
 boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
 boolean showAddEventBtn = ParamUtil.getBoolean(request, "showAddEventBtn");
+boolean showPermissionsBtn = ParamUtil.getBoolean(request, "showPermissionsBtn");
 String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookingURL");
 %>
 
@@ -118,6 +120,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 				editCalendarBookingURL: '<%= HtmlUtil.escapeJS(editCalendarBookingURL) %>',
 				headerTemplate: new A.Template(A.one('#<portlet:namespace />eventRecorderHeaderTpl').html()),
 				permissionsCalendarBookingURL: '<%= HtmlUtil.escapeJS(permissionsCalendarBookingURL) %>',
+				permissionsURL: '<%= HtmlUtil.escapeJS(permissionsURL) %>',
 				popover: {
 					width: width
 				},
@@ -177,6 +180,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			preventPersistence: <%= preventPersistence %>,
 			render: true,
 			showAddEventBtn: <%= showAddEventBtn %>,
+			showPermissionsBtn: <%= showPermissionsBtn %>,
 			strings: {
 				agenda: '<liferay-ui:message key="agenda" />',
 				day: '<liferay-ui:message key="day" />',

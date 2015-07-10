@@ -76,6 +76,25 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-integration-test">
+		<attribute name="database.type" />
+		<sequential>
+			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+				<test-action>
+					<database-test-run-test database.test.sequence="@{database.type}">
+						<test-action>
+							<ant dir="portal-impl" target="test-class-group" inheritAll="false">
+								<property name="database.type" value="@{database.type}" />
+								<property name="test.class.group.index" value="@{test.class.group.index}" />
+								<property name="test.type" value="integration" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-build-selenium">
 		<sequential>
 			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
@@ -91,21 +110,15 @@
 	</macrodef>
 
 	<target name="integration-mysql">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
-			<test-action>
-				<antcall target="test-class-group">
-					<param name="test.class.group.index" value="@{test.class.group.index}" />
-				</antcall>
-			</test-action>
-		</run-batch-test>
+		<run-integration-test database.type="mysql" />
 	</target>
 
 	<target name="integration-oracle">
-		<echo>${jenkins.axis.variable}</echo>
+		<run-integration-test database.type="oracle" />
 	</target>
 
 	<target name="integration-postgresql">
-		<echo>${jenkins.axis.variable}</echo>
+		<run-integration-test database.type="postgresql" />
 	</target>
 
 	<target name="modules">

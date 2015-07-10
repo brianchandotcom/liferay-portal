@@ -119,16 +119,18 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				<%= searchInfoMessage %>
 			</span>
 
-			<span class="change-search-folder">
+			<c:if test="<%= !showBreadcrumb %>">
+				<span class="change-search-folder">
 
-				<%
-				searchURL.setParameter("folderId", !searchEverywhere ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId));
-				searchURL.setParameter("searchFolderId", String.valueOf(folderId));
-				searchURL.setParameter("keywords", keywords);
-				%>
+					<%
+					searchURL.setParameter("folderId", !searchEverywhere ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId));
+					searchURL.setParameter("searchFolderId", String.valueOf(folderId));
+					searchURL.setParameter("keywords", keywords);
+					%>
 
-				<aui:button href="<%= searchURL.toString() %>" value='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
-			</span>
+					<aui:button href="<%= searchURL.toString() %>" value='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
+				</span>
+			</c:if>
 
 			<%
 			PortletURL closeSearchURL = PortletURLUtil.clone(searchURL, liferayPortletResponse);

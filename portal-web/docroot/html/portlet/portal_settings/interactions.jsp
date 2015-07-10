@@ -189,7 +189,7 @@ for (Portlet portlet : portlets) {
 	for (Portlet socialInteractionsConfigurationPortlet : socialInteractionsConfigurationPortlets) {
 	%>
 
-		Util.toggleBoxes('<%= renderResponse.getNamespace() + "socialInteractionsSocialRelationTypesEnabled" + socialInteractionsConfigurationPortlet.getPortletId() + "Checkbox" %>', '<%= renderResponse.getNamespace() + "socialRelations" + socialInteractionsConfigurationPortlet.getPortletId() %>');
+		Util.toggleBoxes('<%= renderResponse.getNamespace() + "socialInteractionsSocialRelationTypesEnabled" + socialInteractionsConfigurationPortlet.getPortletId() %>', '<%= renderResponse.getNamespace() + "socialRelations" + socialInteractionsConfigurationPortlet.getPortletId() %>');
 
 		Util.toggleRadio('<%= renderResponse.getNamespace() + "inheritSocialInteractionsConfiguration" + socialInteractionsConfigurationPortlet.getPortletId() %>', '', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>');
 		Util.toggleRadio('<%= renderResponse.getNamespace() + "socialInteractionsAnyUser" + socialInteractionsConfigurationPortlet.getPortletId() %>', '', '<%= renderResponse.getNamespace() + "socialInteractionsUsersWrapper" + socialInteractionsConfigurationPortlet.getPortletId() %>');

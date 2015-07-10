@@ -85,11 +85,6 @@ public class DDMStructureImpl implements DDMStructure {
 		return _structure.getUuid();
 	}
 
-	@Override
-	public void setStructureId(long structureId) {
-		_structure.setStructureId(structureId);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureImpl.class);
 

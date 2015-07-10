@@ -37,6 +37,4 @@ public interface DDMStructure {
 
 	public String getUuid();
 
-	public void setStructureId(long structureId);
-
 }

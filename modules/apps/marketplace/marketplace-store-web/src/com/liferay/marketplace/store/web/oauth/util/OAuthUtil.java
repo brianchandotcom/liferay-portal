@@ -14,6 +14,8 @@
 
 package com.liferay.marketplace.store.web.oauth.util;
 
+import com.liferay.marketplace.store.web.configuration.MarketplaceStoreWebConfigurationValues;
+import com.liferay.marketplace.store.web.oauth.api.MarketplaceApi;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,7 +37,11 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import org.scribe.builder.api.Api;
+import org.scribe.model.OAuthConfig;
+import org.scribe.model.SignatureType;
 import org.scribe.model.Token;
+import org.scribe.oauth.OAuthService;
 
 /**
  * @author Ryan Park
@@ -68,6 +74,18 @@ public class OAuthUtil {
 
 		return new Token(
 			tokenExpandoValue.getString(), secretExpandoValue.getString());
+	}
+
+	public static OAuthService getOAuthService() {
+		Api api = new MarketplaceApi();
+
+		OAuthConfig oAuthConfig = new OAuthConfig(
+			MarketplaceStoreWebConfigurationValues.MARKETPLACE_KEY,
+			MarketplaceStoreWebConfigurationValues.MARKETPLACE_SECRET,
+			MarketplaceStoreWebConfigurationValues.MARKETPLACE_URL,
+			SignatureType.Header, null, null);
+
+		return api.createService(oAuthConfig);
 	}
 
 	public static void updateAccessToken(User user, Token token)

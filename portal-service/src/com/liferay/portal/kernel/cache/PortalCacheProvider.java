@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Tina Tian
  */
-public class PortalCacheManagerProvider {
+public class PortalCacheProvider {
 
 	public static PortalCacheManager<? extends Serializable, ?>
 		getPortalCacheManager(String portalCacheManagerName) {
@@ -44,7 +44,7 @@ public class PortalCacheManagerProvider {
 		return _instance._getPortalCacheManagers();
 	}
 
-	private PortalCacheManagerProvider() {
+	private PortalCacheProvider() {
 		_portalCacheManagers = new ConcurrentHashMap<>();
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -70,8 +70,8 @@ public class PortalCacheManagerProvider {
 			_portalCacheManagers.values());
 	}
 
-	private static final PortalCacheManagerProvider _instance =
-		new PortalCacheManagerProvider();
+	private static final PortalCacheProvider _instance =
+		new PortalCacheProvider();
 
 	private final
 		Map<String, PortalCacheManager<? extends Serializable, ?>>

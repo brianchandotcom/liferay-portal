@@ -91,6 +91,10 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	public void deleteFileEntryMetadata(long fileEntryId)
 		throws PortalException;
 
+	public void deleteFileEntryMetadata(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fileEntryMetadata)
+		throws PortalException;
+
 	public void deleteFileVersionFileEntryMetadata(long fileVersionId)
 		throws PortalException;
 

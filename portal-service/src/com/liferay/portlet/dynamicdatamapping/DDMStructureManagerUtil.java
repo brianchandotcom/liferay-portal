@@ -45,13 +45,15 @@ public class DDMStructureManagerUtil {
 			serviceContext);
 	}
 
-	public void deleteStructure(long structureId) throws PortalException {
+	public static void deleteStructure(long structureId)
+		throws PortalException {
+
 		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
 
 		ddmStructureManager.deleteStructure(structureId);
 	}
 
-	public DDMStructure fetchStructure(
+	public static DDMStructure fetchStructure(
 		long groupId, long classNameId, String structureKey) {
 
 		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
@@ -60,7 +62,7 @@ public class DDMStructureManagerUtil {
 			groupId, classNameId, structureKey);
 	}
 
-	public DDMStructure fetchStructureByUuidAndGroupId(
+	public static DDMStructure fetchStructureByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
@@ -69,7 +71,7 @@ public class DDMStructureManagerUtil {
 			uuid, groupId);
 	}
 
-	public List<DDMStructure> getClassStructures(
+	public static List<DDMStructure> getClassStructures(
 		long companyId, long classNameId, int start, int end) {
 
 		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
@@ -78,13 +80,15 @@ public class DDMStructureManagerUtil {
 			companyId, classNameId, start, end);
 	}
 
-	public DDMStructure getStructure(long structureId) throws PortalException {
+	public static DDMStructure getStructure(long structureId)
+		throws PortalException {
+
 		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
 
 		return ddmStructureManager.getStructure(structureId);
 	}
 
-	public DDMStructure getStructure(
+	public static DDMStructure getStructure(
 			long groupId, long classNameId, String structureKey)
 		throws PortalException {
 
@@ -94,7 +98,8 @@ public class DDMStructureManagerUtil {
 			groupId, classNameId, structureKey);
 	}
 
-	public DDMStructure getStructureByUuidAndGroupId(String uuid, long groupId)
+	public static DDMStructure getStructureByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException {
 
 		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
@@ -102,7 +107,7 @@ public class DDMStructureManagerUtil {
 		return ddmStructureManager.getStructureByUuidAndGroupId(uuid, groupId);
 	}
 
-	public DDMStructure updateStructure(
+	public static DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,

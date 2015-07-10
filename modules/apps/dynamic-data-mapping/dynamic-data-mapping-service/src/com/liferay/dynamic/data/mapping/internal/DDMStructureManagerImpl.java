@@ -209,8 +209,9 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		try {
 			com.liferay.portlet.dynamicdatamapping.model.DDMStructure
 				structure = _ddmStructureLocalService.updateStructure(
-					userId, parentStructureId, translate(ddmForm),
-					translate(ddmFormLayout), serviceContext);
+					userId, structureId, parentStructureId, nameMap,
+					descriptionMap, translate(ddmForm), translate(ddmFormLayout),
+					serviceContext);
 
 			return new DDMStructureImpl(structure);
 		}

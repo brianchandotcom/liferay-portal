@@ -332,7 +332,7 @@ AUI.add(
 								align: null,
 								centered: true,
 								modal: true,
-								width: '90%'
+								width: 'auto'
 							}
 						).align();
 					}

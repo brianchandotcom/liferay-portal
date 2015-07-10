@@ -27,7 +27,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 %>
 
 <portlet:resourceURL var="updateContentListURL">
-	<portlet:param name="struts_action" value="/dockbar/view" />
+	<portlet:param name="mvcPath" value="/view_resources.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:resourceURL>
 
@@ -67,7 +67,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 			<%
 			PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
-			redirectURL.setParameter("struts_action", "/dockbar/add_content_redirect");
+			redirectURL.setParameter("mvcPath", "/add_content_redirect.jsp");
 			redirectURL.setWindowState(LiferayWindowState.POP_UP);
 			%>
 

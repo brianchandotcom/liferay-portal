@@ -57,7 +57,7 @@ boolean portalMessageUseAnimation = GetterUtil.getBoolean(PortalMessages.get(req
 
 				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 					<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-						<portlet:param name="struts_action" value="/dockbar/add_panel" />
+						<portlet:param name="mvcPath" value="/add_panel.jsp" />
 						<portlet:param name="stateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
 						<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:renderURL>
@@ -67,7 +67,7 @@ boolean portalMessageUseAnimation = GetterUtil.getBoolean(PortalMessages.get(req
 
 				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (hasLayoutUpdatePermission || GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE)) %>">
 					<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-						<portlet:param name="struts_action" value="/dockbar/preview_panel" />
+						<portlet:param name="mvcPath" value="/preview_panel.jsp" />
 					</portlet:renderURL>
 
 					<aui:nav-item anchorId="previewPanel" cssClass="page-preview-controls" data-panelURL="<%= HtmlUtil.escapeAttribute(previewContentURL) %>" href="javascript:;" iconCssClass="icon-desktop" label="preview" />

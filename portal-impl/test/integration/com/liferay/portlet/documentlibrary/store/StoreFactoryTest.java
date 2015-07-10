@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portlet.documentlibrary.store.bundle.storefactory.TestStore;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -44,7 +43,6 @@ public class StoreFactoryTest {
 		Store testStore = storeFactory.getStoreInstance("test");
 
 		Assert.assertNotNull(testStore);
-		Assert.assertTrue(testStore instanceof TestStore);
 
 		String[] fileNames = testStore.getFileNames(0, 0);
 

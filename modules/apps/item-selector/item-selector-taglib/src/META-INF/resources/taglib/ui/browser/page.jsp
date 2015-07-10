@@ -33,7 +33,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 %>
 
 <liferay-util:html-top>
-	<link href="/o/item-selector-taglib/taglib/css/main.css" rel="stylesheet" type="text/css" />
+	<link href="<%= ServletContextUtil.getContextPath() + "/taglib/css/main.css" %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">

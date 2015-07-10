@@ -17,9 +17,14 @@ package com.liferay.portlet.documentlibrary.store.bundle.storefactory;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreWrapper;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Manuel de la Peña
  */
+@Component(
+	immediate = true, property = "store.type=test", service = StoreWrapper.class
+)
 public class TestStoreWrapper implements StoreWrapper {
 
 	@Override

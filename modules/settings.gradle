@@ -40,6 +40,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/mentions/*/build.gradle"
 		include "apps/message-boards/*/build.gradle"
 		include "apps/microblogs/*/build.gradle"
+		include "apps/mobile-device-rules/*/build.gradle"
 		include "apps/nested-portlets/*/build.gradle"
 		include "apps/network-utilities/*/build.gradle"
 		include "apps/password-generator/*/build.gradle"

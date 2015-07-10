@@ -272,11 +272,11 @@ public class EntityCacheImpl
 	}
 
 	@Override
-	public void notifyPortalCacheAdded(String portalCacheName) {
+	public void notifyCacheAdded(String portalCacheName) {
 	}
 
 	@Override
-	public void notifyPortalCacheRemoved(String portalCacheName) {
+	public void notifyCacheRemoved(String portalCacheName) {
 		_portalCaches.remove(portalCacheName);
 	}
 

@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.cache;
 /**
  * @author Shuyang Zhou
  */
-public interface PortalCacheManagerListener {
+public interface CacheManagerListener {
 
 	public void dispose() throws PortalCacheException;
 

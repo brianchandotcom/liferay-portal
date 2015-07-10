@@ -39,7 +39,7 @@ public class PortalCacheMapSynchronizeUtil {
 	}
 
 	private static class SynchronizeCacheListener<K extends Serializable, V>
-		implements PortalCacheListener<K, V> {
+		implements CacheListener<K, V> {
 
 		public SynchronizeCacheListener(
 			Map<? extends K, ? extends V> map,

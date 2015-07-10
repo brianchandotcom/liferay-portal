@@ -1640,6 +1640,7 @@
 
 	<command name="searchCP">
 		<execute function="Type" locator1="CPUsersandorganizations#SEARCH_FIELD" value1="${searchToken}" />
+
 		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_BUTTON" value1="Search" />
 	</command>
 

@@ -118,6 +118,21 @@
 	</target>
 
 	<target name="unit">
-		<echo>${jenkins.axis.variable}</echo>
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<ant dir="portal-service" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+				</ant>
+
+				<ant dir="portal-impl" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.type" value="unit" />
+				</ant>
+
+				<ant dir="util-java" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+				</ant>
+			</test-action>
+		</run-batch-test>
 	</target>
 </project>

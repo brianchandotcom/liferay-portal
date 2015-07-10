@@ -14,12 +14,14 @@
 
 package com.liferay.blogs.web.blogs.portlet;
 
+import com.liferay.blogs.web.blogs.upgrade.BlogsWebUpgrade;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -56,4 +58,9 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class BlogsPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setBlogsWebUpgrade(BlogsWebUpgrade blogsWebUpgrade) {
+	}
+
 }

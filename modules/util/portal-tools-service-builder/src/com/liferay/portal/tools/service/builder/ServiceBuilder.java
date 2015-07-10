@@ -5321,11 +5321,13 @@ public class ServiceBuilder {
 
 		context.put("classDeprecated", false);
 
-		DocletTag tag = javaClass.getTagByName("deprecated");
+		if (javaClass != null) {
+			DocletTag tag = javaClass.getTagByName("deprecated");
 
-		if (tag != null) {
-			context.put("classDeprecated", true);
-			context.put("classDeprecatedComment", tag.getValue());
+			if (tag != null) {
+				context.put("classDeprecated", true);
+				context.put("classDeprecatedComment", tag.getValue());
+			}
 		}
 
 		return context;

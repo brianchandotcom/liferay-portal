@@ -34,12 +34,12 @@ public class ItemSelectorBrowserReturnTypeUtilTest {
 	public void testGetFirstAvailableDraggableFileReturnType()
 		throws Exception {
 
-		populateItemSelectorReturnTypesSet();
+		populateItemSelectorReturnTypes();
 
 		ItemSelectorReturnType itemSelectorReturnType =
 			ItemSelectorBrowserReturnTypeUtil.
 				getFirstAvailableDraggableFileReturnType(
-					_itemSelectorReturnTypeSet);
+					_itemSelectorReturnTypes);
 
 		Assert.assertEquals(
 			Base64ItemSelectorReturnType.class.getName(),
@@ -50,12 +50,12 @@ public class ItemSelectorBrowserReturnTypeUtilTest {
 	public void testGetFirstAvailableExistingFileEntryReturnType()
 		throws Exception {
 
-		populateItemSelectorReturnTypesSet();
+		populateItemSelectorReturnTypes();
 
 		ItemSelectorReturnType itemSelectorReturnType =
 			ItemSelectorBrowserReturnTypeUtil.
 				getFirstAvailableExistingFileEntryReturnType(
-					_itemSelectorReturnTypeSet);
+					_itemSelectorReturnTypes);
 
 		Assert.assertEquals(
 			URLItemSelectorReturnType.class.getName(),
@@ -63,29 +63,28 @@ public class ItemSelectorBrowserReturnTypeUtilTest {
 	}
 
 	@Test
-	public void testGetFirstAvailableMethodsDoNotModifyOriginalSet()
+	public void testGetFirstAvailableMethodsDoNotModifyOriginalList()
 		throws Exception {
 
-		populateItemSelectorReturnTypesSet();
+		populateItemSelectorReturnTypes();
 
 		ItemSelectorBrowserReturnTypeUtil.
-			getFirstAvailableDraggableFileReturnType(
-				_itemSelectorReturnTypeSet);
+			getFirstAvailableDraggableFileReturnType(_itemSelectorReturnTypes);
 
 		ItemSelectorBrowserReturnTypeUtil.
 			getFirstAvailableExistingFileEntryReturnType(
-				_itemSelectorReturnTypeSet);
+				_itemSelectorReturnTypes);
 
-		Assert.assertEquals(3, _itemSelectorReturnTypeSet.size());
+		Assert.assertEquals(3, _itemSelectorReturnTypes.size());
 	}
 
-	protected void populateItemSelectorReturnTypesSet() {
-		_itemSelectorReturnTypeSet.add(new Base64ItemSelectorReturnType());
-		_itemSelectorReturnTypeSet.add(new URLItemSelectorReturnType());
-		_itemSelectorReturnTypeSet.add(new UploadableFileReturnType());
+	protected void populateItemSelectorReturnTypes() {
+		_itemSelectorReturnTypes.add(new Base64ItemSelectorReturnType());
+		_itemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+		_itemSelectorReturnTypes.add(new UploadableFileReturnType());
 	}
 
-	private final List<ItemSelectorReturnType> _itemSelectorReturnTypeSet =
+	private final List<ItemSelectorReturnType> _itemSelectorReturnTypes =
 		new ArrayList<>();
 
 }

@@ -37,36 +37,36 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		_remoteInvokeThreadLocal.set(remoteInvoke);
 	}
 
-	public void addPortalCacheListener(PortalCacheListener<K, V> portalCacheListener) {
-		addPortalCacheListener(portalCacheListener, PortalCacheListenerScope.ALL);
+	public void addPortalCacheListener(PortalCacheListener<K, V> cacheListener) {
+		addPortalCacheListener(cacheListener, PortalCacheListenerScope.ALL);
 	}
 
 	public void addPortalCacheListener(
-		PortalCacheListener<K, V> portalCacheListener,
-		PortalCacheListenerScope portalCacheListenerScope) {
+		PortalCacheListener<K, V> cacheListener,
+		PortalCacheListenerScope cacheListenerScope) {
 
-		_portalCacheListeners.putIfAbsent(portalCacheListener, portalCacheListenerScope);
+		_cacheListeners.putIfAbsent(cacheListener, cacheListenerScope);
 	}
 
 	public void clearAll() {
 		dispose();
 
-		_portalCacheListeners.clear();
+		_cacheListeners.clear();
 	}
 
 	@Override
 	public void dispose() {
-		for (PortalCacheListener<K, V> portalCacheListener : _portalCacheListeners.keySet()) {
-			portalCacheListener.dispose();
+		for (PortalCacheListener<K, V> cacheListener : _cacheListeners.keySet()) {
+			cacheListener.dispose();
 		}
 	}
 
 	public Map<PortalCacheListener<K, V>, PortalCacheListenerScope> getPortalCacheListeners() {
-		return Collections.unmodifiableMap(_portalCacheListeners);
+		return Collections.unmodifiableMap(_cacheListeners);
 	}
 
 	public boolean isEmpty() {
-		return _portalCacheListeners.isEmpty();
+		return _cacheListeners.isEmpty();
 	}
 
 	@Override
@@ -75,12 +75,12 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		throws PortalCacheException {
 
 		for (Map.Entry<PortalCacheListener<K, V>, PortalCacheListenerScope> entry :
-				_portalCacheListeners.entrySet()) {
+				_cacheListeners.entrySet()) {
 
-			PortalCacheListener<K, V> portalCacheListener = entry.getKey();
+			PortalCacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(portalCacheListener, entry.getValue())) {
-				portalCacheListener.notifyEntryEvicted(
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
+				cacheListener.notifyEntryEvicted(
 					portalCache, key, value, timeToLive);
 			}
 		}
@@ -92,12 +92,12 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		throws PortalCacheException {
 
 		for (Map.Entry<PortalCacheListener<K, V>, PortalCacheListenerScope> entry :
-				_portalCacheListeners.entrySet()) {
+				_cacheListeners.entrySet()) {
 
-			PortalCacheListener<K, V> portalCacheListener = entry.getKey();
+			PortalCacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(portalCacheListener, entry.getValue())) {
-				portalCacheListener.notifyEntryExpired(
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
+				cacheListener.notifyEntryExpired(
 					portalCache, key, value, timeToLive);
 			}
 		}
@@ -109,12 +109,12 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		throws PortalCacheException {
 
 		for (Map.Entry<PortalCacheListener<K, V>, PortalCacheListenerScope> entry :
-				_portalCacheListeners.entrySet()) {
+				_cacheListeners.entrySet()) {
 
-			PortalCacheListener<K, V> portalCacheListener = entry.getKey();
+			PortalCacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(portalCacheListener, entry.getValue())) {
-				portalCacheListener.notifyEntryPut(
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
+				cacheListener.notifyEntryPut(
 					portalCache, key, value, timeToLive);
 			}
 		}
@@ -126,12 +126,12 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		throws PortalCacheException {
 
 		for (Map.Entry<PortalCacheListener<K, V>, PortalCacheListenerScope> entry :
-				_portalCacheListeners.entrySet()) {
+				_cacheListeners.entrySet()) {
 
-			PortalCacheListener<K, V> portalCacheListener = entry.getKey();
+			PortalCacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(portalCacheListener, entry.getValue())) {
-				portalCacheListener.notifyEntryRemoved(
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
+				cacheListener.notifyEntryRemoved(
 					portalCache, key, value, timeToLive);
 			}
 		}
@@ -143,12 +143,12 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		throws PortalCacheException {
 
 		for (Map.Entry<PortalCacheListener<K, V>, PortalCacheListenerScope> entry :
-				_portalCacheListeners.entrySet()) {
+				_cacheListeners.entrySet()) {
 
-			PortalCacheListener<K, V> portalCacheListener = entry.getKey();
+			PortalCacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(portalCacheListener, entry.getValue())) {
-				portalCacheListener.notifyEntryUpdated(
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
+				cacheListener.notifyEntryUpdated(
 					portalCache, key, value, timeToLive);
 			}
 		}
@@ -159,33 +159,33 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 		throws PortalCacheException {
 
 		for (Map.Entry<PortalCacheListener<K, V>, PortalCacheListenerScope> entry :
-				_portalCacheListeners.entrySet()) {
+				_cacheListeners.entrySet()) {
 
-			PortalCacheListener<K, V> portalCacheListener = entry.getKey();
+			PortalCacheListener<K, V> cacheListener = entry.getKey();
 
-			if (_shouldDeliver(portalCacheListener, entry.getValue())) {
-				portalCacheListener.notifyRemoveAll(portalCache);
+			if (_shouldDeliver(cacheListener, entry.getValue())) {
+				cacheListener.notifyRemoveAll(portalCache);
 			}
 		}
 	}
 
-	public void removePortalCacheListener(PortalCacheListener<K, V> portalCacheListener) {
-		portalCacheListener.dispose();
+	public void removePortalCacheListener(PortalCacheListener<K, V> cacheListener) {
+		cacheListener.dispose();
 
-		_portalCacheListeners.remove(portalCacheListener);
+		_cacheListeners.remove(cacheListener);
 	}
 
 	private boolean _shouldDeliver(
-		PortalCacheListener<K, V> portalCacheListener,
-		PortalCacheListenerScope portalCacheListenerScope) {
+		PortalCacheListener<K, V> cacheListener,
+		PortalCacheListenerScope cacheListenerScope) {
 
 		if (_remoteInvokeThreadLocal.get()) {
-			if (portalCacheListener instanceof PortalCacheReplicator) {
+			if (cacheListener instanceof PortalCacheReplicator) {
 				return false;
 			}
 
-			if (portalCacheListenerScope.equals(PortalCacheListenerScope.ALL) ||
-				portalCacheListenerScope.equals(PortalCacheListenerScope.REMOTE)) {
+			if (cacheListenerScope.equals(PortalCacheListenerScope.ALL) ||
+				cacheListenerScope.equals(PortalCacheListenerScope.REMOTE)) {
 
 				return true;
 			}
@@ -193,8 +193,8 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 			return false;
 		}
 
-		if (portalCacheListenerScope.equals(PortalCacheListenerScope.ALL) ||
-			portalCacheListenerScope.equals(PortalCacheListenerScope.LOCAL)) {
+		if (cacheListenerScope.equals(PortalCacheListenerScope.ALL) ||
+			cacheListenerScope.equals(PortalCacheListenerScope.LOCAL)) {
 
 			return true;
 		}
@@ -207,6 +207,6 @@ public class AggregatedPortalCacheListener<K extends Serializable, V>
 			AggregatedPortalCacheListener.class + "._remoteInvokeThreadLocal", false);
 
 	private final ConcurrentMap<PortalCacheListener<K, V>, PortalCacheListenerScope>
-		_portalCacheListeners = new ConcurrentHashMap<>();
+		_cacheListeners = new ConcurrentHashMap<>();
 
 }

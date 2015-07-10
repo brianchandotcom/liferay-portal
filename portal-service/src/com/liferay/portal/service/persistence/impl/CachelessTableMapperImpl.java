@@ -124,13 +124,13 @@ public class CachelessTableMapperImpl
 
 		@Override
 		public void registerPortalCacheListener(
-			PortalCacheListener<Long, long[]> portalCacheListener) {
+			PortalCacheListener<Long, long[]> cacheListener) {
 		}
 
 		@Override
 		public void registerPortalCacheListener(
-			PortalCacheListener<Long, long[]> portalCacheListener,
-			PortalCacheListenerScope portalCacheListenerScope) {
+			PortalCacheListener<Long, long[]> cacheListener,
+			PortalCacheListenerScope cacheListenerScope) {
 		}
 
 		@Override
@@ -143,7 +143,7 @@ public class CachelessTableMapperImpl
 
 		@Override
 		public void unregisterPortalCacheListener(
-			PortalCacheListener<Long, long[]> portalCacheListener) {
+			PortalCacheListener<Long, long[]> cacheListener) {
 		}
 
 		@Override

@@ -267,7 +267,7 @@ public class EhcacheConfigurationHelperUtil {
 		}
 
 		Map<CallbackConfiguration, PortalCacheListenerScope>
-			portalCacheListenerConfigurations = new HashMap<>();
+			cacheListenerConfigurations = new HashMap<>();
 
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerConfigurations =
@@ -286,7 +286,7 @@ public class EhcacheConfigurationHelperUtil {
 				cacheEventListenerFactoryConfiguration. getPropertySeparator(),
 				props);
 
-			PortalCacheListenerScope portalCacheListenerScope = _portalCacheListenerScopes.get(
+			PortalCacheListenerScope cacheListenerScope = _cacheListenerScopes.get(
 				cacheEventListenerFactoryConfiguration.getListenFor());
 
 			if (factoryClassName.equals(
@@ -295,11 +295,11 @@ public class EhcacheConfigurationHelperUtil {
 
 				if (clusterAware && clusterEnabled) {
 					if (clusterLinkReplicationEnabled) {
-						portalCacheListenerConfigurations.put(
+						cacheListenerConfigurations.put(
 							new CallbackConfiguration(
 								ClusterLinkCallbackFactory.INSTANCE,
 								properties),
-							portalCacheListenerScope);
+							cacheListenerScope);
 					}
 					else {
 						properties.put(
@@ -307,10 +307,10 @@ public class EhcacheConfigurationHelperUtil {
 								CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
 							factoryClassName);
 
-						portalCacheListenerConfigurations.put(
+						cacheListenerConfigurations.put(
 							new CallbackConfiguration(
 								EhcacheCallbackFactory.INSTANCE, properties),
-							portalCacheListenerScope);
+							cacheListenerScope);
 					}
 				}
 			}
@@ -319,16 +319,16 @@ public class EhcacheConfigurationHelperUtil {
 					EhcacheConstants.CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
 					factoryClassName);
 
-				portalCacheListenerConfigurations.put(
+				cacheListenerConfigurations.put(
 					new CallbackConfiguration(
 						EhcacheCallbackFactory.INSTANCE, properties),
-					portalCacheListenerScope);
+					cacheListenerScope);
 			}
 		}
 
 		cacheEventListenerConfigurations.clear();
 
-		CallbackConfiguration portalCacheBootstrapLoaderConfiguration = null;
+		CallbackConfiguration bootstrapLoaderConfiguration = null;
 
 		BootstrapCacheLoaderFactoryConfiguration
 			bootstrapCacheLoaderFactoryConfiguration =
@@ -343,7 +343,7 @@ public class EhcacheConfigurationHelperUtil {
 
 			if (clusterAware && clusterEnabled) {
 				if (clusterLinkReplicationEnabled) {
-					portalCacheBootstrapLoaderConfiguration = new CallbackConfiguration(
+					bootstrapLoaderConfiguration = new CallbackConfiguration(
 						ClusterLinkCallbackFactory.INSTANCE, properties);
 				}
 				else {
@@ -354,7 +354,7 @@ public class EhcacheConfigurationHelperUtil {
 							bootstrapCacheLoaderFactoryConfiguration.
 								getFullyQualifiedClassPath(), props));
 
-					portalCacheBootstrapLoaderConfiguration = new CallbackConfiguration(
+					bootstrapLoaderConfiguration = new CallbackConfiguration(
 						EhcacheCallbackFactory.INSTANCE, properties);
 				}
 			}
@@ -366,8 +366,8 @@ public class EhcacheConfigurationHelperUtil {
 			cacheConfiguration, clusterAware, clusterEnabled);
 
 		return new EhcachePortalCacheConfiguration(
-			portalCacheName, portalCacheListenerConfigurations,
-			portalCacheBootstrapLoaderConfiguration, requireSerialization);
+			portalCacheName, cacheListenerConfigurations,
+			bootstrapLoaderConfiguration, requireSerialization);
 	}
 
 	private static String _parseFactoryClassName(
@@ -458,13 +458,13 @@ public class EhcacheConfigurationHelperUtil {
 		EhcacheConfigurationHelperUtil.class);
 
 	private static final Map<NotificationScope, PortalCacheListenerScope>
-		_portalCacheListenerScopes = new EnumMap<>(NotificationScope.class);
+		_cacheListenerScopes = new EnumMap<>(NotificationScope.class);
 	private static final Map<String, String> _unescapeMap = new HashMap<>();
 
 	static {
-		_portalCacheListenerScopes.put(NotificationScope.ALL, PortalCacheListenerScope.ALL);
-		_portalCacheListenerScopes.put(NotificationScope.LOCAL, PortalCacheListenerScope.LOCAL);
-		_portalCacheListenerScopes.put(NotificationScope.REMOTE, PortalCacheListenerScope.REMOTE);
+		_cacheListenerScopes.put(NotificationScope.ALL, PortalCacheListenerScope.ALL);
+		_cacheListenerScopes.put(NotificationScope.LOCAL, PortalCacheListenerScope.LOCAL);
+		_cacheListenerScopes.put(NotificationScope.REMOTE, PortalCacheListenerScope.REMOTE);
 
 		_unescapeMap.put("amp", "&");
 		_unescapeMap.put("gt", ">");

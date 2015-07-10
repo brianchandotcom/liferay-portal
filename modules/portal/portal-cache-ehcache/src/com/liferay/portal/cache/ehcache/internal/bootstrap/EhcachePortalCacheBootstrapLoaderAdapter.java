@@ -41,7 +41,7 @@ public class EhcachePortalCacheBootstrapLoaderAdapter implements PortalCacheBoot
 	}
 
 	@Override
-	public void loadPortalCache(String portalCacheManagerName, String portalCacheName) {
+	public void load(String portalCacheManagerName, String portalCacheName) {
 		PortalCacheManager<?, ?> portalCacheManager =
 			PortalCacheManagerProvider.getPortalCacheManager(portalCacheManagerName);
 

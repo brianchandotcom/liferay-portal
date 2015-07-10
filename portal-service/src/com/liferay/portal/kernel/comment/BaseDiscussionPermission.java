@@ -62,4 +62,14 @@ public abstract class BaseDiscussionPermission implements DiscussionPermission {
 		}
 	}
 
+	@Override
+	public boolean hasDeletePermission(long commentId) throws PortalException {
+		return hasPermission(commentId, ActionKeys.DELETE_DISCUSSION);
+	}
+
+	@Override
+	public boolean hasUpdatePermission(long commentId) throws PortalException {
+		return hasPermission(commentId, ActionKeys.UPDATE_DISCUSSION);
+	}
+
 }

@@ -14,7 +14,9 @@
 
 package com.liferay.comments.ratings.definition;
 
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
@@ -38,7 +40,8 @@ public class CommentsPortletRatingsDefinition
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.COMMENTS;
+		return PortletProviderUtil.getPortletId(
+			Comment.class.getName(), PortletProvider.Action.VIEW);
 	}
 
 }

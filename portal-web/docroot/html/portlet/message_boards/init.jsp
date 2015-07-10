@@ -16,14 +16,9 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.comment.Comment" %><%@
-page import="com.liferay.portal.kernel.comment.CommentConstants" %><%@
-page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
-page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
-page import="com.liferay.portal.kernel.util.MimeTypesUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.util.MimeTypesUtil" %><%@
 page import="com.liferay.portlet.messageboards.BannedUserException" %><%@
 page import="com.liferay.portlet.messageboards.CategoryNameException" %><%@
-page import="com.liferay.portlet.messageboards.DiscussionMaxCommentsException" %><%@
 page import="com.liferay.portlet.messageboards.LockedThreadException" %><%@
 page import="com.liferay.portlet.messageboards.MBGroupServiceSettings" %><%@
 page import="com.liferay.portlet.messageboards.MailingListEmailAddressException" %><%@

@@ -125,6 +125,11 @@ public class MBCommentImpl implements WorkflowableComment {
 	}
 
 	@Override
+	public String getUuid() {
+		return _message.getUuid();
+	}
+
+	@Override
 	public boolean isRoot() {
 		MBMessage message = getMessage();
 

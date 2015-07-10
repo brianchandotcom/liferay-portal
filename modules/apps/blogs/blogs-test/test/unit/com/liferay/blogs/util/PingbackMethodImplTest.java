@@ -497,16 +497,6 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected void setUpPortletProviderUtil() {
-		mockStatic(PortletProviderUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(
-				PortletProviderUtil.class, "getPortletId", String.class,
-				PortletProvider.Action.class)
-		).toReturn(
-			BlogsPortletKeys.BLOGS
-		);
-
 		mockStatic(ServiceTrackerCollections.class, Mockito.RETURNS_MOCKS);
 
 		stub(
@@ -515,6 +505,16 @@ public class PingbackMethodImplTest extends PowerMockito {
 				String.class)
 		).toReturn(
 			_serviceTrackerMap
+		);
+
+		mockStatic(PortletProviderUtil.class, Mockito.CALLS_REAL_METHODS);
+
+		stub(
+			method(
+				PortletProviderUtil.class, "getPortletId", String.class,
+				PortletProvider.Action.class)
+		).toReturn(
+			BlogsPortletKeys.BLOGS
 		);
 	}
 

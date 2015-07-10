@@ -34,6 +34,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -235,11 +236,12 @@ public class LiferaySeleniumHelper {
 		content = "<log4j>" + content + "</log4j>";
 		content = content.replaceAll("log4j:", "");
 
+		InputStream inputStream = new ByteArrayInputStream(
+			content.getBytes("UTF-8"));
+
 		SAXReader saxReader = new SAXReader();
 
-		File file = new File(fileName);
-
-		Document document = saxReader.read(file);
+		Document document = saxReader.read(inputStream);
 
 		Element rootElement = document.getRootElement();
 

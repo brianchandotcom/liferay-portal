@@ -44,6 +44,10 @@ $theme.include($body_top_include)
 	</div>
 </div>
 
+#if ($scope_group.isUserPersonalPanel() || ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+	#control_menu()
+#end
+
 $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)

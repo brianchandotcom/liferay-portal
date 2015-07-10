@@ -67,6 +67,8 @@ $theme.include($body_top_include)
 	</footer>
 </div>
 
+#control_menu()
+
 $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)

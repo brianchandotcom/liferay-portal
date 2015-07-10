@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.web.blogsaggregator.lar;
+package com.liferay.blogs.recent.bloggers.web.lar;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,13 +42,15 @@ import org.osgi.service.component.annotations.Component;
  * @author Julio Camarero
  */
 @Component(
-	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS_AGGREGATOR},
+	property = {
+		"javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS
+	},
 	service = PortletDataHandler.class
 )
-public class BlogsAggregatorPortletDataHandler
+public class RecentBloggersPortletDataHandler
 	extends DefaultConfigurationPortletDataHandler {
 
-	public BlogsAggregatorPortletDataHandler() {
+	public RecentBloggersPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setPublishToLiveByDefault(true);
 	}

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.web.recentbloggers.portlet.action;
+package com.liferay.blogs.recent.bloggers.web.portlet.action;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 
@@ -29,7 +29,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + BlogsPortletKeys.RECENT_BLOGGERS},
+	property = {
+		"javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS
+	},
 	service = ConfigurationAction.class
 )
 public class RecentBloggersConfigurationAction
@@ -37,7 +39,7 @@ public class RecentBloggersConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		return "/recent_bloggers/configuration.jsp";
+		return "/configuration.jsp";
 	}
 
 	@Override

@@ -12,20 +12,14 @@
  * details.
  */
 
-package com.liferay.blogs.web.constants;
+package com.liferay.blogs.recent.bloggers.web.constants;
 
 /**
  * @author Sergio González
  */
-public class BlogsPortletKeys {
+public class RecentBloggersPortletKeys {
 
-	public static final String BLOGS =
-		"com_liferay_blogs_web_portlet_BlogsPortlet";
-
-	public static final String BLOGS_ADMIN =
-		"com_liferay_blogs_web_portlet_BlogsAdminPortlet";
-
-	public static final String BLOGS_AGGREGATOR =
-		"com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
+	public static final String RECENT_BLOGGERS =
+		"com_liferay_blogs_recent_bloggers_web_portlet_RecentBloggersPortlet";
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.layout.prototype.action;
 
+import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -83,7 +84,7 @@ public class AddLayoutPrototypeAction {
 			layout, BlogsPortletKeys.BLOGS, "column-1");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
-			layout, BlogsPortletKeys.RECENT_BLOGGERS, "column-2");
+			layout, RecentBloggersPortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
 	@Reference(unbind = "-")

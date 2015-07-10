@@ -76,7 +76,7 @@ public class EntityCacheImpl
 						<? extends Serializable, ? extends Serializable>
 							portalCacheManager = _multiVMPool.getCacheManager();
 
-					portalCacheManager.registerPortalCacheManagerListener(
+					portalCacheManager.registerCacheManagerListener(
 						EntityCacheImpl.this);
 				}
 

@@ -53,14 +53,14 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
 		String portalCacheName) {
 
-		return _portalCacheManager.getPortalCache(portalCacheName);
+		return _portalCacheManager.getCache(portalCacheName);
 	}
 
 	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
 		String portalCacheName, boolean blocking) {
 
-		return _portalCacheManager.getPortalCache(portalCacheName, blocking);
+		return _portalCacheManager.getCache(portalCacheName, blocking);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	@Override
 	public void removeCache(String portalCacheName) {
-		_portalCacheManager.removePortalCache(portalCacheName);
+		_portalCacheManager.removeCache(portalCacheName);
 	}
 
 	@Activate

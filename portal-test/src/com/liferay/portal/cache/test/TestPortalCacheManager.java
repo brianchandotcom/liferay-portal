@@ -47,7 +47,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void reconfigurePortalCaches(URL configurationURL) {
+	public void reconfigureCaches(URL configurationURL) {
 		throw new UnsupportedOperationException();
 	}
 

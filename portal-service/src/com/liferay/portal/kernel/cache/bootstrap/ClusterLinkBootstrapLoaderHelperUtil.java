@@ -228,7 +228,7 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 						try {
 							portalCache =
 								(PortalCache<Serializable, Serializable>)
-									portalCacheManager.getPortalCache((String)object);
+									portalCacheManager.getCache((String)object);
 						}
 						finally {
 							_skipBootstrapLoaderThreadLocal.remove();
@@ -391,13 +391,13 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 					for (String portalCacheName : _portalCacheNames) {
 						PortalCache<Serializable, Serializable> portalCache =
 							(PortalCache<Serializable, Serializable>)
-							portalCacheManager.getPortalCache(portalCacheName);
+							portalCacheManager.getCache(portalCacheName);
 
 						if (portalCache == null) {
 							_skipBootstrapLoaderThreadLocal.set(Boolean.TRUE);
 
 							try {
-								portalCacheManager.getPortalCache(portalCacheName);
+								portalCacheManager.getCache(portalCacheName);
 							}
 							finally {
 								_skipBootstrapLoaderThreadLocal.remove();

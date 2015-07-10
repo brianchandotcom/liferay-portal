@@ -44,7 +44,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	extends AbstractPortalCacheManager<K, V> {
 
 	@Override
-	public void reconfigurePortalCaches(URL configurationURL) {
+	public void reconfigureCaches(URL configurationURL) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -50,14 +50,14 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public PortalCache<K, V> getPortalCache(String portalCacheName)
+	public PortalCache<K, V> getCache(String portalCacheName)
 		throws PortalCacheException {
 
-		return getPortalCache(portalCacheName, false);
+		return getCache(portalCacheName, false);
 	}
 
 	@Override
-	public PortalCache<K, V> getPortalCache(String portalCacheName, boolean blocking)
+	public PortalCache<K, V> getCache(String portalCacheName, boolean blocking)
 		throws PortalCacheException {
 
 		PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
@@ -114,7 +114,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 						bootstrapLoaderConfiguration.getProperties());
 
 				if (bootstrapLoader != null) {
-					bootstrapLoader.load(getPortalCacheManagerName(), portalCacheName);
+					bootstrapLoader.load(getName(), portalCacheName);
 				}
 			}
 		}
@@ -123,12 +123,12 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public Set<PortalCacheManagerListener> getPortalCacheManagerListeners() {
+	public Set<PortalCacheManagerListener> getCacheManagerListeners() {
 		return aggregatedCacheManagerListener.getCacheManagerListeners();
 	}
 
 	@Override
-	public String getPortalCacheManagerName() {
+	public String getName() {
 		return _portalCacheManagerName;
 	}
 
@@ -154,7 +154,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public boolean registerPortalCacheManagerListener(
+	public boolean registerCacheManagerListener(
 		PortalCacheManagerListener cacheManagerListener) {
 
 		return aggregatedCacheManagerListener.addCacheListener(
@@ -162,7 +162,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void removePortalCache(String portalCacheName) {
+	public void removeCache(String portalCacheName) {
 		portalCaches.remove(portalCacheName);
 
 		doRemoveCache(portalCacheName);
@@ -201,7 +201,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public boolean unregisterPortalCacheManagerListener(
+	public boolean unregisterCacheManagerListener(
 		PortalCacheManagerListener cacheManagerListener) {
 
 		return aggregatedCacheManagerListener.removeCacheListener(
@@ -209,7 +209,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void unregisterPortalCacheManagerListeners() {
+	public void unregisterCacheManagerListeners() {
 		aggregatedCacheManagerListener.clearAll();
 	}
 
@@ -259,7 +259,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 					callbackConfiguration.getProperties());
 
 			if (cacheManagerListener != null) {
-				registerPortalCacheManagerListener(cacheManagerListener);
+				registerCacheManagerListener(cacheManagerListener);
 			}
 		}
 	}

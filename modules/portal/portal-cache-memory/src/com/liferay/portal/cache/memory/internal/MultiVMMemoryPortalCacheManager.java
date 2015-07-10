@@ -51,7 +51,7 @@ public class MultiVMMemoryPortalCacheManager
 	protected void activate(Map<String, Object> properties) {
 		setClusterAware(true);
 		setMpiOnly(true);
-		setPortalCacheManagerName(PortalCacheManagerNames.MULTI_VM);
+		setName(PortalCacheManagerNames.MULTI_VM);
 
 		initialize();
 

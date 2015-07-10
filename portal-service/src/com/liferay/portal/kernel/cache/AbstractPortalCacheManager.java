@@ -83,13 +83,13 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		_initPortalCacheListeners(portalCache, portalCacheConfiguration);
 
-		if (isTransactionalPortalCacheEnabled() &&
+		if (isTransactionalCacheEnabled() &&
 			isTransactionalPortalCache(portalCacheName)) {
 
 			portalCache = new TransactionalPortalCache<>(portalCache);
 		}
 
-		if (isBlockingPortalCacheAllowed() && blocking) {
+		if (isBlockingCacheAllowed() && blocking) {
 			portalCache = new BlockingPortalCache<>(portalCache);
 		}
 
@@ -99,7 +99,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		if (previousPortalCache != null) {
 			portalCache = previousPortalCache;
 		}
-		else if (isPortalCacheBootstrapLoaderEnabled() &&
+		else if (isBootstrapCacheLoaderEnabled() &&
 				 (portalCacheConfiguration != null)) {
 
 			CallbackConfiguration bootstrapLoaderConfiguration =
@@ -132,15 +132,15 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		return _portalCacheManagerName;
 	}
 
-	public String[] getTransactionalPortalCacheNames() {
+	public String[] getTransactionalCacheNames() {
 		return _transactionalCacheNames;
 	}
 
-	public boolean isBlockingPortalCacheAllowed() {
+	public boolean isBlockingCacheAllowed() {
 		return _blockingCacheAllowed;
 	}
 
-	public boolean isPortalCacheBootstrapLoaderEnabled() {
+	public boolean isBootstrapCacheLoaderEnabled() {
 		return _bootstrapCacheLoaderEnabled;
 	}
 
@@ -149,7 +149,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		return _clusterAware;
 	}
 
-	public boolean isTransactionalPortalCacheEnabled() {
+	public boolean isTransactionalCacheEnabled() {
 		return _transactionalCacheEnabled;
 	}
 
@@ -165,14 +165,14 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	public void removePortalCache(String portalCacheName) {
 		portalCaches.remove(portalCacheName);
 
-		doRemovePortalCache(portalCacheName);
+		doRemoveCache(portalCacheName);
 	}
 
-	public void setBlockingPortalCacheAllowed(boolean blockingCacheAllowed) {
+	public void setBlockingCacheAllowed(boolean blockingCacheAllowed) {
 		_blockingCacheAllowed = blockingCacheAllowed;
 	}
 
-	public void setPortalCacheBootstrapLoaderEnabled(
+	public void setBootstrapCacheLoaderEnabled(
 		boolean bootstrapCacheLoaderEnabled) {
 
 		_bootstrapCacheLoaderEnabled = bootstrapCacheLoaderEnabled;
@@ -186,17 +186,17 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		_mpiOnly = mpiOnly;
 	}
 
-	public void setPortalCacheManagerName(String portalCacheManagerName) {
+	public void setName(String portalCacheManagerName) {
 		_portalCacheManagerName = portalCacheManagerName;
 	}
 
-	public void setTransactionalPortalCacheEnabled(
+	public void setTransactionalCacheEnabled(
 		boolean transactionalCacheEnabled) {
 
 		_transactionalCacheEnabled = transactionalCacheEnabled;
 	}
 
-	public void setTransactionalPortalCacheNames(String[] transactionalCacheNames) {
+	public void setTransactionalCacheNames(String[] transactionalCacheNames) {
 		_transactionalCacheNames = transactionalCacheNames;
 	}
 
@@ -220,12 +220,12 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	protected abstract void doDestroy();
 
-	protected abstract void doRemovePortalCache(String portalCacheName);
+	protected abstract void doRemoveCache(String portalCacheName);
 
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();
 
-	protected abstract String getPortalCacheManagerType();
+	protected abstract String getType();
 
 	protected void initialize() {
 		if ((_portalCacheManagerConfiguration != null) ||
@@ -267,7 +267,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	protected abstract void initPortalCacheManager();
 
 	protected boolean isTransactionalPortalCache(String portalCacheName) {
-		for (String namePattern : getTransactionalPortalCacheNames()) {
+		for (String namePattern : getTransactionalCacheNames()) {
 			if (StringUtil.wildcardMatches(
 					portalCacheName, namePattern, CharPool.QUESTION,
 					CharPool.STAR, CharPool.PERCENT, true)) {

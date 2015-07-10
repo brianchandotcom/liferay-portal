@@ -1824,7 +1824,7 @@ public class TableMapperTest {
 
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
-			getPortalCache(String name) {
+			getCache(String name) {
 
 			PortalCache<?, ?> portalCache = _portalCaches.get(name);
 
@@ -1840,14 +1840,14 @@ public class TableMapperTest {
 
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
-			getPortalCache(String name, boolean blocking) {
+			getCache(String name, boolean blocking) {
 
-			return getPortalCache(name);
+			return getCache(name);
 		}
 
 		@Override
 		public PortalCacheManager
-			<? extends Serializable, ? extends Serializable> getPortalCacheManager() {
+			<? extends Serializable, ? extends Serializable> getCacheManager() {
 
 			return null;
 		}
@@ -1857,7 +1857,7 @@ public class TableMapperTest {
 		}
 
 		@Override
-		public void removePortalCache(String name) {
+		public void removeCache(String name) {
 			_portalCaches.remove(name);
 		}
 

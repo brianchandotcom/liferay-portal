@@ -74,7 +74,7 @@ public class EntityCacheImpl
 
 					PortalCacheManager
 						<? extends Serializable, ? extends Serializable>
-							portalCacheManager = _multiVMPool.getPortalCacheManager();
+							portalCacheManager = _multiVMPool.getCacheManager();
 
 					portalCacheManager.registerPortalCacheManagerListener(
 						EntityCacheImpl.this);
@@ -331,7 +331,7 @@ public class EntityCacheImpl
 
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-		_multiVMPool.removePortalCache(groupKey);
+		_multiVMPool.removeCache(groupKey);
 	}
 
 	@Override
@@ -383,7 +383,7 @@ public class EntityCacheImpl
 			String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 			portalCache =
-				(PortalCache<Serializable, Serializable>)_multiVMPool.getPortalCache(
+				(PortalCache<Serializable, Serializable>)_multiVMPool.getCache(
 					groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
 			if (PropsValues.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED &&

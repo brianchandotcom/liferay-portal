@@ -86,7 +86,7 @@ public class FreeMarkerTemplateTest {
 					RandomTestUtil.randomString());
 
 		Mockito.when(
-			multiVMPool.getPortalCache(Mockito.anyString())
+			multiVMPool.getCache(Mockito.anyString())
 		).thenAnswer(
 			new Answer
 				<PortalCache

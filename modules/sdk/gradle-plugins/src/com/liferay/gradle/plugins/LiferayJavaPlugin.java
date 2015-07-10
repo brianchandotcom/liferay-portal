@@ -85,6 +85,8 @@ import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
+import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
+import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
@@ -98,6 +100,7 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.plugins.MavenPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
@@ -159,6 +162,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		applyPlugins(project);
 
+		configureConf2ScopeMappings(project);
 		configureConfigurations(project);
 		configureDependencies(project);
 		configureProperties(project);
@@ -835,6 +839,27 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, ZIP_JAVADOC_TASK_NAME);
 
 		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, zipJavadocTask);
+	}
+
+	protected void configureConf2ScopeMappings(Project project) {
+		MavenPluginConvention mavenPluginConvention = GradleUtil.getConvention(
+			project, MavenPluginConvention.class);
+
+		Conf2ScopeMappingContainer conf2ScopeMappingContainer =
+			mavenPluginConvention.getConf2ScopeMappings();
+
+		Map<Configuration, Conf2ScopeMapping> mappings =
+			conf2ScopeMappingContainer.getMappings();
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
+
+		mappings.remove(configuration);
+
+		configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
+
+		mappings.remove(configuration);
 	}
 
 	protected void configureConfigurations(final Project project) {

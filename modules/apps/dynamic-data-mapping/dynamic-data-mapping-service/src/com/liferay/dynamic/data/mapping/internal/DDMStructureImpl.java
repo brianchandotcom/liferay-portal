@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 
 import java.util.ArrayList;
@@ -35,6 +37,19 @@ public class DDMStructureImpl implements DDMStructure {
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure) {
 
 		_structure = structure;
+	}
+
+	@Override
+	public DDMForm getDDMForm() {
+		try {
+			return BeanPropertiesUtil.deepCopyProperties(
+				_structure.getDDMForm(), DDMForm.class);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -58,6 +73,29 @@ public class DDMStructureImpl implements DDMStructure {
 		}
 
 		return null;
+	}
+
+	@Override
+	public DDMFormLayout getDDMFormLayout() throws PortalException {
+		try {
+			return BeanPropertiesUtil.deepCopyProperties(
+				_structure.getDDMFormLayout(), DDMFormLayout.class);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getDefinition() {
+		return _structure.getDescription();
+	}
+
+	@Override
+	public Map<Locale, String> getDescriptionMap() {
+		return _structure.getDescriptionMap();
 	}
 
 	@Override

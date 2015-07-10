@@ -25,7 +25,15 @@ import java.util.Map;
  */
 public interface DDMStructure {
 
+	public DDMForm getDDMForm();
+
 	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields);
+
+	public DDMFormLayout getDDMFormLayout() throws PortalException;
+
+	public String getDefinition();
+
+	public Map<Locale, String> getDescriptionMap();
 
 	public String getFieldType(String fieldName) throws PortalException;
 

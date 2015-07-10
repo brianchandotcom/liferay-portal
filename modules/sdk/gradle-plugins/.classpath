@@ -44,6 +44,7 @@
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-core.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-language-java.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-language-jvm.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-maven.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-model-core.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-platform-jvm.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />

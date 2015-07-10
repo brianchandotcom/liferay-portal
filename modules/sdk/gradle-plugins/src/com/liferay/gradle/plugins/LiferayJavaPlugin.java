@@ -95,6 +95,7 @@ import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
@@ -791,10 +792,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project,
 			"com/liferay/gradle/plugins/dependencies/config-liferay.gradle",
 			project);
+
+		GradleUtil.applyScript(
+			project,
+			"com/liferay/gradle/plugins/dependencies/config-maven.gradle",
+			project);
 	}
 
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
+		GradleUtil.applyPlugin(project, MavenPlugin.class);
 
 		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);

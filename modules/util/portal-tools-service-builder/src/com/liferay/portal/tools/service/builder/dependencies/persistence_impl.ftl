@@ -307,8 +307,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	<#if entity.getUniqueFinderList()?size &gt; 0>
-		protected void cacheUniqueFindersCache(${entity.name} ${entity.varName}) {
-			if (${entity.varName}.isNew()) {
+		protected void cacheUniqueFindersCache(${entity.name} ${entity.varName}, boolean isNew) {
+			if (isNew) {
 				<#list entity.getUniqueFinderList() as finder>
 					<#assign finderColsList = finder.getColumns()>
 
@@ -774,7 +774,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if uniqueFinderList?size &gt; 0>
 			clearUniqueFindersCache(${entity.varName});
-			cacheUniqueFindersCache(${entity.varName});
+			cacheUniqueFindersCache(${entity.varName}, isNew);
 		</#if>
 
 		${entity.varName}.resetOriginalValues();

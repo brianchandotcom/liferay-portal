@@ -115,7 +115,7 @@ public class SpringDependencyAnalyzerPluginTest {
 		Analyzer analyzer = new Analyzer();
 
 		analyzer.setProperty(
-			"-service-dependencies", ServiceReference.class.getName());
+			"-spring-dependency", ServiceReference.class.getName());
 
 		ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
 

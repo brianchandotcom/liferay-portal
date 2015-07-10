@@ -283,6 +283,7 @@ public class DLFileShortcutTrashHandlerTest
 			getNotInTrashBaseModelsCount(parentBaseModel));
 	}
 
-	private WhenIsAssetable _whenIsAssetable = new DefaultWhenIsAssetable();
+	private final WhenIsAssetable _whenIsAssetable =
+		new DefaultWhenIsAssetable();
 
 }

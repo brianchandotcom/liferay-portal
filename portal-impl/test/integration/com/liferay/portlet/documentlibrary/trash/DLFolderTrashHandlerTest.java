@@ -263,8 +263,9 @@ public class DLFolderTrashHandlerTest
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
-	private WhenIsAssetable _whenIsAssetable = new DefaultWhenIsAssetable();
-	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
+	private final WhenIsAssetable _whenIsAssetable =
+		new DefaultWhenIsAssetable();
+	private final WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
 		new DefaultWhenIsIndexableBaseModel();
 
 }

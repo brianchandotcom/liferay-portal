@@ -345,8 +345,9 @@ public class MBThreadTrashHandlerTest
 
 	private static final String _SUBJECT = "Subject";
 
-	private WhenIsAssetable _whenIsAssetable = new DefaultWhenIsAssetable();
-	private WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
+	private final WhenIsAssetable _whenIsAssetable =
+		new DefaultWhenIsAssetable();
+	private final WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
 		new DefaultWhenIsIndexableBaseModel();
 
 }

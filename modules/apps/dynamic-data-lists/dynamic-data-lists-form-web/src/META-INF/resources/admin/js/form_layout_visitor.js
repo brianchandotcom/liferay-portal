@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-layout-visitor',
 	function(A) {
-		var AArray = A.Array;
 		var EMPTY_FN = A.Lang.emptyFn;
 
 		var LayoutVisitor = A.Component.create(
@@ -15,7 +14,8 @@ AUI.add(
 						value: EMPTY_FN
 					},
 
-					layouts: {
+					pages: {
+						validator: Array.isArray,
 						value: []
 					},
 
@@ -36,30 +36,30 @@ AUI.add(
 					visit: function() {
 						var instance = this;
 
-						return instance.visitPages(instance.get('layouts'));
+						return instance._visitPages(instance.get('pages'));
 					},
 
-					visitColumn: function(column) {
+					_visitColumn: function(column) {
 						var instance = this;
 
 						var columnHandler = instance.get('columnHandler');
 
 						var fieldsList = column.get('value');
 
-						if (A.instanceOf(fieldsList, A.FormBuilderFieldList)) {
-							instance.visitFields(fieldsList.get('fields'));
+						if (fieldsList) {
+							instance._visitFields(fieldsList.get('fields'));
 						}
 
 						return columnHandler.apply(instance, arguments);
 					},
 
-					visitColumns: function(columns) {
+					_visitColumns: function(columns) {
 						var instance = this;
 
-						return AArray.map(columns, A.bind('visitColumn', instance));
+						return columns.map(A.bind('_visitColumn', instance));
 					},
 
-					visitField: function(field) {
+					_visitField: function(field) {
 						var instance = this;
 
 						var fieldHandler = instance.get('fieldHandler');
@@ -67,42 +67,42 @@ AUI.add(
 						return fieldHandler.apply(instance, arguments);
 					},
 
-					visitFields: function(fields) {
+					_visitFields: function(fields) {
 						var instance = this;
 
-						return AArray.map(fields, A.bind('visitField', instance));
+						return fields.map(A.bind('_visitField', instance));
 					},
 
-					visitPage: function(page, index) {
+					_visitPage: function(page, index) {
 						var instance = this;
 
 						var pageHandler = instance.get('pageHandler');
 
-						instance.visitRows(page.get('rows'));
+						instance._visitRows(page.get('rows'));
 
 						return pageHandler.apply(instance, arguments);
 					},
 
-					visitPages: function(pages) {
+					_visitPages: function(pages) {
 						var instance = this;
 
-						return AArray.map(pages, A.bind('visitPage', instance));
+						return pages.map(A.bind('_visitPage', instance));
 					},
 
-					visitRow: function(row) {
+					_visitRow: function(row) {
 						var instance = this;
 
 						var rowHandler = instance.get('rowHandler');
 
-						instance.visitColumns(row.get('cols'));
+						instance._visitColumns(row.get('cols'));
 
 						return rowHandler.apply(instance, arguments);
 					},
 
-					visitRows: function(rows) {
+					_visitRows: function(rows) {
 						var instance = this;
 
-						return AArray.map(rows, A.bind('visitRow', instance));
+						return rows.map(A.bind('_visitRow', instance));
 					}
 				}
 			}
@@ -112,6 +112,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder-field-list', 'aui-layout']
+		requires: ['aui-layout']
 	}
 );

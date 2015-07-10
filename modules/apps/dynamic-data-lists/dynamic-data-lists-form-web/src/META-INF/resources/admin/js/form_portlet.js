@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-ddl-portlet',
 	function(A) {
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
-		var Lang = A.Lang;
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
 		var DDLPortlet = A.Component.create(
@@ -14,11 +13,11 @@ AUI.add(
 					definition: {
 					},
 
-					layout: {
-					},
-
 					formBuilder: {
 						valueFn: '_valueFormBuilder'
+					},
+
+					layout: {
 					}
 				},
 
@@ -44,6 +43,12 @@ AUI.add(
 						instance.renderUI();
 					},
 
+					renderUI: function() {
+						var instance = this;
+
+						instance.get('formBuilder').render(instance.one('#formBuilder'));
+					},
+
 					bindUI: function() {
 						var instance = this;
 
@@ -54,12 +59,6 @@ AUI.add(
 						instance._eventHandlers = [
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
-					},
-
-					renderUI: function() {
-						var instance = this;
-
-						instance.get('formBuilder').render(instance.one('#formBuilder'));
 					},
 
 					destructor: function() {
@@ -76,7 +75,7 @@ AUI.add(
 						instance.destroy();
 					},
 
-					_onSubmitEditForm: function(event) {
+					_onSubmitEditForm: function() {
 						var instance = this;
 
 						var description = window[instance.ns('descriptionEditor')].getHTML();
@@ -85,17 +84,17 @@ AUI.add(
 
 						var formBuilder = instance.get('formBuilder');
 
-						var layouts = formBuilder.get('layouts');
+						var pages = formBuilder.get('layouts');
 
 						var definitionInput = instance.one('#definition');
 
-						instance.definitionSerializer.set('layouts', layouts);
+						instance.definitionSerializer.set('pages', pages);
 
 						definitionInput.val(instance.definitionSerializer.serialize());
 
 						var layoutInput = instance.one('#layout');
 
-						instance.layoutSerializer.set('layouts', layouts);
+						instance.layoutSerializer.set('pages', pages);
 
 						layoutInput.val(instance.layoutSerializer.serialize());
 
@@ -107,12 +106,14 @@ AUI.add(
 					_valueFormBuilder: function() {
 						var instance = this;
 
+						var layout = instance.get('layout');
+
 						return new Liferay.DDL.FormBuilder(
 							{
 								definition: instance.get('definition'),
-								layouts: instance.get('layout')
+								pages: layout.pages
 							}
-						)
+						);
 					}
 				}
 			}
@@ -122,6 +123,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-form', 'liferay-portlet-base']
+		requires: ['liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-portlet-base']
 	}
 );

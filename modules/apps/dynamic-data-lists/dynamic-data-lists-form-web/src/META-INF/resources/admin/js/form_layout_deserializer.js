@@ -1,10 +1,8 @@
 AUI.add(
 	'liferay-ddl-form-builder-layout-deserializer',
 	function(A) {
-		var AArray = A.Array;
 		var Lang = A.Lang;
 
-		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
 		var RendererUtil = Liferay.DDM.Renderer.Util;
 
@@ -12,20 +10,21 @@ AUI.add(
 			{
 				ATTRS: {
 					definition: {
-						validator: function(val) {
-							return Lang.isObject(val);
-						}
+						validator: Lang.isObject
 					},
 
 					descriptions: {
+						validator: Array.isArray,
 						value: []
 					},
 
-					layouts: {
+					pages: {
+						validator: Array.isArray,
 						value: []
 					},
 
 					titles: {
+						validator: Array.isArray,
 						value: []
 					}
 				},
@@ -38,12 +37,12 @@ AUI.add(
 					deserialize: function() {
 						var instance = this;
 
-						var layouts = instance.get('layouts');
+						var pages = instance.get('pages');
 
-						return instance.deserializePages(layouts);
+						return instance._deserializePages(pages);
 					},
 
-					deserializeColumn: function(column) {
+					_deserializeColumn: function(column) {
 						var instance = this;
 
 						var deserializedColumn = new A.LayoutCol(
@@ -55,7 +54,7 @@ AUI.add(
 						if (column.fieldNames && column.fieldNames.length > 0) {
 							var fieldsList = new A.FormBuilderFieldList(
 								{
-									fields: instance.deserializeFields(deserializedColumn, column.fieldNames)
+									fields: instance._deserializeFields(deserializedColumn, column.fieldNames)
 								}
 							);
 
@@ -65,82 +64,57 @@ AUI.add(
 						return deserializedColumn;
 					},
 
-					deserializeColumns: function(columns) {
+					_deserializeColumns: function(columns) {
 						var instance = this;
 
-						return AArray.map(columns, A.bind('deserializeColumn', instance));
+						return columns.map(A.bind('_deserializeColumn', instance));
 					},
 
-					deserializeField: function(deserializedColumn, fieldName) {
+					_deserializeField: function(deserializedColumn, fieldName) {
 						var instance = this;
 
 						var definition = instance.get('definition');
 
-						var fieldDefinition = RendererUtil.searchFieldData(definition, 'name', fieldName);
+						var fieldDefinition = RendererUtil.getFieldByKey(definition, fieldName);
 
-						var fieldType = FieldTypes.get(fieldDefinition.type);
+						var fieldClass = FormBuilderUtil.getFieldClass(fieldDefinition.type);
 
-						var settings = fieldType.get('settings');
-
-						var fieldConfig = {};
-
-						AArray.each(
-							settings.fields,
-							function(item, index, collection) {
-								var value = fieldDefinition[item.name];
-
-								if (value) {
-									fieldConfig[item.name] = value;
-								}
-							}
-						);
-
-						deserializedColumn.set('container', deserializedColumn.get('node'));
-
-						fieldConfig.definition = fieldDefinition;
-						fieldConfig.fieldType = fieldDefinition.type;
-						fieldConfig.form = instance;
-						fieldConfig.parent = deserializedColumn;
-						fieldConfig.value = '';
-
-						var fieldClassName = fieldType.get('className');
-
-						var fieldClass = FormBuilderUtil.getFieldClass(fieldClassName);
-
-						return (new fieldClass(fieldConfig)).render();
+						return new fieldClass(fieldDefinition);
 					},
 
-					deserializeFields: function(deserializedColumn, fieldNames) {
+					_deserializeFields: function(deserializedColumn, fieldNames) {
 						var instance = this;
 
-						return AArray.map(fieldNames, A.bind('deserializeField', instance, deserializedColumn));
+						return fieldNames.map(A.bind('_deserializeField', instance, deserializedColumn));
 					},
 
-					deserializePage: function(page) {
+					_deserializePage: function(page) {
 						var instance = this;
 
-						var description = page.description && page.description[themeDisplay.getLanguageId()];
+						var languageId = themeDisplay.getLanguageId();
+
+						var description = page.description && page.description[languageId];
 
 						instance.get('descriptions').push(description);
 
-						var title = page.title && page.title[themeDisplay.getLanguageId()];
+						var title = page.title && page.title[languageId];
 
 						instance.get('titles').push(title);
 
 						return new A.Layout(
 							{
-								rows: instance.deserializeRows(page.rows)
+								rows: instance._deserializeRows(page.rows)
 							}
 						);
 					},
 
-					deserializePages: function(pages) {
+					_deserializePages: function(pages) {
 						var instance = this;
 
 						var deserializedPages;
 
 						if (pages.length) {
-							deserializedPages = AArray.map(pages, A.bind('deserializePage', instance));
+							deserializedPages = pages.map(A.bind('_deserializePage', instance));
 						}
 						else {
 							deserializedPages = [
@@ -157,20 +131,20 @@ AUI.add(
 						return deserializedPages;
 					},
 
-					deserializeRow: function(row) {
+					_deserializeRow: function(row) {
 						var instance = this;
 
 						return new A.LayoutRow(
 							{
-								cols: instance.deserializeColumns(row.columns)
+								cols: instance._deserializeColumns(row.columns)
 							}
 						);
 					},
 
-					deserializeRows: function(rows) {
+					_deserializeRows: function(rows) {
 						var instance = this;
 
-						return AArray.map(rows, A.bind('deserializeRow', instance));
+						return rows.map(A.bind('_deserializeRow', instance));
 					}
 				}
 			}
@@ -180,6 +154,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-layout', 'aui-form-builder-field-list', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['aui-form-builder-field-list', 'aui-layout', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer-util']
 	}
 );

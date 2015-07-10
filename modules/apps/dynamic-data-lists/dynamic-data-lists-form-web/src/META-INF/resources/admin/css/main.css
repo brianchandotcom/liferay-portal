@@ -46,6 +46,10 @@
 						border-radius: 0;
 						border-width: 0;
 						min-height: 100px;
+
+						.field-wrapper {
+							min-height: 60px;
+						}
 					}
 				}
 			}
@@ -99,20 +103,33 @@
 	margin: 0;
 }
 
-.lfr-ddm-form-field-container .lfr-form-row {
-	border-width: 0;
-	padding-bottom: 5px;
-	padding-top: 5px;
+.form-builder-field-settings-content {
+	padding: 10px;
 
-	&:hover {
-		padding-top: 5px;
+	.modal-body {
+		max-height: 500px;
+		overflow: hidden;
+
+		&:hover {
+			overflow-y: auto;
+		}
 	}
 
-	.lfr-autorow-controls {
-		bottom: 13px;
+	.lfr-ddm-form-field-container .lfr-form-row {
+		border-width: 0;
+		padding-bottom: 5px;
+		padding-top: 5px;
 
-		.add-row {
-			margin-right: 5px;
+		&:hover {
+			padding-top: 5px;
+		}
+
+		.lfr-autorow-controls {
+			bottom: 13px;
+
+			.add-row {
+				margin-right: 5px;
+			}
 		}
 	}
 }

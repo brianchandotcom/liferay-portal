@@ -1,10 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-layout-serializer',
 	function(A) {
-		var AArray = A.Array;
-
-		var Field = Liferay.DDM.Renderer.Field;
-
 		var LayoutSerializer = A.Component.create(
 			{
 				ATTRS: {
@@ -34,30 +30,6 @@ AUI.add(
 				NAME: 'liferay-ddl-form-builder-layout-serializer',
 
 				prototype: {
-					_valueColumnHandler: function() {
-						var instance = this;
-
-						return instance.serializeColumn;
-					},
-
-					_valueFieldHandler: function() {
-						var instance = this;
-
-						return instance.serializeField;
-					},
-
-					_valuePageHandler: function() {
-						var instance = this;
-
-						return instance.serializePage;
-					},
-
-					_valueRowHandler: function() {
-						var instance = this;
-
-						return instance.serializeRow;
-					},
-
 					serialize: function() {
 						var instance = this;
 
@@ -68,7 +40,7 @@ AUI.add(
 						);
 					},
 
-					serializeColumn: function(column) {
+					_serializeColumn: function(column) {
 						var instance = this;
 
 						var fieldsList = column.get('value');
@@ -77,22 +49,18 @@ AUI.add(
 							size: column.get('size')
 						};
 
-						serializedColumn.fieldNames = [];
-
-						if (A.instanceOf(fieldsList, A.FormBuilderFieldList)) {
-							serializedColumn.fieldNames = instance.visitFields(fieldsList.get('fields'));
-						}
+						serializedColumn.fieldNames = instance._visitFields(fieldsList.get('fields'));
 
 						return serializedColumn;
 					},
 
-					serializeField: function(field) {
+					_serializeField: function(field) {
 						var instance = this;
 
 						return field.get('name');
 					},
 
-					serializePage: function(page, index) {
+					_serializePage: function(page, index) {
 						var instance = this;
 
 						var builder = instance.get('builder');
@@ -106,37 +74,59 @@ AUI.add(
 							description: {
 								en_US: descriptions[index] || ''
 							},
-							rows: instance.visitRows(page.get('rows')),
+							rows: instance._visitRows(page.get('rows')),
 							title: {
 								en_US: titles[index] || index + 1
 							}
 						};
 					},
 
-					serializeRow: function(row) {
+					_serializeRow: function(row) {
 						var instance = this;
 
 						return {
-							columns: instance.visitColumns(row.get('cols'))
+							columns: instance._visitColumns(row.get('cols'))
 						};
 					},
 
-					visitColumns: function(rows) {
+					_valueColumnHandler: function() {
 						var instance = this;
 
-						return AArray.filter(
-							LayoutSerializer.superclass.visitColumns.apply(instance, arguments),
+						return instance._serializeColumn;
+					},
+
+					_valueFieldHandler: function() {
+						var instance = this;
+
+						return instance._serializeField;
+					},
+
+					_valuePageHandler: function() {
+						var instance = this;
+
+						return instance._serializePage;
+					},
+
+					_valueRowHandler: function() {
+						var instance = this;
+
+						return instance._serializeRow;
+					},
+
+					_visitColumns: function(rows) {
+						var instance = this;
+
+						return LayoutSerializer.superclass._visitColumns.apply(instance, arguments).filter(
 							function(item) {
 								return item.fieldNames.length > 0;
 							}
 						);
 					},
 
-					visitRows: function(rows) {
+					_visitRows: function(rows) {
 						var instance = this;
 
-						return AArray.filter(
-							LayoutSerializer.superclass.visitRows.apply(instance, arguments),
+						return LayoutSerializer.superclass._visitRows.apply(instance, arguments).filter(
 							function(item) {
 								return item.columns.length > 0;
 							}
@@ -150,6 +140,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder-layout-visitor', 'liferay-ddm-form-renderer-field']
+		requires: ['liferay-ddl-form-builder-layout-visitor']
 	}
 );

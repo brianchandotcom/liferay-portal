@@ -416,7 +416,7 @@ public class SocialActivitySettingLocalServiceImpl
 		SocialActivitySettingLocalServiceImpl.class);
 
 	private static final PortalCache<String, SocialActivityDefinition>
-		_activityDefinitions = MultiVMPoolUtil.getPortalCache(
+		_activityDefinitions = MultiVMPoolUtil.getCache(
 			SocialActivitySettingLocalServiceImpl.class.getName());
 
 }

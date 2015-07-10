@@ -91,9 +91,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 				"SELECT " + rightColumnName + " FROM " + tableName + " WHERE " +
 					leftColumnName + " = ?",
 				new int[] {Types.BIGINT}, RowMapper.PRIMARY_KEY);
-		leftToRightPortalCache = MultiVMPoolUtil.getPortalCache(
+		leftToRightPortalCache = MultiVMPoolUtil.getCache(
 			TableMapper.class.getName() + "-" + tableName + "-LeftToRight");
-		rightToLeftPortalCache = MultiVMPoolUtil.getPortalCache(
+		rightToLeftPortalCache = MultiVMPoolUtil.getCache(
 			TableMapper.class.getName() + "-" + tableName + "-RightToLeft");
 	}
 
@@ -229,8 +229,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public void destroy() {
-		MultiVMPoolUtil.removePortalCache(leftToRightPortalCache.getPortalCacheName());
-		MultiVMPoolUtil.removePortalCache(rightToLeftPortalCache.getPortalCacheName());
+		MultiVMPoolUtil.removeCache(leftToRightPortalCache.getPortalCacheName());
+		MultiVMPoolUtil.removeCache(rightToLeftPortalCache.getPortalCacheName());
 	}
 
 	@Override

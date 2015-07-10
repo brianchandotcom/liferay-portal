@@ -33,7 +33,7 @@
 	String portletId = PortletProviderUtil.getPortletId(PortalUserPersonalBarApplicationType.UserPersonalBar.CLASS_NAME, PortletProvider.Action.VIEW);
 	%>
 
-	<aui:nav-item cssClass="staging-controls">
+	<aui:nav-item>
 		<liferay-portlet:runtime portletName="<%= portletId %>" />
 	</aui:nav-item>
 </aui:nav>

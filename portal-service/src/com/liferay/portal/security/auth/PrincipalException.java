@@ -79,6 +79,23 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBeEnabled extends PrincipalException {
+
+		public MustBeEnabled(long companyId, String ... resourceName) {
+			super(
+				String.format(
+					"%s must be enabled for company %s",
+					StringUtil.merge(resourceName, ","), companyId));
+
+			this.companyId = companyId;
+			this.resourceName = resourceName;
+		}
+
+		public final long companyId;
+		public final String[] resourceName;
+
+	}
+
 	public static class MustBeOmniadmin extends PrincipalException {
 
 		public MustBeOmniadmin(long userId) {
@@ -156,6 +173,7 @@ public class PrincipalException extends PortalException {
 	private static final Class<?>[] _NESTED_CLASSES = {
 		PrincipalException.class, PrincipalException.MustBeAuthenticated.class,
 		PrincipalException.MustBeCompanyAdmin.class,
+		PrincipalException.MustBeEnabled.class,
 		PrincipalException.MustBeOmniadmin.class,
 		PrincipalException.MustHavePermission.class
 	};

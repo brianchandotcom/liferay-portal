@@ -19,6 +19,10 @@ apply plugin: "eclipse"
 
 liferay {
 	appServerParentDir = rootProject.file("../../bundles")
+
+	if (deployDir == new File(appServerParentDir, "deploy")) {
+		deployDir = new File(liferayHome, "osgi/apps")
+	}
 }
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")

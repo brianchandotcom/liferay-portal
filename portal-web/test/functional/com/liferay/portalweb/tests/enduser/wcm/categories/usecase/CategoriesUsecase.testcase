@@ -621,7 +621,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="WebContent#viewCategorizationCategoryNotVisibleCP">
@@ -786,8 +786,6 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
-
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
@@ -823,7 +821,8 @@
 
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Import Site Name" />
+			<var name="siteScopeName" value="Import Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

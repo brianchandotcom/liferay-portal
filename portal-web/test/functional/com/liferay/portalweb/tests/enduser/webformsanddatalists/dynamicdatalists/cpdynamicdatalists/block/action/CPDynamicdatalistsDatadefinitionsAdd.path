@@ -61,7 +61,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'description')]</td>
+	<td>//input[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -125,6 +125,9 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="Click" locator1="PGAssetpublisherConfiguration#FILTER_CATEGORIES_CATEGORY_CHECKBOX" />
+
+		<execute function="Click" locator1="PGAssetpublisherConfiguration#FILTER_CATEGORIES_CATEGORY_CLOSE_BUTTON" />
+
 		<execute function="AssertClick" locator1="PGAssetpublisherConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="PGAssetpublisherConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>

@@ -113,4 +113,6 @@ public interface Trash {
 
 	public boolean isTrashEnabled(long groupId) throws PortalException;
 
+	public boolean isValidTrashTitle(String title);
+
 }

@@ -15,6 +15,8 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -34,7 +36,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -45,6 +46,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,16 +68,30 @@ public class FindActionTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		_portletIds = new String[] {
+			PortletProviderUtil.getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.MANAGE),
+			PortletProviderUtil.getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.VIEW)
+		};
+	}
+
 	@Test
 	public void testGetPlidAndPortletIdViewInContext() throws Exception {
 		addLayouts(true, false);
 
 		Object[] plidAndPorltetId = BaseFindActionHelper.getPlidAndPortletId(
 			getThemeDisplay(), _blogsEntry.getGroupId(), _assetLayout.getPlid(),
-			_PORTLET_IDS);
+			_portletIds);
 
 		Assert.assertEquals(_blogLayout.getPlid(), plidAndPorltetId[0]);
-		Assert.assertEquals(PortletKeys.BLOGS, plidAndPorltetId[1]);
+
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		Assert.assertEquals(portletId, plidAndPorltetId[1]);
 	}
 
 	@Test
@@ -87,7 +103,7 @@ public class FindActionTest {
 		try {
 			BaseFindActionHelper.getPlidAndPortletId(
 				getThemeDisplay(), _blogsEntry.getGroupId(),
-				_assetLayout.getPlid(), _PORTLET_IDS);
+				_assetLayout.getPlid(), _portletIds);
 
 			Assert.fail();
 		}
@@ -134,7 +150,10 @@ public class FindActionTest {
 		_assetLayout = LayoutTestUtil.addLayout(_group);
 
 		if (portletExists) {
-			LayoutTestUtil.addPortletToLayout(_blogLayout, PortletKeys.BLOGS);
+			String portletId = PortletProviderUtil.getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
+			LayoutTestUtil.addPortletToLayout(_blogLayout, portletId);
 		}
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
@@ -188,9 +207,7 @@ public class FindActionTest {
 		return themeDisplay;
 	}
 
-	private static final String[] _PORTLET_IDS = {
-		PortletKeys.BLOGS_ADMIN, PortletKeys.BLOGS, PortletKeys.BLOGS_AGGREGATOR
-	};
+	private static String[] _portletIds;
 
 	private Layout _assetLayout;
 	private Layout _blogLayout;

@@ -905,6 +905,12 @@ public class ServiceBuilder {
 								entity, modelImplJavaClass);
 							_createExtendedModelImpl(entity);
 
+							if (modelImplJavaClass == null) {
+								modelImplJavaClass = _getJavaClass(
+									_outputPath + "/model/impl/" +
+										entity.getName() + "Impl.java");
+							}
+
 							entity.setTransients(_getTransients(entity, false));
 							entity.setParentTransients(
 								_getTransients(entity, true));
@@ -5321,11 +5327,13 @@ public class ServiceBuilder {
 
 		context.put("classDeprecated", false);
 
-		DocletTag tag = javaClass.getTagByName("deprecated");
+		if (javaClass != null) {
+			DocletTag tag = javaClass.getTagByName("deprecated");
 
-		if (tag != null) {
-			context.put("classDeprecated", true);
-			context.put("classDeprecatedComment", tag.getValue());
+			if (tag != null) {
+				context.put("classDeprecated", true);
+				context.put("classDeprecatedComment", tag.getValue());
+			}
 		}
 
 		return context;

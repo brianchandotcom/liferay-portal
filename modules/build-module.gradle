@@ -44,6 +44,14 @@ configurations {
 	portalTest
 }
 
+if (FileUtil.exists(project, "docroot")) {
+	copyLibs {
+		from(appServerLibPortalDir) {
+			include "util-bridges.jar", "util-java.jar", "util-taglib.jar"
+		}
+	}
+}
+
 dependencies {
 	portal files(appServerClassesPortalDir)
 	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")

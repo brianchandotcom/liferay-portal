@@ -2816,8 +2816,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Module module, boolean isNew) {
-		if (isNew) {
+	protected void cacheUniqueFindersCache(Module module) {
+		if (module.isNew()) {
 			Object[] args = new Object[] {
 					module.getAppId(), module.getContextName()
 				};
@@ -3123,7 +3123,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 			ModuleImpl.class, module.getPrimaryKey(), module, false);
 
 		clearUniqueFindersCache(module);
-		cacheUniqueFindersCache(module, isNew);
+		cacheUniqueFindersCache(module);
 
 		module.resetOriginalValues();
 
@@ -3504,11 +3504,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
-	}
-
-	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
-		return ModuleModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

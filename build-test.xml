@@ -5140,8 +5140,8 @@ plugins.includes=marketplace-portlet</echo>
 			<else>
 				<if>
 					<and>
-						<equals arg1="${app.server.type}" arg2="jboss" />
 						<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
+						<equals arg1="${app.server.type}" arg2="jboss" />
 					</and>
 					<then>
 						<ant antfile="build-dist.xml" target="unzip-jboss" inheritAll="false" />

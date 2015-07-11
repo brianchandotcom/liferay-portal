@@ -15,6 +15,8 @@
 package com.liferay.blogs.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.web.lar.BlogsPortletDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -27,8 +29,6 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.blogs.lar.BlogsPortletDataHandler;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -61,7 +61,7 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.BLOGS;
+		return BlogsPortletKeys.BLOGS;
 	}
 
 	@Before

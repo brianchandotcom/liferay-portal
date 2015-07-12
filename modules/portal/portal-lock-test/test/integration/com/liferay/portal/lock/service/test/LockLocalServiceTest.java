@@ -29,8 +29,10 @@ import java.sql.BatchUpdateException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Level;
@@ -72,15 +74,13 @@ public class LockLocalServiceTest {
 
 			ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-			List<LockingJob> lockingJobs = new ArrayList<>();
+			List<Future<Void>> futures = new ArrayList<>();
 
 			for (int i = 0; i < 10; i++) {
 				LockingJob lockingJob = new LockingJob(
 					"className", "key", "owner-" + i, 10);
 
-				lockingJobs.add(lockingJob);
-
-				executorService.execute(lockingJob);
+				futures.add(executorService.submit(lockingJob));
 			}
 
 			executorService.shutdown();
@@ -88,13 +88,8 @@ public class LockLocalServiceTest {
 			Assert.assertTrue(
 				executorService.awaitTermination(600, TimeUnit.SECONDS));
 
-			for (LockingJob lockingJob : lockingJobs) {
-				RuntimeException runtimeException =
-					lockingJob.getRuntimeException();
-
-				if (runtimeException != null) {
-					throw runtimeException;
-				}
+			for (Future<Void> future : futures) {
+				future.get();
 			}
 
 			Assert.assertFalse(
@@ -139,7 +134,7 @@ public class LockLocalServiceTest {
 		LockLocalServiceUtil.unlock(className, key, owner2);
 	}
 
-	private class LockingJob implements Runnable {
+	private class LockingJob implements Callable<Void> {
 
 		public LockingJob(
 			String className, String key, String owner,
@@ -151,12 +146,8 @@ public class LockLocalServiceTest {
 			_requiredSuccessCount = requiredSuccessCount;
 		}
 
-		public RuntimeException getRuntimeException() {
-			return _runtimeException;
-		}
-
 		@Override
-		public void run() {
+		public Void call() {
 			int count = 0;
 
 			while (true) {
@@ -176,7 +167,7 @@ public class LockLocalServiceTest {
 									_className, _key, _owner);
 
 								if (++count >= _requiredSuccessCount) {
-									return;
+									return null;
 								}
 
 								break;
@@ -186,9 +177,7 @@ public class LockLocalServiceTest {
 									continue;
 								}
 
-								_runtimeException = re;
-
-								return;
+								throw re;
 							}
 						}
 					}
@@ -198,9 +187,7 @@ public class LockLocalServiceTest {
 						continue;
 					}
 
-					_runtimeException = re;
-
-					break;
+					throw re;
 				}
 			}
 		}
@@ -243,7 +230,6 @@ public class LockLocalServiceTest {
 		private final String _key;
 		private final String _owner;
 		private final int _requiredSuccessCount;
-		private RuntimeException _runtimeException;
 
 	}
 

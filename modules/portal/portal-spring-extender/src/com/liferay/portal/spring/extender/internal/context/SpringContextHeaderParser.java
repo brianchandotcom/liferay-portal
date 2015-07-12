@@ -14,30 +14,34 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
-import org.eclipse.gemini.blueprint.context.support.OsgiBundleXmlApplicationContext;
-import org.eclipse.gemini.blueprint.io.OsgiBundleResourcePatternResolver;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.List;
 
 import org.osgi.framework.Bundle;
-
-import org.springframework.core.io.support.ResourcePatternResolver;
 
 /**
  * @author Miguel Pastor
  */
-public class ServiceBuilderApplicationContext
-	extends OsgiBundleXmlApplicationContext {
+public class SpringContextHeaderParser {
 
-	public ServiceBuilderApplicationContext(
-		Bundle bundle, String[] configLocations) {
-
-		super(configLocations);
-
+	public SpringContextHeaderParser(Bundle bundle) {
 		_bundle = bundle;
 	}
 
-	@Override
-	protected ResourcePatternResolver createResourcePatternResolver() {
-		return new OsgiBundleResourcePatternResolver(_bundle);
+	public String[] getBeanDefinitionFiles() {
+		Dictionary<String, String> headers = _bundle.getHeaders();
+		List<String> beanDefinitionFiles = new ArrayList<>();
+
+		String configs = headers.get("Spring-Context");
+
+		if (configs != null) {
+			Collections.addAll(beanDefinitionFiles, configs.split(","));
+		}
+
+		return beanDefinitionFiles.toArray(
+			new String[beanDefinitionFiles.size()]);
 	}
 
 	private final Bundle _bundle;

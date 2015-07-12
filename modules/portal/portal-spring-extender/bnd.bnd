@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Portal Spring Extender
 Bundle-SymbolicName: com.liferay.portal.spring.extender
 Bundle-Version: 1.0.1
-Export-Package: com.liferay.portal.spring.extender.loader
+Export-Package:\
+	com.liferay.portal.spring.extender.loader,\
+	com.liferay.portal.spring.extender.service
 Import-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache,\
@@ -61,9 +63,13 @@ Import-Package:\
 	org.springframework.jms.config,\
 	org.springframework.oxm.config,\
 	org.springframework.transaction.config,\
-	org.springframework.web.servlet.config
+	org.springframework.web.servlet.config,\
+	\
+	*
 Include-Resource:\
-	classes
+	classes,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*
 Provide-Capability:\
 	liferay.extender;\
 	liferay.extender="spring.extender";\

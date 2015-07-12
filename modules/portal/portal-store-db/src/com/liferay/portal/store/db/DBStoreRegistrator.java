@@ -34,6 +34,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.osgi.framework.BundleContext;
@@ -41,7 +43,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Reference;	
 
 /**
  * @author Carlos Sierra Andrés
@@ -69,6 +71,10 @@ public class DBStoreRegistrator {
 	@Deactivate
 	protected void deactivate() {
 		_storeServiceRegistration.unregister();
+	}
+
+	@Reference(target = "(original.bean=true)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private Store _wrapDatabaseStore(Store store) {

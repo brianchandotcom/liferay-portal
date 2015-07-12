@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.dao.db.SybaseDB;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalServiceUtil;
@@ -90,11 +89,11 @@ public class LockLocalServiceTest {
 				executorService.awaitTermination(600, TimeUnit.SECONDS));
 
 			for (LockingJob lockingJob : lockingJobs) {
-				SystemException systemException =
-					lockingJob.getSystemException();
+				RuntimeException runtimeException =
+					lockingJob.getRuntimeException();
 
-				if (systemException != null) {
-					throw systemException;
+				if (runtimeException != null) {
+					throw runtimeException;
 				}
 			}
 
@@ -152,8 +151,8 @@ public class LockLocalServiceTest {
 			_requiredSuccessCount = requiredSuccessCount;
 		}
 
-		public SystemException getSystemException() {
-			return _systemException;
+		public RuntimeException getRuntimeException() {
+			return _runtimeException;
 		}
 
 		@Override
@@ -182,38 +181,36 @@ public class LockLocalServiceTest {
 
 								break;
 							}
-							catch (SystemException se) {
-								if (_isExpectedException(se)) {
+							catch (RuntimeException re) {
+								if (_isExpectedException(re)) {
 									continue;
 								}
 
-								_systemException = se;
+								_runtimeException = re;
 
 								return;
 							}
 						}
 					}
 				}
-				catch (SystemException se) {
-					if (_isExpectedException(se)) {
+				catch (RuntimeException re) {
+					if (_isExpectedException(re)) {
 						continue;
 					}
 
-					_systemException = se;
+					_runtimeException = re;
 
 					break;
 				}
 			}
 		}
 
-		private boolean _isExpectedException(SystemException se) {
-			Throwable cause = se.getCause();
+		private boolean _isExpectedException(RuntimeException re) {
+			Throwable cause = re.getCause();
 
-			if (!(cause instanceof ORMException)) {
-				return false;
+			if (re instanceof SystemException) {
+				cause = cause.getCause();
 			}
-
-			cause = cause.getCause();
 
 			if ((cause instanceof ConstraintViolationException) ||
 				(cause instanceof LockAcquisitionException)) {
@@ -246,7 +243,7 @@ public class LockLocalServiceTest {
 		private final String _key;
 		private final String _owner;
 		private final int _requiredSuccessCount;
-		private SystemException _systemException;
+		private RuntimeException _runtimeException;
 
 	}
 

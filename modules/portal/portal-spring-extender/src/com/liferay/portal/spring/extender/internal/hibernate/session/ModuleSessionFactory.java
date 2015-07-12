@@ -16,21 +16,24 @@ package com.liferay.portal.spring.extender.internal.hibernate.session;
 
 import com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
+import com.liferay.portal.spring.extender.internal.context.ModuleApplicationContext;
 import com.liferay.portal.spring.extender.internal.hibernate.configuration.ModuleHibernateConfiguration;
 
 import javax.sql.DataSource;
-
-import org.eclipse.gemini.blueprint.context.BundleContextAware;
 
 import org.hibernate.SessionFactory;
 
 import org.osgi.framework.BundleContext;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 /**
  * @author Miguel Pastor
  */
-public class ModuleSessionFactory
-	extends PortletSessionFactoryImpl implements BundleContextAware {
+public class ModuleSessionFactory extends PortletSessionFactoryImpl
+	implements ApplicationContextAware {
 
 	@Override
 	public ClassLoader getSessionFactoryClassLoader() {
@@ -38,7 +41,15 @@ public class ModuleSessionFactory
 	}
 
 	@Override
-	public void setBundleContext(BundleContext bundleContext) {
+	public void setApplicationContext(ApplicationContext applicationContext)
+		throws BeansException {
+
+		ModuleApplicationContext moduleApplicationContext =
+			(ModuleApplicationContext)applicationContext;
+
+		BundleContext bundleContext =
+			moduleApplicationContext.getBundleContext();
+
 		_classLoader = new BundleResolverClassLoader(
 			bundleContext.getBundle(), null);
 

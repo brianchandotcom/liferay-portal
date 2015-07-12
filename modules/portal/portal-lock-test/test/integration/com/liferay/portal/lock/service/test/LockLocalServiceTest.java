@@ -136,16 +136,6 @@ public class LockLocalServiceTest {
 
 	private class LockingJob implements Callable<Void> {
 
-		public LockingJob(
-			String className, String key, String owner,
-			int requiredSuccessCount) {
-
-			_className = className;
-			_key = key;
-			_owner = owner;
-			_requiredSuccessCount = requiredSuccessCount;
-		}
-
 		@Override
 		public Void call() {
 			int count = 0;
@@ -190,6 +180,16 @@ public class LockLocalServiceTest {
 					throw re;
 				}
 			}
+		}
+
+		private LockingJob(
+			String className, String key, String owner,
+			int requiredSuccessCount) {
+
+			_className = className;
+			_key = key;
+			_owner = owner;
+			_requiredSuccessCount = requiredSuccessCount;
 		}
 
 		private boolean _isExpectedException(RuntimeException re) {

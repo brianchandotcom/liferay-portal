@@ -5,6 +5,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -59,7 +60,15 @@ import ${import};
 	@AccessControlled
 	@JSONWebService
 </#if>
-
+<#if entity.hasRemoteService() && sessionTypeName != "Local" && osgiModule>
+	@OSGiBeanProperties(
+		property = {
+			"json.web.service.context.name=${portletShortName?lower_case}",
+			"json.web.service.context.path=${entity.name}"
+		},
+		service = ${entity.name}${sessionTypeName}Service.class
+	)
+</#if>
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor = {PortalException.class, SystemException.class})
 public interface ${entity.name}${sessionTypeName}Service

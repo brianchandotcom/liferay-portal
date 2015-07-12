@@ -709,6 +709,8 @@ public class ServiceBuilder {
 			"service_clp_serializer", _tplServiceClpSerializer);
 		_tplServiceHttp = _getTplProperty("service_http", _tplServiceHttp);
 		_tplServiceImpl = _getTplProperty("service_impl", _tplServiceImpl);
+		_tplServiceJsonWS = _getTplProperty(
+			"service_jsonws", _tplServiceJsonWS);
 		_tplServicePropsUtil = _getTplProperty(
 			"service_props_util", _tplServicePropsUtil);
 		_tplServiceSoap = _getTplProperty("service_soap", _tplServiceSoap);
@@ -965,7 +967,7 @@ public class ServiceBuilder {
 								_createServiceHttp(entity);
 							}
 
-							_createServiceJson(entity);
+							_createServiceJson(entity, _SESSION_TYPE_REMOTE);
 
 							if (entity.hasColumns()) {
 								_createServiceJsonSerializer(entity);
@@ -3368,16 +3370,42 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createServiceJson(Entity entity) {
-		File ejbFile = new File(
-			_outputPath + "/service/http/" + entity.getName() +
-				"ServiceJSON.java");
+	private void _createServiceJson(Entity entity, int sessionType)
+		throws Exception {
 
-		if (ejbFile.exists()) {
-			System.out.println("Removing deprecated " + ejbFile);
+		if (!_osgiModule) {
+			File ejbFile = new File(
+				_outputPath + "/service/http/" + entity.getName() +
+					"ServiceJSON.java");
 
-			ejbFile.delete();
+			if (ejbFile.exists()) {
+				System.out.println("Removing deprecated " + ejbFile);
+
+				ejbFile.delete();
+			}
+
+			return;
 		}
+
+		JavaClass javaClass = _getJavaClass(
+			_serviceOutputPath + "/service/" + entity.getName() +
+				_getSessionTypeName(sessionType) + "Service.java");
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+		context.put("methods", _getMethods(javaClass));
+		context.put("sessionTypeName", _getSessionTypeName(sessionType));
+
+		context = _putDeprecatedKeys(context, javaClass);
+
+		String content = _processTemplate(_tplServiceJsonWS, context);
+
+		File ejbFile = new File(
+			_outputPath + "/service/http/jsonws/" + entity.getName() +
+				"JsonService.java");
+
+		writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceJsonSerializer(Entity entity) {
@@ -5558,6 +5586,7 @@ public class ServiceBuilder {
 		_TPL_ROOT + "service_clp_serializer.ftl";
 	private String _tplServiceHttp = _TPL_ROOT + "service_http.ftl";
 	private String _tplServiceImpl = _TPL_ROOT + "service_impl.ftl";
+	private String _tplServiceJsonWS = _TPL_ROOT + "service_jsonws.ftl";
 	private String _tplServicePropsUtil = _TPL_ROOT + "service_props_util.ftl";
 	private String _tplServiceSoap = _TPL_ROOT + "service_soap.ftl";
 	private String _tplServiceUtil = _TPL_ROOT + "service_util.ftl";

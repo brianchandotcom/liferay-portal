@@ -1,0 +1,106 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:error exception="<%= RequiredCompanyException.class %>" message="the-default-company-is-required" />
+
+<div class="btn-toolbar">
+	<portlet:renderURL var="addURL">
+		<portlet:param name="mvcRenderCommandName" value="/portal_instances/edit_instance" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<%
+	String taglibAdd = "location.href = '" + addURL + "';";
+	%>
+
+	<aui:button onClick="<%= taglibAdd %>" value="add" />
+</div>
+
+<liferay-ui:search-container
+	iteratorURL="<%= portletURL %>"
+	total="<%= CompanyLocalServiceUtil.getCompaniesCount(false) %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= CompanyLocalServiceUtil.getCompanies(false, searchContainer.getStart(), searchContainer.getEnd()) %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Company"
+		modelVar="curCompany"
+	>
+
+		<%
+		PortletURL rowURL = renderResponse.createRenderURL();
+
+		rowURL.setParameter("mvcRenderCommandName", "/portal_instances/edit_instance");
+		rowURL.setParameter("redirect", currentURL);
+		rowURL.setParameter("companyId", String.valueOf(curCompany.getCompanyId()));
+		%>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="instance-id"
+			property="companyId"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="web-id"
+			property="webId"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="virtual-host"
+			value="<%= curCompany.getVirtualHostname() %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="mail-domain"
+			property="mx"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="num-of-users"
+			value="<%= String.valueOf(UserLocalServiceUtil.searchCount(curCompany.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, null)) %>"
+		/>
+
+		<%
+		int maxUsers = curCompany.getMaxUsers();
+		%>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="max-num-of-users"
+			value='<%= (maxUsers > 0) ? String.valueOf(maxUsers) : LanguageUtil.get(request, "unlimited") %>'
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="active"
+			value='<%= LanguageUtil.get(request, curCompany.isActive() ? "yes" : "no") %>'
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action"
+			path="/instance_actions.jsp"
+		/>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+</liferay-ui:search-container>

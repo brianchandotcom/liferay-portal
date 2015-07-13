@@ -16,6 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerChoice" %>
+
 <liferay-staging:defineObjects />
 
 <%

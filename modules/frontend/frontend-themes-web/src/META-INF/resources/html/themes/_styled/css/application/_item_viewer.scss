@@ -16,6 +16,20 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
+
+	.search-info {
+		background-color: #D3E8F1;
+
+		.keywords {
+			font-size: 1.4em;
+			font-weight: bold;
+		}
+
+		.change-search-folder {
+			font-size: 0.8em;
+			font-weight: normal;
+		}
+	}
 }
 
 .lfr-item-viewer-close {

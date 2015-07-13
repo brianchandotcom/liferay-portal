@@ -41,54 +41,58 @@ public class GetCommentsStrutsAction extends BaseStrutsAction {
 
 		String namespace = ParamUtil.getString(request, "namespace");
 
-		request = new NamespaceServletRequest(
+		HttpServletRequest namespacedRequest = new NamespaceServletRequest(
 			request, StringPool.BLANK, namespace);
 
-		String className = ParamUtil.getString(request, "className");
-		long classPK = ParamUtil.getLong(request, "classPK");
-		boolean hideControls = ParamUtil.getBoolean(request, "hideControls");
+		String className = ParamUtil.getString(namespacedRequest, "className");
+		long classPK = ParamUtil.getLong(namespacedRequest, "classPK");
+		boolean hideControls = ParamUtil.getBoolean(
+			namespacedRequest, "hideControls");
 		boolean ratingsEnabled = ParamUtil.getBoolean(
-			request, "ratingsEnabled");
-		long userId = ParamUtil.getLong(request, "userId");
+			namespacedRequest, "ratingsEnabled");
+		long userId = ParamUtil.getLong(namespacedRequest, "userId");
 
-		request.setAttribute("liferay-ui:discussion:className", className);
-		request.setAttribute(
+		namespacedRequest.setAttribute(
+			"liferay-ui:discussion:className", className);
+		namespacedRequest.setAttribute(
 			"liferay-ui:discussion:classPK", String.valueOf(classPK));
-		request.setAttribute(
+		namespacedRequest.setAttribute(
 			"liferay-ui:discussion:hideControls", String.valueOf(hideControls));
-		request.setAttribute(
+		namespacedRequest.setAttribute(
 			"liferay-ui:discussion:ratingsEnabled",
 			String.valueOf(ratingsEnabled));
-		request.setAttribute(
+		namespacedRequest.setAttribute(
 			"liferay-ui:discussion:userId", String.valueOf(userId));
 
-		int index = ParamUtil.getInteger(request, "index");
+		int index = ParamUtil.getInteger(namespacedRequest, "index");
 
-		request.setAttribute(
+		namespacedRequest.setAttribute(
 			"liferay-ui:discussion:index", String.valueOf(index));
 
 		String randomNamespace = ParamUtil.getString(
-			request, "randomNamespace");
+			namespacedRequest, "randomNamespace");
 
-		request.setAttribute(
+		namespacedRequest.setAttribute(
 			"liferay-ui:discussion:randomNamespace", randomNamespace);
 
-		int rootIndexPage = ParamUtil.getInteger(request, "rootIndexPage");
+		int rootIndexPage = ParamUtil.getInteger(
+			namespacedRequest, "rootIndexPage");
 
-		request.setAttribute(
+		namespacedRequest.setAttribute(
 			"liferay-ui:discussion:rootIndexPage",
 			String.valueOf(rootIndexPage));
 
-		request.setAttribute("aui:form:portletNamespace", namespace);
+		namespacedRequest.setAttribute("aui:form:portletNamespace", namespace);
 
-		String portletId = ParamUtil.getString(request, "portletId");
+		String portletId = ParamUtil.getString(namespacedRequest, "portletId");
 
-		request.setAttribute(WebKeys.PORTLET_ID, portletId);
+		namespacedRequest.setAttribute(WebKeys.PORTLET_ID, portletId);
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/html/taglib/ui/discussion/page_resources.jsp");
+		RequestDispatcher requestDispatcher =
+			namespacedRequest.getRequestDispatcher(
+				"/html/taglib/ui/discussion/page_resources.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(namespacedRequest, response);
 
 		return null;
 	}

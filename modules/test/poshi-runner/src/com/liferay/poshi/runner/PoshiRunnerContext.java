@@ -611,74 +611,86 @@ public class PoshiRunnerContext {
 				Set<String> classCommandNames = _productClassCommandNames.get(
 					productName);
 
-				int maxGroupSize = PropsValues.MAX_GROUP_SIZE;
+				int totalGroupCount =
+					classCommandNames.size() / PropsValues.MAX_GROUP_SIZE;
 
-				int groupsSize =
-					(classCommandNames.size() + maxGroupSize - 1) /
-						maxGroupSize;
+				int uncompleteGroupCount =
+					classCommandNames.size() % PropsValues.MAX_GROUP_SIZE;
 
-				List<List<String>> classCommandNameGroups = new ArrayList(
-					groupsSize);
-
-				for (int i = 0; i < groupsSize; i++) {
-					classCommandNameGroups.add(new ArrayList());
+				if (uncompleteGroupCount > 0) {
+					totalGroupCount++;
 				}
 
-				int j = 0;
+				Map<Integer, List<String>> classCommandNameGroups =
+					new HashMap<Integer, List<String>>();
 
-				Iterator<String> iterator = classCommandNames.iterator();
+				int classCommandNameCount = 0;
 
-				while (iterator.hasNext()) {
-					List classCommandNameGroup = classCommandNameGroups.get(
-						j++ % groupsSize);
+				for (String classCommandName : classCommandNames) {
+					List<String> classCommandNameGroup =
+						new ArrayList<String>();
 
-					classCommandNameGroup.add(iterator.next());
+					int classCommandNameGroupIndex =
+						classCommandNameCount % totalGroupCount;
+
+					if (classCommandNameGroups.containsKey(
+						classCommandNameGroupIndex)) {
+
+						classCommandNameGroup.addAll(
+							classCommandNameGroups.get(
+								classCommandNameGroupIndex));
+					}
+
+					classCommandNameGroup.add(classCommandName);
+
+					classCommandNameGroups.put(
+						classCommandNameGroupIndex, classCommandNameGroup);
+
+					classCommandNameCount++;
 				}
 
-				for (int i = 0; i < groupsSize; i++) {
-					String productNameKey =
-						productName + "_TEST_CASE_METHOD_GROUP_";
+				for (int i = 0; i < classCommandNameGroups.size(); i++) {
+					String productNameGroupKey =
+						productName + "_TEST_CASE_METHOD_GROUP_" + i;
 
-					productNameKey = StringUtil.upperCase(
-						productNameKey.replace("-", "_"));
+					productNameGroupKey = StringUtil.upperCase(
+						productNameGroupKey.replace("-", "_"));
 
-					sb.append(productNameKey);
-					sb.append(i);
+					sb.append(productNameGroupKey);
 					sb.append("=");
 
 					List<String> classCommandNameGroup =
 						classCommandNameGroups.get(i);
 
-					for (String testCaseClassCommandName :
-							classCommandNameGroup) {
+					for (int j = 0; j < classCommandNameGroup.size(); j++) {
+						String testCaseClassCommandName =
+							classCommandNameGroup.get(j);
 
 						sb.append(testCaseClassCommandName);
-						sb.append(" ");
-					}
 
-					if (!classCommandNameGroup.isEmpty()) {
-						sb.setLength(sb.length() - 1);
+						if (j < classCommandNameGroup.size() - 1) {
+							sb.append(" ");
+						}
+					}
 
 					sb.append("\n\n");
-					}
 				}
 
-				String productGroupsKey =
+				String productNameGroupsKey =
 					productName + "_TEST_CASE_METHOD_GROUPS";
 
-				productGroupsKey = StringUtil.upperCase(
-					productGroupsKey.replace("-", "_"));
+				productNameGroupsKey = StringUtil.upperCase(
+					productNameGroupsKey.replace("-", "_"));
 
-				sb.append(productGroupsKey);
+				sb.append(productNameGroupsKey);
 				sb.append("=");
 
-				for (int i = 0; i < groupsSize; i++) {
+				for (int i = 0; i < classCommandNameGroups.size(); i++) {
 					sb.append(i);
-					sb.append(" ");
-				}
 
-				if (groupsSize > 0) {
-					sb.setLength(sb.length() - 1);
+					if (i < classCommandNameGroups.size() - 1) {
+						sb.append(" ");
+					}
 				}
 
 				sb.append("\n\n");

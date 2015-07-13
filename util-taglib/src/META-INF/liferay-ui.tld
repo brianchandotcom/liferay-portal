@@ -5526,6 +5526,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>user-group-search-container-results</name>
+		<tag-class>com.liferay.taglib.ui.UserGroupSearchContainerResultsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>searchContainer</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>searchTerms</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>userGroupParams</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>user-group-search-form</name>
 		<tag-class>com.liferay.taglib.ui.UserGroupSearchFormTag</tag-class>
 		<body-content>JSP</body-content>

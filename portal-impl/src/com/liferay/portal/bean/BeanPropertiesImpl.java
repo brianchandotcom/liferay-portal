@@ -16,6 +16,8 @@ package com.liferay.portal.bean;
 
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -26,22 +28,12 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -101,47 +93,33 @@ public class BeanPropertiesImpl implements BeanProperties {
 	}
 
 	@Override
-	public <T> T deepCopyProperties(Object source, Class<T> targetClazz)
-		throws Exception {
+	public <T> T deepCopyProperties(Object source) throws Exception {
+		ObjectInputStream objectInputStream = null;
+		ObjectOutputStream objectOutputStream = null;
 
-		T target = targetClazz.newInstance();
+		try {
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
 
-		BeanInfo targetBeanInfo = Introspector.getBeanInfo(targetClazz);
+			objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream);
 
-		for (PropertyDescriptor targetPropertyDescriptor :
-				targetBeanInfo.getPropertyDescriptors()) {
+			objectOutputStream.writeObject(source);
+			objectOutputStream.flush();
 
-			Class<?> targetPropertyType =
-				targetPropertyDescriptor.getPropertyType();
+			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(
+					unsyncByteArrayOutputStream.toByteArray());
 
-			if ((targetPropertyType == null) ||
-				(targetPropertyDescriptor.getWriteMethod() == null)) {
+			objectInputStream = new ObjectInputStream(
+				unsyncByteArrayInputStream);
 
-				continue;
-			}
-
-			PropertyDescriptor sourcePropertyDescriptor = getPropertyDescriptor(
-				source.getClass(), targetPropertyDescriptor.getName());
-
-			if (sourcePropertyDescriptor == null) {
-				continue;
-			}
-
-			Class<?> sourcePropertyType =
-				sourcePropertyDescriptor.getPropertyType();
-
-			if ((sourcePropertyType == null) ||
-				(sourcePropertyDescriptor.getReadMethod() == null)) {
-
-				continue;
-			}
-
-			deepCopyProperties(
-				sourcePropertyType, sourcePropertyDescriptor, source,
-				targetPropertyType, targetPropertyDescriptor, target);
+			return (T)objectInputStream.readObject();
 		}
-
-		return target;
+		finally {
+			objectInputStream.close();
+			objectOutputStream.close();
+		}
 	}
 
 	@Override
@@ -669,134 +647,6 @@ public class BeanPropertiesImpl implements BeanProperties {
 		BeanUtil.setPropertyForcedSilent(bean, param, value);
 	}
 
-	protected Collection<?> copyCollection(
-			Collection<?> source, Class<?> targetClazz)
-		throws Exception {
-
-		if (source == null) {
-			return null;
-		}
-
-		Class<?> sourceClazz = source.getClass();
-
-		Collection<Object> target =
-			(Collection<Object>)sourceClazz.newInstance();
-
-		for (Object object : source) {
-			if (isSimpleCopy(object.getClass(), targetClazz)) {
-				target.add(object);
-			}
-			else {
-				target.add(deepCopyProperties(object, targetClazz));
-			}
-		}
-
-		return target;
-	}
-
-	protected void copyCollection(
-			Method sourceReadMethod, Object source, Method targetWriteMethod,
-			Object target)
-		throws Exception {
-
-		Object value = sourceReadMethod.invoke(source);
-
-		if (value == null) {
-			return;
-		}
-
-		Class<?> targetClazz = getCollectionType(targetWriteMethod);
-
-		targetWriteMethod.invoke(
-			target, copyCollection((Collection<?>)value, targetClazz));
-	}
-
-	protected void copyMap(
-			Method sourceReadMethod, Object source, Method targetWriteMethod,
-			Object target)
-		throws Exception {
-
-		Object value = sourceReadMethod.invoke(source);
-
-		if (value == null) {
-			return;
-		}
-
-		Class<?> keyClazz = getMapKeyClass(targetWriteMethod);
-
-		Class<?> valueClazz = getMapValueClass(targetWriteMethod);
-
-		Map<?, ?> sourceMap = (Map<?, ?>)value;
-
-		Class<?> sourceClazz = sourceMap.getClass();
-
-		Map<Object, Object> targetMap =
-			(Map<Object, Object>)sourceClazz.newInstance();
-
-		for (Object key : sourceMap.keySet()) {
-			Object targetKey = null;
-			Object targetValue = null;
-
-			Object sourceValue = sourceMap.get(key);
-
-			if (isSimpleCopy(keyClazz, key.getClass())) {
-				targetKey = key;
-			}
-			else {
-				targetKey = deepCopyProperties(key, keyClazz);
-			}
-
-			if (isSimpleCopy(valueClazz, sourceValue.getClass())) {
-				targetValue = sourceValue;
-			}
-			else {
-				targetValue = deepCopyProperties(sourceValue, valueClazz);
-			}
-
-			targetMap.put(targetKey, targetValue);
-		}
-
-		targetWriteMethod.invoke(target, targetMap);
-	}
-
-	protected void deepCopyProperties(
-			Class<?> sourcePropertyType,
-			PropertyDescriptor sourcePropertyDescriptor, Object source,
-			Class<?> targetPropertyType,
-			PropertyDescriptor targetPropertyDescriptor, Object target)
-		throws Exception {
-
-		Method sourceReadMethod = sourcePropertyDescriptor.getReadMethod();
-
-		Method targetWriteMethod = targetPropertyDescriptor.getWriteMethod();
-
-		if (isCollectionCopy(sourcePropertyType, targetPropertyType)) {
-			copyCollection(sourceReadMethod, source, targetWriteMethod, target);
-		}
-		else if (isMapCopy(sourcePropertyType, targetPropertyType)) {
-			copyMap(sourceReadMethod, source, targetWriteMethod, target);
-		}
-		else if (isSimpleCopy(sourcePropertyType, targetPropertyType)) {
-			targetWriteMethod.invoke(target, sourceReadMethod.invoke(source));
-		}
-		else {
-			Object value = sourceReadMethod.invoke(source);
-
-			if (value != null) {
-				targetWriteMethod.invoke(
-					target, deepCopyProperties(value, targetPropertyType));
-			}
-		}
-	}
-
-	protected Class<?> getCollectionType(Method targetWriteMethod) {
-		Type[] types = targetWriteMethod.getGenericParameterTypes();
-
-		ParameterizedType parameterizedType = (ParameterizedType)types[0];
-
-		return (Class<?>)parameterizedType.getActualTypeArguments()[0];
-	}
-
 	protected Date getDate(String param, HttpServletRequest request) {
 		int month = ParamUtil.getInteger(request, param + "Month");
 		int day = ParamUtil.getInteger(request, param + "Day");
@@ -826,82 +676,6 @@ public class BeanPropertiesImpl implements BeanProperties {
 		catch (PortalException pe) {
 			return null;
 		}
-	}
-
-	protected Class<?> getMapKeyClass(Method targetWriteMethod) {
-		Type[] types = targetWriteMethod.getGenericParameterTypes();
-
-		ParameterizedType parameterizedType = (ParameterizedType)types[0];
-
-		return (Class<?>)parameterizedType.getActualTypeArguments()[0];
-	}
-
-	protected Class<?> getMapValueClass(Method targetWriteMethod) {
-		Type[] types = targetWriteMethod.getGenericParameterTypes();
-
-		ParameterizedType parameterizedType = (ParameterizedType)types[0];
-
-		return (Class<?>)parameterizedType.getActualTypeArguments()[1];
-	}
-
-	protected PropertyDescriptor getPropertyDescriptor(
-			Class<?> clazz, String propertyName)
-		throws Exception {
-
-		if (propertyName.equals("class")) {
-			return null;
-		}
-
-		BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
-
-		for (PropertyDescriptor propertyDescriptor :
-				beanInfo.getPropertyDescriptors()) {
-
-			if (propertyName.equals(propertyDescriptor.getName())) {
-				return propertyDescriptor;
-			}
-		}
-
-		return null;
-	}
-
-	protected boolean isCollectionCopy(
-		Class<?> sourceClazz, Class<?> targetClazz) {
-
-		if ((sourceClazz.equals(List.class) || sourceClazz.equals(Set.class)) &&
-			(targetClazz.equals(List.class) || targetClazz.equals(Set.class))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isMapCopy(Class<?> sourceClazz, Class<?> targetClazz) {
-		if (sourceClazz.equals(Map.class) && targetClazz.equals(Map.class)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isSimpleCopy(Class<?> sourceClazz, Class<?> targetClazz) {
-		if (!targetClazz.isAssignableFrom(sourceClazz)) {
-			return false;
-		}
-
-		if (sourceClazz.isPrimitive() || sourceClazz.equals(Boolean.class) ||
-			sourceClazz.equals(Double.class) ||
-			sourceClazz.equals(Float.class) ||
-			sourceClazz.equals(Integer.class) ||
-			sourceClazz.equals(Locale.class) ||
-			sourceClazz.equals(Long.class) ||
-			sourceClazz.equals(String.class)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

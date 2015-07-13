@@ -199,8 +199,9 @@ public class DummyCommentManagerImpl implements CommentManager {
 			}
 
 			@Override
-			public ActionableDynamicQuery getCommentExportActionableDynamicQuery(
-				PortletDataContext portletDataContext) {
+			public ActionableDynamicQuery
+				getCommentExportActionableDynamicQuery(
+					PortletDataContext portletDataContext) {
 
 				return null;
 			}

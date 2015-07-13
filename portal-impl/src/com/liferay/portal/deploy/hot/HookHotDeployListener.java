@@ -61,8 +61,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
-import com.liferay.portal.kernel.struts.path.AuthPublicPath;
-import com.liferay.portal.kernel.struts.path.DefaultAuthPublicPath;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -840,12 +838,9 @@ public class HookHotDeployListener
 			portalProperties.getProperty(AUTH_PUBLIC_PATHS));
 
 		for (String publicPath : publicPaths) {
-			AuthPublicPath authPublicPath = new DefaultAuthPublicPath(
-				publicPath);
-
 			registerService(
 				servletContextName, AUTH_PUBLIC_PATHS + publicPath,
-				AuthPublicPath.class, authPublicPath);
+				Object.class, new Object());
 		}
 	}
 

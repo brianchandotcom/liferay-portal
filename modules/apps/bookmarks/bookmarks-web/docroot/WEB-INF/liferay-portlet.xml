@@ -14,8 +14,8 @@
 		<social-activity-interpreter-class>com.liferay.bookmarks.social.BookmarksFolderActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/bookmarks/notifications/bookmarks-user-notification-definitions.xml</user-notification-definitions>
 		<user-notification-handler-class>com.liferay.bookmarks.notifications.BookmarksUserNotificationHandler</user-notification-handler-class>
-		<custom-attributes-display>com.liferay.bookmarks.web.customattributes.BookmarksEntryCustomAttributesDisplay</custom-attributes-display>
-		<custom-attributes-display>com.liferay.bookmarks.web.customattributes.BookmarksFolderCustomAttributesDisplay</custom-attributes-display>
+		<custom-attributes-display>com.liferay.bookmarks.web.custom.attributes.BookmarksEntryCustomAttributesDisplay</custom-attributes-display>
+		<custom-attributes-display>com.liferay.bookmarks.web.custom.attributes.BookmarksFolderCustomAttributesDisplay</custom-attributes-display>
 		<trash-handler>com.liferay.bookmarks.trash.BookmarksEntryTrashHandler</trash-handler>
 		<trash-handler>com.liferay.bookmarks.trash.BookmarksFolderTrashHandler</trash-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>

@@ -15,7 +15,7 @@
 		<social-activity-interpreter-class>com.liferay.wiki.social.WikiActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/wiki/notifications/wiki-user-notification-definitions.xml</user-notification-definitions>
 		<user-notification-handler-class>com.liferay.wiki.notifications.WikiUserNotificationHandler</user-notification-handler-class>
-		<custom-attributes-display>com.liferay.wiki.web.customattributes.WikiPageCustomAttributesDisplay</custom-attributes-display>
+		<custom-attributes-display>com.liferay.wiki.web.custom.attributes.WikiPageCustomAttributesDisplay</custom-attributes-display>
 		<permission-propagator>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</permission-propagator>
 		<trash-handler>com.liferay.wiki.trash.WikiNodeTrashHandler</trash-handler>
 		<trash-handler>com.liferay.wiki.trash.WikiPageTrashHandler</trash-handler>

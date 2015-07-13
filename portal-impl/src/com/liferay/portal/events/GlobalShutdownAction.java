@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.zip.TrueZIPHelperUtil;
@@ -173,6 +174,10 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Plugins
 
 		RequiredPluginsUtil.stopCheckingRequiredPlugins();
+
+		// Authentication
+
+		AuthPublicPathRegistry.unregister(PropsValues.AUTH_PUBLIC_PATHS);
 
 		// Scheduler engine
 

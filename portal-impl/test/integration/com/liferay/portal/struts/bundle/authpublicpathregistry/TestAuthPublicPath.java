@@ -14,8 +14,6 @@
 
 package com.liferay.portal.struts.bundle.authpublicpathregistry;
 
-import com.liferay.portal.kernel.struts.path.AuthPublicPath;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -23,13 +21,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"service.ranking:Integer=" + Integer.MAX_VALUE}
+	property = {
+		"auth.public.path=testAuthPublicPath",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	},
+	service = Object.class
 )
-public class TestAuthPublicPath implements AuthPublicPath {
-
-	@Override
-	public String path() {
-		return TestAuthPublicPath.class.getName();
-	}
-
+public class TestAuthPublicPath {
 }

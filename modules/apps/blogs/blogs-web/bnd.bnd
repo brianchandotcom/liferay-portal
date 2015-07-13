@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Blogs Web
+Bundle-SymbolicName: com.liferay.blogs.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.blogs.web.asset,\
+	com.liferay.blogs.web.constants,\
+	com.liferay.blogs.web.lar,\
+	com.liferay.blogs.web.social
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /blogs-web

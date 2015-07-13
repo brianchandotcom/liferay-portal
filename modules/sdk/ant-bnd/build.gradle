@@ -1,6 +1,8 @@
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
 	compile group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+
+	testCompile group: "org.jboss.shrinkwrap", name: "shrinkwrap-depchain", version: "1.2.2"
 }
 
 liferay {

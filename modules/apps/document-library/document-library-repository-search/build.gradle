@@ -1,7 +1,8 @@
 dependencies {
-	compile group: "org.apache.lucene", name: "lucene-core", version: "3.5.0"
-	compile group: "org.apache.lucene", name: "lucene-queries", version: "3.5.0"
-	compile group: "org.apache.lucene", name: "lucene-queryparser", version: "3.5.0"
+	compile group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.2.1"
+	compile group: "org.apache.lucene", name: "lucene-core", version: "5.2.1"
+	compile group: "org.apache.lucene", name: "lucene-queries", version: "5.2.1"
+	compile group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }

@@ -1,0 +1,5 @@
+dependencies {
+	compile project(":apps:comments:comments-web")
+
+	testCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"
+}

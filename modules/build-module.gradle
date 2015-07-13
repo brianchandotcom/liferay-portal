@@ -1,14 +1,37 @@
+import com.liferay.gradle.util.FileUtil
+
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "latest.release"
+	}
+}
+
 apply plugin: "com.liferay.plugin"
 apply plugin: "eclipse"
 
 liferay {
 	appServerParentDir = rootProject.file("../../bundles")
+
+	if (deployDir == new File(appServerParentDir, "deploy")) {
+		deployDir = new File(liferayHome, "osgi/apps")
+	}
 }
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
-File sdkDir = rootProject.file("../tools/sdk")
+
+group = "com.liferay"
+distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist2"), buildDir)
+libsDirName = distsDirName
 
 afterEvaluate {
 	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
@@ -19,6 +42,14 @@ afterEvaluate {
 configurations {
 	portal
 	portalTest
+}
+
+if (FileUtil.exists(project, "docroot")) {
+	copyLibs {
+		from(appServerLibPortalDir) {
+			include "util-bridges.jar", "util-java.jar", "util-taglib.jar"
+		}
+	}
 }
 
 dependencies {
@@ -46,14 +77,6 @@ eclipseProject {
 	}
 }
 
-ext {
-	sdkDestinationDir = new File(sdkDir, "dist2")
-}
-
-jar {
-	destinationDir = sdkDestinationDir
-}
-
 repositories {
 	mavenLocal()
 }
@@ -73,8 +96,6 @@ sourceSets {
 		runtimeClasspath += configurations.portal + configurations.portalTest
 	}
 }
-
-group = "com.liferay"
 
 pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	afterEvaluate {

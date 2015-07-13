@@ -1,5 +1,6 @@
 dependencies {
 	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	compile project(":apps:blogs:blogs-web")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-web")

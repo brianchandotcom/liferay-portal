@@ -13,8 +13,6 @@ task deployJar(type: Copy)
 jar {
 	deleteAllActions()
 
-	destinationDir = sdkDestinationDir
-
 	doLast {
 		Set<File> jarFiles = configurations.compile.files {
 			it.name == "icu4j"

@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
+import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
@@ -74,6 +75,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
+import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ModuleVersionSelector;
@@ -81,8 +83,12 @@ import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvedArtifact;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
+import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
+import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
+import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
@@ -93,6 +99,8 @@ import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.plugins.MavenPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
@@ -101,6 +109,8 @@ import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.api.tasks.bundling.Zip;
+import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 
@@ -124,6 +134,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
 
+	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
+
 	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
 
 	public static final String SETUP_ARQUILLIAN_TASK_NAME = "setupArquillian";
@@ -142,12 +154,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String TEST_INTEGRATION_TASK_NAME = "testIntegration";
 
+	public static final String ZIP_JAVADOC_TASK_NAME = "zipJavadoc";
+
 	@Override
 	public void apply(Project project) {
 		addLiferayExtension(project);
 
 		applyPlugins(project);
 
+		configureConf2ScopeMappings(project);
 		configureConfigurations(project);
 		configureDependencies(project);
 		configureProperties(project);
@@ -158,6 +173,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTasks(project);
 
 		applyConfigScripts(project);
+
+		configureArtifacts(project);
 
 		configureTaskBuildService(project);
 		configureTaskBuildWSDD(project);
@@ -407,18 +424,74 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return initGradleTask;
 	}
 
+	protected Jar addTaskJarSources(Project project) {
+		final Jar jar = GradleUtil.addTask(
+			project, JAR_SOURCES_TASK_NAME, Jar.class);
+
+		jar.setClassifier("sources");
+		jar.setGroup(BasePlugin.BUILD_GROUP);
+		jar.setDescription(
+			"Assembles a jar archive containing the main source files.");
+		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+
+		File docrootDir = project.file("docroot");
+
+		if (docrootDir.exists()) {
+			jar.from(docrootDir);
+		}
+		else {
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+			jar.from(sourceSet.getAllSource());
+		}
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			PatchTask.class,
+			new Action<PatchTask>() {
+
+				@Override
+				public void execute(final PatchTask patchTask) {
+					jar.from(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return patchTask.getPatchesDir();
+							}
+
+						},
+						new Closure<Void>(null) {
+
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								copySpec.into("META-INF/patches");
+							}
+
+						});
+				}
+
+			});
+
+		return jar;
+	}
+
 	protected void addTasks(Project project) {
 		addTaskDeploy(project);
 		addTaskExpandPortalWeb(project);
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
+		addTaskJarSources(project);
 		addTaskSetupArquillian(project);
 		addTaskSetupTestableTomcat(project);
 		addTaskStartTestableTomcat(project);
 		addTaskStopTestableTomcat(project);
 		addTaskTestIntegration(project);
 		addTaskWar(project);
+		addTaskZipJavadoc(project);
 	}
 
 	protected Task addTaskSetupArquillian(Project project) {
@@ -704,15 +777,39 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return task;
 	}
 
+	protected Zip addTaskZipJavadoc(Project project) {
+		Zip zip = GradleUtil.addTask(project, ZIP_JAVADOC_TASK_NAME, Zip.class);
+
+		zip.setClassifier("javadoc");
+		zip.setDescription(
+			"Assembles a zip archive containing the Javadoc files for this " +
+				"project.");
+		zip.setGroup(BasePlugin.BUILD_GROUP);
+
+		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		zip.dependsOn(javadoc);
+		zip.from(javadoc.getDestinationDir());
+
+		return zip;
+	}
+
 	protected void applyConfigScripts(Project project) {
 		GradleUtil.applyScript(
 			project,
 			"com/liferay/gradle/plugins/dependencies/config-liferay.gradle",
 			project);
+
+		GradleUtil.applyScript(
+			project,
+			"com/liferay/gradle/plugins/dependencies/config-maven.gradle",
+			project);
 	}
 
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
+		GradleUtil.applyPlugin(project, MavenPlugin.class);
 
 		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
@@ -728,6 +825,41 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
+	}
+
+	protected void configureArtifacts(Project project) {
+		ArtifactHandler artifactHandler = project.getArtifacts();
+
+		Task jarSourcesTask = GradleUtil.getTask(
+			project, JAR_SOURCES_TASK_NAME);
+
+		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
+
+		Task zipJavadocTask = GradleUtil.getTask(
+			project, ZIP_JAVADOC_TASK_NAME);
+
+		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, zipJavadocTask);
+	}
+
+	protected void configureConf2ScopeMappings(Project project) {
+		MavenPluginConvention mavenPluginConvention = GradleUtil.getConvention(
+			project, MavenPluginConvention.class);
+
+		Conf2ScopeMappingContainer conf2ScopeMappingContainer =
+			mavenPluginConvention.getConf2ScopeMappings();
+
+		Map<Configuration, Conf2ScopeMapping> mappings =
+			conf2ScopeMappingContainer.getMappings();
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
+
+		mappings.remove(configuration);
+
+		configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
+
+		mappings.remove(configuration);
 	}
 
 	protected void configureConfigurations(final Project project) {

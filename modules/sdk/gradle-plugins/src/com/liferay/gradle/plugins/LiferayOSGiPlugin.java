@@ -24,7 +24,6 @@ import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
-import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -34,13 +33,9 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.Callable;
-
-import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
@@ -52,11 +47,8 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileTreeElement;
-import org.gradle.api.invocation.Gradle;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
@@ -67,7 +59,6 @@ import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
 import org.gradle.api.tasks.bundling.Zip;
-import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.internal.Factory;
 
 /**
@@ -87,6 +78,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureBundleExtension(project);
+
+		configureArchivesBaseName(project);
+		configureVersion(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -325,127 +319,14 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		Copy copy = GradleUtil.addTask(
 			project, COPY_LIBS_TASK_NAME, Copy.class);
 
-		copy.from(
-			new Callable<FileCollection>() {
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
 
-				@Override
-				public FileCollection call() throws Exception {
-					JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
-						project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
-
-					return javaCompile.getClasspath();
-				}
-
-			});
-
-		copy.include(
-			new Spec<FileTreeElement>() {
-
-				@Override
-				public boolean isSatisfiedBy(FileTreeElement fileTreeElement) {
-					File file = fileTreeElement.getFile();
-
-					if (ArrayUtil.contains(
-							_COPY_LIBS_FILE_NAMES, file.getName())) {
-
-						return true;
-					}
-
-					Gradle gradle = project.getGradle();
-
-					if (FileUtil.isChild(file, gradle.getGradleUserHomeDir())) {
-						return true;
-					}
-
-					Set<File> projectDependencyDirs =
-						_getProjectDependencyDirs();
-
-					if (projectDependencyDirs.contains(file.getParentFile())) {
-						return true;
-					}
-
-					return false;
-				}
-
-				private Set<File> _getProjectDependencyDirs() {
-					if (_projectDependencyDirs != null) {
-						return _projectDependencyDirs;
-					}
-
-					_projectDependencyDirs = new HashSet<>();
-
-					Configuration configuration = GradleUtil.getConfiguration(
-						project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
-
-					DependencySet dependencySet =
-						configuration.getAllDependencies();
-
-					Set<ProjectDependency> projectDependencies =
-						dependencySet.withType(ProjectDependency.class);
-
-					for (ProjectDependency projectDependency :
-							projectDependencies) {
-
-						Jar dependencyJar = (Jar)GradleUtil.getTask(
-							projectDependency.getDependencyProject(),
-							JavaPlugin.JAR_TASK_NAME);
-
-						_projectDependencyDirs.add(
-							dependencyJar.getDestinationDir());
-					}
-
-					return _projectDependencyDirs;
-				}
-
-				private Set<File> _projectDependencyDirs;
-
-			});
-
+		copy.from(configuration);
 		copy.into(getLibDir(project));
 
-		copy.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
-
-					String[] includeResourceArray = new String[2];
-
-					includeResourceArray[0] = getBundleInstruction(
-						project, Constants.INCLUDERESOURCE);
-					includeResourceArray[1] = getBundleInstruction(
-						project, Constants.INCLUDE_RESOURCE);
-
-					for (String includeResource : includeResourceArray) {
-						if (Validator.isNull(includeResource)) {
-							continue;
-						}
-
-						String[] resources = includeResource.split(",");
-
-						String libDirName = project.relativePath(
-							getLibDir(project));
-
-						libDirName = libDirName.replace('\\', '/') + "/";
-
-						for (String resource : resources) {
-							if (resource.contains("@" + libDirName) ||
-								resource.startsWith(libDirName)) {
-
-								return true;
-							}
-						}
-					}
-
-					return false;
-				}
-
-			});
-
 		Closure<String> closure = new RenameDependencyClosure(
-			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME,
-			ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+			project, configuration.getName());
 
 		copy.rename(closure);
 
@@ -481,6 +362,16 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		replaceJarBuilderFactory(project);
 
 		super.applyPlugins(project);
+	}
+
+	protected void configureArchivesBaseName(Project project) {
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		String bundleSymbolicName = getBundleInstruction(
+			project, Constants.BUNDLE_SYMBOLICNAME);
+
+		basePluginConvention.setArchivesBaseName(bundleSymbolicName);
 	}
 
 	protected void configureBundleExtension(Project project) {
@@ -662,34 +553,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskJar(Project project) {
-		super.configureTaskJar(project);
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		configureTaskJarArchiveName(jar);
-	}
-
-	protected void configureTaskJarArchiveName(Jar jar) {
-		String bundleSymbolicName = getBundleInstruction(
-			jar.getProject(), Constants.BUNDLE_SYMBOLICNAME);
-
-		if (Validator.isNull(bundleSymbolicName)) {
-			return;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(bundleSymbolicName);
-		sb.append("-");
-		sb.append(jar.getVersion());
-		sb.append(".");
-		sb.append(jar.getExtension());
-
-		jar.setArchiveName(sb.toString());
-	}
-
-	@Override
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -700,20 +563,16 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureTaskAutoUpdateXml(project);
 	}
 
-	@Override
-	protected void configureVersion(
-		Project project, LiferayExtension liferayExtension) {
-
+	protected void configureVersion(Project project) {
 		String bundleVersion = getBundleInstruction(
 			project, Constants.BUNDLE_VERSION);
 
-		if (Validator.isNotNull(bundleVersion)) {
-			project.setVersion(bundleVersion);
+		project.setVersion(bundleVersion);
+	}
 
-			return;
-		}
-
-		super.configureVersion(project, liferayExtension);
+	@Override
+	protected void configureVersion(
+		Project project, LiferayExtension liferayExtension) {
 	}
 
 	protected String getBundleInstruction(Project project, String key) {
@@ -771,10 +630,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		bundleExtension.setJarBuilderFactory(
 			new LiferayJarBuilderFactory(project));
 	}
-
-	private static final String[] _COPY_LIBS_FILE_NAMES = {
-		"util-bridges.jar", "util-java.jar", "util-taglib.jar"
-	};
 
 	private static class LiferayJarBuilder extends JarBuilder {
 

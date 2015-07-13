@@ -19,7 +19,7 @@
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.sass.compiler.api" org="com.liferay" rev="1.0.0" />
 		<dependency name="jruby-complete" org="org.jruby" rev="1.7.20" />
-		<dependency conf="provided->master" name="com.liferay.ruby.gems" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency conf="provided->master" name="com.liferay.ruby.gems" org="com.liferay" rev="1.0.0" />
 		<dependency conf="test->default" name="junit" org="junit" rev="4.12" />
 	</dependencies>
 </ivy-module>

@@ -185,6 +185,7 @@ page import="com.liferay.portlet.dynamicdatamapping.storage.Fields" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
+page import="com.liferay.registry.Registry" %><%@
 page import="com.liferay.registry.RegistryUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.RSSUtil" %>
@@ -230,9 +231,10 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 %>
 
 <%!
-
 private JournalConverter _getJournalConverter() {
-	return RegistryUtil.getRegistry().getService(JournalConverter.class);
+	Registry registry = RegistryUtil.getRegistry();
+
+	return registry.getService(JournalConverter.class);
 }
 %>
 

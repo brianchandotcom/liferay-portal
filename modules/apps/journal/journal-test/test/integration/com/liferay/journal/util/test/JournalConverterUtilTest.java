@@ -63,6 +63,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
@@ -112,8 +113,9 @@ public class JournalConverterUtilTest {
 			classNameId, null, "Test Structure", definition,
 			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
-		_journalConverter = RegistryUtil.getRegistry().getService(
-			JournalConverter.class);
+		Registry registry = RegistryUtil.getRegistry();
+
+		_journalConverter = registry.getService(JournalConverter.class);
 	}
 
 	@Test

@@ -64,6 +64,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
@@ -384,7 +385,9 @@ public class ActionUtil {
 		Fields fields = DDMUtil.getFields(
 			ddmStructure.getStructureId(), serviceContext);
 
-		String content = getJournalConverter().getContent(ddmStructure, fields);
+		JournalConverter journalConverter = getJournalConverter();
+
+		String content = journalConverter.getContent(ddmStructure, fields);
 
 		Map<String, byte[]> images = getImages(content, fields);
 
@@ -605,7 +608,9 @@ public class ActionUtil {
 	}
 
 	protected static JournalConverter getJournalConverter() {
-		return RegistryUtil.getRegistry().getService(JournalConverter.class);
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(JournalConverter.class);
 	}
 
 	protected static String getLanguageId(

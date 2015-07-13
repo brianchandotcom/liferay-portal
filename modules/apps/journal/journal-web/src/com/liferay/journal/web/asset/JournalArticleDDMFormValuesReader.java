@@ -24,6 +24,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 /**
@@ -44,7 +45,9 @@ final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 					PortalUtil.getClassNameId(JournalArticle.class),
 					_article.getDDMStructureKey(), true);
 
-			Fields fields = getJournalConverter().getDDMFields(
+			JournalConverter journalConverter = getJournalConverter();
+
+			Fields fields = journalConverter.getDDMFields(
 				ddmStructure, _article.getContent());
 
 			return FieldsToDDMFormValuesConverterUtil.convert(
@@ -57,7 +60,9 @@ final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 	}
 
 	protected JournalConverter getJournalConverter() {
-		return RegistryUtil.getRegistry().getService(JournalConverter.class);
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(JournalConverter.class);
 	}
 
 	private final JournalArticle _article;

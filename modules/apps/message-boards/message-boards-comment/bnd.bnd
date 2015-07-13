@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Message Boards Comment
-Bundle-SymbolicName: com.liferay.message.boards.comment
-Bundle-Version: 1.0.0
-Include-Resource: classes

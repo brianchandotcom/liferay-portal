@@ -14,7 +14,7 @@
 
 package com.liferay.comments.ratings.definition;
 
-import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comments.Comment;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portlet.ratings.RatingsType;

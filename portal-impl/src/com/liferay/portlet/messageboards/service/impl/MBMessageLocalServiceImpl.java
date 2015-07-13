@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
-import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comments.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

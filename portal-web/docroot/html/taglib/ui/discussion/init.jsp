@@ -16,18 +16,18 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.comment.context.CommentDisplayContextProviderUtil" %><%@
-page import="com.liferay.portal.comment.context.util.DiscussionRequestHelper" %><%@
-page import="com.liferay.portal.comment.context.util.DiscussionTaglibHelper" %><%@
-page import="com.liferay.portal.kernel.comment.CommentConstants" %><%@
-page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
-page import="com.liferay.portal.kernel.comment.Discussion" %><%@
-page import="com.liferay.portal.kernel.comment.DiscussionComment" %><%@
-page import="com.liferay.portal.kernel.comment.DiscussionCommentIterator" %><%@
-page import="com.liferay.portal.kernel.comment.DiscussionPermission" %><%@
-page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
-page import="com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext" %><%@
-page import="com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext" %><%@
+<%@ page import="com.liferay.portal.comments.context.CommentDisplayContextProviderUtil" %><%@
+page import="com.liferay.portal.comments.context.util.DiscussionRequestHelper" %><%@
+page import="com.liferay.portal.comments.context.util.DiscussionTaglibHelper" %><%@
+page import="com.liferay.portal.kernel.comments.CommentConstants" %><%@
+page import="com.liferay.portal.kernel.comments.CommentManagerUtil" %><%@
+page import="com.liferay.portal.kernel.comments.Discussion" %><%@
+page import="com.liferay.portal.kernel.comments.DiscussionComment" %><%@
+page import="com.liferay.portal.kernel.comments.DiscussionCommentIterator" %><%@
+page import="com.liferay.portal.kernel.comments.DiscussionPermission" %><%@
+page import="com.liferay.portal.kernel.comments.WorkflowableComment" %><%@
+page import="com.liferay.portal.kernel.comments.context.CommentSectionDisplayContext" %><%@
+page import="com.liferay.portal.kernel.comments.context.CommentTreeDisplayContext" %><%@
 page import="com.liferay.portal.service.ServiceContextFunction" %>
 
 <portlet:defineObjects />

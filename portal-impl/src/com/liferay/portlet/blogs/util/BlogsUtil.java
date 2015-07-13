@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.blogs.util;
 
-import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comments.CommentManager;
+import com.liferay.portal.kernel.comments.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.blogs.service.impl;
 
-import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comments.CommentManager;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;

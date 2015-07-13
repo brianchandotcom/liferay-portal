@@ -44,7 +44,7 @@ import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comments.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;

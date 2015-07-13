@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -313,7 +312,7 @@ public class EditorConfigTransformerTest {
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse,
+			PortletURLBuilder portletURLBuilder,
 			JSONObject configJSONObject) {
 
 			String uploadURL = editorOptions.getUploadURL();

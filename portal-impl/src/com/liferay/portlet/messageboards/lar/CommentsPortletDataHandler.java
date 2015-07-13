@@ -110,7 +110,7 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			CommentManagerUtil.getDiscussionStagingHandler();
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			discussionStagingHandler.getCommentActionableDynamicQuery(
+			discussionStagingHandler.getCommentExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -140,7 +140,7 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			CommentManagerUtil.getDiscussionStagingHandler();
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			discussionStagingHandler.getCommentActionableDynamicQuery(
+			discussionStagingHandler.getCommentExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performCount();

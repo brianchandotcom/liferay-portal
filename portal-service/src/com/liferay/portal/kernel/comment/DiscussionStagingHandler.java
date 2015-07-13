@@ -30,7 +30,7 @@ public interface DiscussionStagingHandler {
 
 	public String getClassName();
 
-	public ActionableDynamicQuery getCommentActionableDynamicQuery(
+	public ActionableDynamicQuery getCommentExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
 	public String getResourceName();

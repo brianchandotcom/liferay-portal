@@ -1,7 +1,6 @@
 Bundle-Name: Liferay User Groups Admin Web
 Bundle-SymbolicName: com.liferay.user.groups.admin.web
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.user.groups.admin.web.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources

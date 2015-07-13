@@ -175,6 +175,9 @@ public class PortletKeys {
 
 	public static final String UNIT_CONVERTER = "27";
 
+	public static final String USER_GROUPS_ADMIN =
+		"com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet";
+
 	public static final String USER_STATISTICS = "180";
 
 	public static final String USERS_ADMIN = "125";

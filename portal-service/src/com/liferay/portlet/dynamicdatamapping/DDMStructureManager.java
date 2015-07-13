@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +27,12 @@ import java.util.Map;
  * @author Leonardo Barros
  */
 public interface DDMStructureManager {
+
+	public static final long STRUCTURE_DEFAULT_PARENT_STRUCTURE_ID = 0;
+
+	public static final String STRUCTURE_DEFAULT_STORAGE_TYPE = "json";
+
+	public static final int STRUCTURE_TYPE_DEFAULT = 0;
 
 	public DDMStructure addStructure(
 			long userId, long groupId, String parentStructureKey,

@@ -14,16 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,52 +41,42 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
-	public DDMForm getDDMForm() {
-		try {
-			return BeanPropertiesUtil.deepCopyProperties(
-				_structure.getDDMForm(), DDMForm.class);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+	public Object clone() {
+		DDMStructureImpl structureImpl = new DDMStructureImpl(
+			(com.liferay.portlet.dynamicdatamapping.model.DDMStructure)
+				_structure.clone());
 
-		return null;
+		return structureImpl;
+	}
+
+	@Override
+	public long getClassNameId() {
+		return _structure.getClassNameId();
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _structure.getCompanyId();
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _structure.getCreateDate();
+	}
+
+	@Override
+	public DDMForm getDDMForm() {
+		return _structure.getDDMForm();
 	}
 
 	@Override
 	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields) {
-		try {
-			List<DDMFormField> ddmFormFields = new ArrayList<>();
-
-			for (com.liferay.portlet.dynamicdatamapping.model.DDMFormField
-					ddmFormField :
-						_structure.getDDMFormFields(includeTransientFields)) {
-
-				ddmFormFields.add(
-					BeanPropertiesUtil.deepCopyProperties(
-						ddmFormField, DDMFormField.class));
-			}
-
-			return ddmFormFields;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return null;
+		return _structure.getDDMFormFields(includeTransientFields);
 	}
 
 	@Override
 	public DDMFormLayout getDDMFormLayout() throws PortalException {
-		try {
-			return BeanPropertiesUtil.deepCopyProperties(
-				_structure.getDDMFormLayout(), DDMFormLayout.class);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return null;
+		return _structure.getDDMFormLayout();
 	}
 
 	@Override
@@ -94,8 +85,23 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String getDescription() {
+		return _structure.getDescription();
+	}
+
+	@Override
+	public String getDescription(Locale locale) {
+		return _structure.getDescription(locale);
+	}
+
+	@Override
 	public Map<Locale, String> getDescriptionMap() {
 		return _structure.getDescriptionMap();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _structure.getExpandoBridge();
 	}
 
 	@Override
@@ -104,8 +110,48 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public long getGroupId() {
+		return _structure.getGroupId();
+	}
+
+	@Override
+	public Class<?> getModelClass() {
+		return _structure.getModelClass();
+	}
+
+	@Override
+	public String getModelClassName() {
+		return _structure.getModelClassName();
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _structure.getModifiedDate();
+	}
+
+	@Override
+	public String getName() {
+		return _structure.getName();
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		return _structure.getName(locale);
+	}
+
+	@Override
 	public Map<Locale, String> getNameMap() {
 		return _structure.getNameMap();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _structure.getPrimaryKeyObj();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _structure.getStagedModelType();
 	}
 
 	@Override
@@ -123,8 +169,30 @@ public class DDMStructureImpl implements DDMStructure {
 		return _structure.getUuid();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMStructureImpl.class);
+	@Override
+	public void setCompanyId(long companyId) {
+		_structure.setCompanyId(companyId);
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_structure.setCreateDate(createDate);
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_structure.setModifiedDate(modifiedDate);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_structure.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		_structure.setUuid(uuid);
+	}
 
 	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructure
 		_structure;

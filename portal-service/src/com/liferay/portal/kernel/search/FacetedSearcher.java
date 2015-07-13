@@ -207,7 +207,8 @@ public class FacetedSearcher extends BaseSearcher {
 			queryBooleanFilter.addRequiredTerm(
 				Field.COMPANY_ID, searchContext.getCompanyId());
 
-			Query fullQuery = getFullQuery(searchContext);
+			Query fullQuery = createFullQuery(
+				queryBooleanFilter, searchContext);
 
 			if (!fullQuery.hasChildren()) {
 				BooleanFilter preBooleanFilter =

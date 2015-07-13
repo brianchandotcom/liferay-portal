@@ -14,6 +14,8 @@
 
 package com.liferay.polls.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.base.PollsVoteServiceBaseImpl;
 import com.liferay.polls.service.permission.PollsQuestionPermissionChecker;
@@ -25,6 +27,7 @@ import com.liferay.portal.service.ServiceContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class PollsVoteServiceImpl extends PollsVoteServiceBaseImpl {
 
 	@Override

@@ -272,6 +272,25 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				</div>
 			</c:when>
 			<c:otherwise>
+
+				<%
+				List<FileEntry> fileEntries = new ArrayList<FileEntry>();
+				List<Folder> folders = new ArrayList<Folder>();
+
+				for (Object result : searchContainer.getResults()) {
+					if (result instanceof FileEntry) {
+						fileEntries.add((FileEntry)result);
+					} else if (result instanceof FileShortcut) {
+						FileShortcut fileShortcut = (FileShortcut)result;
+
+						fileEntries.add(DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId()));
+
+					} else {
+						folders.add((Folder)result);
+					}
+				}
+				%>
+
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 						<div class="row" id="cardSection">
@@ -282,38 +301,21 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				</c:choose>
 
 				<%
-				for (Object result : searchContainer.getResults()) {
-					FileEntry fileEntry = null;
-					FileShortcut fileShortcut = null;
-					Folder folder = null;
+				for (FileEntry fileEntry : fileEntries) {
+					FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
-					if (result instanceof FileEntry) {
-						fileEntry = (FileEntry)result;
-					}
-					else if (result instanceof FileShortcut) {
-						fileShortcut = (FileShortcut)result;
+					String title = DLUtil.getTitleWithExtension(fileEntry);
 
-						fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
-					}
-					else {
-						folder = (Folder)result;
-					}
-
-					if (fileEntry != null) {
-						FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
-
-						String title = DLUtil.getTitleWithExtension(fileEntry);
-
-						JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
+					JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 				%>
 
-						<c:choose>
-							<c:when test='<%= displayStyle.equals("icon") %>'>
-								<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+					<c:choose>
+						<c:when test='<%= displayStyle.equals("icon") %>'>
+							<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
 
-									<%
-										String imageThumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
-									%>
+								<%
+								String imageThumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+								%>
 
 									<div class="aspect-ratio aspect-ratio-middle">
 										<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" style="background-image: url('<%= imageThumbnailSrc %>')" title="<%= HtmlUtil.escapeAttribute(title) %>">
@@ -321,85 +323,86 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 										</a>
 									</div>
 								</div>
-							</c:when>
-							<c:otherwise>
-								<li class="list-group-item list-group-item-default" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
-									<div class="list-group-item-field">
-										<img src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle(true, 9, 128, 128) %>" />
-									</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<li class="list-group-item list-group-item-default" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+								<div class="list-group-item-field">
+									<img src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle(true, 9, 128, 128) %>" />
+								</div>
 
-									<div class="list-group-item-content">
-										<h6>
-											<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(fileEntry.getUserName()), LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
-										</h6>
+								<div class="list-group-item-content">
+									<h6>
+										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(fileEntry.getUserName()), LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
+									</h6>
 
-										<h5>
-											<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
-												<%= HtmlUtil.escape(title) %>
-											</a>
-										</h5>
+									<h5>
+										<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+											<%= HtmlUtil.escape(title) %>
+										</a>
+									</h5>
 
-										<h6><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" /></h6>
-									</div>
-								</li>
-							</c:otherwise>
-						</c:choose>
+									<h6><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" /></h6>
+								</div>
+							</li>
+						</c:otherwise>
+					</c:choose>
 
-					<%
-					}
-					else {
-						PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
+				<%
+				}
 
-						viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
-					%>
+				for (Folder folder : folders) {
+					PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
 
-						<c:choose>
-							<c:when test='<%= displayStyle.equals("icon") %>'>
-								<div class="col-md-6">
-									<div class="card-horizontal">
-										<div class="card-row card-row-padded">
-											<div class="card-col-field">
-												<span class="icon-folder-close-alt icon-monospaced"></span>
-											</div>
-											<div class="card-col-content card-col-gutters">
-												<h4>
-													<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
-														<%= HtmlUtil.escapeAttribute(folder.getName()) %>
-													</a>
-												</h4>
-											</div>
+					viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+				%>
+
+					<c:choose>
+						<c:when test='<%= displayStyle.equals("icon") %>'>
+							<div class="col-md-6">
+								<div class="card-horizontal">
+									<div class="card-row card-row-padded">
+										<div class="card-col-field">
+											<span class="icon-folder-close-alt icon-monospaced"></span>
+										</div>
+										<div class="card-col-content card-col-gutters">
+											<h4>
+												<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
+													<%= HtmlUtil.escapeAttribute(folder.getName()) %>
+												</a>
+											</h4>
 										</div>
 									</div>
 								</div>
-							</c:when>
-							<c:otherwise>
-								<li class="list-group-item list-group-item-default">
-									<div class="list-group-item-field">
+							</div>
+						</c:when>
+						<c:otherwise>
+							<li class="list-group-item list-group-item-default">
+								<div class="list-group-item-field">
 
-										<%
-										String folderImage = "folder_empty_document";
+									<%
+									String folderImage = "folder_empty_document";
 
-										if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0)) {
-											folderImage = "folder_full_document";
-										}
-										%>
+									if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0)) {
+										folderImage = "folder_full_document";
+									}
+									%>
 
-										<img src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" />
-									</div>
+									<img src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" />
+								</div>
 
-									<div class="list-group-item-content">
-										<h5>
-											<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
-												<%= HtmlUtil.escape(folder.getName()) %>
-											</a>
-										</h5>
-									</div>
-								</li>
-							</c:otherwise>
-						</c:choose>
+								<div class="list-group-item-content">
+									<h5>
+										<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
+											<%= HtmlUtil.escape(folder.getName()) %>
+										</a>
+									</h5>
+								</div>
+							</li>
+						</c:otherwise>
+					</c:choose>
 
 				<%
-					}
 				}
 				%>
 

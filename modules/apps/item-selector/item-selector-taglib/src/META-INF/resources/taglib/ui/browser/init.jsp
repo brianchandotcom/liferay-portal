@@ -52,6 +52,9 @@ page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" 
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />

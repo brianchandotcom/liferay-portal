@@ -201,6 +201,7 @@ public class PoshiRunnerContext {
 
 		PoshiRunnerValidation.validate();
 
+		_writeTestCaseMethodGroupProperties();
 		_writeTestCaseMethodNamesProperties();
 		_writeTestGeneratedProperties();
 	}
@@ -218,19 +219,19 @@ public class PoshiRunnerContext {
 		_testClassName = testClassName;
 	}
 
-	private static void _addTestCaseClassCommandNames(
+	private static void _addComponentClassCommandNames(
 		String componentName, String classCommandName) {
 
 		Set<String> classCommandNames = new TreeSet<>();
 
 		classCommandNames.add(classCommandName);
 
-		if (_testCaseClassCommandNames.containsKey(componentName)) {
+		if (_componentClassCommandNames.containsKey(componentName)) {
 			classCommandNames.addAll(
-				_testCaseClassCommandNames.get(componentName));
+				_componentClassCommandNames.get(componentName));
 		}
 
-		_testCaseClassCommandNames.put(componentName, classCommandNames);
+		_componentClassCommandNames.put(componentName, classCommandNames);
 	}
 
 	private static String _getCommandSummary(
@@ -290,7 +291,7 @@ public class PoshiRunnerContext {
 		return relatedClassCommandNames;
 	}
 
-	private static void _initTestClassCommandNamesMap() {
+	private static void _initComponentCommandNamesMap() {
 		for (String testCaseClassName : _testCaseClassNames) {
 			Element rootElement = getTestCaseRootElement(testCaseClassName);
 
@@ -322,7 +323,7 @@ public class PoshiRunnerContext {
 						continue;
 					}
 
-					_addTestCaseClassCommandNames(
+					_addComponentClassCommandNames(
 						componentName,
 						testCaseClassName + "#" + extendsCommandName);
 
@@ -347,7 +348,7 @@ public class PoshiRunnerContext {
 				if (commandElement.attributeValue("known-issues") != null) {
 					for (String productName : _productNames) {
 						if (componentName.startsWith(productName)) {
-							_addTestCaseClassCommandNames(
+							_addComponentClassCommandNames(
 								productName + "-known-issues",
 								classCommandName);
 
@@ -356,8 +357,30 @@ public class PoshiRunnerContext {
 					}
 				}
 				else {
-					_addTestCaseClassCommandNames(
+					_addComponentClassCommandNames(
 						componentName, classCommandName);
+				}
+			}
+		}
+	}
+
+	private static void _initProductClassCommandNamesMap() {
+		for (String productName : _productNames) {
+			for (String componentName : _componentNames) {
+				Set<String> classCommandNames = _componentClassCommandNames.get(
+					componentName);
+
+				if (Validator.isNotNull(classCommandNames) &&
+					!classCommandNames.isEmpty() &&
+					componentName.startsWith(productName)) {
+
+					if (_productClassCommandNames.containsKey(productName)) {
+						classCommandNames.addAll(
+							_productClassCommandNames.get(productName));
+					}
+
+					_productClassCommandNames.put(
+						productName, classCommandNames);
 				}
 			}
 		}
@@ -563,7 +586,8 @@ public class PoshiRunnerContext {
 			}
 		}
 
-		_initTestClassCommandNamesMap();
+		_initComponentCommandNamesMap();
+		_initProductClassCommandNamesMap();
 	}
 
 	private static void _readSeleniumFiles() throws Exception {
@@ -579,6 +603,104 @@ public class PoshiRunnerContext {
 		_seleniumParameterCounts.put("open", 1);
 	}
 
+	private static void _writeTestCaseMethodGroupProperties() throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		for (String productName : _productNames) {
+			if (_productClassCommandNames.containsKey(productName)) {
+				Set<String> classCommandNames = _productClassCommandNames.get(
+					productName);
+
+				int totalGroupCount =
+					classCommandNames.size() / PropsValues.MAX_GROUP_SIZE;
+
+				int uncompleteGroupCount =
+					classCommandNames.size() % PropsValues.MAX_GROUP_SIZE;
+
+				if (uncompleteGroupCount > 0) {
+					totalGroupCount++;
+				}
+
+				Map<Integer, List<String>> classCommandNameGroups =
+					new HashMap<Integer, List<String>>();
+
+				int classCommandNameCount = 0;
+
+				for (String classCommandName : classCommandNames) {
+					List<String> classCommandNameGroup =
+						new ArrayList<String>();
+
+					int classCommandNameGroupIndex =
+						classCommandNameCount % totalGroupCount;
+
+					if (classCommandNameGroups.containsKey(
+						classCommandNameGroupIndex)) {
+
+						classCommandNameGroup.addAll(
+							classCommandNameGroups.get(
+								classCommandNameGroupIndex));
+					}
+
+					classCommandNameGroup.add(classCommandName);
+
+					classCommandNameGroups.put(
+						classCommandNameGroupIndex, classCommandNameGroup);
+
+					classCommandNameCount++;
+				}
+
+				for (int i = 0; i < classCommandNameGroups.size(); i++) {
+					String productNameGroupKey =
+						productName + "_TEST_CASE_METHOD_GROUP_" + i;
+
+					productNameGroupKey = StringUtil.upperCase(
+						productNameGroupKey.replace("-", "_"));
+
+					sb.append(productNameGroupKey);
+					sb.append("=");
+
+					List<String> classCommandNameGroup =
+						classCommandNameGroups.get(i);
+
+					for (int j = 0; j < classCommandNameGroup.size(); j++) {
+						String testCaseClassCommandName =
+							classCommandNameGroup.get(j);
+
+						sb.append(testCaseClassCommandName);
+
+						if (j < classCommandNameGroup.size() - 1) {
+							sb.append(" ");
+						}
+					}
+
+					sb.append("\n\n");
+				}
+
+				String productNameGroupsKey =
+					productName + "_TEST_CASE_METHOD_GROUPS";
+
+				productNameGroupsKey = StringUtil.upperCase(
+					productNameGroupsKey.replace("-", "_"));
+
+				sb.append(productNameGroupsKey);
+				sb.append("=");
+
+				for (int i = 0; i < classCommandNameGroups.size(); i++) {
+					sb.append(i);
+
+					if (i < classCommandNameGroups.size() - 1) {
+						sb.append(" ");
+					}
+				}
+
+				sb.append("\n\n");
+			}
+		}
+
+		FileUtil.write(
+			"test.case.method.names.groups.properties", sb.toString());
+	}
+
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
@@ -591,7 +713,7 @@ public class PoshiRunnerContext {
 			sb.append(componentNameKey);
 			sb.append("=");
 
-			Set<String> classCommandNames = _testCaseClassCommandNames.get(
+			Set<String> classCommandNames = _componentClassCommandNames.get(
 				componentName);
 
 			if (Validator.isNotNull(classCommandNames) &&
@@ -677,20 +799,22 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final Map<String, String> _commandSummaries =
 		new HashMap<>();
+	private static final Map<String, Set<String>> _componentClassCommandNames =
+		new TreeMap<>();
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final Map<String, String> _filePaths = new HashMap<>();
 	private static String[] _filePathsArray;
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();
+	private static final Map<String, Set<String>> _productClassCommandNames =
+		new TreeMap<>();
 	private static final List<String> _productNames = new ArrayList<>();
 	private static final Map<String, Element> _rootElements = new HashMap<>();
 	private static final Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<>();
 	private static final List<String> _testCaseAvailablePropertyNames =
 		new ArrayList<>();
-	private static final Map<String, Set<String>> _testCaseClassCommandNames =
-		new TreeMap<>();
 	private static final List<String> _testCaseClassNames = new ArrayList<>();
 	private static final List<String> _testCaseRequiredPropertyNames =
 		new ArrayList<>();

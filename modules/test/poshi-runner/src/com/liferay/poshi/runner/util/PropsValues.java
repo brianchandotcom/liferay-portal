@@ -80,6 +80,9 @@ public class PropsValues {
 	public static final String LOGGER_RESOURCES_URL = PropsUtil.get(
 		"logger.resources.url");
 
+	public static final int MAX_GROUP_SIZE = GetterUtil.getInteger(
+		PropsUtil.get("max.group.size"));
+
 	public static final String MOBILE_ANDROID_HOME = PropsUtil.get(
 		"mobile.android.home");
 

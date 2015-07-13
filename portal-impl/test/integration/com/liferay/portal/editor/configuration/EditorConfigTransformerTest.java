@@ -311,8 +311,7 @@ public class EditorConfigTransformerTest {
 		public void transform(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			PortletURLBuilder portletURLBuilder,
+			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder,
 			JSONObject configJSONObject) {
 
 			String uploadURL = editorOptions.getUploadURL();

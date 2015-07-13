@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
@@ -71,7 +72,10 @@ public class ForgotPasswordAction extends PortletAction {
 		Company company = themeDisplay.getCompany();
 
 		if (!company.isSendPassword() && !company.isSendPasswordResetLink()) {
-			throw new PrincipalException("Unable to reset password");
+			throw new PrincipalException.MustBeEnabled(
+				company.getCompanyId(),
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK);
 		}
 
 		try {

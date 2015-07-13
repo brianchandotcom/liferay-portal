@@ -268,8 +268,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	protected long getDDMStructureId(
 		long groupId, long companyGroupId, String structureId, boolean warn) {
 
-		String globalGroupOr = "";
-
 		if (Validator.isNull(structureId)) {
 			return 0;
 		}
@@ -279,24 +277,30 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		if ((ddmStructureId == null) && (companyGroupId != 0)) {
 			ddmStructureId = _ddmStructureIds.get(
 				companyGroupId + "#" + structureId);
-
-			globalGroupOr = " or global group";
 		}
 
-		if (ddmStructureId == null) {
-			if (warn) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get the DDM structure ID for group " +
-							groupId + globalGroupOr + " and journal " +
-								"structure ID " + structureId);
-				}
+		if (ddmStructureId != null) {
+			return ddmStructureId;
+		}
+
+		if (warn && _log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("Unable to get the DDM structure ID for group ");
+			sb.append(groupId);
+
+			if (companyGroupId != 0) {
+				sb.append(" or global group");
 			}
 
-			return 0;
+			sb.append(" and journal structure ID ");
+			sb.append(structureId);
+			sb.append(".");
+
+			_log.warn(sb.toString());
 		}
 
-		return ddmStructureId;
+		return 0;
 	}
 
 	protected long getDDMStructureId(

@@ -1,4 +1,5 @@
 dependencies {
+	compile project(":apps:blogs:blogs-web")
 	compile project(":apps:mentions:mentions-api")
 }
 

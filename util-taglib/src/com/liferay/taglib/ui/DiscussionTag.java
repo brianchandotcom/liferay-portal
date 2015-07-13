@@ -107,7 +107,7 @@ public class DiscussionTag extends IncludeTag {
 		String portletId = portletDisplay.getId();
 
 		return themeDisplay.getPathMain() +
-			"/portal/more_comments?p_p_isolated=1&portletId=" + portletId;
+			"/portal/get_comments?p_p_isolated=1&portletId=" + portletId;
 	}
 
 	@Override

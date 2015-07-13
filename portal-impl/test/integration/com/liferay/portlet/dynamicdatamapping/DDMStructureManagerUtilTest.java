@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,6 +26,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -62,7 +62,8 @@ public class DDMStructureManagerUtilTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_classNameId = RandomTestUtil.randomLong();
+		_classNameId = PortalUtil.getClassNameId(
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
@@ -118,14 +119,20 @@ public class DDMStructureManagerUtilTest {
 
 	@Test
 	public void testGetClassStructures() throws Exception {
-		DDMStructure structure = addStructure();
-
 		List<DDMStructure> structures =
 			DDMStructureManagerUtil.getClassStructures(
-				_group.getCompanyId(), structure.getClassNameId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				_group.getCompanyId(), _classNameId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(1, structures.size());
+		int initialSize = structures.size();
+
+		addStructure();
+
+		structures = DDMStructureManagerUtil.getClassStructures(
+			_group.getCompanyId(), _classNameId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		Assert.assertEquals(initialSize + 1, structures.size());
 	}
 
 	@Test

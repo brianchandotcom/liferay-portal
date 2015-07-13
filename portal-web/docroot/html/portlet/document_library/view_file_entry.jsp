@@ -421,7 +421,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 								try {
 									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-									ddmFormValues = StorageEngineUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+									ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 
 								}
 								catch (Exception e) {

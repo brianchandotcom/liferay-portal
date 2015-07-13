@@ -106,8 +106,10 @@ AUI.add(
 
 					config.data.p_auth = Liferay.authToken;
 
-					if (themeDisplay.getDoAsUserIdEncoded() != "") {
-						config.data.doAsUserId = themeDisplay.getDoAsUserIdEncoded();
+					var doAsUserIdEncoded = themeDisplay.getDoAsUserIdEncoded();
+
+					if (doAsUserIdEncoded) {
+						config.data.doAsUserId = doAsUserIdEncoded;
 					}
 
 					A.io.request(

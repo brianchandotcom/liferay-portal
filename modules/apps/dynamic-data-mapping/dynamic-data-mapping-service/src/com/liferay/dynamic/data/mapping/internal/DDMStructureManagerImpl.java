@@ -45,13 +45,13 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure =
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.addStructure(
 				userId, groupId, parentStructureKey, classNameId, structureKey,
 				nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType,
 				type, serviceContext);
 
-		return new DDMStructureImpl(structure);
+		return new DDMStructureImpl(ddmStructure);
 	}
 
 	@Override
@@ -63,30 +63,30 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public DDMStructure fetchStructure(
 		long groupId, long classNameId, String structureKey) {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure =
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.fetchStructure(
 				groupId, classNameId, structureKey);
 
-		if (structure == null) {
+		if (ddmStructure == null) {
 			return null;
 		}
 
-		return new DDMStructureImpl(structure);
+		return new DDMStructureImpl(ddmStructure);
 	}
 
 	@Override
 	public DDMStructure fetchStructureByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure =
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.fetchDDMStructureByUuidAndGroupId(
 				uuid, groupId);
 
-		if (structure == null) {
+		if (ddmStructure == null) {
 			return null;
 		}
 
-		return new DDMStructureImpl(structure);
+		return new DDMStructureImpl(ddmStructure);
 	}
 
 	@Override
@@ -95,14 +95,12 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure>
-			structures = _ddmStructureLocalService.getClassStructures(
-				companyId, classNameId, start, end);
-
 		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructure
-				structure : structures) {
+				ddmStructure :
+					_ddmStructureLocalService.getClassStructures(
+						companyId, classNameId, start, end)) {
 
-			ddmStructures.add(new DDMStructureImpl(structure));
+			ddmStructures.add(new DDMStructureImpl(ddmStructure));
 		}
 
 		return ddmStructures;
@@ -110,10 +108,10 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 	@Override
 	public DDMStructure getStructure(long structureId) throws PortalException {
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure =
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.getStructure(structureId);
 
-		return new DDMStructureImpl(structure);
+		return new DDMStructureImpl(ddmStructure);
 	}
 
 	@Override
@@ -132,11 +130,11 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public DDMStructure getStructureByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure =
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.getDDMStructureByUuidAndGroupId(
 				uuid, groupId);
 
-		return new DDMStructureImpl(structure);
+		return new DDMStructureImpl(ddmStructure);
 	}
 
 	@Override
@@ -147,12 +145,12 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure =
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.updateStructure(
 				userId, structureId, parentStructureId, nameMap, descriptionMap,
 				ddmForm, ddmFormLayout, serviceContext);
 
-		return new DDMStructureImpl(structure);
+		return new DDMStructureImpl(ddmStructure);
 	}
 
 	@Reference

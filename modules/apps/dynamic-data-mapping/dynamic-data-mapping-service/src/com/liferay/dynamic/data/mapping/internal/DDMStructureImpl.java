@@ -35,166 +35,166 @@ import java.util.Map;
 public class DDMStructureImpl implements DDMStructure {
 
 	public DDMStructureImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure) {
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmTemplate) {
 
-		_structure = structure;
+		_ddmStructure = ddmTemplate;
 	}
 
 	@Override
 	public Object clone() {
 		DDMStructureImpl structureImpl = new DDMStructureImpl(
 			(com.liferay.portlet.dynamicdatamapping.model.DDMStructure)
-				_structure.clone());
+				_ddmStructure.clone());
 
 		return structureImpl;
 	}
 
 	@Override
 	public long getClassNameId() {
-		return _structure.getClassNameId();
+		return _ddmStructure.getClassNameId();
 	}
 
 	@Override
 	public long getCompanyId() {
-		return _structure.getCompanyId();
+		return _ddmStructure.getCompanyId();
 	}
 
 	@Override
 	public Date getCreateDate() {
-		return _structure.getCreateDate();
+		return _ddmStructure.getCreateDate();
 	}
 
 	@Override
 	public DDMForm getDDMForm() {
-		return _structure.getDDMForm();
+		return _ddmStructure.getDDMForm();
 	}
 
 	@Override
 	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields) {
-		return _structure.getDDMFormFields(includeTransientFields);
+		return _ddmStructure.getDDMFormFields(includeTransientFields);
 	}
 
 	@Override
 	public DDMFormLayout getDDMFormLayout() throws PortalException {
-		return _structure.getDDMFormLayout();
+		return _ddmStructure.getDDMFormLayout();
 	}
 
 	@Override
 	public String getDefinition() {
-		return _structure.getDescription();
+		return _ddmStructure.getDescription();
 	}
 
 	@Override
 	public String getDescription() {
-		return _structure.getDescription();
+		return _ddmStructure.getDescription();
 	}
 
 	@Override
 	public String getDescription(Locale locale) {
-		return _structure.getDescription(locale);
+		return _ddmStructure.getDescription(locale);
 	}
 
 	@Override
 	public Map<Locale, String> getDescriptionMap() {
-		return _structure.getDescriptionMap();
+		return _ddmStructure.getDescriptionMap();
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return _structure.getExpandoBridge();
+		return _ddmStructure.getExpandoBridge();
 	}
 
 	@Override
 	public String getFieldType(String fieldName) throws PortalException {
-		return _structure.getFieldType(fieldName);
+		return _ddmStructure.getFieldType(fieldName);
 	}
 
 	@Override
 	public long getGroupId() {
-		return _structure.getGroupId();
+		return _ddmStructure.getGroupId();
 	}
 
 	@Override
 	public Class<?> getModelClass() {
-		return _structure.getModelClass();
+		return _ddmStructure.getModelClass();
 	}
 
 	@Override
 	public String getModelClassName() {
-		return _structure.getModelClassName();
+		return _ddmStructure.getModelClassName();
 	}
 
 	@Override
 	public Date getModifiedDate() {
-		return _structure.getModifiedDate();
+		return _ddmStructure.getModifiedDate();
 	}
 
 	@Override
 	public String getName() {
-		return _structure.getName();
+		return _ddmStructure.getName();
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return _structure.getName(locale);
+		return _ddmStructure.getName(locale);
 	}
 
 	@Override
 	public Map<Locale, String> getNameMap() {
-		return _structure.getNameMap();
+		return _ddmStructure.getNameMap();
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _structure.getPrimaryKeyObj();
+		return _ddmStructure.getPrimaryKeyObj();
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _structure.getStagedModelType();
+		return _ddmStructure.getStagedModelType();
 	}
 
 	@Override
 	public long getStructureId() {
-		return _structure.getStructureId();
+		return _ddmStructure.getStructureId();
 	}
 
 	@Override
 	public String getStructureKey() {
-		return _structure.getStructureKey();
+		return _ddmStructure.getStructureKey();
 	}
 
 	@Override
 	public String getUuid() {
-		return _structure.getUuid();
+		return _ddmStructure.getUuid();
 	}
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_structure.setCompanyId(companyId);
+		_ddmStructure.setCompanyId(companyId);
 	}
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_structure.setCreateDate(createDate);
+		_ddmStructure.setCreateDate(createDate);
 	}
 
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_structure.setModifiedDate(modifiedDate);
+		_ddmStructure.setModifiedDate(modifiedDate);
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_structure.setPrimaryKeyObj(primaryKeyObj);
+		_ddmStructure.setPrimaryKeyObj(primaryKeyObj);
 	}
 
 	@Override
 	public void setUuid(String uuid) {
-		_structure.setUuid(uuid);
+		_ddmStructure.setUuid(uuid);
 	}
 
 	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructure
-		_structure;
+		_ddmStructure;
 
 }

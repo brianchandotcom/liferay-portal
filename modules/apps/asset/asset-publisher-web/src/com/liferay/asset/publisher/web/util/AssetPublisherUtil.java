@@ -321,12 +321,14 @@ public class AssetPublisherUtil {
 		actionableDynamicQuery.performActions();
 	}
 
-	public static String filterTagNames(long groupId, String tagNames) {
-		StringBundler sb = new StringBundler();
+	public static String filterAssetTagNames(
+		long groupId, String assetTagNames) {
 
-		String[] names = StringUtil.split(tagNames, StringPool.COMMA);
+		String[] names = StringUtil.split(assetTagNames);
 
 		long[] tagIds = AssetTagLocalServiceUtil.getTagIds(groupId, names);
+
+		StringBundler sb = new StringBundler();
 
 		for (long tagId : tagIds) {
 			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);

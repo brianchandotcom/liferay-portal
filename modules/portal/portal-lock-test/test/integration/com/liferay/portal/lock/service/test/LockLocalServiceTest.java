@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.dao.db.SybaseDB;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalServiceUtil;
@@ -30,8 +29,10 @@ import java.sql.BatchUpdateException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Level;
@@ -73,15 +74,13 @@ public class LockLocalServiceTest {
 
 			ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-			List<LockingJob> lockingJobs = new ArrayList<>();
+			List<Future<Void>> futures = new ArrayList<>();
 
 			for (int i = 0; i < 10; i++) {
 				LockingJob lockingJob = new LockingJob(
 					"className", "key", "owner-" + i, 10);
 
-				lockingJobs.add(lockingJob);
-
-				executorService.execute(lockingJob);
+				futures.add(executorService.submit(lockingJob));
 			}
 
 			executorService.shutdown();
@@ -89,13 +88,8 @@ public class LockLocalServiceTest {
 			Assert.assertTrue(
 				executorService.awaitTermination(600, TimeUnit.SECONDS));
 
-			for (LockingJob lockingJob : lockingJobs) {
-				SystemException systemException =
-					lockingJob.getSystemException();
-
-				if (systemException != null) {
-					throw systemException;
-				}
+			for (Future<Void> future : futures) {
+				future.get();
 			}
 
 			Assert.assertFalse(
@@ -140,24 +134,10 @@ public class LockLocalServiceTest {
 		LockLocalServiceUtil.unlock(className, key, owner2);
 	}
 
-	private class LockingJob implements Runnable {
-
-		public LockingJob(
-			String className, String key, String owner,
-			int requiredSuccessCount) {
-
-			_className = className;
-			_key = key;
-			_owner = owner;
-			_requiredSuccessCount = requiredSuccessCount;
-		}
-
-		public SystemException getSystemException() {
-			return _systemException;
-		}
+	private class LockingJob implements Callable<Void> {
 
 		@Override
-		public void run() {
+		public Void call() {
 			int count = 0;
 
 			while (true) {
@@ -177,43 +157,47 @@ public class LockLocalServiceTest {
 									_className, _key, _owner);
 
 								if (++count >= _requiredSuccessCount) {
-									return;
+									return null;
 								}
 
 								break;
 							}
-							catch (SystemException se) {
-								if (_isExpectedException(se)) {
+							catch (RuntimeException re) {
+								if (_isExpectedException(re)) {
 									continue;
 								}
 
-								_systemException = se;
-
-								return;
+								throw re;
 							}
 						}
 					}
 				}
-				catch (SystemException se) {
-					if (_isExpectedException(se)) {
+				catch (RuntimeException re) {
+					if (_isExpectedException(re)) {
 						continue;
 					}
 
-					_systemException = se;
-
-					break;
+					throw re;
 				}
 			}
 		}
 
-		private boolean _isExpectedException(SystemException se) {
-			Throwable cause = se.getCause();
+		private LockingJob(
+			String className, String key, String owner,
+			int requiredSuccessCount) {
 
-			if (!(cause instanceof ORMException)) {
-				return false;
+			_className = className;
+			_key = key;
+			_owner = owner;
+			_requiredSuccessCount = requiredSuccessCount;
+		}
+
+		private boolean _isExpectedException(RuntimeException re) {
+			Throwable cause = re.getCause();
+
+			if (re instanceof SystemException) {
+				cause = cause.getCause();
 			}
-
-			cause = cause.getCause();
 
 			if ((cause instanceof ConstraintViolationException) ||
 				(cause instanceof LockAcquisitionException)) {
@@ -246,7 +230,6 @@ public class LockLocalServiceTest {
 		private final String _key;
 		private final String _owner;
 		private final int _requiredSuccessCount;
-		private SystemException _systemException;
 
 	}
 

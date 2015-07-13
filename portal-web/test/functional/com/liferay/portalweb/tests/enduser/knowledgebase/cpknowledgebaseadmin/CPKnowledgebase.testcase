@@ -423,7 +423,7 @@
 		<execute macro="KBArticle#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteKBFolder" priority ="5">
+	<command name="DeleteKBFolder" priority ="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>

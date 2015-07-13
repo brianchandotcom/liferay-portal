@@ -178,7 +178,7 @@ public class BBCodeParser {
 			}
 		}
 
-		if (_selfCloseElements.contains(startTag) &&
+		if (_selfCloseElements.contains(startTag) && !tags.isEmpty() &&
 			startTag.equals(tags.lastElement())) {
 
 			BBCodeToken tagBBCodeToken = new BBCodeToken(startTag);

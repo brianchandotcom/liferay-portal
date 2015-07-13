@@ -1433,6 +1433,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
+					!trimmedLine.startsWith(StringPool.STAR)) {
+
+					if (line.contains(StringPool.TAB + StringPool.SPACE) &&
+						!previousLine.endsWith("&&") &&
+						!previousLine.endsWith("||") &&
+						!previousLine.contains(StringPool.TAB + "((") &&
+						!previousLine.contains(
+							StringPool.TAB + StringPool.LESS_THAN) &&
+						!previousLine.contains(
+							StringPool.TAB + StringPool.SPACE) &&
+						!previousLine.contains(StringPool.TAB + "for (") &&
+						!previousLine.contains(
+							StringPool.TAB + "implements ") &&
+						!previousLine.contains(StringPool.TAB + "throws ")) {
+
+						line = StringUtil.replace(
+							line, StringPool.TAB + StringPool.SPACE,
+							StringPool.TAB);
+					}
+
+					line = formatIncorrectSyntax(line, ",}", "}");
+
+					line = formatWhitespace(line, trimmedLine);
+				}
+
 				if (line.contains(StringPool.TAB + "for (") &&
 					line.contains(":") && !line.contains(" :")) {
 
@@ -1463,8 +1491,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				line = replacePrimitiveWrapperInstantiation(line);
-
-				String trimmedLine = StringUtil.trimLeading(line);
 
 				// LPS-45649
 
@@ -1596,28 +1622,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
-
-					if (line.contains(StringPool.TAB + StringPool.SPACE) &&
-						!previousLine.endsWith("&&") &&
-						!previousLine.endsWith("||") &&
-						!previousLine.contains(StringPool.TAB + "((") &&
-						!previousLine.contains(
-							StringPool.TAB + StringPool.LESS_THAN) &&
-						!previousLine.contains(
-							StringPool.TAB + StringPool.SPACE) &&
-						!previousLine.contains(StringPool.TAB + "for (") &&
-						!previousLine.contains(
-							StringPool.TAB + "implements ") &&
-						!previousLine.contains(StringPool.TAB + "throws ")) {
-
-						line = StringUtil.replace(
-							line, StringPool.TAB + StringPool.SPACE,
-							StringPool.TAB);
-					}
-
-					line = formatIncorrectSyntax(line, ",}", "}");
-
-					line = formatWhitespace(line, trimmedLine);
 
 					if ((line.contains(" && ") || line.contains(" || ")) &&
 						line.endsWith(StringPool.OPEN_PARENTHESIS)) {

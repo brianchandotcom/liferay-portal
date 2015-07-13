@@ -1059,7 +1059,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Task expandPortalWebTask = GradleUtil.getTask(
 			project, EXPAND_PORTAL_WEB_TASK_NAME);
 
-		buildCSSTask.dependsOn(expandPortalWebTask);
+		FileCollection cssFiles = buildCSSTask.getCSSFiles();
+
+		if (!cssFiles.isEmpty()) {
+			buildCSSTask.dependsOn(expandPortalWebTask);
+		}
 
 		TaskOutputs taskOutputs = expandPortalWebTask.getOutputs();
 

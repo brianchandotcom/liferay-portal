@@ -3138,9 +3138,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		for (int i = 1; i < exceptions.length; i++) {
 			String exception = exceptions[i];
 
-			if (exception.equals(StringPool.OPEN_CURLY_BRACE) ||
-				exception.equals(StringPool.SEMICOLON)) {
-
+			if (exception.equals(StringPool.OPEN_CURLY_BRACE)) {
 				break;
 			}
 

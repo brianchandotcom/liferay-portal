@@ -100,13 +100,8 @@ public class ConvertDocumentLibraryTest {
 		_convertProcess = (ConvertProcess)InstancePool.get(
 			ConvertDocumentLibrary.class.getName());
 
-		Store dbStore = _storeFactory.getStoreInstance(
-			"com.liferay.portal.store.db.DBStore");
-
-		_dbStoreClassName = dbStore.getClass().getName();
-
 		_convertProcess.setParameterValues(
-			new String[] {_dbStoreClassName, Boolean.TRUE.toString()});
+			new String[] {_DB_STORE_CLASS_NAME, Boolean.TRUE.toString()});
 	}
 
 	@After
@@ -183,9 +178,7 @@ public class ConvertDocumentLibraryTest {
 	public void testStoreUpdatedAfterConversion() throws Exception {
 		_convertProcess.convert();
 
-		Store store = _storeFactory.getStoreInstance();
-
-		Assert.assertEquals(_dbStoreClassName, store.getClass().getName());
+		Assert.assertEquals(_DB_STORE_CLASS_NAME, PropsValues.DL_STORE_IMPL);
 	}
 
 	protected FileEntry addFileEntry(
@@ -243,7 +236,7 @@ public class ConvertDocumentLibraryTest {
 		throws Exception {
 
 		_convertProcess.setParameterValues(
-			new String[] {_dbStoreClassName, delete.toString()});
+			new String[] {_DB_STORE_CLASS_NAME, delete.toString()});
 
 		FileEntry rootFileEntry = addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -309,10 +302,12 @@ public class ConvertDocumentLibraryTest {
 			dlFileEntry.getName());
 	}
 
+	private static final String _DB_STORE_CLASS_NAME =
+		"com.liferay.portal.store.db.DBStore";
+
 	private static StoreFactory _storeFactory;
 
 	private ConvertProcess _convertProcess;
-	private String _dbStoreClassName;
 
 	@DeleteAfterTestRun
 	private Group _group;

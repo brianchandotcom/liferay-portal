@@ -1046,69 +1046,33 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<macrodef name="set-test-type">
 		<sequential>
 			<if>
-				<not>
-					<isset property="test.type" />
-				</not>
-				<then>
-					<if>
-						<available file="test/functional" type="dir" />
-						<then>
-							<resourcecount property="test.functional.count">
-								<fileset dir="test/functional" includes="**/${test.class}.java" />
-							</resourcecount>
-						</then>
-					</if>
-
-					<if>
-						<available file="test/functional-generated" type="dir" />
-						<then>
-							<resourcecount property="test.functional-generated.count">
-								<fileset dir="test/functional-generated" includes="**/${test.class}.java" />
-							</resourcecount>
-						</then>
-					</if>
-
-					<if>
-						<available file="test/integration" type="dir" />
-						<then>
-							<resourcecount property="test.integration.count">
-								<fileset dir="test/integration" includes="**/${test.class}.java" />
-							</resourcecount>
-						</then>
-					</if>
-
-					<if>
-						<available file="test/unit" type="dir" />
-						<then>
-							<resourcecount property="test.unit.count">
-								<fileset dir="test/unit" includes="**/${test.class}.java" />
-							</resourcecount>
-						</then>
-					</if>
-				</then>
-				<else>
-					<resourcecount property="test.${test.type}.count">
-						<fileset dir="test/${test.type}" includes="**/${test.class}.java" />
-					</resourcecount>
-				</else>
-			</if>
-
-			<if>
 				<and>
-					<isset property="test.functional.count" />
-					<not>
-						<equals arg1="${test.functional.count}" arg2="0" />
-					</not>
+					<or>
+						<not>
+							<isset property="test.type" />
+						</not>
+						<equals arg1="${test.type}" arg2="functional" />
+					</or>
+					<available file="test/functional" type="dir" />
+					<resourcecount count="0" when="ne">
+						<fileset dir="test/functional" includes="**/${test.class}.java" />
+					</resourcecount>
 				</and>
 				<then>
 					<var name="test.type" value="functional" />
 				</then>
 				<elseif>
 					<and>
-						<isset property="test.functional-generated.count" />
-						<not>
-							<equals arg1="${test.functional-generated.count}" arg2="0" />
-						</not>
+						<or>
+							<not>
+								<isset property="test.type" />
+							</not>
+							<equals arg1="${test.type}" arg2="functional-generated" />
+						</or>
+						<available file="test/functional-generated" type="dir" />
+						<resourcecount count="0" when="ne">
+							<fileset dir="test/functional-generated" includes="**/${test.class}.java" />
+						</resourcecount>
 					</and>
 					<then>
 						<var name="test.type" value="functional" />
@@ -1116,10 +1080,16 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</elseif>
 				<elseif>
 					<and>
-						<isset property="test.integration.count" />
-						<not>
-							<equals arg1="${test.integration.count}" arg2="0" />
-						</not>
+						<or>
+							<not>
+								<isset property="test.type" />
+							</not>
+							<equals arg1="${test.type}" arg2="integration" />
+						</or>
+						<available file="test/integration" type="dir" />
+						<resourcecount count="0" when="ne">
+							<fileset dir="test/integration" includes="**/${test.class}.java" />
+						</resourcecount>
 					</and>
 					<then>
 						<var name="test.type" value="integration" />
@@ -1127,10 +1097,16 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</elseif>
 				<elseif>
 					<and>
-						<isset property="test.unit.count" />
-						<not>
-							<equals arg1="${test.unit.count}" arg2="0" />
-						</not>
+						<or>
+							<not>
+								<isset property="test.type" />
+							</not>
+							<equals arg1="${test.type}" arg2="unit" />
+						</or>
+						<available file="test/unit" type="dir" />
+						<resourcecount count="0" when="ne">
+							<fileset dir="test/unit" includes="**/${test.class}.java" />
+						</resourcecount>
 					</and>
 					<then>
 						<var name="test.type" value="unit" />

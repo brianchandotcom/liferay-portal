@@ -354,11 +354,6 @@
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 
-		<action path="/message_boards/edit_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.edit_discussion" path="portlet.message_boards.edit_discussion" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
 		<action path="/message_boards/edit_message" type="com.liferay.portlet.messageboards.action.EditMessageAction">
 			<forward name="portlet.message_boards.edit_message" path="portlet.message_boards.edit_message" />
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
@@ -430,11 +425,6 @@
 
 		<action path="/message_boards_admin/edit_category" type="com.liferay.portlet.messageboards.action.EditCategoryAction">
 			<forward name="portlet.message_boards.edit_category" path="portlet.message_boards.edit_category" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
-		<action path="/message_boards_admin/edit_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.edit_discussion" path="portlet.message_boards.edit_discussion" />
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 
@@ -568,10 +558,6 @@
 
 		<!-- Page Comments -->
 
-		<action path="/page_comments/edit_page_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.page_comments.error" />
-		</action>
-
 		<action path="/page_comments/view" forward="portlet.page_comments.view" />
 
 		<!-- Page Flags -->
@@ -671,10 +657,6 @@
 			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
 		</action>
 
-		<action path="/shopping/edit_order_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.shopping.error" />
-		</action>
-
 		<action path="/shopping/notify" type="com.liferay.portlet.shopping.action.PayPalNotificationAction" />
 
 		<action path="/shopping/search" forward="portlet.shopping.search" />
@@ -725,10 +707,6 @@
 		<action path="/software_catalog/edit_product_entry" type="com.liferay.portlet.softwarecatalog.action.EditProductEntryAction">
 			<forward name="portlet.software_catalog.edit_product_entry" path="portlet.software_catalog.edit_product_entry" />
 			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />
-		</action>
-
-		<action path="/software_catalog/edit_product_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.software_catalog.error" />
 		</action>
 
 		<action path="/software_catalog/edit_product_version" type="com.liferay.portlet.softwarecatalog.action.EditProductVersionAction">

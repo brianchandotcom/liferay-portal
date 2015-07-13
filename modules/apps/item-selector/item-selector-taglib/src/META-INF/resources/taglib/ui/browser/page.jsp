@@ -163,7 +163,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 							</div>
 						</c:when>
 						<c:otherwise>
-							<li class="item-preview list-group-item list-group-item-default" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+							<li class="list-group-item list-group-item-default">
 								<div class="list-group-item-field">
 									<img src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" style="<%= DLUtil.getThumbnailStyle(true, 9, 128, 128) %>" />
 								</div>
@@ -173,7 +173,11 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 										<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(fileEntry.getUserName()), LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
 									</h6>
 
-									<h5><%= HtmlUtil.escape(title) %></h5>
+									<h5>
+										<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+											<%= HtmlUtil.escape(title) %>
+										</a>
+									</h5>
 
 									<h6><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" /></h6>
 								</div>

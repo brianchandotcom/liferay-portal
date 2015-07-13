@@ -16,7 +16,6 @@ package com.liferay.portlet.usersadmin.action;
 
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
@@ -77,8 +76,8 @@ public class EditOrganizationAssignmentsMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionRequest.setAttribute(
-					MVCPortlet.MVC_PATH, "/html/portlet/users_admin/error.jsp");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/users_admin/error.jsp");
 			}
 			else {
 				throw e;

@@ -69,6 +69,10 @@ public class BrowserTag extends IncludeTag {
 		_searchURL = searchURL;
 	}
 
+	public void setShowBreadcrumb(boolean showBreadcrumb) {
+		_showBreadcrumb = showBreadcrumb;
+	}
+
 	public void setTabName(String tabName) {
 		_tabName = tabName;
 	}
@@ -91,6 +95,7 @@ public class BrowserTag extends IncludeTag {
 		_itemSelectedEventName = null;
 		_searchContainer = null;
 		_searchURL = null;
+		_showBreadcrumb = false;
 		_tabName = null;
 		_uploadMessage = null;
 		_uploadURL = null;
@@ -161,6 +166,8 @@ public class BrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchURL", _searchURL);
 		request.setAttribute(
+			"liferay-ui:item-selector-browser:showBreadcrumb", _showBreadcrumb);
+		request.setAttribute(
 			"liferay-ui:item-selector-browser:tabName", _tabName);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:uploadMessage",
@@ -179,6 +186,7 @@ public class BrowserTag extends IncludeTag {
 	private String _itemSelectedEventName;
 	private SearchContainer<?> _searchContainer;
 	private PortletURL _searchURL;
+	private boolean _showBreadcrumb;
 	private String _tabName;
 	private String _uploadMessage;
 	private PortletURL _uploadURL;

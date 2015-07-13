@@ -15,6 +15,7 @@
 package com.liferay.portlet.myaccount.action;
 
 import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
@@ -34,7 +35,8 @@ import javax.portlet.ActionResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MY_ACCOUNT,
 		"mvc.command.name=/users_admin/edit_user"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class EditUserMVCActionCommand
 	extends com.liferay.portlet.usersadmin.action.EditUserMVCActionCommand {

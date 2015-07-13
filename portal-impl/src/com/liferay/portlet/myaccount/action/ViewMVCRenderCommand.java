@@ -35,7 +35,8 @@ import javax.portlet.WindowState;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MY_ACCOUNT, "mvc.command.name=/",
 		"mvc.command.name=/my_account/view"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.message.boards.comment.test;
+package com.liferay.message.boards.comments.test;
 
-import com.liferay.message.boards.comment.MBCommentManagerImpl;
+import com.liferay.message.boards.comments.MBCommentManagerImpl;
 import com.liferay.portal.kernel.comments.DuplicateCommentException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Function;

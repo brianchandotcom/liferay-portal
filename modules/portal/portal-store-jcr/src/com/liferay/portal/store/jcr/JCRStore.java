@@ -1015,9 +1015,9 @@ public class JCRStore extends BaseStore {
 		activate(properties);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(JCRStore.class);
+
 	private JCRFactoryWrapper _jcrFactoryWrapper;
 	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
-
-	private static final Log _log = LogFactoryUtil.getLog(JCRStore.class);
 
 }

@@ -12,38 +12,38 @@
  * details.
  */
 
-package com.liferay.calendar.service;
+package com.liferay.calendar.service.http.jsonws;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.security.access.control.AccessControlled;
-import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseService;
+import com.liferay.calendar.service.CalendarBookingService;
+
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the remote service interface for CalendarBooking. Methods of this
- * service are expected to have security checks based on the propagated JAAS
- * credentials because this service can be accessed remotely.
+ * Provides the JSONWS remote service utility for CalendarBooking. This utility wraps
+ * {@link com.liferay.calendar.service.impl.CalendarBookingServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on a remote server. Methods of this service are expected to have security
+ * checks based on the propagated JAAS credentials because this service can be
+ * accessed remotely.
  *
  * @author Eduardo Lundgren
- * @see CalendarBookingServiceUtil
- * @see com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl
- * @see com.liferay.calendar.service.impl.CalendarBookingServiceImpl
+ * @see CalendarBookingService
  * @generated
  */
-@AccessControlled
+@Component(immediate = true, property =  {
+	"json.web.service.context.name=calendar", "json.web.service.context.path=CalendarBooking"}, service = CalendarBookingJsonService.class)
+@JSONWebService
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface CalendarBookingService extends BaseService {
+public class CalendarBookingJsonService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link CalendarBookingServiceUtil} to access the calendar booking remote service. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarBookingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarBookingServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public com.liferay.calendar.model.CalendarBooking addCalendarBooking(
 		long calendarId, long[] childCalendarIds, long parentCalendarBookingId,
@@ -54,7 +54,13 @@ public interface CalendarBookingService extends BaseService {
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.addCalendarBooking(calendarId, childCalendarIds,
+			parentCalendarBookingId, titleMap, descriptionMap, location,
+			startTime, endTime, allDay, recurrence, firstReminder,
+			firstReminderType, secondReminder, secondReminderType,
+			serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking addCalendarBooking(
 		long calendarId, long[] childCalendarIds, long parentCalendarBookingId,
@@ -68,95 +74,142 @@ public interface CalendarBookingService extends BaseService {
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.addCalendarBooking(calendarId, childCalendarIds,
+			parentCalendarBookingId, titleMap, descriptionMap, location,
+			startTimeYear, startTimeMonth, startTimeDay, startTimeHour,
+			startTimeMinute, endTimeYear, endTimeMonth, endTimeDay,
+			endTimeHour, endTimeMinute, timeZoneId, allDay, recurrence,
+			firstReminder, firstReminderType, secondReminder,
+			secondReminderType, serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking deleteCalendarBooking(
-		long calendarBookingId) throws PortalException;
+		long calendarBookingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.deleteCalendarBooking(calendarBookingId);
+	}
 
 	public void deleteCalendarBookingInstance(long calendarBookingId,
-		long startTime, boolean allFollowing) throws PortalException;
+		long startTime, boolean allFollowing)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_service.deleteCalendarBookingInstance(calendarBookingId, startTime,
+			allFollowing);
+	}
 
 	public java.lang.String exportCalendarBooking(long calendarBookingId,
-		java.lang.String type) throws java.lang.Exception;
+		java.lang.String type) throws java.lang.Exception {
+		return _service.exportCalendarBooking(calendarBookingId, type);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarBooking fetchCalendarBooking(
-		long calendarBookingId) throws PortalException;
+		long calendarBookingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.fetchCalendarBooking(calendarBookingId);
+	}
 
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getBeanIdentifier() {
+		return _service.getBeanIdentifier();
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarBooking getCalendarBooking(
-		long calendarBookingId) throws PortalException;
+		long calendarBookingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getCalendarBooking(calendarBookingId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarBooking getCalendarBooking(
 		long calendarId, long parentCalendarBookingId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getCalendarBooking(calendarId, parentCalendarBookingId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarBooking getCalendarBookingInstance(
-		long calendarBookingId, int instanceIndex) throws PortalException;
+		long calendarBookingId, int instanceIndex)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getCalendarBookingInstance(calendarBookingId,
+			instanceIndex);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> getCalendarBookings(
 		long calendarId, long startTime, long endTime)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getCalendarBookings(calendarId, startTime, endTime);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> getCalendarBookings(
 		long calendarId, long startTime, long endTime, int max)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getCalendarBookings(calendarId, startTime, endTime, max);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getCalendarBookingsRSS(long calendarId,
 		long startTime, long endTime, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getCalendarBookingsRSS(calendarId, startTime, endTime,
+			max, type, version, displayStyle, themeDisplay);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings(
-		long parentCalendarBookingId) throws PortalException;
+		long parentCalendarBookingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getChildCalendarBookings(parentCalendarBookingId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings(
-		long parentCalendarBookingId, int status) throws PortalException;
+		long parentCalendarBookingId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getChildCalendarBookings(parentCalendarBookingId, status);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarBooking getNewStartTimeAndDurationCalendarBooking(
 		long calendarBookingId, long offset, long duration)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.getNewStartTimeAndDurationCalendarBooking(calendarBookingId,
+			offset, duration);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasChildCalendarBookings(long parentCalendarBookingId);
+	public boolean hasChildCalendarBookings(long parentCalendarBookingId) {
+		return _service.hasChildCalendarBookings(parentCalendarBookingId);
+	}
 
 	public void invokeTransition(long calendarBookingId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_service.invokeTransition(calendarBookingId, status, serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking moveCalendarBookingToTrash(
-		long calendarBookingId) throws PortalException;
+		long calendarBookingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.moveCalendarBookingToTrash(calendarBookingId);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking restoreCalendarBookingFromTrash(
-		long calendarBookingId) throws PortalException;
+		long calendarBookingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.restoreCalendarBookingFromTrash(calendarBookingId);
+	}
 
-	@AccessControlled(guestAccessEnabled = true)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> search(
 		long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
 		java.lang.String keywords, long startTime, long endTime,
 		boolean recurring, int[] statuses, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.search(companyId, groupIds, calendarIds,
+			calendarResourceIds, parentCalendarBookingId, keywords, startTime,
+			endTime, recurring, statuses, start, end, orderByComparator);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarBooking> search(
 		long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
@@ -165,29 +218,42 @@ public interface CalendarBookingService extends BaseService {
 		boolean recurring, int[] statuses, boolean andOperator, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.calendar.model.CalendarBooking> orderByComparator)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.search(companyId, groupIds, calendarIds,
+			calendarResourceIds, parentCalendarBookingId, title, description,
+			location, startTime, endTime, recurring, statuses, andOperator,
+			start, end, orderByComparator);
+	}
 
-	@AccessControlled(guestAccessEnabled = true)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
 		java.lang.String keywords, long startTime, long endTime,
-		boolean recurring, int[] statuses) throws PortalException;
+		boolean recurring, int[] statuses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.searchCount(companyId, groupIds, calendarIds,
+			calendarResourceIds, parentCalendarBookingId, keywords, startTime,
+			endTime, recurring, statuses);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds, long[] calendarIds,
 		long[] calendarResourceIds, long parentCalendarBookingId,
 		java.lang.String title, java.lang.String description,
 		java.lang.String location, long startTime, long endTime,
 		boolean recurring, int[] statuses, boolean andOperator)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.searchCount(companyId, groupIds, calendarIds,
+			calendarResourceIds, parentCalendarBookingId, title, description,
+			location, startTime, endTime, recurring, statuses, andOperator);
+	}
 
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_service.setBeanIdentifier(beanIdentifier);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking updateCalendarBooking(
 		long calendarBookingId, long calendarId, long[] childCalendarIds,
@@ -198,7 +264,12 @@ public interface CalendarBookingService extends BaseService {
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.updateCalendarBooking(calendarBookingId, calendarId,
+			childCalendarIds, titleMap, descriptionMap, location, startTime,
+			endTime, allDay, recurrence, firstReminder, firstReminderType,
+			secondReminder, secondReminderType, status, serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking updateCalendarBooking(
 		long calendarBookingId, long calendarId,
@@ -209,7 +280,12 @@ public interface CalendarBookingService extends BaseService {
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.updateCalendarBooking(calendarBookingId, calendarId,
+			titleMap, descriptionMap, location, startTime, endTime, allDay,
+			recurrence, firstReminder, firstReminderType, secondReminder,
+			secondReminderType, status, serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking updateCalendarBookingInstance(
 		long calendarBookingId, int instanceIndex, long calendarId,
@@ -221,7 +297,13 @@ public interface CalendarBookingService extends BaseService {
 		long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.updateCalendarBookingInstance(calendarBookingId,
+			instanceIndex, calendarId, childCalendarIds, titleMap,
+			descriptionMap, location, startTime, endTime, allDay, recurrence,
+			allFollowing, firstReminder, firstReminderType, secondReminder,
+			secondReminderType, status, serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking updateCalendarBookingInstance(
 		long calendarBookingId, int instanceIndex, long calendarId,
@@ -232,7 +314,13 @@ public interface CalendarBookingService extends BaseService {
 		long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.updateCalendarBookingInstance(calendarBookingId,
+			instanceIndex, calendarId, titleMap, descriptionMap, location,
+			startTime, endTime, allDay, recurrence, allFollowing,
+			firstReminder, firstReminderType, secondReminder,
+			secondReminderType, status, serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking updateCalendarBookingInstance(
 		long calendarBookingId, int instanceIndex, long calendarId,
@@ -246,7 +334,15 @@ public interface CalendarBookingService extends BaseService {
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.updateCalendarBookingInstance(calendarBookingId,
+			instanceIndex, calendarId, titleMap, descriptionMap, location,
+			startTimeYear, startTimeMonth, startTimeDay, startTimeHour,
+			startTimeMinute, endTimeYear, endTimeMonth, endTimeDay,
+			endTimeHour, endTimeMinute, timeZoneId, allDay, recurrence,
+			allFollowing, firstReminder, firstReminderType, secondReminder,
+			secondReminderType, status, serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking updateOffsetAndDuration(
 		long calendarBookingId, long calendarId, long[] childCalendarIds,
@@ -257,7 +353,12 @@ public interface CalendarBookingService extends BaseService {
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.updateOffsetAndDuration(calendarBookingId, calendarId,
+			childCalendarIds, titleMap, descriptionMap, location, offset,
+			duration, allDay, recurrence, firstReminder, firstReminderType,
+			secondReminder, secondReminderType, status, serviceContext);
+	}
 
 	public com.liferay.calendar.model.CalendarBooking updateOffsetAndDuration(
 		long calendarBookingId, long calendarId,
@@ -268,5 +369,17 @@ public interface CalendarBookingService extends BaseService {
 		java.lang.String firstReminderType, long secondReminder,
 		java.lang.String secondReminderType, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _service.updateOffsetAndDuration(calendarBookingId, calendarId,
+			titleMap, descriptionMap, location, offset, duration, allDay,
+			recurrence, firstReminder, firstReminderType, secondReminder,
+			secondReminderType, status, serviceContext);
+	}
+
+	@Reference
+	protected void setService(CalendarBookingService service) {
+		_service = service;
+	}
+
+	private CalendarBookingService _service;
 }

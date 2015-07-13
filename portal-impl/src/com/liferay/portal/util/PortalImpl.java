@@ -20,6 +20,8 @@ import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.RSSFeedException;
+import com.liferay.portal.comment.action.EditDiscussionStrutsAction;
+import com.liferay.portal.comment.action.GetCommentsStrutsAction;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -201,7 +203,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.messageboards.action.EditDiscussionAction;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.sites.util.Sites;
@@ -5995,8 +5996,9 @@ public class PortalImpl implements Portal {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		_editDiscussionAction.processAction(
-			null, null, portletConfig, actionRequest, actionResponse);
+		_editDiscussionStrutsAction.execute(
+			getHttpServletRequest(actionRequest),
+			getHttpServletResponse(actionResponse));
 	}
 
 	/**
@@ -6009,8 +6011,17 @@ public class PortalImpl implements Portal {
 			ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		_editDiscussionAction.serveResource(
-			null, null, portletConfig, resourceRequest, resourceResponse);
+		try {
+			_getCommentsStrutsAction.execute(
+				getHttpServletRequest(resourceRequest),
+				getHttpServletResponse(resourceResponse));
+		}
+		catch (IOException | PortletException | RuntimeException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
 	}
 
 	/**
@@ -8332,8 +8343,10 @@ public class PortalImpl implements Portal {
 	private final String _computerName;
 	private String[] _customSqlKeys;
 	private String[] _customSqlValues;
-	private final EditDiscussionAction _editDiscussionAction =
-		new EditDiscussionAction();
+	private final EditDiscussionStrutsAction _editDiscussionStrutsAction =
+		new EditDiscussionStrutsAction();
+	private final GetCommentsStrutsAction _getCommentsStrutsAction =
+		new GetCommentsStrutsAction();
 	private final String _pathContext;
 	private final String _pathFriendlyURLPrivateGroup;
 	private final String _pathFriendlyURLPrivateUser;

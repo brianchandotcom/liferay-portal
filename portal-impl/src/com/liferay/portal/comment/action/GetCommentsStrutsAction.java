@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
-	property = "path=/portal/more_comments", service = StrutsAction.class
+	property = "path=/portal/get_comments", service = StrutsAction.class
 )
 public class GetCommentsStrutsAction extends BaseStrutsAction {
 

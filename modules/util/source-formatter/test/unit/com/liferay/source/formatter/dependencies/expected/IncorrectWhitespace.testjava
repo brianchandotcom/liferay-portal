@@ -68,4 +68,6 @@ public class IncorrectWhitespace {
 		}
 	}
 
+	public void method3() throws Exception;
+
 }

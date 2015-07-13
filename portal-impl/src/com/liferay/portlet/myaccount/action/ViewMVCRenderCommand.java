@@ -33,7 +33,7 @@ import javax.portlet.WindowState;
  */
 @OSGiBeanProperties(
 	property = {
-		"javax.portlet.name=" + PortletKeys.MY_ACCOUNT, "mvc.command.name=",
+		"javax.portlet.name=" + PortletKeys.MY_ACCOUNT, "mvc.command.name=/",
 		"mvc.command.name=/my_account/view"
 	}
 )

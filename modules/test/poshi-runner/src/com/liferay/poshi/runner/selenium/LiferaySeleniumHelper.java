@@ -217,11 +217,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void assertLiferayErrors() throws Exception {
-		String currentDate = DateUtil.getCurrentDate(
-			"yyyy-MM-dd", LocaleUtil.getDefault());
-
-		String fileName =
-			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".xml";
+		String fileName = PropsValues.TEST_CONSOLE_LOG_PATH;
 
 		if (!FileUtil.exists(fileName)) {
 			return;

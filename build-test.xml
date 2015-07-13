@@ -6413,54 +6413,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<antelope:post to="http://localhost:14444/selenium-server/driver/?cmd=shutDownSeleniumServer" wantresponse="true" />
 	</target>
 
-	<target name="test-class-group">
-		<ant dir="portal-service" target="test-class-group" inheritAll="false" />
-
-		<ant dir="portal-impl" target="test-class-group" inheritAll="false">
-			<property name="test.type" value="unit" />
-		</ant>
-
-		<database-test-run-test database.test.sequence="${database.test.sequence}">
-			<test-action>
-				<ant dir="portal-impl" target="test-class-group" inheritAll="false">
-					<property name="database.type" value="${database.type}" />
-					<property name="test.type" value="integration" />
-				</ant>
-			</test-action>
-		</database-test-run-test>
-
-		<exec executable="service" failonerror="true">
-			<arg line="${database.mysql.service.name} start" />
-		</exec>
-
-		<ant dir="util-java" target="test-class-group" inheritAll="false" />
-
-		<antcall target="rebuild-database" inheritAll="false" />
-
-		<antcall target="delete-liferay-home" />
-
-		<ant dir="modules" target="test-class-group" inheritAll="false" />
-
-		<ant dir="portal-service" target="test-class" inheritAll="false">
-			<property name="test.class" value="PortalLogAssertorTest" />
-		</ant>
-
-		<ant antfile="build-test-tck.xml" target="record-test-tck-package-names" />
-
-		<ant antfile="build-test-tck.xml" target="test-class-group" />
-
-		<if>
-			<available file=".testable.portal.started" />
-			<then>
-				<antcall target="stop-app-server" />
-
-				<delete file=".testable.portal.started" failonerror="false" />
-			</then>
-		</if>
-
-		<print-gc-logs if:set="env.JENKINS_HOME" />
-	</target>
-
 	<target name="test-integration">
 		<ant dir="portal-service" target="test-integration" inheritAll="false" />
 

@@ -106,6 +106,10 @@ AUI.add(
 
 					config.data.p_auth = Liferay.authToken;
 
+					if (themeDisplay.getDoAsUserIdEncoded() != "") {
+						config.data.doAsUserId = themeDisplay.getDoAsUserIdEncoded();
+					}
+
 					A.io.request(
 						themeDisplay.getPathMain() + '/portal/session_click',
 						config

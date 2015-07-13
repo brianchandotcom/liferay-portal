@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.json.scanner.SpringScannerStrategy;
 import com.liferay.portal.kernel.annotation.AnnotationLocator;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
@@ -22,40 +23,39 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
-
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Igor Spasic
  */
-public class JSONWebServiceRegistrator {
+public class DefaultJSONWebServiceRegistrator
+	implements JSONWebServiceRegistrator {
 
-	public JSONWebServiceRegistrator() {
+	public DefaultJSONWebServiceRegistrator() {
 		_jsonWebServiceNaming =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceNaming();
 
 		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
 			_jsonWebServiceNaming);
+
+		_jsonWebServiceScannerStrategy = new SpringScannerStrategy();
 	}
 
-	public JSONWebServiceRegistrator(
-		JSONWebServiceNaming jsonWebServiceNaming) {
+	public DefaultJSONWebServiceRegistrator(
+		JSONWebServiceNaming jsonWebServiceNaming,
+		JSONWebServiceScannerStrategy jsonWebServiceScannerStrategy) {
 
 		_jsonWebServiceNaming = jsonWebServiceNaming;
+		_jsonWebServiceScannerStrategy = jsonWebServiceScannerStrategy;
 
 		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
 			_jsonWebServiceNaming);
@@ -110,6 +110,7 @@ public class JSONWebServiceRegistrator {
 		}
 	}
 
+	@Override
 	public void processBean(
 		String contextName, String contextPath, Object bean) {
 
@@ -135,62 +136,6 @@ public class JSONWebServiceRegistrator {
 
 	public void setWireViaUtil(boolean wireViaUtil) {
 		this._wireViaUtil = wireViaUtil;
-	}
-
-	protected Class<?> getTargetClass(Object service) throws Exception {
-		if (ProxyUtil.isProxyClass(service.getClass())) {
-			AdvisedSupport advisedSupport =
-				ServiceBeanAopProxy.getAdvisedSupport(service);
-
-			TargetSource targetSource = advisedSupport.getTargetSource();
-
-			service = targetSource.getTarget();
-		}
-
-		return service.getClass();
-	}
-
-	protected boolean isInterfaceMethod(Method method) {
-		Class<?> declaringClass = method.getDeclaringClass();
-
-		if (declaringClass.isInterface()) {
-			return true;
-		}
-
-		Queue<Class<?>> queue = new LinkedList<>(
-			Arrays.asList(declaringClass.getInterfaces()));
-
-		Class<?> superClass = declaringClass.getSuperclass();
-
-		if (superClass != null) {
-			queue.add(superClass);
-		}
-
-		Class<?> clazz = null;
-
-		while ((clazz = queue.poll()) != null) {
-			if (clazz.isInterface()) {
-				try {
-					clazz.getMethod(
-						method.getName(), method.getParameterTypes());
-
-					return true;
-				}
-				catch (ReflectiveOperationException roe) {
-				}
-			}
-			else {
-				queue.addAll(Arrays.asList(clazz.getInterfaces()));
-
-				superClass = clazz.getSuperclass();
-
-				if (superClass != null) {
-					queue.add(superClass);
-				}
-			}
-		}
-
-		return false;
 	}
 
 	protected Class<?> loadUtilClass(Class<?> implementationClass)
@@ -230,18 +175,13 @@ public class JSONWebServiceRegistrator {
 			jsonWebServiceMode = jsonWebService.mode();
 		}
 
-		Class<?> serviceBeanClass = getTargetClass(serviceBean);
+		JSONWebServiceScannerStrategy.MethodDescriptor[] methodDescriptors =
+			_jsonWebServiceScannerStrategy.scan(serviceBean);
 
-		Method[] methods = serviceBeanClass.getMethods();
+		for (JSONWebServiceScannerStrategy.MethodDescriptor methodDescriptor :
+				methodDescriptors) {
 
-		for (Method method : methods) {
-			Class<?> declaringClass = method.getDeclaringClass();
-
-			if ((declaringClass != serviceBeanClass) ||
-				!isInterfaceMethod(method)) {
-
-				continue;
-			}
+			final Method method = methodDescriptor.getMethod();
 
 			if (!_jsonWebServiceNaming.isIncludedMethod(method)) {
 				continue;
@@ -250,10 +190,12 @@ public class JSONWebServiceRegistrator {
 			JSONWebService methodJSONWebService = method.getAnnotation(
 				JSONWebService.class);
 
+			Class<?> declaringClass = methodDescriptor.getDeclaringClass();
+
 			if (jsonWebServiceMode.equals(JSONWebServiceMode.AUTO)) {
 				if (methodJSONWebService == null) {
 					registerJSONWebServiceAction(
-						contextName, contextPath, serviceBean, serviceBeanClass,
+						contextName, contextPath, serviceBean, declaringClass,
 						method);
 				}
 				else {
@@ -265,7 +207,7 @@ public class JSONWebServiceRegistrator {
 
 						registerJSONWebServiceAction(
 							contextName, contextPath, serviceBean,
-							serviceBeanClass, method);
+							declaringClass, method);
 					}
 				}
 			}
@@ -277,7 +219,7 @@ public class JSONWebServiceRegistrator {
 						JSONWebServiceMode.IGNORE)) {
 
 					registerJSONWebServiceAction(
-						contextName, contextPath, serviceBean, serviceBeanClass,
+						contextName, contextPath, serviceBean, declaringClass,
 						method);
 				}
 			}
@@ -328,10 +270,11 @@ public class JSONWebServiceRegistrator {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JSONWebServiceRegistrator.class);
+		DefaultJSONWebServiceRegistrator.class);
 
 	private final JSONWebServiceMappingResolver _jsonWebServiceMappingResolver;
 	private final JSONWebServiceNaming _jsonWebServiceNaming;
+	private final JSONWebServiceScannerStrategy _jsonWebServiceScannerStrategy;
 	private Map<Class<?>, Class<?>> _utilClasses;
 	private boolean _wireViaUtil;
 

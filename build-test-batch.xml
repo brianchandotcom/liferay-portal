@@ -21,41 +21,37 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="database-test-for-each-action">
-		<attribute name="database.test.sequence" />
+	<macrodef name="database-test-action">
+		<attribute name="database.type" />
 		<element name="action" />
 
 		<sequential>
-			<for list="@{database.test.sequence}" param="database.type">
-				<sequential>
-					<local name="database.type" />
+			<local name="database.type" />
 
-					<property name="database.type" value="@{database.type}" />
+			<property name="database.type" value="@{database.type}" />
 
-					<local name="database.service.name" />
+			<local name="database.service.name" />
 
-					<get-database-property property.name="database.service.name" />
+			<get-database-property property.name="database.service.name" />
 
-					<action />
-				</sequential>
-			</for>
+			<action />
 		</sequential>
 	</macrodef>
 
 	<macrodef name="database-test-run-test">
-		<attribute name="database.test.sequence" />
+		<attribute name="database.type" />
 		<element name="test-action" />
 
 		<sequential>
-			<database-test-for-each-action database.test.sequence="@{database.test.sequence}">
+			<database-test-action database.type="@{database.type}">
 				<action>
 					<exec executable="service" failonerror="true">
 						<arg line="${database.service.name} stop" />
 					</exec>
 				</action>
-			</database-test-for-each-action>
+			</database-test-action>
 
-			<database-test-for-each-action database.test.sequence="@{database.test.sequence}">
+			<database-test-action database.type="@{database.type}">
 				<action>
 					<set-portal-impl-portal-ext-properties />
 
@@ -82,7 +78,7 @@
 						<arg line="${database.service.name} stop" />
 					</exec>
 				</action>
-			</database-test-for-each-action>
+			</database-test-action>
 		</sequential>
 	</macrodef>
 
@@ -146,7 +142,7 @@
 		<sequential>
 			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 				<test-action>
-					<database-test-run-test database.test.sequence="@{database.type}">
+					<database-test-run-test database.type="@{database.type}">
 						<test-action>
 							<ant dir="portal-impl" target="test-class-group" inheritAll="false">
 								<property name="database.type" value="@{database.type}" />

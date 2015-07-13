@@ -66,7 +66,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				long commentId = updateComment(request);
 
-				boolean ajax = ParamUtil.getBoolean(request, "ajax");
+				boolean ajax = ParamUtil.getBoolean(request, "ajax", true);
 
 				if (ajax) {
 					String randomNamespace = ParamUtil.getString(

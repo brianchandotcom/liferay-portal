@@ -14,6 +14,23 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ include file="/html/portlet/page_comments/init-ext.jsp" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"  %>
+
+<%@ page import="com.liferay.portal.model.Layout" %><%@
+page import="com.liferay.portal.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %><%@
+page import="com.liferay.portal.util.PortalUtil" %>
+
+<liferay-theme:defineObjects />
+<portlet:defineObjects/>
+
+<%
+String currentURL = PortalUtil.getCurrentURL(request);
+%>
+
+<%@ include file="/init-ext.jsp" %>

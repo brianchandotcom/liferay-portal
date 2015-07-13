@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/page_comments/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.VIEW) %>">
 	<portlet:actionURL var="discussionURL">

@@ -124,9 +124,7 @@ public interface EditorOptionsContributor {
 	 * @param inputEditorTaglibAttributes the attributes specified to the input
 	 *        taglib tag that renders the editor
 	 * @param themeDisplay the theme display
-	 * @param liferayPortletResponse the Liferay portlet response (optionally
-	 *        <code>null</code>). Only use the response to generate portlet
-	 *        URLs.
+	 * @param portletURLBuilder a portlet URL builder.
 	 */
 	public void populateEditorOptions(
 		EditorOptions editorOptions,

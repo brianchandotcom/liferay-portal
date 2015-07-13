@@ -5602,12 +5602,19 @@ if (ppstate.equals("normal")) {
 	<target name="run-poshi-runner">
 		<get-poshi-test-name />
 
+		<tstamp>
+			<format property="current.date" pattern="yyyy-MM-dd" />
+		</tstamp>
+
+		<property name="test.console.log.path" value="${liferay.home}/logs/liferay.${current.date}.xml" />
+
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />
 			<arg value="-PsaveScreenshot=${test.save.screenshot}" />
 			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+			<arg value="-PtestConsoleLogPath=${test.console.log.path}" />
 			<arg value="-PtestSkipTearDown=${test.skip.tear.down}" />
 		</gradle-execute>
 	</target>

@@ -86,6 +86,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 	<portlet:renderURL var="closeSearchURL">
 		<portlet:param name="displayStyle" value="<%= journalDisplayContext.getDisplayStyle() %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

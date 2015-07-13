@@ -21,7 +21,7 @@ WikiAttachmentItemSelectorViewDisplayContext wikiAttachmentItemSelectorViewDispl
 
 WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = wikiAttachmentItemSelectorViewDisplayContext.getWikiAttachmentItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), null, LanguageUtil.get(request, "there-are-no-wiki-attachments"));
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(request, "there-are-no-wiki-attachments"));
 
 WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 
@@ -30,9 +30,11 @@ Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
 int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();
 
+String curTabName = ParamUtil.getString(request, "tabName");
 String keywords = ParamUtil.getString(request, "keywords");
+String tabName = wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale);
 
-if (Validator.isNotNull(keywords)) {
+if (Validator.isNotNull(keywords) && curTabName.equals(tabName)) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setEnd(searchContainer.getEnd());
@@ -78,11 +80,11 @@ searchContainer.setResults(results);
 <item-selector-ui:browser
 	desiredItemSelectorReturnTypes="<%= wikiAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	displayStyle="<%= wikiAttachmentItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	displayStyleURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL() %>"
+	displayStyleURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	itemSelectedEventName="<%= wikiAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	searchContainer="<%= searchContainer %>"
-	searchURL="<%= PortletURLUtil.clone(wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), liferayPortletResponse) %>"
-	tabName="<%= wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
+	searchURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
+	tabName="<%= tabName %>"
 />
 
 <%!

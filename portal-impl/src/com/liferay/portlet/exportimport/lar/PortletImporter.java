@@ -84,6 +84,7 @@ import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.LayoutImportException;
 import com.liferay.portlet.exportimport.MissingReferenceException;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
 
 import java.io.File;
@@ -188,8 +189,7 @@ public class PortletImporter {
 	}
 
 	public void importPortletDataDeletions(
-			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
 		ZipReader zipReader = null;
@@ -197,16 +197,26 @@ public class PortletImporter {
 		try {
 			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(true);
 
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)settingsMap.get("parameterMap");
+			String portletId = MapUtil.getString(settingsMap, "portletId");
+			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
 			// LAR validation
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Layout layout = LayoutLocalServiceUtil.getLayout(targetPlid);
 
 			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-			validateFile(layout.getCompanyId(), groupId, portletId, zipReader);
+			validateFile(
+				layout.getCompanyId(), targetGroupId, portletId, zipReader);
 
 			PortletDataContext portletDataContext = getPortletDataContext(
-				userId, plid, groupId, portletId, parameterMap, file);
+				exportImportConfiguration, file);
 
 			boolean deletePortletData = MapUtil.getBoolean(
 				parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
@@ -238,9 +248,19 @@ public class PortletImporter {
 		}
 	}
 
-	public void importPortletInfo(
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #importPortletDataDeletions(ExportImportConfiguration, File)}
+	 */
+	@Deprecated
+	public void importPortletDataDeletions(
 			long userId, long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)
+		throws Exception {
+	}
+
+	public void importPortletInfo(
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
 		PortletDataContext portletDataContext = null;
@@ -249,12 +269,17 @@ public class PortletImporter {
 			ExportImportThreadLocal.setPortletImportInProcess(true);
 
 			portletDataContext = getPortletDataContext(
-				userId, plid, groupId, portletId, parameterMap, file);
+				exportImportConfiguration, file);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
+
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			long userId = MapUtil.getLong(settingsMap, "userId");
 
 			doImportPortletInfo(portletDataContext, userId);
 
@@ -279,9 +304,19 @@ public class PortletImporter {
 		}
 	}
 
-	public MissingReferences validateFile(
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #importPortletInfo(ExportImportConfiguration, File)}
+	 */
+	@Deprecated
+	public void importPortletInfo(
 			long userId, long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)
+		throws Exception {
+	}
+
+	public MissingReferences validateFile(
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
 		ZipReader zipReader = null;
@@ -289,14 +324,22 @@ public class PortletImporter {
 		try {
 			ExportImportThreadLocal.setPortletValidationInProcess(true);
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			String portletId = MapUtil.getString(settingsMap, "portletId");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(targetPlid);
 
 			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-			validateFile(layout.getCompanyId(), groupId, portletId, zipReader);
+			validateFile(
+				layout.getCompanyId(), targetGroupId, portletId, zipReader);
 
 			PortletDataContext portletDataContext = getPortletDataContext(
-				userId, plid, groupId, portletId, parameterMap, file);
+				exportImportConfiguration, file);
 
 			MissingReferences missingReferences =
 				ExportImportHelperUtil.validateMissingReferences(
@@ -318,6 +361,19 @@ public class PortletImporter {
 				zipReader.close();
 			}
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #validateFile(ExportImportConfiguration, File)}
+	 */
+	@Deprecated
+	public MissingReferences validateFile(
+			long userId, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws Exception {
+
+		return new MissingReferences();
 	}
 
 	protected void deletePortletData(PortletDataContext portletDataContext)
@@ -625,11 +681,20 @@ public class PortletImporter {
 	}
 
 	protected PortletDataContext getPortletDataContext(
-			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+		String portletId = MapUtil.getString(settingsMap, "portletId");
+		long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+		long userId = MapUtil.getLong(settingsMap, "userId");
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(targetPlid);
 
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
@@ -642,11 +707,11 @@ public class PortletImporter {
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				layout.getCompanyId(), groupId, parameterMap, userIdStrategy,
-				zipReader);
+				layout.getCompanyId(), targetGroupId, parameterMap,
+				userIdStrategy, zipReader);
 
-		portletDataContext.setOldPlid(plid);
-		portletDataContext.setPlid(plid);
+		portletDataContext.setOldPlid(targetPlid);
+		portletDataContext.setPlid(targetPlid);
 		portletDataContext.setPortletId(portletId);
 		portletDataContext.setPrivateLayout(layout.isPrivateLayout());
 

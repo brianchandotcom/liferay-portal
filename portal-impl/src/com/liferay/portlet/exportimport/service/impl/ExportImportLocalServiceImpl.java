@@ -18,9 +18,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.ServiceContext;
@@ -31,7 +29,6 @@ import com.liferay.portlet.exportimport.backgroundtask.LayoutExportBackgroundTas
 import com.liferay.portlet.exportimport.backgroundtask.LayoutImportBackgroundTaskExecutor;
 import com.liferay.portlet.exportimport.backgroundtask.PortletExportBackgroundTaskExecutor;
 import com.liferay.portlet.exportimport.backgroundtask.PortletImportBackgroundTaskExecutor;
-import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.LayoutExporter;
 import com.liferay.portlet.exportimport.lar.LayoutImporter;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
@@ -63,22 +60,8 @@ public class ExportImportLocalServiceImpl
 		try {
 			LayoutExporter layoutExporter = LayoutExporter.getInstance();
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-			boolean privateLayout = MapUtil.getBoolean(
-				settingsMap, "privateLayout");
-			long[] layoutIds = GetterUtil.getLongValues(
-				settingsMap.get("layoutIds"));
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-			DateRange dateRange = ExportImportDateUtil.getDateRange(
-				exportImportConfiguration);
-
 			return layoutExporter.exportLayoutsAsFile(
-				sourceGroupId, privateLayout, layoutIds, parameterMap,
-				dateRange.getStartDate(), dateRange.getEndDate());
+				exportImportConfiguration);
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -138,20 +121,8 @@ public class ExportImportLocalServiceImpl
 		try {
 			PortletExporter portletExporter = PortletExporter.getInstance();
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
-			long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-			String portletId = MapUtil.getString(settingsMap, "portletId");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-			DateRange dateRange = ExportImportDateUtil.getDateRange(
-				exportImportConfiguration);
-
 			return portletExporter.exportPortletInfoAsFile(
-				sourcePlid, sourceGroupId, portletId, parameterMap,
-				dateRange.getStartDate(), dateRange.getEndDate());
+				exportImportConfiguration);
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -216,18 +187,7 @@ public class ExportImportLocalServiceImpl
 		try {
 			LayoutImporter layoutImporter = LayoutImporter.getInstance();
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long userId = MapUtil.getLong(settingsMap, "userId");
-			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-			boolean privateLayout = MapUtil.getBoolean(
-				settingsMap, "privateLayout");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-
-			layoutImporter.importLayouts(
-				userId, targetGroupId, privateLayout, parameterMap, file);
+			layoutImporter.importLayouts(exportImportConfiguration, file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
@@ -277,18 +237,8 @@ public class ExportImportLocalServiceImpl
 		try {
 			LayoutImporter layoutImporter = LayoutImporter.getInstance();
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long userId = MapUtil.getLong(settingsMap, "userId");
-			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-			boolean privateLayout = MapUtil.getBoolean(
-				settingsMap, "privateLayout");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-
 			layoutImporter.importLayoutsDataDeletions(
-				userId, targetGroupId, privateLayout, parameterMap, file);
+				exportImportConfiguration, file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
@@ -392,19 +342,8 @@ public class ExportImportLocalServiceImpl
 		try {
 			PortletImporter portletImporter = PortletImporter.getInstance();
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long userId = MapUtil.getLong(settingsMap, "userId");
-			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
-			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-			String portletId = MapUtil.getString(settingsMap, "portletId");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-
 			portletImporter.importPortletDataDeletions(
-				userId, targetPlid, targetGroupId, portletId, parameterMap,
-				file);
+				exportImportConfiguration, file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
@@ -431,19 +370,7 @@ public class ExportImportLocalServiceImpl
 		try {
 			PortletImporter portletImporter = PortletImporter.getInstance();
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long userId = MapUtil.getLong(settingsMap, "userId");
-			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
-			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-			String portletId = MapUtil.getString(settingsMap, "portletId");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-
-			portletImporter.importPortletInfo(
-				userId, targetPlid, targetGroupId, portletId, parameterMap,
-				file);
+			portletImporter.importPortletInfo(exportImportConfiguration, file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
@@ -586,18 +513,7 @@ public class ExportImportLocalServiceImpl
 		try {
 			LayoutImporter layoutImporter = LayoutImporter.getInstance();
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long userId = MapUtil.getLong(settingsMap, "userId");
-			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-			boolean privateLayout = MapUtil.getBoolean(
-				settingsMap, "privateLayout");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-
-			return layoutImporter.validateFile(
-				userId, targetGroupId, privateLayout, parameterMap, file);
+			return layoutImporter.validateFile(exportImportConfiguration, file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();
@@ -647,19 +563,8 @@ public class ExportImportLocalServiceImpl
 		try {
 			PortletImporter portletImporter = PortletImporter.getInstance();
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long userId = MapUtil.getLong(settingsMap, "userId");
-			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
-			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-			String portletId = MapUtil.getString(settingsMap, "portletId");
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-
 			return portletImporter.validateFile(
-				userId, targetPlid, targetGroupId, portletId, parameterMap,
-				file);
+				exportImportConfiguration, file);
 		}
 		catch (PortalException pe) {
 			Throwable cause = pe.getCause();

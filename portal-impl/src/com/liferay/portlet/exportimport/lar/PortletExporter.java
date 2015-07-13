@@ -71,10 +71,12 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.exportimport.LayoutImportException;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.util.xml.DocUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
@@ -231,8 +233,7 @@ public class PortletExporter {
 	}
 
 	public File exportPortletInfoAsFile(
-			long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 
 		PortletDataContext portletDataContext = null;
@@ -241,7 +242,7 @@ public class PortletExporter {
 			ExportImportThreadLocal.setPortletExportInProcess(true);
 
 			portletDataContext = getPortletDataContext(
-				plid, groupId, portletId, parameterMap, startDate, endDate);
+				exportImportConfiguration);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
@@ -270,6 +271,19 @@ public class PortletExporter {
 
 			throw t;
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #exportPortletInfoAsFile(ExportImportConfiguration)}
+	 */
+	@Deprecated
+	public File exportPortletInfoAsFile(
+			long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws Exception {
+
+		return null;
 	}
 
 	protected File doExportPortletInfoAsFile(
@@ -1123,21 +1137,31 @@ public class PortletExporter {
 	}
 
 	protected PortletDataContext getPortletDataContext(
-			long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+		String portletId = MapUtil.getString(settingsMap, "portletId");
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			exportImportConfiguration);
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(sourcePlid);
 		ZipWriter zipWriter = ExportImportHelperUtil.getPortletZipWriter(
 			portletId);
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				layout.getCompanyId(), groupId, parameterMap, startDate,
-				endDate, zipWriter);
+				layout.getCompanyId(), sourceGroupId, parameterMap,
+				dateRange.getStartDate(), dateRange.getEndDate(), zipWriter);
 
-		portletDataContext.setOldPlid(plid);
-		portletDataContext.setPlid(plid);
+		portletDataContext.setOldPlid(sourcePlid);
+		portletDataContext.setPlid(sourcePlid);
 		portletDataContext.setPortletId(portletId);
 
 		return portletDataContext;

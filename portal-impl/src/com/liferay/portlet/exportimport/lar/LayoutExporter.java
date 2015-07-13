@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -73,10 +73,12 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.io.File;
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
@@ -164,21 +166,11 @@ public class LayoutExporter {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
-		File file = exportLayoutsAsFile(
-			groupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
-
-		try {
-			return FileUtil.getBytes(file);
-		}
-		finally {
-			file.delete();
-		}
+		return new byte[0];
 	}
 
 	public File exportLayoutsAsFile(
-			long groupId, boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 
 		PortletDataContext portletDataContext = null;
@@ -186,8 +178,14 @@ public class LayoutExporter {
 		try {
 			ExportImportThreadLocal.setLayoutExportInProcess(true);
 
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			long[] layoutIds = GetterUtil.getLongValues(
+				settingsMap.get("layoutIds"));
+
 			portletDataContext = getPortletDataContext(
-				groupId, privateLayout, parameterMap, startDate, endDate);
+				exportImportConfiguration);
 
 			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_EXPORT_STARTED, getProcessFlag(),
@@ -216,6 +214,19 @@ public class LayoutExporter {
 
 			throw t;
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #exportLayoutsAsFile(ExportImportConfiguration)}
+	 */
+	@Deprecated
+	public File exportLayoutsAsFile(
+			long groupId, boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws Exception {
+
+		return null;
 	}
 
 	protected File doExportLayoutsAsFile(
@@ -739,18 +750,28 @@ public class LayoutExporter {
 	}
 
 	protected PortletDataContext getPortletDataContext(
-			long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws PortalException {
+			ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+		boolean privateLayout = MapUtil.getBoolean(
+			settingsMap, "privateLayout");
+		Map<String, String[]> parameterMap =
+			(Map<String, String[]>)settingsMap.get("parameterMap");
+		DateRange dateRange = ExportImportDateUtil.getDateRange(
+			exportImportConfiguration);
+
+		Group group = GroupLocalServiceUtil.getGroup(sourceGroupId);
 		ZipWriter zipWriter = ExportImportHelperUtil.getLayoutSetZipWriter(
-			groupId);
+			sourceGroupId);
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				group.getCompanyId(), groupId, parameterMap, startDate, endDate,
-				zipWriter);
+				group.getCompanyId(), sourceGroupId, parameterMap,
+				dateRange.getStartDate(), dateRange.getEndDate(), zipWriter);
 
 		portletDataContext.setPrivateLayout(privateLayout);
 

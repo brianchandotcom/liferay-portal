@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.comment;
+package com.liferay.message.boards.comments;
 
 import com.liferay.portal.kernel.comments.BaseDiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;

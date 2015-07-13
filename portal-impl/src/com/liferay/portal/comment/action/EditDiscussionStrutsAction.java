@@ -92,7 +92,9 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 				subscribeToComments(request, false);
 			}
 
-			sendRedirect(request, response, redirect);
+			if (Validator.isNotNull(redirect)) {
+				response.sendRedirect(redirect);
+			}
 		}
 		catch (DiscussionMaxCommentsException | MessageBodyException |
 			NoSuchMessageException | PrincipalException |
@@ -252,13 +254,6 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		ServletResponseUtil.write(response, json.toString());
 
 		response.flushBuffer();
-	}
-
-	private void sendRedirect(
-		HttpServletRequest request, HttpServletResponse response,
-		String redirect) {
-
-		throw new UnsupportedOperationException();
 	}
 
 }

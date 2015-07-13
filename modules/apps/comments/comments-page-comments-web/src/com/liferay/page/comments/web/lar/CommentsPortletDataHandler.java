@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.lar;
+package com.liferay.page.comments.web.lar;
 
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;

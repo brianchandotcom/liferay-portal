@@ -25,18 +25,33 @@ import java.util.List;
  */
 public class DDMStructureLinkManagerUtil {
 
-	public static List<DDMStructureLink> getClassNameStructureLinks(long classNameId){
+	public static List<DDMStructureLink> getClassNameStructureLinks(
+		long classNameId) {
 
-		return _getDDMStructureLinkManager().getClassNameStructureLinks(classNameId);
+		DDMStructureLinkManager ddmStructureLinkManager =
+			_getDDMStructureLinkManager();
+
+		return ddmStructureLinkManager.getClassNameStructureLinks(classNameId);
 	}
 
-	public static List<DDMStructureLink> getStructureLinks(long classNameId, long classPK){
+	public static List<DDMStructureLink> getStructureLinks(
+		long classNameId, long classPK) {
 
-		return _getDDMStructureLinkManager().getStructureLinks(classNameId, classPK);
+		DDMStructureLinkManager ddmStructureLinkManager =
+			_getDDMStructureLinkManager();
+
+		return ddmStructureLinkManager.getStructureLinks(classNameId, classPK);
 	}
-	
+
 	private static DDMStructureLinkManager _getDDMStructureLinkManager() {
-		return _instance._serviceTracker.getService();
+		DDMStructureLinkManager ddmStructureLinkManager =
+			_instance._serviceTracker.getService();
+
+		if (ddmStructureLinkManager == null) {
+			return _dummyDDMStructureLinkManagerImpl;
+		}
+
+		return ddmStructureLinkManager;
 	}
 
 	private DDMStructureLinkManagerUtil() {
@@ -50,8 +65,12 @@ public class DDMStructureLinkManagerUtil {
 	private static final DDMStructureLinkManagerUtil _instance =
 		new DDMStructureLinkManagerUtil();
 
-	private final ServiceTracker<DDMStructureLinkManager,
-	DDMStructureLinkManager> _serviceTracker;
+	private static final DummyDDMStructureLinkManagerImpl
+		_dummyDDMStructureLinkManagerImpl =
+			new DummyDDMStructureLinkManagerImpl();
 
+	private final
+		ServiceTracker<DDMStructureLinkManager, DDMStructureLinkManager>
+			_serviceTracker;
 
 }

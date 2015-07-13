@@ -2,13 +2,13 @@ buildService {
 	apiDirName = "../calendar-api/src"
 	autoNamespaceTables = false
 	hbmFileName = "src/META-INF/module-hbm.xml"
-	springFileName = "src/META-INF/module-spring.xml"
+	springFileName = "src/META-INF/spring/module-spring.xml"
 	sqlDirName = "src/META-INF/sql"
 	testDirName = "../calendar-test/test/integration"
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.1"
 	compile group: "com.liferay", name: "net.fortuna.ical4j", version: "1.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile group: "rome", name: "rome", version: "1.0"

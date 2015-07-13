@@ -16,6 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil" %>
+<%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>

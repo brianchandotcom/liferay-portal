@@ -17,6 +17,8 @@ package com.liferay.portlet.display.template;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
 
 import java.util.List;
 import java.util.Map;
@@ -31,11 +33,18 @@ public interface PortletDisplayTemplate {
 
 	public static final String DISPLAY_STYLE_PREFIX = "ddmTemplate_";
 
+	public void exportDDMTemplateStagedModel(
+			PortletDataContext portletDataContext, String portletId,
+			long ddmTemplateId)
+		throws PortletDataException;
+
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle);
 
 	public long getDDMTemplateGroupId(long groupId);
 
 	public String getDDMTemplateKey(String displayStyle);
+
+	public Class<?> getDDMTemplateStagedModelClass();
 
 	@Deprecated
 	public String getDDMTemplateUuid(String displayStyle);

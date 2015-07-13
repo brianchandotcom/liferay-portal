@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.portletdisplaytemplate;
 
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -31,6 +33,18 @@ import javax.servlet.http.HttpServletResponse;
  * @author Leonardo Barros
  */
 public class PortletDisplayTemplateManagerUtil {
+
+	public static void exportDDMTemplateStagedModel(
+			PortletDataContext portletDataContext, String portletId,
+			DDMTemplate ddmTemplate)
+		throws PortletDataException {
+
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
+			_instance._serviceTracker.getService();
+
+		portletDisplayTemplateManager.exportDDMTemplateStagedModel(
+			portletDataContext, portletId, ddmTemplate);
+	}
 
 	public static DDMTemplate getDDMTemplate(
 		long groupId, long classNameId, String displayStyle,
@@ -48,6 +62,13 @@ public class PortletDisplayTemplateManagerUtil {
 			_getPortletDisplayTemplateManager();
 
 		return portletDisplayTemplateManager.getDDMTemplateGroupId(groupId);
+	}
+
+	public static Class<?> getDDMTemplateStagedModelClass() {
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
+			_getPortletDisplayTemplateManager();
+
+		return portletDisplayTemplateManager.getDDMTemplateStagedModelClass();
 	}
 
 	public static String getDisplayStyle(String ddmTemplateKey) {

@@ -27,9 +27,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.DDMTemplateManager;
+import com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -180,9 +180,8 @@ public class TemplateHandlerRegistryUtil {
 				String templateKey = templateElement.elementText(
 					"template-key");
 
-				DDMTemplate ddmTemplate =
-					DDMTemplateLocalServiceUtil.fetchTemplate(
-						group.getGroupId(), classNameId, templateKey);
+				DDMTemplate ddmTemplate = DDMTemplateManagerUtil.fetchTemplate(
+					group.getGroupId(), classNameId, templateKey);
 
 				if (ddmTemplate != null) {
 					continue;
@@ -207,12 +206,12 @@ public class TemplateHandlerRegistryUtil {
 				boolean cacheable = GetterUtil.getBoolean(
 					templateElement.elementText("cacheable"));
 
-				DDMTemplateLocalServiceUtil.addTemplate(
+				DDMTemplateManagerUtil.addTemplate(
 					userId, group.getGroupId(), classNameId, 0,
 					PortalUtil.getClassNameId(
 						_PORTLET_DISPLAY_TEMPLATE_CLASS_NAME),
 					templateKey, nameMap, descriptionMap,
-					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language,
+					DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null, language,
 					script, cacheable, false, null, null, serviceContext);
 			}
 		}

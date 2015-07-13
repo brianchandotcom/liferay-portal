@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Page Ratings Web
+Bundle-SymbolicName: com.liferay.page.ratings.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources

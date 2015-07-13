@@ -96,6 +96,18 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBeInvokedUsingPost extends PrincipalException {
+
+		public MustBeInvokedUsingPost(String url) {
+			super(String.format("URL %s must be invoked using POST", url));
+
+			this.url = url;
+		}
+
+		public final String url;
+
+	}
+
 	public static class MustBeOmniadmin extends PrincipalException {
 
 		public MustBeOmniadmin(long userId) {
@@ -174,6 +186,7 @@ public class PrincipalException extends PortalException {
 		PrincipalException.class, PrincipalException.MustBeAuthenticated.class,
 		PrincipalException.MustBeCompanyAdmin.class,
 		PrincipalException.MustBeEnabled.class,
+		PrincipalException.MustBeInvokedUsingPost.class,
 		PrincipalException.MustBeOmniadmin.class,
 		PrincipalException.MustHavePermission.class
 	};

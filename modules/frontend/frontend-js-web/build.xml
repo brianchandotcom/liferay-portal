@@ -4,6 +4,7 @@
 <project>
 	<property name="alloy.bootstrap.version" value="3.2.0-2" />
 	<property name="alloy.version" value="3.0.1" />
+	<property name="lexicon.version" value="0.1.4" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
@@ -192,6 +193,71 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="build-lexicon">
+		<sequential>
+			<path id="lexicon.zip.path">
+				<fileset dir="${third.party.dir}">
+					<include name="lexicon*.zip" />
+				</fileset>
+			</path>
+
+			<property name="lexicon.zip.path" refid="lexicon.zip.path" />
+
+			<basename file="${lexicon.zip.path}" property="lexicon.file" />
+
+			<if>
+				<not>
+					<uptodate
+						srcfile="${third.party.dir}/${lexicon.file}"
+						targetfile="tmp/META-INF/resources/html/js/lexicon"
+					/>
+				</not>
+				<then>
+
+					<!-- Prepare -->
+
+					<delete dir="tmp/META-INF/resources/html/lexicon-assets" />
+					<delete dir="tmp/META-INF/resources/html/js/lexicon" />
+
+					<echo>${lexicon.file}</echo>
+
+					<tstamp>
+						<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					</tstamp>
+
+					<unzip dest="${tstamp.value}" src="${third.party.dir}/${lexicon.file}" />
+
+					<property name="lexicon.assets.dir" value="${tstamp.value}/bootstrap-sass-${lexicon.version}/assets" />
+
+					<!-- JavaScript -->
+
+					<delete failonerror="false" includeemptydirs="true" quiet="true">
+						<fileset
+							dir="${tstamp.value}/js"
+							includes="*.js"
+						/>
+					</delete>
+
+					<copy todir="tmp/META-INF/resources/html/js/lexicon" overwrite="true" preservelastmodified="true">
+						<fileset dir="${tstamp.value}/js/" />
+					</copy>
+
+					<delete dir="${tstamp.value}/js" />
+
+					<!-- Assets -->
+
+					<copy todir="tmp/META-INF/resources/html/lexicon-assets" overwrite="true" preservelastmodified="true">
+						<fileset dir="${tstamp.value}/" />
+					</copy>
+
+					<!-- Clean up -->
+
+					<delete dir="${tstamp.value}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="build-lfr-amd-loader">
 		<sequential>
 			<download-node-module
@@ -210,6 +276,10 @@
 		<build-alloy-bootstrap />
 	</target>
 
+	<target name="build-lexicon">
+		<build-lexicon />
+	</target>
+
 	<target name="compile">
 		<compile
 			module.dir="${basedir}"
@@ -218,6 +288,8 @@
 		<build-alloy-bootstrap />
 
 		<build-alloy />
+
+		<build-lexicon />
 
 		<build-lfr-amd-loader />
 	</target>

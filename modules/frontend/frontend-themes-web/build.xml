@@ -175,38 +175,41 @@
 
 		<basename file="${lexicon.zip.path}" property="lexicon.file" />
 
+		<property name="lexicon.assets.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/lexicon-assets" />
+
 		<if>
 			<not>
 				<uptodate
 					srcfile="${third.party.dir}/${lexicon.file}"
-					targetfile="${lexicon.deploy.theme.dir}"
+					targetfile="${lexicon.assets.dir}"
 				/>
 			</not>
 			<then>
-				<delete dir="${lexicon.deploy.theme.dir}" />
-
-				<unzip
-					dest="${lexicon.deploy.theme.dir}"
-					src="${third.party.dir}/${lexicon.file}"
-				/>
-
-				<!-- Process files for inclusion in the theme -->
-
-				<replaceregexp match="^// INSERT CUSTOM VARS" replace="@import &quot;../../aui_variables&quot;;" byline="true">
-					<fileset
-						dir="${lexicon.deploy.theme.dir}"
-						includes="atlas.scss,bootstrap.scss,lexicon-base.scss"
-					/>
-				</replaceregexp>
-
-				<replaceregexp match="^// INSERT CUSTOM EXTENSIONS" replace="@import &quot;../../aui_custom&quot;;${line.separator}@import &quot;../../liferay_custom&quot;;${line.separator}@import &quot;../alloy-font-awesome/scss/font-awesome&quot;;" byline="true">
-					<fileset
-						dir="${lexicon.deploy.theme.dir}"
-						includes="atlas.scss,bootstrap.scss,lexicon-base.scss"
-					/>
-				</replaceregexp>
+				<ant antfile="${frontend.js.web.dir}/build.xml" dir="${frontend.js.web.dir}" target="build-lexicon" inheritAll="false" />
 			</then>
 		</if>
+
+		<delete dir="${lexicon.deploy.theme.dir}" />
+
+		<!-- Process files for inclusion in the theme -->
+
+		<replaceregexp match="^// INSERT CUSTOM VARS" replace="@import &quot;../../aui_variables&quot;;" byline="true">
+			<fileset
+				dir="${lexicon.assets.dir}/scss"
+				includes="atlas.scss,bootstrap.scss,lexicon-base.scss"
+			/>
+		</replaceregexp>
+
+		<replaceregexp match="^// INSERT CUSTOM EXTENSIONS" replace="@import &quot;../../aui_custom&quot;;${line.separator}@import &quot;../../liferay_custom&quot;;${line.separator}@import &quot;../alloy-font-awesome/scss/font-awesome&quot;;" byline="true">
+			<fileset
+				dir="${lexicon.assets.dir}/scss"
+				includes="atlas.scss,bootstrap.scss,lexicon-base.scss"
+			/>
+		</replaceregexp>
+
+		<copy todir="${lexicon.deploy.theme.dir}" overwrite="true" preservelastmodified="true">
+			<fileset dir="${lexicon.assets.dir}/scss/" />
+		</copy>
 	</target>
 
 	<target name="build-themes" depends="build-alloy-bootstrap-theme,build-alloy-theme,build-alloy-font-awesome,build-lexicon">

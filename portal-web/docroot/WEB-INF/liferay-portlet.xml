@@ -320,17 +320,6 @@
 		<active>false</active>
 	</portlet>
 	<portlet>
-		<portlet-name>107</portlet-name>
-		<icon>/html/icons/page_comments.png</icon>
-		<struts-path>page_comments</struts-path>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-page-comments</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>108</portlet-name>
 		<icon>/html/icons/page_ratings.png</icon>
 		<struts-path>page_ratings</struts-path>

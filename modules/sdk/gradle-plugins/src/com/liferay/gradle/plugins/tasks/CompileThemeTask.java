@@ -329,23 +329,20 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	protected void copyThemeParentUnstyled() {
-		copyPortalThemeDir("_unstyled", new String[] {"templates/**"}, "**");
+		copyPortalThemeDir(
+			"_unstyled", new String[] {"package.json", "templates/**"}, "**");
 
 		Set<String> themeTypes = getThemeTypes();
 
-		List<String> excludes = new ArrayList<>(themeTypes.size() + 1);
-		List<String> includes = new ArrayList<>(themeTypes.size());
+		String[] themeTypesArray = themeTypes.toArray(
+			new String[themeTypes.size()]);
 
-		excludes.add("package.json");
+		String[] excludes = StringUtil.prepend(
+			themeTypesArray, "templates/init.");
+		String[] includes = StringUtil.prepend(
+			themeTypesArray, "templates/**/*.");
 
-		for (String themeType : getThemeTypes()) {
-			excludes.add("templates/init." + themeType);
-			includes.add("templates/**/*." + themeType);
-		}
-
-		copyPortalThemeDir(
-			"_unstyled", excludes.toArray(new String[excludes.size()]),
-			includes.toArray(new String[includes.size()]));
+		copyPortalThemeDir("_unstyled", excludes, includes);
 	}
 
 	private static final String[] _PORTAL_THEMES = {

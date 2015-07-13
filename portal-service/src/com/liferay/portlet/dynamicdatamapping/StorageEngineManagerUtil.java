@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.dynamicdatamapping.storage;
+package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -31,28 +30,32 @@ public class StorageEngineManagerUtil {
 			ServiceContext serviceContext)
 		throws StorageException {
 
-		return _getStorageEngineManager().create(
+		StorageEngineManager storageEngineManager = _getStorageEngineManager();
+
+		return storageEngineManager.create(
 			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
 	public static void deleteByClass(long classPK) throws StorageException {
-		_getStorageEngineManager().deleteByClass(classPK);
+		StorageEngineManager storageEngineManager = _getStorageEngineManager();
+
+		storageEngineManager.deleteByClass(classPK);
 	}
 
 	public static void deleteByDDMStructure(long ddmStructureId)
 		throws StorageException {
 
-		_getStorageEngineManager().deleteByDDMStructure(ddmStructureId);
+		StorageEngineManager storageEngineManager = _getStorageEngineManager();
+
+		storageEngineManager.deleteByDDMStructure(ddmStructureId);
 	}
 
 	public static DDMFormValues getDDMFormValues(long classPK)
 		throws StorageException {
 
-		return _getStorageEngineManager().getDDMFormValues(classPK);
-	}
+		StorageEngineManager storageEngineManager = _getStorageEngineManager();
 
-	public static String getStorageType() {
-		return _getStorageEngineManager().getStorageType();
+		return storageEngineManager.getDDMFormValues(classPK);
 	}
 
 	public static void update(
@@ -60,26 +63,20 @@ public class StorageEngineManagerUtil {
 			ServiceContext serviceContext)
 		throws StorageException {
 
-		_getStorageEngineManager().update(
-			classPK, ddmFormValues, serviceContext);
-	}
+		StorageEngineManager storageEngineManager = _getStorageEngineManager();
 
-	private static StorageEngineManager _getDummyStorageEngineManager() {
-		if (_dummyImpl == null) {
-			_dummyImpl = new DummyStorageEngineManagerImpl();
-		}
-
-		return _dummyImpl;
+		storageEngineManager.update(classPK, ddmFormValues, serviceContext);
 	}
 
 	private static StorageEngineManager _getStorageEngineManager() {
-		StorageEngineManager manager = _instance._serviceTracker.getService();
+		StorageEngineManager storageEngineManager =
+			_instance._serviceTracker.getService();
 
-		if (manager == null) {
-			manager = _getDummyStorageEngineManager();
+		if (storageEngineManager == null) {
+			return _dummyStorageEngineImpl;
 		}
 
-		return manager;
+		return storageEngineManager;
 	}
 
 	private StorageEngineManagerUtil() {
@@ -93,7 +90,8 @@ public class StorageEngineManagerUtil {
 	private static final StorageEngineManagerUtil _instance =
 		new StorageEngineManagerUtil();
 
-	private static DummyStorageEngineManagerImpl _dummyImpl;
+	private static final DummyStorageEngineManagerImpl _dummyStorageEngineImpl =
+		new DummyStorageEngineManagerImpl();
 
 	private final ServiceTracker<StorageEngineManager,
 										StorageEngineManager> _serviceTracker;

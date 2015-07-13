@@ -94,7 +94,8 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			actionResponse.sendRedirect(themeDisplay.getURLSignIn());
+			sendRedirect(
+				actionRequest, actionResponse, themeDisplay.getURLSignIn());
 
 			return true;
 		}

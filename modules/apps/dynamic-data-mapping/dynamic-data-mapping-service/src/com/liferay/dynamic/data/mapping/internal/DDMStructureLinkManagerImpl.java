@@ -28,14 +28,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(immediate = true)
-public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager{
+public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager {
 
 	@Override
 	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId) {
-
 		List<DDMStructureLink> structureLinks = new ArrayList<>();
 
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink structureLink : _ddmStructureLinkLocalService.getClassNameStructureLinks(classNameId)) {
+		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
+				structureLink :
+					_ddmStructureLinkLocalService.getClassNameStructureLinks(
+						classNameId)) {
+
 			structureLinks.add( new DDMStructureLinkImpl(structureLink));
 		}
 
@@ -43,12 +46,16 @@ public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager{
 	}
 
 	@Override
-	public List<DDMStructureLink> getStructureLinks(long classNameId,
-			long classPK) {
-		
+	public List<DDMStructureLink> getStructureLinks(
+		long classNameId, long classPK) {
+
 		List<DDMStructureLink> structureLinks = new ArrayList<>();
 
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink structureLink : _ddmStructureLinkLocalService.getStructureLinks(classNameId, classPK)) {
+		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
+				structureLink :
+					_ddmStructureLinkLocalService.getStructureLinks(
+						classNameId, classPK)) {
+
 			structureLinks.add( new DDMStructureLinkImpl(structureLink));
 		}
 
@@ -56,9 +63,12 @@ public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager{
 	}
 
 	@Reference
-	protected void setDDMStructureLinkLocalService(DDMStructureLinkLocalService ddmStructureLinkLocalService) {
+	protected void setDDMStructureLinkLocalService(
+		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
+
 		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
 	}
-	
+
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+
 }

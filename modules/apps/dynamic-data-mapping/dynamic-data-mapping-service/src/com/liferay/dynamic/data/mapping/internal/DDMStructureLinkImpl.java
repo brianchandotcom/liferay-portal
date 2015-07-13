@@ -21,7 +21,10 @@ import com.liferay.portlet.dynamicdatamapping.DDMStructureLink;
  */
 public class DDMStructureLinkImpl implements DDMStructureLink {
 
-	public DDMStructureLinkImpl(com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink structureLink) {
+	public DDMStructureLinkImpl(
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
+			structureLink) {
+
 		_structureLink = structureLink;
 	}
 
@@ -47,9 +50,14 @@ public class DDMStructureLinkImpl implements DDMStructureLink {
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl((com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink) _structureLink.clone());
+		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl(
+			(com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink)
+			_structureLink.clone());
+
 		return ddmStructureLinkImpl;
 	}
 
-	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink _structureLink;
+	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
+		_structureLink;
+
 }

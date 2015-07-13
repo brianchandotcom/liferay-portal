@@ -23,6 +23,7 @@ public interface DDMStructureLinkManager {
 
 	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId);
 
-	public List<DDMStructureLink> getStructureLinks(long classNameId, long classPK);
+	public List<DDMStructureLink> getStructureLinks(
+		long classNameId, long classPK);
 
 }

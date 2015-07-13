@@ -17,13 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.VIEW) %>">
-	<portlet:actionURL var="discussionURL">
-		<portlet:param name="struts_action" value="/page_comments/edit_page_discussion" />
-	</portlet:actionURL>
+	<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
 
-	<portlet:resourceURL var="discussionPaginationURL">
-		<portlet:param name="struts_action" value="/page_comments/edit_page_discussion" />
-	</portlet:resourceURL>
+	<portlet:resourceURL id="invokeTaglibDiscussionPagination" var="discussionPaginationURL" />
 
 	<liferay-ui:discussion
 		className="<%= Layout.class.getName() %>"

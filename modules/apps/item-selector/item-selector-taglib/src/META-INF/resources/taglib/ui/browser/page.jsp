@@ -348,12 +348,6 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 					<%
 					}
 					else {
-						String folderImage = "folder_empty_document";
-
-						if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0)) {
-							folderImage = "folder_full_document";
-						}
-
 						PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
 
 						viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
@@ -361,17 +355,35 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 
 						<c:choose>
 							<c:when test='<%= displayStyle.equals("icon") %>'>
-								<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-									<div class="aspect-ratio aspect-ratio-middle">
-										<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
-											<img src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" />
-										</a>
+								<div class="col-md-6">
+									<div class="card-horizontal">
+										<div class="card-row card-row-padded">
+											<div class="card-col-field">
+												<span class="icon-folder-close-alt icon-monospaced"></span>
+											</div>
+											<div class="card-col-content card-col-gutters">
+												<h4>
+													<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
+														<%= HtmlUtil.escapeAttribute(folder.getName()) %>
+													</a>
+												</h4>
+											</div>
+										</div>
 									</div>
 								</div>
 							</c:when>
 							<c:otherwise>
 								<li class="list-group-item list-group-item-default">
 									<div class="list-group-item-field">
+
+										<%
+										String folderImage = "folder_empty_document";
+
+										if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0)) {
+											folderImage = "folder_full_document";
+										}
+										%>
+
 										<img src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" />
 									</div>
 

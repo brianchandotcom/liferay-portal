@@ -156,7 +156,8 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 								currentURL);
 					}
 
-					throw new PrincipalException(currentURL);
+					throw new PrincipalException.MustBeInvokedUsingPost(
+						currentURL);
 				}
 			}
 

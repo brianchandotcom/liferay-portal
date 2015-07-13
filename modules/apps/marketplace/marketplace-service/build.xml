@@ -15,7 +15,7 @@
 			service.api.dir="../marketplace-api/src"
 			service.auto.namespace.tables="true"
 			service.hbm.file.name="module-hbm.xml"
-			service.spring.file.name="module-spring.xml"
+			service.spring.file.name="spring/module-spring.xml"
 			service.sql.dir="src/META-INF/sql"
 			service.test.dir="../marketplace-test/test/integration"
 		/>

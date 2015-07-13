@@ -31,8 +31,7 @@ public interface BeanProperties {
 	public void copyProperties(
 		Object source, Object target, String[] ignoreProperties);
 
-	public <T> T deepCopyProperties(Object source, Class<T> targetClazz)
-		throws Exception;
+	public <T> T deepCopyProperties(Object source) throws Exception;
 
 	public boolean getBoolean(Object bean, String param);
 

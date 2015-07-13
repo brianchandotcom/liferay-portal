@@ -62,39 +62,40 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 	public DDMTemplate fetchTemplate(
 		long groupId, long classNameId, String templateKey) {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate template =
+		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate =
 			_ddmTemplateLocalService.fetchTemplate(
 				groupId, classNameId, templateKey);
 
-		if (template == null) {
+		if (ddmTemplate == null) {
 			return null;
 		}
 
-		return new DDMTemplateImpl(template);
+		return new DDMTemplateImpl(ddmTemplate);
 	}
 
 	@Override
 	public DDMTemplate getTemplate(long templateId) throws PortalException {
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate template =
+		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate =
 			_ddmTemplateLocalService.getTemplate(templateId);
 
-		return new DDMTemplateImpl(template);
+		return new DDMTemplateImpl(ddmTemplate);
 	}
 
 	@Override
 	public List<DDMTemplate> getTemplates(
 		long[] groupIds, long classNameId, long classPK) {
 
-		List<DDMTemplate> templates = new ArrayList<>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate template :
-				_ddmTemplateLocalService.getTemplates(
-						groupIds, classNameId, classPK)) {
+		for (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate
+				ddmTemplate :
+					_ddmTemplateLocalService.getTemplates(
+							groupIds, classNameId, classPK)) {
 
-			templates.add(new DDMTemplateImpl(template));
+			ddmTemplates.add(new DDMTemplateImpl(ddmTemplate));
 		}
 
-		return templates;
+		return ddmTemplates;
 	}
 
 	@Override

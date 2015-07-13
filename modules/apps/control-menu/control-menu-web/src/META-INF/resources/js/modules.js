@@ -7,6 +7,13 @@
 				controlmenu: {
 					base: PATH_DOCKBAR_WEB + '/js/',
 					modules: {
+						'liferay-dockbar': {
+							path: 'dockbar.js',
+							requires: [
+								'aui-node',
+								'event-touch'
+							]
+						},
 						'liferay-dockbar-add-application': {
 							path: 'dockbar_add_application.js',
 							requires: [

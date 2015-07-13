@@ -16,6 +16,7 @@ package com.liferay.portlet.usersadmin.action;
 
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
@@ -40,7 +41,8 @@ import javax.portlet.ActionResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/edit_organization_assignments"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class EditOrganizationAssignmentsMVCActionCommand
 	extends BaseMVCActionCommand {

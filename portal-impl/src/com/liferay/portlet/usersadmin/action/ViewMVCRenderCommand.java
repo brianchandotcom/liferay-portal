@@ -28,7 +28,8 @@ import javax.portlet.RenderResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.USERS_ADMIN, "mvc.command.name=/",
 		"mvc.command.name=/users_admin/view"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.myaccount.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -34,7 +35,8 @@ import javax.portlet.RenderResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MY_ACCOUNT,
 		"mvc.command.name=/users_admin/edit_user"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class EditUserMVCRenderCommand
 	extends com.liferay.portlet.usersadmin.action.EditUserMVCRenderCommand {

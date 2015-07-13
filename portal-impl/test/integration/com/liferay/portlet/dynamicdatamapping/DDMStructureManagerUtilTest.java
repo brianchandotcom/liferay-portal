@@ -14,28 +14,33 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -57,283 +62,240 @@ public class DDMStructureManagerUtilTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_classNameId = RandomTestUtil.randomLong();
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		if (_structure != null) {
-			DDMStructureManagerUtil.deleteStructure(
-				_structure.getStructureId());
-		}
-
-		_structure = null;
-	}
-
 	@Test
-	public void testAddStructure() {
-		try {
-			addStructure();
-		}
-		catch (PortalException e) {
-			Assert.fail("Structure not inserted");
-		}
-	}
-
-	@Test
-	public void testDeleteStructure() {
-		try {
-			DDMStructure structure = addStructure();
-			DDMStructureManagerUtil.deleteStructure(structure.getStructureId());
-			_structure = null;
-		}
-		catch (PortalException e) {
-			Assert.fail("Structure not removed");
-		}
-	}
-
-	@Test
-	public void testFetchStructure() {
-		try {
-			addStructure();
-
-			DDMStructure structure = DDMStructureManagerUtil.fetchStructure(
-				_group.getGroupId(),
-				PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure"),
-				"KEY");
-
-			assertStructure(structure);
-		}
-		catch (PortalException e) {
-			Assert.fail("Should not throw exception");
-		}
-	}
-
-	@Test
-	public void testFetchStructureByUuidAndGroupId() {
-		try {
-			DDMStructure structure = addStructure();
-
-			structure = DDMStructureManagerUtil.fetchStructureByUuidAndGroupId(
-				structure.getUuid(), _group.getGroupId());
-
-			assertStructure(structure);
-		}
-		catch (PortalException e) {
-			Assert.fail("Should not throw exception");
-		}
-	}
-
-	@Test
-	public void testGetClassStructures() {
-		try {
-			addStructure();
-
-			List<DDMStructure> structures =
-				DDMStructureManagerUtil.getClassStructures(
-					_group.getCompanyId(),
-					PortalUtil.getClassNameId(
-				"com.liferay.portlet.dynamicdatamapping.model.DDMStructure"),
-					0, 1);
-
-			Assert.assertEquals(1, structures.size());
-		}
-		catch (PortalException e) {
-			Assert.fail("Should not throw exception");
-		}
-	}
-
-	@Test
-	public void testGetStructure() {
-		try {
-			addStructure();
-
-			DDMStructure structure = DDMStructureManagerUtil.getStructure(
-				_group.getGroupId(),
-				PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure"),
-				"KEY");
-
-			assertStructure(structure);
-		}
-		catch (PortalException e) {
-			Assert.fail("Should not throw exception");
-		}
-	}
-
-	@Test
-	public void testGetStructureById() {
-		try {
-			DDMStructure structure = addStructure();
-
-			structure = DDMStructureManagerUtil.getStructure(
-				structure.getStructureId());
-
-			assertStructure(structure);
-		}
-		catch (PortalException e) {
-			Assert.fail("Should not throw exception");
-		}
-	}
-
-	@Test
-	public void testGetStructureByUuidAndGroupId() {
-		try {
-			DDMStructure structure = addStructure();
-
-			structure = DDMStructureManagerUtil.getStructureByUuidAndGroupId(
-				structure.getUuid(), _group.getGroupId());
-
-			assertStructure(structure);
-		}
-		catch (PortalException e) {
-			Assert.fail("Should not throw exception");
-		}
-	}
-
-	@Test
-	public void testUpdateStructure() {
-		try {
-			DDMStructure structure = addStructure();
-
-			Map<Locale, String> nameMap = new HashMap<>();
-			nameMap.put(LocaleUtil.US, "test");
-
-			Map<Locale, String> descriptionMap = new HashMap<>();
-			descriptionMap.put(LocaleUtil.US, "description");
-
-			structure = DDMStructureManagerUtil.updateStructure(
-				TestPropsValues.getUserId(), structure.getStructureId(), 0,
-				nameMap, descriptionMap, structure.getDDMForm(),
-				structure.getDDMFormLayout(), _serviceContext);
-
-			assertStructure(structure);
-		}
-		catch (PortalException e) {
-			Assert.fail("Should not throw exception");
-		}
-	}
-
-	private DDMStructure addStructure() throws PortalException {
-		Map<Locale, String> nameMap = new HashMap<>();
-		nameMap.put(LocaleUtil.US, "test");
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-		descriptionMap.put(LocaleUtil.US, "description");
-
-		_structure = DDMStructureManagerUtil.addStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(), null,
-			PortalUtil.getClassNameId(
-		"com.liferay.portlet.dynamicdatamapping.model.DDMStructure"),
-			"KEY", nameMap, descriptionMap, createForm(), createFormLayout(),
-			"json", 1, _serviceContext);
-
-		return _structure;
-	}
-
-	private void assertStructure(DDMStructure structure)
-		throws PortalException {
+	public void testAddStructure() throws Exception {
+		DDMStructure structure = addStructure();
 
 		Assert.assertNotNull(structure);
-		Assert.assertEquals("KEY", structure.getStructureKey());
-
-		Map<Locale, String> nameMap = structure.getNameMap();
-
-		Assert.assertTrue(nameMap.containsKey(LocaleUtil.US));
-		Assert.assertEquals("test", nameMap.get(LocaleUtil.US));
-
-		Map<Locale, String> descriptionMap = structure.getDescriptionMap();
-		Assert.assertTrue(descriptionMap.containsKey(LocaleUtil.US));
-		Assert.assertEquals("description", descriptionMap.get(LocaleUtil.US));
 	}
 
-	private DDMForm createForm() {
-		Set<Locale> availableLocales = new LinkedHashSet<>();
-		availableLocales.add(LocaleUtil.US);
+	@Test
+	public void testDeleteStructure() throws Exception {
+		DDMStructure structure = addStructure();
 
+		Assert.assertNotNull(structure);
+
+		DDMStructureManagerUtil.deleteStructure(structure.getStructureId());
+
+		structure = DDMStructureManagerUtil.fetchStructure(
+			structure.getGroupId(), structure.getClassNameId(),
+			structure.getStructureKey());
+
+		Assert.assertNull(structure);
+	}
+
+	@Test
+	public void testFetchStructure() throws Exception {
+		DDMStructure expectedStructure = addStructure();
+
+		DDMStructure actualStructure = DDMStructureManagerUtil.fetchStructure(
+			_group.getGroupId(), expectedStructure.getClassNameId(),
+			expectedStructure.getStructureKey());
+
+		Assert.assertNotNull(actualStructure);
+
+		assertEquals(expectedStructure, actualStructure);
+	}
+
+	@Test
+	public void testFetchStructureByUuidAndGroupId() throws Exception {
+		DDMStructure expectedStructure = addStructure();
+
+		DDMStructure actualStructure =
+			DDMStructureManagerUtil.fetchStructureByUuidAndGroupId(
+				expectedStructure.getUuid(), expectedStructure.getGroupId());
+
+		Assert.assertNotNull(actualStructure);
+
+		assertEquals(expectedStructure, actualStructure);
+	}
+
+	@Test
+	public void testGetClassStructures() throws Exception {
+		DDMStructure structure = addStructure();
+
+		List<DDMStructure> structures =
+			DDMStructureManagerUtil.getClassStructures(
+				_group.getCompanyId(), structure.getClassNameId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(1, structures.size());
+	}
+
+	@Test
+	public void testGetStructure() throws Exception {
+		DDMStructure expectedStructure = addStructure();
+
+		DDMStructure actualStructure = DDMStructureManagerUtil.getStructure(
+			_group.getGroupId(), expectedStructure.getClassNameId(),
+			expectedStructure.getStructureKey());
+
+		assertEquals(expectedStructure, actualStructure);
+	}
+
+	@Test
+	public void testGetStructureById() throws Exception {
+		DDMStructure expectedStructure = addStructure();
+
+		DDMStructure actualStructure = DDMStructureManagerUtil.getStructure(
+			expectedStructure.getStructureId());
+
+		assertEquals(expectedStructure, actualStructure);
+	}
+
+	@Test
+	public void testGetStructureByUuidAndGroupId() throws Exception {
+		DDMStructure expectedStructure = addStructure();
+
+		DDMStructure actualStructure =
+			DDMStructureManagerUtil.getStructureByUuidAndGroupId(
+				expectedStructure.getUuid(), _group.getGroupId());
+
+		assertEquals(expectedStructure, actualStructure);
+	}
+
+	@Test
+	public void testUpdateStructure() throws Exception {
+		DDMStructure expectedStructure = addStructure();
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.US, "Structure Name Modified");
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(LocaleUtil.US, "Structure Description Modified");
+
+		DDMStructure actualStructure = DDMStructureManagerUtil.updateStructure(
+			TestPropsValues.getUserId(), expectedStructure.getStructureId(), 0,
+			nameMap, descriptionMap, expectedStructure.getDDMForm(),
+			expectedStructure.getDDMFormLayout(), _serviceContext);
+
+		Assert.assertEquals(nameMap, actualStructure.getNameMap());
+		Assert.assertEquals(
+			descriptionMap, actualStructure.getDescriptionMap());
+	}
+
+	protected DDMStructure addStructure() throws Exception {
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.US, "Test Structure Name");
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(LocaleUtil.US, "Test Structure Description");
+
+		return DDMStructureManagerUtil.addStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(), null,
+			_classNameId, StringUtil.randomString(), nameMap, descriptionMap,
+			createDDMForm(), createDDMFormLayout(),
+			DDMStructureManager.STRUCTURE_DEFAULT_STORAGE_TYPE,
+			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, _serviceContext);
+	}
+
+	protected void assertEquals(
+		DDMStructure expectedStructure, DDMStructure actualStructure) {
+
+		Assert.assertEquals(
+			expectedStructure.getStructureId(),
+			actualStructure.getStructureId());
+		Assert.assertEquals(
+			expectedStructure.getGroupId(), actualStructure.getGroupId());
+		Assert.assertEquals(
+			expectedStructure.getCompanyId(), actualStructure.getCompanyId());
+		Assert.assertEquals(
+			expectedStructure.getClassNameId(),
+			actualStructure.getClassNameId());
+		Assert.assertEquals(
+			expectedStructure.getStructureKey(),
+			actualStructure.getStructureKey());
+		Assert.assertEquals(
+			expectedStructure.getNameMap(), actualStructure.getNameMap());
+		Assert.assertEquals(
+			expectedStructure.getDescriptionMap(),
+			actualStructure.getDescriptionMap());
+	}
+
+	protected DDMForm createDDMForm() {
 		DDMForm ddmForm = new DDMForm();
+
 		ddmForm.setDefaultLocale(LocaleUtil.US);
-		ddmForm.setAvailableLocales(availableLocales);
+		ddmForm.addAvailableLocale(LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField();
+
 		ddmFormField.setType("text");
 		ddmFormField.setName("fieldName");
 
-		List<DDMFormField> ddmFormFields = new ArrayList<>();
-		ddmFormFields.add(ddmFormField);
-
-		ddmForm.setDDMFormFields(ddmFormFields);
+		ddmForm.addDDMFormField(ddmFormField);
 
 		return ddmForm;
 	}
 
-	private DDMFormLayout createFormLayout() {
-		List<DDMFormLayoutPage> ddmFormLayoutPages = new ArrayList<>();
-		ddmFormLayoutPages.add(createLayoutPage());
-
+	protected DDMFormLayout createDDMFormLayout() {
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
 		ddmFormLayout.setDefaultLocale(LocaleUtil.US);
-		ddmFormLayout.setDDMFormLayoutPages(ddmFormLayoutPages);
+
+		ddmFormLayout.addDDMFormLayoutPage(createDDMFormLayoutPage());
 
 		return ddmFormLayout;
 	}
 
-	private DDMFormLayoutColumn createFormLayoutColumn() {
+	protected DDMFormLayoutColumn createDDMFormLayoutColumn() {
 		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn();
 
-		List<String> names = new ArrayList<>();
-		names.add("fieldName");
+		List<String> ddmFormFieldNames = new ArrayList<>();
 
-		ddmFormLayoutColumn.setDDMFormFieldNames(names);
+		ddmFormFieldNames.add("fieldName");
 
-		ddmFormLayoutColumn.setSize(1);
+		ddmFormLayoutColumn.setDDMFormFieldNames(ddmFormFieldNames);
+		ddmFormLayoutColumn.setSize(DDMFormLayoutColumn.FULL);
 
 		return ddmFormLayoutColumn;
 	}
 
-	private DDMFormLayoutRow createFormLayoutRow() {
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
-		ddmFormLayoutColumns.add(createFormLayoutColumn());
-
-		ddmFormLayoutRow.setDDMFormLayoutColumns(ddmFormLayoutColumns);
-		return ddmFormLayoutRow;
-	}
-
-	private DDMFormLayoutPage createLayoutPage() {
-		Map<Locale, String> titleValues = new HashMap<>();
-		titleValues.put(LocaleUtil.US, "title");
-
-		Map<Locale, String> descriptionValues = new HashMap<>();
-		descriptionValues.put(LocaleUtil.US, "description");
-
+	protected DDMFormLayoutPage createDDMFormLayoutPage() {
 		LocalizedValue title = new LocalizedValue();
+
 		title.setDefaultLocale(LocaleUtil.US);
-		title.setValues(titleValues);
+
+		title.addString(LocaleUtil.US, "Title");
 
 		LocalizedValue description = new LocalizedValue();
-		title.setDefaultLocale(LocaleUtil.US);
-		title.setValues(descriptionValues);
+
+		description.setDefaultLocale(LocaleUtil.US);
+
+		description.addString(LocaleUtil.US, "Description");
 
 		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
 		ddmFormLayoutPage.setTitle(title);
 		ddmFormLayoutPage.setDescription(description);
-
-		List<DDMFormLayoutRow> ddmFormLayoutRows = new ArrayList<>();
-		ddmFormLayoutRows.add(createFormLayoutRow());
-
-		ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
+		ddmFormLayoutPage.addDDMFormLayoutRow(createDDMFormLayoutRow());
 
 		return ddmFormLayoutPage;
 	}
+
+	protected DDMFormLayoutRow createDDMFormLayoutRow() {
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.addDDMFormLayoutColumn(createDDMFormLayoutColumn());
+
+		return ddmFormLayoutRow;
+	}
+
+	private long _classNameId;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private ServiceContext _serviceContext;
-	private DDMStructure _structure = null;
 
 }

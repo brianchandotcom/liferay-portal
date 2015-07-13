@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -395,8 +394,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionRequest.setAttribute(
-					MVCPortlet.MVC_PATH, "/html/portlet/users_admin/error.jsp");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/users_admin/error.jsp");
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||

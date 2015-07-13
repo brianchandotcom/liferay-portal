@@ -29,7 +29,6 @@ import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.RequiredOrganizationException;
 import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -125,8 +124,8 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionRequest.setAttribute(
-					MVCPortlet.MVC_PATH, "/html/portlet/users_admin/error.jsp");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/users_admin/error.jsp");
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||

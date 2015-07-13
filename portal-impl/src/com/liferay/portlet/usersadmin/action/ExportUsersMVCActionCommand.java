@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -37,7 +36,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -101,14 +99,14 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 			ServletResponseUtil.sendFile(
 				request, response, fileName, bytes, ContentTypes.TEXT_CSV_UTF8);
 
-			actionRequest.setAttribute(
-				MVCPortlet.MVC_PATH, ActionConstants.COMMON_NULL);
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/common/null.jsp");
 		}
 		catch (Exception e) {
 			SessionErrors.add(actionRequest, e.getClass());
 
-			actionRequest.setAttribute(
-				MVCPortlet.MVC_PATH, "/html/portlet/users_admin/error.jsp");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/users_admin/error.jsp");
 		}
 	}
 

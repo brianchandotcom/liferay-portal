@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.storage.impl;
+package com.liferay.dynamic.data.mapping.internal;
 
-import com.liferay.portal.kernel.dynamicdatamapping.storage.StorageEngineManager;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = StorageEngineManager.class)
+@Component(immediate = true)
 public class StorageEngineManagerImpl implements StorageEngineManager {
 
 	@Override
@@ -59,11 +59,6 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	@Override
-	public String getStorageType() {
-		return _storageEngine.getStorageType();
-	}
-
-	@Override
 	public void update(
 			long classPK, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
@@ -72,7 +67,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 		_storageEngine.update(classPK, ddmFormValues, serviceContext);
 	}
 
-	@Reference(unbind = "-")
+	@Reference
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
 	}

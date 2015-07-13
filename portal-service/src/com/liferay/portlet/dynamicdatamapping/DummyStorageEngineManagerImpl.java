@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.dynamicdatamapping.storage;
+package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
@@ -45,11 +44,6 @@ public class DummyStorageEngineManagerImpl implements StorageEngineManager {
 	public DDMFormValues getDDMFormValues(long classPK)
 		throws StorageException {
 
-		return null;
-	}
-
-	@Override
-	public String getStorageType() {
 		return null;
 	}
 

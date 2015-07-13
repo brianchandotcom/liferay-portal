@@ -127,6 +127,8 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			userId, groupId);
 
+		fileName = fileName.replaceAll("\\(\\d+\\)\\.\\w$", StringPool.BLANK);
+
 		FileEntry fileEntry = _fetchPortletFileEntry(groupId, fileName, folder);
 
 		int counterSuffixValue = 1;

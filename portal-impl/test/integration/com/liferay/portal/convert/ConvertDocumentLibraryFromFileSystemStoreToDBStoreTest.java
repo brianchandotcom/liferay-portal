@@ -72,7 +72,7 @@ import org.junit.Test;
  * @author Sergio González
  * @author Manuel de la Peña
  */
-public class ConvertDocumentLibraryTest {
+public class ConvertDocumentLibraryFromFileSystemStoreToDBStoreTest {
 
 	@ClassRule
 	@Rule

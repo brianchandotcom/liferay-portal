@@ -17,9 +17,7 @@ package com.liferay.portlet.usersadmin.action;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

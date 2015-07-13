@@ -21,6 +21,67 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="database-test-action">
+		<attribute name="database.type" />
+		<element name="action" />
+
+		<sequential>
+			<local name="database.type" />
+
+			<property name="database.type" value="@{database.type}" />
+
+			<local name="database.service.name" />
+
+			<get-database-property property.name="database.service.name" />
+
+			<action />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="database-test-run-test">
+		<attribute name="database.type" />
+		<element name="test-action" />
+
+		<sequential>
+			<database-test-action database.type="@{database.type}">
+				<action>
+					<exec executable="service" failonerror="true">
+						<arg line="${database.service.name} stop" />
+					</exec>
+				</action>
+			</database-test-action>
+
+			<database-test-action database.type="@{database.type}">
+				<action>
+					<set-portal-impl-portal-ext-properties />
+
+					<set-portal-impl-portal-test-ext-properties />
+
+					<set-portal-impl-system-ext-properties />
+
+					<exec executable="service" failonerror="true">
+						<arg line="${database.service.name} start" />
+					</exec>
+
+					<antcall target="copy-optional-jars" inheritall="false" >
+						<param name="database.type" value="${database.type}" />
+						<param name="todir" value="lib/development" />
+					</antcall>
+
+					<antcall target="rebuild-database" inheritall="false" >
+						<param name="database.type" value="${database.type}" />
+					</antcall>
+
+					<test-action />
+
+					<exec executable="service" failonerror="true">
+						<arg line="${database.service.name} stop" />
+					</exec>
+				</action>
+			</database-test-action>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="merge-test-results">
 		<sequential>
 			<antcall target="merge-test-results" />
@@ -81,7 +142,7 @@
 		<sequential>
 			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 				<test-action>
-					<database-test-run-test database.test.sequence="@{database.type}">
+					<database-test-run-test database.type="@{database.type}">
 						<test-action>
 							<ant dir="portal-impl" target="test-class-group" inheritAll="false">
 								<property name="database.type" value="@{database.type}" />

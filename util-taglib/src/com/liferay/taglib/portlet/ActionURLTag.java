@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutConstants;
@@ -32,6 +31,7 @@ import com.liferay.portlet.PortletPreferencesFactoryConstants;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -165,9 +165,10 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 		}
 
 		if (parameterMap != null) {
-			MapUtil.merge(liferayPortletURL.getParameterMap(), parameterMap);
-
-			liferayPortletURL.setParameters(parameterMap);
+			for (Entry<String, String[]> entry : parameterMap.entrySet()) {
+				liferayPortletURL.setParameter(
+					entry.getKey(), entry.getValue(), false);
+			}
 		}
 
 		if ((settingsScope != null) &&

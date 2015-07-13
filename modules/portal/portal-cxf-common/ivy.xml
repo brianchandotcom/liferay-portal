@@ -22,7 +22,7 @@
 		<dependency name="cxf-tools-validator" org="org.apache.cxf" rev="3.0.3" />
 		<dependency name="org.apache.felix.dependencymanager" org="org.apache.felix" rev="3.2.0" />
 		<dependency name="org.apache.felix.dependencymanager.shell" org="org.apache.felix" rev="3.2.0" />
-		<dependency name="org.eclipse.equinox.http.servlet" org="org.eclipse.equinox" rev="1.2.0-SNAPSHOT" />
+		<dependency name="org.eclipse.equinox.http.servlet" org="org.eclipse.equinox" rev="1.2.1-SNAPSHOT" />
 		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />

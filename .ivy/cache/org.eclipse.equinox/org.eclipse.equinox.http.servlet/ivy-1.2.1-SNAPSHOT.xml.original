@@ -14,11 +14,11 @@
   <parent>
     <artifactId>rt.equinox.bundles</artifactId>
     <groupId>org.eclipse.equinox.bundles</groupId>
-    <version>4.5.0-SNAPSHOT</version>
+    <version>4.5.1-SNAPSHOT</version>
     <relativePath>../../</relativePath>
   </parent>
   <groupId>org.eclipse.equinox</groupId>
   <artifactId>org.eclipse.equinox.http.servlet</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.2.1-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

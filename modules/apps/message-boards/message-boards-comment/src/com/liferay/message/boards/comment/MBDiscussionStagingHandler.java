@@ -70,7 +70,14 @@ public class MBDiscussionStagingHandler implements DiscussionStagingHandler {
 
 	@Override
 	public String getClassName() {
-		return MBMessage.class.getName();
+		Class<? extends StagedModel> stagedModelClass = getStagedModelClass();
+
+		return stagedModelClass.getName();
+	}
+
+	@Override
+	public Class<? extends StagedModel> getStagedModelClass() {
+		return MBMessage.class;
 	}
 
 	@Override

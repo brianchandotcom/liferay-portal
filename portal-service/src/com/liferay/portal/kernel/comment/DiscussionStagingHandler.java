@@ -29,6 +29,8 @@ public interface DiscussionStagingHandler {
 
 	public String getClassName();
 
+	public Class<? extends StagedModel> getStagedModelClass();
+
 	public <T extends StagedModel> void importReferenceDiscussions(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;

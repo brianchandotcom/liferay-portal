@@ -193,6 +193,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 				return StringPool.BLANK;
 			}
 
+			@Override
+			public Class<? extends StagedModel> getStagedModelClass() {
+				return null;
+			}
+
 		};
 
 }

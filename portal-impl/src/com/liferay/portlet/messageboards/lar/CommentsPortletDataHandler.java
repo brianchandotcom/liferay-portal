@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -29,15 +31,14 @@ import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
-import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
@@ -56,16 +57,36 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 
 	public CommentsPortletDataHandler() {
 		setDataAlwaysStaged(true);
-		setDeletionSystemEventStagedModelTypes(
-			new StagedModelType(MBMessage.class));
-		setExportControls(
+		setPublishToLiveByDefault(true);
+	}
+
+	@Override
+	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
+
+		StagedModelType stagedModelType = new StagedModelType(
+			discussionStagingHandler.getStagedModelClass());
+
+		return new StagedModelType[] {stagedModelType};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportControls() {
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
+
+		PortletDataHandlerBoolean portletDataHandlerBoolean =
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "comments", true, false, null,
-				MBMessage.class.getName()));
-		setImportControls(getExportControls());
-		setPublishToLiveByDefault(true);
+				discussionStagingHandler.getClassName());
 
-		XStreamAliasRegistryUtil.register(MBMessageImpl.class, "MBMessage");
+		return new PortletDataHandlerControl[] {portletDataHandlerBoolean};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportControls() {
+		return getExportControls();
 	}
 
 	@Override

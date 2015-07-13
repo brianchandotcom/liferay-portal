@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/page_ratings/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:ratings
 	className="<%= Layout.class.getName() %>"

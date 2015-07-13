@@ -554,7 +554,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 									fileEntry.getFileEntryId());
 							}
 
-							actionResponse.sendRedirect(redirect);
+							sendRedirect(
+								actionRequest, actionResponse, redirect);
 						}
 					}
 				}
@@ -745,7 +746,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				String uploadExceptionRedirect = ParamUtil.getString(
 					actionRequest, "uploadExceptionRedirect");
 
-				actionResponse.sendRedirect(uploadExceptionRedirect);
+				sendRedirect(
+					actionRequest, actionResponse, uploadExceptionRedirect);
 
 				SessionErrors.add(actionRequest, e.getClass());
 

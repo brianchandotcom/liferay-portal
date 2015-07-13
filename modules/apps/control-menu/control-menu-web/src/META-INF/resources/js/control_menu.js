@@ -227,6 +227,19 @@ AUI.add(
 
 		Liferay.provide(
 			ControlMenu,
+			'_init',
+			function(namespace) {
+				var instance = this;
+
+				instance._namespace = namespace;
+
+				instance._registerPanels();
+			},
+			['aui-io-request', 'liferay-node', 'liferay-store', 'node-focusmanager']
+		);
+
+		Liferay.provide(
+			ControlMenu,
 			'_showPanel',
 			function(panelId) {
 				var instance = this;

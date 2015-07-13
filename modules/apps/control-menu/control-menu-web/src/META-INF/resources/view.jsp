@@ -100,3 +100,12 @@ boolean portalMessageUseAnimation = GetterUtil.getBoolean(PortalMessages.get(req
 		</aui:nav>
 	</aui:nav-bar>
 </c:if>
+
+<aui:script position="inline" use="liferay-control-menu">
+	Liferay.once(
+		'dockbarLoaded',
+		function() {
+			Liferay.ControlMenu._init('<portlet:namespace />');
+		}
+	);
+</aui:script>

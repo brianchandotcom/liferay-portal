@@ -49,7 +49,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 
 <liferay-ui:membership-policy-error />
 
-<portlet:actionURL name="/users_admin/edit_organization" var="editAssignmentsURL" />
+<portlet:actionURL name="/users_admin/edit_organization_assignments" var="editAssignmentsURL" />
 
 <aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

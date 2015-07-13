@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.Locale;
 import java.util.Map;
@@ -44,12 +44,11 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 		super.populateConfigJSONObject(
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
-			liferayPortletResponse);
+			portletURLBuilder);
 
 		jsonObject.put("autoParagraph", Boolean.FALSE);
 		jsonObject.put("autoSaveTimeout", 3000);

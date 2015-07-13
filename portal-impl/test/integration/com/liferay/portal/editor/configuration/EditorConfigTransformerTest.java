@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -295,8 +295,7 @@ public class EditorConfigTransformerTest {
 		public void populateConfigJSONObject(
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 			jsonObject.put("textMode", "html");
 			jsonObject.put("toolbar", "HTMLToolbar");
@@ -312,8 +311,7 @@ public class EditorConfigTransformerTest {
 		public void transform(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse,
+			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder,
 			JSONObject configJSONObject) {
 
 			String uploadURL = editorOptions.getUploadURL();
@@ -339,8 +337,7 @@ public class EditorConfigTransformerTest {
 		public void populateEditorOptions(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 			editorOptions.setTextMode(true);
 		}
@@ -354,8 +351,7 @@ public class EditorConfigTransformerTest {
 		public void populateEditorOptions(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 			editorOptions.setUploadURL("http://upload.com");
 		}

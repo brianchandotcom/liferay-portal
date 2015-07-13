@@ -24,12 +24,12 @@ import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.web.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -75,6 +75,9 @@ public class ItemSelectorImpl implements ItemSelector {
 		String itemSelectedEventName = getValue(
 			parameters, PARAMETER_ITEM_SELECTED_EVENT_NAME);
 
+		PortletURLBuilder portletURLBuilder = PortletURLBuilder.create(
+			PortalUtil.getLiferayPortletResponse(portletResponse));
+
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			new ArrayList<>();
 
@@ -105,7 +108,7 @@ public class ItemSelectorImpl implements ItemSelector {
 					itemSelectorViews) {
 
 				PortletURL portletURL = getItemSelectorURL(
-					portletResponse, itemSelectedEventName,
+					portletURLBuilder, itemSelectedEventName,
 					itemSelectorCriteriaArray);
 
 				portletURL.setParameter(
@@ -126,13 +129,10 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Override
 	public PortletURL getItemSelectorURL(
-		PortletResponse portletResponse, String itemSelectedEventName,
+		PortletURLBuilder portletURLBuilder, String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
-
-		LiferayPortletURL portletURL = liferayPortletResponse.createRenderURL(
+		PortletURL portletURL = portletURLBuilder.createRenderURL(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
 		try {

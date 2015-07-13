@@ -16,8 +16,8 @@ package com.liferay.frontend.editors.web.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.Map;
 
@@ -35,8 +35,7 @@ public class CKEditorCreoleOptionsContributor
 	public void populateEditorOptions(
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 		Map<String, Object> dynamicAttributes =
 			editorOptions.getDynamicAttributes();

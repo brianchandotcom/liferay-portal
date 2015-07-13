@@ -211,6 +211,10 @@ public class MVCPortlet extends LiferayPortlet {
 			"ResourceCommand");
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void invokeTaglibDiscussion(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -221,6 +225,10 @@ public class MVCPortlet extends LiferayPortlet {
 			portletConfig, actionRequest, actionResponse);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void invokeTaglibDiscussionPagination(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {

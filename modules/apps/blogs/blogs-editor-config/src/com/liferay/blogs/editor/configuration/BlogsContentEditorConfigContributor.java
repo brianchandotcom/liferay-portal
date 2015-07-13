@@ -25,9 +25,9 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,19 +55,20 @@ public class BlogsContentEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
-		if (liferayPortletResponse != null) {
-			String name =
-				liferayPortletResponse.getNamespace() +
-					GetterUtil.getString(
-						(String)inputEditorTaglibAttributes.get(
-							"liferay-ui:input-editor:name"));
+		String namespace = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:namespace"));
 
-			populateFileBrowserURL(
-				jsonObject, liferayPortletResponse, name + "selectDocument");
-		}
+		String name =
+			namespace +
+				GetterUtil.getString(
+					inputEditorTaglibAttributes.get(
+						"liferay-ui:input-editor:name"));
+
+		populateFileBrowserURL(
+			jsonObject, portletURLBuilder, name + "selectDocument");
 	}
 
 	@Reference(unbind = "-")
@@ -76,7 +77,7 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	protected void populateFileBrowserURL(
-		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
+		JSONObject jsonObject, PortletURLBuilder portletURLBuilder,
 		String eventName) {
 
 		List<ItemSelectorReturnType>
@@ -102,7 +103,7 @@ public class BlogsContentEditorConfigContributor
 			blogsContentEditorDesiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			liferayPortletResponse, eventName, blogsItemSelectorCriterion,
+			portletURLBuilder, eventName, blogsItemSelectorCriterion,
 			imageItemSelectorCriterion);
 
 		jsonObject.put(

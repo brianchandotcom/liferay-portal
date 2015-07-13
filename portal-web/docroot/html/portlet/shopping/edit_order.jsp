@@ -394,20 +394,10 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 <c:if test="<%= PropsValues.SHOPPING_ORDER_COMMENTS_ENABLED && !windowState.equals(LiferayWindowState.POP_UP) %>">
 	<liferay-ui:panel-container extended="<%= true %>"  id="shoppingEditOrderPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditOrderCommentsPanel" persistState="<%= true %>" title="comments">
-			<portlet:actionURL var="discussionURL">
-				<portlet:param name="struts_action" value="/shopping/edit_order_discussion" />
-			</portlet:actionURL>
-
-			<portlet:resourceURL var="discussionPaginationURL">
-				<portlet:param name="struts_action" value="/shopping/edit_order_discussion" />
-			</portlet:resourceURL>
-
 			<liferay-ui:discussion
 				className="<%= ShoppingOrder.class.getName() %>"
 				classPK="<%= order.getOrderId() %>"
-				formAction="<%= discussionURL %>"
 				formName="fm2"
-				paginationURL="<%= discussionPaginationURL %>"
 				redirect="<%= currentURL %>"
 				userId="<%= order.getUserId() %>"
 			/>

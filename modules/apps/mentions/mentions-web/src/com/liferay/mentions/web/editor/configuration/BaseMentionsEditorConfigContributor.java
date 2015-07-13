@@ -19,14 +19,15 @@ import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributo
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.Map;
+
+import javax.portlet.PortletURL;
 
 /**
  * @author Sergio González
@@ -37,8 +38,7 @@ public class BaseMentionsEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 		JSONObject autoCompleteConfigJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -67,18 +67,14 @@ public class BaseMentionsEditorConfigContributor
 
 		triggerJSONObject.put("tplResults", sb.toString());
 
-		if (liferayPortletResponse != null) {
-			LiferayPortletURL autoCompleteUserURL =
-				liferayPortletResponse.createResourceURL(
-					MentionsPortletKeys.MENTIONS);
+		PortletURL autoCompleteUserURL = portletURLBuilder.createResourceURL(
+			MentionsPortletKeys.MENTIONS);
 
-			String source =
-				autoCompleteUserURL.toString() + "&" +
-					PortalUtil.getPortletNamespace(
-						MentionsPortletKeys.MENTIONS);
+		String source =
+			autoCompleteUserURL.toString() + "&" +
+				PortalUtil.getPortletNamespace(MentionsPortletKeys.MENTIONS);
 
-			triggerJSONObject.put("source", source);
-		}
+		triggerJSONObject.put("source", source);
 
 		triggerJSONArray.put(triggerJSONObject);
 

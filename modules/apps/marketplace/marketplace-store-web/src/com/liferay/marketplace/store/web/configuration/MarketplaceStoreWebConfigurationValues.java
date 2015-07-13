@@ -14,20 +14,22 @@
 
 package com.liferay.marketplace.store.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-
 /**
- * @author Ryan Park
  * @author Joan Kim
+ * @author Ryan Park
  */
-public class MarketplaceWebConfigurationValues {
+public class MarketplaceStoreWebConfigurationValues {
 
-	public static final boolean MARKETPLACE_STORE_ENABLED =
-		GetterUtil.getBoolean(
-			MarketplaceWebConfigurationUtil.get("marketplace.store.enabled"),
-			true);
+	public static final String MARKETPLACE_KEY =
+		MarketplaceStoreWebConfigurationUtil.get(
+			MarketplaceStoreWebConfigurationKeys.MARKETPLACE_KEY);
 
-	public static final String MARKETPLACE_URL = GetterUtil.getString(
-		MarketplaceWebConfigurationUtil.get("marketplace.url"));
+	public static final String MARKETPLACE_SECRET =
+		MarketplaceStoreWebConfigurationUtil.get(
+			MarketplaceStoreWebConfigurationKeys.MARKETPLACE_SECRET);
+
+	public static final String MARKETPLACE_URL =
+		MarketplaceStoreWebConfigurationUtil.get(
+			MarketplaceStoreWebConfigurationKeys.MARKETPLACE_URL);
 
 }

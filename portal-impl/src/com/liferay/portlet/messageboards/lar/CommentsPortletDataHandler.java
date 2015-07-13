@@ -17,31 +17,15 @@ package com.liferay.portlet.messageboards.lar;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageConstants;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -101,9 +85,8 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		MBThreadLocalServiceUtil.deleteThreads(
-			portletDataContext.getScopeGroupId(),
-			MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+		CommentManagerUtil.deleteGroupComments(
+			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -123,8 +106,12 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			return getExportDataRootElementString(rootElement);
 		}
 
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
+
 		ActionableDynamicQuery actionableDynamicQuery =
-			getCommentActionableDynamicQuery(portletDataContext);
+			discussionStagingHandler.getCommentActionableDynamicQuery(
+				portletDataContext);
 
 		actionableDynamicQuery.performActions();
 
@@ -149,77 +136,14 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
+
 		ActionableDynamicQuery actionableDynamicQuery =
-			getCommentActionableDynamicQuery(portletDataContext);
-
-		actionableDynamicQuery.performCount();
-	}
-
-	protected ActionableDynamicQuery getCommentActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
-
-		final ExportActionableDynamicQuery actionableDynamicQuery =
-			MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
+			discussionStagingHandler.getCommentActionableDynamicQuery(
 				portletDataContext);
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
-
-					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
-
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
-
-						disjunction.add(modifiedDateCriterion);
-						disjunction.add(statusDateCriterion);
-
-						dynamicQuery.add(disjunction);
-					}
-
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
-
-					dynamicQuery.add(classNameIdProperty.gt(0L));
-
-					Property parentMessageIdProperty =
-						PropertyFactoryUtil.forName("parentMessageId");
-
-					dynamicQuery.add(
-						parentMessageIdProperty.gt(
-							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID));
-
-					Property statusProperty = PropertyFactoryUtil.forName(
-						"status");
-
-					if (portletDataContext.isInitialPublication()) {
-						dynamicQuery.add(
-							statusProperty.ne(
-								WorkflowConstants.STATUS_IN_TRASH));
-					}
-					else {
-						StagedModelDataHandler<?> stagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									MBMessage.class.getName());
-
-						dynamicQuery.add(
-							statusProperty.in(
-								stagedModelDataHandler.
-									getExportableStatuses()));
-					}
-				}
-
-			});
-
-		return actionableDynamicQuery;
+		actionableDynamicQuery.performCount();
 	}
 
 	private class ImportCommentsCallable implements Callable<Void> {
@@ -230,8 +154,11 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 
 		@Override
 		public Void call() throws PortalException {
+			DiscussionStagingHandler discussionStagingHandler =
+				CommentManagerUtil.getDiscussionStagingHandler();
+
 			_portletDataContext.importPortletPermissions(
-				MBPermission.RESOURCE_NAME);
+				discussionStagingHandler.getResourceName());
 
 			if (!_portletDataContext.getBooleanParameter(
 					NAMESPACE, "comments")) {
@@ -240,7 +167,8 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			}
 
 			Element messagesElement =
-				_portletDataContext.getImportDataGroupElement(MBMessage.class);
+				_portletDataContext.getImportDataGroupElement(
+					discussionStagingHandler.getStagedModelClass());
 
 			List<Element> messageElements = messagesElement.elements();
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.StagedModel;
@@ -69,6 +70,10 @@ public class DummyCommentManagerImpl implements CommentManager {
 
 	@Override
 	public void deleteDiscussion(String className, long classPK) {
+	}
+
+	@Override
+	public void deleteGroupComments(long groupId) {
 	}
 
 	@Override
@@ -179,6 +184,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 		new DiscussionStagingHandler() {
 
 			@Override
+			public String getResourceName() {
+				return StringPool.BLANK;
+			}
+
+			@Override
 			public <T extends StagedModel> void exportReferenceDiscussions(
 				PortletDataContext portletDataContext, T stagedModel) {
 			}
@@ -186,6 +196,13 @@ public class DummyCommentManagerImpl implements CommentManager {
 			@Override
 			public <T extends StagedModel> void importReferenceDiscussions(
 				PortletDataContext portletDataContext, T stagedModel) {
+			}
+
+			@Override
+			public ActionableDynamicQuery getCommentActionableDynamicQuery(
+				PortletDataContext portletDataContext) {
+
+				return null;
 			}
 
 			@Override

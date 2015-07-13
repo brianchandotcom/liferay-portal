@@ -76,6 +76,12 @@ public class CommentManagerUtil {
 		getCommentManager().deleteDiscussion(className, classPK);
 	}
 
+	public static void deleteGroupComments(long groupId)
+		throws PortalException {
+
+		getCommentManager().deleteGroupComments(groupId);
+	}
+
 	public static Comment fetchComment(long commentId) {
 		return getCommentManager().fetchComment(commentId);
 	}

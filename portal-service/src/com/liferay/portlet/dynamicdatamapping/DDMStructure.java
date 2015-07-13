@@ -15,6 +15,10 @@
 package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.StagedModel;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +27,9 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public interface DDMStructure {
+public interface DDMStructure extends StagedModel {
+
+	public long getClassNameId();
 
 	public DDMForm getDDMForm();
 
@@ -33,9 +39,19 @@ public interface DDMStructure {
 
 	public String getDefinition();
 
+	public String getDescription();
+
+	public String getDescription(Locale locale);
+
 	public Map<Locale, String> getDescriptionMap();
 
 	public String getFieldType(String fieldName) throws PortalException;
+
+	public long getGroupId();
+
+	public String getName();
+
+	public String getName(Locale locale);
 
 	public Map<Locale, String> getNameMap();
 

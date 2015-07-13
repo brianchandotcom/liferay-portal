@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.jsonwebservice;
 
+import com.liferay.portal.kernel.json.JSONWebServiceRegistrator;
+
 import java.lang.reflect.Method;
 
 import java.util.List;
@@ -61,6 +63,10 @@ public interface JSONWebServiceActionsManager {
 
 	public int registerService(
 		String contextName, String contextPath, Object service);
+
+	public int registerService(
+		String contextName, String contextPath, Object service,
+		JSONWebServiceRegistrator jsonWebServiceRegistrator);
 
 	public int registerServletContext(ServletContext servletContext);
 

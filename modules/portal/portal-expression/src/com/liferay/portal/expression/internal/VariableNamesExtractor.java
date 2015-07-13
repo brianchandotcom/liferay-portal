@@ -32,6 +32,8 @@ public class VariableNamesExtractor {
 			return Collections.emptyList();
 		}
 
+		expressionString = removeStringConstants(expressionString);
+
 		List<String> variableNames = new ArrayList<>();
 
 		Matcher matcher = _pattern.matcher(expressionString);
@@ -45,6 +47,10 @@ public class VariableNamesExtractor {
 		}
 
 		return variableNames;
+	}
+
+	private String removeStringConstants(String expressionString) {
+		return expressionString.replaceAll("\"([^\"]|\\\")*\"", "");
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

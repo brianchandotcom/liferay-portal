@@ -217,6 +217,17 @@ public class ExpressionEvaluationTest {
 	}
 
 	@Test
+	public void testEvaluateWithStringConstant() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression(
+				"var1 == \"Life\" + \"ray\"");
+
+		expression.setStringVariableValue("var1", "Liferay");
+
+		Assert.assertTrue(expression.evaluate());
+	}
+
+	@Test
 	public void testSumWithDoubleValues() throws Exception {
 		Expression<Double> expression =
 			_expressionFactory.createDoubleExpression("sum(var1, var2, var3)");

@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.blogs.linkback;
 
-import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comments.CommentManager;
+import com.liferay.portal.kernel.comments.CommentManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;

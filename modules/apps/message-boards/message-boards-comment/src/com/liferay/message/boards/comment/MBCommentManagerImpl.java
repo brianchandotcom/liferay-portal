@@ -14,14 +14,14 @@
 
 package com.liferay.message.boards.comment;
 
-import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentConstants;
-import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.comment.Discussion;
-import com.liferay.portal.kernel.comment.DiscussionComment;
-import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
-import com.liferay.portal.kernel.comment.DuplicateCommentException;
+import com.liferay.portal.kernel.comments.Comment;
+import com.liferay.portal.kernel.comments.CommentConstants;
+import com.liferay.portal.kernel.comments.CommentManager;
+import com.liferay.portal.kernel.comments.Discussion;
+import com.liferay.portal.kernel.comments.DiscussionComment;
+import com.liferay.portal.kernel.comments.DiscussionPermission;
+import com.liferay.portal.kernel.comments.DiscussionStagingHandler;
+import com.liferay.portal.kernel.comments.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringPool;

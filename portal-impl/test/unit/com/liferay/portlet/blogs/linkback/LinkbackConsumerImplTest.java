@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.blogs.linkback;
 
-import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comments.CommentManager;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;

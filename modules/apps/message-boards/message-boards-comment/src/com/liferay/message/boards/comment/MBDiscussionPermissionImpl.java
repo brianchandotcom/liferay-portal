@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.comment;
 
-import com.liferay.portal.kernel.comment.BaseDiscussionPermission;
+import com.liferay.portal.kernel.comments.BaseDiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;

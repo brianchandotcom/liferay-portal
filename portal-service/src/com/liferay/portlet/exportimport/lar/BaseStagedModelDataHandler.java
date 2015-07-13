@@ -22,8 +22,8 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_SUCCEEDED;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
+import com.liferay.portal.kernel.comments.CommentManagerUtil;
+import com.liferay.portal.kernel.comments.DiscussionStagingHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

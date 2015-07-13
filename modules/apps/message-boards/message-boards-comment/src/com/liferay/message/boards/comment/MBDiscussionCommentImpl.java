@@ -14,9 +14,9 @@
 
 package com.liferay.message.boards.comment;
 
-import com.liferay.portal.kernel.comment.DiscussionComment;
-import com.liferay.portal.kernel.comment.DiscussionCommentIterator;
-import com.liferay.portal.kernel.comment.WorkflowableComment;
+import com.liferay.portal.kernel.comments.DiscussionComment;
+import com.liferay.portal.kernel.comments.DiscussionCommentIterator;
+import com.liferay.portal.kernel.comments.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;

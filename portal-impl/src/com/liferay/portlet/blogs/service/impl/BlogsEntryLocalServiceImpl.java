@@ -15,7 +15,7 @@
 package com.liferay.portlet.blogs.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comments.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

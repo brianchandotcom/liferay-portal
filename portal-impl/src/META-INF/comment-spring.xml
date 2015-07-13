@@ -7,8 +7,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.comment.CommentManager" class="com.liferay.portal.comment.CommentManagerImpl" />
-	<bean id="com.liferay.portal.kernel.comment.CommentManagerUtil" class="com.liferay.portal.kernel.comment.CommentManagerUtil">
+	<bean id="com.liferay.portal.kernel.comment.CommentManager" class="com.liferay.portal.comments.CommentManagerImpl" />
+	<bean id="com.liferay.portal.kernel.comment.CommentManagerUtil" class="com.liferay.portal.kernel.comments.CommentManagerUtil">
 		<property name="commentManager" ref="com.liferay.portal.kernel.comment.CommentManager" />
 	</bean>
 </beans>

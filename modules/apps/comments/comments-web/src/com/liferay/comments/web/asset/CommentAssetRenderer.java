@@ -15,10 +15,10 @@
 package com.liferay.comments.web.asset;
 
 import com.liferay.comments.web.constants.CommentsPortletKeys;
-import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.comment.WorkflowableComment;
+import com.liferay.portal.kernel.comments.Comment;
+import com.liferay.portal.kernel.comments.CommentManagerUtil;
+import com.liferay.portal.kernel.comments.DiscussionPermission;
+import com.liferay.portal.kernel.comments.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

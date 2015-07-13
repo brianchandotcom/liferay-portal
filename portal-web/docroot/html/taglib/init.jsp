@@ -16,7 +16,7 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.comment.Comment" %><%@
+<%@ page import="com.liferay.portal.kernel.comments.Comment" %><%@
 page import="com.liferay.portal.kernel.search.RelatedSearchResult" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@

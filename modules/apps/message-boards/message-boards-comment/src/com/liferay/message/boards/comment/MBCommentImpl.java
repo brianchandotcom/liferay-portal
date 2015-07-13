@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.comment;
 
-import com.liferay.portal.kernel.comment.WorkflowableComment;
+import com.liferay.portal.kernel.comments.WorkflowableComment;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;

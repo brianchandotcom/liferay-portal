@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.comment;
 
-import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
+import com.liferay.portal.kernel.comments.DiscussionStagingHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;

@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.comment;
 
-import com.liferay.portal.kernel.comment.Discussion;
-import com.liferay.portal.kernel.comment.DiscussionComment;
+import com.liferay.portal.kernel.comments.Discussion;
+import com.liferay.portal.kernel.comments.DiscussionComment;
 
 /**
  * @author Adolfo Pérez

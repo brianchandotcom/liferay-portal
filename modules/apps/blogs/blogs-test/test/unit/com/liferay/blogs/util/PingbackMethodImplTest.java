@@ -15,8 +15,8 @@
 package com.liferay.blogs.util;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.comment.DuplicateCommentException;
+import com.liferay.portal.kernel.comments.CommentManager;
+import com.liferay.portal.kernel.comments.DuplicateCommentException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;

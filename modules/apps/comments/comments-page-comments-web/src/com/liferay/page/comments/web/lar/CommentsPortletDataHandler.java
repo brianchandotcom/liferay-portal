@@ -14,6 +14,7 @@
 
 package com.liferay.page.comments.web.lar;
 
+import com.liferay.page.comments.web.constants.PageCommentsPortletKeys;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -32,9 +34,16 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Gergely Mathe
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PageCommentsPortletKeys.PAGE_COMMENTS},
+	service = PortletDataHandler.class
+)
 public class CommentsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "comments";

@@ -9,6 +9,8 @@ AUI.add(
 
 		var CSS_CAPTION = A.getClassName('image', 'viewer', 'caption');
 
+		var CSS_ICON_MONOSPACED = 'icon-monospaced';
+
 		var CSS_IMAGE_VIEWER = A.getClassName('image', 'viewer');
 
 		var CSS_IMAGE_VIEWER_BASE = A.getClassName(CSS_IMAGE_VIEWER, 'base');
@@ -43,7 +45,7 @@ AUI.add(
 
 		var STR_RENDER_CONTROLS = 'renderControls';
 
-		var TPL_CLOSE = '<button class="close image-viewer-base-control image-viewer-close lfr-item-viewer-close" type="button"><span class="glyphicon glyphicon-chevron-left"></span><span>{0}</span></button>';
+		var TPL_CLOSE = '<button class="close image-viewer-base-control image-viewer-close lfr-item-viewer-close" type="button"><span class="glyphicon glyphicon-chevron-left ' + CSS_ICON_MONOSPACED + '"></span><span>{0}</span></button>';
 
 		var TPL_INFO_ICON = '<span class="glyphicon glyphicon-info-sign lfr-item-viewer-icon-info"></span>';
 
@@ -97,11 +99,11 @@ AUI.add(
 					TPL_CAPTION: '<p class="' + CSS_CAPTION + '"></p>',
 
 					TPL_CONTROL_LEFT: '<a class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_LEFT_BASE + ' ' + CSS_FOOTER_CONTROL_LEFT + '" href="javascript:;">' +
-						'<span class="glyphicon glyphicon-chevron-left"></span>' +
+						'<span class="glyphicon glyphicon-chevron-left ' + CSS_ICON_MONOSPACED + '"></span>' +
 					'</a>',
 
 					TPL_CONTROL_RIGHT: '<a class="' + CSS_FOOTER_CONTROL + ' ' + CSS_FOOTER_CONTROL_RIGHT_BASE + ' ' + CSS_FOOTER_CONTROL_RIGHT + '" href="javascript:;">' +
-						'<span class="glyphicon glyphicon-chevron-right"></span>' +
+						'<span class="glyphicon glyphicon-chevron-right ' + CSS_ICON_MONOSPACED + '"></span>' +
 					'</a>',
 
 					TPL_IMAGE_CONTAINER: '<div class="closed ' + CSS_IMAGE_CONTAINER + ' ' + CSS_SIDENAV_CONTAINER + ' sidenav-right">' +

@@ -27,6 +27,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
 page import="com.liferay.exportimport.web.portlet.action.ExportImportMVCActionCommand" %><%@
+page import="com.liferay.exportimport.web.search.ExportImportConfigurationDisplayTerms" %><%@
+page import="com.liferay.exportimport.web.search.ExportImportConfigurationSearchTerms" %><%@
 page import="com.liferay.portal.LayoutPrototypeException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.NoSuchGroupException" %><%@
@@ -142,8 +144,6 @@ page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerControl" %><
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portlet.exportimport.lar.UserIdStrategy" %><%@
 page import="com.liferay.portlet.exportimport.model.ExportImportConfiguration" %><%@
-page import="com.liferay.portlet.exportimport.search.ExportImportConfigurationDisplayTerms" %><%@
-page import="com.liferay.portlet.exportimport.search.ExportImportConfigurationSearchTerms" %><%@
 page import="com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@

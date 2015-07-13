@@ -59,6 +59,8 @@ cobertura.ser
 /lib/development/ojdbc5.jar
 /lib/development/ojdbc6.jar
 
+/modules/util/sass-compiler-ruby/test/unit/com/liferay/sass/compiler/ruby/internal/dependencies
+
 /nbproject/private
 
 /osgi/bootstrap/classes

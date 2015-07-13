@@ -345,20 +345,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>86</portlet-name>
-		<display-name>Portlet Configuration</display-name>
-		<portlet-class>com.liferay.portlet.portletconfiguration.PortletConfigurationPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/portlet_configuration/</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-	</portlet>
-	<portlet>
 		<portlet-name>90</portlet-name>
 		<display-name>Portal</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

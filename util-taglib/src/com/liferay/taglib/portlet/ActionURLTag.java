@@ -155,10 +155,11 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 			}
 
 			liferayPortletURL.setParameter(
-				"mvcPath",
-				"/html/portlet/portlet_configuration/edit_configuration.jsp");
+				"mvcPath", "/edit_configuration.jsp");
 			liferayPortletURL.setParameter(
 				"returnToFullPageURL", returnToFullPageURL);
+			liferayPortletURL.setParameter(
+				"portletConfiguration", Boolean.TRUE.toString());
 			liferayPortletURL.setParameter("portletResource", portletResource);
 			liferayPortletURL.setParameter("previewWidth", previewWidth);
 		}

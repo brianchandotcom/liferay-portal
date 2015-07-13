@@ -34,9 +34,9 @@ if (Validator.isNull(portletResource)) {
 }
 
 if (Validator.isNotNull(portletResource)) {
-	String mvcPath = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "mvcPath");
+	boolean portletConfiguration = ParamUtil.getBoolean(request, PortalUtil.getPortletNamespace(ppid) + "portletConfiguration");
 
-	if (!mvcPath.contains("/portlet_configuration/")) {
+	if (!portletConfiguration) {
 		ppid = portletResource;
 	}
 }

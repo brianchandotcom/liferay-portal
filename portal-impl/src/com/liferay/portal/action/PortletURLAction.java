@@ -135,9 +135,7 @@ public class PortletURLAction extends Action {
 				request, "portletResource");
 			String previewWidth = ParamUtil.getString(request, "previewWidth");
 
-			portletURL.setParameter(
-				"mvcPath",
-				"/html/portlet/portlet_configuration/edit_configuration.jsp");
+			portletURL.setParameter("mvcPath", "/edit_configuration.jsp");
 			portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 			portletURL.setParameter("portletResource", portletResource);
 			portletURL.setParameter("previewWidth", previewWidth);

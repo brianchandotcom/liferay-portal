@@ -56,12 +56,12 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	</c:if>
 
 	<%
-	for (DDMTemplate curDDMTemplate : DDMTemplateLocalServiceUtil.getTemplates(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), classNameId, 0L)) {
+	for (DDMTemplate curDDMTemplate : DDMTemplateManagerUtil.getTemplates(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), classNameId, 0L)) {
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("displaystylegroupid", curDDMTemplate.getGroupId());
 
-		if (!DDMTemplatePermission.contains(permissionChecker, scopeGroupId, curDDMTemplate, PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
+		if (!DDMTemplateManagerUtil.hasPermission(permissionChecker, scopeGroupId, curDDMTemplate.getTemplateId(), PortletKeys.PORTLET_DISPLAY_TEMPLATE, ActionKeys.VIEW)) {
 			continue;
 		}
 	%>

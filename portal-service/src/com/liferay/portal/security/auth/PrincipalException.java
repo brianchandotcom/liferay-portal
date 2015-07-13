@@ -128,6 +128,23 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBePortletStrutsPath extends PrincipalException {
+
+		public MustBePortletStrutsPath(String strutsPath, String portletId) {
+			super(
+				String.format(
+					"Struts path %s must be struts path of portlet %s",
+					strutsPath, portletId));
+
+			this.strutsPath = strutsPath;
+			this.portletId = portletId;
+		}
+
+		public final String portletId;
+		public final String strutsPath;
+
+	}
+
 	public static class MustHavePermission extends PrincipalException {
 
 		public MustHavePermission(long userId, String... actionIds) {
@@ -188,6 +205,7 @@ public class PrincipalException extends PortalException {
 		PrincipalException.MustBeEnabled.class,
 		PrincipalException.MustBeInvokedUsingPost.class,
 		PrincipalException.MustBeOmniadmin.class,
+		PrincipalException.MustBePortletStrutsPath.class,
 		PrincipalException.MustHavePermission.class
 	};
 

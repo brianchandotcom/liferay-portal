@@ -20,6 +20,7 @@
 boolean author = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:author"));
 int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:user-display:displayStyle"));
 String imageCssClass = (String)request.getAttribute("liferay-ui:user-display:imageCssClass");
+boolean showLink = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:showLink"));
 boolean showUserDetails = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:showUserDetails"));
 boolean showUserName = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:showUserName"));
 String url = (String)request.getAttribute("liferay-ui:user-display:url");

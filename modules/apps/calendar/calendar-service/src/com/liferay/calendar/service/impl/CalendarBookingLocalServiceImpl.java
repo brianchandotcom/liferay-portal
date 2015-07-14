@@ -1206,7 +1206,7 @@ public class CalendarBookingLocalServiceImpl
 		if ((recurrenceObj.getUntilJCalendar() != null) &&
 			startTimeJCalendar.after(recurrenceObj.getUntilJCalendar())) {
 
-			throw new CalendarBookingRecurrenceException()
+			throw new CalendarBookingRecurrenceException();
 		}
 	}
 

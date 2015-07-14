@@ -101,8 +101,8 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 
 							new Liferay.DDL.Portlet(
 								{
-									editForm: event.form,
 									definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
+									editForm: event.form,
 									layout: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>,
 									namespace: '<portlet:namespace />'
 								}

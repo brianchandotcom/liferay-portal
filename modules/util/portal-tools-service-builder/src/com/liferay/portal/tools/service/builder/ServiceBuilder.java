@@ -2084,6 +2084,7 @@ public class ServiceBuilder {
 
 				if (Character.isAlphabetic(nextChar) ||
 					Character.isDigit(nextChar) ||
+					(nextChar == CharPool.PERIOD) ||
 					(nextChar == CharPool.QUOTE) ||
 					(nextChar == CharPool.SEMICOLON) ||
 					(previousChar == CharPool.QUOTE)) {

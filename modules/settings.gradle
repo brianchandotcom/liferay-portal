@@ -46,6 +46,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/password-generator/*/build.gradle"
 		include "apps/password-policies-admin/*/build.gradle"
 		include "apps/polls/*/build.gradle"
+		include "apps/portal-instances/*/build.gradle"
 		include "apps/portlet-configuration/*/build.gradle"
 		include "apps/portlet-css/*/build.gradle"
 		include "apps/portlet-display-template/*/build.gradle"

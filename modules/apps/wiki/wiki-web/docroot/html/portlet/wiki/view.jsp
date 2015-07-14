@@ -357,20 +357,11 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 		<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>">
 			<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
-					<portlet:actionURL var="discussionURL">
-						<portlet:param name="struts_action" value="/wiki/edit_page_discussion" />
-					</portlet:actionURL>
-
-					<portlet:resourceURL var="discussionPaginationURL">
-						<portlet:param name="struts_action" value="/wiki/edit_page_discussion" />
-					</portlet:resourceURL>
 
 					<liferay-ui:discussion
 						className="<%= WikiPage.class.getName() %>"
 						classPK="<%= wikiPage.getResourcePrimKey() %>"
-						formAction="<%= discussionURL %>"
 						formName="fm2"
-						paginationURL="<%= discussionPaginationURL %>"
 						ratingsEnabled="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>"
 						redirect="<%= currentURL %>"
 						userId="<%= wikiPage.getUserId() %>"

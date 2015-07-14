@@ -12,16 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.portal.comment.action;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
@@ -30,7 +37,7 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFunction;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -41,143 +48,85 @@ import com.liferay.portlet.messageboards.RequiredMessageException;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Sergio González
+ * @author Adolfo Pérez
  */
-public class EditDiscussionAction extends PortletAction {
+@OSGiBeanProperties(
+	property = "path=/portal/edit_discussion", service = StrutsAction.class
+)
+public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		String namespace = ParamUtil.getString(request, "namespace");
+
+		HttpServletRequest namespacedRequest = new NamespaceServletRequest(
+			request, StringPool.BLANK, namespace);
+
+		String cmd = ParamUtil.getString(namespacedRequest, Constants.CMD);
 
 		try {
 			String redirect = PortalUtil.escapeRedirect(
-				ParamUtil.getString(actionRequest, "redirect"));
+				ParamUtil.getString(request, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				long commentId = updateComment(actionRequest);
+				long commentId = updateComment(namespacedRequest);
 
-				boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
+				boolean ajax = ParamUtil.getBoolean(request, "ajax", true);
 
 				if (ajax) {
 					String randomNamespace = ParamUtil.getString(
-						actionRequest, "randomNamespace");
+						namespacedRequest, "randomNamespace");
 
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 					jsonObject.put("commentId", commentId);
 					jsonObject.put("randomNamespace", randomNamespace);
 
-					writeJSON(actionRequest, actionResponse, jsonObject);
+					writeJSON(namespacedRequest, response, jsonObject);
 
-					return;
+					return null;
 				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteComment(actionRequest);
+				deleteComment(namespacedRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE_TO_COMMENTS)) {
-				subscribeToComments(actionRequest, true);
+				subscribeToComments(namespacedRequest, true);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE_FROM_COMMENTS)) {
-				subscribeToComments(actionRequest, false);
+				subscribeToComments(namespacedRequest, false);
 			}
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+			if (Validator.isNotNull(redirect)) {
+				response.sendRedirect(redirect);
+			}
 		}
 		catch (DiscussionMaxCommentsException | MessageBodyException |
-				NoSuchMessageException | PrincipalException |
-				RequiredMessageException e) {
+			NoSuchMessageException | PrincipalException |
+			RequiredMessageException e) {
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				jsonObject.putException(e);
+			jsonObject.putException(e);
 
-				writeJSON(actionRequest, actionResponse, jsonObject);
+			writeJSON(namespacedRequest, response, jsonObject);
 		}
+
+		return null;
 	}
 
-	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws IOException, PortletException {
-
-		String className = ParamUtil.getString(resourceRequest, "className");
-		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
-		boolean hideControls = ParamUtil.getBoolean(
-			resourceRequest, "hideControls");
-		boolean ratingsEnabled = ParamUtil.getBoolean(
-			resourceRequest, "ratingsEnabled");
-		long userId = ParamUtil.getLong(resourceRequest, "userId");
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
-
-		request.setAttribute("liferay-ui:discussion:className", className);
-		request.setAttribute(
-			"liferay-ui:discussion:classPK", String.valueOf(classPK));
-		request.setAttribute(
-			"liferay-ui:discussion:hideControls", String.valueOf(hideControls));
-		request.setAttribute(
-			"liferay-ui:discussion:ratingsEnabled",
-			String.valueOf(ratingsEnabled));
-		request.setAttribute(
-			"liferay-ui:discussion:userId", String.valueOf(userId));
-
-		int index = ParamUtil.getInteger(resourceRequest, "index");
-
-		request.setAttribute(
-			"liferay-ui:discussion:index", String.valueOf(index));
-
-		String randomNamespace = ParamUtil.getString(
-			resourceRequest, "randomNamespace");
-
-		request.setAttribute(
-			"liferay-ui:discussion:randomNamespace", randomNamespace);
-
-		int rootIndexPage = ParamUtil.getInteger(
-			resourceRequest, "rootIndexPage");
-
-		request.setAttribute(
-			"liferay-ui:discussion:rootIndexPage",
-			String.valueOf(rootIndexPage));
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
-				"/html/taglib/ui/discussion/page_resources.jsp");
-
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
-	}
-
-	protected void deleteComment(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+	protected void deleteComment(HttpServletRequest request) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long commentId = ParamUtil.getLong(actionRequest, "commentId");
+		long commentId = ParamUtil.getLong(request, "commentId");
 
 		DiscussionPermission discussionPermission =
 			CommentManagerUtil.getDiscussionPermission(
@@ -188,20 +137,15 @@ public class EditDiscussionAction extends PortletAction {
 		CommentManagerUtil.deleteComment(commentId);
 	}
 
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
 	protected void subscribeToComments(
-			ActionRequest actionRequest, boolean subscribe)
+			HttpServletRequest request, boolean subscribe)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String className = ParamUtil.getString(actionRequest, "className");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		String className = ParamUtil.getString(request, "className");
+		long classPK = ParamUtil.getLong(request, "classPK");
 
 		if (subscribe) {
 			CommentManagerUtil.subscribeDiscussion(
@@ -214,21 +158,20 @@ public class EditDiscussionAction extends PortletAction {
 		}
 	}
 
-	protected long updateComment(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+	protected long updateComment(HttpServletRequest request) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long commentId = ParamUtil.getLong(actionRequest, "commentId");
+		long commentId = ParamUtil.getLong(request, "commentId");
 
-		String className = ParamUtil.getString(actionRequest, "className");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-		long parentCommentId = ParamUtil.getLong(
-			actionRequest, "parentCommentId");
-		String subject = ParamUtil.getString(actionRequest, "subject");
-		String body = ParamUtil.getString(actionRequest, "body");
+		String className = ParamUtil.getString(request, "className");
+		long classPK = ParamUtil.getLong(request, "classPK");
+		long parentCommentId = ParamUtil.getLong(request, "parentCommentId");
+		String subject = ParamUtil.getString(request, "subject");
+		String body = ParamUtil.getString(request, "body");
 
 		Function<String, ServiceContext> serviceContextFunction =
-			new ServiceContextFunction(actionRequest);
+			new ServiceContextFunction(request);
 
 		DiscussionPermission discussionPermission =
 			CommentManagerUtil.getDiscussionPermission(
@@ -245,7 +188,7 @@ public class EditDiscussionAction extends PortletAction {
 			}
 			else {
 				String emailAddress = ParamUtil.getString(
-					actionRequest, "emailAddress");
+					request, "emailAddress");
 
 				user = UserLocalServiceUtil.fetchUserByEmailAddress(
 					themeDisplay.getCompanyId(), emailAddress);
@@ -296,7 +239,7 @@ public class EditDiscussionAction extends PortletAction {
 
 		// Subscription
 
-		boolean subscribe = ParamUtil.getBoolean(actionRequest, "subscribe");
+		boolean subscribe = ParamUtil.getBoolean(request, "subscribe");
 
 		if (subscribe) {
 			CommentManagerUtil.subscribeDiscussion(
@@ -307,6 +250,22 @@ public class EditDiscussionAction extends PortletAction {
 		return commentId;
 	}
 
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
+	protected void writeJSON(
+			HttpServletRequest request, HttpServletResponse response,
+			Object json)
+		throws IOException {
+
+		String contentType = ContentTypes.APPLICATION_JSON;
+
+		if (BrowserSnifferUtil.isIe(request)) {
+			contentType = ContentTypes.TEXT_HTML;
+		}
+
+		response.setContentType(contentType);
+
+		ServletResponseUtil.write(response, json.toString());
+
+		response.flushBuffer();
+	}
 
 }

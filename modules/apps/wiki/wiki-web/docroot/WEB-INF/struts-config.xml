@@ -38,11 +38,6 @@
 			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />
 		</action>
 
-		<action path="/wiki/edit_page_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="/portlet/wiki/error.jsp" />
-			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />
-		</action>
-
 		<action path="/wiki/export_page" type="com.liferay.wiki.web.wiki.portlet.action.ExportPageAction">
 			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />
 		</action>
@@ -186,10 +181,6 @@
 			<forward name="portlet.wiki.error" path="/portlet/wiki/error.jsp" />
 		</action>
 
-		<action path="/wiki_admin/edit_page_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="/portlet/wiki/error.jsp" />
-		</action>
-
 		<action path="/wiki_admin/export_page" type="com.liferay.wiki.web.wiki.portlet.action.ExportPageAction" />
 
 		<action path="/wiki_admin/find_page" type="com.liferay.wiki.web.wiki.portlet.action.FindPageAction" />
@@ -316,10 +307,6 @@
 		<action path="/wiki_display/edit_page_attachment" type="com.liferay.wiki.web.wiki.portlet.action.EditPageAttachmentsAction">
 			<forward name="portlet.wiki.edit_page_attachment" path="/portlet/wiki/edit_page_attachment.jsp" />
 			<forward name="portlet.wiki.error" path="/portlet/wiki/error.jsp" />
-		</action>
-
-		<action path="/wiki_display/edit_page_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="/portlet/wiki/error.jsp" />
 		</action>
 
 		<action path="/wiki_display/export_page" type="com.liferay.wiki.web.wiki.portlet.action.ExportPageAction" />

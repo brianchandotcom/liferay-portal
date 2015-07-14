@@ -17,20 +17,10 @@
 <%@ include file="/html/portlet/page_comments/init.jsp" %>
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.VIEW) %>">
-	<portlet:actionURL var="discussionURL">
-		<portlet:param name="struts_action" value="/page_comments/edit_page_discussion" />
-	</portlet:actionURL>
-
-	<portlet:resourceURL var="discussionPaginationURL">
-		<portlet:param name="struts_action" value="/page_comments/edit_page_discussion" />
-	</portlet:resourceURL>
-
 	<liferay-ui:discussion
 		className="<%= Layout.class.getName() %>"
 		classPK="<%= layout.getPlid() %>"
-		formAction="<%= discussionURL %>"
 		formName="fm"
-		paginationURL="<%= discussionPaginationURL %>"
 		redirect="<%= currentURL %>"
 		userId="<%= user.getUserId() %>"
 	/>

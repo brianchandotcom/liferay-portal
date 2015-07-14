@@ -47,12 +47,6 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 		/>
 	</c:if>
 
-	<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-	<portlet:resourceURL var="discussionPaginationURL">
-		<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
-	</portlet:resourceURL>
-
 	<%
 	PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 	%>
@@ -60,9 +54,7 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 	<liferay-ui:discussion
 		className="<%= JournalArticle.class.getName() %>"
 		classPK="<%= articleDisplay.getResourcePrimKey() %>"
-		formAction="<%= discussionURL %>"
 		hideControls="<%= viewMode.equals(Constants.PRINT) %>"
-		paginationURL="<%= discussionPaginationURL %>"
 		ratingsEnabled="<%= commentsContentMetadataAssetAddonEntry.isCommentsRatingsSelected(request) && !viewMode.equals(Constants.PRINT) %>"
 		redirect="<%= currentURLObj.toString() %>"
 		userId="<%= articleDisplay.getUserId() %>"

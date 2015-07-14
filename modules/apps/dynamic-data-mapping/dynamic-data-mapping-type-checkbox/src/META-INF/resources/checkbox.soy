@@ -7,6 +7,7 @@
  * @param dir
  * @param label
  * @param name
+ * @param required
  * @param status
  * @param visible
  */
@@ -16,6 +17,10 @@
 			<input class="field" dir="{$dir}" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
 
 			&nbsp;{$label}
+
+			{if $required}
+				<b>&nbsp;*</b>
+			{/if}
 		</label>
 
 		{$childElementsHTML|noAutoescape}

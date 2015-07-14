@@ -4,7 +4,7 @@
 		module="org.eclipse.equinox.http.servlet"
 		revision="1.2.1-SNAPSHOT"
 		status="integration"
-		publication="20150713110105"
+		publication="20150713194940"
 	>
 		<description homepage="" />
 		<m:properties__tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/equinox/rt.equinox.bundles.git</m:properties__tycho.scmUrl>

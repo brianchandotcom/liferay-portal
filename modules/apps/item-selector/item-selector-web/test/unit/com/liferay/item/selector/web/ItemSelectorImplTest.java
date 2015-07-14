@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactory;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
@@ -106,6 +108,20 @@ public class ItemSelectorImplTest extends PowerMockito {
 			new PortletURLFactoryUtil();
 
 		portletURLFactoryUtil.setPortletURLFactory(portletURLFactory);
+
+		Portal portal = mock(Portal.class);
+
+		LiferayPortletResponse mockPortletResponse = getMockPortletResponse();
+
+		when(
+			portal.getLiferayPortletResponse(Mockito.any(PortletResponse.class))
+		).thenReturn(
+			mockPortletResponse
+		);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(portal);
 	}
 
 	@Test
@@ -208,7 +224,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		return portletRequest;
 	}
 
-	protected PortletResponse getMockPortletResponse() {
+	protected LiferayPortletResponse getMockPortletResponse() {
 		LiferayPortletResponse liferayPortletResponse = mock(
 			LiferayPortletResponse.class);
 

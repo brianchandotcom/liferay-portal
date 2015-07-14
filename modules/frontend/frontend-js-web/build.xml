@@ -231,13 +231,6 @@
 
 					<!-- JavaScript -->
 
-					<delete failonerror="false" includeemptydirs="true" quiet="true">
-						<fileset
-							dir="${tstamp.value}/js"
-							includes="*.js"
-						/>
-					</delete>
-
 					<copy todir="tmp/META-INF/resources/html/js/lexicon" overwrite="true" preservelastmodified="true">
 						<fileset dir="${tstamp.value}/js/" />
 					</copy>

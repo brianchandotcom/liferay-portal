@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comments.Comment;
+import com.liferay.portal.kernel.comments.CommentManagerUtil;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;

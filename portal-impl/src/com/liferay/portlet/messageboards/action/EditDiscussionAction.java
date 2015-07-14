@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.messageboards.action;
 
-import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comments.Comment;
+import com.liferay.portal.kernel.comments.CommentManagerUtil;
+import com.liferay.portal.kernel.comments.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Constants;

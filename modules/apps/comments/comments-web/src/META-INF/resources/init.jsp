@@ -26,10 +26,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
-page import="com.liferay.portal.kernel.comment.Comment" %><%@
-page import="com.liferay.portal.kernel.comment.CommentConstants" %><%@
-page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
-page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
+page import="com.liferay.portal.kernel.comments.Comment" %><%@
+page import="com.liferay.portal.kernel.comments.CommentConstants" %><%@
+page import="com.liferay.portal.kernel.comments.CommentManagerUtil" %><%@
+page import="com.liferay.portal.kernel.comments.WorkflowableComment" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@

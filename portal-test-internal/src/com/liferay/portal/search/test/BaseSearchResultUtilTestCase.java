@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.test;
 
-import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comments.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;

@@ -15,8 +15,8 @@
 package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comments.Comment;
+import com.liferay.portal.kernel.comments.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseSearchResultManager;

@@ -53,7 +53,7 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
 	@Override
 	public Set<String> getPortletCSRFWhitelistActions() {
-		return _portletCSRFWhitelistActions;
+		return AuthTokenIgnoreActionsRegistry.getAuthTokenIgnoreActions();
 	}
 
 	@Override
@@ -210,7 +210,6 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
 	private Set<String> _originCSRFWhitelist;
 	private Set<String> _portletCSRFWhitelist;
-	private Set<String> _portletCSRFWhitelistActions;
 	private Set<String> _portletInvocationWhitelist;
 	private Set<String> _portletInvocationWhitelistActions;
 

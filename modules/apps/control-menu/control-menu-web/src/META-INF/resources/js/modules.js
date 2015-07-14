@@ -48,6 +48,18 @@
 								'liferay-portlet-base'
 							]
 						},
+						'liferay-control-menu-add-content-drag-drop': {
+							path: 'control_menu_add_content_drag_drop.js',
+							requires: [
+								'aui-base',
+								'dd',
+								'liferay-control-menu',
+								'liferay-layout',
+								'liferay-layout-column',
+								'liferay-layout-freeform',
+								'liferay-portlet-base'
+							]
+						},
 						'liferay-control-menu-add-content-preview': {
 							path: 'control_menu_add_content_preview.js',
 							requires: [

@@ -7,8 +7,6 @@ AUI.add(
 
 		var SELECTOR_NAV_ACCOUNT_CONTROLS = '.nav-account-controls';
 
-		var SELECTOR_NAV_ADD_CONTROLS = '.nav-add-controls';
-
 		var Dockbar = {
 			init: function(containerId) {
 				var instance = this;
@@ -79,12 +77,6 @@ AUI.add(
 					if (navAccountControls) {
 						navAccountControls.toggleClass('nav-account-controls-notice', force);
 					}
-
-					var navAddControls = A.one('#' + namespace + 'navAddControls');
-
-					if (navAddControls) {
-						navAddControls.toggleClass('nav-add-controls-notice', force);
-					}
 				}
 			}
 		};
@@ -94,10 +86,6 @@ AUI.add(
 			'_init',
 			function() {
 				var instance = this;
-
-				var dockBar = instance.dockBar;
-
-				Liferay.Util.toggleControls(dockBar);
 
 				instance._toolbarItems = {};
 
@@ -117,7 +105,6 @@ AUI.add(
 				var dockBar = instance.dockBar;
 
 				var navAccountControls = dockBar.one(SELECTOR_NAV_ACCOUNT_CONTROLS);
-				var navAddControls = dockBar.one(SELECTOR_NAV_ADD_CONTROLS);
 
 				if (navAccountControls) {
 					var stagingBar = navAccountControls.one('.staging-bar');
@@ -130,42 +117,6 @@ AUI.add(
 				}
 
 				if (BODY.hasClass('dockbar-split')) {
-					dockBar.plug(Liferay.DockbarKeyboardInteraction);
-
-					if (themeDisplay.isSignedIn() && navAddControls) {
-						navAddControls.plug(
-							A.Plugin.NodeFocusManager,
-							{
-								circular: true,
-								descendants: '.dropdown-menu li:visible a',
-								keys: {
-									next: 'down:39,40',
-									previous: 'down:37,38'
-								}
-							}
-						);
-
-						navAddControls.focusManager.after(
-							'focusedChange',
-							function(event) {
-								var instance = this;
-
-								if (!event.newVal) {
-									instance.set('activeDescendant', 0);
-								}
-							}
-						);
-					}
-				}
-				else if (themeDisplay.isSignedIn() && navAddControls) {
-					var brand = dockBar.one('.navbar-brand');
-
-					if (brand) {
-						brand.all('a').get('parentNode').addClass(CSS_DOCKBAR_ITEM);
-					}
-
-					navAddControls.all('> li').addClass(CSS_DOCKBAR_ITEM);
-
 					dockBar.plug(Liferay.DockbarKeyboardInteraction);
 				}
 

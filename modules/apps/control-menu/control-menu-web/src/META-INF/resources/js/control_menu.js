@@ -26,6 +26,22 @@ AUI.add(
 		var TPL_PREVIEW_PANEL = '<div class="lfr-admin-panel lfr-device-preview-panel" id="{0}" />';
 
 		var ControlMenu = {
+			init: function(containerId) {
+				var instance = this;
+
+				var controlMenu = A.one(containerId);
+
+				if (controlMenu) {
+					var namespace = controlMenu.attr('data-namespace');
+
+					instance._namespace = namespace;
+
+					Liferay.Util.toggleControls(controlMenu);
+				}
+
+				instance._registerPanels();
+			},
+
 			getPanelNode: function(panelId) {
 				var instance = this;
 
@@ -227,19 +243,6 @@ AUI.add(
 
 		Liferay.provide(
 			ControlMenu,
-			'_init',
-			function(namespace) {
-				var instance = this;
-
-				instance._namespace = namespace;
-
-				instance._registerPanels();
-			},
-			['aui-io-request', 'liferay-node', 'liferay-store', 'node-focusmanager']
-		);
-
-		Liferay.provide(
-			ControlMenu,
 			'_showPanel',
 			function(panelId) {
 				var instance = this;
@@ -249,7 +252,7 @@ AUI.add(
 				var panel = A.one('#' + instance._namespace + panelId);
 
 				if (panel) {
-					var uri = panel.ancestor().attr('data-panelURL');
+					var uri = panel.attr('data-panelurl');
 
 					A.io.request(
 						uri,

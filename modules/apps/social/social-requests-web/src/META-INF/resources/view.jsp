@@ -31,11 +31,6 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(Request
 	<c:otherwise>
 
 		<%
-		PortletURL portletURL = renderResponse.createActionURL();
-
-		portletURL.setParameter("struts_action", "/requests/update_request");
-		portletURL.setParameter("redirect", currentURL);
-
 		for (int i = 0; i < requests.size(); i++) {
 			SocialRequest socialRequest = requests.get(i);
 
@@ -57,11 +52,6 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(Request
 							</div>
 						</c:when>
 						<c:otherwise>
-
-							<%
-							portletURL.setParameter("requestId", String.valueOf(socialRequest.getRequestId()));
-							%>
-
 							<div class="request-title">
 								<%= requestFeedEntry.getTitle() %>
 							</div>
@@ -77,25 +67,28 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(Request
 							</c:if>
 
 							<liferay-ui:icon-list>
-
-								<%
-								portletURL.setParameter("status", String.valueOf(SocialRequestConstants.STATUS_CONFIRM));
-								%>
+								<portlet:actionURL name="/requests/update_request" var="confirmRequestURL">
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="requestId" value="<%= String.valueOf(socialRequest.getRequestId()) %>" />
+									<portlet:param name="status" value="<%= String.valueOf(SocialRequestConstants.STATUS_CONFIRM) %>" />
+								</portlet:actionURL>
 
 								<liferay-ui:icon
 									iconCssClass="icon-ok-sign"
 									message="confirm"
-									url="<%= portletURL.toString() %>"
+									url="<%= confirmRequestURL %>"
 								/>
 
-								<%
-								portletURL.setParameter("status", String.valueOf(SocialRequestConstants.STATUS_IGNORE));
-								%>
+								<portlet:actionURL name="/requests/update_request" var="ignoreRequestURL">
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="requestId" value="<%= String.valueOf(socialRequest.getRequestId()) %>" />
+									<portlet:param name="status" value="<%= String.valueOf(SocialRequestConstants.STATUS_IGNORE) %>" />
+								</portlet:actionURL>
 
 								<liferay-ui:icon
 									iconCssClass="icon-remove-sign"
 									message="ignore"
-									url="<%= portletURL.toString() %>"
+									url="<%= ignoreRequestURL %>"
 								/>
 							</liferay-ui:icon-list>
 						</c:otherwise>

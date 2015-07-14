@@ -19,14 +19,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.SocialRequestConstants;
-import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialRequestLocalService;
 import com.liferay.social.requests.web.constants.RequestsPortletKeys;
 import com.liferay.social.requests.web.constants.RequestsWebKeys;
 
@@ -37,6 +37,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -70,13 +71,13 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
 		User user = themeDisplay.getUser();
 
 		if (group.isUser()) {
-			user = UserLocalServiceUtil.getUserById(group.getClassPK());
+			user = _userLocalService.getUserById(group.getClassPK());
 		}
 
 		if (UserPermissionUtil.contains(
@@ -84,7 +85,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				ActionKeys.UPDATE)) {
 
 			List<SocialRequest> requests =
-				SocialRequestLocalServiceUtil.getReceiverUserRequests(
+				_socialRequestLocalService.getReceiverUserRequests(
 					user.getUserId(), SocialRequestConstants.STATUS_PENDING, 0,
 					100);
 
@@ -94,5 +95,26 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return "/view.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialRequestLocalService(
+		SocialRequestLocalService socialRequestLocalService) {
+
+		_socialRequestLocalService = socialRequestLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
+	private SocialRequestLocalService _socialRequestLocalService;
+	private UserLocalService _userLocalService;
 
 }

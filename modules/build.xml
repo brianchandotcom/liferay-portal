@@ -45,6 +45,7 @@
 		<dirset dir="apps/portlet-display-template" includes="*" />
 		<dirset dir="apps/product-menu" includes="*" />
 		<dirset dir="apps/quick-note" includes="*" />
+		<dirset dir="apps/ratings" includes="*" />
 		<dirset dir="apps/roles" includes="*" />
 		<dirset dir="apps/rss" includes="*" />
 		<dirset dir="apps/search" includes="*" />

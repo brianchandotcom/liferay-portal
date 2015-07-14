@@ -2087,6 +2087,7 @@ public class ServiceBuilder {
 					(nextChar == CharPool.PERIOD) ||
 					(nextChar == CharPool.QUOTE) ||
 					(nextChar == CharPool.SEMICOLON) ||
+					(nextChar == CharPool.UNDERLINE) ||
 					(previousChar == CharPool.QUOTE)) {
 
 					continue;

@@ -243,6 +243,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void sikuliClick(String image) throws Exception;
 
+	public void sikuliClickByIndex(String image, String index) throws Exception;
+
 	public void sikuliDragAndDrop(String image, String coordString)
 		throws Exception;
 

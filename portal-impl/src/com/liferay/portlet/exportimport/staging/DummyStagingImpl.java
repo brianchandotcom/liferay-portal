@@ -233,6 +233,10 @@ public class DummyStagingImpl implements Staging {
 		throws Exception {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
@@ -241,6 +245,10 @@ public class DummyStagingImpl implements Staging {
 		return JSONFactoryUtil.createJSONArray();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap) {
@@ -336,6 +344,10 @@ public class DummyStagingImpl implements Staging {
 		return Collections.<String, String[]>emptyMap();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,

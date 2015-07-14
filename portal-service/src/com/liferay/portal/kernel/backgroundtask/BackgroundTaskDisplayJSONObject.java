@@ -14,26 +14,17 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.kernel.json.JSONObject;
+
+import java.util.Locale;
 
 /**
- * @author Michael C. Han
- */
-public interface BackgroundTaskExecutor {
+* @author Andrew Betts
+*/
+public interface BackgroundTaskDisplayJSONObject {
 
-	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception;
+	public JSONObject toJSONObject();
 
-	public BackgroundTaskDisplay getBackgroundTaskDisplay(
-		BackgroundTask backgroundTask);
-
-	public BackgroundTaskStatusMessageTranslator
-		getBackgroundTaskStatusMessageTranslator();
-
-	public int getIsolationLevel();
-
-	public String handleException(BackgroundTask backgroundTask, Exception e);
-
-	public boolean isSerial();
+	public JSONObject toJSONObject(Locale locale);
 
 }

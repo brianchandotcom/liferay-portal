@@ -314,6 +314,10 @@ public class BridgeStagingImpl implements Staging {
 			remoteGroupId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
@@ -323,6 +327,10 @@ public class BridgeStagingImpl implements Staging {
 			locale, missingReferences, contextMap);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap) {
@@ -423,6 +431,10 @@ public class BridgeStagingImpl implements Staging {
 		return getStaging().getStagingParameters(portletRequest);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,

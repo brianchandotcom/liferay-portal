@@ -568,6 +568,10 @@ public class StagingImpl implements Staging {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
@@ -629,23 +633,23 @@ public class StagingImpl implements Staging {
 						true));
 			}
 
-			errorMessageJSONObject.put("name", missingReferenceDisplayName);
+			errorMessageJSONObject.put(
+				"itemStrongMessage", missingReferenceDisplayName);
 
 			Group group = GroupLocalServiceUtil.fetchGroup(
 				missingReference.getGroupId());
 
+			String itemMessage = ResourceActionsUtil.getModelResource(
+				locale, missingReference.getClassName());
+
 			if (group != null) {
-				errorMessageJSONObject.put(
-					"site",
+				itemMessage += StringPool.SPACE +
 					LanguageUtil.format(
 						locale, "in-site-x", missingReference.getGroupId(),
-						false));
+						false);
 			}
 
-			errorMessageJSONObject.put(
-				"type",
-				ResourceActionsUtil.getModelResource(
-					locale, missingReference.getClassName()));
+			errorMessageJSONObject.put("itemMessage", itemMessage);
 
 			errorMessagesJSONArray.put(errorMessageJSONObject);
 		}
@@ -653,6 +657,10 @@ public class StagingImpl implements Staging {
 		return errorMessagesJSONArray;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap) {
@@ -768,13 +776,14 @@ public class StagingImpl implements Staging {
 				String layoutPrototypeName =
 					(String)missingLayoutPrototype.getObject(2);
 
-				errorMessageJSONObject.put("name", layoutPrototypeName);
+				errorMessageJSONObject.put(
+					"itemStrongMessage", layoutPrototypeName);
 
 				String layoutPrototypeClassName =
 					(String)missingLayoutPrototype.getObject(0);
 
 				errorMessageJSONObject.put(
-					"type",
+					"itemMessage",
 					ResourceActionsUtil.getModelResource(
 						locale, layoutPrototypeClassName));
 
@@ -994,9 +1003,9 @@ public class StagingImpl implements Staging {
 		HttpServletRequest request, long layoutSetId) {
 
 		return GetterUtil.getLong(
-			SessionClicks.get(
-				request, Staging.class.getName(),
-				getRecentLayoutSetBranchIdKey(layoutSetId)));
+				SessionClicks.get(
+						request, Staging.class.getName(),
+						getRecentLayoutSetBranchIdKey(layoutSetId)));
 	}
 
 	@Override
@@ -1078,6 +1087,10 @@ public class StagingImpl implements Staging {
 			portletRequest);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
@@ -1108,9 +1121,9 @@ public class StagingImpl implements Staging {
 						false));
 			}
 
-			errorMessageJSONObject.put("size", referrers.size());
+			errorMessageJSONObject.put("itemStrongMessage", referrers.size());
 			errorMessageJSONObject.put(
-				"type",
+				"itemMessage",
 				ResourceActionsUtil.getModelResource(
 					locale, missingReferenceReferrerClassName));
 

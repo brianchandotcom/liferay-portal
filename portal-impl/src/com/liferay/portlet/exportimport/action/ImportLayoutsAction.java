@@ -46,6 +46,7 @@ import com.liferay.portlet.exportimport.LARFileException;
 import com.liferay.portlet.exportimport.LARFileSizeException;
 import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.LayoutImportException;
+import com.liferay.portlet.exportimport.backgroundtask.StagingBackgroundTaskDisplayHelperUtil;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
@@ -55,7 +56,6 @@ import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
-import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import java.io.InputStream;
@@ -328,8 +328,10 @@ public class ImportLayoutsAction extends PortletAction {
 
 		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
 
-		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			themeDisplay.getLocale(), e, null);
+		JSONObject jsonObject =
+			StagingBackgroundTaskDisplayHelperUtil.
+				getExceptionMessagesJSONObject(
+					themeDisplay.getLocale(), e, null);
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
 
@@ -434,8 +436,10 @@ public class ImportLayoutsAction extends PortletAction {
 
 				jsonObject.put(
 					"warningMessages",
-					StagingUtil.getWarningMessagesJSONArray(
-						themeDisplay.getLocale(), weakMissingReferences, null));
+					StagingBackgroundTaskDisplayHelperUtil.
+						getWarningMessagesJSONArray(
+							themeDisplay.getLocale(), weakMissingReferences,
+							null));
 			}
 
 			writeJSON(actionRequest, actionResponse, jsonObject);

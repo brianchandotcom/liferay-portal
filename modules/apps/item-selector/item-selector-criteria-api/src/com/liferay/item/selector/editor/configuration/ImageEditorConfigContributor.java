@@ -18,8 +18,8 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.Map;
 
@@ -37,11 +37,10 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
 
 		PortletURL itemSelectorURL = getItemSelectorPortletURL(
-			inputEditorTaglibAttributes, liferayPortletResponse,
+			inputEditorTaglibAttributes, portletURLBuilder,
 				new ImageItemSelectorCriterion());
 
 		if (itemSelectorURL != null) {

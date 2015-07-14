@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.editor.configuration;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.PortletURLBuilder;
 
 import java.util.Map;
 
@@ -124,14 +124,11 @@ public interface EditorOptionsContributor {
 	 * @param inputEditorTaglibAttributes the attributes specified to the input
 	 *        taglib tag that renders the editor
 	 * @param themeDisplay the theme display
-	 * @param liferayPortletResponse the Liferay portlet response (optionally
-	 *        <code>null</code>). Only use the response to generate portlet
-	 *        URLs.
+	 * @param portletURLBuilder a portlet URL builder.
 	 */
 	public void populateEditorOptions(
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse);
+		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder);
 
 }

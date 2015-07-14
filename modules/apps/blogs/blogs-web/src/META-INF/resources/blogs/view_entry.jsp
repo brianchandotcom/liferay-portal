@@ -200,16 +200,10 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				<aui:input inlineLabel="left" name="trackbackURL" type="resource" value='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
 			</c:if>
 
-			<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-			<portlet:resourceURL id="invokeTaglibDiscussionPagination" var="discussionPaginationURL" />
-
 			<liferay-ui:discussion
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
-				formAction="<%= discussionURL %>"
 				formName="fm2"
-				paginationURL="<%= discussionPaginationURL %>"
 				ratingsEnabled="<%= blogsPortletInstanceSettings.isEnableCommentRatings() %>"
 				redirect="<%= currentURL %>"
 				userId="<%= entry.getUserId() %>"

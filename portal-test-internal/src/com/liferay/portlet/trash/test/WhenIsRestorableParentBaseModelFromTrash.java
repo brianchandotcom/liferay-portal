@@ -14,8 +14,21 @@
 
 package com.liferay.portlet.trash.test;
 
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.WorkflowedModel;
+
+import java.util.List;
+
 /**
  * @author Cristina González
  */
-public interface WhenIsAssetableBaseModel extends WhenIsAssetable {
+public interface WhenIsRestorableParentBaseModelFromTrash {
+
+	public List<? extends WorkflowedModel> getChildrenWorkflowedModels(
+			BaseModel<?> parentBaseModel)
+		throws Exception;
+
+	public void restoreParentBaseModelFromTrash(long primaryKey)
+		throws Exception;
+
 }

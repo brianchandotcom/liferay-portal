@@ -17,5 +17,5 @@ package com.liferay.portlet.trash.test;
 /**
  * @author Cristina González
  */
-public interface WhenIsAssetableParentModel {
+public interface WhenIsAssetableParentModel extends WhenIsAssetable {
 }

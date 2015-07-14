@@ -304,7 +304,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 								viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 							%>
 
-								<div class="col-md-6">
+								<div class="col-md-3">
 									<div class="card-horizontal">
 										<div class="card-row card-row-padded">
 											<div class="card-col-field">

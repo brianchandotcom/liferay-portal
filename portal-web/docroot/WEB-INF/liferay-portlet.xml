@@ -575,6 +575,7 @@
 		<portlet-name>162</portlet-name>
 		<icon>/html/icons/message_boards.png</icon>
 		<struts-path>message_boards_admin</struts-path>
+		<parent-struts-path>message_boards</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.messageboards.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.messageboards.lar.MBPortletDataHandler</portlet-data-handler-class>

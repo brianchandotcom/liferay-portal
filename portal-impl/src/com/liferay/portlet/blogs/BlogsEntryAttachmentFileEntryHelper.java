@@ -147,26 +147,33 @@ public class BlogsEntryAttachmentFileEntryHelper {
 	}
 
 	protected String getUniqueFileName(
-		long groupId, String fileName, Folder folder) {
+			long groupId, String fileName, Folder folder)
+		throws PortalException {
 
 		FileEntry fileEntry = _fetchPortletFileEntry(groupId, fileName, folder);
 
+		if (fileEntry == null) {
+			return fileName;
+		}
+
 		int suffix = 1;
 
-		while (fileEntry != null) {
-			String curfileName = FileUtil.updateFileName(
+		for (int i = 0; i < _MAX_UNIQUE_FILE_NAME_TRIALS; i++) {
+			String curFileName = FileUtil.updateFileName(
 				fileName, String.valueOf(suffix));
 
-			fileEntry = _fetchPortletFileEntry(groupId, curfileName, folder);
+			fileEntry = _fetchPortletFileEntry(groupId, curFileName, folder);
 
 			if (fileEntry == null) {
-				return curfileName;
+				return curFileName;
 			}
 
 			suffix++;
 		}
 
-		return fileName;
+		throw new PortalException(
+			"Cannot find a unique file name for " + fileName +
+				" in folder id " + folder.getFolderId());
 	}
 
 	private FileEntry _fetchPortletFileEntry(
@@ -183,5 +190,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 
 	private static final String _ATTRIBUTE_LIST_REGEXP =
 		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
+
+	private static final int _MAX_UNIQUE_FILE_NAME_TRIALS = 50;
 
 }

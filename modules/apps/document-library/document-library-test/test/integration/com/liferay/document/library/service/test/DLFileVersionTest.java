@@ -443,12 +443,16 @@ public class DLFileVersionTest {
 			"Test Folder", RandomTestUtil.randomString(), serviceContext);
 	}
 
-	protected void setUpPermissionThreadLocal() {
+	protected void setUpPermissionThreadLocal() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		PermissionThreadLocal.setPermissionChecker(
 			new SimplePermissionChecker() {
+
+				{
+					init(TestPropsValues.getUser());
+				}
 
 				@Override
 				public boolean hasOwnerPermission(

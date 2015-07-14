@@ -440,6 +440,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.security">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.security.auth.EmailAddressGeneratorFactory">
 		<priority value="ERROR" />
 	</category>

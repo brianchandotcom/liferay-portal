@@ -431,12 +431,16 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		return new VerifyDocumentLibrary();
 	}
 
-	protected void setUpPermissionThreadLocal() {
+	protected void setUpPermissionThreadLocal() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
 		PermissionThreadLocal.setPermissionChecker(
 			new SimplePermissionChecker() {
+
+				{
+					init(TestPropsValues.getUser());
+				}
 
 				@Override
 				public boolean hasOwnerPermission(

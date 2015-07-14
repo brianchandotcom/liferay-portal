@@ -255,19 +255,9 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 
 <c:choose>
 	<c:when test='<%= PropsValues.SC_PRODUCT_COMMENTS_ENABLED && tabs2.equals("comments") %>'>
-		<portlet:actionURL var="discussionURL">
-			<portlet:param name="struts_action" value="/software_catalog/edit_product_entry_discussion" />
-		</portlet:actionURL>
-
-		<portlet:resourceURL var="discussionPaginationURL">
-			<portlet:param name="struts_action" value="/software_catalog/edit_product_entry_discussion" />
-		</portlet:resourceURL>
-
 		<liferay-ui:discussion
 			className="<%= SCProductEntry.class.getName() %>"
 			classPK="<%= productEntry.getProductEntryId() %>"
-			formAction="<%= discussionURL %>"
-			paginationURL="<%= discussionPaginationURL %>"
 			redirect="<%= currentURL %>"
 			userId="<%= productEntry.getUserId() %>"
 		/>

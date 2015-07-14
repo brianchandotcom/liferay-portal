@@ -1351,7 +1351,7 @@
 		</attribute>
 		<attribute>
 			<name>formAction</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
@@ -1362,11 +1362,6 @@
 		<attribute>
 			<name>hideControls</name>
 			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>paginationURL</name>
-			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

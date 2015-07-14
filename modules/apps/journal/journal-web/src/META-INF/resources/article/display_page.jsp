@@ -119,7 +119,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, eventName, layoutItemSelectorCriterion);
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(PortletURLBuilder.create(liferayPortletResponse), eventName, layoutItemSelectorCriterion);
 		%>
 
 		<aui:script sandbox="<%= true %>">

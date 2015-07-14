@@ -149,7 +149,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</c:if>
 				</header>
 
-				<div class="lfr-discussion-message-body" id='<portlet:namespace /><%= randomNamespace + "discussionMessage" + index %>'>
+				<div class="lfr-discussion-message-body" id='<%= namespace + randomNamespace + "discussionMessage" + index %>'>
 					<%= discussionComment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
 				</div>
 
@@ -258,7 +258,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<div class="lfr-discussion-form-container">
-			<div class="lfr-discussion lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm" + index %>' style="display: none;">
+			<div class="lfr-discussion lfr-discussion-form-reply" id='<%= namespace + randomNamespace + "postReplyForm" + index %>' style="display: none;">
 				<div class="lfr-discussion-details">
 					<liferay-ui:user-display
 						displayStyle="2"

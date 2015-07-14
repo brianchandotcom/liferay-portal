@@ -221,6 +221,11 @@ public class AUIUtil {
 		return null;
 	}
 
+	public static String getNamespace(HttpServletRequest request) {
+		return GetterUtil.getString(
+			request.getAttribute("aui:form:portletNamespace"));
+	}
+
 	public static String getNamespace(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

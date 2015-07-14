@@ -34,6 +34,7 @@
 		<portlet-name>54</portlet-name>
 		<icon>/html/icons/wiki_display.png</icon>
 		<struts-path>wiki_display</struts-path>
+		<parent-struts-path>wiki</parent-struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.wiki.lar.WikiDisplayPortletDataHandler</portlet-data-handler-class>
@@ -52,6 +53,7 @@
 		<portlet-name>154</portlet-name>
 		<icon>/html/icons/wiki.png</icon>
 		<struts-path>wiki_admin</struts-path>
+		<parent-struts-path>wiki</parent-struts-path>
 		<configuration-action-class>com.liferay.wiki.web.admin.portlet.action.WikiGroupServiceSettingsConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.wiki.lar.WikiPortletDataHandler</portlet-data-handler-class>

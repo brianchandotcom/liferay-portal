@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/icon_add/init.jsp" %>
+<%@ include file="/html/taglib/ui/add_menu/init.jsp" %>
 
 <%
-JSONArray actionsJSONArray = (JSONArray)request.getAttribute("liferay-ui:icon-add:actionsJSONArray");
+JSONArray actionsJSONArray = (JSONArray)request.getAttribute("liferay-ui:add-menu:actionsJSONArray");
 %>
 
 <c:if test="<%= actionsJSONArray.length() > 0 %>">

@@ -28,6 +28,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/dynamic-data-mapping/*/build.gradle"
 		include "apps/expando/*/build.gradle"
 		include "apps/export-import/*/build.gradle"
+		include "apps/flags/*/build.gradle"
 		include "apps/hello-velocity/*/build.gradle"
 		include "apps/iframe/*/build.gradle"
 		include "apps/invitation/*/build.gradle"

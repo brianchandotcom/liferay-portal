@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.page.comments.web.lar;
+package com.liferay.comments.page.comments.web.lar;
 
-import com.liferay.page.comments.web.constants.PageCommentsPortletKeys;
+import com.liferay.comments.page.comments.web.constants.PageCommentsPortletKeys;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

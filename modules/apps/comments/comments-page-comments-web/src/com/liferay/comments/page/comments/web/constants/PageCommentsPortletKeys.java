@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.page.comments.web.constants;
+package com.liferay.comments.page.comments.web.constants;
 
 /**
  * @author Adolfo Pérez
@@ -20,6 +20,6 @@ package com.liferay.page.comments.web.constants;
 public class PageCommentsPortletKeys {
 
 	public static final String PAGE_COMMENTS =
-		"com_liferay_page_comments_web_portlet_PageCommentsPortlet";
+		"com_liferay_comments_page_comments_web_portlet_PageCommentsPortlet";
 
 }

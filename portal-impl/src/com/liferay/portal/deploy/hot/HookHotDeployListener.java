@@ -844,6 +844,21 @@ public class HookHotDeployListener
 		}
 	}
 
+	protected void initAuthTokenWhiteListActions(
+			String servletContextName, Properties portalProperties)
+		throws Exception {
+
+		String[] tokenIgnoreActions = StringUtil.split(
+			portalProperties.getProperty(AUTH_TOKEN_IGNORE_ACTIONS));
+
+		for (String tokenIgnoreAction : tokenIgnoreActions) {
+			registerService(
+				servletContextName,
+				AUTH_TOKEN_IGNORE_ACTIONS + tokenIgnoreAction, Object.class,
+				new Object());
+		}
+	}
+
 	protected void initAuthVerifiers(
 			String servletContextName, ClassLoader portletClassLoader,
 			Properties portalProperties)
@@ -1585,6 +1600,10 @@ public class HookHotDeployListener
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_PUBLIC_PATHS)) {
 			initAuthPublicPaths(servletContextName, portalProperties);
+		}
+
+		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_ACTIONS)) {
+			initAuthTokenWhiteListActions(servletContextName, portalProperties);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
@@ -2386,10 +2405,6 @@ public class HookHotDeployListener
 			PropsValues.LOCALES_ENABLED = PropsUtil.getArray(LOCALES_ENABLED);
 
 			LanguageUtil.init();
-		}
-
-		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_ACTIONS)) {
-			AuthTokenWhitelistUtil.resetPortletCSRFWhitelistActions();
 		}
 
 		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_ORIGINS)) {

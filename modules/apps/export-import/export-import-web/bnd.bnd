@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Export Import Web
+Bundle-SymbolicName: com.liferay.exportimport.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.exportimport.web.constants,\
+	com.liferay.exportimport.web.trash
+Import-Package:\
+	javax.servlet;version='[2.3.0,4.0.0)',\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld
+Web-ContextPath: /exportimport-web

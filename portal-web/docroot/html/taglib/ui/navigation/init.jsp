@@ -20,7 +20,10 @@
 
 <%
 String bulletStyle = StringUtil.toLowerCase(((String)request.getAttribute("liferay-ui:navigation:bulletStyle")));
+String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:navigation:displayStyle"));
+long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("liferay-ui:navigation:displayStyleGroupId"));
 String headerType = (String)request.getAttribute("liferay-ui:navigation:headerType");
+List<NavItem> navItems = (List)request.getAttribute("liferay-ui:navigation:navItems");
 String navigationString = (String)request.getAttribute("liferay-ui:navigation:navigationString");
 boolean preview = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:preview"));
 NavItem rootNavItem = (NavItem)request.getAttribute("liferay-ui:navigation:rootNavItem");

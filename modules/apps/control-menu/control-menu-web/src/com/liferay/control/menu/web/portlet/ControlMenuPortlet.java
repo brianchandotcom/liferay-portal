@@ -28,6 +28,8 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.css-class-wrapper=portlet-control-menu",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/modules.js",
 		"com.liferay.portlet.instanceable=false",
 		"com.liferay.portlet.use-default-template=false",

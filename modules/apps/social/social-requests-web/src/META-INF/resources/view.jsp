@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/requests/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(WebKeys.SOCIAL_REQUESTS);
+List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(RequestsWebKeys.SOCIAL_REQUESTS);
 %>
 
 <c:choose>

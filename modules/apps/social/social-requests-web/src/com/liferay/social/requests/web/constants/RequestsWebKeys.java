@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.social.requests.web.constants;
 
-<liferay-ui:error-header />
+/**
+ * @author Adolfo Pérez
+ */
+public class RequestsWebKeys {
 
-<liferay-ui:error exception="<%= NoSuchRequestException.class %>" message="the-request-could-not-be-found" />
+	public static final String SOCIAL_REQUESTS = "SOCIAL_REQUESTS";
 
-<liferay-ui:error-principal />
+}

@@ -38,6 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.name=" + RequestsPortletKeys.REQUESTS,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/requests-default-portlet-preferences.xml",
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

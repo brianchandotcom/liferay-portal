@@ -18,7 +18,6 @@
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutSetLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.PortletPreferencesLocalService)" />
 	</aop:config>
-	<bean id="com.liferay.portlet.documentlibrary.lar.lifecycle.DLIndexingExportImportLifecycleListener" class="com.liferay.portlet.documentlibrary.lar.lifecycle.DLIndexingExportImportLifecycleListener" />
 	<bean id="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" class="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil">
 		<property name="exportImportHelper">
 			<bean class="com.liferay.portlet.exportimport.lar.BridgeExportImportHelperImpl" />

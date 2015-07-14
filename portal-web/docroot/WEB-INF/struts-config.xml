@@ -515,10 +515,6 @@
 
 		<action path="/our_activities/view" forward="portlet.our_activities.view" />
 
-		<!-- Page Ratings -->
-
-		<action path="/page_ratings/view" forward="portlet.page_ratings.view" />
-
 		<!-- Plugins Admin -->
 
 		<action path="/plugins_admin/edit_plugin" type="com.liferay.portlet.pluginsadmin.action.EditPluginAction">

@@ -321,6 +321,11 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
+	public String updateFileName(String fileName, String counterSuffixValue) {
+		return null;
+	}
+
+	@Override
 	public void write(File file, byte[] bytes) {
 	}
 

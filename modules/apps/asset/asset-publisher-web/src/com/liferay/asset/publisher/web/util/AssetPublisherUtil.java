@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -328,22 +327,17 @@ public class AssetPublisherUtil {
 
 		long[] tagIds = AssetTagLocalServiceUtil.getTagIds(groupId, names);
 
-		StringBundler sb = new StringBundler();
+		List<String> filteredAssetTagNames = new ArrayList<>();
 
 		for (long tagId : tagIds) {
 			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
 
 			if (assetTag != null) {
-				sb.append(assetTag.getName());
-				sb.append(StringPool.COMMA);
+				filteredAssetTagNames.add(assetTag.getName());
 			}
 		}
 
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
+		return StringUtil.merge(filteredAssetTagNames);
 	}
 
 	public static long[] getAssetCategoryIds(

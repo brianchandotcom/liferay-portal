@@ -14,6 +14,22 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<%@ include file="/html/portlet/page_flags/init-ext.jsp" %>
+<%
+long reportedUserId = themeDisplay.getDefaultUserId();
+
+Group group = layout.getGroup();
+
+if (group.isUser()) {
+	reportedUserId = group.getClassPK();
+}
+%>
+
+<liferay-ui:flags
+	className="<%= Layout.class.getName() %>"
+	classPK="<%= layout.getPlid() %>"
+	contentTitle="<%= layout.getHTMLTitle(LocaleUtil.getDefault()) %>"
+	message="flag-this-page"
+	reportedUserId="<%= reportedUserId %>"
+/>

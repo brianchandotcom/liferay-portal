@@ -14,22 +14,16 @@
  */
 --%>
 
-<%@ include file="/html/portlet/page_flags/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%
-long reportedUserId = themeDisplay.getDefaultUserId();
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-Group group = layout.getGroup();
+<%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
+page import="com.liferay.portal.model.Group" %><%@
+page import="com.liferay.portal.model.Layout" %>
 
-if (group.isUser()) {
-	reportedUserId = group.getClassPK();
-}
-%>
+<portlet:defineObjects />
+<liferay-theme:defineObjects />
 
-<liferay-ui:flags
-	className="<%= Layout.class.getName() %>"
-	classPK="<%= layout.getPlid() %>"
-	contentTitle="<%= layout.getHTMLTitle(LocaleUtil.getDefault()) %>"
-	message="flag-this-page"
-	reportedUserId="<%= reportedUserId %>"
-/>
+<%@ include file="/init-ext.jsp" %>

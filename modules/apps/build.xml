@@ -19,6 +19,7 @@
 		<dirset dir="dynamic-data-mapping" includes="*" />
 		<dirset dir="expando" includes="*" />
 		<dirset dir="export-import" includes="*" />
+		<dirset dir="flags" includes="*" />
 		<dirset dir="hello-velocity" includes="*" />
 		<dirset dir="iframe" includes="*" />
 		<dirset dir="invitation" includes="*" />

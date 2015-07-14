@@ -523,10 +523,6 @@
 
 		<action path="/page_comments/view" forward="portlet.page_comments.view" />
 
-		<!-- Page Flags -->
-
-		<action path="/page_flags/view" forward="portlet.page_flags.view" />
-
 		<!-- Page Ratings -->
 
 		<action path="/page_ratings/view" forward="portlet.page_ratings.view" />

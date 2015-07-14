@@ -1035,7 +1035,8 @@
 			}
 
 			if (!hasErrors) {
-				var action = event.action;
+				var action = event.action || form.attr('action');
+
 				var singleSubmit = event.singleSubmit;
 
 				var inputs = form.all('input[type=button], input[type=image], input[type=reset], input[type=submit]');
@@ -1054,28 +1055,16 @@
 					Util._submitLocked = true;
 				}
 
-				if (action == null) {
-					action = form.attr('action');
-				}
+				var actionURL = new A.Url(action);
 
-				var x = action.indexOf('?p_auth=');
+				var authToken = actionURL.getParameter('p_auth');
 
-				if (x < 0) {
-					x = action.indexOf('&p_auth=');
-				}
-
-				if (x >= 0) {
-					var y = action.indexOf('&', x);
-
-					if (y < 0) {
-						y = action.length();
-					}
-
-					var authToken = action.substring(x + 8, y);
-
+				if (authToken) {
 					form.append('<input name="p_auth" type="hidden" value="' + authToken + '" />');
 
-					action = action.substring(0, x + 1) + action.substring(y + 1);
+					actionURL.removeParameter('p_auth');
+
+					action = actionURL.toString();
 				}
 
 				form.attr('action', action);
@@ -1576,7 +1565,7 @@
 				);
 			}
 		},
-		['aui-base', 'aui-form-validator', 'liferay-form']
+		['aui-base', 'aui-form-validator', 'aui-url', 'liferay-form']
 	);
 
 	Liferay.publish(

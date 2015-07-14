@@ -2083,6 +2083,7 @@ public class ServiceBuilder {
 				char previousChar = content.charAt(x - 1);
 
 				if (Character.isAlphabetic(nextChar) ||
+					Character.isDigit(nextChar) ||
 					(nextChar == CharPool.QUOTE) ||
 					(nextChar == CharPool.SEMICOLON) ||
 					(previousChar == CharPool.QUOTE)) {

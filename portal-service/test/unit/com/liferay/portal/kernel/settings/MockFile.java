@@ -321,7 +321,7 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public String updateFileName(String fileName, String counterSuffixValue) {
+	public String updateFileName(String fileName, String suffix) {
 		return null;
 	}
 

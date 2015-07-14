@@ -912,20 +912,16 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public String updateFileName(String fileName, String counterSuffixValue) {
+	public String updateFileName(String fileName, String suffix) {
 		String extension = getExtension(fileName);
+		String fileNameWithoutExtension = stripExtension(fileName);
 
-		fileName = fileName.substring(
-			0, (fileName.length() - 1) - extension.length());
+		StringBundler sb = new StringBundler(6);
 
-		String counterSuffix =
-			StringPool.OPEN_PARENTHESIS + counterSuffixValue +
-				StringPool.CLOSE_PARENTHESIS;
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(fileName);
-		sb.append(counterSuffix);
+		sb.append(fileNameWithoutExtension);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(suffix);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 		sb.append(StringPool.PERIOD);
 		sb.append(extension);
 

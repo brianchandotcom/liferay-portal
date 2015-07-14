@@ -156,7 +156,7 @@ public interface File {
 
 	public void unzip(java.io.File source, java.io.File destination);
 
-	public String updateFileName(String fileName, String counterSuffixValue);
+	public String updateFileName(String fileName, String suffix);
 
 	public void write(java.io.File file, byte[] bytes) throws IOException;
 

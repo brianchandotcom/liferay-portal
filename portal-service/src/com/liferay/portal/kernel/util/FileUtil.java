@@ -404,12 +404,10 @@ public class FileUtil {
 		getFile().unzip(source, destination);
 	}
 
-	public static String updateFileName(
-		String fileName, String counterSuffixValue) {
-
+	public static String updateFileName(String fileName, String suffix) {
 		PortalFilePermission.checkRead(fileName);
 
-		return getFile().updateFileName(fileName, counterSuffixValue);
+		return getFile().updateFileName(fileName, suffix);
 	}
 
 	public static void write(File file, byte[] bytes) throws IOException {

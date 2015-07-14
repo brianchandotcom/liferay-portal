@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.page.ratings.web.lar;
+package com.liferay.ratings.page.ratings.web.lar;
 
-import com.liferay.page.ratings.web.constants.PageRatingsPortletKeys;
+import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;

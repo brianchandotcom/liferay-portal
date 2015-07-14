@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.page.ratings.web.upgrade;
+package com.liferay.ratings.page.ratings.web.upgrade;
 
-import com.liferay.page.ratings.web.constants.PageRatingsPortletKeys;
+import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -59,7 +59,7 @@ public class PageRatingsWebUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.page.ratings.web",
+			"com.liferay.ratings.page.ratings.web",
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}

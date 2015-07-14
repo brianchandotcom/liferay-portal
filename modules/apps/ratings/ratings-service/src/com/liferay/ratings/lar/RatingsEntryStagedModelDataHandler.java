@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.lar;
+package com.liferay.ratings.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;

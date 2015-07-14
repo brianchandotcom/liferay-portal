@@ -30,7 +30,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	public String fieldNamespace();
 
 	@DDMFormField(
-		label = "%index-type",
+		label = "%indexable",
 		optionLabels = {
 			"%not-indexable", "%indexable-keyword", "%indexable-text"
 		},

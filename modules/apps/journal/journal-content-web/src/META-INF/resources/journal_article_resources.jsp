@@ -36,6 +36,7 @@ AssetRenderer assetRenderer = journalContentDisplayContext.getAssetRenderer();
 				<p><%= assetRenderer.getSummary() %></p>
 
 				<liferay-ui:user-display
+					showLink="<%= false %>"
 					userId="<%= assetRenderer.getUserId() %>"
 					view="lexicon"
 				/>

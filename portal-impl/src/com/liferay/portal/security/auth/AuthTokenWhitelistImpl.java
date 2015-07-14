@@ -37,7 +37,6 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	public AuthTokenWhitelistImpl() {
 		resetOriginCSRFWhitelist();
 		resetPortletCSRFWhitelist();
-		resetPortletCSRFWhitelistActions();
 		resetPortletInvocationWhitelist();
 		resetPortletInvocationWhitelistActions();
 	}
@@ -161,16 +160,6 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 			_portletCSRFWhitelist);
 
 		return _portletCSRFWhitelist;
-	}
-
-	@Override
-	public Set<String> resetPortletCSRFWhitelistActions() {
-		_portletCSRFWhitelistActions = SetUtil.fromArray(
-			PropsValues.AUTH_TOKEN_IGNORE_ACTIONS);
-		_portletCSRFWhitelistActions = Collections.unmodifiableSet(
-			_portletCSRFWhitelistActions);
-
-		return _portletCSRFWhitelistActions;
 	}
 
 	@Override

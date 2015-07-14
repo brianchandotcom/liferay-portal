@@ -14,11 +14,17 @@
 
 package com.liferay.site.navigation.menu.web.portlet.template;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.theme.NavItem;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.site.navigation.menu.web.configuration.NavigationMenuConfigurationValues;
 import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,17 +41,29 @@ public class NavigationMenuPortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return null;
+		return NavItem.class.getName();
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return null;
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content.Language", locale);
+
+		String portletTitle = PortalUtil.getPortletTitle(
+			NavigationMenuPortletKeys.NAVIGATION, resourceBundle);
+
+		return portletTitle.concat(StringPool.SPACE).concat(
+			LanguageUtil.get(locale, "template"));
 	}
 
 	@Override
 	public String getResourceName() {
-		return null;
+		return NavigationMenuPortletKeys.NAVIGATION;
+	}
+
+	@Override
+	protected String getTemplatesConfigPath() {
+		return NavigationMenuConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

@@ -224,6 +224,18 @@
 		</run-batch-test>
 	</target>
 
+	<target name="service-builder">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<ant dir="modules/util/portal-tools-service-builder" target="clean" />
+
+				<ant dir="modules/util/portal-tools-service-builder" target="deploy" />
+
+				<ant dir="portal-impl" target="build-services" />
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="tck">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>

@@ -14,6 +14,7 @@
 
 package com.liferay.page.ratings.web.lar;
 
+import com.liferay.page.ratings.web.constants.PageRatingsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +23,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
@@ -34,14 +36,20 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Gergely Mathe
  */
-public class RatingsPortletDataHandler extends BasePortletDataHandler {
+@Component(
+	property = {"javax.portlet.name=" + PageRatingsPortletKeys.PAGE_RATINGS},
+	service = PortletDataHandler.class
+)
+public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "ratings";
 
-	public RatingsPortletDataHandler() {
+	public PageRatingsPortletDataHandler() {
 		setDataAlwaysStaged(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(RatingsEntry.class));

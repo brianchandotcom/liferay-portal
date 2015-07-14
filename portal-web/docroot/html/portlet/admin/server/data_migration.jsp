@@ -1,5 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -42,65 +40,67 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 
 			<liferay-ui:panel-container extended="<%= true %>" id='<%= "convert" + i + "PanelContainer" %>' persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "convert" + i + "Panel" %>' persistState="<%= true %>" title="<%= convertProcess.getDescription() %>">
-					<c:if test="<%= parameters == null %>">
-						<div class="alert alert-info">
-							<liferay-ui:message key="<%= convertProcess.getConfigurationDescription() %>" />
-						</div>
-					</c:if>
-					<c:if test="<%= parameters != null %>">
-						<aui:fieldset label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
+					<c:choose>
+						<c:when test="<%= parameters == null %>">
+							<div class="alert alert-info">
+								<liferay-ui:message key="<%= convertProcess.getConfigurationDescription() %>" />
+							</div>
+						</c:when>
+						<c:otherwise>
+							<aui:fieldset label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
 
-							<%
-							for (String parameter : parameters) {
-								if (parameter.contains(StringPool.EQUAL) && parameter.contains(StringPool.SEMICOLON)) {
-									String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
-									String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);
-							%>
+								<%
+								for (String parameter : parameters) {
+									if (parameter.contains(StringPool.EQUAL) && parameter.contains(StringPool.SEMICOLON)) {
+										String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
+										String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);
+								%>
 
-								<aui:select label="<%= parameterPair[0] %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + parameterPair[0] %>">
+									<aui:select label="<%= parameterPair[0] %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + parameterPair[0] %>">
 
-									<%
-									for (String parameterSelectEntry : parameterSelectEntries) {
-									%>
+										<%
+										for (String parameterSelectEntry : parameterSelectEntries) {
+										%>
 
-										<aui:option label="<%= parameterSelectEntry %>" />
+											<aui:option label="<%= parameterSelectEntry %>" />
 
-									<%
-									}
-									%>
+										<%
+										}
+										%>
 
-								</aui:select>
+									</aui:select>
 
-							<%
-								}
-								else {
-									String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
-
-									String parameterName = null;
-									String parameterType = null;
-
-									if (parameterPair.length > 1) {
-										parameterName = parameterPair[0];
-										parameterType = parameterPair[1];
+								<%
 									}
 									else {
-										parameterName = parameter;
+										String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
+
+										String parameterName = null;
+										String parameterType = null;
+
+										if (parameterPair.length > 1) {
+											parameterName = parameterPair[0];
+											parameterType = parameterPair[1];
+										}
+										else {
+											parameterName = parameter;
+										}
+								%>
+
+										<aui:input cssClass="lfr-input-text-container" label="<%= parameterName %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + parameterName %>" type='<%= parameterType != null ? parameterType : "" %>' />
+
+								<%
 									}
-							%>
-
-									<aui:input cssClass="lfr-input-text-container" label="<%= parameterName %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + parameterName %>" type='<%= parameterType != null ? parameterType : "" %>' />
-
-							<%
 								}
-							}
-							%>
+								%>
 
-						</aui:fieldset>
+							</aui:fieldset>
 
-						<aui:button-row>
-							<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + convertProcess.getClass().getName() %>' value="execute" />
-						</aui:button-row>
-					</c:if>
+							<aui:button-row>
+								<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + convertProcess.getClass().getName() %>' value="execute" />
+							</aui:button-row>
+						</c:otherwise>
+					</c:choose>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 

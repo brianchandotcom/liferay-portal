@@ -9,6 +9,7 @@
  * @param multiple
  * @param name
  * @param options
+ * @param required
  * @param visible
  */
 {template .select}
@@ -16,6 +17,10 @@
 		<div class="form-group input-select-wrapper">
 			<label class="control-label" for="{$name}">
 				{$label}
+
+				{if $required}
+					<b>&nbsp;*</b>
+				{/if}
 			</label>
 
 			<select id="{$name}" class="form-control" dir="{$dir}" name="{$name}" {$multiple}>

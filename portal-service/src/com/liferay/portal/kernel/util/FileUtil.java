@@ -405,8 +405,6 @@ public class FileUtil {
 	}
 
 	public static String updateFileName(String fileName, String suffix) {
-		PortalFilePermission.checkRead(fileName);
-
 		return getFile().updateFileName(fileName, suffix);
 	}
 

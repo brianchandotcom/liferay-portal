@@ -23,6 +23,7 @@ import com.liferay.portal.test.rule.SyntheticBundleRule;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,8 +40,13 @@ public class AuthTokenWhitelistUtilTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			new SyntheticBundleRule("bundle.authtokenignoreactions"));
 
+	@Before
+	public void setUp() {
+		AuthTokenIgnoreActionsRegistry.register(new String[] {"a", "b"});
+	}
+
 	@Test
-	public void testGetPortletCSRFWhitelistActions() {
+	public void testGetPortletCSRFWhitelistActionsWithBundle() {
 		Set<String> portletCSRFWhitelistActions =
 			AuthTokenWhitelistUtil.getPortletCSRFWhitelistActions();
 
@@ -50,6 +56,24 @@ public class AuthTokenWhitelistUtilTest {
 				" can't be found in the list portletCSRFWhitelistActions",
 			portletCSRFWhitelistActions.contains(
 				TestAuthTokenIgnoreActions.TEST_AUTH_TOKEN_IGNORE_ACTION_URL));
+
+		Assert.assertTrue(
+			"The URL a can't be found in the list portletCSRFWhitelistActions",
+			portletCSRFWhitelistActions.contains("a"));
+	}
+
+	@Test
+	public void testGetPortletCSRFWhitelistActionsWithRegistry() {
+		Set<String> portletCSRFWhitelistActions =
+			AuthTokenWhitelistUtil.getPortletCSRFWhitelistActions();
+
+		Assert.assertTrue(
+			"The URL a can't be found in the list portletCSRFWhitelistActions",
+			portletCSRFWhitelistActions.contains("a"));
+
+		Assert.assertTrue(
+			"The URL a can't be found in the list portletCSRFWhitelistActions",
+			portletCSRFWhitelistActions.contains("b"));
 	}
 
 }

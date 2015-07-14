@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.POPServerUtil;
+import com.liferay.portal.security.auth.AuthTokenIgnoreActionsRegistry;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.BrowserLauncher;
@@ -252,6 +253,9 @@ public class GlobalStartupAction extends SimpleAction {
 		// Authentication
 
 		AuthPublicPathRegistry.register(PropsValues.AUTH_PUBLIC_PATHS);
+
+		AuthTokenIgnoreActionsRegistry.register(
+			PropsValues.AUTH_TOKEN_IGNORE_ACTIONS);
 
 		// Javadoc
 

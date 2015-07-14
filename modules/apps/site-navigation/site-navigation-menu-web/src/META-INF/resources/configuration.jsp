@@ -26,25 +26,16 @@
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
+			<div class="display-template">
+				<liferay-ddm:template-selector
+					className="<%= NavItem.class.getName() %>"
+					displayStyle="<%= navigationMenuDisplayContext.getDisplayStyle() %>"
+					displayStyleGroupId="<%= navigationMenuDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+				/>
+			</div>
+
 			<aui:fieldset column="<%= true %>">
-				<aui:select name="preferences--displayStyle--">
-					<aui:option label="custom" selected='<%= Validator.equals(navigationMenuDisplayContext.getDisplayStyle(), "[custom]") %>' value="[custom]" />
-
-					<optgroup label="<liferay-ui:message key="predefined" />">
-
-						<%
-						for (String displayStyleOption : navigationMenuWebConfiguration.displayStyleOptions()) {
-						%>
-
-							<aui:option label="<%= displayStyleOption %>" selected="<%= Validator.equals(navigationMenuDisplayContext.getDisplayStyle(), displayStyleOption) %>" />
-
-						<%
-						}
-						%>
-
-					</optgroup>
-				</aui:select>
-
 				<aui:select name="preferences--bulletStyle--">
 
 					<%
@@ -73,7 +64,7 @@
 			</aui:fieldset>
 
 			<aui:fieldset column="<%= true %>">
-				<div class="<%= (navigationMenuDisplayContext.getDisplayStyle()).equals("[custom]") ? "" : "hide" %>" id="<portlet:namespace />customDisplayOptions">
+				<div class="" id="<portlet:namespace />customDisplayOptions">
 					<aui:select label="header" name="preferences--headerType--" value="<%= navigationMenuDisplayContext.getHeaderType() %>">
 						<aui:option label="none" />
 						<aui:option label="portlet-title" />
@@ -128,7 +119,6 @@
 <aui:script sandbox="<%= true %>">
 	var form = $('#<portlet:namespace />fm');
 
-	var customDisplayOptions = form.fm('customDisplayOptions');
 	var selectBulletStyle = form.fm('bulletStyle');
 	var selectDisplayStyle = form.fm('displayStyle');
 	var selectHeaderType = form.fm('headerType');
@@ -149,19 +139,11 @@
 				preview: true
 			};
 
-			var hide = true;
-
-			if (selectDisplayStyle.val() == '[custom]') {
-				hide = false;
-
-				data.headerType = selectHeaderType.val();
-				data.includedLayouts = selectIncludedLayouts.val();
-				data.nestedChildren = selectNestedChildren.val();
-				data.rootLayoutLevel = selectRootLayoutLevel.val();
-				data.rootLayoutType = selectRootLayoutType.val();
-			}
-
-			customDisplayOptions.toggleClass('hide', hide);
+			data.headerType = selectHeaderType.val();
+			data.includedLayouts = selectIncludedLayouts.val();
+			data.nestedChildren = selectNestedChildren.val();
+			data.rootLayoutLevel = selectRootLayoutLevel.val();
+			data.rootLayoutType = selectRootLayoutType.val();
 
 			data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 

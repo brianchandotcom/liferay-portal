@@ -129,29 +129,12 @@ public class BlogsEntryAttachmentFileEntryHelper {
 
 		fileName = fileName.replaceAll("\\(\\d+\\)\\.\\w$", StringPool.BLANK);
 
-		FileEntry fileEntry = _fetchPortletFileEntry(groupId, fileName, folder);
-
-		int counterSuffixValue = 1;
-
-		while (fileEntry != null) {
-			String curfileName = FileUtil.updateFileName(
-				fileName, String.valueOf(counterSuffixValue));
-
-			fileEntry = _fetchPortletFileEntry(groupId, curfileName, folder);
-
-			if (fileEntry == null) {
-				fileName = curfileName;
-
-				break;
-			}
-
-			counterSuffixValue++;
-		}
+		String uniqueFileName = getUniqueFileName(groupId, fileName, folder);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
-			BlogsConstants.SERVICE_NAME, folder.getFolderId(), is, fileName,
-			mimeType, true);
+			BlogsConstants.SERVICE_NAME, folder.getFolderId(), is,
+			uniqueFileName, mimeType, true);
 	}
 
 	protected String getBlogsEntryAttachmentFileEntryImgTag(
@@ -161,6 +144,29 @@ public class BlogsEntryAttachmentFileEntryHelper {
 			null, blogsEntryAttachmentFileEntry, StringPool.BLANK);
 
 		return "<img src=\"" + fileEntryURL + "\" />";
+	}
+
+	protected String getUniqueFileName(
+		long groupId, String fileName, Folder folder) {
+
+		FileEntry fileEntry = _fetchPortletFileEntry(groupId, fileName, folder);
+
+		int suffix = 1;
+
+		while (fileEntry != null) {
+			String curfileName = FileUtil.updateFileName(
+				fileName, String.valueOf(suffix));
+
+			fileEntry = _fetchPortletFileEntry(groupId, curfileName, folder);
+
+			if (fileEntry == null) {
+				return curfileName;
+			}
+
+			suffix++;
+		}
+
+		return fileName;
 	}
 
 	private FileEntry _fetchPortletFileEntry(

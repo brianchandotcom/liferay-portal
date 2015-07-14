@@ -1053,9 +1053,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						</not>
 						<equals arg1="${test.type}" arg2="functional" />
 					</or>
-					<available file="test/functional" type="dir" />
 					<resourcecount count="0" when="gt">
-						<fileset dir="test/functional" includes="**/${test.class}.java" />
+						<fileset dir="test/functional" erroronmissingdir="false" includes="**/${test.class}.java" />
 					</resourcecount>
 				</and>
 				<then>
@@ -1069,9 +1068,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							</not>
 							<equals arg1="${test.type}" arg2="functional-generated" />
 						</or>
-						<available file="test/functional-generated" type="dir" />
 						<resourcecount count="0" when="gt">
-							<fileset dir="test/functional-generated" includes="**/${test.class}.java" />
+							<fileset dir="test/functional-generated" erroronmissingdir="false" includes="**/${test.class}.java" />
 						</resourcecount>
 					</and>
 					<then>
@@ -1086,9 +1084,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							</not>
 							<equals arg1="${test.type}" arg2="integration" />
 						</or>
-						<available file="test/integration" type="dir" />
 						<resourcecount count="0" when="gt">
-							<fileset dir="test/integration" includes="**/${test.class}.java" />
+							<fileset dir="test/integration" erroronmissingdir="false" includes="**/${test.class}.java" />
 						</resourcecount>
 					</and>
 					<then>
@@ -1103,9 +1100,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							</not>
 							<equals arg1="${test.type}" arg2="unit" />
 						</or>
-						<available file="test/unit" type="dir" />
 						<resourcecount count="0" when="gt">
-							<fileset dir="test/unit" includes="**/${test.class}.java" />
+							<fileset dir="test/unit" erroronmissingdir="false" includes="**/${test.class}.java" />
 						</resourcecount>
 					</and>
 					<then>

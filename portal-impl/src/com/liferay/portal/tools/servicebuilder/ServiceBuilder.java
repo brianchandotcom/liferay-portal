@@ -40,6 +40,9 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -197,7 +200,7 @@ public class ServiceBuilder {
 		content = JavaImportsFormatter.stripJavaImports(
 			content, packagePath, className);
 
-		content = _stripFullyQualifiedClassNames(content);
+		content = stripFullyQualifiedClassNames(content);
 
 		File tempFile = new File("ServiceBuilder.temp");
 
@@ -405,7 +408,14 @@ public class ServiceBuilder {
 		return url;
 	}
 
-	private static String _stripFullyQualifiedClassNames(String content)
+	public static String stripFullyQualifiedClassNames(String content)
+		throws IOException {
+
+		return stripFullyQualifiedClassNames(content, null);
+	}
+
+	public static String stripFullyQualifiedClassNames(
+			String content, File file)
 		throws IOException {
 
 		String imports = JavaImportsFormatter.getImports(content);
@@ -413,6 +423,8 @@ public class ServiceBuilder {
 		if (Validator.isNull(imports)) {
 			return content;
 		}
+
+		boolean strippedPath = false;
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -441,8 +453,11 @@ public class ServiceBuilder {
 				char previousChar = content.charAt(x - 1);
 
 				if (Character.isAlphabetic(nextChar) ||
+					Character.isDigit(nextChar) ||
+					(nextChar == CharPool.PERIOD) ||
 					(nextChar == CharPool.QUOTE) ||
 					(nextChar == CharPool.SEMICOLON) ||
+					(nextChar == CharPool.UNDERLINE) ||
 					(previousChar == CharPool.QUOTE)) {
 
 					continue;
@@ -454,7 +469,14 @@ public class ServiceBuilder {
 
 				content = StringUtil.replaceFirst(
 					content, importPackageAndClassName, importClassName, x);
+
+				strippedPath = true;
 			}
+		}
+
+		if (strippedPath && (file != null)) {
+			Files.write(
+				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
 		}
 
 		return content;

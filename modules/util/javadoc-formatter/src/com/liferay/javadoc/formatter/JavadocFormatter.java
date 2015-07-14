@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.Dom4jDocUtil;
 import com.liferay.util.xml.Dom4jUtil;
@@ -834,18 +835,20 @@ public class JavadocFormatter {
 			return;
 		}
 
-		JavaClass javaClass = _getJavaClass(
-			fileName, new UnsyncStringReader(originalContent));
+		String content = ServiceBuilder.stripFullyQualifiedClassNames(
+			originalContent, file);
 
-		String javadocLessContent = _removeJavadocFromJava(
-			javaClass, originalContent);
+		JavaClass javaClass = _getJavaClass(
+			fileName, new UnsyncStringReader(content));
+
+		String javadocLessContent = _removeJavadocFromJava(javaClass, content);
 
 		Document document = _getJavadocDocument(javaClass);
 
 		_updateJavadocsXmlFile(fileName, javaClass, document);
 
 		_updateJavaFromDocument(
-			fileName, originalContent, javadocLessContent, document);
+			fileName, content, javadocLessContent, document);
 	}
 
 	private String _formatCDATA(String cdata) {

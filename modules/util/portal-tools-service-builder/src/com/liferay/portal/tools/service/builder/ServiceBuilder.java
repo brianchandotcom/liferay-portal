@@ -521,7 +521,7 @@ public class ServiceBuilder {
 		content = JavaImportsFormatter.stripJavaImports(
 			content, packagePath, className);
 
-		content = _stripFullyQualifiedClassNames(content);
+		content = stripFullyQualifiedClassNames(content);
 
 		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
 
@@ -2047,7 +2047,14 @@ public class ServiceBuilder {
 		}
 	}
 
-	private static String _stripFullyQualifiedClassNames(String content)
+	public static String stripFullyQualifiedClassNames(String content)
+		throws IOException {
+
+		return stripFullyQualifiedClassNames(content, null);
+	}
+
+	public static String stripFullyQualifiedClassNames(
+			String content, File file)
 		throws IOException {
 
 		String imports = JavaImportsFormatter.getImports(content);
@@ -2055,6 +2062,8 @@ public class ServiceBuilder {
 		if (Validator.isNull(imports)) {
 			return content;
 		}
+
+		boolean strippedPath = false;
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -2099,7 +2108,14 @@ public class ServiceBuilder {
 
 				content = StringUtil.replaceFirst(
 					content, importPackageAndClassName, importClassName, x);
+
+				strippedPath = true;
 			}
+		}
+
+		if (strippedPath && (file != null)) {
+			Files.write(
+				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
 		}
 
 		return content;

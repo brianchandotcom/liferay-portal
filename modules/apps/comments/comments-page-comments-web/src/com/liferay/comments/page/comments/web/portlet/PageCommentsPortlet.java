@@ -15,11 +15,13 @@
 package com.liferay.comments.page.comments.web.portlet;
 
 import com.liferay.comments.page.comments.web.constants.PageCommentsPortletKeys;
+import com.liferay.comments.page.comments.web.upgrade.PageCommentsWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -46,4 +48,10 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class PageCommentsPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setPageCommentsWebUpgrade(
+		PageCommentsWebUpgrade pageCommentsWebUpgrade) {
+	}
+
 }

@@ -1975,6 +1975,17 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates an add icon that contains a list of links.</description>
+		<name>icon-add</name>
+		<tag-class>com.liferay.taglib.ui.IconAddTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>actionsJSONArray</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates an icon to associate with deactivating an item.</description>
 		<name>icon-deactivate</name>
 		<tag-class>com.liferay.taglib.ui.IconDeactivateTag</tag-class>

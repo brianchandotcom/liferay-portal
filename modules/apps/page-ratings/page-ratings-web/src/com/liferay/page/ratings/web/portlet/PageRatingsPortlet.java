@@ -14,6 +14,7 @@
 
 package com.liferay.page.ratings.web.portlet;
 
+import com.liferay.page.ratings.web.constants.PageRatingsPortletKeys;
 import com.liferay.page.ratings.web.upgrade.PageRatingsWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -40,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + PageRatingsPortletKeys.PAGE_RATINGS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

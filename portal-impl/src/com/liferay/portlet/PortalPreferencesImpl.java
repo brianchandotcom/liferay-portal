@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.ReadOnlyException;
@@ -55,7 +56,7 @@ public class PortalPreferencesImpl
 	public PortalPreferencesImpl clone() {
 		return new PortalPreferencesImpl(
 			getOwnerId(), getOwnerType(), getOriginalXML(),
-			getOriginalPreferences(), isSignedIn());
+			new HashMap<>(getOriginalPreferences()), isSignedIn());
 	}
 
 	@Override

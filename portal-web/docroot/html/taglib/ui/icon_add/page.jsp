@@ -31,6 +31,13 @@ JSONArray actionsJSONArray = (JSONArray)request.getAttribute("liferay-ui:icon-ad
 			<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= action.getString("href") %>" title="<%= action.getString("title") %>">
 				<span class="icon-plus"></span>
 			</a>
+			<aui:script>
+				$(document).ready(
+					function() {
+						$('[data-toggle="tooltip"]').tooltip();
+					}
+				);
+			</aui:script>
 		</c:when>
 		<c:otherwise>
 			<div class="btn-action-secondary btn-bottom-right dropdown">

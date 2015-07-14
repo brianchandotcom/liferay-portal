@@ -41,6 +41,8 @@ if (queryLogicIndex >= 0) {
 
 	if (Validator.equals(queryName, "assetTags")) {
 		queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
+
+		queryValues = AssetPublisherUtil.filterAssetTagNames(scopeGroupId, queryValues);
 	}
 	else {
 		queryValues = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);

@@ -149,6 +149,36 @@ public class CustomSQL {
 			}
 		}
 
+		if (queryDefinition.getOwnerUserId() > 0) {
+			if (queryDefinition.isIncludeOwner()) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(tableName);
+				sb.append(_USER_ID_CONDITION_DEFAULT);
+				sb.append(" AND ");
+				sb.append(tableName);
+				sb.append(_STATUS_CONDITION_INVERSE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				sql = sql.replace(_USER_ID_KEYWORD, sb.toString());
+
+				sql = sql.replace(_USER_ID_AND_OR_CONNECTOR, " OR ");
+			}
+			else {
+				sql = sql.replace(
+					_USER_ID_KEYWORD,
+					tableName.concat(_USER_ID_CONDITION_DEFAULT));
+
+				sql = sql.replace(_USER_ID_AND_OR_CONNECTOR, " AND ");
+			}
+		}
+		else {
+			sql = sql.replace(_USER_ID_KEYWORD, StringPool.BLANK);
+
+			sql = sql.replace(_USER_ID_AND_OR_CONNECTOR, StringPool.BLANK);
+		}
+
 		return sql;
 	}
 
@@ -849,6 +879,13 @@ public class CustomSQL {
 	private static final String _STATUS_CONDITION_INVERSE = "status != ?";
 
 	private static final String _STATUS_KEYWORD = "[$STATUS$]";
+
+	private static final String _USER_ID_AND_OR_CONNECTOR =
+		"[$USER_ID_AND_OR_CONNECTOR$]";
+
+	private static final String _USER_ID_CONDITION_DEFAULT = "userId = ?";
+
+	private static final String _USER_ID_KEYWORD = "[$USER_ID$]";
 
 	private static final Log _log = LogFactoryUtil.getLog(CustomSQL.class);
 

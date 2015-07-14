@@ -15,12 +15,10 @@
 package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ProxyServiceInvocation;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.List;
 import java.util.Locale;
@@ -39,9 +37,7 @@ public class DDMStructureManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		return ddmStructureManager.addStructure(
+		return _ddmStructureManager.addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
 			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
 			serviceContext);
@@ -50,53 +46,41 @@ public class DDMStructureManagerUtil {
 	public static void deleteStructure(long structureId)
 		throws PortalException {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		ddmStructureManager.deleteStructure(structureId);
+		_ddmStructureManager.deleteStructure(structureId);
 	}
 
 	public static DDMStructure fetchStructure(
 		long groupId, long classNameId, String structureKey) {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		return ddmStructureManager.fetchStructure(
+		return _ddmStructureManager.fetchStructure(
 			groupId, classNameId, structureKey);
 	}
 
 	public static DDMStructure fetchStructureByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		return ddmStructureManager.fetchStructureByUuidAndGroupId(
+		return _ddmStructureManager.fetchStructureByUuidAndGroupId(
 			uuid, groupId);
 	}
 
 	public static List<DDMStructure> getClassStructures(
 		long companyId, long classNameId, int start, int end) {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		return ddmStructureManager.getClassStructures(
+		return _ddmStructureManager.getClassStructures(
 			companyId, classNameId, start, end);
 	}
 
 	public static DDMStructure getStructure(long structureId)
 		throws PortalException {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		return ddmStructureManager.getStructure(structureId);
+		return _ddmStructureManager.getStructure(structureId);
 	}
 
 	public static DDMStructure getStructure(
 			long groupId, long classNameId, String structureKey)
 		throws PortalException {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		return ddmStructureManager.getStructure(
+		return _ddmStructureManager.getStructure(
 			groupId, classNameId, structureKey);
 	}
 
@@ -104,9 +88,7 @@ public class DDMStructureManagerUtil {
 			String uuid, long groupId)
 		throws PortalException {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		return ddmStructureManager.getStructureByUuidAndGroupId(uuid, groupId);
+		return _ddmStructureManager.getStructureByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static DDMStructure updateStructure(
@@ -116,39 +98,12 @@ public class DDMStructureManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructureManager ddmStructureManager = _getDDMStructureManager();
-
-		return ddmStructureManager.updateStructure(
+		return _ddmStructureManager.updateStructure(
 			userId, structureId, parentStructureId, nameMap, descriptionMap,
 			ddmForm, ddmFormLayout, serviceContext);
 	}
 
-	private static DDMStructureManager _getDDMStructureManager() {
-		DDMStructureManager ddmStructureManager =
-			_instance._serviceTracker.getService();
-
-		if (ddmStructureManager == null) {
-			return _dummyDDMStructureManagerImpl;
-		}
-
-		return ddmStructureManager;
-	}
-
-	private DDMStructureManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(DDMStructureManager.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final DDMStructureManagerUtil _instance =
-		new DDMStructureManagerUtil();
-
-	private static final DummyDDMStructureManagerImpl
-		_dummyDDMStructureManagerImpl = new DummyDDMStructureManagerImpl();
-
-	private final ServiceTracker<DDMStructureManager, DDMStructureManager>
-		_serviceTracker;
+	private static final DDMStructureManager _ddmStructureManager =
+		ProxyServiceInvocation.newInstance(DDMStructureManager.class);
 
 }

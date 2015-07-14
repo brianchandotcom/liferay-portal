@@ -15,11 +15,9 @@
 package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ProxyServiceInvocation;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.io.File;
 
@@ -41,9 +39,7 @@ public class DDMTemplateManagerUtil {
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplateManager ddmTemplateManager = _getDDMTemplateManager();
-
-		return ddmTemplateManager.addTemplate(
+		return _ddmTemplateManager.addTemplate(
 			userId, groupId, classNameId, classPK, resourceClassNameId,
 			templateKey, nameMap, descriptionMap, type, mode, language, script,
 			cacheable, smallImage, smallImageURL, smallImageFile,
@@ -53,26 +49,20 @@ public class DDMTemplateManagerUtil {
 	public static DDMTemplate fetchTemplate(
 		long groupId, long classNameId, String templateKey) {
 
-		DDMTemplateManager ddmTemplateManager = _getDDMTemplateManager();
-
-		return ddmTemplateManager.fetchTemplate(
+		return _ddmTemplateManager.fetchTemplate(
 			groupId, classNameId, templateKey);
 	}
 
 	public static DDMTemplate getTemplate(long templateId)
 		throws PortalException {
 
-		DDMTemplateManager ddmTemplateManager = _getDDMTemplateManager();
-
-		return ddmTemplateManager.getTemplate(templateId);
+		return _ddmTemplateManager.getTemplate(templateId);
 	}
 
 	public static List<DDMTemplate> getTemplates(
 		long[] groupIds, long classNameId, long classPK) {
 
-		DDMTemplateManager ddmTemplateManager = _getDDMTemplateManager();
-
-		return ddmTemplateManager.getTemplates(groupIds, classNameId, classPK);
+		return _ddmTemplateManager.getTemplates(groupIds, classNameId, classPK);
 	}
 
 	public static boolean hasPermission(
@@ -80,38 +70,11 @@ public class DDMTemplateManagerUtil {
 			String portletId, String actionId)
 		throws PortalException {
 
-		DDMTemplateManager ddmTemplateManager = _getDDMTemplateManager();
-
-		return ddmTemplateManager.hasPermission(
+		return _ddmTemplateManager.hasPermission(
 			permissionChecker, groupId, templateId, portletId, actionId);
 	}
 
-	private static DDMTemplateManager _getDDMTemplateManager() {
-		DDMTemplateManager ddmTemplateManager =
-			_instance._serviceTracker.getService();
-
-		if (ddmTemplateManager == null) {
-			return _dummyDDMTemplateManagerImpl;
-		}
-
-		return ddmTemplateManager;
-	}
-
-	private DDMTemplateManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(DDMTemplateManager.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final DDMTemplateManagerUtil _instance =
-		new DDMTemplateManagerUtil();
-
-	private static final DummyDDMTemplateManagerImpl
-		_dummyDDMTemplateManagerImpl = new DummyDDMTemplateManagerImpl();
-
-	private final ServiceTracker<DDMTemplateManager, DDMTemplateManager>
-		_serviceTracker;
+	private static final DDMTemplateManager _ddmTemplateManager =
+		ProxyServiceInvocation.newInstance(DDMTemplateManager.class);
 
 }

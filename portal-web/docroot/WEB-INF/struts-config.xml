@@ -631,10 +631,6 @@
 			<forward name="portlet.requests.error" path="portlet.requests.error" />
 		</action>
 
-		<action path="/requests/view" type="com.liferay.portlet.requests.action.ViewAction">
-			<forward name="portlet.requests.view" path="portlet.requests.view" />
-		</action>
-
 		<!-- Shopping -->
 
 		<action path="/shopping/cart" type="com.liferay.portlet.shopping.action.CartAction">

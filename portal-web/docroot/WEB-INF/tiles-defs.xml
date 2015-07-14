@@ -576,10 +576,6 @@
 		<put name="portlet_content" value="/portlet/requests/error.jsp" />
 	</definition>
 
-	<definition name="portlet.requests.view" extends="portlet.requests">
-		<put name="portlet_content" value="/portlet/requests/view.jsp" />
-	</definition>
-
 	<!-- Shopping -->
 
 	<definition name="portlet.shopping" extends="portlet" />

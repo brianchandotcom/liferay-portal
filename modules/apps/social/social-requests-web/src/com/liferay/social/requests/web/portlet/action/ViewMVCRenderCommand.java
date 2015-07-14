@@ -12,42 +12,59 @@
  * details.
  */
 
-package com.liferay.portlet.requests.action;
+package com.liferay.social.requests.web.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.SocialRequestConstants;
 import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
+import com.liferay.social.requests.web.constants.RequestsPortletKeys;
 
 import java.util.List;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-public class ViewAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + RequestsPortletKeys.REQUESTS,
+		"mvc.command.name=/", "mvc.command.name=/requests/view"
+	},
+	service = MVCRenderCommand.class
+)
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			return doRender(renderRequest);
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
+	}
+
+	protected String doRender(RenderRequest renderRequest)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -73,7 +90,7 @@ public class ViewAction extends PortletAction {
 			renderRequest.setAttribute(WebKeys.SOCIAL_REQUESTS, requests);
 		}
 
-		return actionMapping.findForward("portlet.requests.view");
+		return "/view.jsp";
 	}
 
 }

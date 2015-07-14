@@ -142,7 +142,7 @@ public abstract class BaseTrashHandlerTestCase {
 	@Test
 	public void testMoveBaseModelToTrashIndexable() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
-		Assume.assumeFalse(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeFalse(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -180,7 +180,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
-		Assume.assumeTrue(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeTrue(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -313,7 +313,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
-		Assume.assumeFalse(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeFalse(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -358,7 +358,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
-		Assume.assumeTrue(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeTrue(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -565,7 +565,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
-		Assume.assumeFalse(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeFalse(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -611,7 +611,7 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
-		Assume.assumeTrue(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeTrue(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -2158,7 +2158,7 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
-		Assume.assumeFalse(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeFalse(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -2208,7 +2208,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
-		Assume.assumeTrue(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeTrue(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -2329,7 +2329,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
-		Assume.assumeFalse(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeFalse(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -2380,7 +2380,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
-		Assume.assumeTrue(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeTrue(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -2466,7 +2466,7 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashVersionBaseModelIndexable() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
-		Assume.assumeFalse(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeFalse(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;
@@ -2511,7 +2511,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 		Assume.assumeTrue(this instanceof WhenIsUpdatableBaseModel);
-		Assume.assumeTrue(this instanceof WhenParentHasSameClassThanBaseModel);
+		Assume.assumeTrue(this instanceof WhenParentModelIsSameType);
 
 		WhenIsIndexableBaseModel whenIsIndexableBaseModel =
 			(WhenIsIndexableBaseModel)this;

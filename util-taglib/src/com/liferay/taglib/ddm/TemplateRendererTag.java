@@ -14,99 +14,95 @@
 
 package com.liferay.taglib.ddm;
 
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
-import com.liferay.taglib.util.IncludeTag;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.ddm.base.BaseTemplateRendererTag;
 
 /**
  * @author Eduardo Garcia
  */
-public class TemplateRendererTag extends IncludeTag {
+public class TemplateRendererTag extends BaseTemplateRendererTag {
+
+	public TemplateRendererTag() {
+		setContextObjects(new HashMap<String, Object>());
+	}
 
 	@Override
-	public int processStartTag() throws Exception {
-		if (_displayStyleGroupId == 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+	public int doStartTag() throws JspException {
+		try {
+			String page = getStartPage();
 
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+			setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+			callSetAttributes();
+
+			if (themeResourceExists(page)) {
+				doIncludeTheme(page);
+
+				return EVAL_BODY_INCLUDE;
+			}
+
+			if (!FileAvailabilityUtil.isAvailable(servletContext, page)) {
+				logUnavailablePage(page);
+			}
+
+			doInclude(page, true);
+
+			if (_portletDisplayDDMTemplate != null) {
+				return SKIP_BODY;
+			}
+
+			return EVAL_BODY_INCLUDE;
 		}
-
-		_portletDisplayDDMTemplate =
-			PortletDisplayTemplateManagerUtil.getDDMTemplate(
-				_displayStyleGroupId, PortalUtil.getClassNameId(_className),
-				_displayStyle, true);
-
-		if (_portletDisplayDDMTemplate != null) {
-			return SKIP_BODY;
+		catch (Exception e) {
+			throw new JspException(e);
 		}
-
-		return EVAL_BODY_INCLUDE;
-	}
-
-	public void setClassName(String className) {
-		_className = className;
-	}
-
-	public void setContextObjects(Map<String, Object> contextObjects) {
-		_contextObjects = contextObjects;
-	}
-
-	public void setDisplayStyle(String displayStyle) {
-		_displayStyle = displayStyle;
-	}
-
-	public void setDisplayStyleGroupId(long displayStyleGroupId) {
-		_displayStyleGroupId = displayStyleGroupId;
-	}
-
-	public void setEntries(List<?> entries) {
-		_entries = entries;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_className = null;
-		_contextObjects = new HashMap<>();
-		_displayStyle = null;
-		_displayStyleGroupId = 0;
-		_entries = null;
+		super.cleanUp();
+
+		setContextObjects(new HashMap<String, Object>());
 		_portletDisplayDDMTemplate = null;
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-ui:ddm-template-renderer:contextObjects", _contextObjects);
-		request.setAttribute(
-			"liferay-ui:ddm-template-renderer:entries", _entries);
-		request.setAttribute(
-			"liferay-ui:ddm-template-renderer:portletDisplayDDMTemplate",
-			_portletDisplayDDMTemplate);
+		super.setAttributes(request);
+
+		setPortletDisplayDDMTemplate();
+
+		setNamespacedAttribute(
+			request, "portletDisplayDDMTemplate", _portletDisplayDDMTemplate);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ddm/ddm_template_renderer/page.jsp";
+	protected void setPortletDisplayDDMTemplate() {
+		if (getDisplayStyleGroupId() == 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-	private String _className;
-	private Map<String, Object> _contextObjects = new HashMap<>();
-	private String _displayStyle;
-	private long _displayStyleGroupId;
-	private List<?> _entries;
+			setDisplayStyleGroupId(themeDisplay.getScopeGroupId());
+		}
+
+		_portletDisplayDDMTemplate =
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+				getDisplayStyleGroupId(),
+				PortalUtil.getClassNameId(getClassName()), getDisplayStyle(),
+				true);
+	}
+
 	private DDMTemplate _portletDisplayDDMTemplate;
 
 }

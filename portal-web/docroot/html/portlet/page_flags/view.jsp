@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/page_ratings/init.jsp" %>
+<%@ include file="/html/portlet/page_flags/init.jsp" %>
 
 <%
 long reportedUserId = themeDisplay.getDefaultUserId();

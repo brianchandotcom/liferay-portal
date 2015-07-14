@@ -905,38 +905,6 @@ email address and the list of reserved email addresses.
 
 ---------------------------------------
 
-### Added Required Attribute paginationURL to the Tag liferay-ui:discussion
-- **Date:** 2015-Feb-05
-- **JIRA Ticket:** LPS-53313
-
-#### What changed?
-
-The `liferay-ui:discussion` tag now contains a new required attribute
-`paginationURL`.
-
-#### Who is affected?
-
-This affects all developers who are using this tag in their plugins.
-
-#### How should I update my code?
-
-You should include the new attribute `paginationURL` in the tag. This attribute
-holds a URL that returns an HTML fragment containing the next comments for
-portlets such as Asset Publisher, Blogs, Document Library, etc.
-
-If you are using the Liferay `MVCPortlet` class, you can use the following URL:
-
-    <portlet:resourceURL var="discussionPaginationURL">
-        <portlet:param name="invokeTaglibDiscussion"
-            value="<%= Boolean.TRUE.toString() %>" />
-    </portlet:resourceURL>
-
-#### Why was this change made?
-
-This change was made to support comment pagination.
-
----------------------------------------
-
 ### Replaced ReservedUserIdException with UserIdException Inner Classes
 - **Date:** 2015-Feb-10
 - **JIRA Ticket:** LPS-53487

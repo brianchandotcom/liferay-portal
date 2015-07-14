@@ -22,6 +22,8 @@
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services-groovy.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-core.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-language-java.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-language-jvm.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

@@ -90,6 +90,7 @@ AUI.add(
 
 				var field = new fieldClass(
 					{
+						container: instance._createContainer(),
 						label: instance.get('label'),
 						name: instance.get('name'),
 						parent: parent,

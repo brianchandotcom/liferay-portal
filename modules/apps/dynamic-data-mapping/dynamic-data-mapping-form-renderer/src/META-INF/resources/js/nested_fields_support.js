@@ -69,6 +69,20 @@ AUI.add(
 				}
 			},
 
+			filterNodes: function(fn) {
+				var instance = this;
+
+				var nodes = instance.get('container').all('.lfr-ddm-form-field-container');
+
+				return nodes.filter(
+					function(item) {
+						var qualifiedName = item.one('.field-wrapper').getData('fieldname');
+
+						return fn.call(instance, qualifiedName, item);
+					}
+				);
+			},
+
 			getField: function(name) {
 				var instance = this;
 

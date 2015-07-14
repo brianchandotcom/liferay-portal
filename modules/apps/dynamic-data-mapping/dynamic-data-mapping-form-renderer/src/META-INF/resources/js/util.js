@@ -34,6 +34,14 @@ AUI.add(
 				return A.Object.getValue(window, fieldClassName.split('.'));
 			},
 
+			getFieldNameFromQualifiedName: function(qualifiedName) {
+				var instance = this;
+
+				var name = qualifiedName.split('$$')[1];
+
+				return name.split('$')[0];
+			},
+
 			getInstanceIdFromQualifiedName: function(qualifiedName) {
 				var instance = this;
 

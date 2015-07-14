@@ -102,9 +102,9 @@ AUI.add(
 							instance.after('valueChange', instance._afterValueChange)
 						];
 
-						instance.render();
-
 						instance._uiSetParent(instance.get('parent'));
+
+						instance.render();
 					},
 
 					destructor: function() {
@@ -298,22 +298,34 @@ AUI.add(
 						instance.render();
 					},
 
+					_createContainer: function() {
+						var instance = this;
+
+						return A.Node.create('<div class="lfr-ddm-form-field-container"></div>');
+					},
+
 					_getContainerByInstanceId: function(instanceId) {
 						var instance = this;
 
-						var root = instance.getRoot();
-
-						var nodes = root.get('container').all('.lfr-ddm-form-field-container');
-
-						return nodes.filter(
-							function(item) {
-								var qualifiedName = item.one('.field-wrapper').getData('fieldname');
-
+						return instance.getRoot().filterNodes(
+							function(qualifiedName) {
 								var nodeInstanceId = Util.getInstanceIdFromQualifiedName(qualifiedName);
 
 								return instanceId === nodeInstanceId;
 							}
 						).item(0);
+					},
+
+					_getContainerByNameAndIndex: function(name, repeatedIndex) {
+						var instance = this;
+
+						return instance.getRoot().filterNodes(
+							function(qualifiedName) {
+								var nodeFieldName = Util.getFieldNameFromQualifiedName(qualifiedName);
+
+								return name === nodeFieldName;
+							}
+						).item(repeatedIndex);
 					},
 
 					_getDefaultValue: function() {
@@ -335,7 +347,9 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.appendTo(parent.get('container'));
+						if (!container.inDoc()) {
+							container.appendTo(parent.get('container'));
+						}
 
 						var index = parent.indexOf(instance);
 
@@ -355,7 +369,15 @@ AUI.add(
 						var container = instance._getContainerByInstanceId(instanceId);
 
 						if (!container) {
-							container = A.Node.create('<div class="lfr-ddm-form-field-container"></div>');
+							var name = instance.get('name');
+
+							var repeatedIndex = instance.get('repeatedIndex');
+
+							container = instance._getContainerByNameAndIndex(name, repeatedIndex);
+						}
+
+						if (!container) {
+							container = instance._createContainer();
 						}
 
 						return container;

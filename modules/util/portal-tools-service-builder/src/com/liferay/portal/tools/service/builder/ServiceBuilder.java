@@ -469,6 +469,80 @@ public class ServiceBuilder {
 		return resourceActionModels;
 	}
 
+	public static String stripFullyQualifiedClassNames(String content)
+		throws IOException {
+
+		return stripFullyQualifiedClassNames(content, null);
+	}
+
+	public static String stripFullyQualifiedClassNames(
+			String content, File file)
+		throws IOException {
+
+		String imports = JavaImportsFormatter.getImports(content);
+
+		if (Validator.isNull(imports)) {
+			return content;
+		}
+
+		boolean strippedPath = false;
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			int x = line.indexOf("import ");
+
+			if (x == -1) {
+				continue;
+			}
+
+			String importPackageAndClassName = line.substring(
+				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
+
+			for (x = -1;;) {
+				x = content.indexOf(importPackageAndClassName, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				char nextChar = content.charAt(
+					x + importPackageAndClassName.length());
+				char previousChar = content.charAt(x - 1);
+
+				if (Character.isAlphabetic(nextChar) ||
+					Character.isDigit(nextChar) ||
+					(nextChar == CharPool.PERIOD) ||
+					(nextChar == CharPool.QUOTE) ||
+					(nextChar == CharPool.SEMICOLON) ||
+					(nextChar == CharPool.UNDERLINE) ||
+					(previousChar == CharPool.QUOTE)) {
+
+					continue;
+				}
+
+				String importClassName = importPackageAndClassName.substring(
+					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
+						1);
+
+				content = StringUtil.replaceFirst(
+					content, importPackageAndClassName, importClassName, x);
+
+				strippedPath = true;
+			}
+		}
+
+		if (strippedPath && (file != null)) {
+			Files.write(
+				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+		}
+
+		return content;
+	}
+
 	public static String toHumanName(String name) {
 		if (name == null) {
 			return null;
@@ -2045,80 +2119,6 @@ public class ServiceBuilder {
 		for (Element element : elements) {
 			resourceActionModels.add(element.getText().trim());
 		}
-	}
-
-	public static String stripFullyQualifiedClassNames(String content)
-		throws IOException {
-
-		return stripFullyQualifiedClassNames(content, null);
-	}
-
-	public static String stripFullyQualifiedClassNames(
-			String content, File file)
-		throws IOException {
-
-		String imports = JavaImportsFormatter.getImports(content);
-
-		if (Validator.isNull(imports)) {
-			return content;
-		}
-
-		boolean strippedPath = false;
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int x = line.indexOf("import ");
-
-			if (x == -1) {
-				continue;
-			}
-
-			String importPackageAndClassName = line.substring(
-				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
-
-			for (x = -1;;) {
-				x = content.indexOf(importPackageAndClassName, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				char nextChar = content.charAt(
-					x + importPackageAndClassName.length());
-				char previousChar = content.charAt(x - 1);
-
-				if (Character.isAlphabetic(nextChar) ||
-					Character.isDigit(nextChar) ||
-					(nextChar == CharPool.PERIOD) ||
-					(nextChar == CharPool.QUOTE) ||
-					(nextChar == CharPool.SEMICOLON) ||
-					(nextChar == CharPool.UNDERLINE) ||
-					(previousChar == CharPool.QUOTE)) {
-
-					continue;
-				}
-
-				String importClassName = importPackageAndClassName.substring(
-					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
-						1);
-
-				content = StringUtil.replaceFirst(
-					content, importPackageAndClassName, importClassName, x);
-
-				strippedPath = true;
-			}
-		}
-
-		if (strippedPath && (file != null)) {
-			Files.write(
-				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
-		}
-
-		return content;
 	}
 
 	private static void _touch(File file) throws IOException {

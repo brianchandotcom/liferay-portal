@@ -6,6 +6,7 @@
 		<portlet-name>com_liferay_site_navigation_menu_web_portlet_NavigationMenuPortlet</portlet-name>
 		<permissions>
 			<supports>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>ADD_TO_PAGE</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
@@ -17,6 +18,7 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
 		</permissions>

@@ -1046,76 +1046,33 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<macrodef name="set-test-type">
 		<sequential>
 			<if>
-				<and>
-					<or>
-						<not>
-							<isset property="test.type" />
-						</not>
-						<equals arg1="${test.type}" arg2="functional" />
-					</or>
-					<resourcecount count="0" when="gt">
-						<fileset dir="test/functional" erroronmissingdir="false" includes="**/${test.class}.java" />
-					</resourcecount>
-				</and>
+				<resourcecount count="0" when="gt">
+					<multirootfileset basedirs="test/functional-generated,test/functional" erroronmissingdir="false" includes="**/${test.class}.java" />
+				</resourcecount>
 				<then>
 					<var name="test.type" value="functional" />
 				</then>
 				<elseif>
-					<and>
-						<or>
-							<not>
-								<isset property="test.type" />
-							</not>
-							<equals arg1="${test.type}" arg2="functional-generated" />
-						</or>
-						<resourcecount count="0" when="gt">
-							<fileset dir="test/functional-generated" erroronmissingdir="false" includes="**/${test.class}.java" />
-						</resourcecount>
-					</and>
-					<then>
-						<var name="test.type" value="functional" />
-					</then>
-				</elseif>
-				<elseif>
-					<and>
-						<or>
-							<not>
-								<isset property="test.type" />
-							</not>
-							<equals arg1="${test.type}" arg2="integration" />
-						</or>
-						<resourcecount count="0" when="gt">
-							<fileset dir="test/integration" erroronmissingdir="false" includes="**/${test.class}.java" />
-						</resourcecount>
-					</and>
+					<resourcecount count="0" when="gt">
+						<fileset dir="test/integration" erroronmissingdir="false" includes="**/${test.class}.java" />
+					</resourcecount>
 					<then>
 						<var name="test.type" value="integration" />
 					</then>
 				</elseif>
 				<elseif>
-					<and>
-						<or>
-							<not>
-								<isset property="test.type" />
-							</not>
-							<equals arg1="${test.type}" arg2="unit" />
-						</or>
-						<resourcecount count="0" when="gt">
-							<fileset dir="test/unit" erroronmissingdir="false" includes="**/${test.class}.java" />
-						</resourcecount>
-					</and>
+					<resourcecount count="0" when="gt">
+						<fileset dir="test/unit" erroronmissingdir="false" includes="**/${test.class}.java" />
+					</resourcecount>
 					<then>
 						<var name="test.type" value="unit" />
 					</then>
 				</elseif>
-				<elseif>
-					<not>
-						<isset property="test.type" />
-					</not>
+				<else>
 					<then>
 						<fail>Test class ${test.class} cannot be found.</fail>
 					</then>
-				</elseif>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

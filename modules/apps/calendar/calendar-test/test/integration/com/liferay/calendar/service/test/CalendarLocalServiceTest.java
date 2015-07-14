@@ -12,32 +12,27 @@
  * details.
  */
 
-package com.liferay.calendar.service.persistence.test;
+package com.liferay.calendar.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.calendar.service.persistence.CalendarFinder;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.calendar.util.comparator.CalendarNameComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.List;
 import java.util.Locale;
@@ -49,53 +44,39 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Adam Brandizzi
  */
 @RunWith(Arquillian.class)
-@Sync
-public class CalendarFinderTest {
+public class CalendarLocalServiceTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_bundleContext = bundle.getBundleContext();
-		
-		_serviceReference = _bundleContext.getServiceReference(
-			CalendarFinder.class);
-
-		_calendarFinder = _bundleContext.getService(_serviceReference);
 	}
 
 	@Test
-	public void testFindByC_G_C_N_D() throws PortalException {
+	public void testSearchByKeywords() throws PortalException {
 		ServiceContext serviceContext = new ServiceContext();
+
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getGroupCalendarResource(
 				_group.getGroupId(), serviceContext);
 
 		Locale locale = LocaleUtil.getDefault();
-		Map<Locale, String> nameMap =
-			RandomTestUtil.randomLocaleStringMap(locale);
-		
-		Calendar calendar = CalendarLocalServiceUtil.addCalendar(
+
+		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap(
+			locale);
+
+		Calendar expectedCalendar = CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _group.getGroupId(),
 			calendarResource.getCalendarResourceId(), nameMap,
 			RandomTestUtil.randomLocaleStringMap(), StringPool.UTC,
@@ -104,31 +85,28 @@ public class CalendarFinderTest {
 
 		CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _group.getGroupId(),
-			calendarResource.getCalendarResourceId(), 
+			calendarResource.getCalendarResourceId(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), StringPool.UTC,
 			RandomTestUtil.randomInt(0, 255), false, false, false,
 			serviceContext);
 
-		List<Calendar> calendars = _calendarFinder.findByKeywords(
-			_group.getCompanyId(), new long[]{_group.getGroupId()},
-			new long[]{calendarResource.getCalendarResourceId()},
-			nameMap.get(locale), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+		List<Calendar> actualCalendars = CalendarLocalServiceUtil.search(
+			_group.getCompanyId(), new long[] {_group.getGroupId()},
+			new long[] {calendarResource.getCalendarResourceId()},
+			nameMap.get(locale), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new CalendarNameComparator());
 
-		Assert.assertEquals(1, calendars.size());
-		Calendar foundCalendar = calendars.get(0);
+		Assert.assertEquals(1, actualCalendars.size());
+
+		Calendar actualCalendar = actualCalendars.get(0);
 
 		Assert.assertEquals(
-			calendar.getCalendarId(), foundCalendar.getCalendarId());
-		Assert.assertEquals(calendar.getNameMap(), foundCalendar.getNameMap());
+			expectedCalendar.getCalendarId(), actualCalendar.getCalendarId());
+		Assert.assertEquals(
+			expectedCalendar.getNameMap(), actualCalendar.getNameMap());
 	}
 
-	private BundleContext _bundleContext;
-	private ServiceReference<CalendarFinder> _serviceReference;
-	
-	private CalendarFinder _calendarFinder;
-	
 	@DeleteAfterTestRun
 	private Group _group;
 

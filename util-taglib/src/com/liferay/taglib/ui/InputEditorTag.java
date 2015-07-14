@@ -298,19 +298,21 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	protected String getNamespace() {
-		LiferayPortletRequest portletRequest =
+		LiferayPortletRequest liferayPortletRequest =
 			(LiferayPortletRequest)request.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		LiferayPortletResponse portletResponse =
+		LiferayPortletResponse liferayPortletResponse =
 			(LiferayPortletResponse)request.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		if ((portletRequest == null) || (portletResponse == null)) {
+		if ((liferayPortletRequest == null) ||
+			(liferayPortletResponse == null)) {
+
 			return AUIUtil.getNamespace(request);
 		}
 
-		return AUIUtil.getNamespace(portletRequest, portletResponse);
+		return AUIUtil.getNamespace(
+			liferayPortletRequest, liferayPortletResponse);
 	}
 
 	@Override
@@ -321,15 +323,15 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	protected PortletURLBuilder getPortletURLBuilder() {
-		LiferayPortletResponse portletResponse =
+		LiferayPortletResponse liferayPortletResponse =
 			(LiferayPortletResponse)request.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		if (portletResponse == null) {
+		if (liferayPortletResponse == null) {
 			return PortletURLBuilder.create(request);
 		}
 
-		return PortletURLBuilder.create(portletResponse);
+		return PortletURLBuilder.create(liferayPortletResponse);
 	}
 
 	@Override

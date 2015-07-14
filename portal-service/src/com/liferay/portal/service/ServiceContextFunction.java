@@ -29,12 +29,14 @@ public class ServiceContextFunction
 
 	public ServiceContextFunction(HttpServletRequest request) {
 		_request = request;
+
 		_portletRequest = null;
 	}
 
 	public ServiceContextFunction(PortletRequest portletRequest) {
-		_request = null;
 		_portletRequest = portletRequest;
+
+		_request = null;
 	}
 
 	@Override

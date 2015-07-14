@@ -16,10 +16,12 @@ package com.liferay.social.requests.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.social.requests.web.constants.RequestsPortletKeys;
+import com.liferay.social.requests.web.upgrade.RequestsWebUpgrade;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -45,4 +47,9 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class RequestsPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	public void setRequestsWebUpgrade(RequestsWebUpgrade requestsWebUpgrade) {
+	}
+
 }

@@ -1,0 +1,9 @@
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.0-SNAPSHOT"
+	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

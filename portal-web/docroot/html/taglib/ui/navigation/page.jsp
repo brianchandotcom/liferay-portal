@@ -20,9 +20,9 @@
 
 	<div class="nav-menu nav-menu-style-<%= bulletStyle %>">
 		<c:choose>
-			<c:when test='<%= headerType.equals("root-layout") && (rootLayout != null) %>'>
+			<c:when test='<%= headerType.equals("root-layout") && (rootNavItem != null) %>'>
 				<h2>
-					<a href="<%= PortalUtil.getLayoutURL(rootLayout, themeDisplay) %>" <%= PortalUtil.getLayoutTarget(rootLayout) %>><%= rootLayout.getName(locale) %></a>
+					<a href="<%= rootNavItem.getRegularURL() %>" <%= rootNavItem.getTarget() %>><%= rootNavItem.getName() %></a>
 				</h2>
 			</c:when>
 			<c:when test='<%= headerType.equals("portlet-title") %>'>

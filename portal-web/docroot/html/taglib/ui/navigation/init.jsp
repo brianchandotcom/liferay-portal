@@ -16,10 +16,12 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="com.liferay.portal.theme.NavItem" %>
+
 <%
 String bulletStyle = StringUtil.toLowerCase(((String)request.getAttribute("liferay-ui:navigation:bulletStyle")));
 String headerType = (String)request.getAttribute("liferay-ui:navigation:headerType");
 String navigationString = (String)request.getAttribute("liferay-ui:navigation:navigationString");
 boolean preview = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:preview"));
-Layout rootLayout = (Layout)request.getAttribute("liferay-ui:navigation:rootLayout");
+NavItem rootNavItem = (NavItem)request.getAttribute("liferay-ui:navigation:rootNavItem");
 %>

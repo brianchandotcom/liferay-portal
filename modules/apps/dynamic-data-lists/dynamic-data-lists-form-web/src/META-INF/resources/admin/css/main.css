@@ -8,7 +8,23 @@
 	.ddl-form-builder-basic-info {
 		margin-top: -25px;
 
+		.ddl-form-builder-description .alloy-editor.alloy-editor-placeholder {
+			font-weight: 400;
+		}
+
+		.ddl-form-builder-name .alloy-editor.alloy-editor-placeholder {
+			font-weight: 300;
+		}
+
 		.ddl-form-builder-description, .ddl-form-builder-name {
+			.alloy-editor.alloy-editor-placeholder {
+				padding-left: 0;
+
+				&:empty:not(:focus) {
+					border-width: 0;
+				}
+			}
+
 			.help-block {
 				position: absolute;
 				top: -15px;

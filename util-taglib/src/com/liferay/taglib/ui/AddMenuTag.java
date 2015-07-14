@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Ambrin Chaudhary
  */
-public class IconAddTag extends IconTag {
+public class AddMenuTag extends IconTag {
 
 	public void setActionsJSONArray(JSONArray _actionsJSONArray) {
 		this._actionsJSONArray = _actionsJSONArray;
@@ -40,10 +40,10 @@ public class IconAddTag extends IconTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:icon-add:actionsJSONArray", _actionsJSONArray);
+			"liferay-ui:add-menu:actionsJSONArray", _actionsJSONArray);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/icon_add/page.jsp";
+	private static final String _PAGE = "/html/taglib/ui/add_menu/page.jsp";
 
 	private JSONArray _actionsJSONArray;
 

@@ -220,7 +220,7 @@ public class JCRStore extends BaseStore {
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
 
 			if (dirName.equals(StringPool.SLASH)) {
-				dirName = StringPool.BLANK;
+				dirName = StringPool.PERIOD;
 			}
 
 			Node dirNode = repositoryNode.getNode(dirName);

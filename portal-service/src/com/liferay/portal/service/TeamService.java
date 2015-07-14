@@ -46,8 +46,20 @@ public interface TeamService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TeamServiceUtil} to access the team remote service. Add custom service methods to {@link com.liferay.portal.service.impl.TeamServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	* @throws PortalException
+	* @deprecated As of 7.0.0, replaced by {@link
+	#addTeam(long,long,String,String,ServiceContext)}
+	*/
+	@java.lang.Deprecated
 	public com.liferay.portal.model.Team addTeam(long groupId,
 		java.lang.String name, java.lang.String description)
+		throws PortalException;
+
+	public com.liferay.portal.model.Team addTeam(long groupId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteTeam(long teamId) throws PortalException;

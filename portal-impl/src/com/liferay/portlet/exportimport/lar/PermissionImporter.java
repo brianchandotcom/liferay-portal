@@ -79,7 +79,7 @@ public class PermissionImporter {
 			}
 			catch (NoSuchTeamException nste) {
 				team = TeamLocalServiceUtil.addTeam(
-					userId, groupId, name, description);
+					userId, groupId, name, description, new ServiceContext());
 			}
 
 			role = RoleLocalServiceUtil.getTeamRole(

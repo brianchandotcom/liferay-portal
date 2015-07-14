@@ -52,10 +52,24 @@ public class TeamLocalServiceUtil {
 		return getService().addTeam(team);
 	}
 
+	/**
+	* @throws PortalException
+	* @deprecated As of 7.0.0, replaced by {@link
+	#addTeam(long,long,String,String,ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.portal.model.Team addTeam(long userId,
 		long groupId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addTeam(userId, groupId, name, description);
+	}
+
+	public static com.liferay.portal.model.Team addTeam(long userId,
+		long groupId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addTeam(userId, groupId, name, description, serviceContext);
 	}
 
 	public static void addUserGroupTeam(long userGroupId,
@@ -269,6 +283,18 @@ public class TeamLocalServiceUtil {
 		return getService().fetchTeam(teamId);
 	}
 
+	/**
+	* Returns the team matching the UUID and group.
+	*
+	* @param uuid the team's UUID
+	* @param groupId the primary key of the group
+	* @return the matching team, or <code>null</code> if a matching team could not be found
+	*/
+	public static com.liferay.portal.model.Team fetchTeamByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchTeamByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -280,6 +306,11 @@ public class TeamLocalServiceUtil {
 	*/
 	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Team> getGroupTeams(
@@ -312,6 +343,20 @@ public class TeamLocalServiceUtil {
 	}
 
 	/**
+	* Returns the team matching the UUID and group.
+	*
+	* @param uuid the team's UUID
+	* @param groupId the primary key of the group
+	* @return the matching team
+	* @throws PortalException if a matching team could not be found
+	*/
+	public static com.liferay.portal.model.Team getTeamByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTeamByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the teams.
 	*
 	* <p>
@@ -325,6 +370,36 @@ public class TeamLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.model.Team> getTeams(
 		int start, int end) {
 		return getService().getTeams(start, end);
+	}
+
+	/**
+	* Returns all the teams matching the UUID and company.
+	*
+	* @param uuid the UUID of the teams
+	* @param companyId the primary key of the company
+	* @return the matching teams, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portal.model.Team> getTeamsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getTeamsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of teams matching the UUID and company.
+	*
+	* @param uuid the UUID of the teams
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of teams
+	* @param end the upper bound of the range of teams (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching teams, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portal.model.Team> getTeamsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
+		return getService()
+				   .getTeamsByUuidAndCompanyId(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

@@ -19,6 +19,7 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.TeamServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.TeamPermissionUtil;
@@ -31,6 +32,12 @@ import java.util.List;
  */
 public class TeamServiceImpl extends TeamServiceBaseImpl {
 
+	/**
+	 * @throws     PortalException
+	 * @deprecated As of 7.0.0, replaced by {@link #addTeam(long, String,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public Team addTeam(long groupId, String name, String description)
 		throws PortalException {
@@ -40,6 +47,19 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 
 		return teamLocalService.addTeam(
 			getUserId(), groupId, name, description);
+	}
+
+	@Override
+	public Team addTeam(
+			long groupId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.MANAGE_TEAMS);
+
+		return teamLocalService.addTeam(
+			getUserId(), groupId, name, description, serviceContext);
 	}
 
 	@Override

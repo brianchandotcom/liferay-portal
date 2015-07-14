@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import com.liferay.portlet.exportimport.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +54,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
 		attributes.put("teamId", getTeamId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -71,6 +74,12 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 
 		Long teamId = (Long)attributes.get("teamId");
@@ -274,6 +283,16 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		return _team.getUserUuid();
 	}
 
+	/**
+	* Returns the uuid of this team.
+	*
+	* @return the uuid of this team
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _team.getUuid();
+	}
+
 	@Override
 	public int hashCode() {
 		return _team.hashCode();
@@ -451,6 +470,16 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		_team.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this team.
+	*
+	* @param uuid the uuid of this team
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_team.setUuid(uuid);
+	}
+
 	@Override
 	public CacheModel<com.liferay.portal.model.Team> toCacheModel() {
 		return _team.toCacheModel();
@@ -493,6 +522,11 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _team.getStagedModelType();
 	}
 
 	/**

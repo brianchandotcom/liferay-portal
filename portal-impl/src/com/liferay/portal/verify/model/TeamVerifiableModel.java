@@ -19,7 +19,8 @@ import com.liferay.portal.model.Team;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TeamVerifiableModel implements VerifiableResourcedModel {
+public class TeamVerifiableModel
+	implements VerifiableResourcedModel, VerifiableUUIDModel {
 
 	@Override
 	public String getModelName() {

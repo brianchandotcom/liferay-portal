@@ -197,7 +197,7 @@ public class RoleLocalServiceTest {
 
 		Team team = TeamLocalServiceUtil.addTeam(
 			user.getUserId(), organization.getGroupId(),
-			RandomTestUtil.randomString(), null);
+			RandomTestUtil.randomString(), null, new ServiceContext());
 
 		return new Object[] {organization, team};
 	}

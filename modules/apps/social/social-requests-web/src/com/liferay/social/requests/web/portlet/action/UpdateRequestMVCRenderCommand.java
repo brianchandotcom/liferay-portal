@@ -60,18 +60,10 @@ public class UpdateRequestMVCRenderCommand extends BaseMVCActionCommand {
 				actionResponse.sendRedirect(redirect);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchRequestException ||
-				e instanceof PrincipalException) {
+		catch (NoSuchRequestException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
 
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/error.jsp");
-			}
-			else {
-				throw e;
-			}
+			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}
 	}
 

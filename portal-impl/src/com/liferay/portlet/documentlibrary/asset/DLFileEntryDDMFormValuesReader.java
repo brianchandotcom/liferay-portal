@@ -21,10 +21,10 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.BaseDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 			return new DDMFormValues(null);
 		}
 
-		return StorageEngineUtil.getDDMFormValues(
+		return StorageEngineManagerUtil.getDDMFormValues(
 			dlFileEntryMetadata.getDDMStorageId());
 	}
 

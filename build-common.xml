@@ -1069,9 +1069,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					</then>
 				</elseif>
 				<else>
-					<then>
-						<fail>Test class ${test.class} cannot be found.</fail>
-					</then>
+					<fail>Test class ${test.class} cannot be found.</fail>
 				</else>
 			</if>
 		</sequential>

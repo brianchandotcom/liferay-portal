@@ -165,25 +165,27 @@ public class BBCodeParser {
 
 		String startTag = bbCodeToken.getStartTag();
 
-		if (_blockElements.contains(startTag)) {
-			String currentTag = null;
+		if (!tags.isEmpty()) {
+			if (_blockElements.contains(startTag)) {
+				String currentTag = null;
 
-			while (!tags.isEmpty() &&
-				   ((currentTag = tags.lastElement()) != null) &&
-				   _inlineElements.contains(currentTag)) {
+				while (((currentTag = tags.lastElement()) != null) &&
+					   _inlineElements.contains(currentTag)) {
 
-				BBCodeToken currentTagBBCodeToken = new BBCodeToken(currentTag);
+					BBCodeToken currentTagBBCodeToken = new BBCodeToken(
+						currentTag);
 
-				handleTagEnd(bbCodeItems, tags, currentTagBBCodeToken);
+					handleTagEnd(bbCodeItems, tags, currentTagBBCodeToken);
+				}
 			}
-		}
 
-		if (_selfCloseElements.contains(startTag) &&
-			startTag.equals(tags.lastElement())) {
+			if (_selfCloseElements.contains(startTag) &&
+				startTag.equals(tags.lastElement())) {
 
-			BBCodeToken tagBBCodeToken = new BBCodeToken(startTag);
+				BBCodeToken tagBBCodeToken = new BBCodeToken(startTag);
 
-			handleTagEnd(bbCodeItems, tags, tagBBCodeToken);
+				handleTagEnd(bbCodeItems, tags, tagBBCodeToken);
+			}
 		}
 
 		tags.push(startTag);

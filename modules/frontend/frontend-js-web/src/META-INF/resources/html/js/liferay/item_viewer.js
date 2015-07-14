@@ -144,6 +144,7 @@ AUI.add(
 						sidebarNode.sideNavigation(
 							{
 								content: sidebarNode.find('.image-viewer-base-image'),
+								equalHeight: false,
 								toggler: infoIconNode,
 								width: '300px'
 							}

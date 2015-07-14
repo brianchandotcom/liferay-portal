@@ -41,7 +41,7 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 
 		PortletURL itemSelectorURL = getItemSelectorPortletURL(
 			inputEditorTaglibAttributes, portletURLBuilder,
-				new ImageItemSelectorCriterion());
+			new ImageItemSelectorCriterion());
 
 		if (itemSelectorURL != null) {
 			jsonObject.put(

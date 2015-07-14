@@ -60,15 +60,12 @@ public class BlogsContentEditorConfigContributor
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:namespace"));
-
-		String name =
-			namespace +
-				GetterUtil.getString(
-					inputEditorTaglibAttributes.get(
-						"liferay-ui:input-editor:name"));
+		String name = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:name"));
 
 		populateFileBrowserURL(
-			jsonObject, portletURLBuilder, name + "selectDocument");
+			jsonObject, portletURLBuilder, namespace + name + "selectDocument");
 	}
 
 	@Reference(unbind = "-")

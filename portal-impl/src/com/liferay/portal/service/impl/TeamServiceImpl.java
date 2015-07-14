@@ -34,8 +34,8 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 
 	/**
 	 * @throws     PortalException
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #addTeam(long,long,String,String,ServiceContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link #addTeam(long, String,
+	 *             String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.social.requests.web.constants;
 
-<%@ page import="com.liferay.portlet.social.NoSuchRequestException" %><%@
-page import="com.liferay.portlet.social.model.SocialRequest" %><%@
-page import="com.liferay.portlet.social.model.SocialRequestConstants" %><%@
-page import="com.liferay.portlet.social.model.SocialRequestFeedEntry" %><%@
-page import="com.liferay.portlet.social.service.SocialRequestInterpreterLocalServiceUtil" %>
+/**
+ * @author Adolfo Pérez
+ */
+public class RequestsWebKeys {
 
-<%@ include file="/html/portlet/requests/init-ext.jsp" %>
+	public static final String SOCIAL_REQUESTS = "SOCIAL_REQUESTS";
+
+}

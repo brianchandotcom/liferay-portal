@@ -46,7 +46,7 @@ import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsMoveableFromTrashBaseModel;
 import com.liferay.portlet.trash.test.WhenIsRestorableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
-import com.liferay.portlet.trash.test.WhenParentHasSameClassThanBaseModel;
+import com.liferay.portlet.trash.test.WhenParentModelIsSameType;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.junit.After;
@@ -66,7 +66,7 @@ public class JournalFolderTrashHandlerTest
 			   WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
 			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
 			   WhenIsRestorableBaseModel, WhenIsUpdatableBaseModel,
-			   WhenParentHasSameClassThanBaseModel {
+			   WhenParentModelIsSameType {
 
 	@ClassRule
 	@Rule

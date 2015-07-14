@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.comment;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -28,6 +29,13 @@ public interface DiscussionStagingHandler {
 		throws PortletDataException;
 
 	public String getClassName();
+
+	public ActionableDynamicQuery getCommentExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	public String getResourceName();
+
+	public Class<? extends StagedModel> getStagedModelClass();
 
 	public <T extends StagedModel> void importReferenceDiscussions(
 			PortletDataContext portletDataContext, T stagedModel)

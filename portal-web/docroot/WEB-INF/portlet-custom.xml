@@ -383,30 +383,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>107</portlet-name>
-		<display-name>Page Comments</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/page_comments/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/page_comments/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>108</portlet-name>
 		<display-name>Page Ratings</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

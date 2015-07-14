@@ -14,6 +14,8 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<%@ include file="/html/portlet/page_comments/init-ext.jsp" %>
+<liferay-ui:error-header />
+
+<liferay-ui:error-principal />

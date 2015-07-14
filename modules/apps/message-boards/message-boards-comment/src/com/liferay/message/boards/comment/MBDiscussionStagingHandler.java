@@ -15,16 +15,28 @@
 package com.liferay.message.boards.comment;
 
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import java.util.List;
 
@@ -70,7 +82,87 @@ public class MBDiscussionStagingHandler implements DiscussionStagingHandler {
 
 	@Override
 	public String getClassName() {
-		return MBMessage.class.getName();
+		Class<? extends StagedModel> stagedModelClass = getStagedModelClass();
+
+		return stagedModelClass.getName();
+	}
+
+	@Override
+	public ActionableDynamicQuery getCommentExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery actionableDynamicQuery =
+			MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Criterion modifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria("modifiedDate");
+					Criterion statusDateCriterion =
+						portletDataContext.getDateRangeCriteria("statusDate");
+
+					if ((modifiedDateCriterion != null) &&
+						(statusDateCriterion != null)) {
+
+						Disjunction disjunction =
+							RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(modifiedDateCriterion);
+						disjunction.add(statusDateCriterion);
+
+						dynamicQuery.add(disjunction);
+					}
+
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					dynamicQuery.add(classNameIdProperty.gt(0L));
+
+					Property parentMessageIdProperty =
+						PropertyFactoryUtil.forName("parentMessageId");
+
+					dynamicQuery.add(
+						parentMessageIdProperty.gt(
+							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID));
+
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
+
+					if (portletDataContext.isInitialPublication()) {
+						dynamicQuery.add(
+							statusProperty.ne(
+								WorkflowConstants.STATUS_IN_TRASH));
+					}
+					else {
+						StagedModelDataHandler<?> stagedModelDataHandler =
+							StagedModelDataHandlerRegistryUtil.
+								getStagedModelDataHandler(
+									MBMessage.class.getName());
+
+						dynamicQuery.add(
+							statusProperty.in(
+								stagedModelDataHandler.
+									getExportableStatuses()));
+					}
+				}
+
+			});
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public String getResourceName() {
+		return MBPermission.RESOURCE_NAME;
+	}
+
+	@Override
+	public Class<? extends StagedModel> getStagedModelClass() {
+		return MBMessage.class;
 	}
 
 	@Override

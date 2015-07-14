@@ -430,18 +430,6 @@
 		<put name="portlet_content" value="/portlet/our_activities/view.jsp" />
 	</definition>
 
-	<!-- Page Comments -->
-
-	<definition name="portlet.page_comments" extends="portlet" />
-
-	<definition name="portlet.page_comments.error" extends="portlet.page_comments">
-		<put name="portlet_content" value="/portlet/page_comments/error.jsp" />
-	</definition>
-
-	<definition name="portlet.page_comments.view" extends="portlet.page_comments">
-		<put name="portlet_content" value="/portlet/page_comments/view.jsp" />
-	</definition>
-
 	<!-- Page Flags -->
 
 	<definition name="portlet.page_flags" extends="portlet" />

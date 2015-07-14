@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/page_comments/init.jsp" %>
+package com.liferay.comments.page.comments.web.constants;
 
-<liferay-ui:error-header />
+/**
+ * @author Adolfo Pérez
+ */
+public class PageCommentsPortletKeys {
 
-<liferay-ui:error-principal />
+	public static final String PAGE_COMMENTS =
+		"com_liferay_comments_page_comments_web_portlet_PageCommentsPortlet";
+
+}

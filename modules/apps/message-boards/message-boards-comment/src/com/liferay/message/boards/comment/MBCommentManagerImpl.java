@@ -29,13 +29,17 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
+import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -46,7 +50,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -158,6 +164,12 @@ public class MBCommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
+	}
+
+	@Override
+	public void deleteGroupComments(long groupId) throws PortalException {
+		_mbThreadLocalService.deleteThreads(
+			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 	}
 
 	@Override
@@ -301,8 +313,26 @@ public class MBCommentManagerImpl implements CommentManager {
 		return message.getMessageId();
 	}
 
+	@Activate
+	protected void activate() {
+		XStreamAliasRegistryUtil.register(MBMessageImpl.class, "MBMessage");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		XStreamAliasRegistryUtil.unregister(MBMessageImpl.class, "MBMessage");
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 

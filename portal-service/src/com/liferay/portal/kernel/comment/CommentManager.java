@@ -52,6 +52,8 @@ public interface CommentManager {
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException;
 
+	public void deleteGroupComments(long groupId) throws PortalException;
+
 	public Comment fetchComment(long commentId);
 
 	public int getCommentsCount(String className, long classPK);

@@ -515,14 +515,6 @@
 
 		<action path="/our_activities/view" forward="portlet.our_activities.view" />
 
-		<!-- Page Comments -->
-
-		<action path="/page_comments/edit_page_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.page_comments.error" />
-		</action>
-
-		<action path="/page_comments/view" forward="portlet.page_comments.view" />
-
 		<!-- Page Flags -->
 
 		<action path="/page_flags/view" forward="portlet.page_flags.view" />

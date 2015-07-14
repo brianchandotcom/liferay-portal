@@ -127,6 +127,13 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public void deleteGroupComments(long groupId) throws PortalException {
+		CommentManager commentManager = getCommentManager();
+
+		commentManager.deleteGroupComments(groupId);
+	}
+
+	@Override
 	public Comment fetchComment(long commentId) {
 		CommentManager commentManager = getCommentManager();
 

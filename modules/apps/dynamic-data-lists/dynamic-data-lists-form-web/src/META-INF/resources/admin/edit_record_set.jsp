@@ -71,6 +71,8 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 		<div id="<portlet:namespace />formBuilder"></div>
 	</aui:fieldset>
 
+	<div class="loading-animation" id="<portlet:namespace />loader"></div>
+
 	<aui:button-row cssClass="ddl-form-builder-buttons">
 		<aui:button label="save" primary="<%= true %>" type="submit" />
 
@@ -99,8 +101,8 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 
 							new Liferay.DDL.Portlet(
 								{
-									editForm: event.form,
 									definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
+									editForm: event.form,
 									layout: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>,
 									namespace: '<portlet:namespace />'
 								}

@@ -7,10 +7,10 @@ AUI.add(
 		var DDLPortlet = A.Component.create(
 			{
 				ATTRS: {
-					editForm: {
+					definition: {
 					},
 
-					definition: {
+					editForm: {
 					},
 
 					formBuilder: {
@@ -45,6 +45,8 @@ AUI.add(
 
 					renderUI: function() {
 						var instance = this;
+
+						instance.one('#loader').remove();
 
 						instance.get('formBuilder').render(instance.one('#formBuilder'));
 					},

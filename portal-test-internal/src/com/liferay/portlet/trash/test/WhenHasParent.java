@@ -17,5 +17,10 @@ package com.liferay.portlet.trash.test;
 /**
  * @author Cristina González
  */
-public interface WhenIsAssetableBaseModel extends WhenIsAssetable {
+public interface WhenHasParent {
+
+	public String getParentBaseModelClassName();
+
+	public void moveParentBaseModelToTrash(long primaryKey) throws Exception;
+
 }

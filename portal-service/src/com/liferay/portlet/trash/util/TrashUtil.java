@@ -184,6 +184,10 @@ public class TrashUtil {
 		return getTrash().isTrashEnabled(groupId);
 	}
 
+	public static boolean isValidTrashTitle(String title) {
+		return getTrash().isValidTrashTitle(title);
+	}
+
 	public void setTrash(Trash trash) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

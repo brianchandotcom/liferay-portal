@@ -217,4 +217,8 @@
 
 		<build-lfr-amd-loader />
 	</target>
+
+	<target name="build-alloy-bootstrap">
+		<build-alloy-bootstrap />
+	</target>
 </project>

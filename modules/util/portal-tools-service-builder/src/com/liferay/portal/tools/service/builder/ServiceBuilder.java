@@ -887,42 +887,30 @@ public class ServiceBuilder {
 							_createHbm(entity);
 							_createHbmUtil(entity);
 
-							JavaClass modelImplJavaClass = _getJavaClass(
-								_outputPath + "/model/impl/" +
-									entity.getName() + "Impl.java");
-
-							_createPersistenceImpl(entity, modelImplJavaClass);
+							_createPersistenceImpl(entity);
 							_createPersistence(entity);
 							_createPersistenceUtil(entity);
 
 							if (Validator.isNotNull(_testDirName)) {
-								_createPersistenceTest(
-									entity, modelImplJavaClass);
+								_createPersistenceTest(entity);
 							}
 
-							_createModelImpl(entity, modelImplJavaClass);
-							_createExtendedModelBaseImpl(
-								entity, modelImplJavaClass);
+							_createModelImpl(entity);
+							_createExtendedModelBaseImpl(entity);
 							_createExtendedModelImpl(entity);
-
-							if (modelImplJavaClass == null) {
-								modelImplJavaClass = _getJavaClass(
-									_outputPath + "/model/impl/" +
-										entity.getName() + "Impl.java");
-							}
 
 							entity.setTransients(_getTransients(entity, false));
 							entity.setParentTransients(
 								_getTransients(entity, true));
 
-							_createModel(entity, modelImplJavaClass);
-							_createExtendedModel(entity, modelImplJavaClass);
+							_createModel(entity);
+							_createExtendedModel(entity);
 
-							_createModelCache(entity, modelImplJavaClass);
-							_createModelClp(entity, modelImplJavaClass);
+							_createModelCache(entity);
+							_createModelClp(entity);
 							_createModelWrapper(entity);
 
-							_createModelSoap(entity, modelImplJavaClass);
+							_createModelSoap(entity);
 
 							_createBlobModels(entity);
 
@@ -2327,9 +2315,9 @@ public class ServiceBuilder {
 		writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createExtendedModel(
-			Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
+	private void _createExtendedModel(Entity entity) throws Exception {
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		List<JavaMethod> methods = ListUtil.fromArray(
 			_getMethods(modelImplJavaClass));
@@ -2372,13 +2360,13 @@ public class ServiceBuilder {
 		writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createExtendedModelBaseImpl(
-			Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
-
+	private void _createExtendedModelBaseImpl(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
@@ -2593,12 +2581,13 @@ public class ServiceBuilder {
 		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
-	private void _createModel(Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
-
+	private void _createModel(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
@@ -2614,8 +2603,9 @@ public class ServiceBuilder {
 		writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createModelCache(Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
+	private void _createModelCache(Entity entity) throws Exception {
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		Map<String, Object> context = _getContext();
 
@@ -2637,12 +2627,13 @@ public class ServiceBuilder {
 		writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createModelClp(Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
-
+	private void _createModelClp(Entity entity) throws Exception {
 		if (Validator.isNull(_pluginName)) {
 			return;
 		}
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		Map<String, JavaMethod> methods = new HashMap<>();
 
@@ -2736,8 +2727,9 @@ public class ServiceBuilder {
 		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
-	private void _createModelImpl(Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
+	private void _createModelImpl(Entity entity) throws Exception {
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		Map<String, Object> context = _getContext();
 
@@ -2758,15 +2750,16 @@ public class ServiceBuilder {
 		writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createModelSoap(Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
-
+	private void _createModelSoap(Entity entity) throws Exception {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + "Soap.java");
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
@@ -2841,14 +2834,14 @@ public class ServiceBuilder {
 		writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
-	private void _createPersistenceImpl(
-			Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
-
+	private void _createPersistenceImpl(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 		context.put("referenceList", _mergeReferenceList(entity));
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
@@ -2879,13 +2872,13 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createPersistenceTest(
-			Entity entity, JavaClass modelImplJavaClass)
-		throws Exception {
-
+	private void _createPersistenceTest(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 

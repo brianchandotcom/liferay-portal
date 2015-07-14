@@ -13,6 +13,7 @@ dependencies {
 ext {
 	alloyBootstrapVersion = "3.2.0-2"
 	alloyVersion = "3.0.1"
+	lexiconVersion = "0.1.5"
 	lfrAMDLoaderVersion = "1.2.0"
 }
 
@@ -25,6 +26,7 @@ File thirdPartyDir = file("../../../portal-web/third-party")
 
 task buildAlloy(type: Copy)
 task buildAlloyBootstrap(type: Copy)
+task buildLexicon(type: Copy)
 task buildLfrAMDLoader(type: Copy)
 task downloadLfrAMDLoader(type: NpmTask)
 
@@ -75,6 +77,20 @@ buildAlloyBootstrap {
 	into alloyBootstrapDestinationDir
 }
 
+buildLexicon {
+	File lexiconDestinatioDir = new File(jsDestinationDir, "lexicon")
+
+	doFirst {
+		delete lexiconDestinatioDir
+	}
+
+	eachFile new StripPathSegmentsAction(1)
+	from zipTree(new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip"))
+	include "js/**"
+	includeEmptyDirs = false
+	into lexiconDestinatioDir
+}
+
 buildLfrAMDLoader {
 	dependsOn downloadLfrAMDLoader
 	from new File(node.nodeModulesDir, "node_modules/lfr-amd-loader/dist/loader.js")
@@ -89,5 +105,6 @@ downloadLfrAMDLoader {
 classes {
 	dependsOn buildAlloy
 	dependsOn buildAlloyBootstrap
+	dependsOn buildLexicon
 	dependsOn buildLfrAMDLoader
 }

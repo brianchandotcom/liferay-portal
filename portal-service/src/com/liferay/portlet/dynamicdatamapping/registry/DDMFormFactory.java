@@ -20,6 +20,10 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Marcellus Tavares
  */
@@ -31,16 +35,23 @@ public class DDMFormFactory {
 				"Unsupported class " + clazz.getName());
 		}
 
+		Map<String, DDMFormField> ddmFormFieldsMap = new HashMap<>();
+
+		collectDDMFormFields(clazz, ddmFormFieldsMap);
+
 		DDMForm ddmForm = new DDMForm();
 
-		addDDMFormFields(clazz, ddmForm);
+		ddmForm.setDDMFormFields(
+			new ArrayList<DDMFormField>(ddmFormFieldsMap.values()));
 
 		return ddmForm;
 	}
 
-	protected static void addDDMFormFields(Class<?> clazz, DDMForm ddmForm) {
+	protected static void collectDDMFormFields(
+		Class<?> clazz, Map<String, DDMFormField> ddmFormFieldsMap) {
+
 		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			addDDMFormFields(interfaceClass, ddmForm);
+			collectDDMFormFields(interfaceClass, ddmFormFieldsMap);
 		}
 
 		for (Method method : clazz.getDeclaredMethods()) {
@@ -50,7 +61,7 @@ public class DDMFormFactory {
 
 			DDMFormField ddmFormField = createDDMFormField(clazz, method);
 
-			ddmForm.addDDMFormField(ddmFormField);
+			ddmFormFieldsMap.put(ddmFormField.getName(), ddmFormField);
 		}
 	}
 

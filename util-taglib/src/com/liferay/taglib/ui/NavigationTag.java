@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -42,6 +43,14 @@ public class NavigationTag extends IncludeTag {
 
 	public void setBulletStyle(String bulletStyle) {
 		_bulletStyle = bulletStyle;
+	}
+
+	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
+		_ddmTemplateGroupId = ddmTemplateGroupId;
+	}
+
+	public void setDdmTemplateKey(String ddmTemplateKey) {
+		_ddmTemplateKey = ddmTemplateKey;
 	}
 
 	public void setDisplayStyleDefinition(String[] displayStyleDefinition) {
@@ -79,7 +88,7 @@ public class NavigationTag extends IncludeTag {
 			StringBundler sb)
 		throws Exception {
 
-		List<NavItem> childNavItems = new ArrayList<>();
+		List<NavItem> childNavItems;
 
 		if (rootNavItem != null) {
 			childNavItems = rootNavItem.getChildren();
@@ -206,10 +215,19 @@ public class NavigationTag extends IncludeTag {
 		branchNavItems.add(navItem);
 
 		for (Layout layoutAncestor : layoutAncestors) {
-			branchNavItems.add(new NavItem(request, layoutAncestor, null));
+			branchNavItems.add(0, new NavItem(request, layoutAncestor, null));
 		}
 
 		return branchNavItems;
+	}
+
+	protected String getDisplayStyle() {
+		if (Validator.isNotNull(_ddmTemplateKey)) {
+			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
+				_ddmTemplateKey);
+		}
+
+		return null;
 	}
 
 	protected String getHeaderType() {
@@ -347,10 +365,16 @@ public class NavigationTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:navigation:navigationString",
 			getNavigationString(request));
+		request.setAttribute(
+			"liferay-ui:navigation:displayStyle", getDisplayStyle());
+		request.setAttribute(
+			"liferay-ui:navigation:displayStyleGroupId", _ddmTemplateGroupId);
 
 		try {
 			List<NavItem> branchNavItems = getBranchNavItems(request);
 
+			request.setAttribute(
+				"liferay-ui:navigation:navItems", branchNavItems);
 			request.setAttribute(
 				"liferay-ui:navigation:rootNavItem",
 				getRootNavItem(branchNavItems));
@@ -365,6 +389,8 @@ public class NavigationTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(NavigationTag.class);
 
 	private String _bulletStyle = "1";
+	private long _ddmTemplateGroupId;
+	private String _ddmTemplateKey;
 	private String[] _displayStyleDefinition;
 	private String _headerType = "none";
 	private String _includedLayouts = "auto";

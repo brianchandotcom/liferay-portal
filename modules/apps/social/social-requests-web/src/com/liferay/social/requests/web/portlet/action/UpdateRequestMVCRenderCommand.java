@@ -66,7 +66,8 @@ public class UpdateRequestMVCRenderCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.requests.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/error.jsp");
 			}
 			else {
 				throw e;

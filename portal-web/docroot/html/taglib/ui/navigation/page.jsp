@@ -17,27 +17,29 @@
 <%@ include file="/html/taglib/ui/navigation/init.jsp" %>
 
 <c:if test="<%= layout != null %>">
+	<liferay-ui:ddm-template-renderer className="<%= NavItem.class.getName() %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= navItems %>">
+		<div class="nav-menu nav-menu-style-<%= bulletStyle %>">
+			<c:choose>
+				<c:when test='<%= headerType.equals("root-layout") && (rootNavItem != null) %>'>
+					<h2>
+						<a href="<%= rootNavItem.getRegularURL() %>" <%= rootNavItem.getTarget() %>><%= rootNavItem.getName() %></a>
+					</h2>
+				</c:when>
+				<c:when test='<%= headerType.equals("portlet-title") %>'>
+					<h2><%= HtmlUtil.escape(portletDisplay.getTitle()) %></h2>
+				</c:when>
+				<c:when test='<%= headerType.equals("breadcrumb") %>'>
+					<liferay-ui:breadcrumb />
+				</c:when>
+				<c:when test="<%= preview && (navigationString.length() == 0) %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-are-no-pages-to-display-for-the-current-page-level" />
+					</div>
+				</c:when>
+			</c:choose>
 
-	<div class="nav-menu nav-menu-style-<%= bulletStyle %>">
-		<c:choose>
-			<c:when test='<%= headerType.equals("root-layout") && (rootNavItem != null) %>'>
-				<h2>
-					<a href="<%= rootNavItem.getRegularURL() %>" <%= rootNavItem.getTarget() %>><%= rootNavItem.getName() %></a>
-				</h2>
-			</c:when>
-			<c:when test='<%= headerType.equals("portlet-title") %>'>
-				<h2><%= HtmlUtil.escape(portletDisplay.getTitle()) %></h2>
-			</c:when>
-			<c:when test='<%= headerType.equals("breadcrumb") %>'>
-				<liferay-ui:breadcrumb />
-			</c:when>
-			<c:when test="<%= preview && (navigationString.length() == 0) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-are-no-pages-to-display-for-the-current-page-level" />
-				</div>
-			</c:when>
-		</c:choose>
+			<%= navigationString %>
+		</div>
+	</liferay-ui:ddm-template-renderer>
 
-		<%= navigationString %>
-	</div>
 </c:if>

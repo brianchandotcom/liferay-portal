@@ -14,11 +14,11 @@
 
 package com.liferay.ratings.page.ratings.web.upgrade;
 
-import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
 
 import java.util.Collections;
 

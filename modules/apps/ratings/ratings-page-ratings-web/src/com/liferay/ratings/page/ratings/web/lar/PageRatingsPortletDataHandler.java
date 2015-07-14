@@ -14,7 +14,6 @@
 
 package com.liferay.ratings.page.ratings.web.lar;
 
-import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +29,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
 
 import java.util.List;
 import java.util.concurrent.Callable;

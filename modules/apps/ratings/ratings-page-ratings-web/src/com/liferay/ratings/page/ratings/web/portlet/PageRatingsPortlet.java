@@ -14,9 +14,9 @@
 
 package com.liferay.ratings.page.ratings.web.portlet;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
 import com.liferay.ratings.page.ratings.web.upgrade.PageRatingsWebUpgrade;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 

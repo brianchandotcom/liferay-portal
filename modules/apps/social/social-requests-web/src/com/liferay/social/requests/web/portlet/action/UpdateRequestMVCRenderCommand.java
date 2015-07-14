@@ -24,13 +24,14 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.NoSuchRequestException;
-import com.liferay.portlet.social.service.SocialRequestServiceUtil;
+import com.liferay.portlet.social.service.SocialRequestService;
 import com.liferay.social.requests.web.constants.RequestsPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -67,6 +68,13 @@ public class UpdateRequestMVCRenderCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setSocialRequestService(
+		SocialRequestService socialRequestService) {
+
+		_socialRequestService = socialRequestService;
+	}
+
 	protected void updateRequest(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -74,7 +82,9 @@ public class UpdateRequestMVCRenderCommand extends BaseMVCActionCommand {
 		long requestId = ParamUtil.getLong(actionRequest, "requestId");
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
-		SocialRequestServiceUtil.updateRequest(requestId, status, themeDisplay);
+		_socialRequestService.updateRequest(requestId, status, themeDisplay);
 	}
+
+	private SocialRequestService _socialRequestService;
 
 }

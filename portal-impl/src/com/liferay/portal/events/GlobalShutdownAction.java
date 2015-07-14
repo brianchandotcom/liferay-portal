@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.auth.AuthTokenIgnoreActionsRegistry;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -106,6 +107,8 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Authentication
 
 		AuthPublicPathRegistry.unregister(PropsValues.AUTH_PUBLIC_PATHS);
+
+		AuthTokenIgnoreActionsRegistry.unregister();
 
 		// Instant messenger AIM
 

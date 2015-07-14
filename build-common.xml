@@ -1108,6 +1108,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						<var name="test.type" value="unit" />
 					</then>
 				</elseif>
+				<elseif>
+					<not>
+						<isset property="test.type" />
+					</not>
+					<then>
+						<fail>Test class ${test.class} cannot be found.</fail>
+					</then>
+				</elseif>
 			</if>
 		</sequential>
 	</macrodef>
@@ -1494,14 +1502,6 @@ rerun your task.
 			<then>
 				<fail>Use "ant test-class -Dtest.class=StringUtilTest".</fail>
 			</then>
-			<elseif>
-				<not>
-					<isset property="test.type" />
-				</not>
-				<then>
-					<fail>Test class ${test.class} cannot be found.</fail>
-				</then>
-			</elseif>
 		</if>
 
 		<compile-test
@@ -1603,14 +1603,6 @@ rerun your task.
 			<then>
 				<fail>Use "ant test-method -Dtest.class=StringUtilTest -Dtest.methods=testAppendParentheticalSuffixInteger".</fail>
 			</then>
-			<elseif>
-				<not>
-					<isset property="test.type" />
-				</not>
-				<then>
-					<fail>Test class ${test.class} cannot be found.</fail>
-				</then>
-			</elseif>
 		</if>
 
 		<compile-test

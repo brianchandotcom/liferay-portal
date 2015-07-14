@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
@@ -47,14 +45,6 @@ public class DLFileItemSelectorView
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
-	}
-
-	@Override
-	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content/Language", locale);
-
-		return resourceBundle.getString("documents");
 	}
 
 	@Override

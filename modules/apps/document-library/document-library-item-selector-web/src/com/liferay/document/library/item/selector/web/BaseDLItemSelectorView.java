@@ -19,6 +19,9 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 
 import java.io.IOException;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
@@ -40,6 +43,14 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 	public ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content/Language", locale);
+
+		return resourceBundle.getString("documents-and-media");
 	}
 
 	@Override

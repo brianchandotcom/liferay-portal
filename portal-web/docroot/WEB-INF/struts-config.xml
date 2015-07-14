@@ -625,12 +625,6 @@
 
 		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
 
-		<!-- Requests -->
-
-		<action path="/requests/update_request" type="com.liferay.portlet.requests.action.UpdateRequestAction">
-			<forward name="portlet.requests.error" path="portlet.requests.error" />
-		</action>
-
 		<!-- Shopping -->
 
 		<action path="/shopping/cart" type="com.liferay.portlet.shopping.action.CartAction">

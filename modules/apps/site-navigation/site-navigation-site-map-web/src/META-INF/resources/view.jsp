@@ -22,6 +22,6 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 contextObjects.put("siteMapDisplayContext", siteMapDisplayContext);
 %>
 
-<liferay-ui:template-renderer className="<%= LayoutSet.class.getName() %>" contextObjects="<%= contextObjects%>" displayStyle="<%= siteMapPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= siteMapDisplayContext.getDisplayStyleGroupId() %>" entries="<%= siteMapDisplayContext.getRootLayouts() %>">
+<liferay-ddm:template-renderer className="<%= LayoutSet.class.getName() %>" contextObjects="<%= contextObjects%>" displayStyle="<%= siteMapPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= siteMapDisplayContext.getDisplayStyleGroupId() %>" entries="<%= siteMapDisplayContext.getRootLayouts() %>">
 	<%= siteMapDisplayContext.buildSiteMap() %>
-</liferay-ui:template-renderer>
+</liferay-ddm:template-renderer>

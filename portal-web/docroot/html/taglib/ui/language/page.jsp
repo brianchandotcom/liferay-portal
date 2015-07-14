@@ -25,7 +25,7 @@ contextObjects.put("name", name);
 contextObjects.put("namespace", namespace);
 %>
 
-<liferay-ui:template-renderer
+<liferay-ddm:template-renderer
 	className="<%= LanguageEntry.class.getName() %>"
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= displayStyle %>"

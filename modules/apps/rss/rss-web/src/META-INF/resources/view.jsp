@@ -24,7 +24,7 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 contextObjects.put("rssDisplayContext", rssDisplayContext);
 %>
 
-<liferay-ui:template-renderer className="<%= RSSFeed.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>" entries="<%= rssFeeds %>">
+<liferay-ddm:template-renderer className="<%= RSSFeed.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>" entries="<%= rssFeeds %>">
 
 	<%
 	for (int i = 0; i < rssFeeds.size(); i++) {
@@ -45,4 +45,4 @@ contextObjects.put("rssDisplayContext", rssDisplayContext);
 	}
 	%>
 
-</liferay-ui:template-renderer>
+</liferay-ddm:template-renderer>

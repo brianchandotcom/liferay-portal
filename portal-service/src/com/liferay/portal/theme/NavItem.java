@@ -85,6 +85,28 @@ public class NavItem implements Serializable {
 		_contextObjects = contextObjects;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof NavItem)) {
+			return false;
+		}
+
+		NavItem navItem = (NavItem)obj;
+
+		Layout layout = navItem.getLayout();
+
+		if (getLayoutId() == layout.getLayoutId()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	/**
 	 * Returns all of child layouts that the current user has permission to
 	 * access from this navigation item's layout.
@@ -240,6 +262,14 @@ public class NavItem implements Serializable {
 			"velocityTaglib_layoutIcon");
 
 		method.invoke(velocityTaglib, _layout);
+	}
+
+	public boolean isBelongsToNavigationEntries(List<NavItem> navItemList) {
+		if (navItemList == null) {
+			return false;
+		}
+
+		return navItemList.contains(this);
 	}
 
 	public boolean isChildSelected() throws PortalException {

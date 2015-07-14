@@ -31,6 +31,8 @@ import java.util.Map;
 
 import javax.portlet.ReadOnlyException;
 
+import org.hibernate.StaleObjectStateException;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
@@ -227,6 +229,55 @@ public class PortalPreferencesImpl
 		}
 		catch (SystemException se) {
 			throw new IOException(se);
+		}
+	}
+
+	protected boolean isCausedByStaleObjectException(Throwable t) {
+		Throwable cause = t.getCause();
+
+		while ((t != null) && (t != cause)) {
+			if (t instanceof StaleObjectStateException) {
+				return true;
+			}
+
+			t = cause;
+
+			cause = t.getCause();
+		}
+
+		return false;
+	}
+
+	protected void reload() {
+		PortalPreferencesImpl portalPreferencesImpl =
+			(PortalPreferencesImpl)
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					getOwnerId(), isSignedIn());
+
+		reset();
+
+		setOriginalPreferences(portalPreferencesImpl.getOriginalPreferences());
+
+		setOriginalXML(portalPreferencesImpl.getOriginalXML());
+	}
+
+	protected void reloadableStore(Callable<?> callable) throws Exception {
+		while (true) {
+			try {
+				callable.call();
+
+				store();
+
+				break;
+			}
+			catch (Exception e) {
+				if (isCausedByStaleObjectException(e)) {
+					reload();
+				}
+				else {
+					throw e;
+				}
+			}
 		}
 	}
 

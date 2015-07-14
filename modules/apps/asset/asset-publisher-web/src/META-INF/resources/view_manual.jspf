@@ -28,7 +28,7 @@ request.setAttribute("view.jsp-results", assetEntries);
 
 <c:choose>
 	<c:when test="<%= !assetEntries.isEmpty() %>">
-		<liferay-ui:template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetEntries %>">
+		<liferay-ddm:template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetEntries %>">
 
 			<%
 			for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
@@ -67,10 +67,10 @@ request.setAttribute("view.jsp-results", assetEntries);
 			}
 			%>
 
-		</liferay-ui:template-renderer>
+		</liferay-ddm:template-renderer>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= new ArrayList<AssetEntry>() %>">
+		<liferay-ddm:template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= new ArrayList<AssetEntry>() %>">
 
 			<%
 			boolean hasAddPortletURLs = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:hasAddPortletURLs"));
@@ -94,6 +94,6 @@ request.setAttribute("view.jsp-results", assetEntries);
 					</c:otherwise>
 				</c:choose>
 			</div>
-		</liferay-ui:template-renderer>
+		</liferay-ddm:template-renderer>
 	</c:otherwise>
 </c:choose>

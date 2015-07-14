@@ -78,7 +78,7 @@ contextObjects.put("blogsPortletInstanceConfiguration", blogsPortletInstanceConf
 contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSettingsHelper);
 %>
 
-<liferay-ui:template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= _convertToBlogEntries(results) %>">
+<liferay-ddm:template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= _convertToBlogEntries(results) %>">
 
 	<%
 	int index = 0;
@@ -118,7 +118,7 @@ contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSet
 	}
 	%>
 
-</liferay-ui:template-renderer>
+</liferay-ddm:template-renderer>
 
 <liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 

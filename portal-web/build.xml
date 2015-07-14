@@ -44,7 +44,10 @@
 		<pathelement location="${project.dir}/lib/portal/log4j.jar" />
 		<pathelement location="${project.dir}/lib/portal/openid4java.jar" />
 		<pathelement location="${project.dir}/lib/portal/rome.jar" />
-		<pathelement location="${project.dir}/lib/portal/struts.jar" />
+		<pathelement location="${project.dir}/lib/portal/struts-core.jar" />
+		<pathelement location="${project.dir}/lib/portal/struts-extras.jar" />
+		<pathelement location="${project.dir}/lib/portal/struts-taglib.jar" />
+		<pathelement location="${project.dir}/lib/portal/struts-tiles.jar" />
 	</path>
 
 	<extension-point name="build-portal-web-dependencies" depends="build-css,build-dtd,build-vaadin" />

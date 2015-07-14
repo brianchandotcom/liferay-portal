@@ -511,7 +511,10 @@
 				<classpath mode="compile">lib/portal/streambuffer.jar</classpath>
 				<classpath mode="compile">lib/portal/stringtemplate.jar</classpath>
 				<classpath mode="compile">lib/portal/struts-el.jar</classpath>
-				<classpath mode="compile">lib/portal/struts.jar</classpath>
+				<classpath mode="compile">lib/portal/struts-core.jar</classpath>
+				<classpath mode="compile">lib/portal/struts-extras.jar</classpath>
+				<classpath mode="compile">lib/portal/struts-taglib.jar</classpath>
+				<classpath mode="compile">lib/portal/struts-tiles.jar</classpath>
 				<classpath mode="compile">lib/portal/tagsoup.jar</classpath>
 				<classpath mode="compile">lib/portal/tika-core.jar</classpath>
 				<classpath mode="compile">lib/portal/tika-parsers.jar</classpath>

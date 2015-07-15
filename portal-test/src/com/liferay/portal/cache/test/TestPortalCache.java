@@ -59,6 +59,15 @@ public class TestPortalCache <K extends Serializable, V>
 		return keys;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheName()}
+	 */
+	@Deprecated
+	@Override
+	public String getName() {
+		return getPortalCacheName();
+	}
+
 	@Override
 	public String getPortalCacheName() {
 		return _portalCacheName;

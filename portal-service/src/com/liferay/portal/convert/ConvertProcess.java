@@ -21,7 +21,7 @@ public interface ConvertProcess {
 
 	public void convert() throws ConvertException;
 
-	public String getConfigurationDescription();
+	public String getConfigurationErrorMessage();
 
 	public String getDescription();
 

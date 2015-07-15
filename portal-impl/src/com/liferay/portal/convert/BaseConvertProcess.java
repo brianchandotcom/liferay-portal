@@ -59,7 +59,7 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 	}
 
 	@Override
-	public String getConfigurationDescription() {
+	public String getConfigurationErrorMessage() {
 		return null;
 	}
 

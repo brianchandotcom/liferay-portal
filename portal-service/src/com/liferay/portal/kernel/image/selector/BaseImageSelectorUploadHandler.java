@@ -138,30 +138,11 @@ public abstract class BaseImageSelectorUploadHandler
 			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
 
-			FileEntry existingFileEntry = _fetchTempFileEntry(
-				themeDisplay, fileName);
-
-			int counterSuffixValue = 1;
-
-			while (existingFileEntry != null) {
-				String curfileName = FileUtil.updateFileName(
-					fileName, String.valueOf(counterSuffixValue));
-
-				existingFileEntry = _fetchTempFileEntry(
-					themeDisplay, curfileName);
-
-				if (existingFileEntry == null) {
-					fileName = curfileName;
-
-					break;
-				}
-
-				counterSuffixValue++;
-			}
+			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
 
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, fileName, inputStream, contentType);
+				_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 
@@ -178,6 +159,35 @@ public abstract class BaseImageSelectorUploadHandler
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
+	}
+
+	protected String getUniqueFileName(
+			ThemeDisplay themeDisplay, String fileName)
+		throws PortalException {
+
+		FileEntry fileEntry = _fetchTempFileEntry(themeDisplay, fileName);
+
+		if (fileEntry == null) {
+			return fileName;
+		}
+
+		int suffix = 1;
+
+		for (int i = 0; i < _MAX_UNIQUE_FILE_NAME_TRIALS; i++) {
+			String curFileName = FileUtil.updateFileName(
+				fileName, String.valueOf(suffix));
+
+			fileEntry = _fetchTempFileEntry(themeDisplay, curFileName);
+
+			if (fileEntry == null) {
+				return curFileName;
+			}
+
+			suffix++;
+		}
+
+		throw new PortalException(
+			"Cannot find a unique file name for " + fileName);
 	}
 
 	protected abstract void handleUploadException(
@@ -201,6 +211,8 @@ public abstract class BaseImageSelectorUploadHandler
 			return null;
 		}
 	}
+
+	private static final int _MAX_UNIQUE_FILE_NAME_TRIALS = 50;
 
 	private static final String _TEMP_FOLDER_NAME =
 		BaseImageSelectorUploadHandler.class.getName();

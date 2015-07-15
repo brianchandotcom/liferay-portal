@@ -179,6 +179,18 @@ public class ToolsUtil {
 					break;
 				}
 
+				// Continue if the class reference is part of a string literal
+
+				String[] lines = StringUtil.splitLines(content.substring(x));
+
+				if (lines.length > 0) {
+					int quotes = StringUtil.count(lines[0], "\"");
+
+					if ((quotes % 2) != 0) {
+						continue;
+					}
+				}
+
 				char nextChar = content.charAt(
 					x + importPackageAndClassName.length());
 				char previousChar = content.charAt(x - 1);

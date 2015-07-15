@@ -1650,11 +1650,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			(StartAppServerTask)GradleUtil.getTask(
 				project, START_TESTABLE_TOMCAT_TASK_NAME);
 
-		if (!configureTaskEnabledWithAppServer(
-				startTestableTomcatTask, "tomcat")) {
-
-			return;
-		}
+		configureTaskEnabledWithAppServer(startTestableTomcatTask, "tomcat");
 	}
 
 	protected void configureTasksTest(Project project) {

@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.Validator;
 import org.osgi.framework.ServiceReference;
 
 /**
-* @author Adolfo Pérez
-*/
+ * @author Adolfo Pérez
+ */
 public class PanelCategoryServiceReferenceMapper
 	implements ServiceReferenceMapper<String, PanelEntry> {
 

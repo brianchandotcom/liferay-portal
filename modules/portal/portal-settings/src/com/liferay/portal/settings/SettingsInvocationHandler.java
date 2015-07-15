@@ -24,8 +24,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
-* @author Iván Zaera
-*/
+ * @author Iván Zaera
+ */
 public class SettingsInvocationHandler<S> implements InvocationHandler {
 
 	public SettingsInvocationHandler(

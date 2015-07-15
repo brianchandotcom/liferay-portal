@@ -79,9 +79,9 @@ public class ConvertDocumentLibrary
 	public String[] getParameterNames() {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
-		String[] hooks = storeFactory.getStoreTypes();
+		String[] storeTypes = storeFactory.getStoreTypes();
 
-		StringBundler sb = new StringBundler(hooks.length * 2 + 2);
+		StringBundler sb = new StringBundler(storeTypes.length * 2 + 2);
 
 		Store store = storeFactory.getStore();
 
@@ -92,9 +92,11 @@ public class ConvertDocumentLibrary
 		sb.append(PropsKeys.DL_STORE_IMPL);
 		sb.append(StringPool.EQUAL);
 
-		for (String hook : hooks) {
-			if (!hook.equals(store.getClass().getName())) {
-				sb.append(hook);
+		for (String storeType : storeTypes) {
+			Class<?> clazz = store.getClass();
+			
+			if (!storeType.equals(clazz.getName())) {
+				sb.append(storeType);
 				sb.append(StringPool.SEMICOLON);
 			}
 		}

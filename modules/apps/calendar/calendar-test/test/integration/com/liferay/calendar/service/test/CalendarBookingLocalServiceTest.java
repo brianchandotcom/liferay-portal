@@ -37,7 +37,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.jboss.arquillian.junit.Arquillian;
 
@@ -126,7 +125,7 @@ public class CalendarBookingLocalServiceTest {
 			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
 	}
 
-	@Test
+	@Test(expected = CalendarBookingRecurrenceException.class)
 	public void testStartDateBeforeUntilDateThrowsRecurrenceException()
 		throws PortalException {
 
@@ -139,31 +138,28 @@ public class CalendarBookingLocalServiceTest {
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
 		long startTime = DateUtil.newTime();
+
 		java.util.Calendar untilJCalendar = CalendarFactoryUtil.getCalendar(
 			startTime);
+
 		untilJCalendar.add(java.util.Calendar.DAY_OF_MONTH, -2);
+
 		Recurrence recurrence = new Recurrence();
-		List<PositionalWeekday> positionalWeekdays = Collections.emptyList();
 
 		recurrence.setFrequency(Frequency.DAILY);
 		recurrence.setUntilJCalendar(untilJCalendar);
-		recurrence.setPositionalWeekdays(positionalWeekdays);
+		recurrence.setPositionalWeekdays(
+			Collections.<PositionalWeekday>emptyList());
 
-		try {
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime,
-				startTime + (Time.HOUR * 10), false,
-				RecurrenceSerializer.serialize(recurrence), 0, null, 0, null,
-				serviceContext);
-
-			Assert.fail();
-		}
-		catch (CalendarBookingRecurrenceException e) {
-		}
+		CalendarBookingLocalServiceUtil.addCalendarBooking(
+			_user.getUserId(), calendar.getCalendarId(), new long[0],
+			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false,
+			RecurrenceSerializer.serialize(recurrence), 0, null, 0, null,
+			serviceContext);
 	}
 
 	@Ignore

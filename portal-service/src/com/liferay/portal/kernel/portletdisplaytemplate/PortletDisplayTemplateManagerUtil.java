@@ -16,12 +16,10 @@ package com.liferay.portal.kernel.portletdisplaytemplate;
 
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.util.ProxyServiceInvocation;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.List;
 import java.util.Map;
@@ -39,10 +37,7 @@ public class PortletDisplayTemplateManagerUtil {
 			DDMTemplate ddmTemplate)
 		throws PortletDataException {
 
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_instance._serviceTracker.getService();
-
-		portletDisplayTemplateManager.exportDDMTemplateStagedModel(
+		_portletDisplayTemplateManager.exportDDMTemplateStagedModel(
 			portletDataContext, portletId, ddmTemplate);
 	}
 
@@ -50,49 +45,31 @@ public class PortletDisplayTemplateManagerUtil {
 		long groupId, long classNameId, String displayStyle,
 		boolean useDefault) {
 
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_getPortletDisplayTemplateManager();
-
-		return portletDisplayTemplateManager.getDDMTemplate(
+		return _portletDisplayTemplateManager.getDDMTemplate(
 			groupId, classNameId, displayStyle, useDefault);
 	}
 
 	public static long getDDMTemplateGroupId(long groupId) {
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_getPortletDisplayTemplateManager();
-
-		return portletDisplayTemplateManager.getDDMTemplateGroupId(groupId);
+		return _portletDisplayTemplateManager.getDDMTemplateGroupId(groupId);
 	}
 
 	public static Class<?> getDDMTemplateStagedModelClass() {
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_getPortletDisplayTemplateManager();
-
-		return portletDisplayTemplateManager.getDDMTemplateStagedModelClass();
+		return _portletDisplayTemplateManager.getDDMTemplateStagedModelClass();
 	}
 
 	public static String getDisplayStyle(String ddmTemplateKey) {
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_getPortletDisplayTemplateManager();
-
-		return portletDisplayTemplateManager.getDisplayStyle(ddmTemplateKey);
+		return _portletDisplayTemplateManager.getDisplayStyle(ddmTemplateKey);
 	}
 
 	public static List<TemplateHandler> getPortletDisplayTemplateHandlers() {
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_getPortletDisplayTemplateManager();
-
-		return portletDisplayTemplateManager.
+		return _portletDisplayTemplateManager.
 			getPortletDisplayTemplateHandlers();
 	}
 
 	public static Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 		String language) {
 
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_getPortletDisplayTemplateManager();
-
-		return portletDisplayTemplateManager.getTemplateVariableGroups(
+		return _portletDisplayTemplateManager.getTemplateVariableGroups(
 			language);
 	}
 
@@ -102,44 +79,12 @@ public class PortletDisplayTemplateManagerUtil {
 			Map<String, Object> contextObjects)
 		throws Exception {
 
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_getPortletDisplayTemplateManager();
-
-		return portletDisplayTemplateManager.renderDDMTemplate(
+		return _portletDisplayTemplateManager.renderDDMTemplate(
 			request, response, templateId, entries, contextObjects);
 	}
 
-	private static PortletDisplayTemplateManager
-		_getPortletDisplayTemplateManager() {
-
-		PortletDisplayTemplateManager portletDisplayTemplateManager =
-			_instance._serviceTracker.getService();
-
-		if (portletDisplayTemplateManager == null) {
-			return _dummyPortletDisplayTemplateManagerImpl;
-		}
-
-		return portletDisplayTemplateManager;
-	}
-
-	private PortletDisplayTemplateManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
+	private static final PortletDisplayTemplateManager
+		_portletDisplayTemplateManager = ProxyServiceInvocation.newInstance(
 			PortletDisplayTemplateManager.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final PortletDisplayTemplateManagerUtil _instance =
-		new PortletDisplayTemplateManagerUtil();
-
-	private static final DummyPortletDisplayTemplateManagerImpl
-		_dummyPortletDisplayTemplateManagerImpl =
-			new DummyPortletDisplayTemplateManagerImpl();
-
-	private final ServiceTracker
-		<PortletDisplayTemplateManager, PortletDisplayTemplateManager>
-			_serviceTracker;
 
 }

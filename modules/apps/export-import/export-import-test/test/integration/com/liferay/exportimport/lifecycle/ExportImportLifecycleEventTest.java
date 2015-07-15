@@ -19,8 +19,8 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.backgroundtask.messaging.BackgroundTaskMessageListener;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -191,7 +191,8 @@ public class ExportImportLifecycleEventTest {
 
 			Throwable throwable = throwableInformation.getThrowable();
 
-			Assert.assertSame(SystemException.class, throwable.getClass());
+			Assert.assertSame(
+				NoSuchLayoutSetException.class, throwable.getClass());
 		}
 
 		Assert.assertTrue(
@@ -297,7 +298,8 @@ public class ExportImportLifecycleEventTest {
 
 			Throwable throwable = throwableInformation.getThrowable();
 
-			Assert.assertSame(SystemException.class, throwable.getClass());
+			Assert.assertSame(
+				NoSuchLayoutException.class, throwable.getClass());
 		}
 
 		Assert.assertTrue(

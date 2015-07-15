@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager
 import com.liferay.portal.kernel.backgroundtask.ClassLoaderAwareBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.SerialBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.ThreadLocalAwareBackgroundTaskExecutor;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -127,22 +128,32 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		catch (Exception e) {
 			status = BackgroundTaskConstants.STATUS_FAILED;
 
+			Exception exception = e;
+
+			if (e instanceof SystemException) {
+				Throwable cause = e.getCause();
+
+				if (cause instanceof Exception) {
+					exception = (Exception)cause;
+				}
+			}
+
 			if (backgroundTaskExecutor != null) {
 				statusMessage = backgroundTaskExecutor.handleException(
-					backgroundTask, e);
+					backgroundTask, exception);
 			}
 
 			if (_log.isInfoEnabled()) {
 				if (statusMessage != null) {
 					statusMessage = statusMessage.concat(
-						StackTraceUtil.getStackTrace(e));
+						StackTraceUtil.getStackTrace(exception));
 				}
 				else {
-					statusMessage = StackTraceUtil.getStackTrace(e);
+					statusMessage = StackTraceUtil.getStackTrace(exception);
 				}
 			}
 
-			_log.error("Unable to execute background task", e);
+			_log.error("Unable to execute background task", exception);
 		}
 		finally {
 			BackgroundTaskLocalServiceUtil.amendBackgroundTask(

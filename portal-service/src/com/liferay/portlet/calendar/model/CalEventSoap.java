@@ -58,6 +58,7 @@ public class CalEventSoap implements Serializable {
 		soapModel.setRemindBy(model.getRemindBy());
 		soapModel.setFirstReminder(model.getFirstReminder());
 		soapModel.setSecondReminder(model.getSecondReminder());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -306,6 +307,14 @@ public class CalEventSoap implements Serializable {
 		_secondReminder = secondReminder;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _eventId;
 	private long _groupId;
@@ -329,4 +338,5 @@ public class CalEventSoap implements Serializable {
 	private int _remindBy;
 	private int _firstReminder;
 	private int _secondReminder;
+	private Date _lastPublishDate;
 }

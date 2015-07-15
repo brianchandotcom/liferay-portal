@@ -93,7 +93,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			{ "targetPortletId", Types.VARCHAR },
 			{ "contentField", Types.VARCHAR },
 			{ "feedFormat", Types.VARCHAR },
-			{ "feedVersion", Types.DOUBLE }
+			{ "feedVersion", Types.DOUBLE },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -120,9 +121,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		TABLE_COLUMNS_MAP.put("contentField", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("feedFormat", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("feedVersion", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalFeed (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,DDMRendererTemplateKey VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(75) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table JournalFeed (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,DDMRendererTemplateKey VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(75) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFeed";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalFeed.feedId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalFeed.feedId ASC";
@@ -178,6 +180,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		model.setContentField(soapModel.getContentField());
 		model.setFeedFormat(soapModel.getFeedFormat());
 		model.setFeedVersion(soapModel.getFeedVersion());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -264,6 +267,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		attributes.put("contentField", getContentField());
 		attributes.put("feedFormat", getFeedFormat());
 		attributes.put("feedVersion", getFeedVersion());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -405,6 +409,12 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 		if (feedVersion != null) {
 			setFeedVersion(feedVersion);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -784,6 +794,17 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		_feedVersion = feedVersion;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -843,6 +864,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		journalFeedImpl.setContentField(getContentField());
 		journalFeedImpl.setFeedFormat(getFeedFormat());
 		journalFeedImpl.setFeedVersion(getFeedVersion());
+		journalFeedImpl.setLastPublishDate(getLastPublishDate());
 
 		journalFeedImpl.resetOriginalValues();
 
@@ -1068,12 +1090,21 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 		journalFeedCacheModel.feedVersion = getFeedVersion();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			journalFeedCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			journalFeedCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return journalFeedCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1119,6 +1150,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		sb.append(getFeedFormat());
 		sb.append(", feedVersion=");
 		sb.append(getFeedVersion());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1126,7 +1159,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.journal.model.JournalFeed");
@@ -1220,6 +1253,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			"<column><column-name>feedVersion</column-name><column-value><![CDATA[");
 		sb.append(getFeedVersion());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1259,6 +1296,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private String _contentField;
 	private String _feedFormat;
 	private double _feedVersion;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private JournalFeed _escapedModel;
 }

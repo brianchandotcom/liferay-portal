@@ -406,6 +406,20 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	 */
 	public void setPrimary(boolean primary);
 
+	/**
+	 * Returns the last publish date of this address.
+	 *
+	 * @return the last publish date of this address
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this address.
+	 *
+	 * @param lastPublishDate the last publish date of this address
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

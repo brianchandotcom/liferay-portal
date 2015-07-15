@@ -4099,6 +4099,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		layoutPrototypeImpl.setDescription(layoutPrototype.getDescription());
 		layoutPrototypeImpl.setSettings(layoutPrototype.getSettings());
 		layoutPrototypeImpl.setActive(layoutPrototype.isActive());
+		layoutPrototypeImpl.setLastPublishDate(layoutPrototype.getLastPublishDate());
 
 		return layoutPrototypeImpl;
 	}

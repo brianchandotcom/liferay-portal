@@ -135,6 +135,8 @@ public class RatingsEntryPersistenceTest {
 
 		newRatingsEntry.setScore(RandomTestUtil.nextDouble());
 
+		newRatingsEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_ratingsEntries.add(_persistence.update(newRatingsEntry));
 
 		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
@@ -161,6 +163,9 @@ public class RatingsEntryPersistenceTest {
 			newRatingsEntry.getClassPK());
 		AssertUtils.assertEquals(existingRatingsEntry.getScore(),
 			newRatingsEntry.getScore());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingRatingsEntry.getLastPublishDate()),
+			Time.getShortTimestamp(newRatingsEntry.getLastPublishDate()));
 	}
 
 	@Test
@@ -231,7 +236,8 @@ public class RatingsEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("RatingsEntry", "uuid",
 			true, "entryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "score", true);
+			"classNameId", true, "classPK", true, "score", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -469,6 +475,8 @@ public class RatingsEntryPersistenceTest {
 		ratingsEntry.setClassPK(RandomTestUtil.nextLong());
 
 		ratingsEntry.setScore(RandomTestUtil.nextDouble());
+
+		ratingsEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_ratingsEntries.add(_persistence.update(ratingsEntry));
 

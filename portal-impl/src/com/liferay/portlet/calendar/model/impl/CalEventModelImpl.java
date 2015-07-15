@@ -91,7 +91,8 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 			{ "recurrence", Types.CLOB },
 			{ "remindBy", Types.INTEGER },
 			{ "firstReminder", Types.INTEGER },
-			{ "secondReminder", Types.INTEGER }
+			{ "secondReminder", Types.INTEGER },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -119,9 +120,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		TABLE_COLUMNS_MAP.put("remindBy", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("firstReminder", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("secondReminder", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CalEvent (uuid_ VARCHAR(75) null,eventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,description TEXT null,location STRING null,startDate DATE null,endDate DATE null,durationHour INTEGER,durationMinute INTEGER,allDay BOOLEAN,timeZoneSensitive BOOLEAN,type_ VARCHAR(75) null,repeating BOOLEAN,recurrence TEXT null,remindBy INTEGER,firstReminder INTEGER,secondReminder INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CalEvent (uuid_ VARCHAR(75) null,eventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,description TEXT null,location STRING null,startDate DATE null,endDate DATE null,durationHour INTEGER,durationMinute INTEGER,allDay BOOLEAN,timeZoneSensitive BOOLEAN,type_ VARCHAR(75) null,repeating BOOLEAN,recurrence TEXT null,remindBy INTEGER,firstReminder INTEGER,secondReminder INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CalEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY calEvent.startDate ASC, calEvent.title ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CalEvent.startDate ASC, CalEvent.title ASC";
@@ -208,6 +210,7 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		attributes.put("remindBy", getRemindBy());
 		attributes.put("firstReminder", getFirstReminder());
 		attributes.put("secondReminder", getSecondReminder());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -353,6 +356,12 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 		if (secondReminder != null) {
 			setSecondReminder(secondReminder);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -729,6 +738,16 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CalEvent.class.getName()));
@@ -788,6 +807,7 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		calEventImpl.setRemindBy(getRemindBy());
 		calEventImpl.setFirstReminder(getFirstReminder());
 		calEventImpl.setSecondReminder(getSecondReminder());
+		calEventImpl.setLastPublishDate(getLastPublishDate());
 
 		calEventImpl.resetOriginalValues();
 
@@ -999,12 +1019,21 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 		calEventCacheModel.secondReminder = getSecondReminder();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			calEventCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			calEventCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return calEventCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1052,6 +1081,8 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		sb.append(getFirstReminder());
 		sb.append(", secondReminder=");
 		sb.append(getSecondReminder());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1059,7 +1090,7 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(76);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.calendar.model.CalEvent");
@@ -1157,6 +1188,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 			"<column><column-name>secondReminder</column-name><column-value><![CDATA[");
 		sb.append(getSecondReminder());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1201,6 +1236,7 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	private boolean _setOriginalRemindBy;
 	private int _firstReminder;
 	private int _secondReminder;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CalEvent _escapedModel;
 }

@@ -249,6 +249,20 @@ public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry
 	 */
 	public void setScore(double score);
 
+	/**
+	 * Returns the last publish date of this ratings entry.
+	 *
+	 * @return the last publish date of this ratings entry
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this ratings entry.
+	 *
+	 * @param lastPublishDate the last publish date of this ratings entry
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

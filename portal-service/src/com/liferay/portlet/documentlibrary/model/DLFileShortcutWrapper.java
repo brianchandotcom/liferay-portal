@@ -72,6 +72,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -178,6 +179,12 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -288,6 +295,16 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public long getGroupId() {
 		return _dlFileShortcut.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this document library file shortcut.
+	*
+	* @return the last publish date of this document library file shortcut
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFileShortcut.getLastPublishDate();
 	}
 
 	/**
@@ -702,6 +719,16 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public void setGroupId(long groupId) {
 		_dlFileShortcut.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this document library file shortcut.
+	*
+	* @param lastPublishDate the last publish date of this document library file shortcut
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_dlFileShortcut.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

@@ -66,7 +66,7 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,8 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 		sb.append(description);
 		sb.append(", data=");
 		sb.append(data);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -153,6 +155,13 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 			ddmContentImpl.setData(data);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			ddmContentImpl.setLastPublishDate(null);
+		}
+		else {
+			ddmContentImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		ddmContentImpl.resetOriginalValues();
 
 		return ddmContentImpl;
@@ -171,6 +180,7 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		data = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -218,6 +228,8 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 		else {
 			objectOutput.writeUTF(data);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -231,4 +243,5 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 	public String name;
 	public String description;
 	public String data;
+	public long lastPublishDate;
 }

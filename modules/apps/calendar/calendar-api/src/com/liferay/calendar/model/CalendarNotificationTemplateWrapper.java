@@ -72,6 +72,7 @@ public class CalendarNotificationTemplateWrapper
 		attributes.put("notificationTemplateType", getNotificationTemplateType());
 		attributes.put("subject", getSubject());
 		attributes.put("body", getBody());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -164,6 +165,12 @@ public class CalendarNotificationTemplateWrapper
 		if (body != null) {
 			setBody(body);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -240,6 +247,16 @@ public class CalendarNotificationTemplateWrapper
 	@Override
 	public long getGroupId() {
 		return _calendarNotificationTemplate.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this calendar notification template.
+	*
+	* @return the last publish date of this calendar notification template
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _calendarNotificationTemplate.getLastPublishDate();
 	}
 
 	/**
@@ -459,6 +476,16 @@ public class CalendarNotificationTemplateWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		_calendarNotificationTemplate.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this calendar notification template.
+	*
+	* @param lastPublishDate the last publish date of this calendar notification template
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_calendarNotificationTemplate.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

@@ -56,6 +56,7 @@ public class JournalFeedSoap implements Serializable {
 		soapModel.setContentField(model.getContentField());
 		soapModel.setFeedFormat(model.getFeedFormat());
 		soapModel.setFeedVersion(model.getFeedVersion());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -284,6 +285,14 @@ public class JournalFeedSoap implements Serializable {
 		_feedVersion = feedVersion;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _id;
 	private long _groupId;
@@ -306,4 +315,5 @@ public class JournalFeedSoap implements Serializable {
 	private String _contentField;
 	private String _feedFormat;
 	private double _feedVersion;
+	private Date _lastPublishDate;
 }

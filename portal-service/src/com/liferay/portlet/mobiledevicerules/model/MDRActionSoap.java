@@ -49,6 +49,7 @@ public class MDRActionSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -221,6 +222,14 @@ public class MDRActionSoap implements Serializable {
 		_typeSettings = typeSettings;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _actionId;
 	private long _groupId;
@@ -236,4 +245,5 @@ public class MDRActionSoap implements Serializable {
 	private String _description;
 	private String _type;
 	private String _typeSettings;
+	private Date _lastPublishDate;
 }

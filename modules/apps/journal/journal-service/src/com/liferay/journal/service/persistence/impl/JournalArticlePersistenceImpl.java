@@ -29871,6 +29871,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		journalArticleImpl.setStatusByUserId(journalArticle.getStatusByUserId());
 		journalArticleImpl.setStatusByUserName(journalArticle.getStatusByUserName());
 		journalArticleImpl.setStatusDate(journalArticle.getStatusDate());
+		journalArticleImpl.setLastPublishDate(journalArticle.getLastPublishDate());
 
 		return journalArticleImpl;
 	}

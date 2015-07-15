@@ -94,6 +94,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _ddmTemplate.getLastPublishDate();
+	}
+
+	@Override
 	public String getMode() {
 		return _ddmTemplate.getMode();
 	}
@@ -221,6 +226,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public void setCreateDate(Date createDate) {
 		_ddmTemplate.setCreateDate(createDate);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_ddmTemplate.setLastPublishDate(date);
 	}
 
 	@Override

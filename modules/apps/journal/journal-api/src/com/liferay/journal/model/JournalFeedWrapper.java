@@ -77,6 +77,7 @@ public class JournalFeedWrapper implements JournalFeed,
 		attributes.put("contentField", getContentField());
 		attributes.put("feedFormat", getFeedFormat());
 		attributes.put("feedVersion", getFeedVersion());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -215,6 +216,12 @@ public class JournalFeedWrapper implements JournalFeed,
 
 		if (feedVersion != null) {
 			setFeedVersion(feedVersion);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -361,6 +368,16 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public long getId() {
 		return _journalFeed.getId();
+	}
+
+	/**
+	* Returns the last publish date of this journal feed.
+	*
+	* @return the last publish date of this journal feed
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _journalFeed.getLastPublishDate();
 	}
 
 	/**
@@ -682,6 +699,16 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public void setId(long id) {
 		_journalFeed.setId(id);
+	}
+
+	/**
+	* Sets the last publish date of this journal feed.
+	*
+	* @param lastPublishDate the last publish date of this journal feed
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_journalFeed.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

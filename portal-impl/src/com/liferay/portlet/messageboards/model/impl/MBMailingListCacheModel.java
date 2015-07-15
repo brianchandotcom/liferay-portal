@@ -66,7 +66,7 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -120,6 +120,8 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		sb.append(allowAnonymous);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -240,6 +242,13 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		mbMailingListImpl.setAllowAnonymous(allowAnonymous);
 		mbMailingListImpl.setActive(active);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			mbMailingListImpl.setLastPublishDate(null);
+		}
+		else {
+			mbMailingListImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		mbMailingListImpl.resetOriginalValues();
 
 		return mbMailingListImpl;
@@ -273,6 +282,7 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		outPassword = objectInput.readUTF();
 		allowAnonymous = objectInput.readBoolean();
 		active = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -376,6 +386,7 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 		objectOutput.writeBoolean(allowAnonymous);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -404,4 +415,5 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 	public String outPassword;
 	public boolean allowAnonymous;
 	public boolean active;
+	public long lastPublishDate;
 }

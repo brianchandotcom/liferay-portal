@@ -66,7 +66,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -106,6 +106,8 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -198,6 +200,13 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 			mbCategoryImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			mbCategoryImpl.setLastPublishDate(null);
+		}
+		else {
+			mbCategoryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		mbCategoryImpl.resetOriginalValues();
 
 		return mbCategoryImpl;
@@ -224,6 +233,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -287,6 +297,7 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -308,4 +319,5 @@ public class MBCategoryCacheModel implements CacheModel<MBCategory>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

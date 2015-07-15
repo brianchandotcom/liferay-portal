@@ -3331,6 +3331,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		ddlRecordImpl.setRecordSetId(ddlRecord.getRecordSetId());
 		ddlRecordImpl.setVersion(ddlRecord.getVersion());
 		ddlRecordImpl.setDisplayIndex(ddlRecord.getDisplayIndex());
+		ddlRecordImpl.setLastPublishDate(ddlRecord.getLastPublishDate());
 
 		return ddlRecordImpl;
 	}

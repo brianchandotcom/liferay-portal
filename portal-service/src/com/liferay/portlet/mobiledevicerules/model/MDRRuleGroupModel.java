@@ -412,6 +412,20 @@ public interface MDRRuleGroupModel extends BaseModel<MDRRuleGroup>,
 	public void setDescriptionMap(Map<Locale, String> descriptionMap,
 		Locale defaultLocale);
 
+	/**
+	 * Returns the last publish date of this m d r rule group.
+	 *
+	 * @return the last publish date of this m d r rule group
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this m d r rule group.
+	 *
+	 * @param lastPublishDate the last publish date of this m d r rule group
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

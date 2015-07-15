@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.constants;
+package com.liferay.dynamic.data.lists.upgrade.v1_0_0;
+
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate;
 
 /**
- * @author Marcellus Tavares
+ * @author Levente Hudak
  */
-public class DDLPortletKeys {
+public class UpgradeDDLLastPublishDate extends UpgradeLastPublishDate {
 
-	public static final String DYNAMIC_DATA_LISTS =
-		"com_liferay_dynamic_data_lists_web_portlet_DDLPortlet";
-
-	public static final String DYNAMIC_DATA_LISTS_DISPLAY =
-		"com_liferay_dynamic_data_lists_web_portlet_DDLDisplayPortlet";
+	@Override
+	protected void doUpgrade() throws Exception {
+		super.updateLastPublishDates(
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, "DDLRecord");
+		super.updateLastPublishDates(
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, "DDLRecordSet");
+	}
 
 }

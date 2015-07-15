@@ -69,6 +69,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -163,6 +164,12 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -338,6 +345,16 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	@Override
 	public long getGroupId() {
 		return _mdrAction.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this m d r action.
+	*
+	* @return the last publish date of this m d r action
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mdrAction.getLastPublishDate();
 	}
 
 	/**
@@ -705,6 +722,16 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	@Override
 	public void setGroupId(long groupId) {
 		_mdrAction.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this m d r action.
+	*
+	* @param lastPublishDate the last publish date of this m d r action
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mdrAction.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

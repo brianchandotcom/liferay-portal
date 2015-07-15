@@ -67,7 +67,7 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -97,6 +97,8 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		sb.append(subject);
 		sb.append(", body=");
 		sb.append(body);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -177,6 +179,14 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 			calendarNotificationTemplateImpl.setBody(body);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			calendarNotificationTemplateImpl.setLastPublishDate(null);
+		}
+		else {
+			calendarNotificationTemplateImpl.setLastPublishDate(new Date(
+					lastPublishDate));
+		}
+
 		calendarNotificationTemplateImpl.resetOriginalValues();
 
 		return calendarNotificationTemplateImpl;
@@ -198,6 +208,7 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		notificationTemplateType = objectInput.readUTF();
 		subject = objectInput.readUTF();
 		body = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -260,6 +271,8 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		else {
 			objectOutput.writeUTF(body);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -276,4 +289,5 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 	public String notificationTemplateType;
 	public String subject;
 	public String body;
+	public long lastPublishDate;
 }

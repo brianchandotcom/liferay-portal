@@ -5646,6 +5646,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		calEventImpl.setRemindBy(calEvent.getRemindBy());
 		calEventImpl.setFirstReminder(calEvent.getFirstReminder());
 		calEventImpl.setSecondReminder(calEvent.getSecondReminder());
+		calEventImpl.setLastPublishDate(calEvent.getLastPublishDate());
 
 		return calEventImpl;
 	}

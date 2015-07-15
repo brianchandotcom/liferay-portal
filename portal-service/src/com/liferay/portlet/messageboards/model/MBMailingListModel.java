@@ -504,6 +504,20 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	 */
 	public void setActive(boolean active);
 
+	/**
+	 * Returns the last publish date of this message boards mailing list.
+	 *
+	 * @return the last publish date of this message boards mailing list
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this message boards mailing list.
+	 *
+	 * @param lastPublishDate the last publish date of this message boards mailing list
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

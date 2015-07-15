@@ -7576,6 +7576,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		journalFolderImpl.setStatusByUserId(journalFolder.getStatusByUserId());
 		journalFolderImpl.setStatusByUserName(journalFolder.getStatusByUserName());
 		journalFolderImpl.setStatusDate(journalFolder.getStatusDate());
+		journalFolderImpl.setLastPublishDate(journalFolder.getLastPublishDate());
 
 		return journalFolderImpl;
 	}

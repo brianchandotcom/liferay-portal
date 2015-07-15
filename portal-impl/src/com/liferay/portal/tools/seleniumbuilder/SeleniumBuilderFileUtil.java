@@ -407,7 +407,7 @@ public class SeleniumBuilderFileUtil {
 		File file = new File(baseDirName + "/" + fileName);
 
 		if (format) {
-			ToolsUtil.writeFile(file, content);
+			ToolsUtil.writeFile(file, content, null);
 		}
 		else {
 			System.out.println("Writing " + file);

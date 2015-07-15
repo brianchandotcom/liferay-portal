@@ -349,7 +349,9 @@ public class ToolsUtil {
 		if (!file.exists() || !content.equals(_read(file))) {
 			_write(file, content);
 
-			modifiedFileNames.add(file.getAbsolutePath());
+			if (modifiedFileNames != null) {
+				modifiedFileNames.add(file.getAbsolutePath());
+			}
 
 			System.out.println("Writing " + file);
 		}

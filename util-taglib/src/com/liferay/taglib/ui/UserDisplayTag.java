@@ -66,6 +66,8 @@ public class UserDisplayTag extends TagSupport {
 				"liferay-ui:user-display:imageCssClass", _imageCssClass);
 
 			request.setAttribute(
+				"liferay-ui:user-display:showLink", String.valueOf(_showLink));
+			request.setAttribute(
 				"liferay-ui:user-display:showUserDetails",
 				String.valueOf(_showUserDetails));
 			request.setAttribute(
@@ -125,6 +127,10 @@ public class UserDisplayTag extends TagSupport {
 		_imageCssClass = imageCssClass;
 	}
 
+	public void setShowLink(boolean showLink) {
+		_showLink = showLink;
+	}
+
 	public void setShowUserDetails(boolean showUserDetails) {
 		_showUserDetails = showUserDetails;
 	}
@@ -181,6 +187,7 @@ public class UserDisplayTag extends TagSupport {
 	private int _displayStyle = 1;
 	private String _endPage;
 	private String _imageCssClass;
+	private boolean _showLink = true;
 	private boolean _showUserDetails = true;
 	private boolean _showUserName = true;
 	private String _startPage;

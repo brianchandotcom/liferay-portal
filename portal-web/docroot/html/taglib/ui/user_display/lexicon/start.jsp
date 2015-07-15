@@ -24,4 +24,15 @@
 			</div>
 		</div>
 		<div class="nameplate-content">
-			<div class="heading4"><aui:a href="<%= url %>"><%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %></aui:a></div>
+			<div class="heading4">
+				<c:choose>
+					<c:when test="<%= showLink %>">
+						<aui:a href="<%= url %>">
+							<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
+					</c:otherwise>
+				</c:choose>
+			</div>

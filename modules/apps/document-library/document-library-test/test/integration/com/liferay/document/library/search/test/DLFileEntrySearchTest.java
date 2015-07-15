@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.search.test;
 
+import com.liferay.dynamic.data.mapping.test.util.search.TestOrderHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.test.BaseSearchTestCase;
-import com.liferay.portal.search.test.TestOrderHelper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;

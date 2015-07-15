@@ -81,6 +81,9 @@ import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.PortletResponseImpl;
 import com.liferay.portlet.PortletURLImpl;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Member;
@@ -119,6 +122,10 @@ import javax.servlet.ServletContext;
 
 import javax.sql.DataSource;
 
+import org.eclipse.osgi.internal.permadmin.EquinoxSecurityManager;
+
+import org.osgi.framework.BundleReference;
+
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.beans.factory.BeanFactory;
 
@@ -134,11 +141,27 @@ import org.springframework.beans.factory.BeanFactory;
  * @author Raymond Augé
  * @author Zsolt Berentey
  */
-public class PortalSecurityManagerImpl extends SecurityManager
+public class PortalSecurityManagerImpl extends EquinoxSecurityManager
 	implements PortalSecurityManager {
 
-	public PortalSecurityManagerImpl() {
+	public PortalSecurityManagerImpl()
+		throws IllegalAccessException, NoSuchMethodException,
+			SecurityException {
+
 		_originalSecurityManager = System.getSecurityManager();
+
+		Lookup lookup = MethodHandles.lookup();
+
+		Class<?> clazz = getClass().getSuperclass();
+
+		Method method = clazz.getDeclaredMethod(
+			"internalCheckPermission", Permission.class, Object.class);
+
+		method.setAccessible(true);
+
+		MethodHandle checkPermission = lookup.unreflect(method);
+
+		_checkPermission = checkPermission.bindTo(this);
 
 		initClasses();
 
@@ -224,7 +247,11 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		ClassLoader clazzClassLoader = ClassLoaderUtil.getClassLoader(clazz);
 
-		if ((accessibility == Member.PUBLIC) || PACLUtil.hasSameOrigin(clazz)) {
+		if ((accessibility == Member.PUBLIC) ||
+			((clazzClassLoader != null) &&
+			 !BundleReference.class.isInstance(clazzClassLoader) &&
+			 PACLUtil.hasSameOrigin(clazz))) {
+
 			_checkMemberAccessClassLoader.set(clazzClassLoader);
 
 			return;
@@ -299,7 +326,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			}
 		}
 
-		AccessController.checkPermission(permission);
+		AccessController.doPrivileged(
+			new PermissionAction(
+				_checkPermission, permission, getSecurityContext()));
 	}
 
 	@Override
@@ -539,6 +568,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	private static final RuntimePermission _checkMemberAccessPermission =
 		new RuntimePermission("accessDeclaredMembers");
 
+	private final MethodHandle _checkPermission;
 	private SecurityManager _originalSecurityManager;
 	private final PortalPolicy _portalPolicy;
 
@@ -1416,6 +1446,35 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			return new TemplateControlContext(
 				accessControlContext, paclPolicy.getClassLoader());
 		}
+
+	}
+
+	private static class PermissionAction implements PrivilegedAction<Void> {
+
+		public PermissionAction(
+			MethodHandle checkPermission, Permission permission,
+			Object context) {
+
+			_checkPermission = checkPermission;
+			_permission = permission;
+			_context = context;
+		}
+
+		@Override
+		public Void run() {
+			try {
+				_checkPermission.invokeExact(_permission, _context);
+			}
+			catch (Throwable t) {
+				ReflectionUtil.throwException(t);
+			}
+
+			return null;
+		}
+
+		private final MethodHandle _checkPermission;
+		private final Object _context;
+		private final Permission _permission;
 
 	}
 

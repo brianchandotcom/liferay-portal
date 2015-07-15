@@ -79,6 +79,10 @@ eclipseProject {
 
 repositories {
 	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
 }
 
 sourceSets {

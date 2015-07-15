@@ -77,6 +77,8 @@ public class InitGradleTask extends DefaultTask {
 			"commons-beanutils.jar", "commons-beanutils", "commons-beanutils",
 			"1.8.2");
 		portalDependencyNotation(
+			"commons-chain.jar", "commons-chain", "commons-chain", "1.2");
+		portalDependencyNotation(
 			"commons-codec.jar", "commons-codec", "commons-codec", "1.9");
 		portalDependencyNotation(
 			"commons-collections.jar", "commons-collections",

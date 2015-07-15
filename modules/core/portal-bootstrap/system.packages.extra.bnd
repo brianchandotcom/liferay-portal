@@ -203,6 +203,7 @@ Include-Resource:\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/osgi/*,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/version/*,\
 	@../../../lib/portal/commons-beanutils.jar,\
+	@../../../lib/portal/commons-chain.jar,\
 	@../../../lib/portal/commons-codec.jar,\
 	@../../../lib/portal/commons-collections.jar,\
 	@../../../lib/portal/commons-discovery.jar,\

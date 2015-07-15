@@ -145,6 +145,7 @@
 	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.jni.jar"/>
 	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.ruby.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="lib/portal/commons-chain.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-collections.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-compress.jar"/>

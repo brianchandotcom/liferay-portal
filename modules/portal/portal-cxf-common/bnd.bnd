@@ -34,6 +34,7 @@ Import-Package:\
 	!org.jvnet.fastinfoset.*,\
 	!org.jvnet.staxex.*,\
 	!org.relaxng.datatype.*,\
+	!org.osgi.service.blueprint.*,\
 	!org.slf4j.spi.*,\
 	!org.springframework.*,\
 	*

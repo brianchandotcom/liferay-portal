@@ -61,7 +61,7 @@ public class ConvertDocumentLibrary
 	extends BaseConvertProcess implements DLStoreConverter {
 
 	@Override
-	public String getConfigurationDescription() {
+	public String getConfigurationErrorMessage() {
 		return "there-are-no-valid-configuration-for-any-store-please-" +
 			"configure-a-store-using-configuration-admin";
 	}

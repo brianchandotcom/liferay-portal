@@ -43,7 +43,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 					<c:choose>
 						<c:when test="<%= parameters == null %>">
 							<div class="alert alert-info">
-								<liferay-ui:message key="<%= convertProcess.getConfigurationDescription() %>" />
+								<liferay-ui:message key="<%= convertProcess.getConfigurationErrorMessage() %>" />
 							</div>
 						</c:when>
 						<c:otherwise>

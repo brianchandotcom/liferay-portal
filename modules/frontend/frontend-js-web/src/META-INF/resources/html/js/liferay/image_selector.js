@@ -247,14 +247,12 @@ AUI.add(
 							{
 								after: {
 									selectedItemChange: A.bind('_afterSelectedItemChange', instance),
+									selectedItemUploadComplete: A.bind('_onUploadComplete', instance),
+									selectedItemUploadError: A.bind('_cancelUpload', instance),
+									selectedItemUploadProgress: A.bind('_onUploadProgress', instance),
 									selectedItemUploadStart: A.bind('_afterSelectedItemUploadStart', instance)
 								},
 								eventName: instance.ns('selectImage'),
-								on: {
-									selectedItemUploadComplete: A.bind('_onUploadComplete', instance),
-									selectedItemUploadError: A.bind('_cancelUpload', instance),
-									selectedItemUploadProgress: A.bind('_onUploadProgress', instance)
-								},
 								plugins: [A.Plugin.LiferayItemSelectorUploader],
 								url: instance.get('itemSelectorURL')
 							}

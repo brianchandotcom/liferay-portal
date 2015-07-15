@@ -34,8 +34,8 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 		int i = 0;
 
 		for (ConvertProcess convertProcess : convertProcesses) {
-			String[] parameterNames = convertProcess.getParameterNames();
 			String parameterDescription = convertProcess.getParameterDescription();
+			String[] parameterNames = convertProcess.getParameterNames();
 		%>
 
 			<liferay-ui:panel-container extended="<%= true %>" id='<%= "convert" + i + "PanelContainer" %>' persistState="<%= true %>">

@@ -409,16 +409,24 @@ public class PoshiRunnerValidation {
 	protected static void validateExecuteElement(
 		Element element, String filePath) {
 
-		List<String> multiplePrimaryAttributeNames = Arrays.asList(
-			"macro-desktop", "macro-mobile");
+		List<String> multiplePrimaryAttributeNames = null;
 
 		List<String> primaryAttributeNames = Arrays.asList(
 			"function", "macro", "macro-desktop", "macro-mobile", "selenium",
 			"test-case");
 
 		if (filePath.endsWith(".function")) {
-			multiplePrimaryAttributeNames = null;
 			primaryAttributeNames = Arrays.asList("function", "selenium");
+		}
+		else if (filePath.endsWith(".macro")) {
+			multiplePrimaryAttributeNames = Arrays.asList(
+				"macro-desktop", "macro-mobile");
+
+			primaryAttributeNames = Arrays.asList("function", "macro");
+		}
+		else if (filePath.endsWith(".testcase")) {
+			primaryAttributeNames = Arrays.asList(
+				"function", "macro", "test-case");
 		}
 
 		String primaryAttributeName = getPrimaryAttributeName(

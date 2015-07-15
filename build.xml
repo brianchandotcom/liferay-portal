@@ -915,10 +915,6 @@
 		<echo>The "start" target is now deprecated. Please use the "compile" target instead.</echo>
 	</target>
 
-	<target name="test-class-group">
-		<ant antfile="build-test.xml" target="test-class-group" inheritAll="false" />
-	</target>
-
 	<target name="test-integration">
 		<ant antfile="build-test.xml" target="test-integration" inheritAll="false" />
 	</target>

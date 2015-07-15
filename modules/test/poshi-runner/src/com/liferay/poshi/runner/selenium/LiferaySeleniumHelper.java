@@ -749,390 +749,49 @@ public class LiferaySeleniumHelper {
 		return false;
 	}
 
-	public static boolean isIgnorableErrorLine(String line) {
-		if (line.contains("[antelope:post]")) {
-			return true;
-		}
+	public static boolean isIgnorableErrorLine(String line) throws Exception {
+		if (Validator.isNotNull(PropsValues.IGNORE_ERRORS_FILE_PATH)) {
+			String content = FileUtil.read(PropsValues.IGNORE_ERRORS_FILE_PATH);
 
-		if (line.contains("[junit]")) {
-			return true;
-		}
+			InputStream inputStream = new ByteArrayInputStream(
+				content.getBytes("UTF-8"));
 
-		if (line.contains("BasicResourcePool")) {
-			return true;
-		}
+			SAXReader saxReader = new SAXReader();
 
-		if (line.contains("Caused by:")) {
-			return true;
-		}
+			Document document = saxReader.read(inputStream);
 
-		if (line.contains("INFO:")) {
-			return true;
-		}
+			Element rootElement = document.getRootElement();
 
-		if (line.matches(
-				".*The web application \\[.*\\] appears to have started a " +
-					"thread.*")) {
+			List<Element> ignoreErrorElements = rootElement.elements(
+				"ignore-error");
 
-			if (line.contains("[AWT-Windows]")) {
-				return true;
+			for (Element ignoreErrorElement : ignoreErrorElements) {
+				Element containsElement = ignoreErrorElement.element(
+					"contains");
+
+				Element matchesElement = ignoreErrorElement.element("matches");
+
+				String partialMessage = containsElement.getText();
+				String regex = matchesElement.getText();
+
+				if (Validator.isNotNull(partialMessage) &&
+					Validator.isNotNull(regex)) {
+
+					if (line.matches(regex) && line.contains(partialMessage)) {
+						return true;
+					}
+				}
+				else if (Validator.isNotNull(partialMessage)) {
+					if (line.contains(partialMessage)) {
+						return true;
+					}
+				}
+				else if (Validator.isNotNull(regex)) {
+					if (line.matches(regex)) {
+						return true;
+					}
+				}
 			}
-
-			if (line.contains("[com.google.inject.internal.Finalizer]")) {
-				return true;
-			}
-
-			if (line.contains("[MultiThreadedHttpConnectionManager cleanup]")) {
-				return true;
-			}
-
-			if (line.contains(
-					"[org.python.google.common.base.internal.Finalizer]")) {
-
-				return true;
-			}
-
-			if (line.matches(".*\\[Thread-[0-9]+\\].*")) {
-				return true;
-			}
-
-			if (line.matches(".*\\[TrueZIP InputStream Reader\\].*")) {
-				return true;
-			}
-		}
-
-		// LPS-17639
-
-		if (line.contains("Table 'lportal.lock_' doesn't exist")) {
-			return true;
-		}
-
-		if (line.contains("Table 'lportal.Lock_' doesn't exist")) {
-			return true;
-		}
-
-		// LPS-22821
-
-		if (line.contains(
-				"Exception sending context destroyed event to listener " +
-					"instance of class com.liferay.portal.spring.context." +
-						"PortalContextLoaderListener")) {
-
-			return true;
-		}
-
-		// LPS-23351
-
-		if (line.contains("user lacks privilege or object not found: LOCK_")) {
-			return true;
-		}
-
-		// LPS-23498
-
-		if (line.contains("JBREM00200: ")) {
-			return true;
-		}
-
-		// LPS-28734
-
-		if (line.contains("java.nio.channels.ClosedChannelException")) {
-			return true;
-		}
-
-		// LPS-28954
-
-		if (line.matches(
-				".*The web application \\[/wsrp-portlet\\] created a " +
-					"ThreadLocal with key of type.*")) {
-
-			if (line.contains(
-					"[org.apache.axis.utils.XMLUtils." +
-						"ThreadLocalDocumentBuilder]")) {
-
-				return true;
-			}
-
-			if (line.contains(
-					"[org.apache.xml.security.utils." +
-						"UnsyncByteArrayOutputStream$1]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-37574
-
-		if (line.contains("java.util.zip.ZipException: ZipFile closed")) {
-			return true;
-		}
-
-		// LPS-41257
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[de.schlichtherle")) {
-				return true;
-			}
-		}
-
-		// LPS-41776
-
-		if (line.contains("SEC5054: Certificate has expired")) {
-			return true;
-		}
-
-		// LPS-41863
-
-		if (line.contains("Disabling contextual LOB") &&
-			line.contains("MSC service thread") &&
-			line.contains("[org.hibernate.engine.jdbc.JdbcSupportLoader]")) {
-
-			return true;
-		}
-
-		// LPS-46161
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[com.google.javascript.jscomp.Tracer.ThreadTrace]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-49204
-
-		if (line.matches(
-				".*The web application \\[\\] appears to have started a " +
-					"thread named \\[elasticsearch\\[.*")) {
-
-			return true;
-		}
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[org.elasticsearch.common.inject]")) {
-				return true;
-			}
-
-			if (line.contains("[org.elasticsearch.index.mapper]")) {
-				return true;
-			}
-		}
-
-		// LPS-49228
-
-		if (line.matches(
-				".*The web application \\[/sharepoint-hook\\] created a " +
-					"ThreadLocal with key of type.*")) {
-
-			if (line.contains(
-					"[org.apache.axis.utils.XMLUtils." +
-						"ThreadLocalDocumentBuilder]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-49229
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[org.apache.xmlbeans.impl.schema." +
-						"SchemaTypeLoaderImpl$1]")) {
-
-				return true;
-			}
-
-			if (line.contains("[org.apache.xmlbeans.impl.store.CharUtil$1]")) {
-				return true;
-			}
-
-			if (line.contains("[org.apache.xmlbeans.impl.store.Locale$1]")) {
-				return true;
-			}
-		}
-
-		// LPS-49505
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[org.jruby.RubyEncoding$2]")) {
-				return true;
-			}
-		}
-
-		// LPS-49506
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[org.joni.StackMachine$1]")) {
-				return true;
-			}
-		}
-
-		// LPS-49628
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[org.apache.poi.extractor.ExtractorFactory$1]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-49629
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[org.apache.xmlbeans.XmlBeans$1]")) {
-				return true;
-			}
-		}
-
-		// LPS-50047
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[com.sun.syndication.feed.impl.ToStringBean$1]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-50936
-
-		if (line.contains(
-				"Liferay does not have the Xuggler native libraries " +
-					"installed.")) {
-
-			return true;
-		}
-
-		// LPS-51371
-
-		if (line.matches(
-				".*The web application \\[/jasperreports-web\\] created a " +
-					"ThreadLocal with key of type.*")) {
-
-			if (line.contains(
-					"[net.sf.jasperreports.engine.fonts.FontUtil$1]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-52346
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[org.apache.jasper.runtime.JspWriterImpl." +
-						"CharBufferThreadLocalPool]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-52699
-
-		if (line.matches(
-				".*The web application \\[/saml-portlet\\] created a " +
-					"ThreadLocal with key of type.*")) {
-
-			if (line.matches(
-					".*\\[org.apache.xml.security.algorithms." +
-						"MessageDigestAlgorithm\\$[0-9]+\\].*")) {
-
-				return true;
-			}
-
-			if (line.matches(
-					".*\\[org.apache.xml.security.algorithms." +
-						"SignatureAlgorithm\\$[0-9]+\\].*")) {
-
-				return true;
-			}
-
-			if (line.matches(
-					".*\\[org.apache.xml.security.utils." +
-						"UnsyncBufferedOutputStream\\$[0-9]+\\].*")) {
-
-				return true;
-			}
-
-			if (line.matches(
-					".*\\[org.apache.xml.security.utils." +
-						"UnsyncByteArrayOutputStream\\$[0-9]+\\].*")) {
-
-				return true;
-			}
-		}
-
-		// LPS-54539
-
-		if (line.matches(
-				".*The web application \\[/agent\\] appears to have started " +
-					"a thread.*")) {
-
-			if (line.matches(".*\\[http-bio.*\\].*")) {
-				return true;
-			}
-
-			if (line.matches(".*\\[scheduler_Worker-[0-9]+\\].*")) {
-				return true;
-			}
-
-			if (line.matches(".*\\[SocketListener.*\\].*")) {
-				return true;
-			}
-		}
-
-		// LPS-54680
-
-		if (line.contains(
-				"The web application [/reports-portlet] appears to have " +
-					"started a thread named [C3P0PooledConnectionPool")) {
-
-			return true;
-		}
-
-		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
-
-		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {
-			if (line.contains("[org_eclipse_equinox_http_servlet")) {
-				return true;
-			}
-		}
-
-		// WCM-202
-
-		if (line.contains("No score point assigners available")) {
-			return true;
 		}
 
 		if (Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||

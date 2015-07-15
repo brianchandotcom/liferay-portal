@@ -1280,32 +1280,34 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		ScreenRegion screenRegion = new DesktopScreenRegion();
+		Mouse mouse = new DesktopMouse();
 
 		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
-		screenRegion = screenRegion.find(imageTarget);
+		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		Mouse mouse = new DesktopMouse();
+		ScreenRegion imageTargetScreenRegion = screenRegion.find(imageTarget);
 
-		mouse.click(screenRegion.getCenter());
+		mouse.click(imageTargetScreenRegion.getCenter());
 	}
 
 	public static void sikuliClickByIndex(
 			LiferaySelenium liferaySelenium, String image, String index)
 		throws Exception {
 
-		ScreenRegion screenRegion = new DesktopScreenRegion();
+		Mouse mouse = new DesktopMouse();
 
 		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
-		List<ScreenRegion> screenRegions = screenRegion.findAll(imageTarget);
+		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		screenRegion = screenRegions.get(Integer.parseInt(index));
+		List<ScreenRegion> imageTargetScreenRegions = screenRegion.findAll(
+			imageTarget);
 
-		Mouse mouse = new DesktopMouse();
+		ScreenRegion imageTargetScreenRegion = imageTargetScreenRegions.get(
+			Integer.parseInt(index));
 
-		mouse.click(screenRegion.getCenter());
+		mouse.click(imageTargetScreenRegion.getCenter());
 	}
 
 	public static void sikuliDragAndDrop(

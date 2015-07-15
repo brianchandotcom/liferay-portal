@@ -30,6 +30,9 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
@@ -87,6 +90,13 @@ public class PortletPanelAppAdapter implements PanelApp {
 	@Override
 	public String getPortletId() {
 		return _portletId;
+	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest request)
+		throws PortalException {
+
+		return null;
 	}
 
 	@Override

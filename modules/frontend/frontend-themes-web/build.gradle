@@ -13,6 +13,7 @@ ext {
 	alloyBootstrapVersion = "3.2.0-2"
 	alloyFontAwesomeVersion = "2.0.0"
 	alloyVersion = "3.0.1"
+	lexiconVersion = "0.1.5"
 }
 
 liferay {
@@ -94,6 +95,8 @@ buildLexicon {
 		delete lexiconDestinationDir
 	}
 
+	eachFile new StripPathSegmentsAction(1)
+
 	eachFile {
 		if (path in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
 			filter {
@@ -102,11 +105,12 @@ buildLexicon {
 				if (line == "// INSERT CUSTOM EXTENSIONS") {
 					line = """\
 @import \"../../aui_custom\";
-@import \"../../liferay_custom\";
-@import \"../alloy-font-awesome/scss/font-awesome\";"""
+@import \"../../liferay_custom\";"""
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
-					return "@import \"../../aui_variables\";"
+					line = """\
+@import \"../../aui_variables\";
+@import \"../alloy-font-awesome/scss/font-awesome\";"""
 				}
 
 				return line
@@ -114,13 +118,9 @@ buildLexicon {
 		}
 	}
 
-	from zipTree(
-		{
-			FileTree lexiconFileTree = fileTree(dir: thirdPartyDir, include: "lexicon*.zip")
-
-			lexiconFileTree.singleFile
-		})
-
+	from zipTree(new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip"))
+	include "scss/**"
+	includeEmptyDirs = false
 	into lexiconDestinationDir
 }
 

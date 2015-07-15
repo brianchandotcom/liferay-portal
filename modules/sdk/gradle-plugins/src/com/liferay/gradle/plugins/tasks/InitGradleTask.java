@@ -345,6 +345,8 @@ public class InitGradleTask extends DefaultTask {
 			String[] importSharedArray = importShared.split(",");
 
 			for (String projectFileName : importSharedArray) {
+				projectFileName = projectFileName.trim();
+
 				String projectName = projectFileName;
 
 				int pos = projectName.lastIndexOf('/');

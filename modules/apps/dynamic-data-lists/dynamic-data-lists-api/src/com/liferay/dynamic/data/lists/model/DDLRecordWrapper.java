@@ -68,6 +68,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		attributes.put("recordSetId", getRecordSetId());
 		attributes.put("version", getVersion());
 		attributes.put("displayIndex", getDisplayIndex());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -156,6 +157,12 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 
 		if (displayIndex != null) {
 			setDisplayIndex(displayIndex);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -248,6 +255,16 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	@Override
 	public long getGroupId() {
 		return _ddlRecord.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this d d l record.
+	*
+	* @return the last publish date of this d d l record
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _ddlRecord.getLastPublishDate();
 	}
 
 	@Override
@@ -502,6 +519,16 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	@Override
 	public void setGroupId(long groupId) {
 		_ddlRecord.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this d d l record.
+	*
+	* @param lastPublishDate the last publish date of this d d l record
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddlRecord.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

@@ -136,6 +136,11 @@ public class FileVersionProxyBean
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _fileVersion.getLastPublishDate();
+	}
+
+	@Override
 	public String getMimeType() {
 		return _fileVersion.getMimeType();
 	}
@@ -283,6 +288,11 @@ public class FileVersionProxyBean
 	@Override
 	public void setGroupId(long groupId) {
 		_fileVersion.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_fileVersion.setLastPublishDate(date);
 	}
 
 	@Override

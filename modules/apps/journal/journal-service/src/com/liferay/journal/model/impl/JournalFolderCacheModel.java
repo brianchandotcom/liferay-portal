@@ -66,7 +66,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,8 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -185,6 +187,13 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 			journalFolderImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			journalFolderImpl.setLastPublishDate(null);
+		}
+		else {
+			journalFolderImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		journalFolderImpl.resetOriginalValues();
 
 		return journalFolderImpl;
@@ -209,6 +218,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -270,6 +280,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -289,4 +300,5 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

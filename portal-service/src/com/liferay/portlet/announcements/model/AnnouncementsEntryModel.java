@@ -358,6 +358,20 @@ public interface AnnouncementsEntryModel extends AttachedModel,
 	 */
 	public void setAlert(boolean alert);
 
+	/**
+	 * Returns the last publish date of this announcements entry.
+	 *
+	 * @return the last publish date of this announcements entry
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this announcements entry.
+	 *
+	 * @param lastPublishDate the last publish date of this announcements entry
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

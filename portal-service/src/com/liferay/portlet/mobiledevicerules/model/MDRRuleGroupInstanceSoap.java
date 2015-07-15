@@ -47,6 +47,7 @@ public class MDRRuleGroupInstanceSoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setRuleGroupId(model.getRuleGroupId());
 		soapModel.setPriority(model.getPriority());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -198,6 +199,14 @@ public class MDRRuleGroupInstanceSoap implements Serializable {
 		_priority = priority;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _ruleGroupInstanceId;
 	private long _groupId;
@@ -210,4 +219,5 @@ public class MDRRuleGroupInstanceSoap implements Serializable {
 	private long _classPK;
 	private long _ruleGroupId;
 	private int _priority;
+	private Date _lastPublishDate;
 }

@@ -2588,6 +2588,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		mbMailingListImpl.setOutPassword(mbMailingList.getOutPassword());
 		mbMailingListImpl.setAllowAnonymous(mbMailingList.isAllowAnonymous());
 		mbMailingListImpl.setActive(mbMailingList.isActive());
+		mbMailingListImpl.setLastPublishDate(mbMailingList.getLastPublishDate());
 
 		return mbMailingListImpl;
 	}

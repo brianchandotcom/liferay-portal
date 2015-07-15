@@ -66,7 +66,7 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -112,6 +112,8 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		sb.append(feedFormat);
 		sb.append(", feedVersion=");
 		sb.append(feedVersion);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -242,6 +244,13 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 		journalFeedImpl.setFeedVersion(feedVersion);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			journalFeedImpl.setLastPublishDate(null);
+		}
+		else {
+			journalFeedImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		journalFeedImpl.resetOriginalValues();
 
 		return journalFeedImpl;
@@ -271,6 +280,7 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		contentField = objectInput.readUTF();
 		feedFormat = objectInput.readUTF();
 		feedVersion = objectInput.readDouble();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -385,6 +395,7 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		}
 
 		objectOutput.writeDouble(feedVersion);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -409,4 +420,5 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 	public String contentField;
 	public String feedFormat;
 	public double feedVersion;
+	public long lastPublishDate;
 }

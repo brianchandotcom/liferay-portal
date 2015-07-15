@@ -250,6 +250,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _dlFileEntry.getLastPublishDate();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion() throws PortalException {
 		return getLatestFileVersion(false);
 	}
@@ -527,6 +532,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	@Override
 	public void setGroupId(long groupId) {
 		_dlFileEntry.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_dlFileEntry.setLastPublishDate(date);
 	}
 
 	@Override

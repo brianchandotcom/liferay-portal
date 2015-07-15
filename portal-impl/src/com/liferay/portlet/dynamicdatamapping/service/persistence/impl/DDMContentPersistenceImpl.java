@@ -2788,6 +2788,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		ddmContentImpl.setName(ddmContent.getName());
 		ddmContentImpl.setDescription(ddmContent.getDescription());
 		ddmContentImpl.setData(ddmContent.getData());
+		ddmContentImpl.setLastPublishDate(ddmContent.getLastPublishDate());
 
 		return ddmContentImpl;
 	}

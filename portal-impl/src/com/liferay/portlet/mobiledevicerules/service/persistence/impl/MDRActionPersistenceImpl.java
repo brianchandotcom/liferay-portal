@@ -2305,6 +2305,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		mdrActionImpl.setDescription(mdrAction.getDescription());
 		mdrActionImpl.setType(mdrAction.getType());
 		mdrActionImpl.setTypeSettings(mdrAction.getTypeSettings());
+		mdrActionImpl.setLastPublishDate(mdrAction.getLastPublishDate());
 
 		return mdrActionImpl;
 	}

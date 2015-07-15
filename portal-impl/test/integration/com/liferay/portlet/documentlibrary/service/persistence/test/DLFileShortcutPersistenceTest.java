@@ -149,6 +149,8 @@ public class DLFileShortcutPersistenceTest {
 
 		newDLFileShortcut.setStatusDate(RandomTestUtil.nextDate());
 
+		newDLFileShortcut.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_dlFileShortcuts.add(_persistence.update(newDLFileShortcut));
 
 		DLFileShortcut existingDLFileShortcut = _persistence.findByPrimaryKey(newDLFileShortcut.getPrimaryKey());
@@ -190,6 +192,9 @@ public class DLFileShortcutPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileShortcut.getStatusDate()),
 			Time.getShortTimestamp(newDLFileShortcut.getStatusDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFileShortcut.getLastPublishDate()),
+			Time.getShortTimestamp(newDLFileShortcut.getLastPublishDate()));
 	}
 
 	@Test
@@ -295,7 +300,7 @@ public class DLFileShortcutPersistenceTest {
 			"modifiedDate", true, "repositoryId", true, "folderId", true,
 			"toFileEntryId", true, "treePath", true, "active", true, "status",
 			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"statusDate", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -546,6 +551,8 @@ public class DLFileShortcutPersistenceTest {
 		dlFileShortcut.setStatusByUserName(RandomTestUtil.randomString());
 
 		dlFileShortcut.setStatusDate(RandomTestUtil.nextDate());
+
+		dlFileShortcut.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_dlFileShortcuts.add(_persistence.update(dlFileShortcut));
 

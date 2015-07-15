@@ -30,6 +30,7 @@
 		<column name="title" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="vocabularyId" type="long" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->
 
@@ -315,6 +316,7 @@
 
 		<column name="name" type="String" accessor="true" />
 		<column name="assetCount" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->
 
@@ -408,6 +410,7 @@
 		<column name="title" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="settings" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

@@ -1,3 +1,5 @@
+alter table Address add lastPublishDate DATE null;
+
 alter table AssetEntry add listable BOOLEAN;
 
 COMMIT_TRANSACTION;
@@ -103,6 +105,8 @@ update DLFolder set restrictionType = 1 where overrideFileEntryTypes = 1;
 
 alter table DLFolder drop column overrideFileEntryTypes;
 
+alter table EmailAddress add lastPublishDate DATE null;
+
 create table ExportImportConfiguration (
 	mvccVersion LONG default 0,
 	exportImportConfigurationId LONG not null primary key,
@@ -136,7 +140,12 @@ create table JournalFolders_DDMStructures (
 	primary key (structureId, folderId)
 );
 
+alter table Layout add lastPublishDate DATE null;
 alter table Layout drop column iconImage;
+
+alter table LayoutFriendlyURL add lastPublishDate DATE null;
+
+alter table LayoutPrototype add lastPublishDate DATE null;
 
 alter table LayoutRevision drop column iconImage;
 
@@ -144,9 +153,20 @@ alter table LayoutSet drop column logo;
 
 alter table LayoutSetBranch drop column logo;
 
+alter table LayoutSetPrototype add lastPublishDate DATE null;
+
+alter table Organization_ add lastPublishDate DATE null;
 alter table Organization_ add logoId LONG;
 
+alter table PasswordPolicy add lastPublishDate DATE null;
+
+alter table Phone add lastPublishDate DATE null;
+
 alter table RatingsEntry add uuid_ VARCHAR(75) null;
+
+alter table Repository add lastPublishDate DATE null;
+
+alter table RepositoryEntry add lastPublishDate DATE null;
 
 insert into Region (regionId, countryId, regionCode, name, active_) values (33001, 33, 'AT-1', 'Burgenland', TRUE);
 insert into Region (regionId, countryId, regionCode, name, active_) values (33002, 33, 'AT-2', 'Kärnten', TRUE);
@@ -161,8 +181,17 @@ insert into Region (regionId, countryId, regionCode, name, active_) values (3300
 update Region set regionCode = 'BB' where regionId = 4004 and regionCode = 'BR';
 update Region set name = 'Monza e Brianza', regionCode = 'MB' where regionId = 8060 and regionCode = 'MZ';
 
+alter table Role_ add lastPublishDate DATE null;
+
 alter table Subscription add groupId LONG;
 
 alter table Team add uuid_ VARCHAR(75);
+alter table Team add lastPublishDate DATE null;
+
+alter table User_ add lastPublishDate DATE null;
+
+alter table UserGroup add lastPublishDate DATE null;
 
 alter table UserNotificationEvent add actionRequired BOOLEAN;
+
+alter table Website add lastPublishDate DATE null;

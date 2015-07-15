@@ -75,6 +75,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -205,6 +206,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -338,6 +345,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public Date getLastPostDate() {
 		return _mbThread.getLastPostDate();
+	}
+
+	/**
+	* Returns the last publish date of this message boards thread.
+	*
+	* @return the last publish date of this message boards thread
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbThread.getLastPublishDate();
 	}
 
 	@Override
@@ -842,6 +859,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		_mbThread.setLastPostDate(lastPostDate);
+	}
+
+	/**
+	* Sets the last publish date of this message boards thread.
+	*
+	* @param lastPublishDate the last publish date of this message boards thread
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mbThread.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

@@ -65,6 +65,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("data", getData());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -135,6 +136,12 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 
 		if (data != null) {
 			setData(data);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -222,6 +229,16 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	@Override
 	public long getGroupId() {
 		return _ddmContent.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this d d m content.
+	*
+	* @return the last publish date of this d d m content
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _ddmContent.getLastPublishDate();
 	}
 
 	/**
@@ -485,6 +502,16 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	@Override
 	public void setGroupId(long groupId) {
 		_ddmContent.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this d d m content.
+	*
+	* @param lastPublishDate the last publish date of this d d m content
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddmContent.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

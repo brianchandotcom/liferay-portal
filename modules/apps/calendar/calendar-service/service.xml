@@ -36,6 +36,7 @@
 		<column name="defaultCalendar" type="boolean" />
 		<column name="enableComments" type="boolean" />
 		<column name="enableRatings" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -98,6 +99,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -197,6 +199,7 @@
 		<column name="notificationTemplateType" type="String" />
 		<column name="subject" type="String" />
 		<column name="body" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -240,6 +243,7 @@
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="active" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

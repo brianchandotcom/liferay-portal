@@ -672,6 +672,20 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	 */
 	public void setSmallImageURL(String smallImageURL);
 
+	/**
+	 * Returns the last publish date of this d d m template.
+	 *
+	 * @return the last publish date of this d d m template
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this d d m template.
+	 *
+	 * @param lastPublishDate the last publish date of this d d m template
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

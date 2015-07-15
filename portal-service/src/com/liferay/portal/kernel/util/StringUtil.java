@@ -182,7 +182,7 @@ public class StringUtil {
 			s = s.substring(0, pos);
 		}
 
-		return appendParentheticalSuffix(s, String.valueOf(suffix));
+		return appendParentheticalSuffix(s, String.valueOf(suffix), true);
 	}
 
 	/**
@@ -207,10 +207,42 @@ public class StringUtil {
 	 *         space, followed by the suffix enclosed in parentheses
 	 */
 	public static String appendParentheticalSuffix(String s, String suffix) {
+		return appendParentheticalSuffix(s, suffix, true);
+	}
+
+	/**
+	 * Returns the original string with an appended space followed by the suffix
+	 * surrounded by parentheses.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * appendParentheticalSuffix("Java", "EE", false) returns "Java(EE)"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the original string
+	 * @param  suffix the suffix to be appended
+	 * @param  addSpace whether to add space
+	 * @return a string that represents the original string, followed by a
+	 *         space or not, followed by the suffix enclosed in parentheses
+	 */
+	public static String appendParentheticalSuffix(
+		String s, String suffix, boolean addSpace) {
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(s);
-		sb.append(StringPool.SPACE);
+
+		if (addSpace) {
+			sb.append(StringPool.SPACE);
+		}
+
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(suffix);
 		sb.append(StringPool.CLOSE_PARENTHESIS);

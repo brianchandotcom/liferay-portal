@@ -159,7 +159,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		int suffix = 1;
 
 		for (int i = 0; i < _MAX_UNIQUE_FILE_NAME_TRIALS; i++) {
-			String curFileName = FileUtil.updateFileName(
+			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
 			fileEntry = _fetchPortletFileEntry(groupId, curFileName, folder);

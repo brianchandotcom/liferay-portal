@@ -174,7 +174,7 @@ public abstract class BaseImageSelectorUploadHandler
 		int suffix = 1;
 
 		for (int i = 0; i < _MAX_UNIQUE_FILE_NAME_TRIALS; i++) {
-			String curFileName = FileUtil.updateFileName(
+			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
 			fileEntry = _fetchTempFileEntry(themeDisplay, curFileName);

@@ -404,8 +404,10 @@ public class FileUtil {
 		getFile().unzip(source, destination);
 	}
 
-	public static String updateFileName(String fileName, String suffix) {
-		return getFile().updateFileName(fileName, suffix);
+	public static String appendParentheticalSuffix(
+		String fileName, String suffix) {
+
+		return getFile().appendParentheticalSuffix(fileName, suffix);
 	}
 
 	public static void write(File file, byte[] bytes) throws IOException {

@@ -14,15 +14,12 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -142,7 +139,7 @@ public class SessionTreeJSClickAction extends Action {
 			}
 
 			if (!cmd.isEmpty()) {
-				updateCheckedLayoutsPlidList(request, treeId);
+				_updateCheckedLayoutsPlidList(request, treeId);
 			}
 
 			PortalPreferences portalPreferences =
@@ -167,46 +164,35 @@ public class SessionTreeJSClickAction extends Action {
 		}
 	}
 
-	private void updateCheckedLayoutsPlidList(
-			HttpServletRequest request, String treeId)
-		throws PortalException {
+	private void _updateCheckedLayoutsPlidList(
+		HttpServletRequest request, String treeId) {
 
-		try {
-			long groupId = ParamUtil.getLong(request, "groupId");
+		long groupId = ParamUtil.getLong(request, "groupId");
 
-			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
+		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
-			JSONArray checkedNodesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray checkedNodesJSONArray = JSONFactoryUtil.createJSONArray();
 
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			String checkedLayoutIds = portalPreferences.getValue(
-				SessionTreeJSClicks.class.getName(), treeId);
+		String checkedLayoutIds = portalPreferences.getValue(
+			SessionTreeJSClicks.class.getName(), treeId);
 
-			if (Validator.isNotNull(checkedLayoutIds)) {
-				for (long checkedLayoutId :
-						StringUtil.split(checkedLayoutIds, 0L)) {
+		for (long checkedLayoutId : StringUtil.split(checkedLayoutIds, 0L)) {
+			Layout checkedLayout = LayoutLocalServiceUtil.fetchLayout(
+				groupId, privateLayout, checkedLayoutId);
 
-					try {
-						Layout checkedLayout = LayoutLocalServiceUtil.getLayout(
-									groupId, privateLayout, checkedLayoutId);
-
-						checkedNodesJSONArray.put(
-							String.valueOf(checkedLayout.getPlid()));
-					}
-					catch (NoSuchLayoutException nsle) {
-					}
-				}
+			if (checkedLayout == null) {
+				continue;
 			}
 
-			portalPreferences.setValue(
-				SessionTreeJSClicks.class.getName(), treeId + "Plid",
-				checkedNodesJSONArray.toString());
+			checkedNodesJSONArray.put(String.valueOf(checkedLayout.getPlid()));
 		}
-		catch (Exception e) {
-		}
+
+		portalPreferences.setValue(
+			SessionTreeJSClicks.class.getName(), treeId + "Plid",
+			checkedNodesJSONArray.toString());
 	}
 
 }

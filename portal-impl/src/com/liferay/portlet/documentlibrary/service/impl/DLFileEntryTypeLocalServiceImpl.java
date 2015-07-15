@@ -53,7 +53,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
@@ -84,7 +83,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLFileEntryType.class);
 
 		for (long ddmStructureId : ddmStructureIds) {
-			ddmStructureLinkLocalService.addStructureLink(
+			DDMStructureLinkManagerUtil.addStructureLink(
 				classNameId, fileEntryTypeId, ddmStructureId);
 		}
 	}
@@ -629,7 +628,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLFileEntryType.class);
 
 		for (long ddmStructureId : ddmStructureIds) {
-			ddmStructureLinkLocalService.deleteStructureLink(
+			DDMStructureLinkManagerUtil.deleteStructureLink(
 				classNameId, fileEntryTypeId, ddmStructureId);
 		}
 	}
@@ -813,9 +812,6 @@ public class DLFileEntryTypeLocalServiceImpl
 			}
 		}
 	}
-
-	@BeanReference(type = DDMStructureLinkLocalService.class)
-	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
 	@BeanReference(type = DDMStructureLocalService.class)
 	protected DDMStructureLocalService ddmStructureLocalService;

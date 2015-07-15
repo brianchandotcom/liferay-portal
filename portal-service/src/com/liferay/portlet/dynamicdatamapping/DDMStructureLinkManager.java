@@ -14,12 +14,21 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 import java.util.List;
 
 /**
  * @author Rafael Praxedes
  */
 public interface DDMStructureLinkManager {
+
+	public DDMStructureLink addStructureLink(
+		long classNameId, long classPK, long structureId);
+
+	public void deleteStructureLink(
+			long classNameId, long classPK, long structureId)
+		throws PortalException;
 
 	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId);
 

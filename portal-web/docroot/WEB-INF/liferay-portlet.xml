@@ -320,19 +320,6 @@
 		<active>false</active>
 	</portlet>
 	<portlet>
-		<portlet-name>108</portlet-name>
-		<icon>/html/icons/page_ratings.png</icon>
-		<struts-path>page_ratings</struts-path>
-		<portlet-data-handler-class>com.liferay.portlet.ratings.lar.RatingsPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.ratings.lar.RatingsEntryStagedModelDataHandler</staged-model-data-handler-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-page-ratings</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>110</portlet-name>
 		<icon>/html/icons/document_library_display.png</icon>
 		<struts-path>document_library_display</struts-path>

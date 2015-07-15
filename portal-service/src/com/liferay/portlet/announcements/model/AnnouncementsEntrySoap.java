@@ -51,6 +51,7 @@ public class AnnouncementsEntrySoap implements Serializable {
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setAlert(model.getAlert());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -246,6 +247,14 @@ public class AnnouncementsEntrySoap implements Serializable {
 		_alert = alert;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _entryId;
 	private long _companyId;
@@ -263,4 +272,5 @@ public class AnnouncementsEntrySoap implements Serializable {
 	private Date _expirationDate;
 	private int _priority;
 	private boolean _alert;
+	private Date _lastPublishDate;
 }

@@ -39,7 +39,6 @@ import java.util.List;
  * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
-@Deprecated
 @ProviderType
 public class CalEventUtil {
 	/*

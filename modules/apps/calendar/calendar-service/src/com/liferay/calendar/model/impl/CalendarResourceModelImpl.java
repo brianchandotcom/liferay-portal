@@ -94,7 +94,8 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 			{ "code_", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -115,9 +116,10 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CalendarResource (uuid_ VARCHAR(75) null,calendarResourceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,code_ VARCHAR(75) null,name STRING null,description STRING null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CalendarResource (uuid_ VARCHAR(75) null,calendarResourceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,code_ VARCHAR(75) null,name STRING null,description STRING null,active_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CalendarResource";
 	public static final String ORDER_BY_JPQL = " ORDER BY calendarResource.code ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CalendarResource.code_ ASC";
@@ -171,6 +173,7 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setActive(soapModel.getActive());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -252,6 +255,7 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -355,6 +359,12 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -871,6 +881,17 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 		return _originalActive;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1006,6 +1027,7 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 		calendarResourceImpl.setName(getName());
 		calendarResourceImpl.setDescription(getDescription());
 		calendarResourceImpl.setActive(getActive());
+		calendarResourceImpl.setLastPublishDate(getLastPublishDate());
 
 		calendarResourceImpl.resetOriginalValues();
 
@@ -1185,12 +1207,21 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 
 		calendarResourceCacheModel.active = getActive();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			calendarResourceCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			calendarResourceCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return calendarResourceCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1224,6 +1255,8 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 		sb.append(getDescription());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1231,7 +1264,7 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.calendar.model.CalendarResource");
@@ -1301,6 +1334,10 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1344,6 +1381,7 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CalendarResource _escapedModel;
 }

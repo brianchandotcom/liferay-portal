@@ -78,7 +78,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "banUserId", Types.BIGINT }
+			{ "banUserId", Types.BIGINT },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -92,9 +93,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("banUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBBan";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbBan.banId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBBan.banId ASC";
@@ -139,6 +141,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setBanUserId(soapModel.getBanUserId());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -212,6 +215,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("banUserId", getBanUserId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -273,6 +277,12 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		if (banUserId != null) {
 			setBanUserId(banUserId);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -479,6 +489,17 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return _originalBanUserId;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -525,6 +546,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		mbBanImpl.setCreateDate(getCreateDate());
 		mbBanImpl.setModifiedDate(getModifiedDate());
 		mbBanImpl.setBanUserId(getBanUserId());
+		mbBanImpl.setLastPublishDate(getLastPublishDate());
 
 		mbBanImpl.resetOriginalValues();
 
@@ -658,12 +680,21 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		mbBanCacheModel.banUserId = getBanUserId();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			mbBanCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			mbBanCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return mbBanCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -683,6 +714,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		sb.append(getModifiedDate());
 		sb.append(", banUserId=");
 		sb.append(getBanUserId());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -690,7 +723,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBBan");
@@ -732,6 +765,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 			"<column><column-name>banUserId</column-name><column-value><![CDATA[");
 		sb.append(getBanUserId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -761,6 +798,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private long _banUserId;
 	private long _originalBanUserId;
 	private boolean _setOriginalBanUserId;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MBBan _escapedModel;
 }

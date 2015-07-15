@@ -14,13 +14,14 @@
 
 package com.liferay.asset.categories.admin.web.upgrade;
 
-import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.categories.admin.web.upgrade.v1_0_0.UpgradeAssetCategoriesAdminLastPublishDate;
+import com.liferay.asset.categories.admin.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -47,23 +48,14 @@ public class AssetCategoriesAdminWebUpgrade {
 
 	@Activate
 	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"147",
-						AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN
-					}
-				};
-			}
+		upgradeProcesses.add(new UpgradePortletId());
 
-		};
+		upgradeProcesses.add(new UpgradeAssetCategoriesAdminLastPublishDate());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.asset.categories.admin.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
+			"com.liferay.asset.categories.admin.web", upgradeProcesses, 1, 1,
 			false);
 	}
 

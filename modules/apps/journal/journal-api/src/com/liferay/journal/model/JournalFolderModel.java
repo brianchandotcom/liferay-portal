@@ -369,6 +369,20 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the last publish date of this journal folder.
+	 *
+	 * @return the last publish date of this journal folder
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this journal folder.
+	 *
+	 * @param lastPublishDate the last publish date of this journal folder
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the trash entry created when this journal folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal folder.
 	 *
 	 * @return the trash entry created when this journal folder was moved to the Recycle Bin

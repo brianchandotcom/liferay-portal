@@ -91,7 +91,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 			{ "outUserName", Types.VARCHAR },
 			{ "outPassword", Types.VARCHAR },
 			{ "allowAnonymous", Types.BOOLEAN },
-			{ "active_", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -122,9 +123,10 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		TABLE_COLUMNS_MAP.put("outPassword", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("allowAnonymous", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBMailingList (uuid_ VARCHAR(75) null,mailingListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,emailAddress VARCHAR(75) null,inProtocol VARCHAR(75) null,inServerName VARCHAR(75) null,inServerPort INTEGER,inUseSSL BOOLEAN,inUserName VARCHAR(75) null,inPassword VARCHAR(75) null,inReadInterval INTEGER,outEmailAddress VARCHAR(75) null,outCustom BOOLEAN,outServerName VARCHAR(75) null,outServerPort INTEGER,outUseSSL BOOLEAN,outUserName VARCHAR(75) null,outPassword VARCHAR(75) null,allowAnonymous BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table MBMailingList (uuid_ VARCHAR(75) null,mailingListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,emailAddress VARCHAR(75) null,inProtocol VARCHAR(75) null,inServerName VARCHAR(75) null,inServerPort INTEGER,inUseSSL BOOLEAN,inUserName VARCHAR(75) null,inPassword VARCHAR(75) null,inReadInterval INTEGER,outEmailAddress VARCHAR(75) null,outCustom BOOLEAN,outServerName VARCHAR(75) null,outServerPort INTEGER,outUseSSL BOOLEAN,outUserName VARCHAR(75) null,outPassword VARCHAR(75) null,allowAnonymous BOOLEAN,active_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBMailingList";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbMailingList.mailingListId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBMailingList.mailingListId ASC";
@@ -212,6 +214,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		attributes.put("outPassword", getOutPassword());
 		attributes.put("allowAnonymous", getAllowAnonymous());
 		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -375,6 +378,12 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -797,6 +806,16 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				MBMailingList.class.getName()));
@@ -859,6 +878,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		mbMailingListImpl.setOutPassword(getOutPassword());
 		mbMailingListImpl.setAllowAnonymous(getAllowAnonymous());
 		mbMailingListImpl.setActive(getActive());
+		mbMailingListImpl.setLastPublishDate(getLastPublishDate());
 
 		mbMailingListImpl.resetOriginalValues();
 
@@ -1080,12 +1100,21 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 		mbMailingListCacheModel.active = getActive();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			mbMailingListCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			mbMailingListCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return mbMailingListCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1139,6 +1168,8 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		sb.append(getAllowAnonymous());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1146,7 +1177,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBMailingList");
@@ -1256,6 +1287,10 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1302,6 +1337,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MBMailingList _escapedModel;
 }

@@ -82,6 +82,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -248,6 +249,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -450,6 +457,16 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public java.lang.String getIcon() {
 		return _dlFileVersion.getIcon();
+	}
+
+	/**
+	* Returns the last publish date of this document library file version.
+	*
+	* @return the last publish date of this document library file version
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _dlFileVersion.getLastPublishDate();
 	}
 
 	/**
@@ -889,6 +906,16 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public void setGroupId(long groupId) {
 		_dlFileVersion.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this document library file version.
+	*
+	* @param lastPublishDate the last publish date of this document library file version
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_dlFileVersion.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

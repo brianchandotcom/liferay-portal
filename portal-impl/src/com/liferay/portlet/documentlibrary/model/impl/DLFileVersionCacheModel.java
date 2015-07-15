@@ -66,7 +66,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -122,6 +122,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -259,6 +261,13 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 			dlFileVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			dlFileVersionImpl.setLastPublishDate(null);
+		}
+		else {
+			dlFileVersionImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		dlFileVersionImpl.resetOriginalValues();
 
 		return dlFileVersionImpl;
@@ -293,6 +302,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -408,6 +418,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -437,4 +448,5 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

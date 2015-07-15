@@ -71,6 +71,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -171,6 +172,12 @@ public class CalendarResourceWrapper implements CalendarResource,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -391,6 +398,16 @@ public class CalendarResourceWrapper implements CalendarResource,
 	@Override
 	public long getGroupId() {
 		return _calendarResource.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this calendar resource.
+	*
+	* @return the last publish date of this calendar resource
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _calendarResource.getLastPublishDate();
 	}
 
 	/**
@@ -795,6 +812,16 @@ public class CalendarResourceWrapper implements CalendarResource,
 	@Override
 	public void setGroupId(long groupId) {
 		_calendarResource.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this calendar resource.
+	*
+	* @param lastPublishDate the last publish date of this calendar resource
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_calendarResource.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

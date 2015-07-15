@@ -22112,6 +22112,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		wikiPageImpl.setStatusByUserId(wikiPage.getStatusByUserId());
 		wikiPageImpl.setStatusByUserName(wikiPage.getStatusByUserName());
 		wikiPageImpl.setStatusDate(wikiPage.getStatusDate());
+		wikiPageImpl.setLastPublishDate(wikiPage.getLastPublishDate());
 
 		return wikiPageImpl;
 	}

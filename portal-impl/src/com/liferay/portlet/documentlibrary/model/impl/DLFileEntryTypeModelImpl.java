@@ -88,7 +88,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "fileEntryTypeKey", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -104,9 +105,10 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		TABLE_COLUMNS_MAP.put("fileEntryTypeKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntryType (uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntryType (uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryType";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntryType.fileEntryTypeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntryType.fileEntryTypeId ASC";
@@ -152,6 +154,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		model.setFileEntryTypeKey(soapModel.getFileEntryTypeKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -239,6 +242,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		attributes.put("fileEntryTypeKey", getFileEntryTypeKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -312,6 +316,12 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -695,6 +705,17 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -825,6 +846,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		dlFileEntryTypeImpl.setFileEntryTypeKey(getFileEntryTypeKey());
 		dlFileEntryTypeImpl.setName(getName());
 		dlFileEntryTypeImpl.setDescription(getDescription());
+		dlFileEntryTypeImpl.setLastPublishDate(getLastPublishDate());
 
 		dlFileEntryTypeImpl.resetOriginalValues();
 
@@ -974,12 +996,21 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 			dlFileEntryTypeCacheModel.description = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			dlFileEntryTypeCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			dlFileEntryTypeCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return dlFileEntryTypeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1003,6 +1034,8 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1010,7 +1043,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileEntryType");
@@ -1060,6 +1093,10 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1090,6 +1127,7 @@ public class DLFileEntryTypeModelImpl extends BaseModelImpl<DLFileEntryType>
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private DLFileEntryType _escapedModel;
 }

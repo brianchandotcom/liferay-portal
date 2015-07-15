@@ -196,6 +196,8 @@ public class UserPersistenceTest {
 
 		newUser.setStatus(RandomTestUtil.nextInt());
 
+		newUser.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_users.add(_persistence.update(newUser));
 
 		User existingUser = _persistence.findByPrimaryKey(newUser.getPrimaryKey());
@@ -272,6 +274,9 @@ public class UserPersistenceTest {
 		Assert.assertEquals(existingUser.getEmailAddressVerified(),
 			newUser.getEmailAddressVerified());
 		Assert.assertEquals(existingUser.getStatus(), newUser.getStatus());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingUser.getLastPublishDate()),
+			Time.getShortTimestamp(newUser.getLastPublishDate()));
 	}
 
 	@Test
@@ -452,7 +457,7 @@ public class UserPersistenceTest {
 			"lastLoginIP", true, "lastFailedLoginDate", true,
 			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
 			"agreedToTermsOfUse", true, "emailAddressVerified", true, "status",
-			true);
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -788,6 +793,8 @@ public class UserPersistenceTest {
 		user.setEmailAddressVerified(RandomTestUtil.randomBoolean());
 
 		user.setStatus(RandomTestUtil.nextInt());
+
+		user.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_users.add(_persistence.update(user));
 

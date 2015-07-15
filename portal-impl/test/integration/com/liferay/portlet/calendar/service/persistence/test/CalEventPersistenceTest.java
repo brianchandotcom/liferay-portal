@@ -59,7 +59,6 @@ import java.util.Set;
  * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
-@Deprecated
 public class CalEventPersistenceTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
@@ -163,6 +162,8 @@ public class CalEventPersistenceTest {
 
 		newCalEvent.setSecondReminder(RandomTestUtil.nextInt());
 
+		newCalEvent.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_calEvents.add(_persistence.update(newCalEvent));
 
 		CalEvent existingCalEvent = _persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
@@ -214,6 +215,9 @@ public class CalEventPersistenceTest {
 			newCalEvent.getFirstReminder());
 		Assert.assertEquals(existingCalEvent.getSecondReminder(),
 			newCalEvent.getSecondReminder());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalEvent.getLastPublishDate()),
+			Time.getShortTimestamp(newCalEvent.getLastPublishDate()));
 	}
 
 	@Test
@@ -341,7 +345,8 @@ public class CalEventPersistenceTest {
 			true, "endDate", true, "durationHour", true, "durationMinute",
 			true, "allDay", true, "timeZoneSensitive", true, "type", true,
 			"repeating", true, "recurrence", true, "remindBy", true,
-			"firstReminder", true, "secondReminder", true);
+			"firstReminder", true, "secondReminder", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -602,6 +607,8 @@ public class CalEventPersistenceTest {
 		calEvent.setFirstReminder(RandomTestUtil.nextInt());
 
 		calEvent.setSecondReminder(RandomTestUtil.nextInt());
+
+		calEvent.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_calEvents.add(_persistence.update(calEvent));
 

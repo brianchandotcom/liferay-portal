@@ -165,6 +165,8 @@ public class JournalFeedPersistenceTest {
 
 		newJournalFeed.setFeedVersion(RandomTestUtil.nextDouble());
 
+		newJournalFeed.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_journalFeeds.add(_persistence.update(newJournalFeed));
 
 		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
@@ -214,6 +216,9 @@ public class JournalFeedPersistenceTest {
 			newJournalFeed.getFeedFormat());
 		AssertUtils.assertEquals(existingJournalFeed.getFeedVersion(),
 			newJournalFeed.getFeedVersion());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingJournalFeed.getLastPublishDate()),
+			Time.getShortTimestamp(newJournalFeed.getLastPublishDate()));
 	}
 
 	@Test
@@ -296,7 +301,7 @@ public class JournalFeedPersistenceTest {
 			"DDMRendererTemplateKey", true, "delta", true, "orderByCol", true,
 			"orderByType", true, "targetLayoutFriendlyUrl", true,
 			"targetPortletId", true, "contentField", true, "feedFormat", true,
-			"feedVersion", true);
+			"feedVersion", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -560,6 +565,8 @@ public class JournalFeedPersistenceTest {
 		journalFeed.setFeedFormat(RandomTestUtil.randomString());
 
 		journalFeed.setFeedVersion(RandomTestUtil.nextDouble());
+
+		journalFeed.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_journalFeeds.add(_persistence.update(journalFeed));
 

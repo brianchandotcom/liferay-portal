@@ -33,7 +33,6 @@ import com.liferay.portlet.calendar.model.CalEvent;
  * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
-@Deprecated
 @ProviderType
 public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	/*

@@ -202,6 +202,11 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return null;
+	}
+
+	@Override
 	public String getMimeType() {
 		String mimeType = _document.getContentStreamMimeType();
 
@@ -372,6 +377,10 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	@Override
 	public void setGroupId(long groupId) {
 		_cmisRepository.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
 	}
 
 	@Override

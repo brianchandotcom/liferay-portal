@@ -5133,6 +5133,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		announcementsEntryImpl.setExpirationDate(announcementsEntry.getExpirationDate());
 		announcementsEntryImpl.setPriority(announcementsEntry.getPriority());
 		announcementsEntryImpl.setAlert(announcementsEntry.isAlert());
+		announcementsEntryImpl.setLastPublishDate(announcementsEntry.getLastPublishDate());
 
 		return announcementsEntryImpl;
 	}

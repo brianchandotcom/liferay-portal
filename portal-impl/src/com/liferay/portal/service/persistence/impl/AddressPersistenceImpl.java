@@ -4833,6 +4833,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		addressImpl.setTypeId(address.getTypeId());
 		addressImpl.setMailing(address.isMailing());
 		addressImpl.setPrimary(address.isPrimary());
+		addressImpl.setLastPublishDate(address.getLastPublishDate());
 
 		return addressImpl;
 	}

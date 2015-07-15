@@ -75,6 +75,7 @@ public class UserSoap implements Serializable {
 		soapModel.setAgreedToTermsOfUse(model.getAgreedToTermsOfUse());
 		soapModel.setEmailAddressVerified(model.getEmailAddressVerified());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -479,6 +480,14 @@ public class UserSoap implements Serializable {
 		_status = status;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _userId;
@@ -520,4 +529,5 @@ public class UserSoap implements Serializable {
 	private boolean _agreedToTermsOfUse;
 	private boolean _emailAddressVerified;
 	private int _status;
+	private Date _lastPublishDate;
 }

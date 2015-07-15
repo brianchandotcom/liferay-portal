@@ -187,6 +187,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setStatusDate(RandomTestUtil.nextDate());
 
+		newJournalArticle.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_journalArticles.add(_persistence.update(newJournalArticle));
 
 		JournalArticle existingJournalArticle = _persistence.findByPrimaryKey(newJournalArticle.getPrimaryKey());
@@ -263,6 +265,9 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getStatusDate()),
 			Time.getShortTimestamp(newJournalArticle.getStatusDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingJournalArticle.getLastPublishDate()),
+			Time.getShortTimestamp(newJournalArticle.getLastPublishDate()));
 	}
 
 	@Test
@@ -662,7 +667,8 @@ public class JournalArticlePersistenceTest {
 			"layoutUuid", true, "displayDate", true, "expirationDate", true,
 			"reviewDate", true, "indexable", true, "smallImage", true,
 			"smallImageId", true, "smallImageURL", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -964,6 +970,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setStatusByUserName(RandomTestUtil.randomString());
 
 		journalArticle.setStatusDate(RandomTestUtil.nextDate());
+
+		journalArticle.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_journalArticles.add(_persistence.update(journalArticle));
 

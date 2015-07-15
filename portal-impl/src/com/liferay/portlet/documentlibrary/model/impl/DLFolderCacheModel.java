@@ -65,7 +65,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -111,6 +111,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -205,6 +207,13 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 			dlFolderImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			dlFolderImpl.setLastPublishDate(null);
+		}
+		else {
+			dlFolderImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		dlFolderImpl.resetOriginalValues();
 
 		return dlFolderImpl;
@@ -234,6 +243,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -300,6 +310,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -324,4 +335,5 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

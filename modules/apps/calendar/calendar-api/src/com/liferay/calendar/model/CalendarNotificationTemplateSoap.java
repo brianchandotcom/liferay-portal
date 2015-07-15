@@ -49,6 +49,7 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 		soapModel.setNotificationTemplateType(model.getNotificationTemplateType());
 		soapModel.setSubject(model.getSubject());
 		soapModel.setBody(model.getBody());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -217,6 +218,14 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 		_body = body;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _calendarNotificationTemplateId;
 	private long _groupId;
@@ -231,4 +240,5 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 	private String _notificationTemplateType;
 	private String _subject;
 	private String _body;
+	private Date _lastPublishDate;
 }

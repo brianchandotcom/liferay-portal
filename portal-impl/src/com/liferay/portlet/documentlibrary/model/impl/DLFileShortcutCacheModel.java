@@ -66,7 +66,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -173,6 +175,13 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 			dlFileShortcutImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			dlFileShortcutImpl.setLastPublishDate(null);
+		}
+		else {
+			dlFileShortcutImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		dlFileShortcutImpl.resetOriginalValues();
 
 		return dlFileShortcutImpl;
@@ -197,6 +206,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -246,6 +256,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -265,4 +276,5 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

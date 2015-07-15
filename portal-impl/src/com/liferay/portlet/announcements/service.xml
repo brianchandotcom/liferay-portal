@@ -61,6 +61,7 @@
 		<column name="expirationDate" type="Date" />
 		<column name="priority" type="int" />
 		<column name="alert" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

@@ -135,6 +135,8 @@ public class MDRRuleGroupPersistenceTest {
 
 		newMDRRuleGroup.setDescription(RandomTestUtil.randomString());
 
+		newMDRRuleGroup.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_mdrRuleGroups.add(_persistence.update(newMDRRuleGroup));
 
 		MDRRuleGroup existingMDRRuleGroup = _persistence.findByPrimaryKey(newMDRRuleGroup.getPrimaryKey());
@@ -161,6 +163,9 @@ public class MDRRuleGroupPersistenceTest {
 			newMDRRuleGroup.getName());
 		Assert.assertEquals(existingMDRRuleGroup.getDescription(),
 			newMDRRuleGroup.getDescription());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRuleGroup.getLastPublishDate()),
+			Time.getShortTimestamp(newMDRRuleGroup.getLastPublishDate()));
 	}
 
 	@Test
@@ -234,7 +239,8 @@ public class MDRRuleGroupPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("MDRRuleGroup", "uuid",
 			true, "ruleGroupId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true);
+			"modifiedDate", true, "name", true, "description", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -469,6 +475,8 @@ public class MDRRuleGroupPersistenceTest {
 		mdrRuleGroup.setName(RandomTestUtil.randomString());
 
 		mdrRuleGroup.setDescription(RandomTestUtil.randomString());
+
+		mdrRuleGroup.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_mdrRuleGroups.add(_persistence.update(mdrRuleGroup));
 

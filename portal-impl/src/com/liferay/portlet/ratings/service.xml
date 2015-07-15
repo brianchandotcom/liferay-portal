@@ -22,6 +22,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="score" type="double" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

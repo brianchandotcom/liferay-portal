@@ -75,7 +75,6 @@ import java.util.Set;
  * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
-@Deprecated
 @ProviderType
 public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	implements CalEventPersistence {
@@ -5646,6 +5645,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		calEventImpl.setRemindBy(calEvent.getRemindBy());
 		calEventImpl.setFirstReminder(calEvent.getFirstReminder());
 		calEventImpl.setSecondReminder(calEvent.getSecondReminder());
+		calEventImpl.setLastPublishDate(calEvent.getLastPublishDate());
 
 		return calEventImpl;
 	}

@@ -511,6 +511,20 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the last publish date of this document library file version.
+	 *
+	 * @return the last publish date of this document library file version
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this document library file version.
+	 *
+	 * @param lastPublishDate the last publish date of this document library file version
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	 */
 	@Deprecated

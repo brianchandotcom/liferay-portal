@@ -65,7 +65,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -113,6 +113,8 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -222,6 +224,13 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 			wikiPageImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			wikiPageImpl.setLastPublishDate(null);
+		}
+		else {
+			wikiPageImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		wikiPageImpl.resetOriginalValues();
 
 		return wikiPageImpl;
@@ -252,6 +261,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -339,6 +349,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -364,4 +375,5 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

@@ -44,6 +44,7 @@ public class DDMContentSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setData(model.getData());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -184,6 +185,14 @@ public class DDMContentSoap implements Serializable {
 		_data = data;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _contentId;
 	private long _groupId;
@@ -195,4 +204,5 @@ public class DDMContentSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private String _data;
+	private Date _lastPublishDate;
 }

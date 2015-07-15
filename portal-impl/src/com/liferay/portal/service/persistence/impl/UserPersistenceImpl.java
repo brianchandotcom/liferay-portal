@@ -7602,6 +7602,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		userImpl.setAgreedToTermsOfUse(user.isAgreedToTermsOfUse());
 		userImpl.setEmailAddressVerified(user.isEmailAddressVerified());
 		userImpl.setStatus(user.getStatus());
+		userImpl.setLastPublishDate(user.getLastPublishDate());
 
 		return userImpl;
 	}

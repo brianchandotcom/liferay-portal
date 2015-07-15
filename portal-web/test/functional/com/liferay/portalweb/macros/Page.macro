@@ -497,7 +497,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertClick" locator1="Myaccount#NAVIGATION_MY" value1="${portletName}" />
+		<execute function="AssertClick" locator1="MyAccount#NAVIGATION_PRODUCTIVITY_CENTER" value1="${portletName}" />
 	</command>
 
 	<command name="gotoMyDashboard">

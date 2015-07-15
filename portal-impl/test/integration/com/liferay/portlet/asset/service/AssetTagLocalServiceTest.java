@@ -27,11 +27,14 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetTagStats;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -39,6 +42,7 @@ import org.junit.Test;
 
 /**
  * @author Michael C. Han
+ * @author Manuel de la Peña
  */
 @Sync
 public class AssetTagLocalServiceTest {
@@ -85,6 +89,13 @@ public class AssetTagLocalServiceTest {
 		IndexerRegistryUtil.register(testAssetIndexer);
 
 		AssetTagLocalServiceUtil.deleteTag(assetTag);
+
+		long classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
+
+		AssetTagStats tagStats = AssetTagStatsLocalServiceUtil.getTagStats(
+			assetTag.getTagId(), classNameId);
+
+		Assert.assertEquals(0, tagStats.getAssetCount());
 	}
 
 	private Indexer<BlogsEntry> _blogsEntryIndexer;

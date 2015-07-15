@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.ratings.page.ratings.web.constants;
 
-<%@ include file="/html/portlet/page_ratings/init-ext.jsp" %>
+/**
+ * @author Roberto Díaz
+ */
+public class PageRatingsPortletKeys {
+
+	public static final String PAGE_RATINGS =
+		"com_liferay_ratings_page_ratings_web_portlet_PageRatingsPortlet";
+
+}

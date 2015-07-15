@@ -14,9 +14,15 @@
  */
 --%>
 
-<%@ include file="/html/portlet/page_ratings/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<liferay-ui:ratings
-	className="<%= Layout.class.getName() %>"
-	classPK="<%= layout.getPlid() %>"
-/>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.portal.model.Layout" %>
+
+<portlet:defineObjects />
+
+<liferay-theme:defineObjects/>
+
+<%@ include file="/init-ext.jsp" %>

@@ -40,12 +40,12 @@ import org.osgi.service.component.annotations.Component;
 public class SafeFileNameStoreWrapper implements StoreWrapper {
 
 	public Store wrap(Store store) {
-		return new SafeFileNameStoreProxyImpl(store);
+		return new SafeFileNameStore(store);
 	}
 
-	private static final class SafeFileNameStoreProxyImpl implements Store {
+	private static final class SafeFileNameStore implements Store {
 
-		public SafeFileNameStoreProxyImpl(Store store) {
+		public SafeFileNameStore(Store store) {
 			_store = store;
 		}
 

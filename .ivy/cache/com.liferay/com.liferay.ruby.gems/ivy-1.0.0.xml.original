@@ -29,5 +29,5 @@
 		<developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
 		<url>http://github.com/liferay/liferay-portal</url>
 	</scm>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 </project>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.servicebuilder;
+package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.sourceformatter.JavaImportsFormatter;
+import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.xml.SAXReaderFactory;
 
 import com.thoughtworks.qdox.model.AbstractBaseJavaEntity;

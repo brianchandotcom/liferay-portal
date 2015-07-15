@@ -39,7 +39,7 @@ import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.sourceformatter.JavaImportsFormatter;
+import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.Dom4jUtil;
 import com.liferay.util.xml.XMLSafeReader;

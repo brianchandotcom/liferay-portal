@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
+import com.liferay.portal.tools.ServiceBuilder;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.ant.Java2WsddTask;
 import com.liferay.util.xml.XMLSafeReader;

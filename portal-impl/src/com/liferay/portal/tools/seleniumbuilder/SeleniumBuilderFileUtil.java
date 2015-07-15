@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
+import com.liferay.portal.tools.ServiceBuilder;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

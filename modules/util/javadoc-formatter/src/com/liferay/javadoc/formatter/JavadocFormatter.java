@@ -1259,8 +1259,14 @@ public class JavadocFormatter {
 			return tuple;
 		}
 
+		File metaInfDir = new File(srcDirName, "META-INF");
+
+		if (!metaInfDir.exists()) {
+			metaInfDir.mkdir();
+		}
+
 		File javadocsXmlFile = new File(
-			srcDirName, "META-INF/" + _outputFilePrefix + "-all.xml");
+			metaInfDir, _outputFilePrefix + "-all.xml");
 
 		String javadocsXmlContent = null;
 

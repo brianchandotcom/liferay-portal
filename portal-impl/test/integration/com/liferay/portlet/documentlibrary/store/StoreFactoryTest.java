@@ -40,11 +40,11 @@ public class StoreFactoryTest {
 	public void testGetStoreInstance() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
-		Store testStore = storeFactory.getStoreInstance("test");
+		Store store = storeFactory.getStoreInstance("test");
 
-		Assert.assertNotNull(testStore);
+		Assert.assertNotNull(store);
 
-		String[] fileNames = testStore.getFileNames(0, 0);
+		String[] fileNames = store.getFileNames(0, 0);
 
 		Assert.assertEquals(1, fileNames.length);
 		Assert.assertEquals("TestStore", fileNames[0]);

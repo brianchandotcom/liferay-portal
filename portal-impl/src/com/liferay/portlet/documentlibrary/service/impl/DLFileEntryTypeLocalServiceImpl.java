@@ -46,13 +46,13 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureLink;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureLinkManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
@@ -83,7 +83,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLFileEntryType.class);
 
 		for (long ddmStructureId : ddmStructureIds) {
-			ddmStructureLinkLocalService.addStructureLink(
+			DDMStructureLinkManagerUtil.addStructureLink(
 				classNameId, fileEntryTypeId, ddmStructureId);
 		}
 	}
@@ -311,8 +311,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLFileEntryType.class);
 
 		List<DDMStructureLink> ddmStructureLinks =
-			ddmStructureLinkLocalService.getClassNameStructureLinks(
-				classNameId);
+			DDMStructureLinkManagerUtil.getClassNameStructureLinks(classNameId);
 
 		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
 			if (ddmStructureId != ddmStructureLink.getStructureId()) {
@@ -629,7 +628,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLFileEntryType.class);
 
 		for (long ddmStructureId : ddmStructureIds) {
-			ddmStructureLinkLocalService.deleteStructureLink(
+			DDMStructureLinkManagerUtil.deleteStructureLink(
 				classNameId, fileEntryTypeId, ddmStructureId);
 		}
 	}
@@ -659,7 +658,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		Set<Long> existingDDMStructureLinkStructureIds = new HashSet<>();
 
 		List<DDMStructureLink> structureLinks =
-			ddmStructureLinkLocalService.getStructureLinks(
+			DDMStructureLinkManagerUtil.getStructureLinks(
 				classNameId, fileEntryTypeId);
 
 		for (DDMStructureLink structureLink : structureLinks) {
@@ -813,9 +812,6 @@ public class DLFileEntryTypeLocalServiceImpl
 			}
 		}
 	}
-
-	@BeanReference(type = DDMStructureLinkLocalService.class)
-	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
 	@BeanReference(type = DDMStructureLocalService.class)
 	protected DDMStructureLocalService ddmStructureLocalService;

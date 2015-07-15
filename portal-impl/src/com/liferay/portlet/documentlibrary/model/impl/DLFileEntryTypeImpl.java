@@ -23,9 +23,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureLink;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureLinkManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.ArrayList;
@@ -41,9 +41,9 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 	@Override
 	public List<DDMStructure> getDDMStructures() {
 		List<DDMStructureLink> ddmStructureLinks =
-			DDMStructureLinkLocalServiceUtil.getStructureLinks(
-				PortalUtil.getClassNameId(DLFileEntryType.class),
-				getFileEntryTypeId());
+				DDMStructureLinkManagerUtil.getStructureLinks(
+						PortalUtil.getClassNameId(DLFileEntryType.class),
+						getFileEntryTypeId());
 
 		return getDDMStructures(ddmStructureLinks);
 	}

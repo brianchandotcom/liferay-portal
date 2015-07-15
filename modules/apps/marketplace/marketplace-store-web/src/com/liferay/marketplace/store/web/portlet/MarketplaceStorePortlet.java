@@ -19,6 +19,7 @@ import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.AppServiceUtil;
 import com.liferay.marketplace.store.web.configuration.MarketplaceStoreWebConfigurationValues;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
+import com.liferay.marketplace.store.web.oauth.util.OAuthUtil;
 import com.liferay.marketplace.store.web.util.MarketplaceLicenseUtil;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -50,6 +51,7 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -446,10 +448,17 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		return url;
 	}
 
+	@Override
 	protected String getRemotePortletURL() {
 		return
 			MarketplaceStoreWebConfigurationValues.MARKETPLACE_URL +
 				"/osb-portlet/mp_server";
+	}
+
+	@Override
+	@Reference
+	protected void setOAuthUtil(OAuthUtil oauthUtil) {
+		super.setOAuthUtil(oauthUtil);
 	}
 
 	private static final String _OSB_PORTLET_ID = "12_WAR_osbportlet";

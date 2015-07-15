@@ -83,10 +83,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		setRequestParameters(renderRequest, renderResponse, oAuthRequest);
 
-		Token token = OAuthUtil.getAccessToken(themeDisplay.getUser());
+		Token token = _oauthUtil.getAccessToken(themeDisplay.getUser());
 
 		if (token != null) {
-			OAuthService oAuthService = OAuthUtil.getOAuthService();
+			OAuthService oAuthService = _oauthUtil.getOAuthService();
 
 			oAuthService.signRequest(token, oAuthRequest);
 		}
@@ -98,6 +98,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		PrintWriter printWriter = renderResponse.getWriter();
 
 		printWriter.write(response.getBody());
+	}
+
+	protected void setOAuthUtil(OAuthUtil oauthUtil) {
+		_oauthUtil = oauthUtil;
 	}
 
 	protected void setRequestParameters(
@@ -124,5 +128,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			oAuthRequest.addQuerystringParameter(entry.getKey(), values[0]);
 		}
 	}
+
+	private OAuthUtil _oauthUtil;
 
 }

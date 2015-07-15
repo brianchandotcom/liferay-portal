@@ -118,8 +118,8 @@ public class TestStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel, InputStream is) {
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		InputStream is) {
 	}
 
 }

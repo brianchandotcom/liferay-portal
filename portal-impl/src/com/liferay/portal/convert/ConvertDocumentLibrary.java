@@ -141,7 +141,7 @@ public class ConvertDocumentLibrary
 	}
 
 	@Override
-	public void validate() throws FileSystemStoreRootDirException {
+	public void validate() {
 		String sourceStoreClassName = getSourceStoreClassName();
 
 		if (!sourceStoreClassName.endsWith(_FILE_SYSTEM_STORE_SUFFIX)) {

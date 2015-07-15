@@ -90,6 +90,11 @@ public class AssetTagLocalServiceTest {
 
 		AssetTagLocalServiceUtil.deleteTag(assetTag);
 
+		AssetTag fetchAssetTag = AssetTagLocalServiceUtil.fetchAssetTag(
+			assetTag.getTagId());
+
+		Assert.assertNull(fetchAssetTag);
+
 		long classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
 
 		AssetTagStats tagStats = AssetTagStatsLocalServiceUtil.getTagStats(

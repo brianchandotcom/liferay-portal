@@ -835,20 +835,29 @@ public class JavadocFormatter {
 			return;
 		}
 
-		String content = ServiceBuilder.stripFullyQualifiedClassNames(
-			originalContent, file);
+		String newContent = ServiceBuilder.stripFullyQualifiedClassNames(
+			originalContent);
 
 		JavaClass javaClass = _getJavaClass(
-			fileName, new UnsyncStringReader(content));
+			fileName, new UnsyncStringReader(newContent));
 
-		String javadocLessContent = _removeJavadocFromJava(javaClass, content);
+		String javadocLessContent = _removeJavadocFromJava(
+			javaClass, newContent);
 
 		Document document = _getJavadocDocument(javaClass);
 
 		_updateJavadocsXmlFile(fileName, javaClass, document);
 
-		_updateJavaFromDocument(
-			fileName, content, javadocLessContent, document);
+		newContent = _getUpdateJavaFromDocument(
+			fileName, javadocLessContent, document);
+
+		if (!originalContent.equals(newContent)) {
+			_write(file, newContent);
+
+			_modifiedFileNames.add(file.getAbsolutePath());
+
+			System.out.println("Writing " + file);
+		}
 	}
 
 	private String _formatCDATA(String cdata) {
@@ -1852,9 +1861,8 @@ public class JavadocFormatter {
 		javadocsXmlRootElement.add(javaClassDocument.getRootElement());
 	}
 
-	private void _updateJavaFromDocument(
-			String fileName, String originalContent, String javadocLessContent,
-			Document document)
+	private String _getUpdateJavaFromDocument(
+			String fileName, String javadocLessContent, Document document)
 		throws Exception {
 
 		String[] lines = StringUtil.splitLines(javadocLessContent);
@@ -1970,17 +1978,7 @@ public class JavadocFormatter {
 
 		String formattedContent = sb.toString();
 
-		formattedContent = formattedContent.trim();
-
-		if (!originalContent.equals(formattedContent)) {
-			File file = new File(_inputDirName + fileName);
-
-			_write(file, formattedContent);
-
-			_modifiedFileNames.add(file.getAbsolutePath());
-
-			System.out.println("Writing " + file);
-		}
+		return formattedContent.trim();
 	}
 
 	private void _updateLanguageProperties(Document document, String className)

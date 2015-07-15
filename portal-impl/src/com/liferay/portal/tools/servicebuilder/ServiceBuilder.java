@@ -179,20 +179,11 @@ public class ServiceBuilder {
 	public static String stripFullyQualifiedClassNames(String content)
 		throws IOException {
 
-		return stripFullyQualifiedClassNames(content, null);
-	}
-
-	public static String stripFullyQualifiedClassNames(
-			String content, File file)
-		throws IOException {
-
 		String imports = JavaImportsFormatter.getImports(content);
 
 		if (Validator.isNull(imports)) {
 			return content;
 		}
-
-		boolean strippedPath = false;
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -237,14 +228,7 @@ public class ServiceBuilder {
 
 				content = StringUtil.replaceFirst(
 					content, importPackageAndClassName, importClassName, x);
-
-				strippedPath = true;
 			}
-		}
-
-		if (strippedPath && (file != null)) {
-			Files.write(
-				file.toPath(), content.getBytes(StandardCharsets.UTF_8));
 		}
 
 		return content;

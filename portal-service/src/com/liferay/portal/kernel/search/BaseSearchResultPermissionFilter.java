@@ -56,13 +56,19 @@ public abstract class BaseSearchResultPermissionFilter
 		if ((end == QueryUtil.ALL_POS) && (start == QueryUtil.ALL_POS)) {
 			Hits hits = getHits(searchContext);
 
-			filterHits(hits, searchContext);
+			if (!isGroupAdmin(searchContext)) {
+				filterHits(hits, searchContext);
+			}
 
 			return hits;
 		}
 
 		if ((start < 0) || (start > end)) {
 			return new HitsImpl();
+		}
+
+		if (isGroupAdmin(searchContext)) {
+			return getHits(searchContext);
 		}
 
 		int excludedDocsSize = 0;
@@ -136,6 +142,8 @@ public abstract class BaseSearchResultPermissionFilter
 
 	protected abstract Hits getHits(SearchContext searchContext)
 		throws SearchException;
+
+	protected abstract boolean isGroupAdmin(SearchContext searchContext);
 
 	protected void updateHits(
 		Hits hits, List<Document> documents, List<Float> scores, int start,

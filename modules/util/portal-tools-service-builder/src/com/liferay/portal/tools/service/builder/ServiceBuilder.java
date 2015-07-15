@@ -39,7 +39,6 @@ import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.Dom4jUtil;
@@ -56,12 +55,6 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.model.Type;
-
-import de.hunsicker.io.FileFormat;
-import de.hunsicker.jalopy.Jalopy;
-import de.hunsicker.jalopy.storage.Convention;
-import de.hunsicker.jalopy.storage.ConventionKeys;
-import de.hunsicker.jalopy.storage.Environment;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -555,7 +548,8 @@ public class ServiceBuilder {
 
 			if (Validator.isNotNull(_testDirName)) {
 				_testOutputPath =
-					_testDirName + "/" + StringUtil.replace(packagePath, ".", "/");
+					_testDirName + "/" +
+						StringUtil.replace(packagePath, ".", "/");
 			}
 
 			_packagePath = packagePath;
@@ -1841,7 +1835,8 @@ public class ServiceBuilder {
 				_serviceOutputPath + "/model/" + entity.getName() +
 					col.getMethodName() + "BlobModel.java");
 
-			ToolsUtil.writeFile(blobModelFile, content, _author, _modifiedFileNames);
+			ToolsUtil.writeFile(
+				blobModelFile, content, _author, _modifiedFileNames);
 		}
 	}
 
@@ -1904,7 +1899,8 @@ public class ServiceBuilder {
 
 				content = StringUtil.replace(content, "\r\n", "\n");
 
-				ToolsUtil.writeFileRaw(exceptionFile, content, _modifiedFileNames);
+				ToolsUtil.writeFileRaw(
+					exceptionFile, content, _modifiedFileNames);
 			}
 
 			if (exception.startsWith("NoSuch")) {
@@ -1917,7 +1913,8 @@ public class ServiceBuilder {
 						content, "kernel.exception.NoSuchModelException",
 						"NoSuchModelException");
 
-					ToolsUtil.writeFileRaw(exceptionFile, content, _modifiedFileNames);
+					ToolsUtil.writeFileRaw(
+						exceptionFile, content, _modifiedFileNames);
 				}
 			}
 		}
@@ -2040,7 +2037,8 @@ public class ServiceBuilder {
 			ToolsUtil.writeFileRaw(modelFile, content, _modifiedFileNames);
 		}
 		else {
-			ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
+			ToolsUtil.writeFile(
+				modelFile, content, _author, _modifiedFileNames);
 		}
 	}
 
@@ -2211,7 +2209,8 @@ public class ServiceBuilder {
 					newContent.substring(lastClass);
 		}
 
-		ToolsUtil.writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(
+			xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createModel(Entity entity) throws Exception {
@@ -2357,7 +2356,8 @@ public class ServiceBuilder {
 					newContent.substring(lastModel);
 		}
 
-		ToolsUtil.writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(
+			xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createModelImpl(Entity entity) throws Exception {
@@ -2711,7 +2711,8 @@ public class ServiceBuilder {
 			}
 		}
 
-		ToolsUtil.writeFileRaw(outputFile, _formatXml(newContent), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(
+			outputFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createService(Entity entity, int sessionType)
@@ -3201,7 +3202,8 @@ public class ServiceBuilder {
 					newContent.substring(lastSession);
 		}
 
-		ToolsUtil.writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(
+			xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createSQLIndexes() throws Exception {
@@ -3388,7 +3390,8 @@ public class ServiceBuilder {
 					sb.append(newCreateTableString);
 				}
 
-				ToolsUtil.writeFileRaw(sqlFile, sb.toString(), _modifiedFileNames);
+				ToolsUtil.writeFileRaw(
+					sqlFile, sb.toString(), _modifiedFileNames);
 			}
 		}
 	}
@@ -3587,7 +3590,8 @@ public class ServiceBuilder {
 					sb.append(newCreateTableString);
 				}
 
-				ToolsUtil.writeFileRaw(sqlFile, sb.toString(), _modifiedFileNames);
+				ToolsUtil.writeFileRaw(
+					sqlFile, sb.toString(), _modifiedFileNames);
 			}
 		}
 	}

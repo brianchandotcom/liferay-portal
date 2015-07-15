@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.xml.SAXReaderFactory;
 
 import de.hunsicker.io.FileFormat;
@@ -334,7 +333,8 @@ public class ToolsUtil {
 	}
 
 	public static void writeFile(
-			File file, String content, String author, Set<String> modifiedFileNames)
+			File file, String content, String author,
+			Set<String> modifiedFileNames)
 		throws IOException {
 
 		writeFile(file, content, author, null, modifiedFileNames);

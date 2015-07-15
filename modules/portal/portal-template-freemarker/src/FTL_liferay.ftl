@@ -83,6 +83,10 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry", portletProviderAction.VIEW)}
 </#macro>
 
+<#macro product_menu>
+	${theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", portletProviderAction.VIEW)}
+</#macro>
+
 <#macro quick_access
 	content_id
 >

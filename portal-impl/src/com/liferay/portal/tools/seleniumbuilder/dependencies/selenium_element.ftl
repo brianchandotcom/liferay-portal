@@ -24,8 +24,11 @@ liferaySelenium.${selenium}(
 	<#elseif seleniumElement.attributeValue("argument1")??>
 		<#assign argument1 = seleniumElement.attributeValue("argument1")>
 
-		<#if argument1?starts_with("${")>
-			${argument1?substring(2, argument1?length - 1)}
+		<#if argument1?contains("${") && argument1?contains("}")>
+			<#assign x = argument1?index_of("${")>
+			<#assign y = argument1?index_of("}")>
+
+			"${argument1?substring(0, x)}" + ${argument1?substring(x + 2, y)} + "${argument1?substring(y + 1)}"
 		<#else>
 			"${argument1}"
 		</#if>
@@ -39,8 +42,11 @@ liferaySelenium.${selenium}(
 	<#if seleniumElement.attributeValue("argument2")??>
 		<#assign argument2 = seleniumElement.attributeValue("argument2")>
 
-		<#if argument2?starts_with("${")>
-			${argument2?substring(2, argument2?length - 1)}
+		<#if argument2?contains("${") && argument2?contains("}")>
+			<#assign x = argument2?index_of("${")>
+			<#assign y = argument2?index_of("}")>
+
+			"${argument2?substring(0, x)}" + ${argument2?substring(x + 2, y)} + "${argument2?substring(y + 1)}"
 		<#else>
 			"${argument2}"
 		</#if>

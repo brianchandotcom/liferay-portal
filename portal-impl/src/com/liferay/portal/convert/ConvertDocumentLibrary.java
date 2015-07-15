@@ -62,8 +62,7 @@ public class ConvertDocumentLibrary
 
 	@Override
 	public String getConfigurationErrorMessage() {
-		return "there-are-no-valid-configuration-for-any-store-please-" +
-			"configure-a-store-using-configuration-admin";
+		return "there-are-no-stores-configured";
 	}
 
 	@Override

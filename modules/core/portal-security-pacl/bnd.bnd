@@ -6,4 +6,4 @@ Include-Resource:\
 	@lib/jsqlparser.jar
 Private-Package: com.liferay.portal.security.pacl.*
 
--baseline: *;version="6.2.0"
+-baseline: portal-pacl;version="6.2.0"

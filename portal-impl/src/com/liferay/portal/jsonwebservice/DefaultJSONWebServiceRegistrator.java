@@ -61,6 +61,14 @@ public class DefaultJSONWebServiceRegistrator
 			_jsonWebServiceNaming);
 	}
 
+	public DefaultJSONWebServiceRegistrator(
+		JSONWebServiceScannerStrategy jsonWebServiceScannerStrategy) {
+
+		this(
+			JSONWebServiceActionsManagerUtil.getJSONWebServiceNaming(),
+			jsonWebServiceScannerStrategy);
+	}
+
 	public void processAllBeans(
 		String contextName, String contextPath, BeanLocator beanLocator) {
 

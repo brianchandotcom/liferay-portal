@@ -670,6 +670,19 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.dynamic.data.lists.web"
 		},
 
+		// Export-Import
+
+		new String[] {
+			"staging.draft.export.import.configuration.check.interval",
+			"draft.export.import.configuration.check.interval",
+			"com.liferay.exportimport.web"
+		},
+		new String[] {
+			"staging.draft.export.import.configuration.clean.up.count",
+			"draft.export.import.configuration.clean.up.count",
+			"com.liferay.exportimport.web"
+		},
+
 		// Facebook Connect
 
 		new String[] {

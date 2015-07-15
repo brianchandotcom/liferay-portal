@@ -14,6 +14,7 @@
 
 package com.liferay.portal.messaging.internal.jmx;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -21,10 +22,9 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.management.DynamicMBean;
 import javax.management.MBeanServer;
@@ -77,7 +77,7 @@ public class MessageBusManager
 	}
 
 	@Activate
-	protected synchronized void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		for (Destination destination : _queuedDestinations) {
@@ -93,18 +93,11 @@ public class MessageBusManager
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(destination.name=*)"
 	)
-	protected synchronized void addDestination(Destination destination) {
+	protected void addDestination(Destination destination) {
 		if (_bundleContext == null) {
 			_queuedDestinations.add(destination);
 
 			return;
-		}
-
-		ServiceRegistration<DynamicMBean> serviceRegistration =
-			_mbeanServiceRegistrations.remove(destination.getName());
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
 		}
 
 		try {
@@ -120,9 +113,10 @@ public class MessageBusManager
 				"jmx.objectname.cache.key",
 				destinationStatisticsManager.getObjectNameCacheKey());
 
-			serviceRegistration = _bundleContext.registerService(
-				DynamicMBean.class, destinationStatisticsManager,
-				mBeanProperties);
+			ServiceRegistration<DynamicMBean> serviceRegistration =
+				_bundleContext.registerService(
+					DynamicMBean.class, destinationStatisticsManager,
+					mBeanProperties);
 
 			_mbeanServiceRegistrations.put(
 				destination.getName(), serviceRegistration);
@@ -136,16 +130,10 @@ public class MessageBusManager
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<DynamicMBean> serviceRegistration :
-				_mbeanServiceRegistrations.values()) {
-
-			serviceRegistration.unregister();
-		}
-
 		_mbeanServiceRegistrations.clear();
 	}
 
-	protected synchronized void removeDestination(Destination destination) {
+	protected void removeDestination(Destination destination) {
 		ServiceRegistration<DynamicMBean> mbeanServiceRegistration =
 			_mbeanServiceRegistrations.remove(destination.getName());
 
@@ -168,8 +156,9 @@ public class MessageBusManager
 
 	private BundleContext _bundleContext;
 	private final Map<String, ServiceRegistration<DynamicMBean>>
-		_mbeanServiceRegistrations = new HashMap<>();
+		_mbeanServiceRegistrations = new ConcurrentHashMap<>();
 	private MessageBus _messageBus;
-	private final Set<Destination> _queuedDestinations = new HashSet<>();
+	private final Set<Destination> _queuedDestinations =
+		new ConcurrentHashSet<>();
 
 }

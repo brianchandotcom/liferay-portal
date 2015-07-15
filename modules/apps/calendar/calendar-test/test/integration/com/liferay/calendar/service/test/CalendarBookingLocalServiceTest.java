@@ -14,21 +14,29 @@
 
 package com.liferay.calendar.service.test;
 
+import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.recurrence.Frequency;
+import com.liferay.calendar.recurrence.PositionalWeekday;
+import com.liferay.calendar.recurrence.Recurrence;
+import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.util.Collections;
 
 import org.jboss.arquillian.junit.Arquillian;
 
@@ -42,7 +50,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Adam Brandizzi
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class CalendarBookingLocalServiceTest {
 
@@ -56,6 +63,7 @@ public class CalendarBookingLocalServiceTest {
 		UserLocalServiceUtil.deleteUser(_user);
 	}
 
+	@Ignore
 	@Test
 	public void testAddCalendarBookingWorkflowActionPublish()
 		throws PortalException {
@@ -86,6 +94,7 @@ public class CalendarBookingLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, calendarBooking.getStatus());
 	}
 
+	@Ignore
 	@Test
 	public void testAddCalendarBookingWorkflowActionSaveDraft()
 		throws PortalException {
@@ -116,6 +125,44 @@ public class CalendarBookingLocalServiceTest {
 			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
 	}
 
+	@Test(expected = CalendarBookingRecurrenceException.class)
+	public void testStartDateBeforeUntilDateThrowsRecurrenceException()
+		throws PortalException {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startTime = DateUtil.newTime();
+
+		java.util.Calendar untilJCalendar = CalendarFactoryUtil.getCalendar(
+			startTime);
+
+		untilJCalendar.add(java.util.Calendar.DAY_OF_MONTH, -2);
+
+		Recurrence recurrence = new Recurrence();
+
+		recurrence.setFrequency(Frequency.DAILY);
+		recurrence.setUntilJCalendar(untilJCalendar);
+		recurrence.setPositionalWeekdays(
+			Collections.<PositionalWeekday>emptyList());
+
+		CalendarBookingLocalServiceUtil.addCalendarBooking(
+			_user.getUserId(), calendar.getCalendarId(), new long[0],
+			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false,
+			RecurrenceSerializer.serialize(recurrence), 0, null, 0, null,
+			serviceContext);
+	}
+
+	@Ignore
 	@Test
 	public void testUpdateCalendarBookingWorkflowActionPublish()
 		throws PortalException {
@@ -157,6 +204,7 @@ public class CalendarBookingLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, calendarBooking.getStatus());
 	}
 
+	@Ignore
 	@Test
 	public void testUpdateCalendarBookingWorkflowActionSaveDraft()
 		throws PortalException {

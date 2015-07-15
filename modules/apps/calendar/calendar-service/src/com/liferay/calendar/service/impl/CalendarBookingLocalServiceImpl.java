@@ -15,6 +15,7 @@
 package com.liferay.calendar.service.impl;
 
 import com.liferay.calendar.exception.CalendarBookingDurationException;
+import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
 import com.liferay.calendar.exception.CalendarBookingTitleException;
 import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
@@ -138,7 +139,7 @@ public class CalendarBookingLocalServiceImpl
 
 		Date now = new Date();
 
-		validate(titleMap, startTimeJCalendar, endTimeJCalendar);
+		validate(titleMap, startTimeJCalendar, endTimeJCalendar, recurrence);
 
 		CalendarBooking calendarBooking = calendarBookingPersistence.create(
 			calendarBookingId);
@@ -787,7 +788,7 @@ public class CalendarBookingLocalServiceImpl
 			firstReminder = originalSecondReminder;
 		}
 
-		validate(titleMap, startTimeJCalendar, endTimeJCalendar);
+		validate(titleMap, startTimeJCalendar, endTimeJCalendar, recurrence);
 
 		calendarBooking.setGroupId(calendar.getGroupId());
 		calendarBooking.setModifiedDate(serviceContext.getModifiedDate(null));
@@ -1185,7 +1186,7 @@ public class CalendarBookingLocalServiceImpl
 
 	protected void validate(
 			Map<Locale, String> titleMap, java.util.Calendar startTimeJCalendar,
-			java.util.Calendar endTimeJCalendar)
+			java.util.Calendar endTimeJCalendar, String recurrence)
 		throws PortalException {
 
 		if (Validator.isNull(titleMap) || titleMap.isEmpty()) {
@@ -1194,6 +1195,18 @@ public class CalendarBookingLocalServiceImpl
 
 		if (startTimeJCalendar.after(endTimeJCalendar)) {
 			throw new CalendarBookingDurationException();
+		}
+
+		if (Validator.isNull(recurrence)) {
+			return;
+		}
+
+		Recurrence recurrenceObj = RecurrenceSerializer.deserialize(recurrence);
+
+		if ((recurrenceObj.getUntilJCalendar() != null) &&
+			startTimeJCalendar.after(recurrenceObj.getUntilJCalendar())) {
+
+			throw new CalendarBookingRecurrenceException();
 		}
 	}
 

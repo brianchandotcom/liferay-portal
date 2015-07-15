@@ -17,6 +17,7 @@ package com.liferay.calendar.web.portlet;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.constants.CalendarWebKeys;
 import com.liferay.calendar.exception.CalendarBookingDurationException;
+import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
 import com.liferay.calendar.exception.CalendarNameException;
 import com.liferay.calendar.exception.CalendarResourceCodeException;
 import com.liferay.calendar.exception.CalendarResourceNameException;
@@ -877,6 +878,7 @@ public class CalendarPortlet extends MVCPortlet {
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof CalendarBookingDurationException ||
+			cause instanceof CalendarBookingRecurrenceException ||
 			cause instanceof CalendarNameException ||
 			cause instanceof CalendarResourceCodeException ||
 			cause instanceof CalendarResourceNameException ||

@@ -79,6 +79,11 @@ public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public String getIcon() {
+		return "icon-check";
+	}
+
+	@Override
 	public String getName() {
 		return "checkbox";
 	}

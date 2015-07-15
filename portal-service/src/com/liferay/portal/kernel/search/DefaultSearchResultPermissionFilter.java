@@ -94,6 +94,27 @@ public class DefaultSearchResultPermissionFilter
 		return _baseIndexer.doSearch(searchContext);
 	}
 
+	@Override
+	protected boolean isGroupAdmin(SearchContext searchContext) {
+		if (_permissionChecker.isCompanyAdmin(searchContext.getCompanyId())) {
+			return true;
+		}
+
+		long[] groupIds = searchContext.getGroupIds();
+
+		if (groupIds == null) {
+			return false;
+		}
+
+		for (long groupId : groupIds) {
+			if (!_permissionChecker.isGroupAdmin(groupId)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private final BaseIndexer<?> _baseIndexer;
 	private final PermissionChecker _permissionChecker;
 

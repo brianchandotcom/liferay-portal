@@ -1,0 +1,20 @@
+Bundle-Name: Liferay Portal Store CMIS
+Bundle-SymbolicName: com.liferay.portal.store.cmis
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.sun.msv.*,\
+	!com.sun.xml.*,\
+	!org.apache.cxf.*,\
+	!org.apache.http.*,\
+	!org.json.simple.*,\
+	!org.relaxng.datatype.*,\
+	*
+Include-Resource:\
+	classes,\
+	@lib/chemistry-opencmis-client-api.jar,\
+	@lib/chemistry-opencmis-client-bindings.jar,\
+	@lib/chemistry-opencmis-client-impl.jar,\
+	@lib/chemistry-opencmis-commons-api.jar,\
+	@lib/chemistry-opencmis-commons-impl.jar,\
+	@lib/stax2-api.jar,\
+	@lib/woodstox-core-asl.jar

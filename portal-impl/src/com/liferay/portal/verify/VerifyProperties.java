@@ -99,7 +99,9 @@ public class VerifyProperties extends VerifyProcess {
 
 		// Document library
 
-		StoreFactory.checkProperties();
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		storeFactory.checkProperties();
 
 		// LDAP
 
@@ -650,6 +652,32 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.cluster"
 		},
 
+		// CMIS Repository
+
+		new String[] {
+			"dl.repository.cmis.delete.depth", "delete.depth",
+			"com.liferay.document.library.repository.cmis"
+		},
+
+		// CMIS Store
+
+		new String[] {
+			"dl.store.cmis.credentials.username", "credentials.username",
+			"com.liferay.portal.store.cmis"
+		},
+		new String[] {
+			"dl.store.cmis.credentials.password", "credentials.password",
+			"com.liferay.portal.store.cmis"
+		},
+		new String[] {
+			"dl.store.cmis.repository.url", "repository.url",
+			"com.liferay.portal.store.cmis"
+		},
+		new String[] {
+			"dl.store.cmis.system.root.dir", "system.root.dir",
+			"com.liferay.portal.store.cmis"
+		},
+
 		// Currency Converter
 
 		new String[] {
@@ -706,6 +734,17 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.security.sso.facebook.connect"
 		},
 
+		// FileSystem Store
+
+		new String[] {
+			"dl.store.advanced.file.system.root.dir", "root.dir",
+			"com.liferay.portal.store.filesystem"
+		},
+		new String[] {
+			"dl.store.file.system.root.dir", "root.dir",
+			"com.liferay.portal.store.filesystem"
+		},
+
 		// FreeMarker Engine
 
 		new String[] {
@@ -755,6 +794,56 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"iframe.hidden-variables", "hidden.variables",
 			"com.liferay.iframe.web"
+		},
+
+		// JCR Store
+
+		new String[] {
+			"dl.store.jcr.fetch.delay", "fetch.delay",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"dl.store.jcr.fetch.max.failures", "fetch.max.failures",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"dl.store.jcr.move.version.labels", "move.version.labels",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.initialize.on.startup", "initialize.on.startup",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.config.file.path", "jackrabbit.config.file.path",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.credentials.password",
+			"jackrabbit.credentials.password", "com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.credentials.username",
+			"jackrabbit.credentials.username", "com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.repository.home", "repository.home",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.repository.root", "repository.root",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.node.documentlibrary", "node.documentlibrary",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.workspace.name", "workspace.name",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.wrap.session", "wrap.session", "com.liferay.portal.store.jcr"
 		},
 
 		// Journal
@@ -1360,6 +1449,45 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"rss.display.templates.config", "display.templates.config",
 			"com.liferay.rss.web"
+		},
+
+		// S3 Store
+
+		new String[] {
+			"dl.store.s3.access.key", "access.key",
+			"com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.bucket.name", "bucket.name",
+			"com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.jets3t[httpclient.max-connections]",
+			"http.client.max.connections", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.jets3t[s3service.default-bucket-location]",
+			"s3service.default.bucket.location", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.jets3t[s3service.default-storage-class]",
+			"s3service.default.storage.class", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.jets3t[s3service.s3-endpoint]",
+			"s3service.s3.endpoint", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.secret.key", "secret.key",
+			"com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.temp.dir.clean.up.expunge",
+			"temp.dir.clean.up.expunge", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.temp.dir.clean.up.frequency",
+			"temp.dir.clean.up.frequency", "com.liferay.portal.store.s3"
 		},
 
 		// Scripting

@@ -412,11 +412,6 @@
 				<classpath mode="compile">lib/portal/im4java.jar</classpath>
 				<classpath mode="compile">lib/portal/isoparser.jar</classpath>
 				<classpath mode="compile">lib/portal/jabsorb.jar</classpath>
-				<classpath mode="compile">lib/portal/jackrabbit-api.jar</classpath>
-				<classpath mode="compile">lib/portal/jackrabbit-core.jar</classpath>
-				<classpath mode="compile">lib/portal/jackrabbit-jcr-commons.jar</classpath>
-				<classpath mode="compile">lib/portal/jackrabbit-spi-commons.jar</classpath>
-				<classpath mode="compile">lib/portal/jackrabbit-spi.jar</classpath>
 				<classpath mode="compile">lib/portal/jai_codec.jar</classpath>
 				<classpath mode="compile">lib/portal/jai_core.jar</classpath>
 				<classpath mode="compile">lib/portal/jakarta-regexp.jar</classpath>
@@ -431,12 +426,10 @@
 				<classpath mode="compile">lib/portal/jcifs.jar</classpath>
 				<classpath mode="compile">lib/portal/jcommon.jar</classpath>
 				<classpath mode="compile">lib/portal/jcl-over-slf4j.jar</classpath>
-				<classpath mode="compile">lib/portal/jcr.jar</classpath>
 				<classpath mode="compile">lib/portal/jdom.jar</classpath>
 				<classpath mode="compile">lib/portal/jempbox.jar</classpath>
 				<classpath mode="compile">lib/portal/jena.jar</classpath>
 				<classpath mode="compile">lib/portal/jericho-html.jar</classpath>
-				<classpath mode="compile">lib/portal/jets3t.jar</classpath>
 				<classpath mode="compile">lib/portal/jfreechart.jar</classpath>
 				<classpath mode="compile">lib/portal/jhighlight.jar</classpath>
 				<classpath mode="compile">lib/portal/jhlabs-filters.jar</classpath>

@@ -14,6 +14,7 @@ Export-Package:\
 	com.liferay.portal.verify.test,\
 	com.liferay.portlet.asset.search.test,\
 	com.liferay.portlet.asset.util.test,\
+	com.liferay.portlet.documentlibrary.store.test,\
 	com.liferay.portlet.dynamicdatamapping.service.test,\
 	com.liferay.portlet.notifications.test,\
 	com.liferay.portlet.social.test,\

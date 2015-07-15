@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Store Safe File Name Wrapper
+Bundle-SymbolicName: com.liferay.portal.store.safefilenamewrapper
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes

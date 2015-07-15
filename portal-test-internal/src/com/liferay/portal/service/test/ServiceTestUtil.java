@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.test;
 
-import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
@@ -120,10 +119,6 @@ public class ServiceTestUtil {
 
 		return RoleTestUtil.addRole(
 			roleName, roleType, resourceName, scope, primKey, actionId);
-	}
-
-	public static void destroyServices() {
-		_deleteDirectories();
 	}
 
 	public static void initPermissions() {
@@ -285,23 +280,9 @@ public class ServiceTestUtil {
 	}
 
 	public static void initServices() {
-
-		// JCR
-
-		try {
-			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
 		// Thread locals
 
 		_setThreadLocals();
-
-		// Directories
-
-		_deleteDirectories();
 
 		// Search engine
 
@@ -370,13 +351,6 @@ public class ServiceTestUtil {
 					modelName, modelActions);
 			}
 		}
-	}
-
-	private static void _deleteDirectories() {
-		FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
-
-		FileUtil.deltree(
-			PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
 	}
 
 	private static void _replaceWithSynchronousDestination(String name) {

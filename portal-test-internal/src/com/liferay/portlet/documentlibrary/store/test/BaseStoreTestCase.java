@@ -25,6 +25,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
 import com.liferay.portlet.documentlibrary.store.Store;
+import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -50,7 +51,9 @@ public abstract class BaseStoreTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		store = getStore();
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		store = storeFactory.getStoreInstance(getStoreType());
 
 		companyId = RandomTestUtil.nextLong();
 		repositoryId = RandomTestUtil.nextLong();
@@ -725,7 +728,7 @@ public abstract class BaseStoreTestCase {
 		return file;
 	}
 
-	protected abstract Store getStore();
+	protected abstract String getStoreType();
 
 	protected long companyId;
 	protected long repositoryId;

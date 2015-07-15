@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil;
@@ -58,6 +59,10 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 		DiscussionStagingHandler discussionStagingHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
 
+		if (discussionStagingHandler == null) {
+			return new StagedModelType[0];
+		}
+
 		StagedModelType stagedModelType = new StagedModelType(
 			discussionStagingHandler.getStagedModelClass());
 
@@ -68,6 +73,10 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 	public PortletDataHandlerControl[] getExportControls() {
 		DiscussionStagingHandler discussionStagingHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
+
+		if (discussionStagingHandler == null) {
+			return new PortletDataHandlerControl[0];
+		}
 
 		PortletDataHandlerBoolean portletDataHandlerBoolean =
 			new PortletDataHandlerBoolean(
@@ -106,6 +115,13 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
+
+		if (discussionStagingHandler == null) {
+			return StringPool.BLANK;
+		}
+
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		rootElement.addAttribute(
@@ -114,9 +130,6 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 		if (!portletDataContext.getBooleanParameter(NAMESPACE, "comments")) {
 			return getExportDataRootElementString(rootElement);
 		}
-
-		DiscussionStagingHandler discussionStagingHandler =
-			CommentManagerUtil.getDiscussionStagingHandler();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			discussionStagingHandler.getCommentExportActionableDynamicQuery(
@@ -148,6 +161,10 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 		DiscussionStagingHandler discussionStagingHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
 
+		if (discussionStagingHandler == null) {
+			return;
+		}
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			discussionStagingHandler.getCommentExportActionableDynamicQuery(
 				portletDataContext);
@@ -165,6 +182,10 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 		public Void call() throws PortalException {
 			DiscussionStagingHandler discussionStagingHandler =
 				CommentManagerUtil.getDiscussionStagingHandler();
+
+			if (discussionStagingHandler == null) {
+				return null;
+			}
 
 			_portletDataContext.importPortletPermissions(
 				discussionStagingHandler.getResourceName());

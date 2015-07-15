@@ -516,8 +516,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		DiscussionStagingHandler discussionStagingHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
 
-		discussionStagingHandler.exportReferenceDiscussions(
-			portletDataContext, stagedModel);
+		if (discussionStagingHandler != null) {
+			discussionStagingHandler.exportReferenceDiscussions(
+				portletDataContext, stagedModel);
+		}
 	}
 
 	protected void exportRatings(
@@ -682,8 +684,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		DiscussionStagingHandler discussionStagingDataHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
 
-		discussionStagingDataHandler.importReferenceDiscussions(
-			portletDataContext, stagedModel);
+		if (discussionStagingDataHandler != null) {
+			discussionStagingDataHandler.importReferenceDiscussions(
+				portletDataContext, stagedModel);
+		}
 	}
 
 	protected void importMissingGroupReference(
@@ -733,6 +737,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		DiscussionStagingHandler discussionStagingHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
 
+		String stagedModelClassName = null;
+
+		if (discussionStagingHandler != null) {
+			stagedModelClassName = discussionStagingHandler.getClassName();
+		}
+
 		List<Element> referenceElements = referencesElement.elements();
 
 		for (Element referenceElement : referenceElements) {
@@ -740,7 +750,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			if (className.equals(AssetCategory.class.getName()) ||
 				className.equals(RatingsEntry.class.getName()) ||
-				className.equals(discussionStagingHandler.getClassName())) {
+				((stagedModelClassName != null) &&
+				 className.equals(stagedModelClassName))) {
 
 				continue;
 			}

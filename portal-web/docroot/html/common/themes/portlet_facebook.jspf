@@ -18,7 +18,7 @@
 
 <fb:header><%= portletTitle %></fb:header>
 
-<link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getPortalURL() + "/html/css/main.css", "themeId=classic&colorSchemeId=01") %>" rel="stylesheet" type="text/css" />
+<link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getPortalURL() + "/main.css", "themeId=classic&colorSchemeId=01") %>" rel="stylesheet" type="text/css" />
 <link href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getPortalURL() + "/classic/css/portlet.css") %>" rel="stylesheet" type="text/css" />
 
 <%

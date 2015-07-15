@@ -43,8 +43,8 @@ uptodate.properties
 /*/*/*/*/test-results
 /*/*/*/*/tmp
 /*/*/*/*/*/favicon.ico
-/*/*/*/*/*/html/css/portal/aui_deprecated.css
-/*/*/*/*/*/html/css/portal/bootstrap.css
+/*/*/*/*/*/portal/aui_deprecated.css
+/*/*/*/*/*/portal/bootstrap.css
 /*/*/*/*/*/_unstyled/css/aui
 /*/*/*/*/*/_unstyled/images/aui
 /*/*/*/*/*/admin/css

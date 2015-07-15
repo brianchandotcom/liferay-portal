@@ -17,7 +17,7 @@ buildAlloyTheme {
 	}
 
 	from "../frontend-js-web/tmp/META-INF/resources/aui/aui_deprecated.css"
-	into "src/META-INF/resources/html/css/portal"
+	into "src/META-INF/resources/portal"
 }
 
 classes {

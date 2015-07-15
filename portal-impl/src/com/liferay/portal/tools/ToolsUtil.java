@@ -35,12 +35,15 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
-
-import org.apache.commons.io.FileUtils;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -204,19 +207,16 @@ public class ToolsUtil {
 		return content;
 	}
 
-	public static void writeFile(File file, String content) throws IOException {
-		writeFile(file, content, AUTHOR);
-	}
-
-	public static void writeFile(File file, String content, String author)
+	public static void writeFile(
+			File file, String content, Set<String> modifiedFileNames)
 		throws IOException {
 
-		writeFile(file, content, author, null);
+		writeFile(file, content, AUTHOR, modifiedFileNames);
 	}
 
 	public static void writeFile(
 			File file, String content, String author,
-			Map<String, Object> jalopySettings)
+			Map<String, Object> jalopySettings, Set<String> modifiedFileNames)
 		throws IOException {
 
 		String packagePath = _getPackagePath(file);
@@ -230,9 +230,9 @@ public class ToolsUtil {
 
 		content = stripFullyQualifiedClassNames(content);
 
-		File tempFile = new File("ServiceBuilder.temp");
+		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
 
-		FileUtils.write(tempFile, content);
+		_write(tempFile, content);
 
 		// Beautify
 
@@ -328,20 +328,28 @@ public class ToolsUtil {
 		newContent = newContent.substring(0, newContent.length() - 2) + "\n\n}";
 		*/
 
-		writeFileRaw(file, newContent);
+		writeFileRaw(file, newContent, modifiedFileNames);
 
 		tempFile.deleteOnExit();
 	}
 
-	public static void writeFileRaw(File file, String content)
+	public static void writeFile(
+			File file, String content, String author, Set<String> modifiedFileNames)
+		throws IOException {
+
+		writeFile(file, content, author, null, modifiedFileNames);
+	}
+
+	public static void writeFileRaw(
+			File file, String content, Set<String> modifiedFileNames)
 		throws IOException {
 
 		// Write file if and only if the file has changed
 
-		if (!file.exists() ||
-			!content.equals(FileUtils.readFileToString(file))) {
+		if (!file.exists() || !content.equals(_read(file))) {
+			_write(file, content);
 
-			FileUtils.write(file, content);
+			modifiedFileNames.add(file.getAbsolutePath());
 
 			System.out.println("Writing " + file);
 		}
@@ -423,6 +431,14 @@ public class ToolsUtil {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
+	private static String _read(File file) throws IOException {
+		String s = new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
 	private static URL _readJalopyXmlFromClassLoader() {
 		ClassLoader classLoader = ToolsUtil.class.getClassLoader();
 
@@ -435,5 +451,15 @@ public class ToolsUtil {
 
 		return url;
 	}
+
+	private static void _write(File file, String s) throws IOException {
+		Path path = file.toPath();
+
+		Files.createDirectories(path.getParent());
+
+		Files.write(path, s.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 
 }

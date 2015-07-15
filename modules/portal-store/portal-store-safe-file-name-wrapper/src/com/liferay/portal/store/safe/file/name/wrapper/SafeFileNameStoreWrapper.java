@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.store.safefilenamewrapper;
+package com.liferay.portal.store.safe.file.name.wrapper;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"store.type=com.liferay.portal.store.filesystem.FileSystemStore",
-		"store.type=com.liferay.portal.store.filesystem.AdvancedFileSystemStore"
+		"store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore",
+		"store.type=com.liferay.portal.store.file.system.FileSystemStore"
 	},
 	service = StoreWrapper.class
 )

@@ -84,7 +84,7 @@ public class ConvertDocumentLibrary
 
 		StringBundler sb = new StringBundler(hooks.length * 2 + 2);
 
-		Store store = storeFactory.getStoreInstance();
+		Store store = storeFactory.getStore();
 
 		if (store == null) {
 			return null;
@@ -159,15 +159,15 @@ public class ConvertDocumentLibrary
 	protected void doConvert() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
-		_sourceStore = storeFactory.getStoreInstance();
+		_sourceStore = storeFactory.getStore();
 
 		String targetStoreClassName = getTargetStoreClassName();
 
-		_targetStore = storeFactory.getStoreInstance(targetStoreClassName);
+		_targetStore = storeFactory.getStore(targetStoreClassName);
 
 		migratePortlets();
 
-		storeFactory.setStoreInstance(targetStoreClassName);
+		storeFactory.setStore(targetStoreClassName);
 
 		MaintenanceUtil.appendStatus(
 			"Please set " + PropsKeys.DL_STORE_IMPL +
@@ -188,7 +188,7 @@ public class ConvertDocumentLibrary
 	protected String getSourceStoreClassName() {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
-		Store sourceStore = storeFactory.getStoreInstance();
+		Store sourceStore = storeFactory.getStore();
 
 		return sourceStore.getClass().getName();
 	}

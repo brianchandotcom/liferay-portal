@@ -34,11 +34,11 @@ import java.util.Set;
 public class StoreFactory {
 
 	public static StoreFactory getInstance() {
-		if (_instance == null) {
-			_instance = new StoreFactory();
+		if (_storeFactory == null) {
+			_storeFactory = new StoreFactory();
 		}
 
-		return _instance;
+		return _storeFactory;
 	}
 
 	public void checkProperties() {
@@ -57,7 +57,7 @@ public class StoreFactory {
 		boolean found = false;
 
 		for (String key : _storeServiceTrackerMap.keySet()) {
-			Store store = getStoreInstance(key);
+			Store store = getStore(key);
 			
 			Class<?> clazz = store.getClass();
 
@@ -105,9 +105,9 @@ public class StoreFactory {
 		_storeWrapperServiceTrackerMap.close();
 	}
 
-	public Store getStoreInstance() {
+	public Store getStore() {
 		if (_store == null) {
-			setStoreInstance(PropsValues.DL_STORE_IMPL);
+			setStore(PropsValues.DL_STORE_IMPL);
 		}
 
 		if (_store == null) {
@@ -117,7 +117,7 @@ public class StoreFactory {
 		return _store;
 	}
 
-	public Store getStoreInstance(String key) {
+	public Store getStore(String key) {
 		Store store = _storeServiceTrackerMap.getService(key);
 
 		StoreWrapper storeWrapper = _storeWrapperServiceTrackerMap.getService(
@@ -136,7 +136,7 @@ public class StoreFactory {
 		return keySet.toArray(new String[keySet.size()]);
 	}
 
-	public void setStoreInstance(String key) {
+	public void setStore(String key) {
 		if (key == null) {
 			_store = null;
 
@@ -147,7 +147,7 @@ public class StoreFactory {
 			_log.debug("Set " + key);
 		}
 
-		_store = getStoreInstance(key);
+		_store = getStore(key);
 	}
 
 	private StoreFactory() {
@@ -158,7 +158,7 @@ public class StoreFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
-	private static StoreFactory _instance;
+	private static StoreFactory _storeFactory;
 
 	private static boolean _warned;
 

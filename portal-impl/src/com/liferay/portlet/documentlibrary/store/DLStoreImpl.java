@@ -48,7 +48,7 @@ public class DLStoreImpl implements DLStore {
 			throw new DirectoryNameException(dirName);
 		}
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.addDirectory(companyId, repositoryId, dirName);
 	}
@@ -65,7 +65,7 @@ public class DLStoreImpl implements DLStore {
 			AntivirusScannerUtil.scan(bytes);
 		}
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.addFile(companyId, repositoryId, fileName, bytes);
 	}
@@ -82,7 +82,7 @@ public class DLStoreImpl implements DLStore {
 			AntivirusScannerUtil.scan(file);
 		}
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.addFile(companyId, repositoryId, fileName, file);
 	}
@@ -107,7 +107,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {
@@ -175,7 +175,7 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public void checkRoot(long companyId) {
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.checkRoot(companyId);
 	}
@@ -186,7 +186,7 @@ public class DLStoreImpl implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.copyFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,
@@ -197,7 +197,7 @@ public class DLStoreImpl implements DLStore {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.deleteDirectory(companyId, repositoryId, dirName);
 	}
@@ -208,7 +208,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.deleteFile(companyId, repositoryId, fileName);
 	}
@@ -221,7 +221,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
@@ -232,7 +232,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.getFile(companyId, repositoryId, fileName);
 	}
@@ -245,7 +245,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.getFile(companyId, repositoryId, fileName, versionLabel);
 	}
@@ -257,7 +257,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.getFileAsBytes(companyId, repositoryId, fileName);
 	}
@@ -270,7 +270,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.getFileAsBytes(
 			companyId, repositoryId, fileName, versionLabel);
@@ -283,7 +283,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.getFileAsStream(companyId, repositoryId, fileName);
 	}
@@ -296,7 +296,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.getFileAsStream(
 			companyId, repositoryId, fileName, versionLabel);
@@ -311,7 +311,7 @@ public class DLStoreImpl implements DLStore {
 			throw new DirectoryNameException(dirName);
 		}
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.getFileNames(companyId, repositoryId, dirName);
 	}
@@ -322,7 +322,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.getFileSize(companyId, repositoryId, fileName);
 	}
@@ -336,7 +336,7 @@ public class DLStoreImpl implements DLStore {
 			throw new DirectoryNameException(dirName);
 		}
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.hasDirectory(companyId, repositoryId, dirName);
 	}
@@ -347,7 +347,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.hasFile(companyId, repositoryId, fileName);
 	}
@@ -360,7 +360,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
@@ -377,7 +377,7 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public void move(String srcDir, String destDir) {
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.move(srcDir, destDir);
 	}
@@ -388,7 +388,7 @@ public class DLStoreImpl implements DLStore {
 			String fileName)
 		throws PortalException {
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
 	}
@@ -399,7 +399,7 @@ public class DLStoreImpl implements DLStore {
 			String newFileName)
 		throws PortalException {
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.updateFile(companyId, repositoryId, fileName, newFileName);
 	}
@@ -420,7 +420,7 @@ public class DLStoreImpl implements DLStore {
 			AntivirusScannerUtil.scan(file);
 		}
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.updateFile(companyId, repositoryId, fileName, versionLabel, file);
 	}
@@ -450,7 +450,7 @@ public class DLStoreImpl implements DLStore {
 
 		DLValidatorUtil.validateVersionLabel(versionLabel);
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {
@@ -502,7 +502,7 @@ public class DLStoreImpl implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		Store store = _storeFactory.getStoreInstance();
+		Store store = _storeFactory.getStore();
 
 		store.updateFileVersion(
 			companyId, repositoryId, fileName, fromVersionLabel,

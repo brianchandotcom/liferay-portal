@@ -40,7 +40,7 @@ public class StoreFactoryTest {
 	public void testGetStoreInstance() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
-		Store store = storeFactory.getStoreInstance("test");
+		Store store = storeFactory.getStore("test");
 
 		Assert.assertNotNull(store);
 

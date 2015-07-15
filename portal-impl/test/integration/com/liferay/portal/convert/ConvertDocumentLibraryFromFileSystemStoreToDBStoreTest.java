@@ -90,10 +90,10 @@ public class ConvertDocumentLibraryFromFileSystemStoreToDBStoreTest {
 		PropsValues.DL_STORE_IMPL =
 			"com.liferay.portal.store.filesystem.FileSystemStore";
 
-		_sourceStore = _storeFactory.getStoreInstance(
+		_sourceStore = _storeFactory.getStore(
 			PropsValues.DL_STORE_IMPL);
 
-		_storeFactory.setStoreInstance(PropsValues.DL_STORE_IMPL);
+		_storeFactory.setStore(PropsValues.DL_STORE_IMPL);
 
 		_group = GroupTestUtil.addGroup();
 
@@ -108,7 +108,7 @@ public class ConvertDocumentLibraryFromFileSystemStoreToDBStoreTest {
 	public void tearDown() throws Exception {
 		PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
-		_storeFactory.setStoreInstance(PropsValues.DL_STORE_IMPL);
+		_storeFactory.setStore(PropsValues.DL_STORE_IMPL);
 	}
 
 	@Test

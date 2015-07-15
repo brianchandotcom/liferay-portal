@@ -53,7 +53,7 @@ public abstract class BaseStoreTestCase {
 	public void setUp() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
-		store = storeFactory.getStoreInstance(getStoreType());
+		store = storeFactory.getStore(getStoreType());
 
 		companyId = RandomTestUtil.nextLong();
 		repositoryId = RandomTestUtil.nextLong();

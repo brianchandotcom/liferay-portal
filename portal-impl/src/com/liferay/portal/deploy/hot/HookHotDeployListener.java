@@ -1721,10 +1721,10 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
+			StoreFactory storeFactory = StoreFactory.getInstance();
+
 			String storeClassName = portalProperties.getProperty(
 				PropsKeys.DL_STORE_IMPL);
-
-			StoreFactory storeFactory = StoreFactory.getInstance();
 
 			storeFactory.setStore(storeClassName);
 		}

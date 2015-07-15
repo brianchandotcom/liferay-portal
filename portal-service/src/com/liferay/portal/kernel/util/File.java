@@ -27,6 +27,8 @@ import java.util.Properties;
  */
 public interface File {
 
+	public String appendParentheticalSuffix(String fileName, String suffix);
+
 	public void copyDirectory(java.io.File source, java.io.File destination)
 		throws IOException;
 
@@ -155,8 +157,6 @@ public interface File {
 	public void touch(String fileName) throws IOException;
 
 	public void unzip(java.io.File source, java.io.File destination);
-
-	public String appendParentheticalSuffix(String fileName, String suffix);
 
 	public void write(java.io.File file, byte[] bytes) throws IOException;
 

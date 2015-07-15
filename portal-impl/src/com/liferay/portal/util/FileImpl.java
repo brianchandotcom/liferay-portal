@@ -87,6 +87,22 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
+	public String appendParentheticalSuffix(String fileName, String suffix) {
+		String extension = getExtension(fileName);
+		String fileNameWithoutExtension = stripExtension(fileName);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(
+			StringUtil.appendParentheticalSuffix(
+				fileNameWithoutExtension, suffix, false));
+		sb.append(StringPool.PERIOD);
+		sb.append(extension);
+
+		return sb.toString();
+	}
+
+	@Override
 	public void copyDirectory(File source, File destination)
 		throws IOException {
 
@@ -909,22 +925,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	@Override
 	public void unzip(File source, File destination) {
 		ExpandTask.expand(source, destination);
-	}
-
-	@Override
-	public String appendParentheticalSuffix(String fileName, String suffix) {
-		String extension = getExtension(fileName);
-		String fileNameWithoutExtension = stripExtension(fileName);
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(
-			StringUtil.appendParentheticalSuffix(
-				fileNameWithoutExtension, suffix, false));
-		sb.append(StringPool.PERIOD);
-		sb.append(extension);
-
-		return sb.toString();
 	}
 
 	@Override

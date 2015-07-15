@@ -593,9 +593,7 @@ public class PortalSecurityManagerImpl extends EquinoxSecurityManager
 			}
 
 			if (classLoader == ClassLoaderUtil.getPortalClassLoader()) {
-				int stackIndex = Reflection.getStackIndex(5, 5);
-
-				Class<?> callerClass = Reflection.getCallerClass(stackIndex);
+				Class<?> callerClass = Reflection.getCallerClass(5);
 
 				ClassLoader callerClassLoader = ClassLoaderUtil.getClassLoader(
 					callerClass);
@@ -1139,9 +1137,7 @@ public class PortalSecurityManagerImpl extends EquinoxSecurityManager
 				return;
 			}
 
-			int stackIndex = Reflection.getStackIndex(5, 5);
-
-			Class<?> callerClass = Reflection.getCallerClass(stackIndex);
+			Class<?> callerClass = Reflection.getCallerClass(5);
 
 			if (clazz == callerClass) {
 

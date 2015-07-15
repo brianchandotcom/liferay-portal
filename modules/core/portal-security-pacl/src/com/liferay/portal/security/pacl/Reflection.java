@@ -85,7 +85,7 @@ public class Reflection extends SecurityManager {
 		}
 
 		if (oracle.length == 1) {
-			return index;
+			return index + _STACK_OFFSET;
 		}
 
 		// Case 2: JDK7
@@ -100,7 +100,7 @@ public class Reflection extends SecurityManager {
 		}
 
 		if (oracle.length == 2) {
-			return index;
+			return index + _STACK_OFFSET;
 		}
 
 		// Case 3: JDK7 >= u25
@@ -114,8 +114,10 @@ public class Reflection extends SecurityManager {
 			}
 		}
 
-		return index;
+		return index + _STACK_OFFSET;
 	}
+
+	private static final int _STACK_OFFSET = 10;
 
 	private static final Reflection _instance = new Reflection();
 

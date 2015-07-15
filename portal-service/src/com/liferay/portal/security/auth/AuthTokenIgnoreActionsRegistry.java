@@ -36,6 +36,10 @@ import java.util.Set;
  */
 public class AuthTokenIgnoreActionsRegistry {
 
+	public static Set<String> getAuthTokenIgnoreActions() {
+		return _instance._getAuthTokenIgnoreActions();
+	}
+
 	public static void register(String... tokenIgnoreActions) {
 		_instance._register(tokenIgnoreActions);
 	}
@@ -58,6 +62,10 @@ public class AuthTokenIgnoreActionsRegistry {
 			new AuthTokenIgnoreActionsCustomizer());
 
 		_serviceTracker.open();
+	}
+
+	private Set<String> _getAuthTokenIgnoreActions() {
+		return _tokenIgnoreActions;
 	}
 
 	private void _register(String... tokenIgnoreActions) {

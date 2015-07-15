@@ -13,3 +13,5 @@
  * details.
  */
 --%>
+
+<%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>

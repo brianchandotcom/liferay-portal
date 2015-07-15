@@ -44,6 +44,6 @@ page import="com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDat
 page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType" %>
 
 <%@ page import="org.apache.struts.action.ActionMapping" %><%@
-page import="org.apache.struts.taglib.tiles.ComponentConstants" %><%@
 page import="org.apache.struts.tiles.ComponentDefinition" %><%@
-page import="org.apache.struts.tiles.TilesUtil" %>
+page import="org.apache.struts.tiles.TilesUtil" %><%@
+page import="org.apache.struts.tiles.taglib.ComponentConstants" %>

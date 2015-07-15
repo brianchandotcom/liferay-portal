@@ -828,8 +828,7 @@ public class ServicePreAction extends Action {
 
 			// Temporary workaround for LPS-56017
 
-			themeDisplay.setPathEditors(
-				portalWebResources.getContextPath() + "/html");
+			themeDisplay.setPathEditors(portalWebResources.getContextPath());
 		}
 
 		themeDisplay.setPathFlash(contextPath.concat("/flash"));

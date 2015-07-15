@@ -56,12 +56,21 @@ public class BookmarksTestUtil {
 			long folderId, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
+		String name = "Test Entry";
+
+		return addEntry(name, folderId, approved, serviceContext);
+	}
+
+	public static BookmarksEntry addEntry(
+			String name, long folderId, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
 			WorkflowThreadLocal.setEnabled(true);
 
-			String name = "Test Entry";
 			String url = "http://www.liferay.com";
 			String description = "This is a test entry.";
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search;
+package com.liferay.portal.search.query;
 
-import com.liferay.portal.kernel.search.QueryPreProcessConfiguration;
+import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

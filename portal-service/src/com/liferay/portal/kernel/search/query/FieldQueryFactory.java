@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.search.query;
+
+import com.liferay.portal.kernel.search.Query;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface TermQuery extends Query {
+public interface FieldQueryFactory {
 
-	public QueryTerm getQueryTerm();
+	public Query createQuery(
+		String field, String value, boolean like, boolean splitKeywords);
 
 }

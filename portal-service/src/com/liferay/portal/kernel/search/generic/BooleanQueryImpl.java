@@ -20,14 +20,10 @@ import com.liferay.portal.kernel.search.BaseBooleanQueryImpl;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanClauseOccurImpl;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermRangeQuery;
+import com.liferay.portal.kernel.search.query.FieldQueryFactoryUtil;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +43,10 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public Query add(Query query, BooleanClauseOccur booleanClauseOccur) {
+		if (query == null) {
+			throw new IllegalArgumentException("Query cannot be null");
+		}
+
 		_booleanClauses.add(new BooleanClauseImpl<>(query, booleanClauseOccur));
 
 		return query;
@@ -308,46 +308,10 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	public Query addRequiredTerm(
 		String field, String value, boolean like, boolean parseKeywords) {
 
-		if (like) {
-			value = StringUtil.replace(
-				value, StringPool.PERCENT, StringPool.BLANK);
-		}
+		Query query = FieldQueryFactoryUtil.createQuery(
+			field, value, like, parseKeywords);
 
-		String[] values = null;
-
-		if (parseKeywords) {
-			values = parseKeywords(value);
-		}
-		else {
-			values = new String[] {value};
-		}
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		for (String curValue : values) {
-			QueryTerm queryTerm = new QueryTermImpl(
-				field, String.valueOf(curValue));
-
-			Query query = null;
-
-			if (like) {
-				query = new WildcardQueryImpl(queryTerm);
-			}
-			else {
-				query = new TermQueryImpl(queryTerm);
-			}
-
-			try {
-				booleanQuery.add(query, BooleanClauseOccur.SHOULD);
-			}
-			catch (ParseException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("ParseException thrown, skipping query", pe);
-				}
-			}
-		}
-
-		return add(booleanQuery, BooleanClauseOccur.MUST);
+		return add(query, BooleanClauseOccur.MUST);
 	}
 
 	@Override
@@ -365,32 +329,13 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		return addTerm(field, value, like, BooleanClauseOccur.SHOULD);
 	}
 
-	public Collection<Query> addTerm(
+	public Query addTerm(
 		String field, String value, boolean like, boolean parseKeywords) {
 
-		List<Query> queries = new ArrayList<>();
+		Query query = FieldQueryFactoryUtil.createQuery(
+			field, value, like, parseKeywords);
 
-		if (like) {
-			value = StringUtil.replace(
-				value, StringPool.PERCENT, StringPool.BLANK);
-		}
-
-		if (parseKeywords) {
-			String[] keywords = parseKeywords(value);
-
-			for (String keyword : keywords) {
-				Query query = addTerm(field, keyword, like);
-
-				queries.add(query);
-			}
-		}
-		else {
-			Query query = addTerm(field, value, like);
-
-			queries.add(query);
-		}
-
-		return queries;
+		return add(query, BooleanClauseOccur.SHOULD);
 	}
 
 	@Override
@@ -398,16 +343,8 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		String field, String value, boolean like,
 		BooleanClauseOccur booleanClauseOccur) {
 
-		Query query = null;
-
-		if (like) {
-			query = new WildcardQueryImpl(
-				new QueryTermImpl(field, String.valueOf(value)));
-		}
-		else {
-			query = new TermQueryImpl(
-				new QueryTermImpl(field, String.valueOf(value)));
-		}
+		Query query = FieldQueryFactoryUtil.createQuery(
+			field, value, like, false);
 
 		return add(query, booleanClauseOccur);
 	}

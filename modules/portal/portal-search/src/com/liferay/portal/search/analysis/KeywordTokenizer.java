@@ -12,13 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.analysis;
+
+import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface TermQuery extends Query {
+public interface KeywordTokenizer {
 
-	public QueryTerm getQueryTerm();
+	public boolean requiresTokenization(String keyword);
+
+	public List<String> tokenize(String value);
 
 }

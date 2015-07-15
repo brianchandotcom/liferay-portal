@@ -166,6 +166,11 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
+	public void testSearchMixedPhraseKeywords() throws Exception {
+		searchByMixedPhraseKeywords();
+	}
+
+	@Test
 	public void testSearchMyEntries() throws Exception {
 		searchMyEntries();
 	}
@@ -633,6 +638,96 @@ public abstract class BaseSearchTestCase {
 			parentBaseModel2, true, getSearchKeywords(), serviceContext);
 
 		assertBaseModelsCount(initialBaseModelsSearchCount + 2, searchContext);
+	}
+
+	protected void searchByMixedPhraseKeywords() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		String keyword1 = getSearchKeywords() + 1;
+		String keyword2 = getSearchKeywords() + 2;
+		String keyword3 = getSearchKeywords() + 3;
+		String keyword4 = getSearchKeywords() + 4;
+		String keyword5 = getSearchKeywords() + 5;
+		String keyword6 = getSearchKeywords() + 6;
+		String keyword7 = getSearchKeywords() + 7;
+
+		String combinedKeywords =
+			keyword1 + StringPool.SPACE + keyword2 + StringPool.SPACE +
+				keyword3 + StringPool.SPACE + keyword4 + StringPool.SPACE +
+				keyword5 + StringPool.SPACE + keyword6 + StringPool.SPACE +
+				keyword7;
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords(combinedKeywords);
+
+		int initialBaseModelsSearchCount = 0;
+
+		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(
+			parentBaseModel, true, combinedKeywords, serviceContext);
+
+		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords(
+			StringPool.QUOTE + keyword1 + StringPool.SPACE + keyword2 +
+				StringPool.QUOTE);
+
+		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords(
+			StringPool.QUOTE + keyword2 + StringPool.SPACE + keyword1 +
+				StringPool.QUOTE);
+
+		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords(
+			StringPool.QUOTE + keyword2 + StringPool.SPACE + keyword4 +
+				StringPool.QUOTE);
+
+		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+					group.getGroupId());
+
+		searchContext.setKeywords(
+			keyword1 + StringPool.SPACE + StringPool.QUOTE + keyword2 +
+				StringPool.SPACE + keyword3 + StringPool.QUOTE);
+
+		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+					group.getGroupId());
+
+		searchContext.setKeywords(
+			RandomTestUtil.randomString() + StringPool.SPACE +
+				StringPool.QUOTE + keyword2 + StringPool.SPACE + keyword3 +
+				StringPool.QUOTE + StringPool.SPACE + keyword5);
+
+		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
+
+		searchContext.setKeywords(
+			RandomTestUtil.randomString() + StringPool.SPACE +
+				StringPool.QUOTE + keyword2 + StringPool.SPACE + keyword5 +
+				StringPool.QUOTE + StringPool.SPACE +
+				RandomTestUtil.randomString());
+
+		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
 	}
 
 	protected void searchComments() throws Exception {

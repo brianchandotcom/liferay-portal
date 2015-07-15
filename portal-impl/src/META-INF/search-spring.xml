@@ -38,7 +38,7 @@
 	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil">
 		<property name="repositorySearchQueryBuilder" ref="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.QueryPreProcessConfiguration" class="com.liferay.portal.search.QueryPreProcessConfigurationImpl">
+	<bean id="com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration" class="com.liferay.portal.search.query.QueryPreProcessConfigurationImpl">
 		<property name="fieldNames">
 			<util:set>
 				<value>assetCategoryTitles?(_.+)?</value>

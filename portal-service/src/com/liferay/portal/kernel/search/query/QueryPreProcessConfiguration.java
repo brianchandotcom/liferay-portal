@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.search.query;
 
 /**
  * @author Miguel Angelo Caldas Gallindo

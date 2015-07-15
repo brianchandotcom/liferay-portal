@@ -38,11 +38,6 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 	}
 
 	@Override
-	public String getAnalyzer() {
-		return _analyzer;
-	}
-
-	@Override
 	public QueryTerm getQueryTerm() {
 		return _queryTerm;
 	}

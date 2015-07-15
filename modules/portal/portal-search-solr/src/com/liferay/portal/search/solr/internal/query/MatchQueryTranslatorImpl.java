@@ -17,7 +17,10 @@ package com.liferay.portal.search.solr.internal.query;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.solr.query.MatchQueryTranslator;
 
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.TermQuery;
@@ -32,11 +35,23 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 
 	@Override
 	public org.apache.lucene.search.Query translate(MatchQuery matchQuery) {
-		org.apache.lucene.search.Query query = null;
+		MatchQuery.Type type = matchQuery.getType();
+
+		if ((type == null) || (type == MatchQuery.Type.BOOLEAN)) {
+			QueryParser queryParser = new QueryParser(
+				matchQuery.getField(), new KeywordAnalyzer());
+
+			try {
+				return queryParser.parse(matchQuery.getValue());
+			}
+			catch (ParseException pe) {
+				throw new IllegalArgumentException(pe);
+			}
+		}
 
 		Term term = new Term(matchQuery.getField(), matchQuery.getValue());
 
-		MatchQuery.Type type = matchQuery.getType();
+		org.apache.lucene.search.Query query = null;
 
 		if (type == MatchQuery.Type.PHRASE) {
 			PhraseQuery phraseQuery = new PhraseQuery();

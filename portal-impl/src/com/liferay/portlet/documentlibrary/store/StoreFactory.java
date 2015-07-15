@@ -57,9 +57,11 @@ public class StoreFactory {
 		boolean found = false;
 
 		for (String key : _storeServiceTrackerMap.keySet()) {
-			Store storeEntry = getStoreInstance(key);
+			Store store = getStoreInstance(key);
+			
+			Class<?> clazz = store.getClass();
 
-			String className = storeEntry.getClass().getName();
+			String className = clazz.getName();
 
 			if (dlHookImpl.equals(className)) {
 				PropsValues.DL_STORE_IMPL = className;
@@ -109,7 +111,7 @@ public class StoreFactory {
 		}
 
 		if (_store == null) {
-			throw new IllegalStateException("Store is not ready.");
+			throw new IllegalStateException("Store is not available");
 		}
 
 		return _store;

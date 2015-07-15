@@ -15,18 +15,11 @@
 package com.liferay.portlet;
 
 import java.io.Serializable;
-import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public interface PortalPreferences extends Serializable {
-
-	public String getAndUpdateValue(
-			String namespace, String key, Callable<String> modifyOperation);
-
-	public String[] getAndUpdateValues(
-			String namespace, String key, Callable<String[]> modifyOperation);
 
 	public long getUserId();
 

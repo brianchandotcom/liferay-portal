@@ -24,13 +24,11 @@ import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import javax.portlet.ReadOnlyException;
-
-import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -80,86 +78,6 @@ public class PortalPreferencesImpl
 		}
 		else {
 			return false;
-		}
-	}
-
-	public String getAndUpdateValue(String namespace, String key, Callable<String> modifyOperation) {
-		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
-			return null;
-		}
-
-		key = _encodeKey(namespace, key);
-
-		try {
-			while (true) {
-				String value = modifyOperation.call();
-
-				if (value != null) {
-					super.setValue(key, value);
-				}
-				else {
-					reset(key);
-				}
-
-				if (_signedIn) {
-					try {
-						PortalPreferencesLocalServiceUtil.updatePreferences(
-								getOwnerId(), getOwnerType(), this);
-
-						return value;
-					} catch (HibernateOptimisticLockingFailureException holfe) {
-
-						// Failure was already logged @DefaultTransactionExecutor.
-
-					}
-				} else {
-					return value;
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-			return null;
-		}
-	}
-
-	public String[] getAndUpdateValues(String namespace, String key, Callable<String[]> modifyOperation) {
-		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
-			return null;
-		}
-
-		key = _encodeKey(namespace, key);
-
-		try {
-			while (true) {
-				String[] values = modifyOperation.call();
-
-				if (values != null) {
-					super.setValues(key, values);
-				}
-				else {
-					reset(key);
-				}
-
-				if (_signedIn) {
-					try {
-						PortalPreferencesLocalServiceUtil.updatePreferences(
-								getOwnerId(), getOwnerType(), this);
-
-						return values;
-					} catch (HibernateOptimisticLockingFailureException holfe) {
-
-						// Failure was already logged @DefaultTransactionExecutor.
-
-					}
-				} else {
-					return values;
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-			return null;
 		}
 	}
 

@@ -79,6 +79,35 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBeEnabled extends PrincipalException {
+
+		public MustBeEnabled(long companyId, String ... resourceName) {
+			super(
+				String.format(
+					"%s must be enabled for company %s",
+					StringUtil.merge(resourceName, ","), companyId));
+
+			this.companyId = companyId;
+			this.resourceName = resourceName;
+		}
+
+		public final long companyId;
+		public final String[] resourceName;
+
+	}
+
+	public static class MustBeInvokedUsingPost extends PrincipalException {
+
+		public MustBeInvokedUsingPost(String url) {
+			super(String.format("URL %s must be invoked using POST", url));
+
+			this.url = url;
+		}
+
+		public final String url;
+
+	}
+
 	public static class MustBeOmniadmin extends PrincipalException {
 
 		public MustBeOmniadmin(long userId) {
@@ -96,6 +125,23 @@ public class PrincipalException extends PortalException {
 		}
 
 		public final long userId;
+
+	}
+
+	public static class MustBePortletStrutsPath extends PrincipalException {
+
+		public MustBePortletStrutsPath(String strutsPath, String portletId) {
+			super(
+				String.format(
+					"Struts path %s must be struts path of portlet %s",
+					strutsPath, portletId));
+
+			this.strutsPath = strutsPath;
+			this.portletId = portletId;
+		}
+
+		public final String portletId;
+		public final String strutsPath;
 
 	}
 
@@ -156,7 +202,10 @@ public class PrincipalException extends PortalException {
 	private static final Class<?>[] _NESTED_CLASSES = {
 		PrincipalException.class, PrincipalException.MustBeAuthenticated.class,
 		PrincipalException.MustBeCompanyAdmin.class,
+		PrincipalException.MustBeEnabled.class,
+		PrincipalException.MustBeInvokedUsingPost.class,
 		PrincipalException.MustBeOmniadmin.class,
+		PrincipalException.MustBePortletStrutsPath.class,
 		PrincipalException.MustHavePermission.class
 	};
 

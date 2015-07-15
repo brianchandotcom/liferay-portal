@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
@@ -80,8 +81,8 @@ public class CreateAnonymousAccountAction extends PortletAction {
 		Company company = themeDisplay.getCompany();
 
 		if (!company.isStrangers()) {
-			throw new PrincipalException(
-				"Strangers are not allowed to access the portal");
+			throw new PrincipalException.MustBeEnabled(
+				company.getCompanyId(), PropsKeys.COMPANY_SECURITY_STRANGERS);
 		}
 
 		String portletName = portletConfig.getPortletName();

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.store.bundle.storefactory;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 
@@ -37,8 +36,7 @@ public class TestStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName, InputStream is) {
 	}
 
 	@Override
@@ -62,9 +60,8 @@ public class TestStore extends BaseStore {
 
 	@Override
 	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		return null;
 	}
@@ -82,8 +79,8 @@ public class TestStore extends BaseStore {
 	}
 
 	@Override
-	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+	public long getFileSize(
+		long companyId, long repositoryId, String fileName) {
 
 		return 0;
 	}
@@ -109,23 +106,20 @@ public class TestStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
-		throws PortalException {
+		long companyId, long repositoryId, long newRepositoryId,
+		String fileName) {
 	}
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String newFileName)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String newFileName) {
 	}
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel, InputStream is) {
 	}
 
 }

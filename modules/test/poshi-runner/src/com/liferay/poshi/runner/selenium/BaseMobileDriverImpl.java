@@ -594,6 +594,13 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void sikuliClickByIndex(String image, String index)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliClickByIndex(this, image, index);
+	}
+
+	@Override
 	public void sikuliDragAndDrop(String image, String coordString)
 		throws Exception {
 

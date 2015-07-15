@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.ServiceBuilder;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.Dom4jDocUtil;
 import com.liferay.util.xml.Dom4jUtil;
@@ -835,7 +835,7 @@ public class JavadocFormatter {
 			return;
 		}
 
-		String newContent = ServiceBuilder.stripFullyQualifiedClassNames(
+		String newContent = ToolsUtil.stripFullyQualifiedClassNames(
 			originalContent);
 
 		JavaClass javaClass = _getJavaClass(

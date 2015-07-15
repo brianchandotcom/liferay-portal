@@ -70,7 +70,7 @@ import org.dom4j.io.SAXReader;
  * @author James Hinkey
  * @author Hugo Huijser
  */
-public class ServiceBuilder {
+public class ToolsUtil {
 
 	public static final String AUTHOR = "Brian Wing Shun Chan";
 
@@ -454,7 +454,7 @@ public class ServiceBuilder {
 	}
 
 	private static URL _readJalopyXmlFromClassLoader() {
-		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
+		ClassLoader classLoader = ToolsUtil.class.getClassLoader();
 
 		URL url = classLoader.getResource("jalopy.xml");
 

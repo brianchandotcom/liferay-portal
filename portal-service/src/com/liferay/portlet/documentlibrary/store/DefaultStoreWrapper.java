@@ -27,12 +27,12 @@ public class DefaultStoreWrapper implements StoreWrapper {
 
 	@Override
 	public Store wrap(Store store) {
-		return new DefaultStoreProxyImpl(store);
+		return new DefaultStore(store);
 	}
 
-	private static final class DefaultStoreProxyImpl implements Store {
+	private static final class DefaultStore implements Store {
 
-		public DefaultStoreProxyImpl(Store store) {
+		public DefaultStore(Store store) {
 			_store = store;
 		}
 

@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.portal.util.PortletKeys" %>
+
 <%
 String selectionMethod = portletPreferences.getValue("selectionMethod", "users");
 long organizationId = GetterUtil.getLong(portletPreferences.getValue("organizationId", "0"));

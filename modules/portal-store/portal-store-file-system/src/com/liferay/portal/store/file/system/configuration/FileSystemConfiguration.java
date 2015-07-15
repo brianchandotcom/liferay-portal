@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.store.filesystem.configuration;
+package com.liferay.portal.store.file.system.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -20,15 +20,15 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Manuel de la Peña
  */
 @Meta.OCD(
-	id = "com.liferay.portal.store.filesystem.configuration.FileSystemConfiguration",
+	id = "com.liferay.portal.store.file.system.configuration.FileSystemConfiguration",
 	localization = "content/Language",
-	name = "%filesystem.store.configuration.name"
+	name = "%file.system.store.configuration.name"
 )
 public interface FileSystemConfiguration {
 
 	@Meta.AD(
 		deflt = "data/document_library",
-		description = "%filesystem.store.configuration.root.dir.description",
+		description = "%file.system.store.configuration.root.dir.description",
 		required = false
 	)
 	public String rootDir();

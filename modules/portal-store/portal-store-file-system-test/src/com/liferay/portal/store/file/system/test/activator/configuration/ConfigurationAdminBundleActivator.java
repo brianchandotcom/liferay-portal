@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.store.filesystem.test.activator.configuration;
+package com.liferay.portal.store.file.system.test.activator.configuration;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -53,7 +53,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 			_waitForService(
 				bundleContext, _advancedFileSystemConfiguration,
-				"com.liferay.portal.store.filesystem.AdvancedFileSystemStore");
+				"com.liferay.portal.store.file.system.AdvancedFileSystemStore");
 
 			_fileSystemConfiguration = _getConfiguration(
 				bundleContext, serviceReference,
@@ -67,7 +67,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 			_waitForService(
 				bundleContext, _fileSystemConfiguration,
-				"com.liferay.portal.store.filesystem.FileSystemStore");
+				"com.liferay.portal.store.file.system.FileSystemStore");
 		}
 		finally {
 			bundleContext.ungetService(serviceReference);
@@ -129,14 +129,14 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 	}
 
 	private static final String _ADVANCED_FILE_SYSTEM_CONFIGURATION_PID =
-		"com.liferay.portal.store.filesystem.configuration." +
+		"com.liferay.portal.store.file.system.configuration." +
 			"AdvancedFileSystemConfiguration";
 
 	private static final String _ADVANCED_ROOT_DIR =
 		PropsUtil.get(PropsKeys.LIFERAY_HOME) + "/advanced-filesystem";
 
 	private static final String _FILE_SYSTEM_CONFIGURATION_PID =
-		"com.liferay.portal.store.filesystem.configuration." +
+		"com.liferay.portal.store.file.system.configuration." +
 			"FileSystemConfiguration";
 
 	private static final String _ROOT_DIR =

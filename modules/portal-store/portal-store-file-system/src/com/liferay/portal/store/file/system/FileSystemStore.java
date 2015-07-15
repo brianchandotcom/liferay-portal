@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.store.filesystem;
+package com.liferay.portal.store.file.system;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.store.filesystem.configuration.FileSystemConfiguration;
+import com.liferay.portal.store.file.system.configuration.FileSystemConfiguration;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
@@ -59,9 +59,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Manuel de la Peña
  */
 @Component(
-	configurationPid = "com.liferay.portal.store.filesystem.configuration.FileSystemConfiguration",
+	configurationPid = "com.liferay.portal.store.file.system.configuration.FileSystemConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = "store.type=com.liferay.portal.store.filesystem.FileSystemStore",
+	property = "store.type=com.liferay.portal.store.file.system.FileSystemStore",
 	service = Store.class
 )
 public class FileSystemStore extends BaseStore {
@@ -456,9 +456,9 @@ public class FileSystemStore extends BaseStore {
 			new FileSystemConfigurationValidator();
 
 		fileSystemConfigurationValidator.validate(
-			"com.liferay.portal.store.filesystem.configuration." +
+			"com.liferay.portal.store.file.system.configuration." +
 				"FileSystemConfiguration",
-			"com.liferay.portal.store.filesystem.configuration." +
+			"com.liferay.portal.store.file.system.configuration." +
 				"AdvancedFileSystemConfiguration");
 
 		initializeRootDir();

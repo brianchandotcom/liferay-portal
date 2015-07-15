@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.test;
+package com.liferay.dynamic.data.mapping.test.util.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;

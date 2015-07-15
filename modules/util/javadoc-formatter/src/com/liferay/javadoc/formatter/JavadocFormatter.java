@@ -1468,6 +1468,126 @@ public class JavadocFormatter {
 		return typeValue;
 	}
 
+	private String _getUpdateJavaFromDocument(
+			String fileName, String javadocLessContent, Document document)
+		throws Exception {
+
+		String[] lines = StringUtil.splitLines(javadocLessContent);
+
+		JavaClass javaClass = _getJavaClass(
+			fileName, new UnsyncStringReader(javadocLessContent));
+
+		_updateLanguageProperties(document, javaClass.getName());
+
+		List<Tuple> ancestorJavaClassTuples = new ArrayList<>();
+
+		ancestorJavaClassTuples = _addAncestorJavaClassTuples(
+			javaClass, ancestorJavaClassTuples);
+
+		Element rootElement = document.getRootElement();
+
+		Map<Integer, String> commentsMap = new TreeMap<>();
+
+		String javaClassComment = _getJavaClassComment(rootElement, javaClass);
+
+		javaClassComment = _addDeprecatedTag(
+			javaClassComment, javaClass, StringPool.BLANK);
+
+		commentsMap.put(_getJavaClassLineNumber(javaClass), javaClassComment);
+
+		Map<String, Element> methodElementsMap = new HashMap<>();
+
+		List<Element> methodElements = rootElement.elements("method");
+
+		for (Element methodElement : methodElements) {
+			String methodKey = _getMethodKey(methodElement);
+
+			methodElementsMap.put(methodKey, methodElement);
+		}
+
+		JavaMethod[] javaMethods = javaClass.getMethods();
+
+		for (JavaMethod javaMethod : javaMethods) {
+			if (commentsMap.containsKey(javaMethod.getLineNumber())) {
+				continue;
+			}
+
+			String indent = _getIndent(lines, javaMethod);
+
+			String javaMethodComment = _getJavaMethodComment(
+				methodElementsMap, javaMethod, indent);
+
+			javaMethodComment = _addDeprecatedTag(
+				javaMethodComment, javaMethod, indent);
+
+			// Handle override tag insertion
+
+			if (!_hasAnnotation(javaMethod, "Override")) {
+				if (_isOverrideMethod(
+						javaClass, javaMethod, ancestorJavaClassTuples)) {
+
+					String overrideLine = indent + "@Override\n";
+
+					if (Validator.isNotNull(javaMethodComment)) {
+						javaMethodComment = javaMethodComment + overrideLine;
+					}
+					else {
+						javaMethodComment = overrideLine;
+					}
+				}
+			}
+
+			commentsMap.put(javaMethod.getLineNumber(), javaMethodComment);
+		}
+
+		Map<String, Element> fieldElementsMap = new HashMap<>();
+
+		List<Element> fieldElements = rootElement.elements("field");
+
+		for (Element fieldElement : fieldElements) {
+			String fieldKey = _getFieldKey(fieldElement);
+
+			fieldElementsMap.put(fieldKey, fieldElement);
+		}
+
+		JavaField[] javaFields = javaClass.getFields();
+
+		for (JavaField javaField : javaFields) {
+			if (commentsMap.containsKey(javaField.getLineNumber())) {
+				continue;
+			}
+
+			String indent = _getIndent(lines, javaField);
+
+			String javaFieldComment = _getJavaFieldComment(
+				fieldElementsMap, javaField, indent);
+
+			javaFieldComment = _addDeprecatedTag(
+				javaFieldComment, javaField, indent);
+
+			commentsMap.put(javaField.getLineNumber(), javaFieldComment);
+		}
+
+		StringBundler sb = new StringBundler(javadocLessContent.length());
+
+		for (int lineNumber = 1; lineNumber <= lines.length; lineNumber++) {
+			String line = lines[lineNumber - 1];
+
+			String comments = commentsMap.get(lineNumber);
+
+			if (comments != null) {
+				sb.append(comments);
+			}
+
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		String formattedContent = sb.toString();
+
+		return formattedContent.trim();
+	}
+
 	private boolean _hasAnnotation(
 		AbstractBaseJavaEntity abstractBaseJavaEntity, String annotationName) {
 
@@ -1859,126 +1979,6 @@ public class JavadocFormatter {
 		}
 
 		javadocsXmlRootElement.add(javaClassDocument.getRootElement());
-	}
-
-	private String _getUpdateJavaFromDocument(
-			String fileName, String javadocLessContent, Document document)
-		throws Exception {
-
-		String[] lines = StringUtil.splitLines(javadocLessContent);
-
-		JavaClass javaClass = _getJavaClass(
-			fileName, new UnsyncStringReader(javadocLessContent));
-
-		_updateLanguageProperties(document, javaClass.getName());
-
-		List<Tuple> ancestorJavaClassTuples = new ArrayList<>();
-
-		ancestorJavaClassTuples = _addAncestorJavaClassTuples(
-			javaClass, ancestorJavaClassTuples);
-
-		Element rootElement = document.getRootElement();
-
-		Map<Integer, String> commentsMap = new TreeMap<>();
-
-		String javaClassComment = _getJavaClassComment(rootElement, javaClass);
-
-		javaClassComment = _addDeprecatedTag(
-			javaClassComment, javaClass, StringPool.BLANK);
-
-		commentsMap.put(_getJavaClassLineNumber(javaClass), javaClassComment);
-
-		Map<String, Element> methodElementsMap = new HashMap<>();
-
-		List<Element> methodElements = rootElement.elements("method");
-
-		for (Element methodElement : methodElements) {
-			String methodKey = _getMethodKey(methodElement);
-
-			methodElementsMap.put(methodKey, methodElement);
-		}
-
-		JavaMethod[] javaMethods = javaClass.getMethods();
-
-		for (JavaMethod javaMethod : javaMethods) {
-			if (commentsMap.containsKey(javaMethod.getLineNumber())) {
-				continue;
-			}
-
-			String indent = _getIndent(lines, javaMethod);
-
-			String javaMethodComment = _getJavaMethodComment(
-				methodElementsMap, javaMethod, indent);
-
-			javaMethodComment = _addDeprecatedTag(
-				javaMethodComment, javaMethod, indent);
-
-			// Handle override tag insertion
-
-			if (!_hasAnnotation(javaMethod, "Override")) {
-				if (_isOverrideMethod(
-						javaClass, javaMethod, ancestorJavaClassTuples)) {
-
-					String overrideLine = indent + "@Override\n";
-
-					if (Validator.isNotNull(javaMethodComment)) {
-						javaMethodComment = javaMethodComment + overrideLine;
-					}
-					else {
-						javaMethodComment = overrideLine;
-					}
-				}
-			}
-
-			commentsMap.put(javaMethod.getLineNumber(), javaMethodComment);
-		}
-
-		Map<String, Element> fieldElementsMap = new HashMap<>();
-
-		List<Element> fieldElements = rootElement.elements("field");
-
-		for (Element fieldElement : fieldElements) {
-			String fieldKey = _getFieldKey(fieldElement);
-
-			fieldElementsMap.put(fieldKey, fieldElement);
-		}
-
-		JavaField[] javaFields = javaClass.getFields();
-
-		for (JavaField javaField : javaFields) {
-			if (commentsMap.containsKey(javaField.getLineNumber())) {
-				continue;
-			}
-
-			String indent = _getIndent(lines, javaField);
-
-			String javaFieldComment = _getJavaFieldComment(
-				fieldElementsMap, javaField, indent);
-
-			javaFieldComment = _addDeprecatedTag(
-				javaFieldComment, javaField, indent);
-
-			commentsMap.put(javaField.getLineNumber(), javaFieldComment);
-		}
-
-		StringBundler sb = new StringBundler(javadocLessContent.length());
-
-		for (int lineNumber = 1; lineNumber <= lines.length; lineNumber++) {
-			String line = lines[lineNumber - 1];
-
-			String comments = commentsMap.get(lineNumber);
-
-			if (comments != null) {
-				sb.append(comments);
-			}
-
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		String formattedContent = sb.toString();
-
-		return formattedContent.trim();
 	}
 
 	private void _updateLanguageProperties(Document document, String className)

@@ -288,6 +288,10 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 			tag.getCompanyId(), AssetTag.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, tag.getTagId());
 
+		// Stats
+
+		assetTagStatsLocalService.deleteTagStatsByTagId(tag.getTagId());
+
 		// Indexer
 
 		assetEntryLocalService.reindex(entries);

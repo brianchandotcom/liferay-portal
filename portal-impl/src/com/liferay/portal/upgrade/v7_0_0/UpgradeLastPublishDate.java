@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.util.PortletKeys;
@@ -72,17 +73,16 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				String settings = rs.getString("settings");
+				UnicodeProperties settingsProperties = new UnicodeProperties(
+					true);
 
-				if (Validator.isNotNull(settings)) {
-					int x = settings.indexOf("last-publish-date=");
+				settingsProperties.load(rs.getString("settings"));
 
-					String dateString = settings.substring(
-						x, settings.length());
+				String dateString = settingsProperties.getProperty(
+					"last-publish-date");
 
-					if (Validator.isNotNull(dateString)) {
-						return new Date(GetterUtil.getLong(dateString));
-					}
+				if (Validator.isNotNull(dateString)) {
+					return new Date(GetterUtil.getLong(dateString));
 				}
 			}
 

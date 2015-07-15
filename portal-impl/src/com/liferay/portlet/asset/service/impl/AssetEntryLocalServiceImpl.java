@@ -406,6 +406,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			return;
 		}
 
+		entry.setModifiedDate(entry.getModifiedDate());
 		entry.setViewCount(entry.getViewCount() + increment);
 
 		assetEntryPersistence.update(entry);

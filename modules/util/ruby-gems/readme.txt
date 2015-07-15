@@ -1,6 +1,4 @@
-1.0.0
-
-Gems included:
+Included gems:
 chunky_png-1.3.4
 compass-1.0.1
 compass-core-1.0.3

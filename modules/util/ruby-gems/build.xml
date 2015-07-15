@@ -39,6 +39,17 @@
 				</if>
 
 				<delete dir="${tstamp.value}" />
+
+                <dirset id="gemList" dir="classes/gems" includes="*" />
+
+                <pathconvert pathsep="${line.separator}" property="gemPaths" refid="gemList">
+                    <mapper>
+                        <flattenmapper />
+                    </mapper>
+                </pathconvert>
+
+                <echo file="readme.txt">Included gems:${line.separator}</echo>
+                <echo file="readme.txt" append="true">${gemPaths}</echo>
 			</then>
 		</if>
 	</target>

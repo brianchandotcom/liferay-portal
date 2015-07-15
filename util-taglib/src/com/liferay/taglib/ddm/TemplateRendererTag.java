@@ -14,20 +14,18 @@
 
 package com.liferay.taglib.ddm;
 
-import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
-
 import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.ddm.base.BaseTemplateRendererTag;
+
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Eduardo Garcia

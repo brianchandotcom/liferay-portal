@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.lang.PortalSecurityManager;
@@ -31,12 +31,12 @@ import java.security.Policy;
 import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,7 +45,7 @@ import javax.servlet.ServletContext;
 public class PACLPolicyManager {
 
 	public static PACLPolicy buildPACLPolicy(
-		String servletContextName, ClassLoader classLoader,
+		String contextName, URLContainer urlContext, ClassLoader classLoader,
 		Properties properties) {
 
 		String value = properties.getProperty(
@@ -53,17 +53,16 @@ public class PACLPolicyManager {
 
 		if (value.equals("generate")) {
 			return new GeneratingPACLPolicy(
-				servletContextName, classLoader, properties);
+				contextName, urlContext, classLoader, properties);
 		}
 
 		if (GetterUtil.getBoolean(value)) {
 			return new ActivePACLPolicy(
-				servletContextName, classLoader, properties);
+				contextName, urlContext, classLoader, properties);
 		}
-		else {
-			return new InactivePACLPolicy(
-				servletContextName, classLoader, properties);
-		}
+
+		return new InactivePACLPolicy(
+			contextName, urlContext, classLoader, properties);
 	}
 
 	public static PACLPolicy getDefaultPACLPolicy() {
@@ -120,10 +119,11 @@ public class PACLPolicyManager {
 			}
 		}
 
-		ServletContext servletContext = ServletContextPool.get(
-			paclPolicy.getServletContextName());
+		URLContainer urlContext = paclPolicy.getURLContext();
 
-		String realPath = servletContext.getRealPath(StringPool.SLASH);
+		URL path = urlContext.getResource(StringPool.SLASH);
+
+		String realPath = path.getPath();
 
 		if (realPath.endsWith(StringPool.SLASH)) {
 			realPath = realPath.substring(0, realPath.length() - 1);
@@ -179,10 +179,24 @@ public class PACLPolicyManager {
 	private static final Map<ClassLoader, PACLPolicy> _classLoaderPACLPolicies =
 		new ConcurrentHashMap<>();
 	private static final PACLPolicy _defaultPACLPolicy = new InactivePACLPolicy(
-		StringPool.BLANK, PACLPolicyManager.class.getClassLoader(),
-		new Properties());
+		StringPool.BLANK, new InactiveURLContext(),
+		PACLPolicyManager.class.getClassLoader(), new Properties());
 	private static final Map<URLWrapper, PACLPolicy> _urlPACLPolicies =
 		new ConcurrentHashMap<>();
+
+	private static class InactiveURLContext implements URLContainer {
+
+		@Override
+		public URL getResource(String name) {
+			return null;
+		}
+
+		@Override
+		public Set<String> getResources(String path) {
+			return Collections.emptySet();
+		}
+
+	}
 
 	private static class PACLPolicyPrivilegedAction
 		implements PrivilegedAction<PACLPolicy> {

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.url.URLContainer;
+
 import java.net.URL;
 
 import java.security.Permission;
@@ -30,6 +32,8 @@ public interface PACLPolicy {
 
 	public ClassLoader getClassLoader();
 
+	public String getContextName();
+
 	public Policy getPolicy();
 
 	public Properties getProperties();
@@ -42,7 +46,7 @@ public interface PACLPolicy {
 
 	public Set<String> getPropertySet(String key);
 
-	public String getServletContextName();
+	public URLContainer getURLContext();
 
 	public List<URL> getURLs();
 

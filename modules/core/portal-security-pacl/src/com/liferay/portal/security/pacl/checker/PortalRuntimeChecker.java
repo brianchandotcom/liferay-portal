@@ -240,10 +240,10 @@ public class PortalRuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetBeanProperty(
-		String servletContextName, String className, String property,
+		String contextName, String className, String property,
 		Permission permission) {
 
-		if (servletContextName.equals(getServletContextName())) {
+		if (contextName.equals(getContextName())) {
 			return true;
 		}
 
@@ -268,7 +268,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		}
 
 		Set<String> getBeanPropertyClassNames = _getBeanPropertyClassNames.get(
-			servletContextName);
+			contextName);
 
 		if (getBeanPropertyClassNames == null) {
 			return false;
@@ -349,14 +349,14 @@ public class PortalRuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasSetBeanProperty(
-		String servletContextName, String className, String property) {
+		String contextName, String className, String property) {
 
-		if (servletContextName.equals(getServletContextName())) {
+		if (contextName.equals(getContextName())) {
 			return true;
 		}
 
 		Set<String> setBeanPropertyClassNames = _setBeanPropertyClassNames.get(
-			servletContextName);
+			contextName);
 
 		if (setBeanPropertyClassNames == null) {
 			return false;

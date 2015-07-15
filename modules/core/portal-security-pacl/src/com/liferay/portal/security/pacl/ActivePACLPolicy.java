@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.security.pacl.checker.Checker;
 import com.liferay.portal.security.pacl.checker.JNDIChecker;
 import com.liferay.portal.security.pacl.checker.SQLChecker;
@@ -31,10 +32,10 @@ import java.util.Properties;
 public class ActivePACLPolicy extends BasePACLPolicy {
 
 	public ActivePACLPolicy(
-		String servletContextName, ClassLoader classLoader,
+		String contextName, URLContainer urlContext, ClassLoader classLoader,
 		Properties properties) {
 
-		super(servletContextName, classLoader, properties);
+		super(contextName, urlContext, classLoader, properties);
 
 		try {
 			initJNDIChecker();

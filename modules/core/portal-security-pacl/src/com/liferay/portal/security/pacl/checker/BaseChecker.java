@@ -43,13 +43,13 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 	}
 
 	@Override
-	public PACLPolicy getPACLPolicy() {
-		return _paclPolicy;
+	public String getContextName() {
+		return _paclPolicy.getContextName();
 	}
 
 	@Override
-	public String getServletContextName() {
-		return _paclPolicy.getServletContextName();
+	public PACLPolicy getPACLPolicy() {
+		return _paclPolicy;
 	}
 
 	public boolean isTrustedCaller(

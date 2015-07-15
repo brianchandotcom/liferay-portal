@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermis
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
+import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -832,11 +833,11 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		@Override
 		public void initPolicy(
-			String servletContextName, ClassLoader classLoader,
-			Properties properties) {
+			String contextName, URLContainer urlContext,
+			ClassLoader classLoader, Properties properties) {
 
 			PACLPolicy paclPolicy = PACLPolicyManager.buildPACLPolicy(
-				servletContextName, classLoader, properties);
+				contextName, urlContext, classLoader, properties);
 
 			PACLPolicyManager.register(classLoader, paclPolicy);
 		}
@@ -1070,15 +1071,15 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				return;
 			}
 
-			String classLoaderReferenceId = "portal";
+			String contextName = "portal";
 
 			if (paclPolicy != null) {
-				classLoaderReferenceId = paclPolicy.getServletContextName();
+				contextName = paclPolicy.getContextName();
 			}
 
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_CLASSLOADER, null,
-				classLoaderReferenceId);
+				contextName);
 
 			securityManager.checkPermission(permission);
 		}
@@ -1248,16 +1249,16 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				return;
 			}
 
-			String servletContextName = "portal";
+			String contextName = "portal";
 
 			if (paclPolicy != null) {
-				servletContextName = paclPolicy.getServletContextName();
+				contextName = paclPolicy.getContextName();
 			}
 
 			PortalServicePermission portalServicePermission =
 				new PortalServicePermission(
 					PACLConstants.PORTAL_SERVICE_PERMISSION_SERVICE,
-					servletContextName, className, methodName);
+					contextName, className, methodName);
 
 			securityManager.checkPermission(portalServicePermission);
 		}

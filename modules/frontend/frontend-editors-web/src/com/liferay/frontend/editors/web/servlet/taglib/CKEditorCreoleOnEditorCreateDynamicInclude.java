@@ -45,7 +45,7 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 		Bundle bundle = _bundleContext.getBundle();
 
 		URL entryURL = bundle.getEntry(
-			"/META-INF/resources/html/editors/ckeditor/extension" +
+			"/META-INF/resources/ckeditor/extension" +
 				"/creole_dialog_definition.js");
 
 		StreamUtil.transfer(entryURL.openStream(), response.getOutputStream());
@@ -55,7 +55,7 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 
 		if (toolbarSet.equals("creole")) {
 			entryURL = bundle.getEntry(
-				"/META-INF/resources/html/editors/ckeditor/extension" +
+				"/META-INF/resources/ckeditor/extension" +
 					"/creole_dialog_show.js");
 
 			StreamUtil.transfer(

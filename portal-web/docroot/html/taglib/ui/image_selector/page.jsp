@@ -102,7 +102,7 @@ itemSelectorURL.setParameter("itemSelectedEventName", randomNamespace + "selectI
 
 JSONObject itemSelectorJSONParamJSONObject = JSONFactoryUtil.createJSONObject();
 
-itemSelectorJSONParamJSONObject.put("desiredItemSelectorReturnTypes", "com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType");
+itemSelectorJSONParamJSONObject.put("desiredItemSelectorReturnTypes", "com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType");
 
 itemSelectorURL.setParameter("0_json", itemSelectorJSONParamJSONObject.toString());
 itemSelectorURL.setParameter("1_json", itemSelectorJSONParamJSONObject.toString());

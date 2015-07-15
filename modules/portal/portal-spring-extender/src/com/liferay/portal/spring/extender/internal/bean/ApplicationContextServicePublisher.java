@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Set;
 
 import org.apache.felix.utils.log.Logger;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
@@ -35,9 +37,9 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Miguel Pastor
  */
-public class ServicesPublisher {
+public class ApplicationContextServicePublisher {
 
-	public ServicesPublisher(
+	public ApplicationContextServicePublisher(
 		ApplicationContext applicationContext, BundleContext bundleContext) {
 
 		_applicationContext = applicationContext;
@@ -46,7 +48,7 @@ public class ServicesPublisher {
 		_log = new Logger(bundleContext);
 	}
 
-	public void registerServices() {
+	public void register() {
 		for (String beanName : _applicationContext.getBeanDefinitionNames()) {
 			Object bean = null;
 
@@ -65,9 +67,14 @@ public class ServicesPublisher {
 				_registerService(_bundleContext, bean);
 			}
 		}
+
+		Bundle bundle = _bundleContext.getBundle();
+
+		_registerApplicationContext(
+			_applicationContext, bundle.getSymbolicName());
 	}
 
-	public void unregisterServices() {
+	public void unregister() {
 		for (ServiceRegistration<?> serviceReference : _serviceRegistrations) {
 			serviceReference.unregister();
 		}
@@ -75,7 +82,7 @@ public class ServicesPublisher {
 		_serviceRegistrations.clear();
 	}
 
-	private Dictionary<String, Object> _getProperties(Object bean) {
+	private Dictionary<String, Object> _getBeanProperties(Object bean) {
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
 
@@ -89,6 +96,20 @@ public class ServicesPublisher {
 		return properties;
 	}
 
+	private void _registerApplicationContext(
+		ApplicationContext applicationContext, String bundleSymbolicName) {
+
+		HashMapDictionary<String, Object> properties =
+			new HashMapDictionary<>();
+
+		properties.put(
+			"org.springframework.context.service.name", bundleSymbolicName);
+
+		_registerService(
+			_bundleContext, applicationContext,
+			Arrays.asList(ApplicationContext.class.getName()), properties);
+	}
+
 	private void _registerService(BundleContext bundleContext, Object bean) {
 		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
 
@@ -100,10 +121,17 @@ public class ServicesPublisher {
 			names.add(interfaceClass.getName());
 		}
 
+		_registerService(bundleContext, bean, names, _getBeanProperties(bean));
+	}
+
+	private void _registerService(
+		BundleContext bundleContext, Object bean, List<String> interfaces,
+		Dictionary<String, Object> properties) {
+
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
-				names.toArray(new String[names.size()]), bean,
-				_getProperties(bean));
+				interfaces.toArray(new String[interfaces.size()]), bean,
+				properties);
 
 		_serviceRegistrations.add(serviceRegistration);
 	}

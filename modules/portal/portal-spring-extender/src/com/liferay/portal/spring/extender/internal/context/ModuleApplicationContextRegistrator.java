@@ -18,7 +18,7 @@ import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
-import com.liferay.portal.spring.extender.internal.bean.ServicesPublisher;
+import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisher;
 import com.liferay.portal.spring.extender.internal.blueprint.ModuleBeanFactoryPostProcessor;
 import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
@@ -58,17 +58,18 @@ public class ModuleApplicationContextRegistrator {
 
 		_configurableApplicationContext = configurableApplicationContext;
 
-		_servicesPublisher = new ServicesPublisher(
-			_configurableApplicationContext,
+		_applicationContextServicePublisher =
+			new ApplicationContextServicePublisher(
+				_configurableApplicationContext,
 			_extendeeBundle.getBundleContext());
 
-		_servicesPublisher.registerServices();
+		_applicationContextServicePublisher.register();
 	}
 
 	protected void stop() {
 		_cleanInstropectionCaches(_extendeeBundle);
 
-		_servicesPublisher.unregisterServices();
+		_applicationContextServicePublisher.unregister();
 
 		PortletBeanLocatorUtil.setBeanLocator(
 			_extendeeBundle.getSymbolicName(), null);
@@ -147,10 +148,11 @@ public class ModuleApplicationContextRegistrator {
 			new BeanLocatorImpl(classLoader, applicationContext));
 	}
 
+	private ApplicationContextServicePublisher
+		_applicationContextServicePublisher;
 	private ConfigurableApplicationContext _configurableApplicationContext;
 	private Bundle _extendeeBundle;
 	private Bundle _extenderBundle;
 	private final Logger _logger;
-	private ServicesPublisher _servicesPublisher;
 
 }

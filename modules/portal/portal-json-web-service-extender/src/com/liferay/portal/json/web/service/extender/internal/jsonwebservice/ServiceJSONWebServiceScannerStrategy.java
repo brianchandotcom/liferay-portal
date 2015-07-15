@@ -12,23 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.json.web.service.extender.internal;
+package com.liferay.portal.json.web.service.extender.internal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
-
-/**
- * @author Miguel Pastor
- */
+import org.springframework.aop.support.AopUtils;
 public class ServiceJSONWebServiceScannerStrategy
 	implements JSONWebServiceScannerStrategy {
 
@@ -37,7 +30,7 @@ public class ServiceJSONWebServiceScannerStrategy
 		Class<?> clazz = null;
 
 		try {
-			clazz = getTargetClass(service);
+			clazz = AopUtils.getTargetClass(service);
 		}
 		catch (Exception e) {
 			return new MethodDescriptor[0];
@@ -58,23 +51,6 @@ public class ServiceJSONWebServiceScannerStrategy
 		}
 
 		return result.toArray(new MethodDescriptor[result.size()]);
-	}
-
-	protected Class<?> getTargetClass(Object service) throws Exception {
-		Class<?> clazz = service.getClass();
-
-		if (ProxyUtil.isProxyClass(clazz)) {
-			AdvisedSupport advisedSupport =
-				ServiceBeanAopProxy.getAdvisedSupport(service);
-
-			TargetSource targetSource = advisedSupport.getTargetSource();
-
-			Object target = targetSource.getTarget();
-
-			clazz = target.getClass();
-		}
-
-		return clazz;
 	}
 
 }

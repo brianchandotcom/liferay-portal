@@ -570,10 +570,8 @@ public class PoshiRunnerExecutor {
 						"locator2");
 				}
 			}
-			else if (argument.matches("\\$\\{([^}]*)\\}")) {
-				argument = PoshiRunnerVariablesUtil.replaceCommandVars(
-					argument);
-			}
+
+			argument = PoshiRunnerVariablesUtil.replaceCommandVars(argument);
 
 			arguments.add(argument);
 

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.product.menu.site.administration.application.list;
+package com.liferay.exportimport.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +43,7 @@ public class ExportImportPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.EXPORT_IMPORT;
+		return ExportImportPortletKeys.EXPORT_IMPORT;
 	}
 
 	@Reference(unbind = "-")

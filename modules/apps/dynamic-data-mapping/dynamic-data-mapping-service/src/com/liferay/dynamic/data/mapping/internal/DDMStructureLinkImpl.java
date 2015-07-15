@@ -23,41 +23,41 @@ public class DDMStructureLinkImpl implements DDMStructureLink {
 
 	public DDMStructureLinkImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
-			structureLink) {
+			ddmStructureLink) {
 
-		_structureLink = structureLink;
+		_ddmStructureLink = ddmStructureLink;
 	}
 
 	@Override
 	public String getClassName() {
-		return _structureLink.getClassName();
+		return _ddmStructureLink.getClassName();
 	}
 
 	@Override
 	public long getClassNameId() {
-		return _structureLink.getClassNameId();
+		return _ddmStructureLink.getClassNameId();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _structureLink.getClassPK();
+		return _ddmStructureLink.getClassPK();
 	}
 
 	@Override
 	public long getStructureId() {
-		return _structureLink.getStructureId();
+		return _ddmStructureLink.getStructureId();
 	}
 
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	protected Object clone() {
 		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl(
 			(com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink)
-			_structureLink.clone());
+			_ddmStructureLink.clone());
 
 		return ddmStructureLinkImpl;
 	}
 
 	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
-		_structureLink;
+		_ddmStructureLink;
 
 }

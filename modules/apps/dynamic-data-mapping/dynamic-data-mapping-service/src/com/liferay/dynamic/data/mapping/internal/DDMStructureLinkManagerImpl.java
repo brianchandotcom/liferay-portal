@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureLink;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureLinkManager;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
@@ -31,35 +32,55 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager {
 
 	@Override
+	public DDMStructureLink addStructureLink(
+		long classNameId, long classPK, long structureId) {
+
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
+			ddmStructureLink = _ddmStructureLinkLocalService.addStructureLink(
+				classNameId, classPK, structureId);
+
+		return new DDMStructureLinkImpl(ddmStructureLink);
+	}
+
+	@Override
+	public void deleteStructureLink(
+			long classNameId, long classPK, long structureId)
+		throws PortalException {
+
+		_ddmStructureLinkLocalService.deleteStructureLink(
+			classNameId, classPK, structureId);
+	}
+
+	@Override
 	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId) {
-		List<DDMStructureLink> structureLinks = new ArrayList<>();
+		List<DDMStructureLink> ddmStructureLinks = new ArrayList<>();
 
 		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
 				structureLink :
 					_ddmStructureLinkLocalService.getClassNameStructureLinks(
 						classNameId)) {
 
-			structureLinks.add( new DDMStructureLinkImpl(structureLink));
+			ddmStructureLinks.add(new DDMStructureLinkImpl(structureLink));
 		}
 
-		return structureLinks;
+		return ddmStructureLinks;
 	}
 
 	@Override
 	public List<DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK) {
 
-		List<DDMStructureLink> structureLinks = new ArrayList<>();
+		List<DDMStructureLink> ddmStructureLinks = new ArrayList<>();
 
 		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
 				structureLink :
 					_ddmStructureLinkLocalService.getStructureLinks(
 						classNameId, classPK)) {
 
-			structureLinks.add( new DDMStructureLinkImpl(structureLink));
+			ddmStructureLinks.add(new DDMStructureLinkImpl(structureLink));
 		}
 
-		return structureLinks;
+		return ddmStructureLinks;
 	}
 
 	@Reference

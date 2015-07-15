@@ -14,9 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.List;
 
@@ -25,52 +24,34 @@ import java.util.List;
  */
 public class DDMStructureLinkManagerUtil {
 
+	public static DDMStructureLink addStructureLink(
+		long classNameId, long classPK, long structureId) {
+
+		return _ddmStructureLinkManager.addStructureLink(
+			classNameId, classPK, structureId);
+	}
+
+	public static void deleteStructureLink(
+			long classNameId, long classPK, long structureId)
+		throws PortalException {
+
+		_ddmStructureLinkManager.deleteStructureLink(
+			classNameId, classPK, structureId);
+	}
+
 	public static List<DDMStructureLink> getClassNameStructureLinks(
 		long classNameId) {
 
-		DDMStructureLinkManager ddmStructureLinkManager =
-			_getDDMStructureLinkManager();
-
-		return ddmStructureLinkManager.getClassNameStructureLinks(classNameId);
+		return _ddmStructureLinkManager.getClassNameStructureLinks(classNameId);
 	}
 
 	public static List<DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK) {
 
-		DDMStructureLinkManager ddmStructureLinkManager =
-			_getDDMStructureLinkManager();
-
-		return ddmStructureLinkManager.getStructureLinks(classNameId, classPK);
+		return _ddmStructureLinkManager.getStructureLinks(classNameId, classPK);
 	}
 
-	private static DDMStructureLinkManager _getDDMStructureLinkManager() {
-		DDMStructureLinkManager ddmStructureLinkManager =
-			_instance._serviceTracker.getService();
-
-		if (ddmStructureLinkManager == null) {
-			return _dummyDDMStructureLinkManagerImpl;
-		}
-
-		return ddmStructureLinkManager;
-	}
-
-	private DDMStructureLinkManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(DDMStructureLinkManager.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final DDMStructureLinkManagerUtil _instance =
-		new DDMStructureLinkManagerUtil();
-
-	private static final DummyDDMStructureLinkManagerImpl
-		_dummyDDMStructureLinkManagerImpl =
-			new DummyDDMStructureLinkManagerImpl();
-
-	private final
-		ServiceTracker<DDMStructureLinkManager, DDMStructureLinkManager>
-			_serviceTracker;
+	private static final DDMStructureLinkManager _ddmStructureLinkManager =
+		ProxyFactory.newServiceTrackedInstance(DDMStructureLinkManager.class);
 
 }

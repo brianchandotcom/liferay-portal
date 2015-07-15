@@ -364,6 +364,12 @@ public class PrefsPropsUtil {
 		PortletPreferences preferences, long companyId, String name,
 		boolean defaultValue) {
 
+		String value = getString(preferences, companyId, name);
+
+		if (value != null) {
+			return value;
+		}
+
 		if (defaultValue) {
 			return preferences.getValue(name, StringPool.TRUE);
 		}

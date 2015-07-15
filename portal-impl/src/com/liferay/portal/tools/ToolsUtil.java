@@ -24,11 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.xml.SAXReaderFactory;
 
-import com.thoughtworks.qdox.model.AbstractBaseJavaEntity;
-import com.thoughtworks.qdox.model.Annotation;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.Type;
-
 import de.hunsicker.io.FileFormat;
 import de.hunsicker.jalopy.Jalopy;
 import de.hunsicker.jalopy.storage.Convention;
@@ -39,9 +34,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import java.util.HashMap;
 import java.util.List;
@@ -152,28 +144,6 @@ public class ToolsUtil {
 		}
 
 		return document.asXML();
-	}
-
-	public static boolean hasAnnotation(
-		AbstractBaseJavaEntity abstractBaseJavaEntity, String annotationName) {
-
-		Annotation[] annotations = abstractBaseJavaEntity.getAnnotations();
-
-		if (annotations == null) {
-			return false;
-		}
-
-		for (int i = 0; i < annotations.length; i++) {
-			Type type = annotations[i].getType();
-
-			JavaClass javaClass = type.getJavaClass();
-
-			if (annotationName.equals(javaClass.getName())) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public static String stripFullyQualifiedClassNames(String content)

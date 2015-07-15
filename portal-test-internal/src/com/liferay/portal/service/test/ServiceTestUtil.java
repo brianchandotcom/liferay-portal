@@ -191,6 +191,7 @@ public class ServiceTestUtil {
 	}
 
 	public static void initServices() {
+
 		// Thread locals
 
 		_setThreadLocals();

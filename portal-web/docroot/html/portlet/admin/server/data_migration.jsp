@@ -34,14 +34,14 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 		int i = 0;
 
 		for (ConvertProcess convertProcess : convertProcesses) {
-			String[] parameters = convertProcess.getParameterNames();
+			String[] parameterNames = convertProcess.getParameterNames();
 			String parameterDescription = convertProcess.getParameterDescription();
 		%>
 
 			<liferay-ui:panel-container extended="<%= true %>" id='<%= "convert" + i + "PanelContainer" %>' persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "convert" + i + "Panel" %>' persistState="<%= true %>" title="<%= convertProcess.getDescription() %>">
 					<c:choose>
-						<c:when test="<%= parameters == null %>">
+						<c:when test="<%= parameterNames == null %>">
 							<div class="alert alert-info">
 								<liferay-ui:message key="<%= convertProcess.getConfigurationErrorMessage() %>" />
 							</div>
@@ -50,9 +50,9 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 							<aui:fieldset label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
 
 								<%
-								for (String parameter : parameters) {
-									if (parameter.contains(StringPool.EQUAL) && parameter.contains(StringPool.SEMICOLON)) {
-										String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
+								for (String parameterName : parameterNames) {
+									if (parameterName.contains(StringPool.EQUAL) && parameterName.contains(StringPool.SEMICOLON)) {
+										String[] parameterPair = StringUtil.split(parameterName, CharPool.EQUAL);
 										String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);
 								%>
 
@@ -73,21 +73,21 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 								<%
 									}
 									else {
-										String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
+										String[] parameterPair = StringUtil.split(parameterName, CharPool.EQUAL);
 
-										String parameterName = null;
-										String parameterType = null;
+										String currentParameterName = null;
+										String currentParameterType = null;
 
 										if (parameterPair.length > 1) {
-											parameterName = parameterPair[0];
-											parameterType = parameterPair[1];
+											currentParameterName = parameterPair[0];
+											currentParameterType = parameterPair[1];
 										}
 										else {
-											parameterName = parameter;
+											currentParameterName = parameterName;
 										}
 								%>
 
-										<aui:input cssClass="lfr-input-text-container" label="<%= parameterName %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + parameterName %>" type='<%= parameterType != null ? parameterType : "" %>' />
+										<aui:input cssClass="lfr-input-text-container" label="<%= currentParameterName %>" name="<%= convertProcess.getClass().getName() + StringPool.PERIOD + currentParameterName %>" type='<%= currentParameterType != null ? currentParameterType : "" %>' />
 
 								<%
 									}

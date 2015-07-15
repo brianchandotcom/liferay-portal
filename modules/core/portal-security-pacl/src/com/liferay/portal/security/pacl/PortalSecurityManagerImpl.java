@@ -382,9 +382,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(ActivePACLPolicy.class);
 		initClass(BaseTemplateManager.class);
 		initClass(CentralizedThreadLocal.class);
-		initClass(
-			com.liferay.portal.kernel.security.pacl.permission.
-				CheckMemberAccessPermission.class);
 		initClass(ConcurrentIdentityHashMap.class);
 		initClass(ConcurrentReferenceKeyHashMap.class);
 		initClass(ConcurrentReferenceValueHashMap.class);

@@ -241,9 +241,6 @@ public class PortalPolicy extends Policy {
 		ProtectionDomain protectionDomain, Permission permission) {
 
 		if ((_policy != null) &&
-			!(permission instanceof
-				com.liferay.portal.kernel.security.pacl.permission.
-					CheckMemberAccessPermission) &&
 			!(permission instanceof PortalHookPermission) &&
 			!(permission instanceof PortalMessageBusPermission) &&
 			!(permission instanceof PortalRuntimePermission) &&

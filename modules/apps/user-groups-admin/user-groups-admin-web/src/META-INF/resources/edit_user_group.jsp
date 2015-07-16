@@ -32,7 +32,9 @@ if (userGroup != null) {
 }
 %>
 
-<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveUserGroup();" %>'>
+<portlet:actionURL name="editUserGroup" var="editUserGroupURL" />
+
+<aui:form action="<%= editUserGroupURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroupId %>" />
 
@@ -276,10 +278,6 @@ if (userGroup != null) {
 <aui:script>
 	function <portlet:namespace />isVisible(currentValue, value) {
 		return currentValue != '';
-	}
-
-	function <portlet:namespace />saveUserGroup() {
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="editUserGroup" />');
 	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');

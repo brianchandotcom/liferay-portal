@@ -17,49 +17,50 @@
 <%@ include file="/html/taglib/ui/add_menu/init.jsp" %>
 
 <%
-IntegerWrapper menuItemsCount = (IntegerWrapper)request.getAttribute("liferay-ui:add-menu:add-count");
-List<AddMenuItem> menuItemList = (List<AddMenuItem>)request.getAttribute("liferay-ui:add-menu:menuItemList");
+List<AddMenuItem> menuItems = (List<AddMenuItem>)request.getAttribute("liferay-ui:add-menu:menuItems");
 %>
 
-<c:if test="<%= menuItemsCount.getValue() > 0 %>">
-	<c:choose>
-		<c:when test="<%= menuItemsCount.getValue() == 1 %>">
+<c:choose>
+	<c:when test="<%= menuItems.size() == 1 %>">
 
-			<%
-				AddMenuItem menuItem = menuItemList.get(0);
-			%>
+		<%
+		AddMenuItem menuItem = menuItems.get(0);
+		%>
 
-			<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= menuItem.getUrl() %>" title="<%= menuItem.getTitle() %>">
+		<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= menuItem.getUrl() %>" title="<%= menuItem.getTitle() %>">
+			<span class="icon-plus"></span>
+		</a>
+
+		<aui:script>
+			$(document).ready(
+				function() {
+					$('[data-toggle="tooltip"]').tooltip();
+				}
+			);
+		</aui:script>
+	</c:when>
+	<c:otherwise>
+		<div class="btn-action-secondary btn-bottom-right dropdown">
+			<button aria-expanded="false" class="btn btn-primary" data-toggle="dropdown" type="button">
 				<span class="icon-plus"></span>
-			</a>
-			<aui:script>
-				$(document).ready(
-					function() {
-						$('[data-toggle="tooltip"]').tooltip();
-					}
-				);
-			</aui:script>
-		</c:when>
-		<c:otherwise>
-			<div class="btn-action-secondary btn-bottom-right dropdown">
-				<button aria-expanded="false" class="btn btn-primary" data-toggle="dropdown" type="button"><span class="icon-plus"></span></button>
-				<ul class="dropdown-menu dropdown-menu-left-side-bottom">
+			</button>
 
-					<%
-					for (int i = 0; i < menuItemList.size(); i++) {
-						AddMenuItem menuItem = menuItemList.get(i);
-					%>
+			<ul class="dropdown-menu dropdown-menu-left-side-bottom">
+
+				<%
+				for (int i = 0; i < menuItems.size(); i++) {
+					AddMenuItem menuItem = menuItems.get(i);
+				%>
 
 					<li>
 						<a href="<%= menuItem.getUrl() %>"><%= menuItem.getTitle() %></a>
 					</li>
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</ul>
-			</div>
-		</c:otherwise>
-	</c:choose>
-</c:if>
+			</ul>
+		</div>
+	</c:otherwise>
+</c:choose>

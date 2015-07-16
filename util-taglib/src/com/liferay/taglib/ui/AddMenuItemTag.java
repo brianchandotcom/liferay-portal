@@ -58,10 +58,7 @@ public class AddMenuItemTag extends IncludeTag {
 				"liferay-ui:add-menu:menuItemList");
 
 		if (menuItemList != null) {
-			AddMenuItem menuItem = new AddMenuItem();
-
-			menuItem.setTitle(_title);
-			menuItem.setUrl(_url);
+			AddMenuItem menuItem = new AddMenuItem(_title, _url);
 
 			menuItemList.add(menuItem);
 		}

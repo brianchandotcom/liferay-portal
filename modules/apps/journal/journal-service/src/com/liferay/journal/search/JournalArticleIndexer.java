@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -279,6 +281,11 @@ public class JournalArticleIndexer
 			final ActionableDynamicQuery actionableDynamicQuery =
 				_journalArticleLocalService.getActionableDynamicQuery();
 
+			final Indexer<JournalArticle> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+
+			_indexAllVersions.set(false);
+
 			actionableDynamicQuery.setAddCriteriaMethod(
 				new ActionableDynamicQuery.AddCriteriaMethod() {
 
@@ -315,7 +322,7 @@ public class JournalArticleIndexer
 						JournalArticle article = (JournalArticle)object;
 
 						try {
-							doReindex(article, false);
+							indexer.reindex(article);
 						}
 						catch (Exception e) {
 							throw new PortalException(e);
@@ -587,7 +594,13 @@ public class JournalArticleIndexer
 
 	@Override
 	protected void doReindex(JournalArticle journalArticle) throws Exception {
-		doReindex(journalArticle, true);
+		Boolean indexAllVersions = _indexAllVersions.get();
+
+		if (indexAllVersions == null) {
+			indexAllVersions = true;
+		}
+
+		doReindex(journalArticle, indexAllVersions);
 	}
 
 	protected void doReindex(JournalArticle article, boolean allVersions)
@@ -868,6 +881,9 @@ public class JournalArticleIndexer
 		JournalArticleIndexer.class);
 
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private final ThreadLocal<Boolean> _indexAllVersions =
+		new AutoResetThreadLocal<>(
+			JournalArticleIndexer.class + "._indexAllVersions", true);
 	private JournalArticleLocalService _journalArticleLocalService;
 
 }

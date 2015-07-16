@@ -35,7 +35,20 @@ public class IndexerRequest {
 		_classedModel = classedModel;
 		_indexer = indexer;
 
-		_modelClass = classedModel.getModelClass();
+		_modelClassName = classedModel.getModelClassName();
+		_modelPrimaryKey = (Long)_classedModel.getPrimaryKeyObj();
+	}
+
+	public IndexerRequest(
+		Method method, Indexer<?> indexer, String modelClassName,
+		Long modelPrimaryKey) {
+
+		_method = method;
+		_classedModel = null;
+		_indexer = indexer;
+
+		_modelClassName = modelClassName;
+		_modelPrimaryKey = modelPrimaryKey;
 	}
 
 	@Override
@@ -51,25 +64,34 @@ public class IndexerRequest {
 		IndexerRequest indexerRequest = (IndexerRequest)object;
 
 		if (Validator.equals(_indexer, indexerRequest._indexer) &&
-			Validator.equals(_modelClass, indexerRequest._modelClass) &&
-			Validator.equals(_method, indexerRequest._method)) {
+			Validator.equals(_modelClassName, indexerRequest._modelClassName) &&
+			(Validator.equals(_method, indexerRequest._method) ||
+			 (Validator.equals(
+				 _method.getName(), indexerRequest._method.getName()) &&
+			  Validator.equals(
+				  _modelPrimaryKey, indexerRequest._modelPrimaryKey)))) {
 
-			return true;
+				return true;
 		}
 
 		return false;
 	}
 
 	public void execute() throws Exception {
-		_method.invoke(_indexer, _classedModel);
+		if (_method.getParameterTypes().length == 1) {
+			_method.invoke(_indexer, _classedModel);
+		}
+		else {
+			_method.invoke(_indexer, _modelClassName, _modelPrimaryKey);
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, _classedModel);
+		int hashCode = HashUtil.hash(0, _modelClassName);
 
-		hashCode = HashUtil.hash(hashCode, _method);
-		hashCode = HashUtil.hash(hashCode, _modelClass);
+		hashCode = HashUtil.hash(hashCode, _modelPrimaryKey);
+		hashCode = HashUtil.hash(hashCode, _method.getName());
 
 		return hashCode;
 	}
@@ -84,8 +106,8 @@ public class IndexerRequest {
 		sb.append(ClassUtil.getClassName(_indexer));
 		sb.append(", method=");
 		sb.append(_method);
-		sb.append(", modelClass=");
-		sb.append(_modelClass);
+		sb.append(", modelClassNames=");
+		sb.append(_modelClassName);
 		sb.append("}");
 
 		return sb.toString();
@@ -94,6 +116,7 @@ public class IndexerRequest {
 	private final ClassedModel _classedModel;
 	private final Indexer<?> _indexer;
 	private final Method _method;
-	private final Class<?> _modelClass;
+	private final String _modelClassName;
+	private final Long _modelPrimaryKey;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.search.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 
 import java.lang.annotation.Annotation;
@@ -49,7 +50,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 
 		IndexerRequestBuffer indexerRequestBuffer = IndexerRequestBuffer.get();
 
-		if ((annotation == null) || (args.length != 1) ||
+		if ((annotation == null) || (args.length == 0) || (args.length > 2) ||
 			(indexerRequestBuffer == null)) {
 
 			return method.invoke(_indexer, args);
@@ -59,18 +60,32 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 
 		if (!(args[0] instanceof BaseModel) &&
 			!(args[0] instanceof ClassedModel) &&
-			!(args0Class.isArray() || args0Class.equals(Collection.class))) {
+			!(args0Class.isArray() || args0Class.equals(Collection.class)) &&
+			!((args.length == 2) && args[0] instanceof String &&
+				args[1].getClass().equals(Long.TYPE))) {
 
 			return method.invoke(_indexer, args);
 		}
 
-		MethodKey methodKey = new MethodKey(
-			Indexer.class, method.getName(), Object.class);
-
 		if (args[0] instanceof ClassedModel) {
+			MethodKey methodKey = new MethodKey(
+				Indexer.class, method.getName(), Object.class);
+
 			bufferRequest(methodKey, args[0], indexerRequestBuffer);
 		}
+		else if (args.length == 2) {
+			MethodKey methodKey = new MethodKey(
+				Indexer.class, method.getName(), String.class, Long.TYPE);
+
+			String className = (String)args[0];
+			Long classPK = (Long)args[1];
+
+			bufferRequest(methodKey, className, classPK, indexerRequestBuffer);
+		}
 		else {
+			MethodKey methodKey = new MethodKey(
+				Indexer.class, method.getName(), Object.class);
+
 			Collection<Object> objects = null;
 
 			if (args0Class.isArray()) {
@@ -98,6 +113,14 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 		_indexerRegistryConfiguration = indexerRegistryConfiguration;
 	}
 
+	public void setIndexerRequestBufferOverflowHandler(
+		IndexerRequestBufferOverflowHandler
+			indexerRequestBufferOverflowHandler) {
+
+		_indexerRequestBufferOverflowHandler =
+			indexerRequestBufferOverflowHandler;
+	}
+
 	protected void bufferRequest(
 			MethodKey methodKey, Object object,
 			IndexerRequestBuffer indexerRequestBuffer)
@@ -105,23 +128,44 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 
 		BaseModel<?> baseModel = (BaseModel<?>)object;
 
-		ClassedModel classModel = (ClassedModel)baseModel.clone();
+		ClassedModel classedModel = (ClassedModel)baseModel.clone();
 
 		IndexerRequest indexerRequest = new IndexerRequest(
-			methodKey.getMethod(), classModel, _indexer);
+			methodKey.getMethod(), classedModel, _indexer);
+
+		doBufferRequest(indexerRequest, indexerRequestBuffer);
+	}
+
+	protected void bufferRequest(
+			MethodKey methodKey, String className, Long classPK,
+			IndexerRequestBuffer indexerRequestBuffer)
+		throws Exception {
+
+		IndexerRequest indexerRequest = new IndexerRequest(
+			methodKey.getMethod(), _indexer, className, classPK);
+
+		doBufferRequest(indexerRequest, indexerRequestBuffer);
+	}
+
+	protected void doBufferRequest(
+			IndexerRequest indexerRequest,
+			IndexerRequestBuffer indexerRequestBuffer)
+		throws Exception {
 
 		indexerRequestBuffer.add(indexerRequest);
 
-		int numRequests =
-			indexerRequestBuffer.size() -
-				_indexerRegistryConfiguration.maxBufferSize();
+		if (indexerRequestBuffer.size() >
+				_indexerRegistryConfiguration.maxBufferSize()) {
 
-		if (numRequests > 0) {
-			indexerRequestBuffer.execute(numRequests);
+			_indexerRequestBufferOverflowHandler.bufferOverflowed(
+				indexerRequestBuffer,
+				_indexerRegistryConfiguration.maxBufferSize());
 		}
 	}
 
 	private final Indexer<?> _indexer;
 	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
+	private volatile IndexerRequestBufferOverflowHandler
+		_indexerRequestBufferOverflowHandler;
 
 }

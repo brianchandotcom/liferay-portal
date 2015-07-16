@@ -317,8 +317,11 @@ public class DLFileEntryIndexer
 				DLFileEntryLocalServiceUtil.getDDMStructureFileEntries(
 					ArrayUtil.toLongArray(ddmStructureIds));
 
+			Indexer<DLFileEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
+
 			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				doReindex(dlFileEntry);
+				indexer.reindex(dlFileEntry);
 			}
 		}
 		catch (Exception e) {

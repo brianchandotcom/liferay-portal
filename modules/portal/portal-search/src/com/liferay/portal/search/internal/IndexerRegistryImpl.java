@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.dummy.DummyIndexer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.search.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 
 import java.util.ArrayList;
@@ -156,6 +157,17 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 				new BufferedIndexerInvocationHandler(
 					indexer, _indexerRegistryConfiguration);
 
+			if (_indexerRequestBufferOverflowHandler == null) {
+				bufferedIndexerInvocationHandler.
+					setIndexerRequestBufferOverflowHandler(
+						_defaultIndexerRequestBufferOverflowHandler);
+			}
+			else {
+				bufferedIndexerInvocationHandler.
+					setIndexerRequestBufferOverflowHandler(
+						_indexerRequestBufferOverflowHandler);
+			}
+
 			_bufferedInvocationHandlers.put(
 				indexer.getClassName(), bufferedIndexerInvocationHandler);
 
@@ -170,13 +182,54 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		return (Indexer<T>)proxiedIndexer;
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setIndexerRequestBufferOverflowHandler(
+		IndexerRequestBufferOverflowHandler
+			indexerRequestBufferOverflowHandler) {
+
+		_indexerRequestBufferOverflowHandler =
+			indexerRequestBufferOverflowHandler;
+
+		for (BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler :
+				_bufferedInvocationHandlers.values()) {
+
+			bufferedIndexerInvocationHandler.
+				setIndexerRequestBufferOverflowHandler(
+					_indexerRequestBufferOverflowHandler);
+		}
+	}
+
+	protected void unsetIndexerRequestBufferOverflowHandler(
+		IndexerRequestBufferOverflowHandler
+			indexerRequestBufferOverflowHandler) {
+
+		_indexerRequestBufferOverflowHandler = null;
+
+		for (BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler :
+				_bufferedInvocationHandlers.values()) {
+
+			bufferedIndexerInvocationHandler.
+				setIndexerRequestBufferOverflowHandler(
+					_defaultIndexerRequestBufferOverflowHandler);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexerRegistryImpl.class);
 
 	private final Map<String, BufferedIndexerInvocationHandler>
 		_bufferedInvocationHandlers = new ConcurrentHashMap<>();
+	private final IndexerRequestBufferOverflowHandler
+		_defaultIndexerRequestBufferOverflowHandler =
+			new DefaultIndexerRequestBufferOverflowHandler();
 	private final Indexer<?> _dummyIndexer = new DummyIndexer();
 	private volatile IndexerRegistryConfiguration _indexerRegistryConfiguration;
+	private volatile IndexerRequestBufferOverflowHandler
+		_indexerRequestBufferOverflowHandler;
 	private final Map<String, Indexer<? extends Object>> _indexers =
 		new ConcurrentHashMap<>();
 	private final Map<String, Indexer<? extends Object>> _proxiedIndexers =

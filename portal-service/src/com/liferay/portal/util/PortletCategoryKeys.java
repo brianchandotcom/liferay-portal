@@ -79,7 +79,7 @@ public class PortletCategoryKeys {
 		"site_administration.pages";
 
 	public static final String SITE_ADMINISTRATION_PUBLISHING_TOOLS =
-		"site_administration.publishing-tools";
+		"site_administration.publishing_tools";
 
 	public static final String SITE_ADMINISTRATION_USERS =
 		"site_administration.users";

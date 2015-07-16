@@ -36,6 +36,7 @@ import aQute.bnd.annotation.ProviderType;
  * @see ${packagePath}.service.${entity.name}ServiceUtil
  */
 </#if>
+
 @ProviderType
 public class ${entity.name}${sessionTypeName}ServiceImpl extends ${entity.name}${sessionTypeName}ServiceBaseImpl {
 

@@ -1,5 +1,3 @@
-<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.*" %>
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -16,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/add_menu_item/init.jsp" %>
 
 <%
 IntegerWrapper addMenuCount = (IntegerWrapper)request.getAttribute("liferay-ui:add-menu:add-count");

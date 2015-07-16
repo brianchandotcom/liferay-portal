@@ -83,8 +83,8 @@ public class AddMenuTag extends BaseBodyTagSupport implements BodyTag {
 		return EVAL_BODY_BUFFERED;
 	}
 
-	public void setMenuItems(List<AddMenuItem> _menuItems) {
-		this._menuItems = _menuItems;
+	public void setMenuItems(List<AddMenuItem> menuItems) {
+		_menuItems = menuItems;
 	}
 
 	protected String getEndPage() {

@@ -112,7 +112,7 @@
 	<javadoc>
 		<name>AnnouncementsPortlet</name>
 		<type>com.liferay.social.office.announcements.web.portlet.AnnouncementsPortlet</type>
-		<author><![CDATA[Raymond AugÃ©]]></author>
+		<author><![CDATA[Raymond Augé]]></author>
 		<author><![CDATA[Evan Thibodeau]]></author>
 		<method>
 			<name>deleteEntry</name>

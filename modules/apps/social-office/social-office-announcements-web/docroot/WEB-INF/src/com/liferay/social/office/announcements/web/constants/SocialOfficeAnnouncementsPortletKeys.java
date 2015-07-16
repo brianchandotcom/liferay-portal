@@ -15,7 +15,7 @@
 package com.liferay.social.office.announcements.web.constants;
 
 /**
-* @author Jonathan Lee
+ * @author Jonathan Lee
  */
 public class SocialOfficeAnnouncementsPortletKeys {
 

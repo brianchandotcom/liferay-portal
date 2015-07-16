@@ -97,8 +97,6 @@ alter table LayoutSet drop column logo;
 
 alter table LayoutSetBranch drop column logo;
 
-alter table ListType add companyId LONG;
-
 alter table Marketplace_Module add companyId LONG;
 
 create index IX_896A375A on Marketplace_Module (uuid_, companyId);

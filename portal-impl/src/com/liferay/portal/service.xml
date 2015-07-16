@@ -1105,7 +1105,7 @@
 
 		<reference package-path="com.liferay.portal" entity="PluginSetting" />
 	</entity>
-	<entity name="ListType" local-service="true" remote-service="true">
+	<entity name="ListType" local-service="true" remote-service="true" partitionable="false">
 
 		<!-- PK fields -->
 

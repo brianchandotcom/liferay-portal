@@ -416,7 +416,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
+	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(
+	 *             HttpServletRequest)}
 	 */
 	@Deprecated
 	public static long getBasicAuthUserId(HttpServletRequest request)
@@ -427,7 +428,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
+	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(
+	 *             HttpServletRequest)}
 	 */
 	@Deprecated
 	public static long getBasicAuthUserId(
@@ -887,7 +889,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getDigestUserId(HttpServletRequest)}
+	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getDigestUserId(
+	 *             HttpServletRequest)}
 	 */
 	@Deprecated
 	public static long getDigestAuthUserId(HttpServletRequest request)

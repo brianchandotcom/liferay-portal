@@ -64,7 +64,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Drew Brokke
  */
-
 @Component(
 	immediate = true,
 	property = {

@@ -68,9 +68,9 @@ public abstract class BaseProxyBean {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
-	 * {@link #setSynchronousMessageSenderMode} and
-	 * {@link #setSynchronousDestinationName}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #setSynchronousMessageSenderMode} and {@link
+	 *             #setSynchronousDestinationName}
 	 */
 	@Deprecated
 	public void setSingleDestinationSynchronousMessageSender(

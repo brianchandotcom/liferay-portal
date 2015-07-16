@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Roberto Díaz
  */
-
 public interface Editor {
 
 	public String getJspPath(HttpServletRequest request);

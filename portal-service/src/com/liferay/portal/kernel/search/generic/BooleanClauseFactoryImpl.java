@@ -48,8 +48,8 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #create(
-	 *             String, String, String)}}
+	 * @deprecated As of 7.0.0, replaced by {@link #create(String, String,
+	 *             String)}}
 	 */
 	@Deprecated
 	@Override

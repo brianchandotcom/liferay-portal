@@ -1553,7 +1553,7 @@ public class LiferaySeleniumHelper {
 		keyboard.type(line.trim());
 	}
 
-	public static void typeFrame(
+	public static void typeCKEditor(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
 		StringBundler sb = new StringBundler();

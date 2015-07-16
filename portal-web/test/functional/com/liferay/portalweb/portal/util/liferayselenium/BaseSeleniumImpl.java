@@ -768,8 +768,8 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void typeFrame(String locator, String value) {
-		LiferaySeleniumHelper.typeFrame(this, locator, value);
+	public void typeCKEditor(String locator, String value) {
+		LiferaySeleniumHelper.typeCKEditor(this, locator, value);
 	}
 
 	@Override

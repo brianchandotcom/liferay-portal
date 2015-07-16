@@ -4,20 +4,32 @@
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-    <target name="test">
-        <if>
-            <available file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies" />
-            <then>
-                <delete file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies" />
-            </then>
-        </if>
+	<macrodef name="copy-test-dependencies">
+		<sequential>
+			<if>
+				<available file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies" />
+				<then>
+					<delete file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies" />
+				</then>
+			</if>
 
-        <copy todir="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies">
-            <fileset dir="../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni/internal/dependencies" />
-        </copy>
+			<copy todir="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies">
+				<fileset dir="../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni/internal/dependencies" />
+			</copy>
+		</sequential>
+	</macrodef>
+
+    <target name="test">
+        <copy-test-dependencies />
 
         <test
             module.dir="${basedir}"
         />
     </target>
+
+	<target name="test-class-group">
+		<copy-test-dependencies />
+
+		<antcall target="build-common-plugin.test-class-group" />
+	</target>
 </project>

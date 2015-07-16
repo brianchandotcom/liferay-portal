@@ -31,9 +31,11 @@ import com.liferay.portal.service.ServiceContext;
 public class DummyCommentManagerImpl implements CommentManager {
 
 	@Override
-	public void addComment(
+	public long addComment(
 		long userId, long groupId, String className, long classPK, String body,
 		Function<String, ServiceContext> serviceContextFunction) {
+
+		return 0;
 	}
 
 	@Override
@@ -158,6 +160,12 @@ public class DummyCommentManagerImpl implements CommentManager {
 
 			@Override
 			public boolean hasPermission(long commentId, String actionId) {
+				return false;
+			}
+
+			public boolean hasSubscribePermission(
+				long companyId, long groupId, String className, long classPK) {
+
 				return false;
 			}
 

@@ -1126,4 +1126,5 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
+	<bean id="com.liferay.portlet.usergroupsadmin.lar.UserGroupStagedModelDataHandler" class="com.liferay.portlet.usergroupsadmin.lar.UserGroupStagedModelDataHandler" />
 </beans>

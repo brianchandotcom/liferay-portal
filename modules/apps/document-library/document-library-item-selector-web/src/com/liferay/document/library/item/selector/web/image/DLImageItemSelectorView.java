@@ -34,7 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(service = ItemSelectorView.class)
+@Component(
+	property = {"service.ranking:Integer=100"},
+	service = ItemSelectorView.class
+)
 public class DLImageItemSelectorView
 	extends BaseDLItemSelectorView<ImageItemSelectorCriterion> {
 

@@ -570,8 +570,10 @@ public class PoshiRunnerExecutor {
 						"locator2");
 				}
 			}
-
-			argument = PoshiRunnerVariablesUtil.replaceCommandVars(argument);
+			else {
+				argument = PoshiRunnerVariablesUtil.replaceCommandVars(
+					argument);
+			}
 
 			arguments.add(argument);
 

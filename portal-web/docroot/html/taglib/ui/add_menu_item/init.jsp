@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,26 +12,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
+<%@ include file="/html/taglib/init.jsp" %>
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
-
-/**
- * @author Ambrín Chaudhary
- */
-public class AddMenuItem {
-
-	public String getTitle() { return _title; }
-
-	public String getUrl() { return _url; }
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	public void setUrl(String url) {
-		_url = url;
-	}
-
-	private String _title;
-	private String _url;
-}
+<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem" %>

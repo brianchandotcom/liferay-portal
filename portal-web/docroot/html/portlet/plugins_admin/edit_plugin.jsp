@@ -42,7 +42,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 %>
 
 <portlet:actionURL var="editPluginURL">
-	<portlet:param name="struts_action" value="/plugins_admin/edit_plugin" />
+	<portlet:param name="mvcRenderCommandName" value="/plugins_admin/edit_plugin" />
 </portlet:actionURL>
 
 <aui:form action="<%= editPluginURL %>" method="post" name="fm">

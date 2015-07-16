@@ -4,35 +4,32 @@
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<target name="compile">
-		<if>
-			<not>
-				<available file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies/sass-spec" />
-			</not>
-			<then>
-				<mkdir dir="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies/sass-spec" />
+	<macrodef name="copy-test-dependencies">
+		<sequential>
+			<if>
+				<available file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies" />
+				<then>
+					<delete file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies" />
+				</then>
+			</if>
 
-				<mirrors-get
-					dest="sass-spec.zip"
-					src="https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
-				/>
+			<copy todir="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies">
+				<fileset dir="../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni/internal/dependencies" />
+			</copy>
+		</sequential>
+	</macrodef>
 
-				<unzip
-					dest="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies/sass-spec"
-					src="sass-spec.zip"
-				>
-					<patternset>
-						<include name="**/spec/basic/**" />
-					</patternset>
-					<cutdirsmapper dirs="3" />
-				</unzip>
+    <target name="test">
+        <copy-test-dependencies />
 
-				<delete file="sass-spec.zip" />
-			</then>
-		</if>
+        <test
+            module.dir="${basedir}"
+        />
+    </target>
 
-		<compile
-			module.dir="${basedir}"
-		/>
+	<target name="test-class-group">
+		<copy-test-dependencies />
+
+		<antcall target="build-common-plugin.test-class-group" />
 	</target>
 </project>

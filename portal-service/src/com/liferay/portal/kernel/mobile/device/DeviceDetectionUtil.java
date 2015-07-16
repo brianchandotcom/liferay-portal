@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.mobile.device;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.Map;
 import java.util.Set;
@@ -34,7 +37,7 @@ public class DeviceDetectionUtil {
 	public static DeviceRecognitionProvider getDeviceRecognitionProvider() {
 		PortalRuntimePermission.checkGetBeanProperty(DeviceDetectionUtil.class);
 
-		return _deviceRecognitionProvider;
+		return _instance._serviceTracker.getService();
 	}
 
 	public static Set<VersionableName> getKnownBrands() {
@@ -76,15 +79,19 @@ public class DeviceDetectionUtil {
 		return knownDevices.getPointingMethods();
 	}
 
-	public void setDeviceRecognitionProvider(
-		DeviceRecognitionProvider deviceRecognitionProvider) {
+	public DeviceDetectionUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		_serviceTracker = registry.trackServices(
+			DeviceRecognitionProvider.class);
 
-		_deviceRecognitionProvider = deviceRecognitionProvider;
+		_serviceTracker.open();
 	}
 
-	private static volatile DeviceRecognitionProvider
-		_deviceRecognitionProvider;
+	private static final DeviceDetectionUtil _instance =
+		new DeviceDetectionUtil();
+
+	private final ServiceTracker
+		<DeviceRecognitionProvider, DeviceRecognitionProvider> _serviceTracker;
 
 }

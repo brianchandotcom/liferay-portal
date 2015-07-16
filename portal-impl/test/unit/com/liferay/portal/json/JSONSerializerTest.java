@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
@@ -76,6 +77,24 @@ public class JSONSerializerTest {
 		Assert.assertTrue(json.contains("\"snippets\":["));
 		Assert.assertTrue(json.contains("\"start\":0"));
 		Assert.assertTrue(json.contains("\"length\":0"));
+	}
+
+	@Test
+	public void testSerializeIntegrity() {
+		ServiceContext serviceContext = new ServiceContext();
+
+		String[] groupPermissions = new String[] {"VIEW"};
+
+		serviceContext.setAttribute("groupPermissions", groupPermissions);
+		serviceContext.setGroupPermissions(groupPermissions);
+
+		String jsonString = JSONFactoryUtil.serialize(serviceContext);
+
+		ServiceContext serviceContextDeserialize =
+			(ServiceContext)JSONFactoryUtil.deserialize(jsonString);
+
+		Assert.assertTrue(
+			serviceContextDeserialize.getGroupPermissions() != null);
 	}
 
 }

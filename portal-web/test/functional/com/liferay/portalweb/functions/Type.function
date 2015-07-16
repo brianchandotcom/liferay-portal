@@ -177,7 +177,7 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="typeFrameWaitForCKEditor">
+	<command name="typeCKEditorWaitForCKEditor">
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 
 		<execute argument1="1000" selenium="pause" />

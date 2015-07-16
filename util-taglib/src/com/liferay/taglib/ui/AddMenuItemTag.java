@@ -15,16 +15,21 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem;
-import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Ambrin Chaudhary
  */
 public class AddMenuItemTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() {
+		return EVAL_BODY_INCLUDE;
+	}
 
 	public void setTitle(String title) {
 		_title = title;
@@ -45,17 +50,11 @@ public class AddMenuItemTag extends IncludeTag {
 		return "/html/taglib/ui/add_menu_item/page.jsp";
 	}
 
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		IntegerWrapper addMenuCount = (IntegerWrapper)request.getAttribute(
-			"liferay-ui:add-menu:add-count");
-
-		if (addMenuCount != null) {
-			addMenuCount.increment();
-		}
-
 		List<AddMenuItem> menuItemList =
 			(List<AddMenuItem>)request.getAttribute(
-				"liferay-ui:add-menu:menuItemList");
+				"liferay-ui:add-menu:menuItems");
 
 		if (menuItemList != null) {
 			AddMenuItem menuItem = new AddMenuItem(_title, _url);

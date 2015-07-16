@@ -64,13 +64,13 @@ public class ApplicationContextServicePublisher {
 			}
 
 			if (bean != null) {
-				_registerService(_bundleContext, bean);
+				registerService(_bundleContext, bean);
 			}
 		}
 
 		Bundle bundle = _bundleContext.getBundle();
 
-		_registerApplicationContext(
+		registerApplicationContext(
 			_applicationContext, bundle.getSymbolicName());
 	}
 
@@ -82,7 +82,7 @@ public class ApplicationContextServicePublisher {
 		_serviceRegistrations.clear();
 	}
 
-	private Dictionary<String, Object> _getBeanProperties(Object bean) {
+	protected Dictionary<String, Object> getBeanProperties(Object bean) {
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
 
@@ -96,7 +96,7 @@ public class ApplicationContextServicePublisher {
 		return properties;
 	}
 
-	private void _registerApplicationContext(
+	protected void registerApplicationContext(
 		ApplicationContext applicationContext, String bundleSymbolicName) {
 
 		HashMapDictionary<String, Object> properties =
@@ -105,12 +105,12 @@ public class ApplicationContextServicePublisher {
 		properties.put(
 			"org.springframework.context.service.name", bundleSymbolicName);
 
-		_registerService(
+		registerService(
 			_bundleContext, applicationContext,
 			Arrays.asList(ApplicationContext.class.getName()), properties);
 	}
 
-	private void _registerService(BundleContext bundleContext, Object bean) {
+	protected void registerService(BundleContext bundleContext, Object bean) {
 		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
 
 		interfaces.add(bean.getClass());
@@ -121,10 +121,10 @@ public class ApplicationContextServicePublisher {
 			names.add(interfaceClass.getName());
 		}
 
-		_registerService(bundleContext, bean, names, _getBeanProperties(bean));
+		registerService(bundleContext, bean, names, getBeanProperties(bean));
 	}
 
-	private void _registerService(
+	protected void registerService(
 		BundleContext bundleContext, Object bean, List<String> interfaces,
 		Dictionary<String, Object> properties) {
 

@@ -1,3 +1,5 @@
+alter table AssetTag add uuid_ VARCHAR(75);
+
 alter table AssetEntry add listable BOOLEAN;
 
 COMMIT_TRANSACTION;

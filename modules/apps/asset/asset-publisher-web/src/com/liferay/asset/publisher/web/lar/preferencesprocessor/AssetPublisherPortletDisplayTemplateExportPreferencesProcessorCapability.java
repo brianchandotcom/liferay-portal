@@ -15,6 +15,10 @@
 package com.liferay.asset.publisher.web.lar.preferencesprocessor;
 
 import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorCapability;
+import com.liferay.portlet.display.template.preferencesprocessor.PortletDisplayTemplateExportPreferencesProcessorCapability;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,5 +33,25 @@ import org.osgi.service.component.annotations.Component;
 	}
 )
 public class AssetPublisherPortletDisplayTemplateExportPreferencesProcessorCapability
-	extends AssetPublisherPortletDisplayTemplateExportImportPreferencesProcessorCapability {
+	extends PortletDisplayTemplateExportPreferencesProcessorCapability {
+
+	@Override
+	protected String getDisplayStyle(
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
+
+		return AssetPublisherExportImportPreferencesProcessorUtil.
+			getDisplayStyle(portletDataContext, portletId, portletPreferences);
+	}
+
+	@Override
+	protected long getDisplayStyleGroupId(
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
+
+		return AssetPublisherExportImportPreferencesProcessorUtil.
+			getDisplayStyleGroupId(
+				portletDataContext, portletId, portletPreferences);
+	}
+
 }

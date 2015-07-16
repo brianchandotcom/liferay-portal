@@ -840,7 +840,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</macrodef>
 
 	<macrodef name="gradle-execute">
-		<attribute default="${basedir}" name="dir" />
 		<attribute default="true" name="failonerror" />
 		<attribute name="task" />
 		<element implicit="true" name="args" optional="true" />
@@ -851,14 +850,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<then>
 					<property name="gradlew.suffix" value="" />
 
-					<chmod file="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" perm="a+x" />
+					<chmod file="${project.dir}/tools/gradle/gradlew${gradlew.suffix}" perm="a+x" />
 				</then>
 				<else>
 					<property name="gradlew.suffix" value=".bat" />
 				</else>
 			</if>
 
-			<exec dir="@{dir}" executable="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+			<exec executable="${project.dir}/tools/gradle/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 				<args />
 				<arg value="@{task}" />
 			</exec>

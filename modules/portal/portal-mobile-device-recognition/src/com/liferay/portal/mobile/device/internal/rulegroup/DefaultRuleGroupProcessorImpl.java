@@ -14,7 +14,6 @@
 
 package com.liferay.portal.mobile.device.internal.rulegroup;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,9 +35,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Edward Han
  */
+@Component(immediate = true, service = RuleGroupProcessor.class)
 public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 
 	@Override
@@ -78,6 +84,21 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 
 	@Override
 	public void registerRuleHandler(RuleHandler ruleHandler) {
+		addRuleHandler(ruleHandler);
+	}
+
+	@Override
+	public RuleHandler unregisterRuleHandler(String ruleType) {
+		return _ruleHandlers.remove(ruleType);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeRuleHandler"
+	)
+	protected void addRuleHandler(RuleHandler ruleHandler) {
 		RuleHandler oldRuleHandler = _ruleHandlers.put(
 			ruleHandler.getType(), ruleHandler);
 
@@ -86,29 +107,6 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 				"Replacing existing rule handler type " +
 					ruleHandler.getType());
 		}
-	}
-
-	public void setMDRRuleGroupInstanceLocalService(
-		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
-
-		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
-	}
-
-	public void setMDRRuleGroupLocalService(
-		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
-
-		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
-	}
-
-	public void setRuleHandlers(Collection<RuleHandler> ruleHandlers) {
-		for (RuleHandler ruleHandler : ruleHandlers) {
-			registerRuleHandler(ruleHandler);
-		}
-	}
-
-	@Override
-	public RuleHandler unregisterRuleHandler(String ruleType) {
-		return _ruleHandlers.remove(ruleType);
 	}
 
 	protected boolean evaluateRule(MDRRule rule, ThemeDisplay themeDisplay) {
@@ -162,15 +160,29 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 		return null;
 	}
 
+	protected void removeRuleHandler(RuleHandler ruleHandler) {
+		_ruleHandlers.remove(ruleHandler.getType());
+	}
+
+	@Reference(unbind = "-")
+	protected void setMdrRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMdrRuleGroupLocalService(
+		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
+
+		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultRuleGroupProcessorImpl.class);
 
-	@BeanReference(type = MDRRuleGroupInstanceLocalService.class)
 	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
-
-	@BeanReference(type = MDRRuleGroupLocalService.class)
 	private MDRRuleGroupLocalService _mdrRuleGroupLocalService;
-
 	private final Map<String, RuleHandler> _ruleHandlers = new HashMap<>();
 
 }

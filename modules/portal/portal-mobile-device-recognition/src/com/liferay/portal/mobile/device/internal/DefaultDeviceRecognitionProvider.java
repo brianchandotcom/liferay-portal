@@ -25,9 +25,12 @@ import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Milen Dyankov
  */
+@Component(immediate = true, service = DeviceRecognitionProvider.class)
 public class DefaultDeviceRecognitionProvider
 	implements DeviceRecognitionProvider {
 

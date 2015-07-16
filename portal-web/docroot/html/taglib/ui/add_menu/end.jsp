@@ -27,7 +27,7 @@ List<AddMenuItem> menuItems = (List<AddMenuItem>)request.getAttribute("liferay-u
 		AddMenuItem menuItem = menuItems.get(0);
 		%>
 
-		<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= menuItem.getUrl() %>" title="<%= menuItem.getTitle() %>">
+		<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" title="<%= HtmlUtil.escapeAttribute(menuItem.getTitle()) %>">
 			<span class="icon-plus"></span>
 		</a>
 
@@ -53,7 +53,7 @@ List<AddMenuItem> menuItems = (List<AddMenuItem>)request.getAttribute("liferay-u
 				%>
 
 					<li>
-						<a href="<%= menuItem.getUrl() %>"><%= menuItem.getTitle() %></a>
+						<a href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>"><%= HtmlUtil.escape(menuItem.getTitle()) %></a>
 					</li>
 
 				<%

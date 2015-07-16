@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.exportimport.api.ExportImportContentProcessor;
+import com.liferay.exportimport.api.ExportImportContentProcessorRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -34,7 +36,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -235,15 +236,19 @@ public class DDMTemplateStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
+		ExportImportContentProcessor exportImportContentProcessor =
+			getExportImportContentProcessor();
+
 		if (template.isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.fetchImage(
 				template.getSmallImageId());
 
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportHelperUtil.replaceExportContentReferences(
+					exportImportContentProcessor.replaceExportContentReferences(
 						portletDataContext, template,
-						template.getSmallImageURL() + StringPool.SPACE, true);
+						template.getSmallImageURL() + StringPool.SPACE, true,
+						true);
 
 				template.setSmallImageURL(smallImageURL);
 			}
@@ -263,10 +268,12 @@ public class DDMTemplateStagedModelDataHandler
 			}
 		}
 
-		String script = ExportImportHelperUtil.replaceExportContentReferences(
-			portletDataContext, template, template.getScript(),
-			portletDataContext.getBooleanParameter(
-				DDMPortletDataHandler.NAMESPACE, "referenced-content"));
+		String script =
+			exportImportContentProcessor.replaceExportContentReferences(
+				portletDataContext, template, template.getScript(),
+				portletDataContext.getBooleanParameter(
+					DDMPortletDataHandler.NAMESPACE, "referenced-content"),
+				true);
 
 		template.setScript(script);
 
@@ -302,6 +309,9 @@ public class DDMTemplateStagedModelDataHandler
 		File smallFile = null;
 
 		try {
+			ExportImportContentProcessor exportImportContentProcessor =
+				getExportImportContentProcessor();
+
 			if (template.isSmallImage()) {
 				Element element =
 					portletDataContext.getImportDataStagedModelElement(
@@ -312,9 +322,10 @@ public class DDMTemplateStagedModelDataHandler
 
 				if (Validator.isNotNull(template.getSmallImageURL())) {
 					String smallImageURL =
-						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, template,
-							template.getSmallImageURL());
+						exportImportContentProcessor.
+							replaceImportContentReferences(
+								portletDataContext, template,
+								template.getSmallImageURL());
 
 					template.setSmallImageURL(smallImageURL);
 				}
@@ -332,7 +343,7 @@ public class DDMTemplateStagedModelDataHandler
 			}
 
 			String script =
-				ExportImportHelperUtil.replaceImportContentReferences(
+				exportImportContentProcessor.replaceImportContentReferences(
 					portletDataContext, template, template.getScript());
 
 			template.setScript(script);
@@ -425,6 +436,14 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		return existingTemplate;
+	}
+
+	protected ExportImportContentProcessor getExportImportContentProcessor() {
+		ExportImportContentProcessor exportImportContentProcessor =
+			ExportImportContentProcessorRegistryUtil.
+				getExportImportContentProcessor(DDMTemplate.class.getName());
+
+		return exportImportContentProcessor;
 	}
 
 }

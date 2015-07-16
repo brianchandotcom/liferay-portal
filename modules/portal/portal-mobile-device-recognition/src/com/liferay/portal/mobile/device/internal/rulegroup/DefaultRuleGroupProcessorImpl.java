@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.rulegroup;
+package com.liferay.portal.mobile.device.internal.rulegroup;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

@@ -72,7 +72,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<execute macro="WikiNode#gotoCP">
 			<var name="wikiNodeName" value="Main" />
@@ -205,7 +207,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<execute macro="WikiNode#gotoCP">
 			<var name="wikiNodeName" value="Main" />

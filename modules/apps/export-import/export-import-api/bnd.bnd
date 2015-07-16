@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Export Import API
 Bundle-SymbolicName: com.liferay.exportimport.api
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.exportimport.portlet.preferences.processor
 Include-Resource: classes

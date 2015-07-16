@@ -17,14 +17,13 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-SearchContainer contextSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer");
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)request.getAttribute("liferay-ui:user-group-search-container-results:searchTerms");
 LinkedHashMap<String, Object> userGroupParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-group-search-container-results:userGroupParams");
 
 String portletName = ParamUtil.getString(request, "p_p_id");
 %>
 
-<liferay-ui:search-container searchContainer="<%= contextSearchContainer %>">
+<liferay-ui:search-container searchContainer="<%= (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer") %>">
 	<liferay-ui:search-container-results>
 		<c:choose>
 			<c:when test="<%= portletName.equals(PortletKeys.DIRECTORY) && PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">

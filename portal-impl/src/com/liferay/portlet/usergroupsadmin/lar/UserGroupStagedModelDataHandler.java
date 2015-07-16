@@ -15,6 +15,7 @@
 package com.liferay.portlet.usergroupsadmin.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.UserGroup;
@@ -31,6 +32,7 @@ import java.util.List;
 /**
  * @author David Mendez Gonzalez
  */
+@OSGiBeanProperties
 public class UserGroupStagedModelDataHandler
 	extends BaseStagedModelDataHandler<UserGroup> {
 

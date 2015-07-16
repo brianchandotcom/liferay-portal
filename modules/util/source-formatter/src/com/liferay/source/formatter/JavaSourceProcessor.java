@@ -2843,6 +2843,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/com/liferay/portal/service/ServiceContext*.java",
 			"**/model/BaseModel.java", "**/model/impl/BaseModelImpl.java",
 			"**/portal-test/**/portal/service/**/*.java",
+			"**/portal-test-internal/**/portal/service/**/*.java",
 			"**/service/Base*.java",
 			"**/service/PersistedModelLocalService*.java",
 			"**/service/base/PrincipalBean.java",

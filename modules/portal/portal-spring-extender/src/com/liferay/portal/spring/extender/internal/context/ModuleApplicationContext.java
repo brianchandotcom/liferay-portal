@@ -51,7 +51,7 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			locationPattern, "*.xml", true);
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		while (enumeration.hasMoreElements()) {
 			resources.add(new UrlResource(enumeration.nextElement()));

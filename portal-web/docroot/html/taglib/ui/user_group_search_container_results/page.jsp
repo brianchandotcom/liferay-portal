@@ -27,11 +27,11 @@ LinkedHashMap<String, Object> userGroupParams = (LinkedHashMap<String, Object>)r
 			<c:when test="<%= Validator.equals(themeDisplay.getPpid(), PortletKeys.DIRECTORY) && PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
 
 				<%
+				BaseModelSearchResult<UserGroup> baseModelSearchResult = null;
+
 				userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
 
 				Sort sort = SortFactoryUtil.getSort(UserGroup.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
-
-				BaseModelSearchResult<UserGroup> baseModelSearchResult = null;
 
 				if (searchTerms.isAdvancedSearch()) {
 					baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);

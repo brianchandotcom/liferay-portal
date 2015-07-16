@@ -115,6 +115,39 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					_afterSelectedItemChange: function(event) {
+						var instance = this;
+
+						var selectedItem = event.newVal;
+
+						if (selectedItem) {
+							instance._updateImageData(JSON.parse(selectedItem.value));
+
+							Liferay.fire(STR_IMAGE_SELECTED);
+						}
+					},
+
+					_afterSelectedItemUploadStart: function(event) {
+						var instance = this;
+
+						var uploadableItem = event.data;
+
+						if (uploadableItem) {
+							var uploadableItemValue = uploadableItem.value;
+
+							var imageData = {
+								fileEntryId: '-1',
+								url: uploadableItemValue.base64
+							};
+
+							instance._updateImageData(imageData);
+
+							Liferay.fire(STR_IMAGE_SELECTED);
+
+							instance._onUploadStart();
+						}
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
@@ -212,18 +245,15 @@ AUI.add(
 
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
-								eventName: instance.ns('selectImage'),
-								on: {
-									selectedItemChange: function(event) {
-										var selectedItem = event.newVal;
-
-										if (selectedItem) {
-											instance._updateImageData(JSON.parse(selectedItem.value));
-
-											Liferay.fire(STR_IMAGE_SELECTED);
-										}
-									}
+								after: {
+									selectedItemChange: A.bind('_afterSelectedItemChange', instance),
+									selectedItemUploadComplete: A.bind('_onUploadComplete', instance),
+									selectedItemUploadError: A.bind('_cancelUpload', instance),
+									selectedItemUploadProgress: A.bind('_onUploadProgress', instance),
+									selectedItemUploadStart: A.bind('_afterSelectedItemUploadStart', instance)
 								},
+								eventName: instance.ns('selectImage'),
+								plugins: [A.Plugin.LiferayItemSelectorUploader],
 								url: instance.get('itemSelectorURL')
 							}
 						);
@@ -531,6 +561,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-progressbar', 'liferay-item-selector-dialog', 'liferay-portlet-base', 'liferay-storage-formatter', 'uploader']
+		requires: ['aui-base', 'aui-progressbar', 'liferay-item-selector-dialog', 'liferay-item-selector-uploader', 'liferay-portlet-base', 'liferay-storage-formatter', 'uploader']
 	}
 );

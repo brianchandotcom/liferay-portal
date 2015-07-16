@@ -179,7 +179,7 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Test
-	public void testSetValueDifferentFields() throws Exception {
+	public void testSetValueDifferentKeys() throws Exception {
 		FutureTask<Void> futureTask1 = new FutureTask<>(
 			new Callable<Void>() {
 
@@ -230,7 +230,7 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Test
-	public void testSetValueSameField() throws Exception {
+	public void testSetValueSameKey() throws Exception {
 		FutureTask<Void> futureTask1 = new FutureTask<>(
 			new Callable<Void>() {
 
@@ -280,7 +280,7 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Test
-	public void testSetValuesDifferentFields() throws Exception {
+	public void testSetValuesDifferentKeys() throws Exception {
 		FutureTask<Void> futureTask1 = new FutureTask<>(
 			new Callable<Void>() {
 
@@ -331,7 +331,7 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Test
-	public void testSetValuesSameField() throws Exception {
+	public void testSetValuesSameKey() throws Exception {
 		FutureTask<Void> futureTask1 = new FutureTask<>(
 			new Callable<Void>() {
 

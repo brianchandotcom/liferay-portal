@@ -73,18 +73,11 @@ public class DeleteThreadMVCActionCommand
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof LockedThreadException ||
-				e instanceof PrincipalException) {
+		catch (LockedThreadException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
 
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/message_boards/error.jsp");
-			}
-			else {
-				throw e;
-			}
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
 	}
 

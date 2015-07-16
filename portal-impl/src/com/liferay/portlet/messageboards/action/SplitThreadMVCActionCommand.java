@@ -80,25 +80,16 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			splitThread(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException ||
-				e instanceof RequiredMessageException) {
+		catch (PrincipalException | RequiredMessageException e) {
+			SessionErrors.add(actionRequest, e.getClass());
 
-				SessionErrors.add(actionRequest, e.getClass());
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/message_boards/error.jsp");
+		}
+		catch (MessageBodyException | MessageSubjectException |
+				NoSuchThreadException | SplitThreadException e) {
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/message_boards/error.jsp");
-			}
-			else if (e instanceof MessageBodyException ||
-					 e instanceof MessageSubjectException ||
-					 e instanceof NoSuchThreadException ||
-					 e instanceof SplitThreadException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
+			SessionErrors.add(actionRequest, e.getClass());
 		}
 	}
 

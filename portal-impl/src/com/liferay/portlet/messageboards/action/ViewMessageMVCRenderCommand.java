@@ -127,17 +127,16 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 
 			return "/html/portlet/message_boards/view_message.jsp";
 		}
+		catch (NoSuchMessageException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/html/portlet/message_board/error.jsp";
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchMessageException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/html/portlet/message_board/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
+			throw new PortletException(e);
 		}
 	}
 

@@ -64,16 +64,11 @@ public class BanUserMVCActionCommand extends BaseMessageBoardsMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (PrincipalException pe) {
+			SessionErrors.add(actionRequest, pe.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/message_boards/error.jsp");
-			}
-			else {
-				throw e;
-			}
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
 	}
 

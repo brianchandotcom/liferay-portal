@@ -95,31 +95,22 @@ public class EditCategoryMVCActionCommand
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCategoryException ||
-				e instanceof PrincipalException) {
+		catch (NoSuchCategoryException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/message_boards/error.jsp");
+		}
+		catch (CaptchaConfigurationException | CaptchaMaxChallengesException |
+				CaptchaTextException | CategoryNameException |
+				MailingListEmailAddressException |
+				MailingListInServerNameException |
+				MailingListInUserNameException |
+				MailingListOutEmailAddressException |
+				MailingListOutServerNameException |
+				MailingListOutUserNameException e) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/message_boards/error.jsp");
-			}
-			else if (e instanceof CaptchaConfigurationException ||
-					 e instanceof CaptchaMaxChallengesException ||
-					 e instanceof CaptchaTextException ||
-					 e instanceof CategoryNameException ||
-					 e instanceof MailingListEmailAddressException ||
-					 e instanceof MailingListInServerNameException ||
-					 e instanceof MailingListInUserNameException ||
-					 e instanceof MailingListOutEmailAddressException ||
-					 e instanceof MailingListOutServerNameException ||
-					 e instanceof MailingListOutUserNameException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
 		}
 	}
 

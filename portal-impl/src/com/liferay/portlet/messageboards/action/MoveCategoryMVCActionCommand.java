@@ -56,13 +56,8 @@ public class MoveCategoryMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.sendRedirect(redirect);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
+		catch (PrincipalException pe) {
+			SessionErrors.add(actionRequest, pe.getClass());
 		}
 	}
 

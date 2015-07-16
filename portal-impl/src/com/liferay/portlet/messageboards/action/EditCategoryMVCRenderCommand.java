@@ -46,17 +46,16 @@ public class EditCategoryMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ActionUtil.getCategory(renderRequest);
 		}
+		catch (NoSuchCategoryException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/html/portlet/message_boards/error.jsp";
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCategoryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/html/portlet/message_boards/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
+			throw new PortletException(e);
 		}
 
 		return "/html/portlet/message_boards/edit_category.jsp";

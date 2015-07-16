@@ -46,17 +46,16 @@ public class MoveThreadMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ActionUtil.getThreadMessage(renderRequest);
 		}
+		catch (NoSuchMessageException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/html/portlet/message_boards/error.jsp";
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchMessageException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/html/portlet/message_boards/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
+			throw new PortletException(e);
 		}
 
 		return "/html/portlet/message_boards/move_thread.jsp";

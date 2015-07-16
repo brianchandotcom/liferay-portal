@@ -162,62 +162,51 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchMessageException ||
-				e instanceof PrincipalException ||
-				e instanceof RequiredMessageException) {
+		catch (NoSuchMessageException | PrincipalException |
+				RequiredMessageException e) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/message_boards/error.jsp");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/message_boards/error.jsp");
+		}
+		catch (AntivirusScannerException | CaptchaConfigurationException |
+				CaptchaMaxChallengesException | CaptchaTextException |
+				DuplicateFileException | FileExtensionException |
+				FileNameException | FileSizeException |
+				LiferayFileItemException | LockedThreadException |
+				MessageBodyException | MessageSubjectException |
+				SanitizerException e) {
+
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				String uploadExceptionRedirect = ParamUtil.getString(
+					actionRequest, "uploadExceptionRedirect");
+
+				actionResponse.sendRedirect(uploadExceptionRedirect);
 			}
-			else if (e instanceof AntivirusScannerException ||
-					 e instanceof CaptchaConfigurationException ||
-					 e instanceof CaptchaMaxChallengesException ||
-					 e instanceof CaptchaTextException ||
-					 e instanceof DuplicateFileException ||
-					 e instanceof FileExtensionException ||
-					 e instanceof FileNameException ||
-					 e instanceof FileSizeException ||
-					 e instanceof LiferayFileItemException ||
-					 e instanceof LockedThreadException ||
-					 e instanceof MessageBodyException ||
-					 e instanceof MessageSubjectException ||
-					 e instanceof SanitizerException) {
 
-				UploadException uploadException =
-					(UploadException)actionRequest.getAttribute(
-						WebKeys.UPLOAD_EXCEPTION);
-
-				if (uploadException != null) {
-					String uploadExceptionRedirect = ParamUtil.getString(
-						actionRequest, "uploadExceptionRedirect");
-
-					actionResponse.sendRedirect(uploadExceptionRedirect);
-				}
-
-				if (e instanceof AntivirusScannerException) {
-					SessionErrors.add(actionRequest, e.getClass(), e);
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
-
+			if (e instanceof AntivirusScannerException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
-				Throwable cause = e.getCause();
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+		}
+		catch (AssetCategoryException | AssetTagException e) {
+			SessionErrors.add(actionRequest, e.getClass(), e);
+		}
+		catch (Exception e) {
+			Throwable cause = e.getCause();
 
-				if (cause instanceof SanitizerException) {
-					SessionErrors.add(actionRequest, SanitizerException.class);
-				}
-				else {
-					throw e;
-				}
+			if (cause instanceof SanitizerException) {
+				SessionErrors.add(actionRequest, SanitizerException.class);
+			}
+			else {
+				throw e;
 			}
 		}
 	}

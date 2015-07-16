@@ -14,17 +14,30 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.util.StringPlus;
 import com.liferay.util.Encryptor;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -39,6 +52,28 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 		resetPortletCSRFWhitelist();
 		resetPortletInvocationWhitelist();
 		resetPortletInvocationWhitelistActions();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			registry.getFilter(
+				"(&(" + PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS+"=*)" +
+					"(objectClass=java.lang.Object))"),
+			new AuthTokenIgnoreActionsCustomizer());
+
+		_serviceTracker.open();
+
+		_registerPortalProperty();
+	}
+
+	public void destroy() {
+		for (ServiceRegistration<Object> serviceRegistration :
+				_serviceRegistrations.values()) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceTracker.close();
 	}
 
 	@Override
@@ -53,7 +88,7 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
 	@Override
 	public Set<String> getPortletCSRFWhitelistActions() {
-		return AuthTokenIgnoreActionsRegistry.getAuthTokenIgnoreActions();
+		return _portletCSRFWhitelistActions;
 	}
 
 	@Override
@@ -208,9 +243,75 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 		return false;
 	}
 
+	private void _registerPortalProperty() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		for (String tokenIgnoreAction : PropsValues.AUTH_TOKEN_IGNORE_ACTIONS) {
+			Map<String, Object> properties = new HashMap<>();
+
+			properties.put(
+				PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, tokenIgnoreAction);
+
+			properties.put("objectClass", Object.class.getName());
+
+			ServiceRegistration<Object> serviceRegistration =
+				registry.registerService(
+					Object.class, new Object(), properties);
+
+			_serviceRegistrations.put(tokenIgnoreAction, serviceRegistration);
+		}
+	}
+
 	private Set<String> _originCSRFWhitelist;
 	private Set<String> _portletCSRFWhitelist;
+	private final Set<String> _portletCSRFWhitelistActions =
+		new ConcurrentHashSet<>();
 	private Set<String> _portletInvocationWhitelist;
 	private Set<String> _portletInvocationWhitelistActions;
+	private final StringServiceRegistrationMap<Object> _serviceRegistrations =
+		new StringServiceRegistrationMap<>();
+	private final ServiceTracker<Object, Object> _serviceTracker;
+
+	private class AuthTokenIgnoreActionsCustomizer
+		implements ServiceTrackerCustomizer<Object, Object> {
+
+		@Override
+		public Object addingService(ServiceReference<Object> serviceReference) {
+			List<String> tokenIgnoreActions = StringPlus.asList(
+				serviceReference.getProperty(
+					PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS));
+
+			_portletCSRFWhitelistActions.addAll(tokenIgnoreActions);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			return registry.getService(serviceReference);
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference, Object object) {
+
+			removedService(serviceReference, object);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference, Object object) {
+
+			List<String> tokenIgnoreActions = StringPlus.asList(
+				serviceReference.getProperty(
+					PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS));
+
+			_portletCSRFWhitelistActions.removeAll(tokenIgnoreActions);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+	}
 
 }

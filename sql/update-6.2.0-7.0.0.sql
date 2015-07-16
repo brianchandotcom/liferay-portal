@@ -1,3 +1,7 @@
+create index IX_38A65B55 on AssetEntries_AssetCategories (companyId);
+
+create index IX_112337B8 on AssetEntries_AssetTags (companyId);
+
 alter table AssetEntry add listable BOOLEAN;
 
 alter table AssetTag add uuid_ VARCHAR(75);
@@ -18,7 +22,11 @@ drop index IX_C803899D on DDMStructureLink;
 
 alter table DLFileEntryMetadata drop column fileEntryTypeId;
 
+create index IX_E69431B7 on DLFileEntryMetadata (uuid_, companyId);
+
 drop index IX_F8E90438 on DLFileEntryMetadata;
+
+create index IX_2E64D9F9 on DLFileEntryTypes_DLFolders (companyId);
 
 alter table DLFolder add restrictionType INTEGER;
 
@@ -51,6 +59,12 @@ update Group_ set groupKey = name;
 
 alter table Group_ add inheritContent BOOLEAN;
 
+create index IX_8BFD4548 on Groups_Orgs (companyId);
+
+create index IX_557D8550 on Groups_Roles (companyId);
+
+create index IX_676FC818 on Groups_UserGroups (companyId);
+
 alter table Layout drop column iconImage;
 
 alter table LayoutRevision drop column iconImage;
@@ -58,6 +72,8 @@ alter table LayoutRevision drop column iconImage;
 alter table LayoutSet drop column logo;
 
 alter table LayoutSetBranch drop column logo;
+
+create index IX_896A375A on Marketplace_Module (uuid_, companyId);
 
 alter table Organization_ add logoId LONG;
 
@@ -79,9 +95,25 @@ update Region set name = 'Monza e Brianza', regionCode = 'MB' where regionId = 8
 alter table ResourcePermission add primKeyId LONG;
 alter table ResourcePermission add viewActionId BOOLEAN;
 
+create index IX_630CC727 on SCFrameworkVersi_SCProductVers (companyId);
+
+create index IX_2EE8A074 on SCLicenses_SCProductEntries (companyId);
+
 alter table Subscription add groupId LONG;
 
 alter table Team add uuid_ VARCHAR(75);
 
+create index IX_2AC5356C on UserGroups_Teams (companyId);
+
 alter table UserNotificationEvent add deliveryType INTEGER;
 alter table UserNotificationEvent add actionRequired BOOLEAN;
+
+create index IX_3499B657 on Users_Groups (companyId);
+
+create index IX_5FBB883C on Users_Orgs (companyId);
+
+create index IX_F987A0DC on Users_Roles (companyId);
+
+create index IX_799F8283 on Users_Teams (companyId);
+
+create index IX_BB65040C on Users_UserGroups (companyId);

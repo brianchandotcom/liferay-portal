@@ -264,7 +264,7 @@
 	<command name="addLocalizedFrontPagePG">
 		<execute function="AssertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="${emptyPageMessage}" />
 
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${wikiPageContent}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${wikiPageContent}" />
 		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_LOCALIZED" />
 
 		<if>

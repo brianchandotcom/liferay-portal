@@ -166,7 +166,7 @@
 				<var name="key_lowercaseLanguageCode" value="${lowercaseLanguageCode}" />
 
 				<execute function="Type" locator1="PGWebcontentdisplayAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="PGWebcontentdisplayAddwebcontent#CONTENT_FIELD_LOCALIZED" value1="${webContentContent}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGWebcontentdisplayAddwebcontent#CONTENT_FIELD_LOCALIZED" value1="${webContentContent}" />
 				<execute function="Click" locator1="PGWebcontentdisplayAddwebcontent#LOCALIZED_PUBLISH_BUTTON" />
 			</then>
 			<elseif>
@@ -193,7 +193,7 @@
 
 				<execute function="SelectFrame" locator1="PGWebcontentdisplayAddwebcontent#WEB_CONTENT_IFRAME" />
 				<execute function="Type" locator1="PGWebcontentdisplayAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="PGWebcontentdisplayAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGWebcontentdisplayAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 
 				<if>
 					<equals arg1="${draft}" arg2="true" />
@@ -800,7 +800,7 @@
 
 		<execute function="Type#typeWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#TITLE_FIELD" value1="${webContentTitleEdit}" />
 
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#CONTENT_FIELD" value1="${webContentContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#CONTENT_FIELD" value1="${webContentContentEdit}" />
 
 		<execute function="Click" locator1="PGAssetpublisherAddnewwebcontent#PUBLISH_BUTTON" value1="Publish" />
 	</command>
@@ -812,7 +812,7 @@
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewwebcontent#WEB_CONTENT_IFRAME" />
 		<execute function="Type#typeWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#TITLE_FIELD" value1="${webContentTitleEdit}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#CONTENT_FIELD" value1="${webContentContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#CONTENT_FIELD" value1="${webContentContentEdit}" />
 		<execute function="Click" locator1="PGAssetpublisherAddnewwebcontent#PUBLISH_BUTTON" value1="Publish" />
 	</command>
 

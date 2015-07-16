@@ -78,7 +78,7 @@
 				</if>
 			</then>
 			<else>
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 			</else>
 		</if>
 

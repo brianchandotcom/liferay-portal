@@ -137,6 +137,25 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-functional-test">
+		<attribute name="database.type" />
+		<sequential>
+			<property name="test.class" value="${axis.variable}" />
+
+			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+				<test-action>
+					<database-test-run-test database.type="@{database.type}">
+						<test-action>
+							<ant antfile="build-test-tomcat.xml" inheritAll="false" target="run-selenium-tomcat">
+								<property name="test.class" value="${axis.variable}" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-integration-test">
 		<attribute name="database.type" />
 		<sequential>
@@ -169,6 +188,10 @@
 			</antcall>
 		</sequential>
 	</macrodef>
+
+	<target name="functional-tomcat-mysql">
+		<run-functional-test database.type="mysql" />
+	</target>
 
 	<target name="integration-mysql">
 		<run-integration-test database.type="mysql" />

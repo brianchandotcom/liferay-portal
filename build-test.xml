@@ -1789,7 +1789,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<if>
 				<equals arg1="@{app.server.bundle.index}" arg2="0" />
 				<then>
-					<record action="stop" name="log" />
+					<record action="stop" name="${project.dir}/log" />
 				</then>
 			</if>
 		</sequential>
@@ -1871,7 +1871,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<then>
 					<antcall target="clean-up-logs" />
 
-					<record action="start" name="log" />
+					<record action="start" name="${project.dir}/log" />
 				</then>
 			</if>
 
@@ -1915,7 +1915,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</not>
 				</and>
 				<then>
-					<record action="stop" name="log" />
+					<record action="stop" name="${project.dir}/log" />
 				</then>
 			</if>
 		</sequential>
@@ -1932,7 +1932,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<then>
 					<antcall target="clean-up-logs" />
 
-					<record action="start" name="log" />
+					<record action="start" name="${project.dir}/log" />
 				</then>
 			</if>
 
@@ -4956,7 +4956,15 @@ module.framework.properties.osgi.console=11312</echo>
 				<equals arg1="${test.build.unit}" arg2="true" />
 			</not>
 			<then>
-				<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
+				<if>
+					<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+					<then>
+						<antcall target="record-test-generated-properties" />
+					</then>
+					<else>
+						<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
+					</else>
+				</if>
 			</then>
 		</if>
 
@@ -5399,6 +5407,31 @@ if (ppstate.equals("normal")) {
 
 	<target name="record-test-class-file-names">
 		<record-test-class-file-names />
+	</target>
+
+	<target name="record-test-generated-properties">
+		<fail message="Please set the property ${test.class}." unless="test.class" />
+
+		<get-poshi-test-name />
+
+		<gradle-execute failonerror="false" task="writePoshiProperties">
+			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-PcomponentNames=${component.names}" />
+			<arg value="-PposhiTestName=${poshi.test.name}" />
+			<arg value="-PproductNames=${product.names}" />
+			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+		</gradle-execute>
+
+		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
+
+		<loadfile failonerror="false" property="test.generated.properties.content" srcfile="test.generated.properties" />
+
+		<echo>##</echo>
+		<echo>## test.generated.properties</echo>
+		<echo>##</echo>
+		<echo></echo>
+		<echo>${test.generated.properties.content}</echo>
+		<echo></echo>
 	</target>
 
 	<target name="record-test-plugin-names">

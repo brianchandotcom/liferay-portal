@@ -41,7 +41,7 @@ public class BundleResourcePatternResolver
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			location, "*.xml", true);
 
-		List<Resource> resources = new ArrayList<Resource>();
+		List<Resource> resources = new ArrayList<>();
 
 		while (enumeration.hasMoreElements()) {
 			resources.add(new UrlResource(enumeration.nextElement()));

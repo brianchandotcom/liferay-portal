@@ -12,42 +12,56 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device;
+package com.liferay.portal.mobile.device.internal;
 
-import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.DeviceCapabilityFilter;
 import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
+import com.liferay.portal.kernel.mobile.device.NoKnownDevices;
+import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Michael C. Han
+ * @author Milen Dyankov
  */
-public class DeviceRecognitionProviderProxyBean
-	extends BaseProxyBean implements DeviceRecognitionProvider {
+@Component(immediate = true, service = DeviceRecognitionProvider.class)
+public class DefaultDeviceRecognitionProvider
+	implements DeviceRecognitionProvider {
 
 	@Override
 	public Device detectDevice(HttpServletRequest request) {
-		throw new UnsupportedOperationException();
+		if (_log.isWarnEnabled()) {
+			_log.warn("Device recognition provider is not available");
+		}
+
+		return UnknownDevice.getInstance();
 	}
 
 	@Override
 	public KnownDevices getKnownDevices() {
-		throw new UnsupportedOperationException();
+		if (_log.isWarnEnabled()) {
+			_log.warn("Device recognition provider is not available");
+		}
+
+		return NoKnownDevices.getInstance();
 	}
 
 	@Override
 	public void reload() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void setDeviceCapabilityFilter(
 		DeviceCapabilityFilter deviceCapabilityFilter) {
-
-		throw new UnsupportedOperationException();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultDeviceRecognitionProvider.class);
 
 }

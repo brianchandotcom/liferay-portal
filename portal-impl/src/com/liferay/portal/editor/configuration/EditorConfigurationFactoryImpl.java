@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -38,15 +38,17 @@ public class EditorConfigurationFactoryImpl
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		JSONObject configJSONObject = _editorConfigProvider.getConfigJSONObject(
 			portletName, editorConfigKey, editorName,
-			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
+			inputEditorTaglibAttributes, themeDisplay,
+			requestBasedPortletURLFactory);
 
 		EditorOptions editorOptions = _editorOptionsProvider.getEditorOptions(
 			portletName, editorConfigKey, editorName,
-			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
+			inputEditorTaglibAttributes, themeDisplay,
+			requestBasedPortletURLFactory);
 
 		EditorConfigTransformer editorConfigTransformer =
 			_editorConfigTransformerServiceTrackerMap.getService(editorName);
@@ -54,7 +56,7 @@ public class EditorConfigurationFactoryImpl
 		if (editorConfigTransformer != null) {
 			editorConfigTransformer.transform(
 				editorOptions, inputEditorTaglibAttributes, themeDisplay,
-				liferayPortletResponse, configJSONObject);
+				requestBasedPortletURLFactory, configJSONObject);
 		}
 
 		return new EditorConfigurationImpl(configJSONObject, editorOptions);

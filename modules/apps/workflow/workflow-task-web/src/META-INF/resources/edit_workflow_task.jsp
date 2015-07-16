@@ -190,19 +190,11 @@ boolean showEditURL = workflowTaskDisplayContext.showEditURL(workflowTask);
 				</liferay-ui:panel>
 
 				<liferay-ui:panel title="comments">
-					<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-					<portlet:resourceURL var="discussionPaginationURL">
-						<portlet:param name="invokeTaglibDiscussion" value="true" />
-					</portlet:resourceURL>
-
 					<liferay-ui:discussion
 						assetEntryVisible="<%= false %>"
 						className="<%= assetRenderer.getClassName() %>"
 						classPK="<%= assetRenderer.getClassPK() %>"
-						formAction="<%= discussionURL %>"
 						formName='<%= "fm" + assetRenderer.getClassPK() %>'
-						paginationURL="<%= discussionPaginationURL %>"
 						ratingsEnabled="<%= false %>"
 						redirect="<%= currentURL %>"
 						userId="<%= user.getUserId() %>"

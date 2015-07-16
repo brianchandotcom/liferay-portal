@@ -17,8 +17,10 @@ package com.liferay.blogs.editor.configuration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Map;
 
@@ -46,13 +48,16 @@ public class BlogsContentEditorOptionsContributor
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
-		if (liferayPortletResponse == null) {
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (Validator.isNull(portletDisplay.getId())) {
 			return;
 		}
 
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
+		PortletURL portletURL = requestBasedPortletURLFactory.createActionURL(
+			portletDisplay.getId());
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");

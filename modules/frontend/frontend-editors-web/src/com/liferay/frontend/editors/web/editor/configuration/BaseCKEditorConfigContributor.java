@@ -18,15 +18,12 @@ import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributo
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Ambrin Chaudhary
@@ -37,7 +34,7 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		jsonObject.put("allowedContent", Boolean.TRUE);
 
@@ -84,12 +81,6 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 		}
 
 		jsonObject.put("resize_enabled", resizable);
-		jsonObject.put("title", Boolean.FALSE);
-
-		HttpServletResponse response =
-			liferayPortletResponse.getHttpServletResponse();
-
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	}
 
 	protected boolean isShowSource(

@@ -16,8 +16,8 @@ package com.liferay.comments.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Map;
 
@@ -40,7 +40,7 @@ public class CommentsEditorOptionsContributor
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		editorOptions.setTextMode(false);
 	}

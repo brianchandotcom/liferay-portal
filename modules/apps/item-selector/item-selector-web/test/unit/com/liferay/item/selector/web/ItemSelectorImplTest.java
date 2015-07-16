@@ -23,8 +23,11 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactory;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
@@ -106,6 +109,20 @@ public class ItemSelectorImplTest extends PowerMockito {
 			new PortletURLFactoryUtil();
 
 		portletURLFactoryUtil.setPortletURLFactory(portletURLFactory);
+
+		Portal portal = mock(Portal.class);
+
+		LiferayPortletResponse mockPortletResponse = getMockPortletResponse();
+
+		when(
+			portal.getLiferayPortletResponse(Mockito.any(PortletResponse.class))
+		).thenReturn(
+			mockPortletResponse
+		);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(portal);
 	}
 
 	@Test
@@ -134,8 +151,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorRendering() {
 		setUpItemSelectionCriterionHandlers();
 
-		PortletRequest portletRequest = getMockPortletRequest();
 		PortletResponse portletResponse = getMockPortletResponse();
+		PortletRequest portletRequest = getMockPortletRequest(portletResponse);
 
 		ItemSelectorRendering itemSelectorRendering =
 			_itemSelectorImpl.getItemSelectorRendering(
@@ -183,7 +200,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
 	}
 
-	protected PortletRequest getMockPortletRequest() {
+	protected PortletRequest getMockPortletRequest(
+		PortletResponse portletResponse) {
+
 		Map<String, String[]> parameters =
 			_itemSelectorImpl.getItemSelectorParameters(
 				"itemSelectedEventName", _mediaItemSelectorCriterion,
@@ -205,10 +224,16 @@ public class ItemSelectorImplTest extends PowerMockito {
 			themeDisplay
 		);
 
+		when(
+			portletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE)
+		).thenReturn(
+			portletResponse
+		);
+		
 		return portletRequest;
 	}
 
-	protected PortletResponse getMockPortletResponse() {
+	protected LiferayPortletResponse getMockPortletResponse() {
 		LiferayPortletResponse liferayPortletResponse = mock(
 			LiferayPortletResponse.class);
 

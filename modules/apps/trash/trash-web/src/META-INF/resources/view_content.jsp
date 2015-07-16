@@ -392,20 +392,12 @@
 				<liferay-ui:message key="commenting-is-disabled-because-this-entry-is-in-the-recycle-bin" />
 			</div>
 
-			<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-			<portlet:resourceURL var="discussionPaginationURL">
-				<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:resourceURL>
-
 			<div class="asset-discussion">
 				<liferay-ui:discussion
 					className="<%= className %>"
 					classPK="<%= classPK %>"
-					formAction="<%= discussionURL %>"
 					formName='<%= "fm" + classPK %>'
 					hideControls="<%= true %>"
-					paginationURL="<%= discussionPaginationURL %>"
 					redirect="<%= currentURL %>"
 					userId="<%= assetEntry.getUserId() %>"
 				/>

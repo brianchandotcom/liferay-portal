@@ -75,10 +75,10 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 				continue;
 			}
 
-			Class<?> type = serviceReference.type();
+			Class<?> typeClass = serviceReference.type();
 
 			org.osgi.framework.ServiceReference<?> osgiServiceReference =
-				_bundleContext.getServiceReference(type.getName());
+				_bundleContext.getServiceReference(typeClass.getName());
 
 			ReflectionUtils.makeAccessible(field);
 

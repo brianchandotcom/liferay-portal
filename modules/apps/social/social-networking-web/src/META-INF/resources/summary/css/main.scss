@@ -95,7 +95,7 @@
 	}
 
 	.helper-clearfix {
-		-ie-exp: expression(!this.x?(this.innerHTML+='<br\ style=clear:both;font:0/0;>',this.x=1):void 0);
+		-ie-exp: expression(!this.x?(this.innerHTML+='<br\ style=clear:both;font:0/0;>', this.x=1):void 0);
 	}
 }
 

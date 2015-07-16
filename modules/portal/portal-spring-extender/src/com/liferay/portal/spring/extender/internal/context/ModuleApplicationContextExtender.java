@@ -52,6 +52,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
+
 		_dependencyManager = new DependencyManager(bundleContext);
 		_logger = new Logger(bundleContext);
 
@@ -160,27 +161,27 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		private List<ContextDependency> _processServiceReferences(Bundle bundle)
 			throws IOException {
 
-			URL url = bundle.getEntry("OSGI-INF/context/context.dependencies");
-
 			List<ContextDependency> contextDependencies = new ArrayList<>();
 
 			List<String> lines = new ArrayList<>();
+
+			URL url = bundle.getEntry("OSGI-INF/context/context.dependencies");
 
 			StringUtil.readLines(url.openStream(), lines);
 
 			for (String line : lines) {
 				line = line.trim();
 
-				String[] split = line.split(" ");
+				String[] array = line.split(" ");
 
-				String filter = "";
+				String filterString = "";
 
-				if (split.length > 1) {
-					filter = split[1];
+				if (array.length > 1) {
+					filterString = array[1];
 				}
 
 				contextDependencies.add(
-					new ContextDependency(split[0], filter));
+					new ContextDependency(array[0], filterString));
 			}
 
 			return contextDependencies;
@@ -191,23 +192,23 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 		private class ContextDependency {
 
-			public ContextDependency(String clazz, String filter) {
-				serviceClass = clazz;
+			public ContextDependency(String className, String filterString) {
+				this.serviceClass = className;
 
-				if (!filter.equals("")) {
-					this.filter = filter;
+				if (!filterString.equals("")) {
+					this.filterString = filterString;
 				}
 			}
 
 			public String getFilter() {
-				return filter;
+				return filterString;
 			}
 
 			public String getServiceClass() {
 				return serviceClass;
 			}
 
-			protected String filter = null;
+			protected String filterString;
 			protected final String serviceClass;
 
 		}

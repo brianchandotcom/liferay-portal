@@ -78,6 +78,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();

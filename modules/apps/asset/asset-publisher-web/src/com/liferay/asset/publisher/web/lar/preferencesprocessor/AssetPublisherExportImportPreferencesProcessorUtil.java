@@ -14,7 +14,6 @@
 
 package com.liferay.asset.publisher.web.lar.preferencesprocessor;
 
-import com.liferay.dynamic.data.mapping.preferencesprocessor.PortletDisplayTemplateExportPreferencesProcessorCapability;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,11 +26,9 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Mate Thurzo
  */
-public class AssetPublisherPortletDisplayTemplateExportImportPreferencesProcessorCapability
-	extends PortletDisplayTemplateExportPreferencesProcessorCapability {
+public class AssetPublisherExportImportPreferencesProcessorUtil {
 
-	@Override
-	protected String getDisplayStyle(
+	public static String getDisplayStyle(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
@@ -50,8 +47,7 @@ public class AssetPublisherPortletDisplayTemplateExportImportPreferencesProcesso
 		return null;
 	}
 
-	@Override
-	protected long getDisplayStyleGroupId(
+	public static long getDisplayStyleGroupId(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 

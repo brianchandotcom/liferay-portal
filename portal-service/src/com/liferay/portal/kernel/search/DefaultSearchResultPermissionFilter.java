@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -51,32 +53,11 @@ public class DefaultSearchResultPermissionFilter
 			WorkflowConstants.STATUS_APPROVED);
 
 		for (int i = 0; i < documents.length; i++) {
-			Document document = documents[i];
-
-			String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
-
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
-
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			try {
-				if ((indexer == null) ||
-					(indexer.isFilterSearch() &&
-					 indexer.hasPermission(
-						 _permissionChecker, entryClassName, entryClassPK,
-						 ActionKeys.VIEW) &&
-					 indexer.isVisibleRelatedEntry(entryClassPK, status)) ||
-					!indexer.isFilterSearch() || !indexer.isPermissionAware()) {
-
-					docs.add(document);
-					scores.add(hits.score(i));
-				}
-				else {
-					excludeDocsSize++;
-				}
+			if (_isIncludeDocument(documents[i], status)) {
+				docs.add(documents[i]);
+				scores.add(hits.score(i));
 			}
-			catch (Exception e) {
+			else {
 				excludeDocsSize++;
 			}
 		}
@@ -114,6 +95,43 @@ public class DefaultSearchResultPermissionFilter
 
 		return true;
 	}
+
+	private boolean _isIncludeDocument(Document document, int status) {
+		String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
+
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+
+		if (indexer == null) {
+			return true;
+		}
+
+		if (!indexer.isFilterSearch() || !indexer.isPermissionAware()) {
+			return true;
+		}
+
+		long entryClassPK = GetterUtil.getLong(
+			document.get(Field.ENTRY_CLASS_PK));
+
+		try {
+			if (indexer.hasPermission(
+					_permissionChecker, entryClassName, entryClassPK,
+					ActionKeys.VIEW) &&
+				indexer.isVisibleRelatedEntry(entryClassPK, status)) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultSearchResultPermissionFilter.class);
 
 	private final BaseIndexer<?> _baseIndexer;
 	private final PermissionChecker _permissionChecker;

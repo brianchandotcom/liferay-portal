@@ -23,7 +23,6 @@ import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
 /**
  * @author Marcellus Tavares
  */
-
 public class DDMFormFieldTypeSettingsTestUtil {
 
 	public static Class<? extends DDMFormFieldTypeSettings> getSettings() {

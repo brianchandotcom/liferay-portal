@@ -185,8 +185,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getExcludeFilter(
-	 *             SearchContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExcludeFilter(SearchContext)}
 	 */
 	@Deprecated
 	@Override

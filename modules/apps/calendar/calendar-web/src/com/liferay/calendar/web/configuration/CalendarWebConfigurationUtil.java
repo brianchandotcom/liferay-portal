@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 /**
  * @author Adam Brandizzi
  */
-
 public class CalendarWebConfigurationUtil {
 
 	public static String get(String key) {

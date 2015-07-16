@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.configuration.Filter;
 /**
  * @author Adam Brandizzi
  */
-
 public class CalendarServiceConfigurationUtil {
 
 	public static String get(String key) {

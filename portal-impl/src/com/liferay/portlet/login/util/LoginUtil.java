@@ -61,7 +61,8 @@ public class LoginUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * AuthenticatedSessionManagerUtil#getAuthenticatedUserId(HttpServletRequest, String, String, String)}
+	 *             AuthenticatedSessionManagerUtil#getAuthenticatedUserId(
+	 *             HttpServletRequest, String, String, String)}
 	 */
 	@Deprecated
 	public static long getAuthenticatedUserId(
@@ -182,7 +183,8 @@ public class LoginUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * AuthenticatedSessionManagerUtil#login(HttpServletRequest, HttpServletResponse, String, String, boolean, String)}
+	 *             AuthenticatedSessionManagerUtil#login(HttpServletRequest,
+	 *             HttpServletResponse, String, String, boolean, String)}
 	 */
 	@Deprecated
 	public static void login(
@@ -196,7 +198,8 @@ public class LoginUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * AuthenticatedSessionManagerUtil#renewSession(HttpServletRequest, HttpSession)}
+	 *             AuthenticatedSessionManagerUtil#renewSession(
+	 *             HttpServletRequest, HttpSession)}
 	 */
 	@Deprecated
 	public static HttpSession renewSession(
@@ -243,7 +246,8 @@ public class LoginUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * AuthenticatedSessionManagerUtil#signOutSimultaneousLogins(long)}
+	 *             AuthenticatedSessionManagerUtil#signOutSimultaneousLogins(
+	 *             long)}
 	 */
 	@Deprecated
 	public static void signOutSimultaneousLogins(long userId) throws Exception {

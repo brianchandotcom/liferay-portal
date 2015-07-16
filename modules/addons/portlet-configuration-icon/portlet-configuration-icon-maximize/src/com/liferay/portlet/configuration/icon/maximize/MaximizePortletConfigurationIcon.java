@@ -35,6 +35,7 @@ public class MaximizePortletConfigurationIcon
 		return "portlet-maximize portlet-maximize-icon";
 	}
 
+	@Override
 	public String getImage() {
 		return "../aui/plus";
 	}

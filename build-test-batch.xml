@@ -238,8 +238,16 @@
 		<run-integration-test database.type="postgresql" />
 	</target>
 
-	<target name="modules-integration">
+	<target name="modules-integration-mysql">
 		<run-modules-integration-test database.type="mysql" />
+	</target>
+
+	<target name="modules-integration-oracle">
+		<run-modules-integration-test database.type="oracle" />
+	</target>
+
+	<target name="modules-integration-postgresql">
+		<run-modules-integration-test database.type="postgresql" />
 	</target>
 
 	<target name="modules-unit">

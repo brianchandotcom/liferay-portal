@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
@@ -835,8 +836,15 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
+		String slash = "/";
+
+		if (OSDetector.isWindows()) {
+			slash = "\\";
+		}
+
 		uploadFile(
-			location, _TEST_BASE_DIR_NAME + _testDependenciesDirName + value);
+			location,
+			_TEST_BASE_DIR_NAME + slash + _testDependenciesDirName + value);
 	}
 
 	@Override
@@ -969,7 +977,7 @@ public abstract class BaseWebDriverImpl
 	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
 
 	private static final String _TEST_BASE_DIR_NAME =
-		PropsValues.TEST_BASE_DIR_NAME;
+		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
 
 	private static final String _TEST_DEPENDENCIES_DIR_NAME =
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;

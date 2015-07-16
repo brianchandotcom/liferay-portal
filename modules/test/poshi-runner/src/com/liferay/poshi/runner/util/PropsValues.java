@@ -137,8 +137,8 @@ public class PropsValues {
 	public static final String TEST_CASE_REQUIRED_PROPERTY_NAMES =
 		PropsUtil.get("test.case.required.property.names");
 
-	public static final String TEST_CONSOLE_LOG_PATH = PropsUtil.get(
-		"test.console.log.path");
+	public static final String TEST_CONSOLE_LOG_FILE_NAME = PropsUtil.get(
+		"test.console.log.file.name");
 
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		PropsUtil.get("test.database.minimal"));

@@ -998,7 +998,7 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="Page#assertnodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
 		</execute>
 
@@ -1024,7 +1024,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Page#assertnodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="9080" />
 		</execute>
 

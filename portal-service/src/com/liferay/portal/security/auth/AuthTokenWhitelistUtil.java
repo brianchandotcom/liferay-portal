@@ -79,10 +79,6 @@ public class AuthTokenWhitelistUtil {
 		return getAuthTokenWhitelist().resetPortletCSRFWhitelist();
 	}
 
-	public static Set<String> resetPortletCSRFWhitelistActions() {
-		return getAuthTokenWhitelist().resetPortletCSRFWhitelistActions();
-	}
-
 	public static Set<String> resetPortletInvocationWhitelist() {
 		return getAuthTokenWhitelist().resetPortletInvocationWhitelist();
 	}

@@ -46,8 +46,6 @@ public interface AuthTokenWhitelist {
 
 	public Set<String> resetPortletCSRFWhitelist();
 
-	public Set<String> resetPortletCSRFWhitelistActions();
-
 	public Set<String> resetPortletInvocationWhitelist();
 
 	public Set<String> resetPortletInvocationWhitelistActions();

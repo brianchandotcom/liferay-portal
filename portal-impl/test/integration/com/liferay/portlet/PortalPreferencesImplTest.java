@@ -90,12 +90,11 @@ public class PortalPreferencesImplTest {
 		InvocationHandler invocationHandler = new SynchronousInvocationHandler(
 			_originalPortalPreferencesLocalService);
 
-		Class<?> clazz = _originalPortalPreferencesLocalService.getClass();
-
 		ReflectionTestUtil.setFieldValue(
 			PortalPreferencesLocalServiceUtil.class, "_service",
 			ProxyUtil.newProxyInstance(
-				clazz.getClassLoader(), clazz.getInterfaces(),
+				PortalPreferencesLocalService.class.getClassLoader(),
+				new Class<?>[] {PortalPreferencesLocalService.class},
 				invocationHandler));
 
 		_testThread.set(true);

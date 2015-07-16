@@ -153,12 +153,12 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="typeCKEditor">
+	<command name="typeAlloyEditor">
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
 
-		<execute selenium="typeCKEditor" />
+		<execute selenium="typeAlloyEditor" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

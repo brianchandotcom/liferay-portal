@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -307,6 +308,28 @@ public class FolderStagedModelDataHandlerTest
 
 		DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
 			parentFolder.getUuid(), group.getGroupId());
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		Assert.assertTrue(
+			stagedModel.getCreateDate() + " " +
+				importedStagedModel.getCreateDate(),
+			DateUtil.equals(
+				stagedModel.getCreateDate(),
+				importedStagedModel.getCreateDate(), true));
+		Assert.assertEquals(
+			stagedModel.getUuid(), importedStagedModel.getUuid());
+
+		Folder folder = (Folder)stagedModel;
+		Folder importedFolder = (Folder)importedStagedModel;
+
+		Assert.assertEquals(folder.getName(), importedFolder.getName());
+		Assert.assertEquals(
+			folder.getDescription(), importedFolder.getDescription());
 	}
 
 }

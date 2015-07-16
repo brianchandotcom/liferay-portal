@@ -19,9 +19,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.osgi.framework.BundleContext;
 
 import org.springframework.beans.BeansException;
@@ -83,8 +80,6 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 			org.osgi.framework.ServiceReference<?> osgiServiceReference =
 				_bundleContext.getServiceReference(type.getName());
 
-			_osgiServiceReferences.add(osgiServiceReference);
-
 			ReflectionUtils.makeAccessible(field);
 
 			try {
@@ -103,7 +98,5 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 	}
 
 	private BundleContext _bundleContext;
-	private final List<org.osgi.framework.ServiceReference<?>>
-		_osgiServiceReferences = new ArrayList<>();
 
 }

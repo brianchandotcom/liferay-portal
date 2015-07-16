@@ -39,6 +39,10 @@ LPS-30525.
 	${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", portletProviderAction.VIEW)}
 </#macro>
 
+<#macro control_menu>
+	${theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", portletProviderAction.VIEW)}
+</#macro>
+
 <#macro css
 	file_name
 >

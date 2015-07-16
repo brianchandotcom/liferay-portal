@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
@@ -27,7 +27,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 %>
 
 <portlet:resourceURL var="updateContentListURL">
-	<portlet:param name="struts_action" value="/dockbar/view" />
+	<portlet:param name="mvcPath" value="/view_resources.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:resourceURL>
 
@@ -67,7 +67,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 			<%
 			PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(themeDisplay.getPlid(), portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
 
-			redirectURL.setParameter("struts_action", "/dockbar/add_content_redirect");
+			redirectURL.setParameter("mvcPath", "/add_content_redirect.jsp");
 			redirectURL.setWindowState(LiferayWindowState.POP_UP);
 			%>
 
@@ -78,16 +78,16 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 	</aui:nav-bar>
 
 	<div id="<portlet:namespace />entriesContainer">
-		<liferay-util:include page="/html/portlet/dockbar/view_resources.jsp" />
+		<liferay-util:include page="/view_resources.jsp" servletContext="<%= application %>" />
 	</div>
 </aui:form>
 
-<aui:script use="liferay-dockbar-add-content">
-	var Dockbar = Liferay.Dockbar;
+<aui:script use="liferay-control-menu-add-content">
+	var ControlMenu = Liferay.ControlMenu;
 
 	var searchContent = A.one('#<portlet:namespace />searchContent');
 
-	var addContent = new Dockbar.AddContent(
+	var addContent = new ControlMenu.AddContent(
 		{
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			focusItem: searchContent,
@@ -97,9 +97,9 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 		}
 	);
 
-	if (Dockbar.PortletDragDrop) {
+	if (ControlMenu.PortletDragDrop) {
 		addContent.plug(
-			Dockbar.PortletDragDrop,
+			ControlMenu.PortletDragDrop,
 			{
 				on: {
 					dragEnd: function(event) {

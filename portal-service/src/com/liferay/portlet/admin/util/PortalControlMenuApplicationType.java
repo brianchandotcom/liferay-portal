@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portlet.admin.util;
 
-<%@ page import="com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class PortalControlMenuApplicationType {
 
-<%@ include file="/html/portlet/dockbar/init-ext.jsp" %>
+	public interface ControlMenu {
+
+		public static final String CLASS_NAME =
+			"com.liferay.portlet.admin.util." +
+				"PortalControlMenuApplicationType$ControlMenu";
+
+	}
+
+}

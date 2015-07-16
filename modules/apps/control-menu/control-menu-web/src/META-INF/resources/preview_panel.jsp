@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <div id="<portlet:namespace />devicePreviewContainer">
 	<aui:button cssClass="close" name="closePanelPreview" value="&times;" />
@@ -71,8 +71,8 @@
 	</div>
 </div>
 
-<aui:script use="liferay-dockbar-device-preview">
-	var devicePreview = new Liferay.Dockbar.DevicePreview(
+<aui:script use="liferay-control-menu-device-preview">
+	var devicePreview = new Liferay.ControlMenu.DevicePreview(
 		{
 			devices: {
 				autosize: {

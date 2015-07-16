@@ -1,7 +1,7 @@
 AUI.add(
-	'liferay-dockbar-add-application',
+	'liferay-control-menu-add-application',
 	function(A) {
-		var Dockbar = Liferay.Dockbar;
+		var ControlMenu = Liferay.ControlMenu;
 		var Layout = Liferay.Layout;
 
 		var CSS_LFR_PORTLET_USED = 'lfr-portlet-used';
@@ -28,7 +28,7 @@ AUI.add(
 			{
 				AUGMENTS: Liferay.PortletBase,
 
-				EXTENDS: Dockbar.AddBase,
+				EXTENDS: ControlMenu.AddBase,
 
 				NAME: 'addapplication',
 
@@ -106,10 +106,10 @@ AUI.add(
 			}
 		);
 
-		Dockbar.AddApplication = AddApplication;
+		ControlMenu.AddApplication = AddApplication;
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'event-key', 'event-mouseenter', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-panel-search', 'liferay-portlet-base', 'liferay-toggler-interaction']
+		requires: ['aui-io-request', 'event-key', 'event-mouseenter', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-panel-search', 'liferay-portlet-base', 'liferay-toggler-interaction']
 	}
 );

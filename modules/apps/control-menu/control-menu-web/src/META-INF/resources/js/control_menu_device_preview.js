@@ -1,8 +1,8 @@
 AUI.add(
-	'liferay-dockbar-device-preview',
+	'liferay-control-menu-device-preview',
 	function(A) {
 		var AObject = A.Object;
-		var Dockbar = Liferay.Dockbar;
+		var ControlMenu = Liferay.ControlMenu;
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
@@ -169,7 +169,7 @@ AUI.add(
 					_closePanel: function() {
 						var instance = this;
 
-						Dockbar.togglePreviewPanel();
+						ControlMenu.togglePreviewPanel();
 					},
 
 					_normalizeDialogAttrs: function(device, rotation) {
@@ -463,7 +463,7 @@ AUI.add(
 			}
 		);
 
-		Dockbar.DevicePreview = DevicePreview;
+		ControlMenu.DevicePreview = DevicePreview;
 	},
 	'',
 	{

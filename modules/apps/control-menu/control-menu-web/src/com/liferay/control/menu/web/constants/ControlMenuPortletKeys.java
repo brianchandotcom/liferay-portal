@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.control.menu.web.constants;
 
-<%@ page import="com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType" %>
+/**
+ * @author Eudaldo Alonso
+ */
+public class ControlMenuPortletKeys {
 
-<%@ include file="/html/portlet/dockbar/init-ext.jsp" %>
+	public static final String CONTROL_MENU =
+		"com_liferay_control_menu_portlet_ControlMenuPortlet";
+
+}

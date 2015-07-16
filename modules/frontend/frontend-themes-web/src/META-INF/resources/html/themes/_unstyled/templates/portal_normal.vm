@@ -72,6 +72,10 @@ $theme.include($body_top_include)
 	</footer>
 </div>
 
+#if ($is_signed_in)
+	#control_menu()
+#end
+
 $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)

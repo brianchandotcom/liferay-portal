@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL refererURL = renderResponse.createActionURL();
@@ -134,7 +134,7 @@ refererURL.setParameter("updateLayout", "true");
 				request.setAttribute(WebKeys.PORTLET_CATEGORY_INDEX, String.valueOf(portletCategoryIndex));
 			%>
 
-			<liferay-util:include page="/html/portlet/dockbar/view_category.jsp">
+			<liferay-util:include page="/view_category.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="panelContainerId" value="<%= panelContainerId %>" />
 			</liferay-util:include>
 
@@ -175,12 +175,12 @@ refererURL.setParameter("updateLayout", "true");
 	</div>
 </aui:form>
 
-<aui:script use="liferay-dockbar-add-application">
-	var Dockbar = Liferay.Dockbar;
+<aui:script use="liferay-control-menu-add-application">
+	var ControlMenu = Liferay.ControlMenu;
 
 	var searchApplication = A.one('#<portlet:namespace />searchApplication');
 
-	var addApplication = new Dockbar.AddApplication(
+	var addApplication = new ControlMenu.AddApplication(
 		{
 			focusItem: searchApplication,
 			inputNode: searchApplication,
@@ -191,9 +191,9 @@ refererURL.setParameter("updateLayout", "true");
 		}
 	);
 
-	if (Dockbar.PortletDragDrop) {
+	if (ControlMenu.PortletDragDrop) {
 		addApplication.plug(
-			Dockbar.PortletDragDrop,
+			ControlMenu.PortletDragDrop,
 			{
 				on: {
 					dragEnd: function(event) {

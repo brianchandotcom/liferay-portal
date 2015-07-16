@@ -1,7 +1,7 @@
 AUI.add(
-	'liferay-dockbar-add-content',
+	'liferay-control-menu-add-content',
 	function(A) {
-		var Dockbar = Liferay.Dockbar;
+		var ControlMenu = Liferay.ControlMenu;
 		var Layout = Liferay.Layout;
 
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
@@ -12,9 +12,9 @@ AUI.add(
 
 		var AddContent = A.Component.create(
 			{
-				AUGMENTS: [Dockbar.AddContentPreview, Dockbar.AddContentSearch, Liferay.PortletBase],
+				AUGMENTS: [ControlMenu.AddContentPreview, ControlMenu.AddContentSearch, Liferay.PortletBase],
 
-				EXTENDS: Dockbar.AddBase,
+				EXTENDS: ControlMenu.AddBase,
 
 				NAME: 'addcontent',
 
@@ -111,10 +111,10 @@ AUI.add(
 			}
 		);
 
-		Dockbar.AddContent = AddContent;
+		ControlMenu.AddContent = AddContent;
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-content-preview', 'liferay-dockbar-add-content-search']
+		requires: ['aui-io-request', 'liferay-control-menu', 'liferay-control-menu-add-base', 'liferay-control-menu-add-content-preview', 'liferay-control-menu-add-content-search']
 	}
 );

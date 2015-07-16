@@ -1,8 +1,8 @@
 AUI.add(
-	'liferay-dockbar-add-content-drag-drop',
+	'liferay-control-menu-add-content-drag-drop',
 	function(A) {
 		var DDM = A.DD.DDM;
-		var Dockbar = Liferay.Dockbar;
+		var ControlMenu = Liferay.ControlMenu;
 		var Layout = Liferay.Layout;
 
 		var PROXY_NODE_ITEM = Layout.PROXY_NODE_ITEM;
@@ -50,7 +50,7 @@ AUI.add(
 					portletItemClass = 'FreeFormPortletItem';
 				}
 
-				var portletItem = new Dockbar[portletItemClass](portletItemOptions);
+				var portletItem = new ControlMenu[portletItemClass](portletItemOptions);
 
 				portletItem.on('drag:end', instance._onDragEnd, instance);
 
@@ -213,12 +213,12 @@ AUI.add(
 			}
 		);
 
-		Dockbar.AddContentDragDrop = AddContentDragDrop;
-		Dockbar.FreeFormPortletItem = FreeFormPortletItem;
-		Dockbar.PortletItem = PortletItem;
+		ControlMenu.AddContentDragDrop = AddContentDragDrop;
+		ControlMenu.FreeFormPortletItem = FreeFormPortletItem;
+		ControlMenu.PortletItem = PortletItem;
 	},
 	'',
 	{
-		requires: ['aui-base', 'dd', 'liferay-dockbar', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'liferay-portlet-base']
+		requires: ['aui-base', 'dd', 'liferay-control-menu', 'liferay-layout', 'liferay-layout-column', 'liferay-layout-freeform', 'liferay-portlet-base']
 	}
 );

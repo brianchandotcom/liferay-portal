@@ -18,6 +18,7 @@ import com.google.javascript.jscomp.BasicErrorManager;
 import com.google.javascript.jscomp.CheckLevel;
 import com.google.javascript.jscomp.Compiler;
 import com.google.javascript.jscomp.CompilerOptions;
+import com.google.javascript.jscomp.CompilerOptions.LanguageMode;
 import com.google.javascript.jscomp.DiagnosticGroups;
 import com.google.javascript.jscomp.JSError;
 import com.google.javascript.jscomp.MessageFormatter;
@@ -43,6 +44,8 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 		SourceFile sourceFile = SourceFile.fromCode(resourceName, content);
 
 		CompilerOptions compilerOptions = new CompilerOptions();
+
+		compilerOptions.setLanguageIn(LanguageMode.ECMASCRIPT5);
 
 		compilerOptions.setWarningLevel(
 			DiagnosticGroups.NON_STANDARD_JSDOC, CheckLevel.OFF);

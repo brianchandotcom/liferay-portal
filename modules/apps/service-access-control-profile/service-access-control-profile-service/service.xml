@@ -33,6 +33,9 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" case-sensitive="false" />
 		</finder>
+
+		<reference package-path="com.liferay.portal" entity="ResourcePermission" />
+		<reference package-path="com.liferay.portal" entity="Role" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateSACPEntryName</exception>

@@ -16,6 +16,7 @@ package com.liferay.portal.security.auth.verifier;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.access.control.profile.ServiceAccessControlProfileThreadLocal;
 import com.liferay.portal.kernel.security.auth.tunnel.TunnelAuthenticationManagerUtil;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
@@ -27,12 +28,15 @@ import com.liferay.portal.security.auth.AuthException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Zsolt Berentey
@@ -42,10 +46,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=255.255.255.255",
 		"auth.verifier.TunnelingServletAuthVerifier.urls.excludes=",
-		"auth.verifier.TunnelingServletAuthVerifier.urls.includes=/api/liferay/do"
+		"auth.verifier.TunnelingServletAuthVerifier.urls.includes=/api/liferay/do",
+		"service.access.control.profile.name=DEFAULT_USER"
 	}
 )
 public class TunnelingServletAuthVerifier implements AuthVerifier {
+
+	@Activate
+	@Modified
+	public void activate(Map<String, Object> properties) {
+		_properties = properties;
+	}
 
 	@Override
 	public String getAuthType() {
@@ -66,6 +77,12 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 				authVerifierResult.setPassword(credentials[1]);
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
+
+				String profileName = (String) _properties.get(
+					"service.access.control.profile.name");
+
+				ServiceAccessControlProfileThreadLocal.
+					addActiveServiceAccessControlProfileName(profileName);
 			}
 		}
 		catch (AuthException ae) {
@@ -113,5 +130,7 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TunnelingServletAuthVerifier.class);
+
+	private Map<String, Object> _properties;
 
 }

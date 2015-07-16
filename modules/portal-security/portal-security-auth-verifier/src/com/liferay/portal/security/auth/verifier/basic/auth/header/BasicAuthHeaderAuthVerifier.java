@@ -65,6 +65,7 @@ public class BasicAuthHeaderAuthVerifier
 
 			if (credentials != null) {
 				authVerifierResult.setPassword(credentials[1]);
+				authVerifierResult.setPasswordBasedAuthentication(true);
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}

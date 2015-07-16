@@ -40,8 +40,18 @@ public class AuthVerifierResult {
 		return _userId;
 	}
 
+	public boolean isPasswordBasedAuthentication() {
+		return _passwordBasedAuthentication;
+	}
+
 	public void setPassword(String password) {
 		_password = password;
+	}
+
+	public void setPasswordBasedAuthentication(
+		boolean passwordBasedAuthentication) {
+
+		_passwordBasedAuthentication = passwordBasedAuthentication;
 	}
 
 	public void setSettings(Map<String, Object> settings) {
@@ -78,6 +88,7 @@ public class AuthVerifierResult {
 	}
 
 	private String _password;
+	private boolean _passwordBasedAuthentication;
 	private Map<String, Object> _settings = new HashMap<>();
 	private State _state = State.NOT_APPLICABLE;
 	private long _userId;

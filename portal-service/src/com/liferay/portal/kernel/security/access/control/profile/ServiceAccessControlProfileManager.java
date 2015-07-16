@@ -21,8 +21,10 @@ import java.util.List;
  */
 public interface ServiceAccessControlProfileManager {
 
-	public ServiceAccessControlProfile getDefaultServiceAccessControlProfile(
+	public String getDefaultApplicationServiceAccessControlProfileName(
 		long companyId);
+
+	public String getDefaultUserServiceAccessControlProfileName(long companyId);
 
 	public ServiceAccessControlProfile getServiceAccessControlProfile(
 		long companyId, String name);

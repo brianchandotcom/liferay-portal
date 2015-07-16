@@ -16,12 +16,29 @@ package com.liferay.portal.kernel.security.access.control.profile;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Mika Koivisto
  */
 public class ServiceAccessControlProfileThreadLocal {
+
+	public static void addActiveServiceAccessControlProfileName(
+		String profileName) {
+
+		List<String> activeServiceAccessControlProfileNames =
+			getActiveServiceAccessControlProfileNames();
+
+		if (activeServiceAccessControlProfileNames == null) {
+			activeServiceAccessControlProfileNames = new ArrayList<>();
+
+			setActiveServiceAccessControlProfileNames(
+				activeServiceAccessControlProfileNames);
+		}
+
+		activeServiceAccessControlProfileNames.add(profileName);
+	}
 
 	public static List<String>
 		getActiveServiceAccessControlProfileNames() {

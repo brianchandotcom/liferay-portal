@@ -16,18 +16,19 @@ package com.liferay.service.access.control.profile;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
+import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.access.control.BaseAccessControlPolicy;
 import com.liferay.portal.kernel.security.access.control.profile.ServiceAccessControlProfileThreadLocal;
+import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.service.access.control.profile.configuration.SACPConfiguration;
 import com.liferay.service.access.control.profile.constants.SACPConstants;
 import com.liferay.service.access.control.profile.model.SACPEntry;
@@ -59,21 +60,6 @@ public class SACPAccessControlPolicy extends BaseAccessControlPolicy {
 			ServiceAccessControlProfileThreadLocal.
 				getActiveServiceAccessControlProfileNames();
 
-		if (serviceAccessControlProfileNames == null) {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			boolean authenticated = false;
-
-			if ((permissionChecker != null) && permissionChecker.isSignedIn()) {
-				authenticated = true;
-			}
-
-			if (authenticated) {
-				return;
-			}
-		}
-
 		SACPConfiguration sacpConfiguration = null;
 
 		try {
@@ -100,8 +86,29 @@ public class SACPAccessControlPolicy extends BaseAccessControlPolicy {
 						serviceAccessControlProfileNames);
 			}
 
-			serviceAccessControlProfileNames.add(
-				sacpConfiguration.defaultSACPEntryName());
+			boolean passwordBasedAuthentication = false;
+
+			AccessControlContext accessControlContext =
+				AccessControlUtil.getAccessControlContext();
+
+			if (accessControlContext != null) {
+				AuthVerifierResult authVerifierResult =
+					accessControlContext.getAuthVerifierResult();
+
+				if (authVerifierResult != null) {
+					passwordBasedAuthentication =
+						authVerifierResult.isPasswordBasedAuthentication();
+				}
+			}
+
+			if (passwordBasedAuthentication) {
+				serviceAccessControlProfileNames.add(
+					sacpConfiguration.defaultUserSACPEntryName());
+			}
+			else {
+				serviceAccessControlProfileNames.add(
+					sacpConfiguration.defaultApplicationSACPEntryName());
+			}
 		}
 
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -119,6 +126,10 @@ public class SACPAccessControlPolicy extends BaseAccessControlPolicy {
 			catch (PortalException pe) {
 				throw new SecurityException(pe);
 			}
+		}
+
+		if (allowedServiceSignatures.contains(StringPool.STAR)) {
+			return;
 		}
 
 		Class<?> clazz = method.getDeclaringClass();

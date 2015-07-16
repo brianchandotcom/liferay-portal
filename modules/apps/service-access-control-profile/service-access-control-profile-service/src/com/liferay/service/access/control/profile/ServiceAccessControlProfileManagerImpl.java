@@ -22,11 +22,9 @@ import com.liferay.portal.kernel.security.access.control.profile.ServiceAccessCo
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.service.access.control.profile.configuration.SACPConfiguration;
 import com.liferay.service.access.control.profile.constants.SACPConstants;
 import com.liferay.service.access.control.profile.model.SACPEntry;
-import com.liferay.service.access.control.profile.service.SACPEntryLocalService;
 import com.liferay.service.access.control.profile.service.SACPEntryService;
 
 import java.util.ArrayList;
@@ -42,43 +40,30 @@ import org.osgi.service.component.annotations.Reference;
 public class ServiceAccessControlProfileManagerImpl
 	implements ServiceAccessControlProfileManager {
 
-	public ServiceAccessControlProfile getDefaultServiceAccessControlProfile(
+	@Override
+	public String getDefaultApplicationServiceAccessControlProfileName(
 		long companyId) {
 
-		SACPConfiguration sacpConfiguration = null;
+		SACPConfiguration sacpConfiguration = getConfiguration(companyId);
 
-		try {
-			sacpConfiguration = _settingsFactory.getSettings(
-				SACPConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					CompanyThreadLocal.getCompanyId(),
-					SACPConstants.SERVICE_NAME));
-		}
-		catch (SettingsException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to determine default service access control " +
-						"profile",
-					se);
-			}
-
-			return null;
+		if (sacpConfiguration != null) {
+			return sacpConfiguration.defaultApplicationSACPEntryName();
 		}
 
-		try {
-			SACPEntry sacpEntry = _sacpEntryLocalService.getSACPEntry(
-				companyId, sacpConfiguration.defaultSACPEntryName());
+		return null;
+	}
 
-			return toServiceAccessControlProfile(sacpEntry);
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get default service access control profile", pe);
-			}
+	@Override
+	public String getDefaultUserServiceAccessControlProfileName(
+		long companyId) {
 
-			return null;
+		SACPConfiguration sacpConfiguration = getConfiguration(companyId);
+
+		if (sacpConfiguration != null) {
+			return sacpConfiguration.defaultUserSACPEntryName();
 		}
+
+		return null;
 	}
 
 	@Override
@@ -107,11 +92,23 @@ public class ServiceAccessControlProfileManagerImpl
 		return _sacpEntryService.getCompanySACPEntriesCount(companyId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setSACPEntryLocalService(
-		SACPEntryLocalService sacpEntryLocalService) {
+	protected SACPConfiguration getConfiguration(long companyId) {
+		try {
+			return _settingsFactory.getSettings(
+				SACPConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, SACPConstants.SERVICE_NAME));
+		}
+		catch (SettingsException se) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to determine default service access control " +
+						"profile",
+					se);
+			}
 
-		_sacpEntryLocalService = sacpEntryLocalService;
+			return null;
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -155,7 +152,6 @@ public class ServiceAccessControlProfileManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceAccessControlProfileManagerImpl.class);
 
-	private SACPEntryLocalService _sacpEntryLocalService;
 	private SACPEntryService _sacpEntryService;
 	private volatile SettingsFactory _settingsFactory;
 

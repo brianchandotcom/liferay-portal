@@ -26,11 +26,18 @@ import java.util.List;
  */
 public class ServiceAccessControlProfileManagerUtil {
 
-	public static ServiceAccessControlProfile
-		getDefaultServiceAccessControlProfile(long companyId) {
+	public static String getDefaultApplicationServiceAccessControlProfileName(
+		long companyId) {
 
 		return getServiceAccessControlProfileManager().
-			getDefaultServiceAccessControlProfile(companyId);
+			getDefaultApplicationServiceAccessControlProfileName(companyId);
+	}
+
+	public static String getDefaultUserServiceAccessControlProfileName(
+		long companyId) {
+
+		return getServiceAccessControlProfileManager().
+			getDefaultUserServiceAccessControlProfileName(companyId);
 	}
 
 	public static ServiceAccessControlProfile getServiceAccessControlProfile(

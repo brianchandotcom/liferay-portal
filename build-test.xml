@@ -693,6 +693,38 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testray-run-id">
+		<sequential>
+			<propertyregex
+				input="${app.server.version}"
+				override="true"
+				property="app.server.major.version"
+				regexp="(\d+\.\d+).*"
+				replace="\1"
+			/>
+
+			<propertyregex
+				input="${browser.version}"
+				override="true"
+				property="browser.major.version"
+				regexp="(\d+\.\d+).*"
+				replace="\1"
+			/>
+
+			<get-database-property property.name="database.version" />
+
+			<propertyregex
+				input="${database.version}"
+				override="true"
+				property="database.major.version"
+				regexp="(\d+\.?\d+?).*"
+				replace="\1"
+			/>
+
+			<property name="testray.run.id" value="${app.server.type}-${app.server.major.version} ${database.type}-${database.major.version} ${browser.type}-${browser.major.version} ${operating.system.type}-${operating.system.version} jdk${java.jdk.version}-${java.jdk.type}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testray-team-name">
 		<sequential>
 			<script classpathref="project.classpath" language="beanshell">
@@ -2169,6 +2201,7 @@ go]]></replacevalue>
 		<get-testray-components />
 		<get-testray-logs />
 		<get-testray-project-name />
+		<get-testray-run-id />
 		<get-testray-team-name />
 
 		<if>
@@ -2252,6 +2285,7 @@ go]]></replacevalue>
 					<property name="testray.product.type" value="${testray.product.type}" />
 					<property name="testray.product.version" value="${testray.product.version}" />
 					<property name="testray.project.name" value="${testray.project.name}" />
+					<property name="testray.run.id" value="${testray.run.id}" />
 				</properties>
 			]]>
 		</property>

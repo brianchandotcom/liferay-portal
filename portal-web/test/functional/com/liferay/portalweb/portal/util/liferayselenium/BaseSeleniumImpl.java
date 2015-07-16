@@ -763,7 +763,7 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void typeCKEditor(String locator, String value) {
+	public void typeAlloyEditor(String locator, String value) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -294,7 +294,7 @@ public class PortalPreferencesImpl
 
 				store();
 
-				break;
+				return;
 			}
 			catch (Exception e) {
 				if (isCausedByStaleObjectException(e)) {

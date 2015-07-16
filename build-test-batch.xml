@@ -68,6 +68,11 @@
 						<param name="todir" value="lib/development" />
 					</antcall>
 
+					<antcall target="copy-optional-jars" inheritall="false" >
+						<param name="database.type" value="@{database.type}" />
+						<param name="todir" value="${app.server.lib.global.dir}" />
+					</antcall>
+
 					<antcall target="rebuild-database" inheritall="false" >
 						<param name="database.type" value="@{database.type}" />
 					</antcall>

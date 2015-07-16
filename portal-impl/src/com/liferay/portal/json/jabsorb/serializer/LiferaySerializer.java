@@ -152,8 +152,7 @@ public class LiferaySerializer extends AbstractSerializer {
 					if (JSONSerializer.CIRC_REF_OR_DUPLICATE != fieldObject) {
 						serializableJSONObject.put(fieldName, fieldObject);
 					}
-
-					if (!serializableJSONObject.has(fieldName)) {
+					else if (!serializableJSONObject.has(fieldName)) {
 						serializableJSONObject.put(
 							fieldName, field.get(object));
 					}
@@ -335,12 +334,14 @@ public class LiferaySerializer extends AbstractSerializer {
 
 					Object value = null;
 
+					if (!serializableJSONObject.has(fieldName)) {
+						continue;
+					}
+
 					try {
-						if (serializableJSONObject.has(fieldName)) {
-							value = ser.unmarshall(
-								serializerState, field.getType(),
-								serializableJSONObject.get(fieldName));
-						}
+						value = ser.unmarshall(
+							serializerState, field.getType(),
+							serializableJSONObject.get(fieldName));
 					}
 					catch (Exception e) {
 					}

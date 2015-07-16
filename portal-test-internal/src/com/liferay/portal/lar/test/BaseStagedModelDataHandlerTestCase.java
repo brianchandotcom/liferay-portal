@@ -752,11 +752,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		Assert.assertNotNull(importedStagedModel);
 
 		validateAssets(importedStagedModel, stagedModelAssets, group);
-
 		validateComments(stagedModel, importedStagedModel, group);
-
 		validateImport(dependentStagedModelsMap, group);
-
+		validateImportedStagedModel(stagedModel, importedStagedModel);
 		validateRatings(stagedModel, importedStagedModel);
 	}
 

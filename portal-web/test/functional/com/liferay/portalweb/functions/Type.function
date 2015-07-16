@@ -165,12 +165,12 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="typeFrame">
+	<command name="typeCKEditor">
 		<execute selenium="waitForVisible" />
 
 		<execute selenium="mouseOver" />
 
-		<execute selenium="typeFrame" />
+		<execute selenium="typeCKEditor" />
 
 		<execute selenium="assertJavaScriptErrors" />
 
@@ -182,7 +182,7 @@
 
 		<execute argument1="1000" selenium="pause" />
 
-		<execute function="Type#typeFrame" />
+		<execute function="Type#typeCKEditor" />
 
 		<execute argument1="1000" selenium="pause" />
 

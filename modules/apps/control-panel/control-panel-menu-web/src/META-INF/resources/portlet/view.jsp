@@ -56,6 +56,9 @@
 			else if (siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_PAGES)) {
 				iconCssClass = "icon-sitemap";
 			}
+			else if (siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS)) {
+				iconCssClass = "icon-retweet";
+			}
 			else if (siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_USERS)) {
 				iconCssClass = "icon-group";
 			}

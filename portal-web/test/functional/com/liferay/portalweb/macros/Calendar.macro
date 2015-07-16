@@ -340,7 +340,7 @@
 			<equals arg1="${inviteEmail}" arg2="true" />
 			<then>
 				<execute function="Type" locator1="PGCalendarCalendarSettings#NOTIFICATION_TEMPLATES_SUBJECT_FIELD" value1="[$PORTLET_NAME$]: Edited Event Notification for [$EVENT_TITLE$]" />
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="PGCalendarCalendarSettings#NOTIFICATION_TEMPLATES_BODY_FIELD" value1="[$TO_NAME$],
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGCalendarCalendarSettings#NOTIFICATION_TEMPLATES_BODY_FIELD" value1="[$TO_NAME$],
 
 				This is an edited event invite email.
 
@@ -355,7 +355,7 @@
 			<equals arg1="${reminderEmail}" arg2="true" />
 			<then>
 				<execute function="Type" locator1="PGCalendarCalendarSettings#NOTIFICATION_TEMPLATES_SUBJECT_FIELD" value1="[$PORTLET_NAME$]: Edited Event Reminder for [$EVENT_TITLE$]" />
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="PGCalendarCalendarSettings#NOTIFICATION_TEMPLATES_BODY_FIELD" value1="[$TO_NAME$],
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGCalendarCalendarSettings#NOTIFICATION_TEMPLATES_BODY_FIELD" value1="[$TO_NAME$],
 
 				This is an edited event reminder email.
 

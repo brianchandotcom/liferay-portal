@@ -88,7 +88,7 @@
 		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 
-		<execute function="SelectFrame" locator1="//iframe[contains(@title,\'Rich Text Editor\')]" />
+		<execute function="SelectFrame" locator1="//div[contains(@id,'cke__')]" />
 
 		<var method="selenium#getBodyText()" name="string" />
 

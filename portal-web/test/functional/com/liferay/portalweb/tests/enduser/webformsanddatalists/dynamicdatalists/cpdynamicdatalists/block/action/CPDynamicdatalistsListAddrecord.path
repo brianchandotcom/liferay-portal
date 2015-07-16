@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>HTML_FIELD</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//div[@id='cke_1_contents']/iframe</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>

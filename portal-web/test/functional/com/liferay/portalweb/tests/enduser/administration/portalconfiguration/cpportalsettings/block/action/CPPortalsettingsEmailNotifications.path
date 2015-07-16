@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_FIELD</td>
-	<td>//iframe[contains(@title,'adminEmailUserAddedBody')]</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,12 +123,12 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD</td>
-	<td>//iframe[contains(@title,'adminEmailUserAddedNoPasswordBody')]</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD</td>
-	<td>//div[contains(@class,'cke_contents')]/iframe</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -159,7 +159,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD</td>
-	<td>//iframe[contains(@title,'adminEmailPasswordSentBody')]</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 </tbody>

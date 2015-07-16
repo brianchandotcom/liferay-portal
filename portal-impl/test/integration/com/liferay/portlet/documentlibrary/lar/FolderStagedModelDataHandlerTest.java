@@ -25,6 +25,7 @@ import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -225,8 +226,11 @@ public class FolderStagedModelDataHandlerTest
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
-				uuid, group.getGroupId());
+			DLFolder dlFolder =
+				DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
+					uuid, group.getGroupId());
+
+			return new LiferayFolder(dlFolder);
 		}
 		catch (Exception e) {
 			return null;

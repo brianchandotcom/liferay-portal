@@ -53,7 +53,8 @@ import org.apache.struts.action.ActionMapping;
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteThreadAction extends BaseMessageBoardsMVCActionCommand {
+public class DeleteThreadMVCActionCommand
+	extends BaseMessageBoardsMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

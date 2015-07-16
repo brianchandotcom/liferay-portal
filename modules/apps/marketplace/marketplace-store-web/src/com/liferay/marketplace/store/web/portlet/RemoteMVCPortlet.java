@@ -89,21 +89,17 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getRemotePortletURL() {
-		return StringPool.BLANK;
-	}
-
-	protected void remoteRender(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+	protected OAuthRequest getGetOAuthRequest(
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		OAuthRequest oAuthRequest = new OAuthRequest(
 			Verb.GET, getRemotePortletURL());
 
-		setRequestParameters(renderRequest, renderResponse, oAuthRequest);
+		setRequestParameters(portletRequest, portletResponse, oAuthRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Token token = _oAuthManager.getAccessToken(themeDisplay.getUser());
 
@@ -112,6 +108,20 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 			oAuthService.signRequest(token, oAuthRequest);
 		}
+
+		return oAuthRequest;
+	}
+
+	protected String getRemotePortletURL() {
+		return StringPool.BLANK;
+	}
+
+	protected void remoteRender(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		OAuthRequest oAuthRequest = getGetOAuthRequest(
+			renderRequest, renderResponse);
 
 		Response response = oAuthRequest.send();
 
@@ -126,21 +136,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		OAuthRequest oAuthRequest = new OAuthRequest(
-			Verb.GET, getRemotePortletURL());
-
-		setRequestParameters(resourceRequest, resourceResponse, oAuthRequest);
-
-		Token token = _oAuthManager.getAccessToken(themeDisplay.getUser());
-
-		if (token != null) {
-			OAuthService oAuthService = _oAuthManager.getOAuthService();
-
-			oAuthService.signRequest(token, oAuthRequest);
-		}
+		OAuthRequest oAuthRequest = getGetOAuthRequest(
+			resourceRequest, resourceResponse);
 
 		Response response = oAuthRequest.send();
 

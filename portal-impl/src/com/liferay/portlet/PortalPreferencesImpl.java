@@ -145,7 +145,7 @@ public class PortalPreferencesImpl
 	@Override
 	public void resetValues(final String namespace) {
 		try {
-			reloadableStore(new Callable<Void>() {
+			retryableStore(new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
@@ -209,7 +209,7 @@ public class PortalPreferencesImpl
 			};
 
 			if (_signedIn) {
-				reloadableStore(callable);
+				retryableStore(callable);
 			}
 			else {
 				callable.call();
@@ -249,7 +249,7 @@ public class PortalPreferencesImpl
 			};
 
 			if (_signedIn) {
-				reloadableStore(callable);
+				retryableStore(callable);
 			}
 			else {
 				callable.call();
@@ -287,7 +287,7 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
-	protected void reloadableStore(Callable<?> callable) throws Exception {
+	protected void retryableStore(Callable<?> callable) throws Exception {
 		while (true) {
 			try {
 				callable.call();

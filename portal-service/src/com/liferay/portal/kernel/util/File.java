@@ -144,6 +144,8 @@ public interface File {
 
 	public String stripExtension(String fileName);
 
+	public String stripParentheticalSuffix(String fileName);
+
 	public List<String> toList(Reader reader);
 
 	public List<String> toList(String fileName);

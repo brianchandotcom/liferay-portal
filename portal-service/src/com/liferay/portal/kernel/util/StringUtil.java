@@ -3919,6 +3919,30 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String stripParentheticalSuffix(String s) {
+		if (!s.contains(StringPool.OPEN_PARENTHESIS) ||
+			!s.contains(StringPool.CLOSE_PARENTHESIS)) {
+
+			return s;
+		}
+
+		int i = s.lastIndexOf(StringPool.OPEN_PARENTHESIS);
+		int j = s.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+		if (((j - i) <= 0) || !s.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+			return s;
+		}
+
+		s = StringUtil.replaceLast(s, s.substring(i, j + 1), StringPool.BLANK);
+
+		if (s.endsWith(StringPool.SPACE)) {
+			s = StringUtil.replaceLast(
+				s, s.substring(i - 1, s.length()), StringPool.BLANK);
+		}
+
+		return s;
+	}
+
 	/**
 	 * Returns a string representing the Unicode character codes of the
 	 * characters comprising the string <code>s</code>.

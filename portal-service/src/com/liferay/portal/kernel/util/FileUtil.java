@@ -374,6 +374,10 @@ public class FileUtil {
 		return getFile().stripExtension(fileName);
 	}
 
+	public static String stripParentheticalSuffix(String fileName) {
+		return getFile().stripParentheticalSuffix(fileName);
+	}
+
 	public static List<String> toList(Reader reader) {
 		return getFile().toList(reader);
 	}

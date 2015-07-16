@@ -861,6 +861,21 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
+	public String stripParentheticalSuffix(String fileName) {
+		String extension = getExtension(fileName);
+		String fileNameWithoutExtension = stripExtension(fileName);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(
+			StringUtil.stripParentheticalSuffix(fileNameWithoutExtension));
+		sb.append(StringPool.PERIOD);
+		sb.append(extension);
+
+		return sb.toString();
+	}
+
+	@Override
 	public List<String> toList(Reader reader) {
 		List<String> list = new ArrayList<>();
 

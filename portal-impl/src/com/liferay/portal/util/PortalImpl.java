@@ -1245,7 +1245,7 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
+	 *             HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	@Override
@@ -1259,7 +1259,7 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
+	 *             HttpAuthManagerUtil#getBasicUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	@Override
@@ -2101,7 +2101,7 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 * 		HttpAuthManagerUtil#getDigestUserId(HttpServletRequest)}
+	 *             HttpAuthManagerUtil#getDigestUserId(HttpServletRequest)}
 	 */
 	@Deprecated
 	@Override

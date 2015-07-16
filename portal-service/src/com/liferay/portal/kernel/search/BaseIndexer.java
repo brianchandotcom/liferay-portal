@@ -439,8 +439,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #postProcessContextBooleanFilter(
-	 *             BooleanFilter, SearchContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #postProcessContextBooleanFilter(BooleanFilter,
+	 *             SearchContext)}
 	 */
 	@Deprecated
 	@Override
@@ -465,8 +466,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #postProcessSearchQuery(
-	 *             BooleanQuery, BooleanFilter, SearchContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
+	 *             SearchContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1424,8 +1426,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	/**
 	 * @deprecated As of 7.0.0, added strictly to support backwards
-	 *             compatibility of {@link Indexer#postProcessSearchQuery(
-	 *             BooleanQuery, SearchContext)}
+	 *             compatibility of {@link
+	 *             Indexer#postProcessSearchQuery(BooleanQuery, SearchContext)}
 	 */
 	@Deprecated
 	protected void doPostProcessSearchQuery(

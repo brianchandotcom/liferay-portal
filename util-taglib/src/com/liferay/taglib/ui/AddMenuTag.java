@@ -14,37 +14,112 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem;
+import com.liferay.portal.kernel.util.*;
+import com.liferay.taglib.BaseBodyTagSupport;
+import com.liferay.taglib.util.PortalIncludeUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Ambrin Chaudhary
  */
-public class AddMenuTag extends IconTag {
+public class AddMenuTag extends BaseBodyTagSupport implements BodyTag {
 
-	public void setActionsJSONArray(JSONArray _actionsJSONArray) {
-		this._actionsJSONArray = _actionsJSONArray;
+	@Override
+	public int doAfterBody() {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		IntegerWrapper addCount = (IntegerWrapper)request.getAttribute(
+			"liferay-ui:add-menu:add-count");
+
+		if (_menuItems != null) {
+			addCount.setValue(_menuItems.size());
+
+			setAttributes(request);
+
+			return SKIP_BODY;
+		}
+
+		if ((addCount != null) && (addCount.getValue() == 0)) {
+			bodyContent.clearBody();
+
+			return EVAL_BODY_AGAIN;
+		}
+		else {
+			return SKIP_BODY;
+		}
 	}
 
 	@Override
-	protected void cleanUp() {
-		_actionsJSONArray = null;
+	public int doEndTag() throws JspException {
+		try {
+			return processEndTag();
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
+		finally {
+		}
 	}
 
 	@Override
-	protected String getPage() {
-		return _PAGE;
+	public int doStartTag() {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		request.setAttribute(
+			"liferay-ui:add-menu:add-count", new IntegerWrapper());
+
+		request.setAttribute(
+			"liferay-ui:add-menu:menuItemList", new ArrayList<AddMenuItem>());
+
+		return EVAL_BODY_BUFFERED;
 	}
 
-	@Override
+	public void setMenuItems(List<AddMenuItem> _menuItems) {
+		this._menuItems = _menuItems;
+	}
+
+	protected String getEndPage() {
+		return "/html/taglib/ui/add_menu/end.jsp";
+	}
+
+	protected String getStartPage() {
+		return "/html/taglib/ui/add_menu/start.jsp";
+	}
+
+	protected int processEndTag() throws Exception {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		IntegerWrapper addCount = (IntegerWrapper)request.getAttribute(
+			"liferay-ui:add-menu:add-count");
+
+		if ((addCount != null) && (addCount.getValue() > 0)) {
+			PortalIncludeUtil.include(pageContext, getStartPage());
+
+			PortalIncludeUtil.include(pageContext, getEndPage());
+
+			request.removeAttribute("liferay-ui:add-menu:add-count");
+
+			request.removeAttribute("liferay-ui:add-menu:menuItemList");
+		}
+
+		return EVAL_PAGE;
+	}
+
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:add-menu:actionsJSONArray", _actionsJSONArray);
+			"liferay-ui:add-menu-item:menuItemList", _menuItems);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/add_menu/page.jsp";
-
-	private JSONArray _actionsJSONArray;
+	private List<AddMenuItem> _menuItems;
 
 }

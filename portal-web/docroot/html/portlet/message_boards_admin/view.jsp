@@ -607,7 +607,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
 			form.fm('threadIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/delete_thread" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="/message_boards/delete_thread" />');
 		}
 	}
 

@@ -282,10 +282,6 @@
 
 		<action path="/message_boards/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
 
-		<action path="/message_boards/delete_thread" type="com.liferay.portlet.messageboards.action.DeleteThreadAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
 		<action path="/message_boards/edit_category" type="com.liferay.portlet.messageboards.action.EditCategoryAction">
 			<forward name="portlet.message_boards.edit_category" path="portlet.message_boards.edit_category" />
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
@@ -351,10 +347,6 @@
 		<!-- Message Boards Admin -->
 
 		<action path="/message_boards_admin/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
-		<action path="/message_boards_admin/delete_thread" type="com.liferay.portlet.messageboards.action.DeleteThreadAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
 
 		<action path="/message_boards_admin/edit_category" type="com.liferay.portlet.messageboards.action.EditCategoryAction">
 			<forward name="portlet.message_boards.edit_category" path="portlet.message_boards.edit_category" />

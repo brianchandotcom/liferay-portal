@@ -299,8 +299,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 					<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
 				</portlet:renderURL>
 
-				<portlet:actionURL var="deleteURL">
-					<portlet:param name="struts_action" value="/message_boards/delete_thread" />
+				<portlet:actionURL name="/message_boards/delete_thread" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= parentCategoryURL %>" />
 					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />

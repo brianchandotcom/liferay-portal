@@ -8,4 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean id="com.liferay.portlet.messageboards.action.BanUserMVCActionCommand" class="com.liferay.portlet.messageboards.action.BanUserMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.DeleteThreadAction" class="com.liferay.portlet.messageboards.action.DeleteThreadAction" />
 </beans>

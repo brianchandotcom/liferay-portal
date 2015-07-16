@@ -14,13 +14,17 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
@@ -41,13 +45,19 @@ import org.apache.struts.action.ActionMapping;
  * @author Sergio González
  * @author Zsolt Berentey
  */
-public class DeleteThreadAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/message_boards/delete_thread"
+	},
+	service = MVCActionCommand.class
+)
+public class DeleteThreadAction extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);

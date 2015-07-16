@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Map;
 
@@ -43,7 +43,7 @@ public class FormTextEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		jsonObject.put("allowedContent", "p");
 		jsonObject.put("disallowedContent", "br");

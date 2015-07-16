@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.editor.configuration;
 
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Map;
 
@@ -27,6 +27,6 @@ public interface EditorConfigurationFactory {
 	public EditorConfiguration getEditorConfiguration(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder);
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory);
 
 }

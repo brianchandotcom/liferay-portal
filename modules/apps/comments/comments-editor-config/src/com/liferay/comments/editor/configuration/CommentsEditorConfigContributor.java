@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Map;
 
@@ -41,7 +41,7 @@ public class CommentsEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		jsonObject.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);

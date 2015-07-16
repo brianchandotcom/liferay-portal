@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -262,7 +262,7 @@ public class InputEditorTag extends IncludeTag {
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				portletId, getConfigKey(), getEditorName(request), attributes,
-				themeDisplay, getPortletURLBuilder());
+				themeDisplay, getRequestBasedPortletURLFactory());
 
 		Map<String, Object> data = editorConfiguration.getData();
 
@@ -322,16 +322,16 @@ public class InputEditorTag extends IncludeTag {
 		return editor.getJspPath(request);
 	}
 
-	protected PortletURLBuilder getPortletURLBuilder() {
+	protected RequestBasedPortletURLFactory getRequestBasedPortletURLFactory() {
 		LiferayPortletResponse liferayPortletResponse =
 			(LiferayPortletResponse)request.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (liferayPortletResponse == null) {
-			return PortletURLBuilder.create(request);
+			return RequestBasedPortletURLFactory.create(request);
 		}
 
-		return PortletURLBuilder.create(liferayPortletResponse);
+		return RequestBasedPortletURLFactory.create(liferayPortletResponse);
 	}
 
 	@Override

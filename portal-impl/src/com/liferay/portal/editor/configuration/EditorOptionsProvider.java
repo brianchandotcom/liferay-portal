@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -36,7 +36,7 @@ public class EditorOptionsProvider
 	public EditorOptions getEditorOptions(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		EditorOptions editorOptions = new EditorOptions();
 
@@ -48,7 +48,7 @@ public class EditorOptionsProvider
 
 			editorOptionsContributor.populateEditorOptions(
 				editorOptions, inputEditorTaglibAttributes, themeDisplay,
-				portletURLBuilder);
+				requestBasedPortletURLFactory);
 		}
 
 		return editorOptions;

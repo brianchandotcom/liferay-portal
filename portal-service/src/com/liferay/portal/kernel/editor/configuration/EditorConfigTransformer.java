@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.editor.configuration;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Map;
 
@@ -59,14 +59,14 @@ public interface EditorConfigTransformer {
 	 * @param inputEditorTaglibAttributes the attributes specified to the input
 	 *        taglib tag that renders the editor
 	 * @param themeDisplay the theme display
-	 * @param portletURLBuilder a portlet URL builder.
+	 * @param requestBasedPortletURLFactory a portlet URL builder.
 	 * @param configJSONObject the JSON object composed of the entire
 	 *        configuration set by {@link EditorConfigContributor} modules
 	 */
 	public void transform(
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder,
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory,
 		JSONObject configJSONObject);
 
 }

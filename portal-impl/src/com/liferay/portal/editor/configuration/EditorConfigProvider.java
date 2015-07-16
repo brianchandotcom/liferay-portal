@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -37,7 +37,7 @@ public class EditorConfigProvider
 	public JSONObject getConfigJSONObject(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		JSONObject configJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -52,7 +52,7 @@ public class EditorConfigProvider
 
 			editorConfigContributor.populateConfigJSONObject(
 				configJSONObject, inputEditorTaglibAttributes, themeDisplay,
-				portletURLBuilder);
+				requestBasedPortletURLFactory);
 		}
 
 		return configJSONObject;

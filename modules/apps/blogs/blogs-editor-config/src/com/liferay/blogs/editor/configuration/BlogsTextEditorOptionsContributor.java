@@ -18,7 +18,7 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Map;
 
@@ -43,7 +43,7 @@ public class BlogsTextEditorOptionsContributor
 	public void populateEditorOptions(
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		editorOptions.setTextMode(true);
 	}

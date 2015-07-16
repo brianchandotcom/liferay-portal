@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.Locale;
 import java.util.Map;
@@ -44,11 +44,11 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		super.populateConfigJSONObject(
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
-			portletURLBuilder);
+			requestBasedPortletURLFactory);
 
 		jsonObject.put("autoParagraph", Boolean.FALSE);
 		jsonObject.put("autoSaveTimeout", 3000);

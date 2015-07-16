@@ -26,16 +26,16 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public abstract class PortletURLBuilder {
+public abstract class RequestBasedPortletURLFactory {
 
-	public static PortletURLBuilder create(HttpServletRequest request) {
-		return new HttpServletRequestPortletURLBuilder(request);
+	public static RequestBasedPortletURLFactory create(HttpServletRequest request) {
+		return new HttpServletRequestRequestBasedPortletURLFactory(request);
 	}
 
-	public static PortletURLBuilder create(
+	public static RequestBasedPortletURLFactory create(
 		LiferayPortletResponse liferayPortletResponse) {
 
-		return new LiferayPortletResponsePortletURLBuilder(
+		return new LiferayPortletResponseRequestBasedPortletURLFactory(
 			liferayPortletResponse);
 	}
 
@@ -45,8 +45,8 @@ public abstract class PortletURLBuilder {
 
 	public abstract PortletURL createResourceURL(String portletId);
 
-	private static class HttpServletRequestPortletURLBuilder
-		extends PortletURLBuilder {
+	private static class HttpServletRequestRequestBasedPortletURLFactory
+		extends RequestBasedPortletURLFactory {
 
 		@Override
 		public PortletURL createActionURL(String portletId) {
@@ -75,7 +75,7 @@ public abstract class PortletURLBuilder {
 				_request, portletId, themeDisplay.getPlid(), lifecycle);
 		}
 
-		private HttpServletRequestPortletURLBuilder(
+		private HttpServletRequestRequestBasedPortletURLFactory(
 			HttpServletRequest request) {
 
 			_request = request;
@@ -85,8 +85,8 @@ public abstract class PortletURLBuilder {
 
 	}
 
-	private static class LiferayPortletResponsePortletURLBuilder
-		extends PortletURLBuilder {
+	private static class LiferayPortletResponseRequestBasedPortletURLFactory
+		extends RequestBasedPortletURLFactory {
 
 		@Override
 		public PortletURL createActionURL(String portletId) {
@@ -103,7 +103,7 @@ public abstract class PortletURLBuilder {
 			return _liferayPortletResponse.createResourceURL(portletId);
 		}
 
-		private LiferayPortletResponsePortletURLBuilder(
+		private LiferayPortletResponseRequestBasedPortletURLFactory(
 			LiferayPortletResponse liferayPortletResponse) {
 
 			_liferayPortletResponse = liferayPortletResponse;

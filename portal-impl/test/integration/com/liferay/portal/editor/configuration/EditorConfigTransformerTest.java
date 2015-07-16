@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -295,7 +295,7 @@ public class EditorConfigTransformerTest {
 		public void populateConfigJSONObject(
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+			ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 			jsonObject.put("textMode", "html");
 			jsonObject.put("toolbar", "HTMLToolbar");
@@ -311,7 +311,7 @@ public class EditorConfigTransformerTest {
 		public void transform(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder,
+			ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory,
 			JSONObject configJSONObject) {
 
 			String uploadURL = editorOptions.getUploadURL();
@@ -337,7 +337,7 @@ public class EditorConfigTransformerTest {
 		public void populateEditorOptions(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+			ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 			editorOptions.setTextMode(true);
 		}
@@ -351,7 +351,7 @@ public class EditorConfigTransformerTest {
 		public void populateEditorOptions(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+			ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 			editorOptions.setUploadURL("http://upload.com");
 		}

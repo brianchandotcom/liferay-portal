@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLBuilder;
+import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, PortletURLBuilder portletURLBuilder) {
+		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		String contentsLanguageDir = getContentsLanguageDir(
 			inputEditorTaglibAttributes);
@@ -94,7 +94,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 						"liferay-ui:input-editor:name"));
 
 		populateFileBrowserURL(
-			jsonObject, portletURLBuilder, name + "selectDocument");
+			jsonObject, requestBasedPortletURLFactory, name + "selectDocument");
 
 		jsonObject.put("srcNode", name);
 
@@ -303,7 +303,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	}
 
 	protected void populateFileBrowserURL(
-		JSONObject jsonObject, PortletURLBuilder portletURLBuilder,
+		JSONObject jsonObject, RequestBasedPortletURLFactory requestBasedPortletURLFactory,
 		String eventName) {
 
 		List<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
@@ -321,7 +321,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			urlDesiredItemSelectorReturnTypes);
 
 		PortletURL layoutItemSelectorURL = _itemSelector.getItemSelectorURL(
-			portletURLBuilder, eventName, urlItemSelectorCriterion);
+			requestBasedPortletURLFactory, eventName, urlItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserBrowseUrl", layoutItemSelectorURL.toString());
@@ -338,7 +338,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			imageDesiredItemSelectorReturnTypes);
 
 		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
-			portletURLBuilder, eventName, imageItemSelectorCriterion);
+			requestBasedPortletURLFactory, eventName, imageItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", dlItemSelectorURL.toString());

@@ -70,6 +70,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void assertEditable(String locator) throws Exception {
+		LiferaySeleniumHelper.assertEditable(this, locator);
+	}
+
+	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
 		LiferaySeleniumHelper.assertElementNotPresent(this, locator);
 	}
@@ -140,6 +145,11 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void assertNotChecked(String locator) throws Exception {
 		LiferaySeleniumHelper.assertNotChecked(this, locator);
+	}
+
+	@Override
+	public void assertNotEditable(String locator) throws Exception {
+		LiferaySeleniumHelper.assertNotEditable(this, locator);
 	}
 
 	@Override
@@ -375,6 +385,11 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public boolean isNotChecked(String locator) {
 		return LiferaySeleniumHelper.isNotChecked(this, locator);
+	}
+
+	@Override
+	public boolean isNotEditable(String locator) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

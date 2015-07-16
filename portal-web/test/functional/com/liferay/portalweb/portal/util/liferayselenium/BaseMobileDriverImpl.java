@@ -68,6 +68,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void assertEditable(String locator) throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
 		throw new UnsupportedOperationException();
 	}
@@ -137,6 +142,11 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void assertNotChecked(String locator) throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void assertNotEditable(String locator) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 
@@ -364,6 +374,11 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isNotChecked(String locator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isNotEditable(String locator) {
 		throw new UnsupportedOperationException();
 	}
 

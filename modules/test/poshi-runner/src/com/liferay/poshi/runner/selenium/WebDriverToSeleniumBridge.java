@@ -887,7 +887,9 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public boolean isEditable(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.isEnabled();
 	}
 
 	@Override

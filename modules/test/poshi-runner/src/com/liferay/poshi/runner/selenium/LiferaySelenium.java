@@ -36,6 +36,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertConsoleTextPresent(String text) throws Exception;
 
+	public void assertEditable(String locator) throws Exception;
+
 	public void assertElementNotPresent(String locator) throws Exception;
 
 	public void assertElementPresent(String locator) throws Exception;
@@ -63,6 +65,8 @@ public interface LiferaySelenium extends Selenium {
 	public void assertNotAlert(String pattern);
 
 	public void assertNotChecked(String locator) throws Exception;
+
+	public void assertNotEditable(String locator) throws Exception;
 
 	public void assertNotLocation(String pattern) throws Exception;
 
@@ -154,6 +158,8 @@ public interface LiferaySelenium extends Selenium {
 	public boolean isMobileDeviceEnabled();
 
 	public boolean isNotChecked(String locator);
+
+	public boolean isNotEditable(String locator);
 
 	public boolean isNotPartialText(String locator, String value);
 

@@ -160,6 +160,16 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void assertEditable(
+			LiferaySelenium liferaySelenium, String locator)
+		throws Exception {
+
+		if (liferaySelenium.isNotEditable(locator)) {
+			throw new Exception(
+				"Element is not editable at \"" + locator + "\"");
+		}
+	}
+
 	public static void assertElementNotPresent(
 			LiferaySelenium liferaySelenium, String locator)
 		throws Exception {
@@ -375,6 +385,15 @@ public class LiferaySeleniumHelper {
 
 		if (liferaySelenium.isChecked(locator)) {
 			throw new Exception("Element is checked at \"" + locator + "\"");
+		}
+	}
+
+	public static void assertNotEditable(
+			LiferaySelenium liferaySelenium, String locator)
+		throws Exception {
+
+		if (liferaySelenium.isEditable(locator)) {
+			throw new Exception("Element is editable at \"" + locator + "\"");
 		}
 	}
 

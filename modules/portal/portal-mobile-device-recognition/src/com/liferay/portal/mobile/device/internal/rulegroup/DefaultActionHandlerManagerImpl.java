@@ -30,9 +30,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Edward C. Han
  */
+@Component(immediate = true, service = ActionHandlerManager.class)
 public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 
 	@Override
@@ -64,6 +71,21 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 
 	@Override
 	public void registerActionHandler(ActionHandler actionHandler) {
+		addActionHandler(actionHandler);
+	}
+
+	@Override
+	public ActionHandler unregisterActionHandler(String actionType) {
+		return _deviceActionHandlers.remove(actionType);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeActionHandler"
+	)
+	protected void addActionHandler(ActionHandler actionHandler) {
 		ActionHandler oldActionHandler = _deviceActionHandlers.put(
 			actionHandler.getType(), actionHandler);
 
@@ -72,17 +94,6 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 				"Replacing existing action handler type " +
 					actionHandler.getType());
 		}
-	}
-
-	public void setActionHandlers(Collection<ActionHandler> actionHandlers) {
-		for (ActionHandler actionHandler : actionHandlers) {
-			registerActionHandler(actionHandler);
-		}
-	}
-
-	@Override
-	public ActionHandler unregisterActionHandler(String actionType) {
-		return _deviceActionHandlers.remove(actionType);
 	}
 
 	protected void applyAction(
@@ -100,6 +111,10 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 			_log.warn(
 				"No action handler registered for type " + mdrAction.getType());
 		}
+	}
+
+	protected void removeActionHandler(ActionHandler actionHandler) {
+		_deviceActionHandlers.remove(actionHandler.getType());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

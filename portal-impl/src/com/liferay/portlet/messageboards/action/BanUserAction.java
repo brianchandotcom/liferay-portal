@@ -20,15 +20,19 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import java.io.IOException;
 
 /**
  * @author Michael Young
@@ -64,7 +68,8 @@ public class BanUserAction extends BaseMVCActionCommand {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.message_boards.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/message_boards/error.jsp");
 			}
 			else {
 				throw e;
@@ -88,6 +93,27 @@ public class BanUserAction extends BaseMVCActionCommand {
 			MBBan.class.getName(), actionRequest);
 
 		MBBanServiceUtil.deleteBan(banUserId, serviceContext);
+	}
+
+	protected void sendRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
+		String redirect = getRedirect(actionRequest);
+
+		if (Validator.isNotNull(redirect)) {
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+	}
+
+	protected String getRedirect(ActionRequest actionRequest) {
+		String redirect = (String)actionRequest.getAttribute(WebKeys.REDIRECT);
+
+		if (Validator.isNotNull(redirect)) {
+			return redirect;
+		}
+
+		return ParamUtil.getString(actionRequest, "redirect");
 	}
 
 }

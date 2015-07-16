@@ -144,28 +144,28 @@ public class PortalPreferencesImplTest {
 
 		portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
 
-		final PortalPreferences portalPreferences1 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
-
 		Thread thread1 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences1.resetValues(_NAMESPACE);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.resetValues(_NAMESPACE);
 			}
 
 		});
-
-		final PortalPreferences portalPreferences2 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
 		Thread thread2 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences2.resetValues(_NAMESPACE);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.resetValues(_NAMESPACE);
 			}
 
 		});
@@ -188,28 +188,28 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testSetValueDifferentFields() throws Exception {
-		final PortalPreferences portalPreferences1 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
-
 		Thread thread1 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences1.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
 			}
 
 		});
-
-		final PortalPreferences portalPreferences2 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
 		Thread thread2 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences2.setValue(_NAMESPACE, _KEY_2, _VALUE_1);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.setValue(_NAMESPACE, _KEY_2, _VALUE_1);
 			}
 
 		});
@@ -233,28 +233,28 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testSetValueSameField() throws Exception {
-		final PortalPreferences portalPreferences1 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
-
 		Thread thread1 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences1.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
 			}
 
 		});
-
-		final PortalPreferences portalPreferences2 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
 		Thread thread2 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences2.setValue(_NAMESPACE, _KEY_1, _VALUE_2);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_2);
 			}
 
 		});
@@ -279,28 +279,28 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testSetValuesDifferentFields() throws Exception {
-		final PortalPreferences portalPreferences1 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
-
 		Thread thread1 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences1.setValues(_NAMESPACE, _KEY_1, _VALUES_1);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_1);
 			}
 
 		});
-
-		final PortalPreferences portalPreferences2 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
 		Thread thread2 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences2.setValues(_NAMESPACE, _KEY_2, _VALUES_1);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.setValues(_NAMESPACE, _KEY_2, _VALUES_1);
 			}
 
 		});
@@ -324,28 +324,28 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testSetValuesSameField() throws Exception {
-		final PortalPreferences portalPreferences1 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
-
 		Thread thread1 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences1.setValues(_NAMESPACE, _KEY_1, _VALUES_1);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_1);
 			}
 
 		});
-
-		final PortalPreferences portalPreferences2 =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
 		Thread thread2 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				portalPreferences2.setValues(_NAMESPACE, _KEY_1, _VALUES_2);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+				portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_2);
 			}
 
 		});

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -41,9 +42,8 @@ public abstract class BaseSearchResultPermissionFilter
 			Set<String> selectedFieldNameSet = SetUtil.fromArray(
 				queryConfig.getSelectedFieldNames());
 
-			for (String selectedFieldName : _PERMISSION_SELECTED_FIELD_NAMES) {
-				selectedFieldNameSet.add(selectedFieldName);
-			}
+			Collections.addAll(
+				selectedFieldNameSet, _PERMISSION_SELECTED_FIELD_NAMES);
 
 			queryConfig.setSelectedFieldNames(
 				selectedFieldNameSet.toArray(

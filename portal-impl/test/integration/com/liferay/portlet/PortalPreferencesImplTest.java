@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -144,37 +145,28 @@ public class PortalPreferencesImplTest {
 
 		portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
 
-		Thread thread1 = new Thread(new Runnable() {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			public void run() {
+			public Void call() {
 				PortalPreferences portalPreferences =
 					PortletPreferencesFactoryUtil.getPortalPreferences(
 						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
 				portalPreferences.resetValues(_NAMESPACE);
+
+				return null;
 			}
 
-		});
-
-		Thread thread2 = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
-
-				portalPreferences.resetValues(_NAMESPACE);
-			}
-
-		});
+		};
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					DefaultTransactionExecutor.class.getName(), Level.ERROR)) {
 
-			doSynchronousUpdate(thread1, thread2, captureAppender);
+			doSynchronousUpdate(
+				new FutureTask<>(callable), new FutureTask<>(callable),
+				captureAppender);
 
 			portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -188,37 +180,43 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testSetValueDifferentFields() throws Exception {
-		Thread thread1 = new Thread(new Runnable() {
+		FutureTask<Void> futureTask1 = new FutureTask<>(
+			new Callable<Void>() {
 
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-				portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
-			}
+					portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
 
-		});
+					return null;
+				}
 
-		Thread thread2 = new Thread(new Runnable() {
+			});
 
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+		FutureTask<Void> futureTask2 = new FutureTask<>(
+			new Callable<Void>() {
 
-				portalPreferences.setValue(_NAMESPACE, _KEY_2, _VALUE_1);
-			}
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-		});
+					portalPreferences.setValue(_NAMESPACE, _KEY_2, _VALUE_1);
+
+					return null;
+				}
+
+			});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					DefaultTransactionExecutor.class.getName(), Level.ERROR)) {
 
-			doSynchronousUpdate(thread1, thread2, captureAppender);
+			doSynchronousUpdate(futureTask1, futureTask2, captureAppender);
 
 			PortalPreferences portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -233,37 +231,43 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testSetValueSameField() throws Exception {
-		Thread thread1 = new Thread(new Runnable() {
+		FutureTask<Void> futureTask1 = new FutureTask<>(
+			new Callable<Void>() {
 
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-				portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
-			}
+					portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
 
-		});
+					return null;
+				}
 
-		Thread thread2 = new Thread(new Runnable() {
+			});
 
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+		FutureTask<Void> futureTask2 = new FutureTask<>(
+			new Callable<Void>() {
 
-				portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_2);
-			}
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-		});
+					portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_2);
+
+					return null;
+				}
+
+			});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					DefaultTransactionExecutor.class.getName(), Level.ERROR)) {
 
-			doSynchronousUpdate(thread1, thread2, captureAppender);
+			doSynchronousUpdate(futureTask1, futureTask2, captureAppender);
 
 			PortalPreferences portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -279,37 +283,43 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testSetValuesDifferentFields() throws Exception {
-		Thread thread1 = new Thread(new Runnable() {
+		FutureTask<Void> futureTask1 = new FutureTask<>(
+			new Callable<Void>() {
 
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-				portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_1);
-			}
+					portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_1);
 
-		});
+					return null;
+				}
 
-		Thread thread2 = new Thread(new Runnable() {
+			});
 
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+		FutureTask<Void> futureTask2 = new FutureTask<>(
+			new Callable<Void>() {
 
-				portalPreferences.setValues(_NAMESPACE, _KEY_2, _VALUES_1);
-			}
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-		});
+					portalPreferences.setValues(_NAMESPACE, _KEY_2, _VALUES_1);
+
+					return null;
+				}
+
+			});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					DefaultTransactionExecutor.class.getName(), Level.ERROR)) {
 
-			doSynchronousUpdate(thread1, thread2, captureAppender);
+			doSynchronousUpdate(futureTask1, futureTask2, captureAppender);
 
 			PortalPreferences portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -324,37 +334,43 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testSetValuesSameField() throws Exception {
-		Thread thread1 = new Thread(new Runnable() {
+		FutureTask<Void> futureTask1 = new FutureTask<>(
+			new Callable<Void>() {
 
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-				portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_1);
-			}
+					portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_1);
 
-		});
+					return null;
+				}
 
-		Thread thread2 = new Thread(new Runnable() {
+			});
 
-			@Override
-			public void run() {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+		FutureTask<Void> futureTask2 = new FutureTask<>(
+			new Callable<Void>() {
 
-				portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_2);
-			}
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-		});
+					portalPreferences.setValues(_NAMESPACE, _KEY_1, _VALUES_2);
+
+					return null;
+				}
+
+			});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					DefaultTransactionExecutor.class.getName(), Level.ERROR)) {
 
-			doSynchronousUpdate(thread1, thread2, captureAppender);
+			doSynchronousUpdate(futureTask1, futureTask2, captureAppender);
 
 			PortalPreferences portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -371,16 +387,22 @@ public class PortalPreferencesImplTest {
 	}
 
 	protected void doSynchronousUpdate(
-			Thread thread1, Thread thread2, CaptureAppender captureAppender)
-		throws InterruptedException {
+			FutureTask<Void> futureTask1, FutureTask<Void> futureTask2,
+			CaptureAppender captureAppender)
+		throws Exception {
 
 		SynchronousInvocationHandler.synchronize(true);
 
+		Thread thread1 = new Thread(futureTask1);
+
 		thread1.start();
+
+		Thread thread2 = new Thread(futureTask2);
+
 		thread2.start();
 
-		thread1.join();
-		thread2.join();
+		futureTask1.get();
+		futureTask2.get();
 
 		SynchronousInvocationHandler.synchronize(false);
 

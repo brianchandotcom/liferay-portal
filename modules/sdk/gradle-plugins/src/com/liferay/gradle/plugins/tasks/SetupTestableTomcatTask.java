@@ -394,8 +394,8 @@ public class SetupTestableTomcatTask
 			public void doCall(CopySpec copySpec) {
 				File moduleFrameworkBaseDir = getModuleFrameworkBaseDir();
 
-				copySpec.from(new File(moduleFrameworkBaseDir, "modules"));
-				copySpec.into(new File(moduleFrameworkBaseDir, "test"));
+				copySpec.from(new File(moduleFrameworkBaseDir, "test"));
+				copySpec.into(new File(moduleFrameworkBaseDir, "modules"));
 			}
 
 		};

@@ -52,16 +52,14 @@ public class EditCategoryMVCRenderCommand implements MVCRenderCommand {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.message_boards.error");
+				return "/html/portlet/message_boards/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.message_boards.edit_category"));
+		return "/html/portlet/message_boards/edit_category.jsp";
 	}
 
 }

@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.METHOD})
 public @interface ServiceReference {
 
-	public String filter() default StringPool.BLANK;
+	public String filterString() default StringPool.BLANK;
 
 	public Class<?> type() default Object.class;
 

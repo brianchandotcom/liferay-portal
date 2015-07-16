@@ -11,6 +11,8 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:calendar:calendar-api")
+	compile project(":apps:export-import:export-import-api")
+	compile project(":apps:export-import:export-import-service")
 }
 
 liferay {

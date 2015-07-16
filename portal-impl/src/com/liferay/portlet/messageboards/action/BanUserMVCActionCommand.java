@@ -45,7 +45,7 @@ import java.io.IOException;
 	},
 	service = MVCActionCommand.class
 )
-public class BanUserMVCActionCommand extends BaseMVCActionCommand {
+public class BanUserMVCActionCommand extends BaseMessageBoardsMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -93,27 +93,6 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 			MBBan.class.getName(), actionRequest);
 
 		MBBanServiceUtil.deleteBan(banUserId, serviceContext);
-	}
-
-	protected void sendRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
-
-		String redirect = getRedirect(actionRequest);
-
-		if (Validator.isNotNull(redirect)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-	}
-
-	protected String getRedirect(ActionRequest actionRequest) {
-		String redirect = (String)actionRequest.getAttribute(WebKeys.REDIRECT);
-
-		if (Validator.isNotNull(redirect)) {
-			return redirect;
-		}
-
-		return ParamUtil.getString(actionRequest, "redirect");
 	}
 
 }

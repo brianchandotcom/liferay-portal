@@ -53,7 +53,7 @@ import org.apache.struts.action.ActionMapping;
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteThreadAction extends BaseMVCActionCommand {
+public class DeleteThreadAction extends BaseMessageBoardsMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -78,7 +78,8 @@ public class DeleteThreadAction extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.message_boards.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/message_boards/error.jsp");
 			}
 			else {
 				throw e;

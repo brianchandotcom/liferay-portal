@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -49,14 +47,14 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 	}
 
 	@Override
-	public Resource[] getResources(String locationPattern) throws IOException {
-		Enumeration<URL> entries = _bundle.findEntries(
+	public Resource[] getResources(String locationPattern) {
+		Enumeration<URL> enumeration = _bundle.findEntries(
 			locationPattern, "*.xml", true);
 
-		List<Resource> resources = new ArrayList();
+		List<Resource> resources = new ArrayList<Resource>();
 
-		while (entries.hasMoreElements()) {
-			resources.add(new UrlResource(entries.nextElement()));
+		while (enumeration.hasMoreElements()) {
+			resources.add(new UrlResource(enumeration.nextElement()));
 		}
 
 		return resources.toArray(new Resource[resources.size()]);

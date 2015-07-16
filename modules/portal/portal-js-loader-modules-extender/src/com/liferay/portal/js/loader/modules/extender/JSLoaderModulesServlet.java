@@ -151,6 +151,10 @@ public class JSLoaderModulesServlet extends HttpServlet
 			return _unversionedConfiguration;
 		}
 
+		public String getUnversionedMapsConfiguration() {
+			return _unversionedMapsConfiguration;
+		}
+
 		public String getVersion() {
 			return _version;
 		}
@@ -238,6 +242,37 @@ public class JSLoaderModulesServlet extends HttpServlet
 			return jsonObject.toString();
 		}
 
+		protected String generateMapsConfiguration(String configuration) {
+			JSONObject mapsConfigurationJSONObject = new JSONObject();
+			JSONObject configurationJSONObject = new JSONObject(
+				"{" + configuration + "}");
+
+			JSONArray namesJSONArray = configurationJSONObject.names();
+
+			for (int i = 0; i < namesJSONArray.length(); i++) {
+				String name = (String)namesJSONArray.get(i);
+
+				int x = name.indexOf('/');
+
+				String moduleRoot = name.substring(0, x + 1);
+
+				String subModulePath = name.substring(x + 1);
+
+				int y = subModulePath.indexOf('/');
+
+				if (y == -1) {
+					continue;
+				}
+
+				String subModuleName = subModulePath.substring(0, y);
+
+				mapsConfigurationJSONObject.put(
+					subModuleName, moduleRoot.concat(subModuleName));
+			}
+
+			return mapsConfigurationJSONObject.toString();
+		}
+
 		protected String normalize(String jsonString) {
 			if (jsonString.startsWith("{") && jsonString.endsWith("}")) {
 				jsonString = jsonString.substring(1, jsonString.length() - 1);
@@ -289,6 +324,10 @@ public class JSLoaderModulesServlet extends HttpServlet
 					generateConfiguration(jsonObject, bundleWiring, false));
 				_versionedConfiguration = normalize(
 					generateConfiguration(jsonObject, bundleWiring, true));
+
+				_unversionedMapsConfiguration = normalize(
+					generateMapsConfiguration(_unversionedConfiguration)
+				);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
@@ -299,6 +338,7 @@ public class JSLoaderModulesServlet extends HttpServlet
 		private final String _contextPath;
 		private final String _name;
 		private String _unversionedConfiguration = "";
+		private String _unversionedMapsConfiguration = "";
 		private final String _version;
 		private String _versionedConfiguration = "";
 
@@ -438,6 +478,14 @@ public class JSLoaderModulesServlet extends HttpServlet
 			printWriter.write("'");
 
 			delimiter = ",\n";
+
+			String mapsConfiguration =
+				jsLoaderModule.getUnversionedMapsConfiguration();
+
+			if (!mapsConfiguration.equals("")) {
+				printWriter.write(delimiter);
+				printWriter.write(mapsConfiguration);
+			}
 		}
 
 		printWriter.println("\n};");

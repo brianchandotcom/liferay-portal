@@ -264,7 +264,7 @@ AUI.add(
 						var instance = this;
 
 						if (!instance._popup) {
-							var popup = Liferay.Util.Window.getWindow(
+							var popup = Liferay.Util.getTop().Liferay.Util.Window.getWindow(
 								{
 									dialog: {
 										cssClass: CSS_POPUP,

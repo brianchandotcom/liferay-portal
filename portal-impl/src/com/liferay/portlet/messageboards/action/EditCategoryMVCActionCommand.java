@@ -63,7 +63,8 @@ import javax.portlet.ActionResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCategoryAction extends BaseMessageBoardsMVCActionCommand {
+public class EditCategoryMVCActionCommand
+	extends BaseMessageBoardsMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

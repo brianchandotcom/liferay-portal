@@ -110,7 +110,7 @@ AUI.add(
 								width: 540
 							};
 
-							dialog = Liferay.Util.Window.getWindow(
+							dialog = Liferay.Util.getTop().Liferay.Util.Window.getWindow(
 								{
 									dialog: dialogConfig,
 									id: instance._dialogId,

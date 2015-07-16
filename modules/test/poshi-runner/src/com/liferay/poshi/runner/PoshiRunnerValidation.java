@@ -37,6 +37,14 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerValidation {
 
+	public static void clearExceptions() {
+		_exceptions.clear();
+	}
+
+	public static Set<Exception> getExceptions() {
+		return _exceptions;
+	}
+
 	public static void main(String[] args) throws Exception {
 		PoshiRunnerContext.readFiles();
 

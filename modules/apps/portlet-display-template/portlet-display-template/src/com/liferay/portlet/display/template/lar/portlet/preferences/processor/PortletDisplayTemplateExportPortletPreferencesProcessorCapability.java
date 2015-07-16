@@ -1,0 +1,152 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.display.template.lar.portlet.preferences.processor;
+
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorCapability;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+
+import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Mate Thurzo
+ */
+@Component(
+	immediate = true,
+	service = {
+		ExportImportPortletPreferencesProcessorCapability.class,
+		PortletDisplayTemplateExportPortletPreferencesProcessorCapability.class
+	}
+)
+public class PortletDisplayTemplateExportPortletPreferencesProcessorCapability
+	implements ExportImportPortletPreferencesProcessorCapability {
+
+	@Override
+	public PortletPreferences process(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		exportDisplayStyle(
+			portletDataContext, portletDataContext.getPortletId(),
+			portletPreferences);
+
+		return portletPreferences;
+	}
+
+	protected void exportDisplayStyle(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		String displayStyle = getDisplayStyle(
+			portletDataContext, portletId, portletPreferences);
+
+		if (Validator.isNull(displayStyle) ||
+			!displayStyle.startsWith(
+				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
+
+			return;
+		}
+
+		long displayStyleGroupId = getDisplayStyleGroupId(
+			portletDataContext, portletId, portletPreferences);
+
+		long previousScopeGroupId = portletDataContext.getScopeGroupId();
+
+		if (displayStyleGroupId != portletDataContext.getScopeGroupId()) {
+			portletDataContext.setScopeGroupId(displayStyleGroupId);
+		}
+
+		DDMTemplate ddmTemplate =
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+				portletDataContext.getGroupId(),
+				getClassNameId(portletDataContext, portletId), displayStyle,
+				false);
+
+		if (ddmTemplate != null) {
+			PortletDisplayTemplateManagerUtil.exportDDMTemplateStagedModel(
+				portletDataContext, portletId, ddmTemplate);
+		}
+
+		portletDataContext.setScopeGroupId(previousScopeGroupId);
+	}
+
+	protected long getClassNameId(
+		PortletDataContext portletDataContext, String portletId) {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
+
+		TemplateHandler templateHandler = portlet.getTemplateHandlerInstance();
+
+		if (templateHandler == null) {
+			return 0;
+		}
+
+		String className = templateHandler.getClassName();
+
+		return PortalUtil.getClassNameId(className);
+	}
+
+	protected String getDisplayStyle(
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
+
+		try {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				portletDataContext.getCompanyId(), portletId);
+
+			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
+				return portletPreferences.getValue("displayStyle", null);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	protected long getDisplayStyleGroupId(
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
+
+		try {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				portletDataContext.getCompanyId(), portletId);
+
+			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
+				return GetterUtil.getLong(
+					portletPreferences.getValue("displayStyleGroupId", null));
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return 0;
+	}
+
+}

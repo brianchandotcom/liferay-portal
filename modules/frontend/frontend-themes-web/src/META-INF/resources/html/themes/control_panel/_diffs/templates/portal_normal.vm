@@ -20,11 +20,19 @@ $theme.include($body_top_include)
 
 #set ($scope_group = $theme_display.getScopeGroup())
 
-#if ($scope_group.isUserPersonalPanel() || ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+#set ($show_dockbar = $scope_group.isUserPersonalPanel() || ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+
+#if ($show_dockbar)
 	#dockbar()
 #end
 
 <div class="container-fluid" id="wrapper">
+	#if ($show_dockbar)
+		<div class="list-unstyled pull-right user-personal-bar">
+			#user_personal_bar()
+		</div>
+	#end
+
 	<div class="row">
 		<div class="col-md-12" id="content-wrapper">
 			<div id="content">
@@ -44,7 +52,7 @@ $theme.include($body_top_include)
 	</div>
 </div>
 
-#if ($scope_group.isUserPersonalPanel() || ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+#if ($show_dockbar)
 	#control_menu()
 #end
 

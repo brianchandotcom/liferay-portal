@@ -15,25 +15,15 @@
 --%>
 
 <aui:nav collapsible="<%= false %>" cssClass='<%= portalMessageUseAnimation ? "nav-account-controls navbar-nav" : "nav-account-controls nav-account-controls-notice navbar-nav" %>' icon="user" id="navAccountControls">
-	<c:if test="<%= userSetupComplete %>">
-		<%@ include file="/html/portlet/dockbar/view_page_customization_bar.jspf" %>
+	<%@ include file="/html/portlet/dockbar/view_page_customization_bar.jspf" %>
 
-		<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
-			<aui:nav-item cssClass="staging-controls">
-				<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
-			</aui:nav-item>
-		</c:if>
-
-		<%@ include file="/html/portlet/dockbar/view_admin_links.jspf" %>
-
-		<%@ include file="/html/portlet/dockbar/view_my_sites.jspf" %>
+	<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
+		<aui:nav-item cssClass="staging-controls">
+			<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
+		</aui:nav-item>
 	</c:if>
 
-	<%
-	String portletId = PortletProviderUtil.getPortletId(PortalUserPersonalBarApplicationType.UserPersonalBar.CLASS_NAME, PortletProvider.Action.VIEW);
-	%>
+	<%@ include file="/html/portlet/dockbar/view_admin_links.jspf" %>
 
-	<aui:nav-item>
-		<liferay-portlet:runtime portletName="<%= portletId %>" />
-	</aui:nav-item>
+	<%@ include file="/html/portlet/dockbar/view_my_sites.jspf" %>
 </aui:nav>

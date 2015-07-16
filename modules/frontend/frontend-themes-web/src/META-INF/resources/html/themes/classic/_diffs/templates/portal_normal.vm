@@ -23,6 +23,10 @@ $theme.include($body_top_include)
 <div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
 		<div id="heading">
+			<div class="list-unstyled pull-right user-personal-bar">
+				#user_personal_bar()
+			</div>
+
 			<h1 class="site-title">
 				<a class="$logo_css_class" href="$site_default_url" title="#language_format ("go-to-x", [$site_name])">
 					<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />

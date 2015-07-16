@@ -95,7 +95,7 @@
 					<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
 						<li class="my-sites-menu public-site">
 							<a href="<%= HtmlUtil.escapeHREF(mySiteGroup.getDisplayURL(themeDisplay, false)) %>" role="menuitem">
-								<span class="site-name"><liferay-ui:message key="my-profile" /></span>
+								<span class="my-profile"><liferay-ui:message key="my-profile" /></span>
 
 								<span class="badge site-type"><liferay-ui:message key="public" /></span>
 							</a>
@@ -105,7 +105,7 @@
 					<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
 						<li class="my-sites-menu private-site">
 							<a href="<%= HtmlUtil.escapeHREF(mySiteGroup.getDisplayURL(themeDisplay, true)) %>" role="menuitem">
-								<span class="site-name"><liferay-ui:message key="my-dashboard" /></span>
+								<span class="my-dashboard"><liferay-ui:message key="my-dashboard" /></span>
 
 								<span class="badge site-type"><liferay-ui:message key="private" /></span>
 							</a>

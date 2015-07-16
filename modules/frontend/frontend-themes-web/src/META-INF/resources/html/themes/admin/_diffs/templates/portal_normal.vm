@@ -20,11 +20,19 @@ $theme.include($body_top_include)
 
 #set ($scope_group = $theme_display.getScopeGroup())
 
-#if ($scope_group.isUserPersonalPanel() || ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+#set ($show_dockbar = $scope_group.isUserPersonalPanel() || ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+
+#if ($show_dockbar)
 	#dockbar()
 #end
 
 <div id="wrapper">
+	#if ($show_dockbar)
+		<div class="list-unstyled pull-right user-personal-bar">
+			#user_personal_bar()
+		</div>
+	#end
+
 	<div id="content-wrapper">
 		<div id="content">
 			#if ($selectable)

@@ -19,6 +19,10 @@ poshiRunner {
 		poshiProperty "component.names", project.properties["componentNames"]
 	}
 
+	if (project.hasProperty("poshiTestName")) {
+		poshiProperty "test.name", project.properties["poshiTestName"]
+	}
+
 	if (project.hasProperty("productNames")) {
 		poshiProperty "product.names", project.properties["productNames"]
 	}

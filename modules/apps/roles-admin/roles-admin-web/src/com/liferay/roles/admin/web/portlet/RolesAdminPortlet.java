@@ -55,6 +55,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.roles.admin.web.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.web.upgrade.RolesAdminWebUpgrade;
 
 import java.io.IOException;
@@ -97,7 +98,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=com_liferay_roles_admin_web_portlet_RolesAdminPortlet",
+		"javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.roles.admin.web.constants.RolesAdminPortletKeys;
 
 import java.util.Collections;
 
@@ -53,7 +53,7 @@ public class RolesAdminWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"128", PortletKeys.ROLES_ADMIN
+						"128", RolesAdminPortletKeys.ROLES_ADMIN
 					}
 				};
 			}

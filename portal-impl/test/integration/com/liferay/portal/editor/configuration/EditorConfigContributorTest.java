@@ -412,7 +412,7 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void 
+	public void
 			testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
 		throws Exception {
 

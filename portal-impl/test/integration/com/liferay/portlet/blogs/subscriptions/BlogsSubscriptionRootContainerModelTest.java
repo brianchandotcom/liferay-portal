@@ -99,7 +99,7 @@ public class BlogsSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long userId, long baseModelId) 
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		ServiceContext serviceContext =

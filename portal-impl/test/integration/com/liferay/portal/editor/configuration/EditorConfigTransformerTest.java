@@ -212,7 +212,7 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void 
+	public void
 			testEditorConfigTransformedWithMultipleEditorOptionsContributors()
 		throws Exception {
 

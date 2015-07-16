@@ -73,9 +73,7 @@ else {
 	title='<%= (category == null) ? "add-category[message-board]" : LanguageUtil.format(request, "edit-x", category.getName(), false) %>'
 />
 
-<portlet:actionURL var="editCategoryURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_category" />
-</portlet:actionURL>
+<portlet:actionURL name="/message_boards/edit_category" var="editCategoryURL" />
 
 <aui:form action="<%= editCategoryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCategory();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

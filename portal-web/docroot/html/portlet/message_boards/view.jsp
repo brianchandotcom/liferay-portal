@@ -59,8 +59,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_category" />
+<portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -98,7 +97,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<div class="category-buttons">
 				<c:if test="<%= showAddCategoryButton %>">
 					<portlet:renderURL var="editCategoryURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_category" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
@@ -169,8 +168,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
 					<c:choose>
 						<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(category.getCategoryId()) %>">
-							<portlet:actionURL var="unsubscribeURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_category" />
+							<portlet:actionURL name="/message_boards/edit_category" var="unsubscribeURL">
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
@@ -184,8 +182,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 						</c:when>
 						<c:otherwise>
-							<portlet:actionURL var="subscribeURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_category" />
+							<portlet:actionURL name="/message_boards/edit_category" var="subscribeURL">
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />

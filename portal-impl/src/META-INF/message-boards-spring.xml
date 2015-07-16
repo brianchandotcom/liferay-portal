@@ -9,4 +9,7 @@
 >
 	<bean id="com.liferay.portlet.messageboards.action.BanUserMVCActionCommand" class="com.liferay.portlet.messageboards.action.BanUserMVCActionCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.DeleteThreadMVCActionCommand" class="com.liferay.portlet.messageboards.action.DeleteThreadMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.EditCategoryAction" class="com.liferay.portlet.messageboards.action.EditCategoryAction" />
+	<bean id="com.liferay.portlet.messageboards.action.EditCategoryMVCRenderCommand" class="com.liferay.portlet.messageboards.action.EditCategoryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.SelectCategoryMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SelectCategoryMVCRenderCommand" />
 </beans>

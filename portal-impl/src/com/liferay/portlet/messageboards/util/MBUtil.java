@@ -141,18 +141,20 @@ public class MBUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String mvcRenderCommandName = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (strutsAction.equals("/message_boards/select_category") ||
-			strutsAction.equals("/message_boards_admin/select_category")) {
+		if (mvcRenderCommandName.equals("/message_boards/select_category") ||
+			mvcRenderCommandName.equals(
+				"/message_boards_admin/select_category")) {
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			portletURL.setParameter(
-				"struts_action", "/message_boards/select_category");
+				"mvcRenderCommandName", "/message_boards/select_category");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(

@@ -38,8 +38,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 }
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_category" />
+<portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -68,7 +67,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 			<div class="category-buttons">
 				<c:if test="<%= showAddCategoryButton %>">
 					<portlet:renderURL var="editCategoryURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_category" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
@@ -595,7 +594,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
 			form.fm('deleteCategoryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_category" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="/message_boards/edit_category" />');
 		}
 	}
 

@@ -129,7 +129,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-th
 					},
 					id: '<portlet:namespace />selectCategory',
 					title: '<liferay-ui:message arguments="category" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" /></portlet:renderURL>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" /></portlet:renderURL>'
 				},
 				function(event) {
 					var form = $(document.<portlet:namespace />fm);

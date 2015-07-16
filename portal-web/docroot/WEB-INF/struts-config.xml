@@ -282,11 +282,6 @@
 
 		<action path="/message_boards/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
 
-		<action path="/message_boards/edit_category" type="com.liferay.portlet.messageboards.action.EditCategoryAction">
-			<forward name="portlet.message_boards.edit_category" path="portlet.message_boards.edit_category" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
 		<action path="/message_boards/edit_message" type="com.liferay.portlet.messageboards.action.EditMessageAction">
 			<forward name="portlet.message_boards.edit_message" path="portlet.message_boards.edit_message" />
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
@@ -319,11 +314,6 @@
 
 		<action path="/message_boards/search" forward="portlet.message_boards.search" />
 
-		<action path="/message_boards/select_category" type="com.liferay.portlet.messageboards.action.EditCategoryAction">
-			<forward name="portlet.message_boards.edit_category" path="portlet.message_boards.select_category" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
 		<action path="/message_boards/split_thread" type="com.liferay.portlet.messageboards.action.SplitThreadAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.split_thread" path="portlet.message_boards.split_thread" />
@@ -347,11 +337,6 @@
 		<!-- Message Boards Admin -->
 
 		<action path="/message_boards_admin/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
-		<action path="/message_boards_admin/edit_category" type="com.liferay.portlet.messageboards.action.EditCategoryAction">
-			<forward name="portlet.message_boards.edit_category" path="portlet.message_boards.edit_category" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
 
 		<action path="/message_boards_admin/edit_message" type="com.liferay.portlet.messageboards.action.EditMessageAction">
 			<forward name="portlet.message_boards.edit_message" path="portlet.message_boards.edit_message" />
@@ -382,11 +367,6 @@
 		<action path="/message_boards_admin/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 
 		<action path="/message_boards_admin/search" forward="portlet.message_boards.search" />
-
-		<action path="/message_boards_admin/select_category" type="com.liferay.portlet.messageboards.action.EditCategoryAction">
-			<forward name="portlet.message_boards.edit_category" path="portlet.message_boards.select_category" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
 
 		<action path="/message_boards_admin/split_thread" type="com.liferay.portlet.messageboards.action.SplitThreadAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />

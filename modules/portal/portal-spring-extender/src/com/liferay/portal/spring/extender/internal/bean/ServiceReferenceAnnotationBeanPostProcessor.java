@@ -48,7 +48,7 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
 		throws BeansException {
 
-		_autoInject(bean, bean.getClass());
+		autoInject(bean, bean.getClass());
 
 		return bean;
 	}
@@ -63,7 +63,7 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 		_bundleContext = moduleApplicationContext.getBundleContext();
 	}
 
-	private void _autoInject(Object targetBean, Class<?> beanClass) {
+	protected void autoInject(Object targetBean, Class<?> beanClass) {
 		if ((beanClass == null) || beanClass.isInterface()) {
 			return;
 		}
@@ -80,28 +80,30 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 
 			Class<?> type = serviceReference.type();
 
-			org.osgi.framework.ServiceReference<?> sr =
+			org.osgi.framework.ServiceReference<?> osgiServiceReference =
 				_bundleContext.getServiceReference(type.getName());
 
-			_serviceReferences.add(sr);
+			_osgiServiceReferences.add(osgiServiceReference);
 
 			ReflectionUtils.makeAccessible(field);
 
 			try {
-				field.set(targetBean, _bundleContext.getService(sr));
+				field.set(
+					targetBean,
+					_bundleContext.getService(osgiServiceReference));
 			}
 			catch (Throwable t) {
 				throw new BeanCreationException(
 					beanClass.getName(),
-					"Could not inject BeanReference fields", t);
+					"Unable to inject bean reference fields", t);
 			}
 		}
 
-		_autoInject(targetBean, beanClass.getSuperclass());
+		autoInject(targetBean, beanClass.getSuperclass());
 	}
 
 	private BundleContext _bundleContext;
 	private final List<org.osgi.framework.ServiceReference<?>>
-		_serviceReferences = new ArrayList<>();
+		_osgiServiceReferences = new ArrayList<>();
 
 }

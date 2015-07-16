@@ -287,19 +287,6 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
-	protected void reload() {
-		PortalPreferencesImpl portalPreferencesImpl =
-			(PortalPreferencesImpl)
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					getOwnerId(), isSignedIn());
-
-		reset();
-
-		setOriginalPreferences(portalPreferencesImpl.getOriginalPreferences());
-
-		setOriginalXML(portalPreferencesImpl.getOriginalXML());
-	}
-
 	protected void reloadableStore(Callable<?> callable) throws Exception {
 		while (true) {
 			try {
@@ -311,7 +298,17 @@ public class PortalPreferencesImpl
 			}
 			catch (Exception e) {
 				if (isCausedByStaleObjectException(e)) {
-					reload();
+					PortalPreferencesImpl portalPreferencesImpl =
+						(PortalPreferencesImpl)
+							PortletPreferencesFactoryUtil.getPortalPreferences(
+								getOwnerId(), isSignedIn());
+
+					reset();
+
+					setOriginalPreferences(
+						portalPreferencesImpl.getOriginalPreferences());
+
+					setOriginalXML(portalPreferencesImpl.getOriginalXML());
 				}
 				else {
 					throw e;

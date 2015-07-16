@@ -134,7 +134,7 @@ public class ModuleApplicationContextRegistrator {
 				Logger.LOG_ERROR,
 				"Unexpected error while refreshing " +
 					applicationContext.getDisplayName() + " which may" +
-					"cause memory leaks on multiple redeployments");
+						"cause memory leaks on multiple redeployments");
 		}
 	}
 

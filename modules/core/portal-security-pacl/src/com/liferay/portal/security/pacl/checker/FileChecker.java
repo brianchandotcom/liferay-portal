@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.servlet.WebDirDetector;
+import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -48,6 +49,7 @@ import java.security.Permissions;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -60,8 +62,14 @@ public class FileChecker extends BaseChecker {
 
 	@Override
 	public void afterPropertiesSet() {
+		PACLPolicy paclPolicy = getPACLPolicy();
+
+		URLContainer urlContext = paclPolicy.getURLContext();
+
 		try {
-			_rootDir = WebDirDetector.getRootDir(getClassLoader());
+			URL url = urlContext.getResource(StringPool.SLASH);
+
+			_rootDir = url.getPath();
 		}
 		catch (Exception e) {
 
@@ -73,14 +81,13 @@ public class FileChecker extends BaseChecker {
 			_log.debug("Root directory " + _rootDir);
 		}
 
-		ServletContext servletContext = ServletContextPool.get(
-			getServletContextName());
+		Properties properties = paclPolicy.getProperties();
 
-		if (servletContext != null) {
-			File tempDir = (File)servletContext.getAttribute(
+		if (properties.containsKey(
+				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR)) {
+
+			_workDir = paclPolicy.getProperty(
 				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
-
-			_workDir = tempDir.getAbsolutePath();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Work directory " + _workDir);
@@ -138,7 +145,7 @@ public class FileChecker extends BaseChecker {
 			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
 			_PORTAL_DIR, PropsValues.LIFERAY_HOME,
 			System.getProperty("line.separator"),
-			System.getProperty("path.separator"), getServletContextName(),
+			System.getProperty("path.separator"), getContextName(),
 			ReleaseInfo.getVersion(), System.getProperty("resin.home"),
 			System.getProperty("user.dir"), System.getProperty("user.home"),
 			System.getProperty("user.name"), System.getenv("DOMAIN_HOME"),

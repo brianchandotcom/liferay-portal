@@ -251,7 +251,7 @@ public class RuntimeChecker extends BaseChecker {
 			return true;
 		}
 
-		int stackIndex = Reflection.getStackIndex(13, 12);
+		int stackIndex = Reflection.getStackIndex(6, 5);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -267,7 +267,7 @@ public class RuntimeChecker extends BaseChecker {
 			return true;
 		}
 
-		int stackIndex = Reflection.getStackIndex(15, 11);
+		int stackIndex = Reflection.getStackIndex(8, 4);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -279,7 +279,7 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasCreateSecurityManager(Permission permission) {
-		int stackIndex = Reflection.getStackIndex(11, 10);
+		int stackIndex = Reflection.getStackIndex(4, 3);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -292,7 +292,7 @@ public class RuntimeChecker extends BaseChecker {
 
 	protected boolean hasGetClassLoader(Permission permission) {
 		int stackIndex = Reflection.getStackIndex(
-			new int[] {11, 11, 12}, new int[] {10, 10, 10});
+			new int[] {5, 5, 6}, new int[] {4, 4, 4});
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -314,7 +314,7 @@ public class RuntimeChecker extends BaseChecker {
 			}
 		}
 
-		int stackIndex = Reflection.getStackIndex(11, 10);
+		int stackIndex = Reflection.getStackIndex(4, 3);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -330,7 +330,7 @@ public class RuntimeChecker extends BaseChecker {
 			return true;
 		}
 
-		int stackIndex = Reflection.getStackIndex(11, 10);
+		int stackIndex = Reflection.getStackIndex(4, 3);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -342,7 +342,7 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasLoadLibrary(Permission permission) {
-		int stackIndex = Reflection.getStackIndex(13, 12);
+		int stackIndex = Reflection.getStackIndex(6, 5);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -358,7 +358,7 @@ public class RuntimeChecker extends BaseChecker {
 			return true;
 		}
 
-		int stackIndex = Reflection.getStackIndex(13, 12);
+		int stackIndex = Reflection.getStackIndex(6, 5);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -370,7 +370,7 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasReadFileDescriptor(Permission permission) {
-		int stackIndex = Reflection.getStackIndex(12, 11);
+		int stackIndex = Reflection.getStackIndex(5, 4);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -386,7 +386,7 @@ public class RuntimeChecker extends BaseChecker {
 			return true;
 		}
 
-		int stackIndex = Reflection.getStackIndex(11, 10);
+		int stackIndex = Reflection.getStackIndex(4, 3);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -398,7 +398,7 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasWriteFileDescriptor(Permission permission) {
-		int stackIndex = Reflection.getStackIndex(12, 11);
+		int stackIndex = Reflection.getStackIndex(5, 4);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 

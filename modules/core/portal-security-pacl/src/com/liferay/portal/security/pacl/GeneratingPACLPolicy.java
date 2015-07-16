@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -44,10 +45,10 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GeneratingPACLPolicy extends ActivePACLPolicy {
 
 	public GeneratingPACLPolicy(
-		String servletContextName, ClassLoader classLoader,
+		String contextName, URLContainer urlContext, ClassLoader classLoader,
 		Properties properties) {
 
-		super(servletContextName, classLoader, properties);
+		super(contextName, urlContext, classLoader, properties);
 	}
 
 	@Override
@@ -175,7 +176,7 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 
 			FileUtil.write(
 				PropsValues.LIFERAY_HOME + "/pacl-policy",
-				getServletContextName() + ".pacl-policy", sb.toString());
+				getContextName() + ".pacl-policy", sb.toString());
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
@@ -229,7 +230,7 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 			try {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						getServletContextName() +
+						getContextName() +
 							" generated authorization property " +
 								_authorizationProperty);
 				}

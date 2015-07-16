@@ -16,8 +16,6 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.util.JavaDetector;
 
-import java.lang.reflect.Method;
-
 /**
  * <p>
  * See https://issues.liferay.com/browse/LPS-38327.
@@ -40,18 +38,13 @@ public class Reflection extends SecurityManager {
 	}
 
 	private Reflection() {
-		Method[] methods = sun.reflect.Reflection.class.getMethods();
-
 		boolean useOldReflection = true;
 
-		for (Method method : methods) {
-			String methodName = method.getName();
-
-			if (methodName.equals("isCallerSensitive")) {
-				useOldReflection = false;
-
-				break;
-			}
+		try {
+			sun.reflect.Reflection.getCallerClass(1);
+		}
+		catch (UnsupportedOperationException uoe) {
+			useOldReflection = false;
 		}
 
 		_useOldReflection = useOldReflection;
@@ -92,7 +85,7 @@ public class Reflection extends SecurityManager {
 		}
 
 		if (oracle.length == 1) {
-			return index;
+			return index + _STACK_OFFSET;
 		}
 
 		// Case 2: JDK7
@@ -107,7 +100,7 @@ public class Reflection extends SecurityManager {
 		}
 
 		if (oracle.length == 2) {
-			return index;
+			return index + _STACK_OFFSET;
 		}
 
 		// Case 3: JDK7 >= u25
@@ -121,8 +114,10 @@ public class Reflection extends SecurityManager {
 			}
 		}
 
-		return index;
+		return index + _STACK_OFFSET;
 	}
+
+	private static final int _STACK_OFFSET = 10;
 
 	private static final Reflection _instance = new Reflection();
 

@@ -31,9 +31,9 @@ public interface Checker {
 
 	public ClassLoader getClassLoader();
 
-	public PACLPolicy getPACLPolicy();
+	public String getContextName();
 
-	public String getServletContextName();
+	public PACLPolicy getPACLPolicy();
 
 	public boolean implies(Permission permission);
 

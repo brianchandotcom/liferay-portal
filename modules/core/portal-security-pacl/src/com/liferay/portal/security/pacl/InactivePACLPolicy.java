@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.url.URLContainer;
+
 import java.lang.reflect.Method;
 
 import java.security.Permission;
@@ -26,10 +28,10 @@ import java.util.Properties;
 public class InactivePACLPolicy extends BasePACLPolicy {
 
 	public InactivePACLPolicy(
-		String servletContextName, ClassLoader classLoader,
+		String contextName, URLContainer urlContext, ClassLoader classLoader,
 		Properties properties) {
 
-		super(servletContextName, classLoader, properties);
+		super(contextName, urlContext, classLoader, properties);
 	}
 
 	@Override

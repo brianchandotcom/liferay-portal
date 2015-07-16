@@ -240,14 +240,14 @@ public class PortalRuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetBeanProperty(
-		String servletContextName, String className, String property,
+		String contextName, String className, String property,
 		Permission permission) {
 
-		if (servletContextName.equals(getServletContextName())) {
+		if (contextName.equals(getContextName())) {
 			return true;
 		}
 
-		int stackIndex = Reflection.getStackIndex(13, 12);
+		int stackIndex = Reflection.getStackIndex(6, 5);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -268,7 +268,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		}
 
 		Set<String> getBeanPropertyClassNames = _getBeanPropertyClassNames.get(
-			servletContextName);
+			contextName);
 
 		if (getBeanPropertyClassNames == null) {
 			return false;
@@ -292,11 +292,11 @@ public class PortalRuntimeChecker extends BaseChecker {
 	protected boolean hasGetClassLoader(
 		String classLoaderReferenceId, Permission permission) {
 
-		int stackIndex = Reflection.getStackIndex(12, 11);
-
 		if (_classLoaderReferenceIds.contains(classLoaderReferenceId)) {
 			return true;
 		}
+
+		int stackIndex = Reflection.getStackIndex(5, 4);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -349,14 +349,14 @@ public class PortalRuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasSetBeanProperty(
-		String servletContextName, String className, String property) {
+		String contextName, String className, String property) {
 
-		if (servletContextName.equals(getServletContextName())) {
+		if (contextName.equals(getContextName())) {
 			return true;
 		}
 
 		Set<String> setBeanPropertyClassNames = _setBeanPropertyClassNames.get(
-			servletContextName);
+			contextName);
 
 		if (setBeanPropertyClassNames == null) {
 			return false;

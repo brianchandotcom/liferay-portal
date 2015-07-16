@@ -16,17 +16,15 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.pacl.checker.Checker;
-import com.liferay.portal.security.pacl.checker.FileChecker;
-
-import java.io.FilePermission;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,25 +48,23 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public abstract class BasePACLPolicy implements PACLPolicy {
 
 	public BasePACLPolicy(
-		String servletContextName, ClassLoader classLoader,
+		String contextName, URLContainer urlContext, ClassLoader classLoader,
 		Properties properties) {
 
-		_servletContextName = servletContextName;
+		_contextName = contextName;
+		_urlContext = urlContext;
 		_classLoader = classLoader;
 		_properties = properties;
 
 		try {
 			initCheckers();
-
-			initPolicy(servletContextName, classLoader);
+			initPolicy();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -78,6 +74,11 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 	@Override
 	public ClassLoader getClassLoader() {
 		return _classLoader;
+	}
+
+	@Override
+	public String getContextName() {
+		return _contextName;
 	}
 
 	@Override
@@ -111,8 +112,8 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 	}
 
 	@Override
-	public String getServletContextName() {
-		return _servletContextName;
+	public URLContainer getURLContext() {
+		return _urlContext;
 	}
 
 	@Override
@@ -135,20 +136,20 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		sb.append(isActive());
 		sb.append(", hashCode=");
 		sb.append(hashCode());
-		sb.append(", servletContextName=");
-		sb.append(_servletContextName);
+		sb.append(", contextName=");
+		sb.append(_contextName);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	protected void checkForAllPermission(Policy policy, String rootDir)
+	protected void checkForAllPermission(Policy policy, URL rootURL)
 		throws MalformedURLException {
 
-		URL rootURL = new URL("file", null, rootDir);
+		CodeSource codeSource = new CodeSource(rootURL, new Certificate[0]);
 
 		ProtectionDomain protectionDomain = new ProtectionDomain(
-			new CodeSource(rootURL, new Certificate[0]), new Permissions());
+			codeSource, new Permissions());
 
 		if (policy.implies(protectionDomain, new AllPermission())) {
 			throw new IllegalStateException(
@@ -217,27 +218,10 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		}
 	}
 
-	protected void initPolicy(
-			String servletContextName, ClassLoader classLoader)
-		throws Exception {
-
-		ServletContext servletContext = ServletContextPool.get(
-			servletContextName);
-
-		if (servletContext == null) {
-			return;
-		}
-
-		URL url = servletContext.getResource("/WEB-INF/java.policy");
+	protected void initPolicy() throws Exception {
+		URL url = _urlContext.getResource("/WEB-INF/java.policy");
 
 		if (url == null) {
-			return;
-		}
-
-		FileChecker fileChecker = (FileChecker)_checkers.get(
-			FilePermission.class.getName());
-
-		if (fileChecker == null) {
 			return;
 		}
 
@@ -245,9 +229,11 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		// plugin can use it in it's Java security policy file for setting the
 		// code base
 
-		String rootDir = fileChecker.getRootDir();
+		URL rootURL = _urlContext.getResource(StringPool.SLASH);
 
-		System.setProperty(servletContextName, rootDir);
+		String rootDir = rootURL.getPath();
+
+		System.setProperty(_contextName, rootDir);
 
 		try {
 			URIParameter parameter = new URIParameter(url.toURI());
@@ -255,7 +241,7 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 			Policy policy = Policy.getInstance(
 				"JavaPolicy", parameter, getProvider());
 
-			checkForAllPermission(policy, rootDir);
+			checkForAllPermission(policy, rootURL);
 
 			_policy = policy;
 		}
@@ -268,9 +254,10 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 
 	private final Map<String, Checker> _checkers = new HashMap<>();
 	private final ClassLoader _classLoader;
+	private final String _contextName;
 	private Policy _policy;
 	private final Properties _properties;
-	private final String _servletContextName;
+	private final URLContainer _urlContext;
 	private final List<URL> _urls = new ArrayList<>();
 
 }

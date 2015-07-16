@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.store.filesystem.test;
+package com.liferay.portal.store.file.system.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -39,7 +39,7 @@ public class FileSystemStoreTest extends BaseStoreTestCase {
 
 	@Override
 	protected String getStoreType() {
-		return "com.liferay.portal.store.filesystem.FileSystemStore";
+		return "com.liferay.portal.store.file.system.FileSystemStore";
 	}
 
 }

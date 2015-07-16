@@ -88,7 +88,7 @@ public class ConvertDocumentLibraryFromFileSystemStoreToDBStoreTest {
 	@Before
 	public void setUp() throws Exception {
 		PropsValues.DL_STORE_IMPL =
-			"com.liferay.portal.store.filesystem.FileSystemStore";
+			"com.liferay.portal.store.file.system.FileSystemStore";
 
 		_sourceStore = _storeFactory.getStore(
 			PropsValues.DL_STORE_IMPL);

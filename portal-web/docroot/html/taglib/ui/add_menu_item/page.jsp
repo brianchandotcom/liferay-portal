@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.*" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -13,6 +15,24 @@
  * details.
  */
 --%>
+
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem" %>
+<%
+IntegerWrapper addMenuCount = (IntegerWrapper)request.getAttribute("liferay-ui:add-menu:add-count");
+
+if (addMenuCount != null) {
+	addMenuCount.increment();
+}
+
+List<AddMenuItem> menuItemList = (List<AddMenuItem>)request.getAttribute("liferay-ui:add-menu:menuItemList");
+
+if (menuItemList != null) {
+	AddMenuItem menuItem = new AddMenuItem();
+
+	menuItem.setTitle((String)request.getAttribute("liferay-ui:add-menu-item:title"));
+	menuItem.setUrl((String)request.getAttribute("liferay-ui:add-menu-item:url"));
+
+	menuItemList.add(menuItem);
+}
+%>

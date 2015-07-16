@@ -16,7 +16,6 @@ package com.liferay.service.access.control.profile.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -28,6 +27,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.service.access.control.profile.configuration.SACPConfiguration;
 import com.liferay.service.access.control.profile.constants.SACPConstants;
 import com.liferay.service.access.control.profile.exception.DuplicateSACPEntryNameException;
@@ -94,7 +94,7 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 	}
 
 	public void checkDefaultSACPEntry(long companyId) throws PortalException {
-		SACPConfiguration sacpConfiguration = _settingsFactory.getSettings(
+		SACPConfiguration sacpConfiguration = settingsFactory.getSettings(
 			SACPConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				companyId, SACPConstants.SERVICE_NAME));
@@ -242,7 +242,7 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(type = SettingsFactory.class)
-	private SettingsFactory _settingsFactory;
+	@ServiceReference(type = SettingsFactory.class)
+	protected SettingsFactory settingsFactory;
 
 }

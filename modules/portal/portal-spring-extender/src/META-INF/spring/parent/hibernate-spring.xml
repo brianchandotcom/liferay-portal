@@ -4,10 +4,11 @@
 	default-destroy-method="destroy"
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:osgi="http://www.springframework.org/schema/osgi"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
+	<bean id="liferayDataSource" class = "com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getDataSource" />
+
 	<bean id="liferayHibernateSessionFactory" class="com.liferay.portal.spring.extender.internal.hibernate.configuration.ModuleHibernateConfiguration">
 		<property name="dataSource" ref="liferayDataSource" />
 	</bean>
@@ -15,5 +16,5 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
 	</bean>
-	<bean id="liferayTransactionManager" class="com.liferay.portal.kernel.util.InfrastructureUtil" depends-on="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getTransactionManager" />
+	<bean id="liferayTransactionManager" class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getTransactionManager" />
 </beans>

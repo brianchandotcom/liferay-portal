@@ -25,6 +25,7 @@ Import-Package:\
 	!org.jvnet.fastinfoset.*,\
 	!org.jvnet.staxex.*,\
 	!org.junit.*,\
+	!org.osgi.service.blueprint.*,\
 	!org.relaxng.datatype.*,\
 	!org.slf4j.spi.*,\
 	!net.sf.cglib.proxy.*,\

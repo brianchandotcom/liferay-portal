@@ -19,18 +19,20 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
  */
 public class AddMenuItem {
 
-	public String getTitle() { return _title; }
-
-	public String getUrl() { return _url; }
-
-	public void setTitle(String title) {
+	public AddMenuItem(String title, String url) {
 		_title = title;
-	}
-
-	public void setUrl(String url) {
 		_url = url;
 	}
 
-	private String _title;
-	private String _url;
+	public String getTitle() {
+		return _title;
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	private final String _title;
+	private final String _url;
+
 }

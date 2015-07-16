@@ -15,111 +15,42 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem;
-import com.liferay.portal.kernel.util.*;
-import com.liferay.taglib.BaseBodyTagSupport;
-import com.liferay.taglib.util.PortalIncludeUtil;
+import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Ambrin Chaudhary
  */
-public class AddMenuTag extends BaseBodyTagSupport implements BodyTag {
-
-	@Override
-	public int doAfterBody() {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		IntegerWrapper addCount = (IntegerWrapper)request.getAttribute(
-			"liferay-ui:add-menu:add-count");
-
-		if (_menuItems != null) {
-			addCount.setValue(_menuItems.size());
-
-			setAttributes(request);
-
-			return SKIP_BODY;
-		}
-
-		if ((addCount != null) && (addCount.getValue() == 0)) {
-			bodyContent.clearBody();
-
-			return EVAL_BODY_AGAIN;
-		}
-		else {
-			return SKIP_BODY;
-		}
-	}
-
-	@Override
-	public int doEndTag() throws JspException {
-		try {
-			return processEndTag();
-		}
-		catch (Exception e) {
-			throw new JspException(e);
-		}
-		finally {
-		}
-	}
+public class AddMenuTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+		request.setAttribute("liferay-ui:add-menu:menuItems", _menuItems);
 
-		request.setAttribute(
-			"liferay-ui:add-menu:add-count", new IntegerWrapper());
-
-		request.setAttribute(
-			"liferay-ui:add-menu:menuItemList", new ArrayList<AddMenuItem>());
-
-		return EVAL_BODY_BUFFERED;
+		return EVAL_BODY_INCLUDE;
 	}
 
 	public void setMenuItems(List<AddMenuItem> menuItems) {
 		_menuItems = menuItems;
 	}
 
-	protected String getEndPage() {
+	@Override
+	protected String getPage() {
 		return "/html/taglib/ui/add_menu/end.jsp";
 	}
 
-	protected String getStartPage() {
-		return "/html/taglib/ui/add_menu/start.jsp";
-	}
-
-	protected int processEndTag() throws Exception {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		IntegerWrapper addCount = (IntegerWrapper)request.getAttribute(
-			"liferay-ui:add-menu:add-count");
-
-		if ((addCount != null) && (addCount.getValue() > 0)) {
-			PortalIncludeUtil.include(pageContext, getStartPage());
-
-			PortalIncludeUtil.include(pageContext, getEndPage());
-
-			request.removeAttribute("liferay-ui:add-menu:add-count");
-
-			request.removeAttribute("liferay-ui:add-menu:menuItemList");
-		}
-
-		return EVAL_PAGE;
-	}
-
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-ui:add-menu-item:menuItemList", _menuItems);
+		List<AddMenuItem> menuItems = (List)request.getAttribute(
+			"liferay-ui:add-menu:menuItems");
+
+		request.setAttribute("liferay-ui:add-menu:menuItems", menuItems);
 	}
 
-	private List<AddMenuItem> _menuItems;
+	private List<AddMenuItem> _menuItems = new ArrayList<>();
 
 }

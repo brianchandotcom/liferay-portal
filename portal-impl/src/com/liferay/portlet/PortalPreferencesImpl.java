@@ -148,7 +148,7 @@ public class PortalPreferencesImpl
 			retryableStore(new Callable<Void>() {
 
 				@Override
-				public Void call() throws Exception {
+				public Void call() throws ReadOnlyException {
 					Map<String, Preference> preferences = getPreferences();
 
 					for (Map.Entry<String, Preference> entry :
@@ -193,7 +193,7 @@ public class PortalPreferencesImpl
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
-				public Void call() throws Exception {
+				public Void call() throws ReadOnlyException {
 					String encodedKey = _encodeKey(namespace, key);
 
 					if (value != null) {
@@ -232,7 +232,7 @@ public class PortalPreferencesImpl
 			Callable<Void> callable = new Callable<Void>() {
 
 				@Override
-				public Void call() throws Exception {
+				public Void call() throws ReadOnlyException {
 					String encodedKey = _encodeKey(namespace, key);
 
 					if (values != null) {

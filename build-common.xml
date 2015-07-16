@@ -1056,7 +1056,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<sequential>
 			<if>
 				<resourcecount count="0" when="gt">
-					<multirootfileset basedirs="test/functional,test/functional-generated" erroronmissingdir="false" includes="**/${test.class}.java" />
+					<multirootfileset basedirs="test/functional-generated,test/functional" erroronmissingdir="false" includes="**/${test.class}.java" />
 				</resourcecount>
 				<then>
 					<var name="test.type" value="functional" />

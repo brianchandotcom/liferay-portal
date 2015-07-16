@@ -820,8 +820,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void typeCKEditor(String locator, String value) {
-		WebDriverHelper.typeCKEditor(this, locator, value);
+	public void typeAlloyEditor(String locator, String value) {
+		WebDriverHelper.typeAlloyEditor(this, locator, value);
 	}
 
 	@Override

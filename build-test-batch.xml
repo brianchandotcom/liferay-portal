@@ -144,7 +144,7 @@
 
 			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 				<test-action>
-					<database-test-run-test database.test.sequence="@{database.type}">
+					<database-test-run-test database.type="@{database.type}">
 						<test-action>
 							<ant antfile="build-test-tomcat.xml" inheritAll="false" target="run-selenium-tomcat">
 								<property name="test.class" value="${axis.variable}" />

@@ -225,6 +225,8 @@ public class SetupTestableTomcatTask
 			try (PrintWriter printWriter = getAppendPrintWriter(
 					"bin/setenv.bat")) {
 
+				printWriter.println();
+
 				printWriter.print("set \"JMX_OPTS=");
 				printWriter.print(jmxOptions);
 				printWriter.println('\"');

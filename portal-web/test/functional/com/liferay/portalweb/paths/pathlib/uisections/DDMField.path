@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>HTML</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -23,6 +23,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
@@ -150,8 +151,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorRendering() {
 		setUpItemSelectionCriterionHandlers();
 
-		PortletRequest portletRequest = getMockPortletRequest();
 		PortletResponse portletResponse = getMockPortletResponse();
+		PortletRequest portletRequest = getMockPortletRequest(portletResponse);
 
 		ItemSelectorRendering itemSelectorRendering =
 			_itemSelectorImpl.getItemSelectorRendering(
@@ -199,7 +200,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
 	}
 
-	protected PortletRequest getMockPortletRequest() {
+	protected PortletRequest getMockPortletRequest(
+		PortletResponse portletResponse) {
+
 		Map<String, String[]> parameters =
 			_itemSelectorImpl.getItemSelectorParameters(
 				"itemSelectedEventName", _mediaItemSelectorCriterion,
@@ -221,6 +224,12 @@ public class ItemSelectorImplTest extends PowerMockito {
 			themeDisplay
 		);
 
+		when(
+			portletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE)
+		).thenReturn(
+			portletResponse
+		);
+		
 		return portletRequest;
 	}
 

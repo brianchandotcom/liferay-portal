@@ -44,6 +44,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -323,15 +324,15 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	protected RequestBasedPortletURLFactory getRequestBasedPortletURLFactory() {
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletRequest portletRequest =
+			(PortletRequest)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (liferayPortletResponse == null) {
+		if (portletRequest == null) {
 			return RequestBasedPortletURLFactory.create(request);
 		}
 
-		return RequestBasedPortletURLFactory.create(liferayPortletResponse);
+		return RequestBasedPortletURLFactory.create(portletRequest);
 	}
 
 	@Override

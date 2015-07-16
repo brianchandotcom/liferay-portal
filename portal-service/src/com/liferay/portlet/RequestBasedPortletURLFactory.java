@@ -15,10 +15,13 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +38,18 @@ public abstract class RequestBasedPortletURLFactory {
 	}
 
 	public static RequestBasedPortletURLFactory create(
-		LiferayPortletResponse liferayPortletResponse) {
+		PortletRequest portletRequest) {
+
+		PortletResponse portletResponse =
+			(PortletResponse)portletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if (portletResponse == null) {
+			return create(PortalUtil.getHttpServletRequest(portletRequest));
+		}
 
 		return new LiferayPortletResponseRequestBasedPortletURLFactory(
-			liferayPortletResponse);
+			PortalUtil.getLiferayPortletResponse(portletResponse));
 	}
 
 	public abstract PortletURL createActionURL(String portletId);

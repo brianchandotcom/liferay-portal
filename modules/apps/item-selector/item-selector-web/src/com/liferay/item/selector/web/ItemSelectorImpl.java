@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.RequestBasedPortletURLFactory;
 
 import java.lang.reflect.Constructor;
@@ -76,8 +75,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			parameters, PARAMETER_ITEM_SELECTED_EVENT_NAME);
 
 		RequestBasedPortletURLFactory requestBasedPortletURLFactory =
-			RequestBasedPortletURLFactory.create(
-				PortalUtil.getLiferayPortletResponse(portletResponse));
+			RequestBasedPortletURLFactory.create(portletRequest);
 
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			new ArrayList<>();

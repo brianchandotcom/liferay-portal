@@ -16,12 +16,10 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.AntCommands;
-import com.liferay.poshi.runner.util.DateUtil;
 import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
-import com.liferay.poshi.runner.util.LocaleUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RuntimeVariables;
@@ -34,6 +32,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -226,11 +225,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void assertLiferayErrors() throws Exception {
-		String currentDate = DateUtil.getCurrentDate(
-			"yyyy-MM-dd", LocaleUtil.getDefault());
-
-		String fileName =
-			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".xml";
+		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
 
 		if (!FileUtil.exists(fileName)) {
 			return;
@@ -245,11 +240,12 @@ public class LiferaySeleniumHelper {
 		content = "<log4j>" + content + "</log4j>";
 		content = content.replaceAll("log4j:", "");
 
+		InputStream inputStream = new ByteArrayInputStream(
+			content.getBytes("UTF-8"));
+
 		SAXReader saxReader = new SAXReader();
 
-		File file = new File(fileName);
-
-		Document document = saxReader.read(file);
+		Document document = saxReader.read(inputStream);
 
 		Element rootElement = document.getRootElement();
 
@@ -661,19 +657,47 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isConsoleTextPresent(String text) throws Exception {
-		String currentDate = DateUtil.getCurrentDate(
-			"yyyy-MM-dd", LocaleUtil.getDefault());
+		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
 
-		String fileName =
-			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".log";
+		if (!FileUtil.exists(fileName)) {
+			return false;
+		}
 
 		String content = FileUtil.read(fileName);
 
-		Pattern pattern = Pattern.compile(text);
+		if (content.equals("")) {
+			return false;
+		}
 
-		Matcher matcher = pattern.matcher(content);
+		content = "<log4j>" + content + "</log4j>";
+		content = content.replaceAll("log4j:", "");
 
-		return matcher.find();
+		InputStream inputStream = new ByteArrayInputStream(
+			content.getBytes("UTF-8"));
+
+		SAXReader saxReader = new SAXReader();
+
+		Document document = saxReader.read(inputStream);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> eventElements = rootElement.elements("event");
+
+		for (Element eventElement : eventElements) {
+			Element messageElement = eventElement.element("message");
+
+			String messageText = messageElement.getText();
+
+			Pattern pattern = Pattern.compile(text);
+
+			Matcher matcher = pattern.matcher(messageText);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isElementPresentAfterWait(

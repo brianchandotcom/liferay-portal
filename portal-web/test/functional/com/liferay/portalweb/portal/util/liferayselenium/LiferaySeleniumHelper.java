@@ -1558,17 +1558,16 @@ public class LiferaySeleniumHelper {
 
 		StringBundler sb = new StringBundler();
 
-		String titleAttribute = liferaySelenium.getAttribute(
-			locator + "@title");
+		String idAttribute = liferaySelenium.getAttribute(locator + "@id");
 
-		int x = titleAttribute.indexOf(",");
-		int y = titleAttribute.indexOf(",", x + 1);
+		int x = idAttribute.indexOf("cke__");
+		int y = idAttribute.indexOf("cke__", x + 1);
 
 		if (y == -1) {
-			y = titleAttribute.length();
+			y = idAttribute.length();
 		}
 
-		sb.append(titleAttribute.substring(x + 1, y));
+		sb.append(idAttribute.substring(x + 4, y));
 
 		sb.append(".setHTML(\"");
 		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));

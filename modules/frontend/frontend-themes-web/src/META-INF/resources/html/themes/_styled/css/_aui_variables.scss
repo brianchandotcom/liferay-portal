@@ -57,23 +57,3 @@ $alert-warning-text: $state-warning-text;
 
 $FontAwesomePath: "aui/alloy-font-awesome/font";
 $icon-font-path: "aui/glyphicons/font/";
-
-// Liferay
-
-$status-approved-border: $state-success-border;
-$status-approved-text: $state-success-text;
-
-$status-denied-border: $state-danger-border;
-$status-denied-text: $state-danger-text;
-
-$status-draft-border: $gray;
-$status-draft-text: $status-draft-border;
-
-$status-expired-border: $state-warning-border;
-$status-expired-text: $state-warning-text;
-
-$status-pending-border: $state-info-border;
-$status-pending-text: $state-info-text;
-
-$status-scheduled-border: $state-info-bg;
-$status-scheduled-text: $state-info-text;

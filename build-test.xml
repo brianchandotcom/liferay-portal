@@ -1789,7 +1789,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<if>
 				<equals arg1="@{app.server.bundle.index}" arg2="0" />
 				<then>
-					<record action="stop" name="log" />
+					<record action="stop" name="${project.dir}/log" />
 				</then>
 			</if>
 		</sequential>
@@ -1871,7 +1871,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<then>
 					<antcall target="clean-up-logs" />
 
-					<record action="start" name="log" />
+					<record action="start" name="${project.dir}/log" />
 				</then>
 			</if>
 
@@ -1915,7 +1915,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</not>
 				</and>
 				<then>
-					<record action="stop" name="log" />
+					<record action="stop" name="${project.dir}/log" />
 				</then>
 			</if>
 		</sequential>
@@ -1932,7 +1932,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<then>
 					<antcall target="clean-up-logs" />
 
-					<record action="start" name="log" />
+					<record action="start" name="${project.dir}/log" />
 				</then>
 			</if>
 

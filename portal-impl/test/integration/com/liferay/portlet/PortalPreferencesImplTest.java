@@ -275,9 +275,7 @@ public class PortalPreferencesImplTest {
 
 			String value = portalPreferences.getValue(_NAMESPACE, _KEY_1);
 
-			if (!value.equals(_VALUE_1) && !value.equals(_VALUE_2)) {
-				Assert.fail();
-			}
+			Assert.assertTrue(value.equals(_VALUE_1) || value.equals(_VALUE_2));
 		}
 	}
 
@@ -376,13 +374,11 @@ public class PortalPreferencesImplTest {
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
-			String[] value = portalPreferences.getValues(_NAMESPACE, _KEY_1);
+			String[] values = portalPreferences.getValues(_NAMESPACE, _KEY_1);
 
-			if (!Arrays.equals(value, _VALUES_1) &&
-				!Arrays.equals(value, _VALUES_2)) {
-
-				Assert.fail();
-			}
+			Assert.assertTrue(
+				Arrays.equals(values, _VALUES_1) ||
+					Arrays.equals(values, _VALUES_2));
 		}
 	}
 

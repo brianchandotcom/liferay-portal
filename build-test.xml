@@ -695,6 +695,8 @@ jdbc.default.password=${database.password}]]></echo>
 
 	<macrodef name="get-testray-run-id">
 		<sequential>
+			<var name="testray.run.id" unset="true" />
+
 			<propertyregex
 				input="${app.server.version}"
 				override="true"

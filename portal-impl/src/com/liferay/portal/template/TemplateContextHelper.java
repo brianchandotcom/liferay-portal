@@ -103,8 +103,8 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts.taglib.tiles.ComponentConstants;
 import org.apache.struts.tiles.ComponentContext;
+import org.apache.struts.tiles.taglib.ComponentConstants;
 
 /**
  * @author Tina Tian

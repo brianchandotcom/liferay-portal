@@ -4,7 +4,7 @@
 <project>
 	<property name="import.shared" value="wiki-service,../application-list/application-list-api,../item-selector/item-selector-api,../item-selector/item-selector-criteria-api,../portlet-display-template/portlet-display-template" />
 	<property name="osgi.auto.update.xml" value="true" />
-	<property name="osgi.ide.dependencies" value="struts.jar" />
+	<property name="osgi.ide.dependencies" value="struts-core.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

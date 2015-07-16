@@ -22,8 +22,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.taglib.tiles.ComponentConstants;
 import org.apache.struts.tiles.ComponentContext;
+import org.apache.struts.tiles.taglib.ComponentConstants;
 
 import org.osgi.service.component.annotations.Component;
 

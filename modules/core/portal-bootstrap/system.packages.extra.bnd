@@ -156,7 +156,7 @@ Export-Package:\
 	org.apache.log4j.varia;version='1.2.17',\
 	org.apache.log4j.xml;version='1.2.17',\
 	org.apache.regexp;version='2.7.1',\
-	org.apache.struts.*;version='1.2.9',\
+	org.apache.struts.*;version='1.3.10',\
 	org.apache.tools.ant.*;version='1.8.2',\
 	org.apache.xalan.*;version='2.7.1',\
 	org.apache.xpath.*;version='2.7.1',\
@@ -203,6 +203,7 @@ Include-Resource:\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/osgi/*,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/version/*,\
 	@../../../lib/portal/commons-beanutils.jar,\
+	@../../../lib/portal/commons-chain.jar,\
 	@../../../lib/portal/commons-codec.jar,\
 	@../../../lib/portal/commons-collections.jar,\
 	@../../../lib/portal/commons-discovery.jar,\
@@ -238,7 +239,10 @@ Include-Resource:\
 	@../../../lib/portal/spring-web.jar,\
 	@../../../lib/portal/spring-webmvc.jar,\
 	@../../../lib/portal/spring-webmvc-portlet.jar,\
-	@../../../lib/portal/struts.jar,\
+	@../../../lib/portal/struts-core.jar,\
+	@../../../lib/portal/struts-extras.jar,\
+	@../../../lib/portal/struts-taglib.jar,\
+	@../../../lib/portal/struts-tiles.jar,\
 	@../../../lib/portal/xalan.jar,\
 	@../../../lib/portal/xercesImpl.jar,\
 	@../../../lib/portal/xml-apis.jar,\

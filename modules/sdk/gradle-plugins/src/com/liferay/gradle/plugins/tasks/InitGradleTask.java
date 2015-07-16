@@ -77,6 +77,8 @@ public class InitGradleTask extends DefaultTask {
 			"commons-beanutils.jar", "commons-beanutils", "commons-beanutils",
 			"1.8.2");
 		portalDependencyNotation(
+			"commons-chain.jar", "commons-chain", "commons-chain", "1.2");
+		portalDependencyNotation(
 			"commons-codec.jar", "commons-codec", "commons-codec", "1.9");
 		portalDependencyNotation(
 			"commons-collections.jar", "commons-collections",
@@ -145,8 +147,15 @@ public class InitGradleTask extends DefaultTask {
 		portalDependencyNotation(
 			"slf4j-api.jar", "org.slf4j", "slf4j-api", "1.7.2");
 		portalDependencyNotation(
-			"struts.jar", "com.liferay", "org.apache.struts",
-			"1.2.9.LIFERAY-PATCHED-1");
+			"struts-core.jar", "org.apache.struts", "struts-core", "1.3.10");
+		portalDependencyNotation(
+			"struts-extras.jar", "org.apache.struts", "struts-extras",
+			"1.3.10");
+		portalDependencyNotation(
+			"struts-taglib.jar", "org.apache.struts", "struts-taglib",
+			"1.3.10");
+		portalDependencyNotation(
+			"struts-tiles.jar", "org.apache.struts", "struts-tiles", "1.3.10");
 		portalDependencyNotation(
 			"util-slf4j.jar", "com.liferay.portal", "util-slf4j", "default");
 		portalDependencyNotation("wsdl4j.jar", "wsdl4j", "wsdl4j", "1.6.1");

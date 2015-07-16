@@ -145,6 +145,7 @@
 	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.jni.jar"/>
 	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.ruby.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="lib/portal/commons-chain.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-collections.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-compress.jar"/>
@@ -284,8 +285,11 @@
 	<classpathentry kind="lib" path="lib/portal/stax-ex.jar"/>
 	<classpathentry kind="lib" path="lib/portal/streambuffer.jar"/>
 	<classpathentry kind="lib" path="lib/portal/stringtemplate.jar"/>
-	<classpathentry kind="lib" path="lib/portal/struts.jar"/>
+	<classpathentry kind="lib" path="lib/portal/struts-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/struts-el.jar"/>
+	<classpathentry kind="lib" path="lib/portal/struts-extras.jar"/>
+	<classpathentry kind="lib" path="lib/portal/struts-taglib.jar"/>
+	<classpathentry kind="lib" path="lib/portal/struts-tiles.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tagsoup.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tika-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tika-parsers.jar"/>

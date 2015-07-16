@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.extender.internal.io;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -39,13 +37,14 @@ public class BundleResourcePatternResolver
 	}
 
 	@Override
-	public Resource[] getResources(String location) throws IOException {
-		Enumeration<URL> entries = _bundle.findEntries(location, "*.xml", true);
+	public Resource[] getResources(String location) {
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			location, "*.xml", true);
 
-		List<Resource> resources = new ArrayList();
+		List<Resource> resources = new ArrayList<Resource>();
 
-		while (entries.hasMoreElements()) {
-			resources.add(new UrlResource(entries.nextElement()));
+		while (enumeration.hasMoreElements()) {
+			resources.add(new UrlResource(enumeration.nextElement()));
 		}
 
 		return resources.toArray(new Resource[resources.size()]);

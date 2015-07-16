@@ -97,6 +97,39 @@ sourceSets {
 	}
 }
 
+test {
+	jvmArgs "-XX:MaxNewSize=32m"
+	jvmArgs "-XX:MaxPermSize=64m"
+	jvmArgs "-XX:MaxTenuringThreshold=0"
+	jvmArgs "-XX:NewSize=32m"
+	jvmArgs "-XX:ParallelGCThreads=2"
+	jvmArgs "-XX:PermSize=64m"
+	jvmArgs "-XX:SurvivorRatio=65536"
+	jvmArgs "-XX:TargetSurvivorRatio=0"
+	jvmArgs "-XX:-UseAdaptiveSizePolicy"
+	jvmArgs "-XX:+UseParallelOldGC"
+	jvmArgs "-XX:-UseSplitVerifier"
+
+	maxHeapSize = "256m"
+	minHeapSize = "256m"
+}
+
+testIntegration {
+	jvmArgs "-XX:MaxNewSize=32m"
+	jvmArgs "-XX:MaxPermSize=200m"
+	jvmArgs "-XX:MaxTenuringThreshold=0"
+	jvmArgs "-XX:NewSize=32m"
+	jvmArgs "-XX:ParallelGCThreads=2"
+	jvmArgs "-XX:PermSize=200m"
+	jvmArgs "-XX:SurvivorRatio=65536"
+	jvmArgs "-XX:TargetSurvivorRatio=0"
+	jvmArgs "-XX:-UseAdaptiveSizePolicy"
+	jvmArgs "-XX:+UseParallelOldGC"
+
+	maxHeapSize = "512m"
+	minHeapSize = "512m"
+}
+
 pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	afterEvaluate {
 		buildPluginDescriptor {
@@ -144,4 +177,18 @@ pluginManager.withPlugin("com.moowork.node") {
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 	options.warnings = false
+}
+
+if (project.hasProperty("testClassGroupIndex")) {
+	Properties properties = new Properties()
+
+	File file = new File(rootDir, "../test.class.file.names.properties")
+
+	properties.load(new StringReader(file.text.replace("\\", "/")))
+
+	String testClassGroup = properties["TEST_CLASS_GROUP_" + testClassGroupIndex]
+
+	List<String> testClasses = testClassGroup.tokenize(",")
+
+	[test, testIntegration]*.include testClasses
 }

@@ -1650,11 +1650,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			(StartAppServerTask)GradleUtil.getTask(
 				project, START_TESTABLE_TOMCAT_TASK_NAME);
 
-		if (!configureTaskEnabledWithAppServer(
-				startTestableTomcatTask, "tomcat")) {
-
-			return;
-		}
+		configureTaskEnabledWithAppServer(startTestableTomcatTask, "tomcat");
 	}
 
 	protected void configureTasksTest(Project project) {
@@ -1706,6 +1702,18 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		test.setDefaultCharacterEncoding(StandardCharsets.UTF_8.name());
 	}
 
+	protected boolean configureTaskTestEnabledWithCandidateClassFiles(
+		Test test) {
+
+		FileTree fileTree = test.getCandidateClassFiles();
+
+		if (fileTree.isEmpty()) {
+			test.setEnabled(false);
+		}
+
+		return test.getEnabled();
+	}
+
 	protected void configureTaskTestForkEvery(Test test) {
 		String name = test.getName();
 
@@ -1731,8 +1739,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		File skipManagedAppServerFile = new File(
 			srcDir, _SKIP_MANAGED_APP_SERVER_FILE_NAME);
 
-		if (!skipManagedAppServerFile.exists()) {
-			configureTaskEnabledWithAppServer(test, "tomcat");
+		if (!skipManagedAppServerFile.exists() &&
+			configureTaskEnabledWithAppServer(test, "tomcat") &&
+			configureTaskTestEnabledWithCandidateClassFiles(test)) {
 
 			test.dependsOn(START_TESTABLE_TOMCAT_TASK_NAME);
 			test.finalizedBy(STOP_TESTABLE_TOMCAT_TASK_NAME);

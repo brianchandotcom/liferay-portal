@@ -75,7 +75,6 @@ import javax.portlet.RenderResponse;
  * @author Connor McKay
  * @author Drew Brokke
  */
-
 public class RolesAdminPortlet extends MVCPortlet {
 
 	public void deletePermission(

@@ -44,10 +44,10 @@ public abstract class BaseStore implements Store {
 	/**
 	 * Adds a directory.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
-	 * @param  dirName the directory's name
+	 * @param companyId the primary key of the company
+	 * @param repositoryId the primary key of the data repository (optionally
+	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param dirName the directory's name
 	 */
 	@Override
 	public abstract void addDirectory(
@@ -180,10 +180,10 @@ public abstract class BaseStore implements Store {
 	/**
 	 * Deletes a directory.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
-	 * @param  dirName the directory's name
+	 * @param companyId the primary key of the company
+	 * @param repositoryId the primary key of the data repository (optionally
+	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param dirName the directory's name
 	 */
 	@Override
 	public abstract void deleteDirectory(
@@ -193,10 +193,10 @@ public abstract class BaseStore implements Store {
 	 * Deletes a file. If a file has multiple versions, all versions will be
 	 * deleted.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
+	 * @param companyId the primary key of the company
+	 * @param repositoryId the primary key of the data repository (optionally
+	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param fileName the file's name
 	 */
 	@Override
 	public abstract void deleteFile(
@@ -205,11 +205,11 @@ public abstract class BaseStore implements Store {
 	/**
 	 * Deletes a file at a particular version.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @param  versionLabel the file's version label
+	 * @param companyId the primary key of the company
+	 * @param repositoryId the primary key of the data repository (optionally
+	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param fileName the file's name
+	 * @param versionLabel the file's version label
 	 */
 	@Override
 	public abstract void deleteFile(

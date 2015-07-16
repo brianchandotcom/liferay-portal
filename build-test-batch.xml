@@ -219,8 +219,6 @@
 
 				<antcall target="rebuild-database" inheritAll="false" />
 
-				<antcall target="delete-liferay-home" />
-
 				<ant dir="modules" target="test-class-group" inheritAll="false">
 					<property name="test.class.group.index" value="@{test.class.group.index}" />
 					<property name="test.type" value="integration" />

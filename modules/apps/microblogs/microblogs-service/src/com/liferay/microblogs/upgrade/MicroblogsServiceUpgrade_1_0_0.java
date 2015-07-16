@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -18,6 +17,9 @@ package com.liferay.microblogs.upgrade;
 import com.liferay.microblogs.upgrade.v1_0_0.UpgradeMicroblogsEntry;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
+/**
+ * @author Ryan Park
+ */
 /**
  * @author Ryan Park
  */

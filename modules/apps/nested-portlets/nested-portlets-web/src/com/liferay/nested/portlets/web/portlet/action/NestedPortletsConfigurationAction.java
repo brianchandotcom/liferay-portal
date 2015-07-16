@@ -91,6 +91,7 @@ public class NestedPortletsConfigurationAction
 		super.include(portletConfig, request, response);
 	}
 
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)

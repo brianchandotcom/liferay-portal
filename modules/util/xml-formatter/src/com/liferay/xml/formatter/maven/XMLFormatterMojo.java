@@ -45,10 +45,6 @@ public class XMLFormatterMojo extends AbstractMojo {
 		_xmlFormatterArgs.setStripComments(stripComments);
 	}
 
-	/**
-	 * @parameter default-value="${project.basedir}
-	 * @readonly
-	 */
 	protected File baseDir;
 
 	private final XMLFormatterArgs _xmlFormatterArgs = new XMLFormatterArgs();

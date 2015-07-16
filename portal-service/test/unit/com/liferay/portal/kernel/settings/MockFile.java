@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Properties;
 
 /**
-* @author Iván Zaera
-*/
+ * @author Iván Zaera
+ */
 public class MockFile implements com.liferay.portal.kernel.util.File {
 
 	@Override

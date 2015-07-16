@@ -284,8 +284,8 @@ public interface TrashHandler {
 	public Filter getExcludeFilter(SearchContext searchContext);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getExcludeFilter(
-	 *             SearchContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExcludeFilter(SearchContext)}
 	 */
 	@Deprecated
 	public Query getExcludeQuery(SearchContext searchContext);

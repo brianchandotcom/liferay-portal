@@ -66,7 +66,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 /**
  * @author Matthew Tambara
  */
-public class PortalPreferencesImplConcurrencyTest {
+public class PortalPreferencesImplTest {
 
 	@ClassRule
 	@Rule

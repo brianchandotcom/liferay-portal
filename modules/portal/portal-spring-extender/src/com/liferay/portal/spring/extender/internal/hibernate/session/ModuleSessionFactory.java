@@ -32,8 +32,8 @@ import org.springframework.context.ApplicationContextAware;
 /**
  * @author Miguel Pastor
  */
-public class ModuleSessionFactory extends PortletSessionFactoryImpl
-	implements ApplicationContextAware {
+public class ModuleSessionFactory
+	extends PortletSessionFactoryImpl implements ApplicationContextAware {
 
 	@Override
 	public ClassLoader getSessionFactoryClassLoader() {

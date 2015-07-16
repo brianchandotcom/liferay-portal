@@ -22,12 +22,12 @@
 
 	<command name="addCP">
 		<execute function="Type#mouseOverFocusType" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
+		<execute function="Type#typeCKEditor" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 	</command>
 
 	<command name="addDraftCP">
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
+		<execute function="Type#typeCKEditor" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentAddwebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -69,7 +69,7 @@
 
 	<command name="addFailWithoutRequiredCategoryAssetTypeCP">
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="Web Content Title" />
-		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="Web Content Content" />
+		<execute function="Type#typeCKEditor" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="Web Content Content" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontentCategorization#VOCABULARY" value1="${vocabularyName} Required" />
@@ -82,7 +82,7 @@
 		<if>
 			<isset var="webContentContent" />
 			<then>
-				<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute function="Type#typeCKEditor" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 			</then>
 		</if>
 
@@ -360,7 +360,7 @@
 
 	<command name="addWithCategoryCP">
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
+		<execute function="Type#typeCKEditor" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
 
 		<if>
@@ -615,7 +615,7 @@
 
 	<command name="addWithWorkflowCP">
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
+		<execute function="Type#typeCKEditor" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -707,7 +707,7 @@
 		<if>
 			<isset var="webContentContentEdit" />
 			<then>
-				<execute function="Type#typeFrame" locator1="CPWebcontentEditwebcontent#CONTENT_FIELD" value1="${webContentContentEdit}" />
+				<execute function="Type#typeCKEditor" locator1="CPWebcontentEditwebcontent#CONTENT_FIELD" value1="${webContentContentEdit}" />
 			</then>
 		</if>
 
@@ -783,7 +783,7 @@
 		<if>
 			<isset var="webContentContent" />
 			<then>
-				<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute function="Type#typeCKEditor" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 			</then>
 		</if>
 

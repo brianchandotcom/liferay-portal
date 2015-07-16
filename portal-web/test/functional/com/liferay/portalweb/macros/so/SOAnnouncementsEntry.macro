@@ -31,7 +31,7 @@
 				<execute function="Type#sendKeys" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
 			</then>
 			<else>
-				<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
+				<execute function="Type#typeCKEditor" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
 			</else>
 		</if>
 
@@ -85,7 +85,7 @@
 		<execute function="AssertClick" locator1="SOAnnouncementsManage#ADD_ENTRY_BUTTON" value1="Add Entry"  />
 
 		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeCKEditor" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -246,7 +246,7 @@
 
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
-		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeCKEditor" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -268,7 +268,7 @@
 		<execute function="AssertClick" locator1="SOAnnouncementsManage#ANNOUNCEMENTS_ENTRY_EDIT_LINK" value1="Edit"  />
 
 		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
-		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeCKEditor" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -337,7 +337,7 @@
 
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitleEdit}" />
-		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeCKEditor" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />
@@ -354,7 +354,7 @@
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type#typeFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeCKEditor" locator1="SOAnnouncementsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#URL_FIELD" value1="${entryURL}" />

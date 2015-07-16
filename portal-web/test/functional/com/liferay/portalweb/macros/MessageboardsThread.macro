@@ -6,7 +6,7 @@
 		<execute function="AssertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute function="Type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 		<execute function="AssertClick" locator1="CPMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -214,7 +214,7 @@
 		<execute function="AssertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute function="Type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 		<execute function="Click" locator1="CPMessageboardsPostthread#SUBMIT_FOR_PUBLICATION_BUTTON" />
 
 		<execute function="AssertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -297,7 +297,7 @@
 		<if>
 			<isset var="threadBodyEdit" />
 			<then>
-				<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBodyEdit}" />
+				<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBodyEdit}" />
 			</then>
 		</if>
 
@@ -469,7 +469,7 @@
 				<execute function="AssertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
 				<execute function="Check" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_CHECKBOX" />
 				<execute function="Type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
-				<execute function="Type#typeFrame" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+				<execute function="Type#typeCKEditor" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 
@@ -518,7 +518,7 @@
 				<execute function="AssertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
 				<execute function="Check" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_CHECKBOX" />
 				<execute function="Type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
-				<execute function="Type#typeFrame" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+				<execute function="Type#typeCKEditor" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 

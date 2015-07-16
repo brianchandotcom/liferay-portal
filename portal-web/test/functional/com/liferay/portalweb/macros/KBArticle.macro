@@ -6,7 +6,7 @@
 		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
 		<execute function="Type" locator1="CPKnowledgebaseadminAddchildarticle#TITLE_FIELD" value1="${kbChildArticleTitle}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddchildarticle#CONTENT_FIELD" value1="${kbChildArticleContent}" />
+		<execute function="Type#typeCKEditor" locator1="CPKnowledgebaseadminAddchildarticle#CONTENT_FIELD" value1="${kbChildArticleContent}" />
 		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />

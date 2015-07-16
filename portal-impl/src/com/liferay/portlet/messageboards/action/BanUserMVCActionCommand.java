@@ -45,7 +45,7 @@ import java.io.IOException;
 	},
 	service = MVCActionCommand.class
 )
-public class BanUserAction extends BaseMVCActionCommand {
+public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

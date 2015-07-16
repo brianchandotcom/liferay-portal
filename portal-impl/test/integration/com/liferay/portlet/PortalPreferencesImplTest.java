@@ -33,8 +33,6 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortletKeys;
 
-import java.io.IOException;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -87,15 +85,13 @@ public class PortalPreferencesImplTest {
 		_originalPortalPreferencesLocalService =
 			PortalPreferencesLocalServiceUtil.getService();
 
-		InvocationHandler invocationHandler = new SynchronousInvocationHandler(
-			_originalPortalPreferencesLocalService);
-
 		ReflectionTestUtil.setFieldValue(
 			PortalPreferencesLocalServiceUtil.class, "_service",
 			ProxyUtil.newProxyInstance(
 				PortalPreferencesLocalService.class.getClassLoader(),
 				new Class<?>[] {PortalPreferencesLocalService.class},
-				invocationHandler));
+				new SynchronousInvocationHandler(
+					_originalPortalPreferencesLocalService)));
 
 		_testThread.set(true);
 	}
@@ -111,8 +107,8 @@ public class PortalPreferencesImplTest {
 	}
 
 	@Before
-	public void setUp() throws IOException {
-		PortalPreferencesImpl portalPreferences = new PortalPreferencesImpl(
+	public void setUp() {
+		PortalPreferences portalPreferences = new PortalPreferencesImpl(
 			PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_USER, null,
 			new HashMap<String, Preference>(), true);
@@ -124,18 +120,20 @@ public class PortalPreferencesImplTest {
 	public void tearDown() throws Throwable {
 		Builder builder = new Builder();
 
-		TransactionInvokerUtil.invoke(builder.build(), new Callable<Void>() {
+		TransactionInvokerUtil.invoke(
+			builder.build(),
+			new Callable<Void>() {
 
-			@Override
-			public Void call() throws NoSuchPreferencesException {
-				PortalPreferencesUtil.removeByO_O(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_USER);
+				@Override
+				public Void call() throws NoSuchPreferencesException {
+					PortalPreferencesUtil.removeByO_O(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_USER);
 
-				return null;
-			}
+					return null;
+				}
 
-		});
+			});
 	}
 
 	@Test

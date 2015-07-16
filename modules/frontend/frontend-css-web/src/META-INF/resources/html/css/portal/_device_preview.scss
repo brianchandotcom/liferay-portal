@@ -1,7 +1,7 @@
 @import "bourbon";
 
 .lfr-device-preview-panel {
-	width: 220px;
+	width: 350px;
 
 	.nav {
 		margin: 20px -10px;
@@ -168,9 +168,9 @@
 .lfr-device-preview {
 	bottom: 0;
 	display: none;
-	left: 220px;
+	left: 0;
 	position: fixed;
-	right: 0;
+	right: 350px;
 	top: 0;
 	z-index: 500;
 
@@ -196,7 +196,7 @@
 		.lfr-device-preview-panel {
 			margin: 0;
 			position: fixed;
-			width: 200px;
+			width: 350px;
 
 			.btn.close {
 				font-size: 20px;

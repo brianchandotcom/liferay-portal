@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.Collection;
 
@@ -36,7 +39,7 @@ public class RuleGroupProcessorUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			RuleGroupProcessorUtil.class);
 
-		return _ruleGroupProcessor;
+		return _instance._serviceTracker.getService();
 	}
 
 	public static RuleHandler getRuleHandler(String ruleType) {
@@ -59,12 +62,18 @@ public class RuleGroupProcessorUtil {
 		return getRuleGroupProcessor().unregisterRuleHandler(ruleType);
 	}
 
-	public void setRuleGroupProcessor(RuleGroupProcessor ruleGroupProcessor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	public RuleGroupProcessorUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_ruleGroupProcessor = ruleGroupProcessor;
+		_serviceTracker = registry.trackServices(RuleGroupProcessor.class);
+
+		_serviceTracker.open();
 	}
 
-	private static RuleGroupProcessor _ruleGroupProcessor;
+	private static final RuleGroupProcessorUtil _instance =
+		new RuleGroupProcessorUtil();
+
+	private final ServiceTracker<RuleGroupProcessor, RuleGroupProcessor>
+		_serviceTracker;
 
 }

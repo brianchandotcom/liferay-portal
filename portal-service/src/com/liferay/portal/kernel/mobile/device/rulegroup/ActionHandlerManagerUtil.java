@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,7 +49,7 @@ public class ActionHandlerManagerUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			ActionHandlerManagerUtil.class);
 
-		return _actionHandlerManager;
+		return _instance._serviceTracker.getService();
 	}
 
 	public static Collection<ActionHandler> getActionHandlers() {
@@ -65,14 +68,18 @@ public class ActionHandlerManagerUtil {
 		return getActionHandlerManager().unregisterActionHandler(actionType);
 	}
 
-	public void setActionHandlerManager(
-		ActionHandlerManager actionHandlerManager) {
+	public ActionHandlerManagerUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		_serviceTracker = registry.trackServices(ActionHandlerManager.class);
 
-		_actionHandlerManager = actionHandlerManager;
+		_serviceTracker.open();
 	}
 
-	private static ActionHandlerManager _actionHandlerManager;
+	private static final ActionHandlerManagerUtil _instance =
+		new ActionHandlerManagerUtil();
+
+	private final ServiceTracker<ActionHandlerManager, ActionHandlerManager>
+		_serviceTracker;
 
 }

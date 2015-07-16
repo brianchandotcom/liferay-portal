@@ -4,22 +4,12 @@
 	default-destroy-method="destroy"
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 
 	<!-- Util -->
 
-	<bean id="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil" class="com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil">
-		<property name="deviceRecognitionProvider" ref="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil" class="com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil">
-		<property name="actionHandlerManager" ref="com.liferay.portal.mobile.device.rulegroup.DefaultActionHandlerManagerImpl" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil" class="com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil">
-		<property name="ruleGroupProcessor" ref="com.liferay.portal.mobile.device.rulegroup.DefaultRuleGroupProcessorImpl" />
-	</bean>
 	<bean id="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" class="com.liferay.portal.mobile.device.DefaultDeviceRecognitionProvider" />
 	<bean id="com.liferay.portal.mobile.device.rulegroup.DefaultActionHandlerManagerImpl" class="com.liferay.portal.mobile.device.rulegroup.DefaultActionHandlerManagerImpl">
 		<property name="actionHandlers">

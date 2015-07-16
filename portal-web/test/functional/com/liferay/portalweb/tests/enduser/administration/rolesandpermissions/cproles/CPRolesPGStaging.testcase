@@ -349,7 +349,7 @@
 		</execute>
 
 		<execute macro="Page#addPG">
-			<var name="PageName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />

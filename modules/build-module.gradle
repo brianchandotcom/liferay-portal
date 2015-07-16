@@ -178,3 +178,17 @@ tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 	options.warnings = false
 }
+
+if (project.hasProperty("testClassGroupIndex")) {
+	Properties properties = new Properties()
+
+	File file = new File(rootDir, "../test.class.file.names.properties")
+
+	properties.load(new StringReader(file.text.replace("\\", "/")))
+
+	String testClassGroup = properties["TEST_CLASS_GROUP_" + testClassGroupIndex]
+
+	List<String> testClasses = testClassGroup.tokenize(",")
+
+	[test, testIntegration]*.include testClasses
+}

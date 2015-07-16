@@ -280,10 +280,6 @@
 
 		<!-- Message Boards -->
 
-		<action path="/message_boards/ban_user" type="com.liferay.portlet.messageboards.action.BanUserAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
 		<action path="/message_boards/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
 
 		<action path="/message_boards/delete_thread" type="com.liferay.portlet.messageboards.action.DeleteThreadAction">
@@ -353,10 +349,6 @@
 		</action>
 
 		<!-- Message Boards Admin -->
-
-		<action path="/message_boards_admin/ban_user" type="com.liferay.portlet.messageboards.action.BanUserAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
 
 		<action path="/message_boards_admin/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
 

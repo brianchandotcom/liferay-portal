@@ -182,7 +182,7 @@
 		<run-integration-test database.type="postgresql" />
 	</target>
 
-	<target name="modules">
+	<target name="modules-integration">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>
 				<exec executable="service" failonerror="true">
@@ -195,10 +195,22 @@
 
 				<ant dir="modules" target="test-class-group" inheritAll="false">
 					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.type" value="integration" />
 				</ant>
 
 				<ant dir="portal-service" target="test-class" inheritAll="false">
 					<property name="test.class" value="PortalLogAssertorTest" />
+				</ant>
+			</test-action>
+		</run-batch-test>
+	</target>
+
+	<target name="modules-unit">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<ant dir="modules" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.type" value="unit" />
 				</ant>
 			</test-action>
 		</run-batch-test>

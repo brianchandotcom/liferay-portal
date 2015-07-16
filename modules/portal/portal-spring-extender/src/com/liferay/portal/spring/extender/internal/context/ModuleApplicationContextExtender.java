@@ -133,24 +133,25 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				new ModuleApplicationContextRegistrator(
 					_bundle, _bundleContext.getBundle()));
 
-			List<ContextDependency> contextDependencies =
-				_processServiceReferences(_bundle);
-
 			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
 			ClassLoader classLoader = bundleWiring.getClassLoader();
+
+			List<ContextDependency> contextDependencies =
+				_processServiceReferences(_bundle);
 
 			for (ContextDependency contextDependency : contextDependencies) {
 				ServiceDependency serviceDependency =
 					_dependencyManager.createServiceDependency();
 
-				Class<?> clazz = Class.forName(
-					contextDependency.getServiceClass(), false, classLoader);
+				serviceDependency.setRequired(true);
+
+				Class<?> serviceClass = Class.forName(
+					contextDependency.getServiceClassName(), false,
+					classLoader);
 
 				serviceDependency.setService(
-					clazz, contextDependency.getFilter());
-
-				serviceDependency.setRequired(true);
+					serviceClass, contextDependency.getFilterString());
 
 				_component.add(serviceDependency);
 			}
@@ -192,24 +193,26 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 		private class ContextDependency {
 
-			public ContextDependency(String className, String filterString) {
-				this.serviceClass = className;
+			public ContextDependency(
+				String serviceClassName, String filterString) {
+
+				this.serviceClassName = serviceClassName;
 
 				if (!filterString.equals("")) {
 					this.filterString = filterString;
 				}
 			}
 
-			public String getFilter() {
+			public String getFilterString() {
 				return filterString;
 			}
 
-			public String getServiceClass() {
-				return serviceClass;
+			public String getServiceClassName() {
+				return serviceClassName;
 			}
 
 			protected String filterString;
-			protected final String serviceClass;
+			protected final String serviceClassName;
 
 		}
 

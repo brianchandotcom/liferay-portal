@@ -21,8 +21,55 @@ import org.junit.Test;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Roberto Díaz
  */
 public class FileImplTest {
+
+	@Test
+	public void testAppendSuffixWhenFileNameHasParenthesis() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test(1).jsp", "1");
+
+		Assert.assertEquals("test(1)(1).jsp", fileName);
+	}
+
+	@Test
+	public void testAppendSuffixWithMultipleCharacterValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test.jsp", "1!$eae1");
+
+		Assert.assertEquals("test(1!$eae1).jsp", fileName);
+	}
+
+	@Test
+	public void testAppendSuffixWithMultipleNumericalValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test.jsp", "1111111");
+
+		Assert.assertEquals("test(1111111).jsp", fileName);
+	}
+
+	@Test
+	public void testAppendSuffixWithMultipleStringValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test.jsp", "AAAAAAA");
+
+		Assert.assertEquals("test(AAAAAAA).jsp", fileName);
+	}
+
+	@Test
+	public void testAppendSuffixWithSingleNumericalValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix("test.jsp", "1");
+
+		Assert.assertEquals("test(1).jsp", fileName);
+	}
+
+	@Test
+	public void testAppendSuffixWithSingleStringValue() {
+		String fileName3 = _fileImpl.appendParentheticalSuffix("test.jsp", "A");
+
+		Assert.assertEquals("test(A).jsp", fileName3);
+	}
 
 	@Test
 	public void testGetPathBackSlashForwardSlash() {
@@ -57,6 +104,82 @@ public class FileImplTest {
 	@Test
 	public void testGetShortFileNameNoPath() {
 		Assert.assertEquals("aaa.bbb", _fileImpl.getShortFileName("aaa.bbb"));
+	}
+
+	@Test
+	public void testStripSuffixAppendedWhenFileNameHasParenthesis() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test(1).jsp", "1");
+
+		Assert.assertEquals(
+			"test(1).jsp", _fileImpl.stripParentheticalSuffix(fileName));
+	}
+
+	@Test
+	public void testStripSuffixAppendedWithMultipleCharacterValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test.jsp", "1!$eae1");
+
+		Assert.assertEquals(
+			"test.jsp", _fileImpl.stripParentheticalSuffix(fileName));
+	}
+
+	@Test
+	public void testStripSuffixAppendedWithMultipleNumericalValue() {
+		String fileName2 = _fileImpl.appendParentheticalSuffix(
+			"test.jsp", "1111111");
+
+		Assert.assertEquals(
+			"test.jsp", _fileImpl.stripParentheticalSuffix(fileName2));
+	}
+
+	@Test
+	public void testStripSuffixAppendedWithMultipleStringValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test.jsp", "AAAAAAA");
+
+		Assert.assertEquals(
+			"test.jsp", _fileImpl.stripParentheticalSuffix(fileName));
+	}
+
+	@Test
+	public void testStripSuffixAppendedWithSingleNumericalValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix("test.jsp", "1");
+
+		Assert.assertEquals(
+			"test.jsp", _fileImpl.stripParentheticalSuffix(fileName));
+	}
+
+	@Test
+	public void testStripSuffixAppendedWithSingleStringValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix("test.jsp", "A");
+
+		Assert.assertEquals(
+			"test.jsp", _fileImpl.stripParentheticalSuffix(fileName));
+	}
+
+	@Test
+	public void testStripSuffixWhenFileNameHasInvertedParenthesis() {
+		Assert.assertEquals(
+			"test)1(.jsp", _fileImpl.stripParentheticalSuffix("test)1(.jsp"));
+	}
+
+	@Test
+	public void testStripSuffixWhenFileNameHasNoCloseParenthesis() {
+		Assert.assertEquals(
+			"test(1.jsp", _fileImpl.stripParentheticalSuffix("test(1.jsp"));
+	}
+
+	@Test
+	public void testStripSuffixWhenFileNameHasNoParentheticalSuffix() {
+		Assert.assertEquals(
+			"test.jsp", _fileImpl.stripParentheticalSuffix("test.jsp"));
+	}
+
+	@Test
+	public void testStripSuffixWhenFileNameHasParenthesisAtStart() {
+		Assert.assertEquals(
+			"()test.jsp", _fileImpl.stripParentheticalSuffix("()test.jsp"));
 	}
 
 	private final FileImpl _fileImpl = new FileImpl();

@@ -3,21 +3,4 @@
 
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-    <target name="test">
-        <if>
-            <available file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies" />
-            <then>
-                <delete file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies" />
-            </then>
-        </if>
-
-        <copy todir="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies">
-            <fileset dir="../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni/internal/dependencies" />
-        </copy>
-
-        <test
-            module.dir="${basedir}"
-        />
-    </target>
 </project>

@@ -28,11 +28,13 @@ public class EditorConfigurationFactoryUtil {
 	public static EditorConfiguration getEditorConfiguration(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		return getEditorConfigurationFactory().getEditorConfiguration(
 			portletName, editorConfigKey, editorName,
-			inputEditorTaglibAttributes, themeDisplay, requestBasedPortletURLFactory);
+			inputEditorTaglibAttributes, themeDisplay,
+			requestBasedPortletURLFactory);
 	}
 
 	public static EditorConfigurationFactory getEditorConfigurationFactory() {

@@ -41,7 +41,8 @@ public class CommentsEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		jsonObject.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);

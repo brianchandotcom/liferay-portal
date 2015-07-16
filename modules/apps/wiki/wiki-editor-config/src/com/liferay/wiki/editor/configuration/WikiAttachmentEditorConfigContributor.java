@@ -54,7 +54,8 @@ public class WikiAttachmentEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		boolean allowBrowseDocuments = GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(

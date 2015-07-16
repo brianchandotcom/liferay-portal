@@ -37,15 +37,18 @@ public class EditorConfigurationFactoryImpl
 	public EditorConfiguration getEditorConfiguration(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		JSONObject configJSONObject = _editorConfigProvider.getConfigJSONObject(
 			portletName, editorConfigKey, editorName,
-			inputEditorTaglibAttributes, themeDisplay, requestBasedPortletURLFactory);
+			inputEditorTaglibAttributes, themeDisplay,
+			requestBasedPortletURLFactory);
 
 		EditorOptions editorOptions = _editorOptionsProvider.getEditorOptions(
 			portletName, editorConfigKey, editorName,
-			inputEditorTaglibAttributes, themeDisplay, requestBasedPortletURLFactory);
+			inputEditorTaglibAttributes, themeDisplay,
+			requestBasedPortletURLFactory);
 
 		EditorConfigTransformer editorConfigTransformer =
 			_editorConfigTransformerServiceTrackerMap.getService(editorName);

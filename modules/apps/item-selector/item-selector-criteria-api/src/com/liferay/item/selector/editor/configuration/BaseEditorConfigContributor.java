@@ -73,7 +73,8 @@ public abstract class BaseEditorConfigContributor
 		ItemSelector itemSelector = getItemSelector();
 
 		return itemSelector.getItemSelectorURL(
-			requestBasedPortletURLFactory, name + "selectItem", itemSelectorCriterion);
+			requestBasedPortletURLFactory, name + "selectItem",
+			itemSelectorCriterion);
 	}
 
 	protected abstract ItemSelector getItemSelector();

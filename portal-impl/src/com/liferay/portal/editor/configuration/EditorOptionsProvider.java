@@ -36,7 +36,8 @@ public class EditorOptionsProvider
 	public EditorOptions getEditorOptions(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		EditorOptions editorOptions = new EditorOptions();
 

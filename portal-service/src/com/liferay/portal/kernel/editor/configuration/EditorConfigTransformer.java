@@ -66,7 +66,8 @@ public interface EditorConfigTransformer {
 	public void transform(
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory,
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory,
 		JSONObject configJSONObject);
 
 }

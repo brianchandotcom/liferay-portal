@@ -56,7 +56,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		String contentsLanguageDir = getContentsLanguageDir(
 			inputEditorTaglibAttributes);
@@ -303,7 +304,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	}
 
 	protected void populateFileBrowserURL(
-		JSONObject jsonObject, RequestBasedPortletURLFactory requestBasedPortletURLFactory,
+		JSONObject jsonObject,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory,
 		String eventName) {
 
 		List<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
@@ -338,7 +340,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			imageDesiredItemSelectorReturnTypes);
 
 		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBasedPortletURLFactory, eventName, imageItemSelectorCriterion);
+			requestBasedPortletURLFactory, eventName,
+			imageItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", dlItemSelectorURL.toString());

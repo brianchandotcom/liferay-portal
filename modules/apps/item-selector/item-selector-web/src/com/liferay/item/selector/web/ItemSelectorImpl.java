@@ -75,8 +75,9 @@ public class ItemSelectorImpl implements ItemSelector {
 		String itemSelectedEventName = getValue(
 			parameters, PARAMETER_ITEM_SELECTED_EVENT_NAME);
 
-		RequestBasedPortletURLFactory requestBasedPortletURLFactory = RequestBasedPortletURLFactory.create(
-			PortalUtil.getLiferayPortletResponse(portletResponse));
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory =
+			RequestBasedPortletURLFactory.create(
+				PortalUtil.getLiferayPortletResponse(portletResponse));
 
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			new ArrayList<>();
@@ -129,7 +130,8 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Override
 	public PortletURL getItemSelectorURL(
-		RequestBasedPortletURLFactory requestBasedPortletURLFactory, String itemSelectedEventName,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory,
+		String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
 		PortletURL portletURL = requestBasedPortletURLFactory.createRenderURL(

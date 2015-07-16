@@ -35,7 +35,8 @@ public class CKEditorBBCodeOptionsContributor
 	public void populateEditorOptions(
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		Map<String, Object> dynamicAttributes =
 			editorOptions.getDynamicAttributes();

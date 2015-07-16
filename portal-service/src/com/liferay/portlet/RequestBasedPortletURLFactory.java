@@ -28,7 +28,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class RequestBasedPortletURLFactory {
 
-	public static RequestBasedPortletURLFactory create(HttpServletRequest request) {
+	public static RequestBasedPortletURLFactory create(
+		HttpServletRequest request) {
+
 		return new HttpServletRequestRequestBasedPortletURLFactory(request);
 	}
 

@@ -55,17 +55,18 @@ public class BlogsContentEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:namespace"));
 		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:name"));
+			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
 
 		populateFileBrowserURL(
-			jsonObject, requestBasedPortletURLFactory, namespace + name + "selectDocument");
+			jsonObject, requestBasedPortletURLFactory,
+			namespace + name + "selectDocument");
 	}
 
 	@Reference(unbind = "-")
@@ -74,7 +75,8 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	protected void populateFileBrowserURL(
-		JSONObject jsonObject, RequestBasedPortletURLFactory requestBasedPortletURLFactory,
+		JSONObject jsonObject,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory,
 		String eventName) {
 
 		List<ItemSelectorReturnType>
@@ -100,8 +102,8 @@ public class BlogsContentEditorConfigContributor
 			blogsContentEditorDesiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBasedPortletURLFactory, eventName, blogsItemSelectorCriterion,
-			imageItemSelectorCriterion);
+			requestBasedPortletURLFactory, eventName,
+			blogsItemSelectorCriterion, imageItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());

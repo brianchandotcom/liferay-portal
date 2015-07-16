@@ -29,7 +29,8 @@ public interface ItemSelector {
 		PortletRequest portletRequest, PortletResponse portletResponse);
 
 	public PortletURL getItemSelectorURL(
-		RequestBasedPortletURLFactory requestBasedPortletURLFactory, String itemSelectedEventName,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory,
+		String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria);
 
 }

@@ -38,7 +38,8 @@ public class BaseMentionsEditorConfigContributor
 	@Override
 	public void populateConfigJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay, RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
+		ThemeDisplay themeDisplay,
+		RequestBasedPortletURLFactory requestBasedPortletURLFactory) {
 
 		JSONObject autoCompleteConfigJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -67,8 +68,9 @@ public class BaseMentionsEditorConfigContributor
 
 		triggerJSONObject.put("tplResults", sb.toString());
 
-		PortletURL autoCompleteUserURL = requestBasedPortletURLFactory.createResourceURL(
-			MentionsPortletKeys.MENTIONS);
+		PortletURL autoCompleteUserURL =
+			requestBasedPortletURLFactory.createResourceURL(
+				MentionsPortletKeys.MENTIONS);
 
 		String source =
 			autoCompleteUserURL.toString() + "&" +

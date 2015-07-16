@@ -42,6 +42,13 @@ public class UserGroupSearchContainerResultsTag extends IncludeTag {
 	}
 
 	@Override
+	protected void cleanUp() {
+		_searchContainer = null;
+		_searchTerms = null;
+		_userGroupParams = null;
+	}
+
+	@Override
 	protected String getPage() {
 		return _PAGE;
 	}

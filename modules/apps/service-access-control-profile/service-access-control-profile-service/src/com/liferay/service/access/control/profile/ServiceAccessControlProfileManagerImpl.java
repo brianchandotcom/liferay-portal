@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ServiceAccessControlProfileManagerImpl
 	implements ServiceAccessControlProfileManager {
 
+	@Override
 	public ServiceAccessControlProfile getDefaultServiceAccessControlProfile(
 		long companyId) {
 

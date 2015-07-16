@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  * @see    com.liferay.journal.web.lar.JournalPortletDataHandler
  * @see    com.liferay.journal.lar.JournalCreationStrategy
  * @see    com.liferay.portlet.exportimport.lar.PortletDataHandler
-*/
+ */
 @Component(
 	immediate = true,
 	property = {

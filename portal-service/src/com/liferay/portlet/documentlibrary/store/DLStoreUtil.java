@@ -233,10 +233,10 @@ public class DLStoreUtil {
 	/**
 	 * Deletes a directory.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
-	 * @param  dirName the directory's name
+	 * @param companyId the primary key of the company
+	 * @param repositoryId the primary key of the data repository (optionally
+	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param dirName the directory's name
 	 */
 	public static void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {

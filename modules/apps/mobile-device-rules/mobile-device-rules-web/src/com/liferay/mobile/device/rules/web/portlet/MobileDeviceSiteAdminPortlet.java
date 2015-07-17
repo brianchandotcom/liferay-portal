@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.web.portlet;
 
-import com.liferay.mobile.device.rules.web.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

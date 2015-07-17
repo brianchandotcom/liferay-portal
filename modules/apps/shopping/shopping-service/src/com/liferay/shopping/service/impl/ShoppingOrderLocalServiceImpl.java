@@ -767,15 +767,16 @@ public class ShoppingOrderLocalServiceImpl
 		getShoppingGroupServiceSettings(long groupId) throws SettingsException {
 
 		ShoppingServiceComponentProvider shoppingServiceComponentProvider =
-			ShoppingServiceComponentProvider.getShoppingServiceComponentProvider();
+			ShoppingServiceComponentProvider.
+				getShoppingServiceComponentProvider();
 
 		SettingsFactory settingsFactory =
 			shoppingServiceComponentProvider.getSettingsFactory();
 
 		return settingsFactory.getSettings(
-					ShoppingGroupServiceSettings.class,
-					new GroupServiceSettingsLocator(
-						groupId, ShoppingConstants.SERVICE_NAME));
+			ShoppingGroupServiceSettings.class,
+			new GroupServiceSettingsLocator(
+				groupId, ShoppingConstants.SERVICE_NAME));
 	}
 
 }

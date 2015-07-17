@@ -85,7 +85,8 @@ public class MoveThreadAction extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.message_boards.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/message_boards/error.jsp");
 			}
 			else if (e instanceof MessageBodyException ||
 					 e instanceof MessageSubjectException ||

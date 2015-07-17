@@ -43,7 +43,7 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel,
 	public java.io.InputStream getContentStream(boolean incrementCounter)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures()
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.DDMStructure> getDDMStructures()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryType()

@@ -122,12 +122,6 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		return _dlFileEntryMetadata.getDDMStorageId();
 	}
 
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryMetadata.getDDMStructure();
-	}
-
 	/**
 	* Returns the d d m structure ID of this document library file entry metadata.
 	*

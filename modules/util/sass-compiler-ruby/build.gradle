@@ -6,3 +6,7 @@ dependencies {
 
 	testCompile group: "junit", name: "junit", version: "4.12"
 }
+
+processTestResources {
+	dependsOn ":util:sass-compiler-jni:downloadSassSpec"
+}

@@ -77,7 +77,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 				<c:if test="<%= showAddMessageButton %>">
 					<portlet:renderURL var="editMessageURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_message" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
@@ -617,7 +617,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 		form.fm('<%= Constants.CMD %>').val('<%= Constants.LOCK %>');
 		form.fm('threadIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="/message_boards/edit_message" />');
 	}
 
 	function <portlet:namespace />unlockThreads() {
@@ -627,7 +627,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 		form.fm('<%= Constants.CMD %>').val('<%= Constants.UNLOCK %>');
 		form.fm('threadIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/message_boards_admin/edit_message" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="/message_boards/edit_message" />');
 	}
 </aui:script>
 

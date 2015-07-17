@@ -107,7 +107,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<c:if test="<%= showAddMessageButton %>">
 					<portlet:renderURL var="editMessageURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_message" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>

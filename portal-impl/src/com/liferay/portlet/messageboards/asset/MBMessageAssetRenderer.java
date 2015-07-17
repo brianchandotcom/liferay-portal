@@ -147,7 +147,7 @@ public class MBMessageAssetRenderer
 			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/edit_message");
+			"mvcRenderCommandName", "/message_boards/edit_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(_message.getMessageId()));
 

@@ -282,11 +282,6 @@
 
 		<action path="/message_boards/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
 
-		<action path="/message_boards/edit_message" type="com.liferay.portlet.messageboards.action.EditMessageAction">
-			<forward name="portlet.message_boards.edit_message" path="portlet.message_boards.edit_message" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
 		<action path="/message_boards/edit_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
 			<forward name="portlet.message_boards.edit_message_attachments" path="portlet.message_boards.edit_message_attachments" />
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
@@ -337,11 +332,6 @@
 		<!-- Message Boards Admin -->
 
 		<action path="/message_boards_admin/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
-		<action path="/message_boards_admin/edit_message" type="com.liferay.portlet.messageboards.action.EditMessageAction">
-			<forward name="portlet.message_boards.edit_message" path="portlet.message_boards.edit_message" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
 
 		<action path="/message_boards_admin/edit_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
 			<forward name="portlet.message_boards.edit_message_attachments" path="portlet.message_boards.edit_message_attachments" />

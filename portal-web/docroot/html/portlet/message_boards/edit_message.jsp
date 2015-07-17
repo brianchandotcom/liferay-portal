@@ -159,8 +159,7 @@ else {
 	<br />
 </c:if>
 
-<portlet:actionURL var="editMessageURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_message" />
+<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL">
 	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </portlet:actionURL>
 

@@ -137,6 +137,16 @@ public interface ResourceLocalService extends BaseLocalService {
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
+	public void addModelResources(long companyId, long groupId, long userId,
+		java.lang.String name, long primKey,
+		com.liferay.portal.service.ModelPermissions modelPermissions)
+		throws PortalException;
+
+	public void addModelResources(long companyId, long groupId, long userId,
+		java.lang.String name, java.lang.String primKey,
+		com.liferay.portal.service.ModelPermissions modelPermissions)
+		throws PortalException;
+
 	/**
 	* Adds resources for the entity with the name. Use this method if the user
 	* is unknown or irrelevant and there is no current entity instance.

@@ -135,6 +135,24 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 			name, primKey, groupPermissions, guestPermissions);
 	}
 
+	@Override
+	public void addModelResources(long companyId, long groupId, long userId,
+		java.lang.String name, long primKey,
+		com.liferay.portal.service.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourceLocalService.addModelResources(companyId, groupId, userId,
+			name, primKey, modelPermissions);
+	}
+
+	@Override
+	public void addModelResources(long companyId, long groupId, long userId,
+		java.lang.String name, java.lang.String primKey,
+		com.liferay.portal.service.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_resourceLocalService.addModelResources(companyId, groupId, userId,
+			name, primKey, modelPermissions);
+	}
+
 	/**
 	* Adds resources for the entity with the name. Use this method if the user
 	* is unknown or irrelevant and there is no current entity instance.

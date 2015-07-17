@@ -491,6 +491,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		return LocaleUtil.fromLanguageId(_languageId);
 	}
 
+	public ModelPermissions getModelPermissions() {
+		return _modelPermissions;
+	}
+
 	/**
 	 * Returns the date when an entity was modified if this service context is
 	 * being passed as a parameter to a method which updates an entity.
@@ -1332,6 +1336,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		_layoutURL = layoutURL;
 	}
 
+	public void setModelPermissions(ModelPermissions modelPermissions) {
+		_modelPermissions = modelPermissions;
+	}
+
 	/**
 	 * Sets the date when an entity was modified in this service context.
 	 *
@@ -1555,6 +1563,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private String _languageId;
 	private String _layoutFullURL;
 	private String _layoutURL;
+	private ModelPermissions _modelPermissions;
 	private Date _modifiedDate;
 	private String _pathFriendlyURLPrivateGroup;
 	private String _pathFriendlyURLPrivateUser;

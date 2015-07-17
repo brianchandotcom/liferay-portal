@@ -144,6 +144,24 @@ public class ResourceLocalServiceUtil {
 			groupPermissions, guestPermissions);
 	}
 
+	public static void addModelResources(long companyId, long groupId,
+		long userId, java.lang.String name, long primKey,
+		com.liferay.portal.service.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addModelResources(companyId, groupId, userId, name, primKey,
+			modelPermissions);
+	}
+
+	public static void addModelResources(long companyId, long groupId,
+		long userId, java.lang.String name, java.lang.String primKey,
+		com.liferay.portal.service.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addModelResources(companyId, groupId, userId, name, primKey,
+			modelPermissions);
+	}
+
 	/**
 	* Adds resources for the entity with the name. Use this method if the user
 	* is unknown or irrelevant and there is no current entity instance.

@@ -33,6 +33,8 @@ import com.liferay.portal.model.impl.ResourceImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.ModelPermissions;
+import com.liferay.portal.service.ModelPermissionsFactory;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
@@ -146,8 +148,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
+		ModelPermissions modelPermissions =
+			serviceContext.getModelPermissions();
+
+		if ((modelPermissions != null) && !modelPermissions.isEmpty()) {
+			addModelResources(
+				auditedModel.getCompanyId(), getGroupId(auditedModel),
+				auditedModel.getUserId(), auditedModel.getModelClassName(),
+				String.valueOf(auditedModel.getPrimaryKeyObj()),
+				modelPermissions, getPermissionedModel(auditedModel));
+		}
+		else if (serviceContext.isAddGroupPermissions() ||
+				 serviceContext.isAddGuestPermissions()) {
 
 			addResources(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
@@ -171,6 +183,17 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				serviceContext.getGuestPermissions(),
 				getPermissionedModel(auditedModel));
 		}
+	}
+
+	@Override
+	public void addModelResources(
+			long companyId, long groupId, long userId, String name,
+			long primKey, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		addModelResources(
+			companyId, groupId, userId, name, String.valueOf(primKey),
+			modelPermissions, null);
 	}
 
 	/**
@@ -199,6 +222,16 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		addModelResources(
 			companyId, groupId, userId, name, String.valueOf(primKey),
 			groupPermissions, guestPermissions, null);
+	}
+
+	@Override
+	public void addModelResources(
+			long companyId, long groupId, long userId, String name,
+			String primKey, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		addModelResources(
+			companyId, groupId, userId, name, primKey, modelPermissions, null);
 	}
 
 	/**
@@ -657,7 +690,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	protected void addModelResources(
 			long companyId, long groupId, long userId, Resource resource,
-			String[] groupPermissions, String[] guestPermissions,
+			ModelPermissions modelPermissions,
 			PermissionedModel permissionedModel)
 		throws PortalException {
 
@@ -676,27 +709,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		String[] ownerPermissions = ownerActionIds.toArray(
 			new String[ownerActionIds.size()]);
 
-		// Group permissions
-
-		Role defaultGroupRole = null;
-
-		if (groupId > 0) {
-			defaultGroupRole = roleLocalService.getDefaultGroupRole(groupId);
-
-			if (groupPermissions == null) {
-				groupPermissions = new String[0];
-			}
-		}
-
-		// Guest permissions
-
-		Role guestRole = roleLocalService.getRole(
-			companyId, RoleConstants.GUEST);
-
-		if (guestPermissions == null) {
-			guestPermissions = new String[0];
-		}
-
 		if (resourceBlockLocalService.isSupported(resource.getName())) {
 			if (permissionedModel == null) {
 				throw new IllegalArgumentException(
@@ -709,17 +721,14 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				resource.getCompanyId(), groupId, resource.getName(),
 				permissionedModel, ownerRole.getRoleId(), ownerActionIds);
 
-			if (groupId > 0) {
-				resourceBlockLocalService.setIndividualScopePermissions(
-					resource.getCompanyId(), groupId, resource.getName(),
-					permissionedModel, defaultGroupRole.getRoleId(),
-					Arrays.asList(groupPermissions));
+			if (modelPermissions != null) {
+				for (Role role : modelPermissions.getRoles()) {
+					resourceBlockLocalService.setIndividualScopePermissions(
+						resource.getCompanyId(), groupId, resource.getName(),
+						permissionedModel, role.getRoleId(),
+						modelPermissions.getActionIds(role));
+				}
 			}
-
-			resourceBlockLocalService.setIndividualScopePermissions(
-				resource.getCompanyId(), groupId, resource.getName(),
-				permissionedModel, guestRole.getRoleId(),
-				Arrays.asList(guestPermissions));
 		}
 		else {
 			resourcePermissionLocalService.setOwnerResourcePermissions(
@@ -727,24 +736,40 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				resource.getScope(), resource.getPrimKey(),
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
-			if (groupId > 0) {
-				resourcePermissionLocalService.setResourcePermissions(
-					resource.getCompanyId(), resource.getName(),
-					resource.getScope(), resource.getPrimKey(),
-					defaultGroupRole.getRoleId(), groupPermissions);
-			}
+			if (modelPermissions != null) {
+				for (Role role : modelPermissions.getRoles()) {
+					List<String> actionIds = modelPermissions.getActionIds(
+						role);
+					String[] actionIdsArray = actionIds.toArray(
+						new String[actionIds.size()]);
 
-			resourcePermissionLocalService.setResourcePermissions(
-				resource.getCompanyId(), resource.getName(),
-				resource.getScope(), resource.getPrimKey(),
-				guestRole.getRoleId(), guestPermissions);
+					resourcePermissionLocalService.setResourcePermissions(
+						resource.getCompanyId(), resource.getName(),
+						resource.getScope(), resource.getPrimKey(),
+						role.getRoleId(), actionIdsArray);
+				}
+			}
 		}
 	}
 
 	protected void addModelResources(
+			long companyId, long groupId, long userId, Resource resource,
+			String[] groupPermissions, String[] guestPermissions,
+			PermissionedModel permissionedModel)
+		throws PortalException {
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			companyId, groupId, groupPermissions, guestPermissions);
+
+		addModelResources(
+			companyId, groupId, userId, resource, modelPermissions,
+			permissionedModel);
+	}
+
+	protected void addModelResources(
 			long companyId, long groupId, long userId, String name,
-			String primKey, String[] groupPermissions,
-			String[] guestPermissions, PermissionedModel permissionedModel)
+			String primKey, ModelPermissions modelPermissions,
+			PermissionedModel permissionedModel)
 		throws PortalException {
 
 		if (!PermissionThreadLocal.isAddResource()) {
@@ -778,8 +803,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		try {
 			addModelResources(
-				companyId, groupId, userId, resource, groupPermissions,
-				guestPermissions, permissionedModel);
+				companyId, groupId, userId, resource, modelPermissions,
+				permissionedModel);
 		}
 		finally {
 			PermissionThreadLocal.setFlushResourceBlockEnabled(
@@ -794,6 +819,20 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
+	}
+
+	protected void addModelResources(
+			long companyId, long groupId, long userId, String name,
+			String primKey, String[] groupPermissions,
+			String[] guestPermissions, PermissionedModel permissionedModel)
+		throws PortalException {
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			companyId, groupId, groupPermissions, guestPermissions);
+
+		addModelResources(
+			companyId, groupId, userId, name, primKey, modelPermissions,
+			permissionedModel);
 	}
 
 	protected void addResources(

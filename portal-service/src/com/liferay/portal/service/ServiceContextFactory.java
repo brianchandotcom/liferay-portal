@@ -173,17 +173,25 @@ public class ServiceContextFactory {
 
 		// Permissions
 
-		boolean addGroupPermissions = ParamUtil.getBoolean(
-			request, "addGroupPermissions");
-		boolean addGuestPermissions = ParamUtil.getBoolean(
-			request, "addGuestPermissions");
-		String[] groupPermissions = PortalUtil.getGroupPermissions(request);
-		String[] guestPermissions = PortalUtil.getGuestPermissions(request);
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			request);
 
-		serviceContext.setAddGroupPermissions(addGroupPermissions);
-		serviceContext.setAddGuestPermissions(addGuestPermissions);
-		serviceContext.setGroupPermissions(groupPermissions);
-		serviceContext.setGuestPermissions(guestPermissions);
+		if (!modelPermissions.isEmpty()) {
+			serviceContext.setModelPermissions(modelPermissions);
+		}
+		else {
+			boolean addGroupPermissions = ParamUtil.getBoolean(
+				request, "addGroupPermissions");
+			boolean addGuestPermissions = ParamUtil.getBoolean(
+				request, "addGuestPermissions");
+			String[] groupPermissions = PortalUtil.getGroupPermissions(request);
+			String[] guestPermissions = PortalUtil.getGuestPermissions(request);
+
+			serviceContext.setAddGroupPermissions(addGroupPermissions);
+			serviceContext.setAddGuestPermissions(addGuestPermissions);
+			serviceContext.setGroupPermissions(groupPermissions);
+			serviceContext.setGuestPermissions(guestPermissions);
+		}
 
 		// Portlet preferences ids
 

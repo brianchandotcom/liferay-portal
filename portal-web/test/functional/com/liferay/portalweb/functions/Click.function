@@ -97,7 +97,7 @@
 	<command name="clickAtSidebarClickAt">
 		<execute argument1="1000" selenium="pause" />
 
-		<execute argument1="//ul[@class='nav nav-add-controls'] | //ul[contains(@class,'nav nav-add-controls')]" selenium="clickAt" />
+		<execute argument1="//ul[@class='control-menu']" selenium="clickAt" />
 
 		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
 
@@ -113,17 +113,17 @@
 	<command name="clickAtSidebarClickAtWaitForScript">
 		<execute argument1="1000" selenium="pause" />
 
-		<execute argument1="//ul[@class='nav nav-add-controls'] | //ul[contains(@class,'nav nav-add-controls')]" selenium="waitForElementPresent" />
+		<execute argument1="//ul[@class='nav nav-add-controls'] | //ul[contains(@class,'nav nav-add-controls')] | //ul[@class='control-menu']" selenium="waitForElementPresent" />
 
 		<execute selenium="mouseOver" />
 
-		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')] | //script[contains(@src,'/js/control_menu.js')]" selenium="waitForElementPresent" />
 
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Click#clickAt" />
 
-		<execute argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')] | //script[contains(@src,'/html/js/liferay/dockbar_add_page.js')] " selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/html/js/liferay/dockbar_add_application.js')] | //script[contains(	@src,'/js/control_menu_add_content.js')] | //script[contains(@src,'js/control_menu_add_application.js')]" selenium="waitForElementPresent" />
 	</command>
 
 	<command name="clickNoMouseOver">

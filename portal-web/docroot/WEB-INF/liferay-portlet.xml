@@ -485,6 +485,7 @@
 		<portlet-name>137</portlet-name>
 		<icon>/html/icons/admin_server.png</icon>
 		<struts-path>admin_server</struts-path>
+		<parent-struts-path>admin</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>server</friendly-url-mapping>

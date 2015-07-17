@@ -498,8 +498,12 @@ public class PortalPreferencesImplTest {
 				method.getName().equals("updatePreferences") &&
 				Arrays.equals(parameterTypes, expectedTypes)) {
 
-				if (_synchronize.compareAndSet(true, false)) {
+				if (_synchronize.get()) {
+					_cyclicBarrier.await();
+
 					SynchronizedTransactionExecutor.synchronize(true);
+
+					_synchronize.set(false);
 				}
 			}
 
@@ -516,6 +520,8 @@ public class PortalPreferencesImplTest {
 			_target = target;
 		}
 
+		private static final CyclicBarrier _cyclicBarrier = new CyclicBarrier(
+			2);
 		private static final AtomicBoolean _synchronize = new AtomicBoolean();
 
 		private final PortalPreferencesLocalService _target;

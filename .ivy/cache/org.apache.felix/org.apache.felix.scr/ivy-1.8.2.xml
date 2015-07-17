@@ -4,7 +4,7 @@
 		module="org.apache.felix.scr"
 		revision="1.8.2"
 		status="release"
-		publication="20140117195158"
+		publication="20140117225158"
 	>
 		<description homepage="">
 		Implementation of the Declarative Services specification 1.2
@@ -38,6 +38,7 @@
 	<publications>
 		<artifact name="org.apache.felix.scr" type="bundle" ext="jar" conf="master"/>
 		<artifact name="org.apache.felix.scr" type="source" ext="jar" conf="sources" m:classifier="sources"/>
+		<artifact name="org.apache.felix.scr" type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
 	</publications>
 	<dependencies>
 		<dependency org="org.osgi" name="org.osgi.core" rev="5.0.0" force="true" conf="provided->compile(*),provided(*),runtime(*),master(*)">

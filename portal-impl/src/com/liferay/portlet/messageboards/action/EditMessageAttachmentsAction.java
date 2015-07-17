@@ -16,7 +16,12 @@ package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.PortletJSONUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,6 +30,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
@@ -45,13 +51,20 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Eudaldo Alonso
  */
-public class EditMessageAttachmentsAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/message_boards/edit_message_attachments",
+		"mvc.command.name=/message_boards/view_deleted_message_attachments"
+	},
+	service = MVCActionCommand.class
+)
+public class EditMessageAttachmentsAction extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -61,7 +74,8 @@ public class EditMessageAttachmentsAction extends PortletAction {
 				JSONObject jsonObject = RestoreEntryUtil.checkEntry(
 					actionRequest);
 
-				writeJSON(actionRequest, actionResponse, jsonObject);
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 
 				return;
 			}
@@ -92,42 +106,13 @@ public class EditMessageAttachmentsAction extends PortletAction {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.message_boards.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/message_boards/error.jsp");
 			}
 			else {
 				throw e;
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getMessage(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchMessageException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.message_boards.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.message_boards.view_deleted_message_attachments"));
 	}
 
 	protected void deleteAttachment(ActionRequest actionRequest)

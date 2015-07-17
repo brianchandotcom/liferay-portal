@@ -16,9 +16,7 @@
 
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
-<liferay-portlet:actionURL varImpl="restoreURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
-</liferay-portlet:actionURL>
+<liferay-portlet:actionURL name="/message_boards/edit_message_attachments" varImpl="restoreURL" />
 
 <liferay-ui:restore-entry
 	overrideMessage="overwrite-the-existing-attachment-with-the-removed-one"

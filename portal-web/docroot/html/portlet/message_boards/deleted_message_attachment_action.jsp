@@ -31,8 +31,7 @@ MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 		%>
 
-		<portlet:actionURL var="restoreEntryURL">
-			<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
+		<portlet:actionURL name="/message_boards/edit_message_attachments" var="restoreEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
@@ -49,8 +48,7 @@ MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId
 			url="javascript:;"
 		/>
 
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
+		<portlet:actionURL name="/message_boards/edit_message_attachments" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />

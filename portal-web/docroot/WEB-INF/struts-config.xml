@@ -282,11 +282,6 @@
 
 		<action path="/message_boards/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
 
-		<action path="/message_boards/edit_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
-			<forward name="portlet.message_boards.edit_message_attachments" path="portlet.message_boards.edit_message_attachments" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
 		<action path="/message_boards/find_category" type="com.liferay.portlet.messageboards.action.FindCategoryAction" />
 
 		<action path="/message_boards/find_message" type="com.liferay.portlet.messageboards.action.FindMessageAction" />
@@ -297,19 +292,9 @@
 
 		<action path="/message_boards/search" forward="portlet.message_boards.search" />
 
-		<action path="/message_boards/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
-		</action>
-
 		<!-- Message Boards Admin -->
 
 		<action path="/message_boards_admin/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
-		<action path="/message_boards_admin/edit_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
-			<forward name="portlet.message_boards.edit_message_attachments" path="portlet.message_boards.edit_message_attachments" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
 
 		<action path="/message_boards_admin/find_category" type="com.liferay.portlet.messageboards.action.FindCategoryAction" />
 
@@ -320,11 +305,6 @@
 		<action path="/message_boards_admin/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 
 		<action path="/message_boards_admin/search" forward="portlet.message_boards.search" />
-
-		<action path="/message_boards_admin/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
-		</action>
 
 		<!-- Mobile Device Rules -->
 

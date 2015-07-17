@@ -364,7 +364,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								<c:if test="<%= showDeletedAttachmentsFileEntries && (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 									<li class="message-attachment">
 										<portlet:renderURL var="viewTrashAttachmentsURL">
-											<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
+											<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
 											<portlet:param name="redirect" value="<%= currentURL %>" />
 											<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 										</portlet:renderURL>

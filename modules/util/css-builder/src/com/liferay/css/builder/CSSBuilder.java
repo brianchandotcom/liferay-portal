@@ -312,6 +312,13 @@ public class CSSBuilder {
 		if (pos >= 0) {
 			cssThemePath = filePath.substring(0, pos + 4);
 		}
+		else {
+			pos = filePath.lastIndexOf("/resources/");
+
+			if (pos >= 0) {
+				cssThemePath = filePath.substring(0, pos + 10);
+			}
+		}
 
 		return _sassCompiler.compileString(
 			content, _portalCommonDirName + File.pathSeparator + cssThemePath,

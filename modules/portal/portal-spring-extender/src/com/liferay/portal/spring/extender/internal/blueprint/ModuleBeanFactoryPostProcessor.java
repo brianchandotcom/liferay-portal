@@ -14,7 +14,14 @@
 
 package com.liferay.portal.spring.extender.internal.blueprint;
 
+import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.context.PortletBeanFactoryPostProcessor;
+import com.liferay.portal.spring.extender.internal.bean.ServiceReferenceAnnotationBeanPostProcessor;
+
+import org.osgi.framework.BundleContext;
+
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
 /**
  * @author Miguel Pastor
@@ -22,8 +29,30 @@ import com.liferay.portal.spring.context.PortletBeanFactoryPostProcessor;
 public class ModuleBeanFactoryPostProcessor
 	extends PortletBeanFactoryPostProcessor {
 
-	public ModuleBeanFactoryPostProcessor(ClassLoader classLoader) {
+	public ModuleBeanFactoryPostProcessor(
+		ClassLoader classLoader, BundleContext bundleContext) {
+
 		_classLoader = classLoader;
+		_bundleContext = bundleContext;
+	}
+
+	@Override
+	public void postProcessBeanFactory(
+		ConfigurableListableBeanFactory configurableListableBeanFactory) {
+
+		BeanPostProcessor beanPostProcessor =
+			new ServiceReferenceAnnotationBeanPostProcessor(_bundleContext);
+
+		configurableListableBeanFactory.registerSingleton(
+			ServiceReferenceAnnotationBeanPostProcessor.class.getName(),
+			beanPostProcessor);
+		configurableListableBeanFactory.addBeanPostProcessor(beanPostProcessor);
+
+		configurableListableBeanFactory.addBeanPostProcessor(
+			new BeanReferenceAnnotationBeanPostProcessor(
+				configurableListableBeanFactory));
+
+		super.postProcessBeanFactory(configurableListableBeanFactory);
 	}
 
 	@Override
@@ -31,6 +60,7 @@ public class ModuleBeanFactoryPostProcessor
 		return _classLoader;
 	}
 
+	private final BundleContext _bundleContext;
 	private final ClassLoader _classLoader;
 
 }

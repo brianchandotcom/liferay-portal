@@ -14,25 +14,44 @@
 
 package com.liferay.portal.spring.extender.internal.bean;
 
-import com.liferay.portal.spring.extender.internal.context.ModuleApplicationContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.util.ReflectionUtils;
 
 /**
  * @author Miguel Pastor
  */
 public class ServiceReferenceAnnotationBeanPostProcessor
-	implements ApplicationContextAware, BeanPostProcessor {
+	implements ApplicationListener<ContextClosedEvent>, BeanPostProcessor {
+
+	public ServiceReferenceAnnotationBeanPostProcessor(
+		BundleContext bundleContext) {
+
+		_bundleContext = bundleContext;
+	}
+
+	@Override
+	public void onApplicationEvent(ContextClosedEvent event) {
+		for (org.osgi.framework.ServiceReference<?> serviceReference :
+				_serviceReferences) {
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		_serviceReferences.clear();
+	}
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName)
@@ -48,16 +67,6 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 		autoInject(bean, bean.getClass());
 
 		return bean;
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-		throws BeansException {
-
-		ModuleApplicationContext moduleApplicationContext =
-			(ModuleApplicationContext)applicationContext;
-
-		_bundleContext = moduleApplicationContext.getBundleContext();
 	}
 
 	protected void autoInject(Object targetBean, Class<?> beanClass) {
@@ -92,11 +101,15 @@ public class ServiceReferenceAnnotationBeanPostProcessor
 					beanClass.getName(),
 					"Unable to inject bean reference fields", t);
 			}
+
+			_serviceReferences.add(osgiServiceReference);
 		}
 
 		autoInject(targetBean, beanClass.getSuperclass());
 	}
 
-	private BundleContext _bundleContext;
+	private final BundleContext _bundleContext;
+	private final Set<org.osgi.framework.ServiceReference<?>>
+		_serviceReferences = new HashSet<>();
 
 }

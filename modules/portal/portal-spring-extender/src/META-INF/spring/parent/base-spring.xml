@@ -13,9 +13,7 @@
 		</property>
 		<property name="methodInterceptor" ref="serviceAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
-	<bean class="com.liferay.portal.spring.extender.internal.bean.ServiceReferenceAnnotationBeanPostProcessor" />
 	<bean id="basePersistence" abstract="true">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />

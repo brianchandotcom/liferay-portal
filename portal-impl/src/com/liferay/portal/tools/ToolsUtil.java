@@ -153,6 +153,16 @@ public class ToolsUtil {
 
 		String imports = JavaImportsFormatter.getImports(content);
 
+		return stripFullyQualifiedClassNames(content, imports);
+	}
+
+	public static String stripFullyQualifiedClassNames(String content, String imports)
+		throws IOException {
+
+		if (Validator.isNull(content)) {
+			return content;
+		}
+
 		if (Validator.isNull(imports)) {
 			return content;
 		}

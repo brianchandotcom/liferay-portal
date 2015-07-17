@@ -124,7 +124,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
-		<icon>/html/icons/image_gallery.png</icon>
 		<struts-path>image_gallery_display</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.imagegallerydisplay.action.ConfigurationActionImpl</configuration-action-class>
@@ -134,18 +133,7 @@
 		<friendly-url-routes>com/liferay/portlet/imagegallerydisplay/image-gallery-display-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandler</portlet-data-handler-class>
 		<template-handler>com.liferay.portlet.documentlibrary.template.DocumentLibraryPortletDisplayTemplateHandler</template-handler>
-		<webdav-storage-token>document_library</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<instanceable>true</instanceable>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/image_gallery_display/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-image-gallery-display</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>34</portlet-name>

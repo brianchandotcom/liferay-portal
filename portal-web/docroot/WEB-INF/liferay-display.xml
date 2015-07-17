@@ -3,7 +3,6 @@
 
 <display>
 	<category name="category.cms">
-		<portlet id="31" />
 		<portlet id="64" />
 	</category>
 	<category name="category.collaboration">

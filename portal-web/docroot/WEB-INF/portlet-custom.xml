@@ -106,40 +106,6 @@
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
-		<portlet-name>31</portlet-name>
-		<display-name>Media Gallery</display-name>
-		<portlet-class>com.liferay.portlet.imagegallerydisplay.portlet.IGDisplayPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/image_gallery_display/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/image_gallery_display/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
-		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
-		<supported-public-render-parameter>tag</supported-public-render-parameter>
-	</portlet>
-	<portlet>
 		<portlet-name>34</portlet-name>
 		<display-name>Shopping</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

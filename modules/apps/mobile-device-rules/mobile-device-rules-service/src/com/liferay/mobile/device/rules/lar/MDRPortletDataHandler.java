@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules.lar;
+package com.liferay.mobile.device.rules.lar;
 
+import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
@@ -22,6 +23,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
@@ -44,16 +46,27 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MobileDeviceRulesPortletKeys.MOBILE_DEVICE_SITE_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "mobile_device_rules";
 
-	public MDRPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(MDRAction.class, Layout.class),
 			new StagedModelType(MDRRule.class),

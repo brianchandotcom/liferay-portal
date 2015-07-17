@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin;
+package com.liferay.users.admin.web.custom.attributes;
 
-import com.liferay.portal.model.User;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 
 /**
  * @author Jorge Ferrer
  */
-public class UserCustomAttributesDisplay extends BaseCustomAttributesDisplay {
+public class LayoutCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	@Override
 	public String getClassName() {
-		return User.class.getName();
+		return Layout.class.getName();
 	}
 
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/user_icon.png";
+		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 
 }

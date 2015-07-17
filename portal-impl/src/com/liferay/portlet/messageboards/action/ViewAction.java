@@ -53,22 +53,21 @@ public class ViewAction implements MVCRenderCommand {
 		try {
 			ActionUtil.getCategory(renderRequest);
 		}
+		catch (BannedUserException | NoSuchCategoryException |
+				PrincipalException e) {
+
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/html/portlet/message_boards/error.jsp";
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
-			if (e instanceof BannedUserException ||
-				e instanceof NoSuchCategoryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.message_boards.error");
-			}
-			else {
-				throw e;
-			}
+			throw new PortletException(e);
 		}
 
-		return actionMapping.findForward("portlet.message_boards.view");
+		return "/html/portlet/message_boards/view.jsp";
 	}
 
 }

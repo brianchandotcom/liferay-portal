@@ -361,7 +361,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBThreadGuestReply" priority="3">
+	<command name="AddMBThreadGuestReply" priority="5">
 		<var name="replytoMessage" value="guest" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body As Guest" />

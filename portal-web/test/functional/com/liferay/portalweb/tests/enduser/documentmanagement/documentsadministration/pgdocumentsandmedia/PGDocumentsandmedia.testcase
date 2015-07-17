@@ -622,7 +622,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSubFolderDocument" priority="4">
+	<command name="AddSubFolderDocument" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -947,7 +947,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSubFolder" priority="4">
+	<command name="DeleteSubFolder" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1046,7 +1046,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDocumentType" priority="4">
+	<command name="EditDocumentType" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

@@ -97,4 +97,24 @@ public class JSONSerializerTest {
 			serviceContextDeserialize.getGroupPermissions() != null);
 	}
 
+	@Test
+	public void testSerializeTwice() {
+		ServiceContext serviceContext = new ServiceContext();
+
+		String[] groupPermissions = new String[] {"VIEW"};
+
+		serviceContext.setAttribute("groupPermissions", groupPermissions);
+		serviceContext.setGroupPermissions(groupPermissions);
+
+		String jsonString = JSONFactoryUtil.serialize(serviceContext);
+
+		ServiceContext serviceContextDeserialize =
+			(ServiceContext)JSONFactoryUtil.deserialize(jsonString);
+
+		String jsonStringAgain = JSONFactoryUtil.serialize(
+			serviceContextDeserialize);
+
+		Assert.assertEquals(jsonString, jsonStringAgain);
+	}
+
 }

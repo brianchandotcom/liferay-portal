@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.web.portlet.action;
 
-import com.liferay.mobile.device.rules.web.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
 import com.liferay.mobile.device.rules.web.util.MobileDeviceRulesWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;

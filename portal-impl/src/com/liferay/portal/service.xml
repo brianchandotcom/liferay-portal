@@ -598,10 +598,6 @@
 		<reference package-path="com.liferay.portlet.exportimport" entity="ExportImport" />
 		<reference package-path="com.liferay.portlet.exportimport" entity="ExportImportConfiguration" />
 		<reference package-path="com.liferay.portlet.exportimport" entity="Staging" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCategory" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCoupon" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingOrder" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivitySetting" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRequest" />
@@ -2660,7 +2656,6 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBStatsUser" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBThreadFlag" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRelation" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRequest" />

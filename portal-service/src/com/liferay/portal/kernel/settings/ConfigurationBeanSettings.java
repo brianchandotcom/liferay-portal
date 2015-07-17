@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -67,7 +68,7 @@ public class ConfigurationBeanSettings extends BaseSettings
 			return null;
 		}
 
-		return (String[])object;
+		return GetterUtil.getStringValues(object);
 	}
 
 	private Object _getProperty(String key) {

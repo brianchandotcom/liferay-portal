@@ -30,7 +30,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Milen Dyankov
  */
-@Component(immediate = true, service = DeviceRecognitionProvider.class)
+@Component(
+	immediate = true, property = {"type=default"},
+	service = DeviceRecognitionProvider.class
+)
 public class DefaultDeviceRecognitionProvider
 	implements DeviceRecognitionProvider {
 

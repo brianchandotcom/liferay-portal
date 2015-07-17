@@ -50,7 +50,8 @@ public class FindRecentPostsAction extends Action {
 				request, PortletKeys.MESSAGE_BOARDS, plid,
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("struts_action", "/message_boards/view");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
 			portletURL.setParameter("tabs2", "recent-posts");
 			portletURL.setPortletMode(PortletMode.VIEW);
 			portletURL.setWindowState(WindowState.NORMAL);

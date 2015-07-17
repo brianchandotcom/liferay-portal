@@ -140,7 +140,7 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 			((ActionResponseImpl)actionResponse).createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/view_message");
+			"mvcRenderCommandName", "/message_boards/view_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(thread.getRootMessageId()));
 

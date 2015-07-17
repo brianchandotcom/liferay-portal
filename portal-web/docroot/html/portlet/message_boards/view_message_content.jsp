@@ -38,7 +38,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 <c:choose>
 	<c:when test="<%= Validator.isNull(redirect) %>">
 		<portlet:renderURL var="backURL">
-			<portlet:param name="struts_action" value="/message_boards/view" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 			<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
 		</portlet:renderURL>
 
@@ -285,7 +285,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 			<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) && !thread.isLocked() %>">
 				<portlet:renderURL var="parentCategoryURL">
-					<portlet:param name="struts_action" value="/message_boards/view" />
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 					<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
 				</portlet:renderURL>
 

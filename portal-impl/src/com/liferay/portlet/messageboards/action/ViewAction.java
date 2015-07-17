@@ -14,13 +14,17 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.BannedUserException;
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -31,14 +35,20 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/", "mvc.command.name=/message_boards/view"
+	},
+	service = MVCRenderCommand.class
+)
+public class ViewAction implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		try {
 			ActionUtil.getCategory(renderRequest);

@@ -25,7 +25,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/message_boards/view");
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 %>
 
 <aui:nav-bar>

@@ -297,11 +297,6 @@
 
 		<action path="/message_boards/search" forward="portlet.message_boards.search" />
 
-		<action path="/message_boards/view" type="com.liferay.portlet.messageboards.action.ViewAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.view" path="portlet.message_boards.view" />
-		</action>
-
 		<action path="/message_boards/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
@@ -330,11 +325,6 @@
 		<action path="/message_boards_admin/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 
 		<action path="/message_boards_admin/search" forward="portlet.message_boards.search" />
-
-		<action path="/message_boards_admin/view" type="com.liferay.portlet.messageboards.action.ViewAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.view" path="portlet.message_boards_admin.view" />
-		</action>
 
 		<action path="/message_boards_admin/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />

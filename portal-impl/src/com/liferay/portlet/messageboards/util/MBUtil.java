@@ -162,7 +162,8 @@ public class MBUtil {
 				portletURL.toString());
 		}
 		else {
-			portletURL.setParameter("struts_action", "/message_boards/view");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
 		}
 
 		List<MBCategory> ancestorCategories = category.getAncestors();

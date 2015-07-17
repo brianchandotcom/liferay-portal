@@ -1984,7 +1984,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
-				"struts_action", "/message_boards_admin/view_message");
+				"mvcRenderCommandName", "/message_boards_admin/view_message");
 			portletURL.setParameter(
 				"messageId", String.valueOf(message.getMessageId()));
 

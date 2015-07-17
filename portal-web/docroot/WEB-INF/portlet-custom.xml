@@ -92,10 +92,6 @@
 			<name>template-path</name>
 			<value>/html/portlet/message_boards/</value>
 		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/message_boards/view</value>
-		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -661,10 +657,6 @@
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/message_boards_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/message_boards_admin/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

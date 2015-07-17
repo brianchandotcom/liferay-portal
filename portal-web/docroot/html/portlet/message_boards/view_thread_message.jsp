@@ -72,7 +72,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 						<c:if test="<%= showRecentPosts %>">
 							<portlet:renderURL var="recentPostsURL">
-								<portlet:param name="struts_action" value="/message_boards/view" />
+								<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 								<portlet:param name="topLink" value="recent-posts" />
 								<portlet:param name="groupThreadsUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
 							</portlet:renderURL>
@@ -184,7 +184,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						<%
 						PortletURL parentMessageURL = renderResponse.createRenderURL();
 
-						parentMessageURL.setParameter("struts_action", "/message_boards/view_message");
+						parentMessageURL.setParameter("mvcRenderCommandName", "/message_boards/view_message");
 						parentMessageURL.setParameter("messageId", String.valueOf(parentMessage.getMessageId()));
 
 						String author = parentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(parentMessage.getUserId(), parentMessage.getUserName()));
@@ -490,7 +490,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<%
 							PortletURL categoryURL = renderResponse.createRenderURL();
 
-							categoryURL.setParameter("struts_action", "/message_boards/view");
+							categoryURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 							categoryURL.setParameter("mbCategoryId", String.valueOf(message.getCategoryId()));
 							%>
 

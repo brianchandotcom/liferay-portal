@@ -140,7 +140,7 @@ boolean splitThread = true;
 
 		var nameEl = document.getElementById('<portlet:namespace />categoryName');
 
-		nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
+		nameEl.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
 		nameEl.innerHTML = categoryName + '&nbsp;';
 	}
 

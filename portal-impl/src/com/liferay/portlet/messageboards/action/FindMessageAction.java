@@ -42,12 +42,7 @@ public class FindMessageAction extends FindAction {
 	protected String getStrutsAction(
 		HttpServletRequest request, String portletId) {
 
-		if (portletId.equals(PortletKeys.MESSAGE_BOARDS_ADMIN)) {
-			return "/message_boards_admin/view_message";
-		}
-		else {
-			return "/message_boards/view_message";
-		}
+		return "/message_boards/view_message";
 	}
 
 	@Override

@@ -27,7 +27,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, cate
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/message_boards/view");
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
@@ -127,7 +127,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 			%>
 
 			<portlet:renderURL var="backURL">
-				<portlet:param name="struts_action" value="/message_boards/view" />
+				<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 				<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
 			</portlet:renderURL>
 
@@ -172,7 +172,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								modelVar="curCategory"
 							>
 								<liferay-portlet:renderURL varImpl="rowURL">
-									<portlet:param name="struts_action" value="/message_boards/view" />
+									<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 									<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 								</liferay-portlet:renderURL>
 

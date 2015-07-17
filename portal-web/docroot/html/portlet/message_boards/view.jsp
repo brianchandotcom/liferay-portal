@@ -45,7 +45,7 @@ boolean useAssetEntryQuery = Validator.isNotNull(assetTagName);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/message_boards/view");
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
@@ -202,7 +202,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			%>
 
 			<portlet:renderURL var="backURL">
-				<portlet:param name="struts_action" value="/message_boards/view" />
+				<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 				<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
 			</portlet:renderURL>
 
@@ -268,7 +268,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
 
 					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="struts_action" value="/message_boards/view" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 					</liferay-portlet:renderURL>
 

@@ -305,23 +305,23 @@ public class CSSBuilder {
 
 		String filePath = _docrootDirName.concat(fileName);
 
-		String cssThemePath = filePath;
+		String cssBasePath = filePath;
 
 		int pos = filePath.lastIndexOf("/css/");
 
 		if (pos >= 0) {
-			cssThemePath = filePath.substring(0, pos + 4);
+			cssBasePath = filePath.substring(0, pos + 4);
 		}
 		else {
 			pos = filePath.lastIndexOf("/resources/");
 
 			if (pos >= 0) {
-				cssThemePath = filePath.substring(0, pos + 10);
+				cssBasePath = filePath.substring(0, pos + 10);
 			}
 		}
 
 		return _sassCompiler.compileString(
-			content, _portalCommonDirName + File.pathSeparator + cssThemePath,
+			content, _portalCommonDirName + File.pathSeparator + cssBasePath,
 			StringPool.BLANK);
 	}
 

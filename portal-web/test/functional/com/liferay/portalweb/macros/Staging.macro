@@ -54,6 +54,15 @@
 		</if>
 
 		<if>
+			<isset var="isNotEditable" />
+			<then>
+				<var name="key_contentName" value="${isNotEditable}" />
+
+				<execute function="AssertNotEditable" locator1="CPSitesEdit#STAGING_CONTENT_CHECKBOX" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${editActivateStaging}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="CPSitesEdit#MENU_SAVE" value1="Save" />

@@ -350,7 +350,8 @@ public class JavadocFormatter {
 
 	private void _addDocletElements(
 			Element parentElement, AbstractJavaEntity abstractJavaEntity,
-			String name) throws Exception {
+			String name)
+		throws Exception {
 
 		DocletTag[] docletTags = abstractJavaEntity.getTagsByName(name);
 
@@ -652,8 +653,8 @@ public class JavadocFormatter {
 		commentElement.addCDATA(value);
 	}
 
-	private void _addParamElements(
-		Element methodElement, JavaMethod javaMethod) throws Exception {
+	private void _addParamElements(Element methodElement, JavaMethod javaMethod)
+		throws Exception {
 
 		JavaParameter[] javaParameters = javaMethod.getParameters();
 
@@ -746,7 +747,8 @@ public class JavadocFormatter {
 	}
 
 	private void _addThrowsElements(
-		Element methodElement, JavaMethod javaMethod) throws Exception {
+			Element methodElement, JavaMethod javaMethod)
+		throws Exception {
 
 		Type[] exceptionTypes = javaMethod.getExceptions();
 
@@ -1117,7 +1119,8 @@ public class JavadocFormatter {
 	}
 
 	private String _getJavaClassComment(
-		Element rootElement, JavaClass javaClass) throws Exception {
+			Element rootElement, JavaClass javaClass)
+		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
@@ -1128,7 +1131,8 @@ public class JavadocFormatter {
 		String comment = rootElement.elementText("comment");
 
 		if (Validator.isNotNull(comment)) {
-			comment = ToolsUtil.stripFullyQualifiedClassNames(comment, _imports);
+			comment = ToolsUtil.stripFullyQualifiedClassNames(
+				comment, _imports);
 
 			sb.append(_wrapText(comment, indent + " * "));
 		}
@@ -1326,7 +1330,8 @@ public class JavadocFormatter {
 		String comment = fieldElement.elementText("comment");
 
 		if (Validator.isNotNull(comment)) {
-			comment = ToolsUtil.stripFullyQualifiedClassNames(comment, _imports);
+			comment = ToolsUtil.stripFullyQualifiedClassNames(
+				comment, _imports);
 
 			sb.append(_wrapText(comment, indent + " * "));
 		}
@@ -1383,7 +1388,8 @@ public class JavadocFormatter {
 		String comment = methodElement.elementText("comment");
 
 		if (Validator.isNotNull(comment)) {
-			comment = ToolsUtil.stripFullyQualifiedClassNames(comment, _imports);
+			comment = ToolsUtil.stripFullyQualifiedClassNames(
+				comment, _imports);
 
 			sb.append(_wrapText(comment, indent + " * "));
 		}
@@ -2165,6 +2171,7 @@ public class JavadocFormatter {
 	}
 
 	private final String _author;
+	private String _imports;
 	private final boolean _initializeMissingJavadocs;
 	private final String _inputDirName;
 	private final Map<String, Tuple> _javadocxXmlTuples = new HashMap<>();
@@ -2176,7 +2183,5 @@ public class JavadocFormatter {
 	private final Pattern _paragraphTagPattern = Pattern.compile(
 		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
 	private final boolean _updateJavadocs;
-
-	private String _imports;
 
 }

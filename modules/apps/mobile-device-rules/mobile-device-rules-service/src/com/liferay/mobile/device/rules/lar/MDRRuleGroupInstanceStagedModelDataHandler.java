@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules.lar;
+package com.liferay.mobile.device.rules.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -29,6 +29,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
@@ -39,9 +40,12 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUti
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class MDRRuleGroupInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MDRRuleGroupInstance> {
 

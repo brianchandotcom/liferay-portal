@@ -34,9 +34,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.upgrade.v7_0_0.util.JournalArticleTable;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -84,9 +81,15 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		String localizedDescription = localize(
 			groupId, description, defaultLanguageId);
 
-		Element structureElementRootElement = structureElement.element("root");
+		Element structureElementDefinitionElement = structureElement.element(
+			"definition");
 
-		String xsd = structureElementRootElement.asXML();
+		String definition = structureElementDefinitionElement.getTextTrim();
+
+		Element structureElementLayoutElement = structureElement.element(
+			"layout");
+
+		String layout = structureElementLayoutElement.getTextTrim();
 
 		if (hasDDMStructure(groupId, name) > 0) {
 			return name;
@@ -94,11 +97,9 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 		String ddmStructureUUID = PortalUUIDUtil.generate();
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
-
 		long ddmStructureId = addDDMStructure(
 			ddmStructureUUID, increment(), groupId, companyId, name,
-			localizedName, localizedDescription, toJSON(ddmForm),
+			localizedName, localizedDescription, definition, layout,
 			StorageType.JSON.toString());
 
 		String ddmTemplateUUID = PortalUUIDUtil.generate();
@@ -119,7 +120,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		if (stagingGroupId > 0) {
 			ddmStructureId = addDDMStructure(
 				ddmStructureUUID, increment(), stagingGroupId, companyId, name,
-				localizedName, localizedDescription, toJSON(ddmForm),
+				localizedName, localizedDescription, definition, layout,
 				StorageType.JSON.toString());
 
 			addDDMTemplate(
@@ -134,7 +135,8 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 	protected long addDDMStructure(
 			String uuid, long ddmStructureId, long groupId, long companyId,
 			String ddmStructureKey, String localizedName,
-			String localizedDescription, String definition, String storageType)
+			String localizedDescription, String definition, String layout,
+			String storageType)
 		throws Exception {
 
 		Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -193,13 +195,10 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 				WorkflowConstants.STATUS_APPROVED, getDefaultUserId(companyId),
 				StringPool.BLANK, now);
 
-			String ddmStructureLayoutDefinition =
-				getDefaultDDMFormLayoutDefinition(definition);
-
 			addStructureLayout(
 				PortalUUIDUtil.generate(), increment(), groupId, companyId,
 				getDefaultUserId(companyId), StringPool.BLANK, now, now,
-				ddmStructureVersionId, ddmStructureLayoutDefinition);
+				ddmStructureVersionId, layout);
 
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DDMStructure.class.getName());
@@ -492,14 +491,6 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		Element rootElement = document.getRootElement();
 
 		return rootElement.elements("structure");
-	}
-
-	protected String getDefaultDDMFormLayoutDefinition(String definition)
-		throws Exception {
-
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(definition);
-
-		return getDefaultDDMFormLayoutDefinition(ddmForm);
 	}
 
 	protected long getStagingGroupId(long groupId) throws Exception {

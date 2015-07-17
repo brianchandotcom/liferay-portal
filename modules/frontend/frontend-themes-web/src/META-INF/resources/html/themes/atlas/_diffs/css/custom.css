@@ -1,0 +1,37 @@
+@import "bourbon";
+@import "mixins";
+
+$bg-color: #F5F7F8;
+
+body {
+	background-color: $bg-color;
+
+	#wrapper {
+		padding: 0;
+
+		#banner {
+			padding: 20px 0;
+
+			#heading {
+				margin-left: 20px;
+			}
+
+			.site-name {
+				font-size: 145%;
+				margin-left: 20px;
+			}
+
+			li.dropdown:hover .dropdown-menu {
+				display: block;
+				margin-top: -10px;
+			}
+		}
+
+		#footer {
+			background-color: #29343D;
+			color: #FFF;
+			margin-bottom: 60px;
+			padding: 40px 20px;
+		}
+	}
+}

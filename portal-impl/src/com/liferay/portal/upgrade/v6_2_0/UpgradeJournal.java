@@ -30,7 +30,7 @@ import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.journal.util.JournalConverterUtil;
+import com.liferay.portlet.journal.util.JournalConverterManagerUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,7 +94,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ps.setString(13, description);
 			ps.setString(
 				14,
-				JournalConverterUtil.getDDMXSD(xsd, getDefaultLocale(name)));
+				JournalConverterManagerUtil.getDDMXSD(
+					xsd, getDefaultLocale(name)));
 			ps.setString(15, storageType);
 			ps.setInt(16, type);
 

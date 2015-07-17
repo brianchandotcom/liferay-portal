@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util;
+package com.liferay.journal.util;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.Locale;
 
@@ -27,7 +27,6 @@ import java.util.Locale;
  * @author Marcellus Tavares
  * @author Bruno Basto
  */
-@ProviderType
 public class JournalConverterUtil {
 
 	public static String getContent(DDMStructure ddmStructure, Fields ddmFields)
@@ -60,22 +59,25 @@ public class JournalConverterUtil {
 	}
 
 	public static JournalConverter getJournalConverter() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			JournalConverterUtil.class);
-
-		return _journalConverter;
+		return _instance._serviceTracker.getService();
 	}
 
 	public static String getJournalXSD(String ddmXSD) throws Exception {
 		return getJournalConverter().getJournalXSD(ddmXSD);
 	}
 
-	public void setJournalConverter(JournalConverter journalConverter) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private JournalConverterUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_journalConverter = journalConverter;
+		_serviceTracker = registry.trackServices(JournalConverter.class);
+
+		_serviceTracker.open();
 	}
 
-	private static JournalConverter _journalConverter;
+	private static final JournalConverterUtil _instance =
+		new JournalConverterUtil();
+
+	private final ServiceTracker<JournalConverter, JournalConverter>
+		_serviceTracker;
 
 }

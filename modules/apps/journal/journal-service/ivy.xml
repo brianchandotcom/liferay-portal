@@ -18,6 +18,7 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="commons-lang" org="commons-lang" rev="2.1" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>

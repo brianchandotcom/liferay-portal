@@ -20,6 +20,7 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.util.JournalContentUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -69,7 +70,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
-import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
@@ -356,7 +356,7 @@ public class JournalArticleIndexer
 		DDMFormValues ddmFormValues = null;
 
 		try {
-			Fields fields = JournalConverterUtil.getDDMFields(
+			Fields fields = _journalConverter.getDDMFields(
 				ddmStructure, article.getDocument());
 
 			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
@@ -672,7 +672,7 @@ public class JournalArticleIndexer
 		DDMFormValues ddmFormValues = null;
 
 		try {
-			Fields fields = JournalConverterUtil.getDDMFields(
+			Fields fields = _journalConverter.getDDMFields(
 				ddmStructure, article.getDocument());
 
 			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
@@ -877,6 +877,11 @@ public class JournalArticleIndexer
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
+	@Reference
+	protected void setJournalConverter(JournalConverter journalConverter) {
+		_journalConverter = journalConverter;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleIndexer.class);
 
@@ -885,5 +890,6 @@ public class JournalArticleIndexer
 		new AutoResetThreadLocal<>(
 			JournalArticleIndexer.class + "._indexAllVersions", true);
 	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalConverter _journalConverter;
 
 }

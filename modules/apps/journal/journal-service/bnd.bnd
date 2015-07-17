@@ -31,7 +31,8 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
-	@../../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class
+	@../../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

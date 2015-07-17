@@ -194,17 +194,24 @@ public class ToolsUtil {
 				if (content.length() > (x + importPackageAndClassName.length())) {
 					char nextChar = content.charAt(
 						x + importPackageAndClassName.length());
-					char previousChar = content.charAt(x - 1);
 
 					if (Character.isAlphabetic(nextChar) ||
 						Character.isDigit(nextChar) ||
 						(nextChar == CharPool.PERIOD) ||
-						(nextChar == CharPool.QUOTE) ||
 						(nextChar == CharPool.SEMICOLON) ||
-						(nextChar == CharPool.UNDERLINE) ||
-						(previousChar == CharPool.QUOTE)) {
+						(nextChar == CharPool.UNDERLINE)) {
 
 						continue;
+					}
+
+					if (x > 0) {
+						char previousChar = content.charAt(x - 1);
+
+						if ((previousChar == CharPool.QUOTE) &&
+							(nextChar == CharPool.QUOTE)) {
+
+							continue;
+						}
 					}
 				}
 

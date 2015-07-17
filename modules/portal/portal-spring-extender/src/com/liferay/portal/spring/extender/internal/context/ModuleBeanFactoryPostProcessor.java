@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.spring.extender.internal.blueprint;
+package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.context.PortletBeanFactoryPostProcessor;

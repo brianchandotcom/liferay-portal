@@ -1480,10 +1480,10 @@ public class VerifyProperties extends VerifyProcess {
 			"rss.display.templates.config", "display.templates.config",
 			"com.liferay.rss.web"
 		},
-		
+
 		// Shopping
-		
-		new String[] { 
+
+		new String[] {
 			"shopping.credit.card.types", "credit.card.types",
 			"com.liferay.shopping.service"
 		},
@@ -1499,15 +1499,15 @@ public class VerifyProperties extends VerifyProcess {
 			"shopping.category.show.special.items",
 			"category.show.special.items", "com.liferay.shopping.service"
 		},
-		new String[] { 
-			"shopping.currency.id", "currency.id", 
+		new String[] {
+			"shopping.currency.id", "currency.id",
 			"com.liferay.shopping.service"
 		},
 		new String[] {
 			"shopping.email.from.name", "email.from.name",
 			"com.liferay.shopping.service"
 		},
-		new String[] { 
+		new String[] {
 			"shopping.email.from.address", "email.from.address",
 			"com.liferay.shopping.service"
 		},
@@ -1517,7 +1517,7 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		new String[] {
 			"shopping.email.order.confirmation.subject",
-			"email.order.confirmation.subject",  "com.liferay.shopping.service"
+			"email.order.confirmation.subject", "com.liferay.shopping.service"
 		},
 		new String[] {
 			"shopping.email.order.confirmation.body",
@@ -1528,7 +1528,7 @@ public class VerifyProperties extends VerifyProcess {
 			"email.order.shipping.enabled", "com.liferay.shopping.service"
 		},
 		new String[] {
-			"shopping.email.order.shipping.subject", 
+			"shopping.email.order.shipping.subject",
 			"email.order.shipping.subject", "com.liferay.shopping.service"
 		},
 		new String[] {
@@ -1543,7 +1543,7 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.shopping.service"
 		},
 		new String[] {
-			"shopping.item.show.availability", "item.show.availability", 
+			"shopping.item.show.availability", "item.show.availability",
 			"com.liferay.shopping.service"
 		},
 		new String[] {
@@ -1570,10 +1570,10 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.shopping.service"
 		},
 		new String[] {
-			"shopping.paypal.email.address", "paypal.email.address", 
+			"shopping.paypal.email.address", "paypal.email.address",
 			"com.liferay.shopping.service"
 		},
-		new String[] { 
+		new String[] {
 			"shopping.shipping", "shipping", "com.liferay.shopping.service"
 		},
 		new String[] {
@@ -1583,7 +1583,7 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"shopping.tax.rate", "tax.rate", "com.liferay.shopping.service"
 		},
-		new String[] { 
+		new String[] {
 			"shopping.tax.state", "tax.state", "com.liferay.shopping.service"
 		},
 

@@ -494,17 +494,15 @@ public class PortalPreferencesImplTest {
 				com.liferay.portlet.PortalPreferences.class
 			};
 
-			if (_testThread.get() &&
+			if (_synchronize.get() && _testThread.get() &&
 				method.getName().equals("updatePreferences") &&
 				Arrays.equals(parameterTypes, expectedTypes)) {
 
-				if (_synchronize.get()) {
-					_cyclicBarrier.await();
+				_cyclicBarrier.await();
 
-					SynchronizedTransactionExecutor.synchronize(true);
+				SynchronizedTransactionExecutor.synchronize(true);
 
-					_synchronize.set(false);
-				}
+				_synchronize.set(false);
 			}
 
 			return method.invoke(_target, args);

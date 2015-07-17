@@ -39,7 +39,7 @@ import javax.portlet.ActionResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class MoveCategoryAction extends BaseMVCActionCommand {
+public class MoveCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

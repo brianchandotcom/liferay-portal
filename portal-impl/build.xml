@@ -384,40 +384,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<copy file="${liferay.doclet.dir}/liferay-doclet.jar" todir="${project.dir}/lib/development" />
 	</target>
 
-	<target name="build-r2-js">
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<property name="r2.version" value="liferay-0.3" />
-
-		<property name="r2.dir" value="${tstamp.value}/R2-${r2.version}" />
-
-		<unzip
-			dest="${tstamp.value}"
-			src="${project.dir}/portal-web/third-party/R2-${r2.version}.zip"
-		/>
-
-		<exec dir="${r2.dir}" executable="npm">
-			<arg value="install" />
-		</exec>
-
-		<property name="dynamic.css.dependencies.dir" value="${project.dir}/portal-impl/src/com/liferay/portal/servlet/filters/dynamiccss/dependencies" />
-
-		<copy
-			file="${dynamic.css.dependencies.dir}/r2_liferay.js"
-			tofile="${r2.dir}/r2_liferay.js"
-		/>
-
-		<exec dir="${r2.dir}" executable="browserify">
-			<arg value="r2_liferay.js" />
-			<arg value="-o" />
-			<arg value="${dynamic.css.dependencies.dir}/r2.js" />
-		</exec>
-
-		<delete dir="${tstamp.value}" />
-	</target>
-
 	<target name="build-releaseinfo" if="release.info">
 		<java
 			classname="com.liferay.portal.tools.ReleaseInfoBuilder"

@@ -32,6 +32,7 @@ task downloadLfrAMDLoader(type: NpmTask)
 
 buildAlloy {
 	File alloyDestinationDir = new File(jsDestinationDir, "aui")
+	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}.zip")
 
 	doFirst {
 		delete alloyDestinationDir
@@ -56,14 +57,19 @@ buildAlloy {
 	}
 
 	eachFile new StripPathSegmentsAction(1)
-	from zipTree(new File(thirdPartyDir, "alloy-${alloyVersion}.zip"))
+	from zipTree(alloyZipFile)
 	include "build/**"
 	includeEmptyDirs = false
 	into alloyDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, alloyZipFile, alloyDestinationDir)
+	}
 }
 
 buildAlloyBootstrap {
 	File alloyBootstrapDestinationDir = new File(jsDestinationDir, "bootstrap")
+	File bootstrapSassZipFile = new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip")
 
 	doFirst {
 		delete alloyBootstrapDestinationDir
@@ -71,24 +77,33 @@ buildAlloyBootstrap {
 
 	eachFile new StripPathSegmentsAction(3)
 	exclude "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/bootstrap-*.js"
-	from zipTree(new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip"))
+	from zipTree(bootstrapSassZipFile)
 	include "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/**"
 	includeEmptyDirs = false
 	into alloyBootstrapDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, bootstrapSassZipFile, alloyBootstrapDestinationDir)
+	}
 }
 
 buildLexicon {
 	File lexiconDestinatioDir = new File(jsDestinationDir, "lexicon")
+	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
 
 	doFirst {
 		delete lexiconDestinatioDir
 	}
 
 	eachFile new StripPathSegmentsAction(1)
-	from zipTree(new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip"))
+	from zipTree(lexiconZipFile)
 	include "js/**"
 	includeEmptyDirs = false
 	into lexiconDestinatioDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinatioDir)
+	}
 }
 
 buildLfrAMDLoader {

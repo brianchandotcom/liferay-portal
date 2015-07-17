@@ -1,3 +1,4 @@
+import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 dependencies {
@@ -28,16 +29,23 @@ buildAlloyTheme {
 }
 
 buildBourbon {
+	File bourbonDestinationFile = file("../../../portal-web/docroot/html/css/common/bourbon")
+	File bourbonZipFile = file("../../../portal-web/third-party/bourbon-${bourbonVersion}.zip")
+
 	eachFile new StripPathSegmentsAction(4)
 
 	ext {
 		autoClean = false
 	}
 
-	from zipTree("../../../portal-web/third-party/bourbon-${bourbonVersion}.zip")
+	from zipTree(bourbonZipFile)
 	include "bourbon-${bourbonVersion}/app/assets/stylesheets/**/*"
 	includeEmptyDirs = false
-	into "../../../portal-web/docroot/html/css/common/bourbon"
+	into bourbonDestinationFile
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, bourbonZipFile, bourbonDestinationFile)
+	}
 }
 
 classes {

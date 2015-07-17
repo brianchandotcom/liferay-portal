@@ -1,5 +1,6 @@
 import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask
 import com.liferay.gradle.plugins.tasks.CompileThemeTask
+import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
@@ -32,6 +33,7 @@ task copyFavicon(type: Copy)
 
 buildAlloyBootstrapTheme {
 	File alloyBootstrapDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui")
+	File bootstrapSassZipFile = new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip")
 
 	doFirst {
 		delete alloyBootstrapDestinationDir
@@ -39,13 +41,18 @@ buildAlloyBootstrapTheme {
 
 	eachFile new ReplaceLeadingPathAction("bootstrap-sass-${alloyBootstrapVersion}/assets/fonts/bootstrap": "glyphicons/font", "bootstrap-sass-${alloyBootstrapVersion}/assets/stylesheets": "")
 	exclude "bootstrap-sass-${alloyBootstrapVersion}/assets/stylesheets/_bootstrap-*.scss"
-	from zipTree(new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip"))
+	from zipTree(bootstrapSassZipFile)
 	includeEmptyDirs = false
 	into alloyBootstrapDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, bootstrapSassZipFile, alloyBootstrapDestinationDir)
+	}
 }
 
 buildAlloyFontAwesome {
 	File alloyFontAwesomeDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui/alloy-font-awesome")
+	File alloyFontAwesomeZipFile = new File(thirdPartyDir, "alloy-font-awesome-${alloyFontAwesomeVersion}.zip")
 
 	dependsOn buildAlloyBootstrapTheme
 
@@ -58,13 +65,18 @@ buildAlloyFontAwesome {
 	exclude "alloy-font-awesome/css/**"
 	exclude "alloy-font-awesome/less/**"
 
-	from zipTree(new File(thirdPartyDir, "alloy-font-awesome-${alloyFontAwesomeVersion}.zip"))
+	from zipTree(alloyFontAwesomeZipFile)
 	includeEmptyDirs = false
 	into alloyFontAwesomeDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, alloyFontAwesomeZipFile, alloyFontAwesomeDestinationDir)
+	}
 }
 
 buildAlloyTheme {
 	File alloyThemeDestinationDir = new File(themesDestinationDir, "_unstyled/images/aui")
+	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}.zip")
 
 	doFirst {
 		delete alloyThemeDestinationDir
@@ -73,13 +85,17 @@ buildAlloyTheme {
 	filesMatching "build/aui-*/assets/skins/sam/**", new StripPathSegmentsAction(5)
 	filesMatching "build/aui-skin-deprecated/images/**", new StripPathSegmentsAction(3)
 
-	from zipTree(new File(thirdPartyDir, "alloy-${alloyVersion}.zip"))
+	from zipTree(alloyZipFile)
 
 	include "build/aui-*/assets/skins/sam/**.gif", "build/aui-*/assets/skins/sam/**.jpg", "build/aui-*/assets/skins/sam/**.png"
 	include "build/aui-skin-deprecated/images/**"
 
 	includeEmptyDirs = false
 	into alloyThemeDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, alloyZipFile, alloyThemeDestinationDir)
+	}
 }
 
 buildCSS {
@@ -88,6 +104,7 @@ buildCSS {
 
 buildLexicon {
 	File lexiconDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui/lexicon")
+	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
 
 	dependsOn buildAlloyBootstrapTheme
 
@@ -118,10 +135,14 @@ buildLexicon {
 		}
 	}
 
-	from zipTree(new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip"))
+	from zipTree(lexiconZipFile)
 	include "scss/**"
 	includeEmptyDirs = false
 	into lexiconDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinationDir)
+	}
 }
 
 buildThemes {

@@ -71,6 +71,10 @@ public interface CommentManager {
 	public boolean hasDiscussion(String className, long classPK)
 		throws PortalException;
 
+	public void moveDiscussionToTrash(String className, long classPK);
+
+	public void restoreDiscussionFromTrash(String className, long classPK);
+
 	public void subscribeDiscussion(
 			long userId, long groupId, String className, long classPK)
 		throws PortalException;

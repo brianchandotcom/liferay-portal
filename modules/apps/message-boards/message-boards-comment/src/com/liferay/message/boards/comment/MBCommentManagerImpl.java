@@ -252,6 +252,30 @@ public class MBCommentManagerImpl implements CommentManager {
 		return true;
 	}
 
+	@Override
+	public void moveDiscussionToTrash(String className, long classPK) {
+		List<MBMessage> messages = _mbMessageLocalService.getMessages(
+			className, classPK, WorkflowConstants.STATUS_APPROVED);
+
+		for (MBMessage message : messages) {
+			message.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+			_mbMessageLocalService.updateMBMessage(message);
+		}
+	}
+
+	@Override
+	public void restoreDiscussionFromTrash(String className, long classPK) {
+		List<MBMessage> messages = _mbMessageLocalService.getMessages(
+			className, classPK, WorkflowConstants.STATUS_IN_TRASH);
+
+		for (MBMessage message : messages) {
+			message.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+			_mbMessageLocalService.updateMBMessage(message);
+		}
+	}
+
 	@Reference(unbind = "-")
 	public void setMBDiscussionLocalService(
 		MBDiscussionLocalService mbDiscussionLocalService) {

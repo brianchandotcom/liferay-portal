@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.journal.util;
 
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Locale;
@@ -24,12 +23,7 @@ import java.util.Locale;
  * @author Bruno Basto
  * @author Leonardo Barros
  */
-public class JournalConverterUtil {
-
-	public static String getDDMXSD(String journalXSD) throws Exception {
-		return _journalConverterManager.getDDMXSD(
-			journalXSD, LocaleUtil.getSiteDefault());
-	}
+public class JournalConverterManagerUtil {
 
 	public static String getDDMXSD(String journalXSD, Locale defaultLocale)
 		throws Exception {

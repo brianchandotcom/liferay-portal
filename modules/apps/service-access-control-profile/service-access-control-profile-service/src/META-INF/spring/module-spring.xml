@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="com.liferay.service.access.control.profile.service.SACPEntryLocalService" class="com.liferay.service.access.control.profile.service.impl.SACPEntryLocalServiceImpl" />
+	<bean id="com.liferay.service.access.control.profile.service.SACPEntryService" class="com.liferay.service.access.control.profile.service.impl.SACPEntryServiceImpl" />
+	<bean id="com.liferay.service.access.control.profile.service.persistence.SACPEntryPersistence" class="com.liferay.service.access.control.profile.service.persistence.impl.SACPEntryPersistenceImpl" parent="basePersistence" />
+</beans>

@@ -18,10 +18,17 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.application.list.api.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.bookmarks.api.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.bookmarks.service.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.osgi.service.tracker.map.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.portal.spring.extender.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.apache.felix.dependencymanager.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.apache.felix.dependencymanager.shell.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.apache.felix.gogo.runtime.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.apache.felix.utils.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.freemarker.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

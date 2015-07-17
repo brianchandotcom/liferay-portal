@@ -19,6 +19,7 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.ant.bnd.bower.BowerAnalyzerPlugin;
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.ant.bnd.sass.SassAnalyzerPlugin;
+import com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
@@ -99,7 +100,8 @@ public class LiferayOSGiExtension extends LiferayExtension {
 
 	private static final String[] _BND_PLUGIN_CLASS_NAMES = {
 		BowerAnalyzerPlugin.class.getName(), JspAnalyzerPlugin.class.getName(),
-		SassAnalyzerPlugin.class.getName()
+		SassAnalyzerPlugin.class.getName(),
+		SpringDependencyAnalyzerPlugin.class.getName()
 	};
 
 	private boolean _autoUpdateXml = true;

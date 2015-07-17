@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.rulegroup.action.impl;
+package com.liferay.mobile.device.rules.rulegroup.action;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
@@ -34,9 +34,12 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward Han
  */
+@Component(immediate = true, service = ActionHandler.class)
 public class ThemeModificationActionHandler implements ActionHandler {
 
 	public static String getHandlerType() {

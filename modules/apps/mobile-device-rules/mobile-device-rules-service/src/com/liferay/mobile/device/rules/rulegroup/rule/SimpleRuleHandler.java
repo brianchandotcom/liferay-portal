@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.rulegroup.rule.impl;
+package com.liferay.mobile.device.rules.rulegroup.rule;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,10 +32,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward Han
  * @author Milen Daynkov
  */
+@Component(immediate = true, service = RuleHandler.class)
 public class SimpleRuleHandler implements RuleHandler {
 
 	public static final String PROPERTY_OS = "os";

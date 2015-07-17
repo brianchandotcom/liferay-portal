@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.rulegroup.action.impl;
+package com.liferay.mobile.device.rules.rulegroup.action;
 
+import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
@@ -25,9 +26,12 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward Han
  */
+@Component(immediate = true, service = ActionHandler.class)
 public class SimpleRedirectActionHandler extends BaseRedirectActionHandler {
 
 	public static String getHandlerType() {

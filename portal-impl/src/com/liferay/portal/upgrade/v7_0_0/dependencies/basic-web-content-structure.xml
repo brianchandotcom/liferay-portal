@@ -4,15 +4,53 @@
 	<structure>
 		<name>basic-web-content</name>
 		<description>basic-web-content</description>
-		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
-			<dynamic-element dataType="html" fieldNamespace="ddm" indexType="keyword" name="content" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-text-html" width="small">
-				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="label"><![CDATA[Content]]></entry>
-					<entry name="predefinedValue"><![CDATA[]]></entry>
-					<entry name="tip"><![CDATA[]]></entry>
-				</meta-data>
-			</dynamic-element>
-		</root>
+		<definition>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"availableLanguageIds": ["[$LOCALE_DEFAULT$]"],
+					"fields": [
+						{
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "Content"
+							},
+							"localizable": true,
+							"name": "content",
+							"showLabel": true,
+							"type": "ddm-text-html",
+							"width": "small"
+						}
+					]
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": ["content"],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Basic Web Content"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
 		<template>
 			<cacheable>true</cacheable>
 			<file-name>basic-web-content-template.ftl</file-name>

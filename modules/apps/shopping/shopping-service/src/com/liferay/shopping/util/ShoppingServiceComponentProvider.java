@@ -72,7 +72,8 @@ public class ShoppingServiceComponentProvider {
 		_shoppingGroupServiceConfiguration = null;
 	}
 
-	private static ShoppingServiceComponentProvider _shoppingServiceComponentProvider;
+	private static ShoppingServiceComponentProvider
+		_shoppingServiceComponentProvider;
 
 	private SettingsFactory _settingsFactory;
 	private ShoppingGroupServiceConfiguration

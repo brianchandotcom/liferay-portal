@@ -15,9 +15,7 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Locale;
 
@@ -29,49 +27,17 @@ import java.util.Locale;
 public class JournalConverterUtil {
 
 	public static String getDDMXSD(String journalXSD) throws Exception {
-		JournalConverterManager journalConverterManager =
-			_getJournalConverterManager();
-
-		return journalConverterManager.getDDMXSD(
+		return _journalConverterManager.getDDMXSD(
 			journalXSD, LocaleUtil.getSiteDefault());
 	}
 
 	public static String getDDMXSD(String journalXSD, Locale defaultLocale)
 		throws Exception {
 
-		JournalConverterManager journalConverterManager =
-			_getJournalConverterManager();
-
-		return journalConverterManager.getDDMXSD(journalXSD, defaultLocale);
+		return _journalConverterManager.getDDMXSD(journalXSD, defaultLocale);
 	}
 
-	private static JournalConverterManager _getJournalConverterManager() {
-		JournalConverterManager journalConverterManager =
-			_instance._serviceTracker.getService();
-
-		if (journalConverterManager == null) {
-			return _dummyJournalConverterManagerImpl;
-		}
-
-		return journalConverterManager;
-	}
-
-	private JournalConverterUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(JournalConverterManager.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final JournalConverterUtil _instance =
-		new JournalConverterUtil();
-
-	private static final DummyJournalConverterManagerImpl
-		_dummyJournalConverterManagerImpl =
-			new DummyJournalConverterManagerImpl();
-
-	private final ServiceTracker
-		<JournalConverterManager, JournalConverterManager> _serviceTracker;
+	private static final JournalConverterManager _journalConverterManager =
+		ProxyFactory.newServiceTrackedInstance(JournalConverterManager.class);
 
 }

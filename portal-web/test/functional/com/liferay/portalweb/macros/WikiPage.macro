@@ -168,7 +168,7 @@
 		<execute function="AssertClick" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="PGWikiAddpage#WORKFLOW_STATUS" value1="Draft" />
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 
@@ -1082,7 +1082,7 @@
 		<execute function="AssertClick" locator1="PGWikiAddpage#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 		<execute function="AssertTextEquals" locator1="PGWikiAddpage#SUCCESS_MESSAGE"  value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="PGWikiAddpage#WORKFLOW_STATUS" value1="Draft" />
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 
@@ -1526,7 +1526,7 @@
 		<execute function="AssertClick" locator1="PGWiki#EDIT_BUTTON" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="PGWikiAddpage#WORKFLOW_STATUS" value1="Draft" />
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 
 		<var name="key_wikiPageContent" value="${wikiPageContent}" />
 

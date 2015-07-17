@@ -54,7 +54,7 @@
 
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="" />
 
-		<execute function="SelectFrame" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" />
+		<execute function="SelectFrame" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD_IFRAME" />
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#CONTENT_BODY" value1="${kbTemplateContent}" />
 	</command>
 </definition>

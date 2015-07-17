@@ -108,7 +108,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>20</portlet-name>
-		<icon>/html/icons/document_library.png</icon>
 		<struts-path>document_library</struts-path>
 		<configuration-action-class>com.liferay.portlet.documentlibrary.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
@@ -117,27 +116,11 @@
 		<social-activity-interpreter-class>com.liferay.portlet.documentlibrary.social.DLFolderActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/portlet/documentlibrary/document-library-user-notification-definitions.xml</user-notification-definitions>
 		<user-notification-handler-class>com.liferay.portlet.documentlibrary.notifications.DocumentLibraryUserNotificationHandler</user-notification-handler-class>
-		<webdav-storage-token>document_library</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 		<asset-renderer-factory>com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory</asset-renderer-factory>
 		<asset-renderer-factory>com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFileEntryCustomAttributesDisplay</custom-attributes-display>
 		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFolderCustomAttributesDisplay</custom-attributes-display>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>showMountFolder</autopropagated-parameters>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
-		<header-portlet-css>/o/ddm-web/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/o/ddm-web/js/main.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/o/ddm-web/js/custom_fields.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/html/portlet/document_library/js/main.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/html/portlet/document_library/js/upload.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-document-library</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>

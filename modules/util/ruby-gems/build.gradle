@@ -43,6 +43,32 @@ downloadGems {
 				replacevalue "#!/usr/bin/env jruby"
 			}
 		}
+
+		File readmeFile = file("readme.txt")
+
+		readmeFile.withWriter {
+			BufferedWriter bufferedWriter ->
+
+			bufferedWriter.writeLine("Included gems:")
+			bufferedWriter.writeLine("")
+
+			List<String> gemNames = []
+
+			File gemsDir = file("classes/gems")
+
+			gemsDir.eachDir {
+				gemNames << it.name
+			}
+
+			gemNames.each {
+				if (it != gemNames.last()) {
+					bufferedWriter.writeLine(it)
+				}
+				else {
+					bufferedWriter.write(it)
+				}
+			}
+		}
 	}
 
 	onlyIf {

@@ -93,8 +93,6 @@ public class PortalPreferencesImplTest {
 				new Class<?>[] {PortalPreferencesLocalService.class},
 				new SynchronousInvocationHandler(
 					_originalPortalPreferencesLocalService)));
-
-		_testThread.set(true);
 	}
 
 	@AfterClass
@@ -115,10 +113,14 @@ public class PortalPreferencesImplTest {
 			new HashMap<String, Preference>(), true);
 
 		portalPreferences.setValue(_NAMESPACE, "testKey", "testValue");
+
+		_testThread.set(true);
 	}
 
 	@After
 	public void tearDown() throws Throwable {
+		_testThread.set(false);
+
 		Builder builder = new Builder();
 
 		TransactionInvokerUtil.invoke(
@@ -426,7 +428,7 @@ public class PortalPreferencesImplTest {
 			TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus) {
 
-			if (_testThread.get() && _synchronize.get()) {
+			if (_synchronize.get() && _testThread.get()) {
 				try {
 					_cyclicBarrier.await();
 

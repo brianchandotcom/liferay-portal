@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="com.liferay.journal.service.JournalArticleLocalService" class="com.liferay.journal.service.impl.JournalArticleLocalServiceImpl" />
+	<bean id="com.liferay.journal.service.JournalArticleService" class="com.liferay.journal.service.impl.JournalArticleServiceImpl" />
+	<bean id="com.liferay.journal.service.persistence.JournalArticlePersistence" class="com.liferay.journal.service.persistence.impl.JournalArticlePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.journal.service.persistence.JournalArticleFinder" class="com.liferay.journal.service.persistence.impl.JournalArticleFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.journal.service.JournalArticleImageLocalService" class="com.liferay.journal.service.impl.JournalArticleImageLocalServiceImpl" />
+	<bean id="com.liferay.journal.service.persistence.JournalArticleImagePersistence" class="com.liferay.journal.service.persistence.impl.JournalArticleImagePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.journal.service.JournalArticleResourceLocalService" class="com.liferay.journal.service.impl.JournalArticleResourceLocalServiceImpl" />
+	<bean id="com.liferay.journal.service.persistence.JournalArticleResourcePersistence" class="com.liferay.journal.service.persistence.impl.JournalArticleResourcePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.journal.service.JournalContentSearchLocalService" class="com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl" />
+	<bean id="com.liferay.journal.service.persistence.JournalContentSearchPersistence" class="com.liferay.journal.service.persistence.impl.JournalContentSearchPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.journal.service.JournalFeedLocalService" class="com.liferay.journal.service.impl.JournalFeedLocalServiceImpl" />
+	<bean id="com.liferay.journal.service.JournalFeedService" class="com.liferay.journal.service.impl.JournalFeedServiceImpl" />
+	<bean id="com.liferay.journal.service.persistence.JournalFeedPersistence" class="com.liferay.journal.service.persistence.impl.JournalFeedPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.journal.service.persistence.JournalFeedFinder" class="com.liferay.journal.service.persistence.impl.JournalFeedFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.journal.service.JournalFolderLocalService" class="com.liferay.journal.service.impl.JournalFolderLocalServiceImpl" />
+	<bean id="com.liferay.journal.service.JournalFolderService" class="com.liferay.journal.service.impl.JournalFolderServiceImpl" />
+	<bean id="com.liferay.journal.service.persistence.JournalFolderPersistence" class="com.liferay.journal.service.persistence.impl.JournalFolderPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.journal.service.persistence.JournalFolderFinder" class="com.liferay.journal.service.persistence.impl.JournalFolderFinderImpl" parent="basePersistence" />
+</beans>

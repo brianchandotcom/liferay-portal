@@ -125,8 +125,7 @@ public class ViewMessageAction implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
 
-			return actionMapping.findForward(
-				"portlet.message_boards.view_message");
+			return "/html/portlet/message_boards/view_message.jsp";
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchMessageException ||
@@ -134,11 +133,10 @@ public class ViewMessageAction implements MVCRenderCommand {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.message_boards.error");
+				return "/html/portlet/message_board/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 	}

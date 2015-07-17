@@ -232,7 +232,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>110</portlet-name>
-		<icon>/html/icons/document_library_display.png</icon>
 		<struts-path>document_library_display</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.documentlibrarydisplay.action.ConfigurationActionImpl</configuration-action-class>
@@ -241,19 +240,7 @@
 		<friendly-url-mapping>document_library_display</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/documentlibrary/document-library-display-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandler</portlet-data-handler-class>
-		<webdav-storage-token>document_library</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<instanceable>true</instanceable>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/document_library_display/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-document-library-display</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>119</portlet-name>

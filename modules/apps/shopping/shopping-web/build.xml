@@ -4,7 +4,7 @@
 <project>
 	<property name="import.shared" value="shopping-service" />
 	<property name="osgi.auto.update.xml" value="true" />
-	<property name="osgi.ide.dependencies" value="struts.jar" />
+	<property name="osgi.ide.dependencies" value="struts-core.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

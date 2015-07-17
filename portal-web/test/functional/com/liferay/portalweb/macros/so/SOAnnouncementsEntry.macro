@@ -27,7 +27,7 @@
 				<var name="key_textFormat" value="${textFormat}" />
 
 				<execute function="Click" locator1="SOAnnouncementsAdd#TEXT_FORMAT_BUTTON" />
-				<execute function="SelectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
+				<execute function="SelectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD_IFRAME" />
 				<execute function="Type#sendKeys" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
 			</then>
 			<else>

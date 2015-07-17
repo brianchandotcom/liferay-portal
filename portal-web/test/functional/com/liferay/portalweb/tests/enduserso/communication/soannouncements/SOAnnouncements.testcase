@@ -89,7 +89,7 @@
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />
 		<execute function="Select" locator1="SOAnnouncementsAdd#DISTRIBUTION_SCOPE_SELECT" value1="" />
 		<execute function="Type" locator1="SOAnnouncementsAdd#TITLE_FIELD" value1="" />
-		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD" />
+		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#CONTENT_FIELD_IFRAME" />
 		<execute function="Type#sendKeys" locator1="SOAnnouncementsAdd#CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
 		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="SOAnnouncementsAdd#ADD_ENTRY_IFRAME" />

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_FIELD_IFRAME</td>
+	<td>//div[contains(@id,'cke__')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IFRAME</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td></td>

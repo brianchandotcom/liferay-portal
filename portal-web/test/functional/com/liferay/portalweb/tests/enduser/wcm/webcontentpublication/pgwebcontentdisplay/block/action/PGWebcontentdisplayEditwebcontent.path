@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_FIELD_IFRAME</td>
+	<td>//div[contains(@id,'cke__')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_FIELD</td>
 	<td>//body</td>
 	<td></td>

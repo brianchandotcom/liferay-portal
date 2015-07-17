@@ -80,7 +80,7 @@ public class JSONSerializerTest {
 	}
 
 	@Test
-	public void testSerializeIntegrity() {
+	public void testSerializeServiceContext() {
 		ServiceContext serviceContext = new ServiceContext();
 
 		String[] groupPermissions = new String[] {"VIEW"};
@@ -88,13 +88,12 @@ public class JSONSerializerTest {
 		serviceContext.setAttribute("groupPermissions", groupPermissions);
 		serviceContext.setGroupPermissions(groupPermissions);
 
-		String jsonString = JSONFactoryUtil.serialize(serviceContext);
+		String json = JSONFactoryUtil.serialize(serviceContext);
 
 		ServiceContext serviceContextDeserialize =
-			(ServiceContext)JSONFactoryUtil.deserialize(jsonString);
+			(ServiceContext)JSONFactoryUtil.deserialize(json);
 
-		Assert.assertTrue(
-			serviceContextDeserialize.getGroupPermissions() != null);
+		Assert.assertNotNull(serviceContextDeserialize.getGroupPermissions());
 	}
 
 	@Test

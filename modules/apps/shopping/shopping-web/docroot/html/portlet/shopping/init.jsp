@@ -59,7 +59,6 @@ page import="com.liferay.portal.model.Contact" %><%@
 page import="com.liferay.portal.model.Country" %><%@
 page import="com.liferay.portal.model.ModelHintsConstants" %><%@
 page import="com.liferay.portal.model.Region" %><%@
-page import="com.liferay.portal.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@

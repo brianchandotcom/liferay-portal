@@ -12,10 +12,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
+@generated
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/taglib-init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil" %>
+<%
+java.lang.String className = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:className"));
+java.lang.String defaultDisplayStyle = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:defaultDisplayStyle"));
+java.lang.String displayStyle = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:displayStyle"));
+long displayStyleGroupId = GetterUtil.getLong(String.valueOf(request.getAttribute("ddm:template-selector:displayStyleGroupId")));
+java.util.List<java.lang.String> displayStyles = (java.util.List<java.lang.String>)request.getAttribute("ddm:template-selector:displayStyles");
+java.lang.String icon = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:icon"));
+java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:label"), "display-template");
+java.lang.String refreshURL = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:refreshURL"));
+boolean showEmptyOption = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:template-selector:showEmptyOption")));
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("ddm:template-selector:dynamicAttributes");
+Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("ddm:template-selector:scopedAttributes");
+%>
+
+<%@ include file="/html/taglib/ddm/template_selector/init-ext.jspf" %>

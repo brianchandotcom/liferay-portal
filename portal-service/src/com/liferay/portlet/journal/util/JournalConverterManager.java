@@ -14,35 +14,14 @@
 
 package com.liferay.portlet.journal.util;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-
 import java.util.Locale;
 
 /**
- * @author Marcellus Tavares
- * @author Bruno Basto
+ * @author Leonardo Barros
  */
-@ProviderType
-public interface JournalConverter {
-
-	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
-		throws Exception;
-
-	public Fields getDDMFields(DDMStructure ddmStructure, Document document)
-		throws Exception;
-
-	public Fields getDDMFields(DDMStructure ddmStructure, String content)
-		throws Exception;
-
-	public String getDDMXSD(String journalXSD) throws Exception;
+public interface JournalConverterManager {
 
 	public String getDDMXSD(String journalXSD, Locale defaultLocale)
 		throws Exception;
-
-	public String getJournalXSD(String ddmXSD) throws Exception;
 
 }

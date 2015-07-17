@@ -43,7 +43,7 @@ import org.apache.struts.action.ActionMapping;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewAction implements MVCRenderCommand {
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

@@ -126,9 +126,6 @@
 		<struts-path>image_gallery_display</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>image_gallery_display</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/imagegallerydisplay/image-gallery-display-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandler</portlet-data-handler-class>
 		<template-handler>com.liferay.portlet.documentlibrary.template.DocumentLibraryPortletDisplayTemplateHandler</template-handler>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
@@ -221,9 +218,6 @@
 		<struts-path>document_library_display</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>document_library_display</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/documentlibrary/document-library-display-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLDisplayPortletDataHandler</portlet-data-handler-class>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 	</portlet>

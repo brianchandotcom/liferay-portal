@@ -83,7 +83,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
+	<command name="AddWikiFrontPageChildPageFormatHTML" priority="5">
 		<var name="welcomeToLiferay">
 			<![CDATA[
 				<p><a href=http://www.liferay.com>Welcome to LIFERAY</a><p>

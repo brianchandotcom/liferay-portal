@@ -140,7 +140,7 @@
 		<execute macro="DMPortlet#viewDefaultConfigurationDisplaySettingsPG" />
 	</command>
 
-	<command name="CheckoutAndCheckin" priority="4">
+	<command name="CheckoutAndCheckin" priority="5">
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="portletName" value="Documents and Media" />
 

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Mobile Device Rules Service
+Bundle-SymbolicName: com.liferay.mobile.device.rules.service
+Bundle-Version: 1.0.0
+Export-Package:	com.liferay.mobile.device.rules.lar
+Include-Resource: classes

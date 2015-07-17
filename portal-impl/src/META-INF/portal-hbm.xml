@@ -818,9 +818,11 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="scope" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="primKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primKeyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="roleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="ownerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="actionIds" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="viewActionId" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.ResourceTypePermissionImpl" table="ResourceTypePermission" dynamic-update="true">
 		<id name="resourceTypePermissionId" type="long">

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.web.constants;
+package com.liferay.mobile.device.rules.constants;
 
 /**
  * @author Mate Thurzo

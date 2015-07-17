@@ -33,7 +33,6 @@
 	<classpathentry kind="lib" path="lib/com.liferay.shopping.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.shopping.service.jar" />
 	<classpathentry kind="lib" path="lib/jodd-bean.jar" />
-	<classpathentry kind="lib" path="lib/jodd-core.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/aQute.bnd/jars/aQute.bnd-2.3.0.jar" />

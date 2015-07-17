@@ -117,7 +117,8 @@ public class ModuleApplicationContextRegistrator {
 				beanDefinitionFiles);
 
 		moduleApplicationContext.addBeanFactoryPostProcessor(
-			new ModuleBeanFactoryPostProcessor(classLoader));
+			new ModuleBeanFactoryPostProcessor(
+				classLoader, extendee.getBundleContext()));
 
 		moduleApplicationContext.refresh();
 

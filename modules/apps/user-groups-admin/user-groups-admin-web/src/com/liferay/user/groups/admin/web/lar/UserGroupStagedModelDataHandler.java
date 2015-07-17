@@ -97,6 +97,13 @@ public class UserGroupStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long classPK)
+		throws Exception {
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, UserGroup userGroup)
 		throws Exception {

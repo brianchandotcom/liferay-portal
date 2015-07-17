@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ADD_CUSTOM_FIELD_BUTTON</td>
-	<td>//button[contains(.,'Add Custom Field')]</td>
+	<td>//a[contains(.,'Add Custom Field')]</td>
 	<td></td>
 </tr>
 <tr>

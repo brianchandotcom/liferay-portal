@@ -1248,6 +1248,18 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						-releaserepo=${-releaserepo}
 					</echo>
 
+					<if>
+						<isset property="env.JENKINS_HOME" />
+						<then>
+							<echo
+								append="true"
+								file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
+							>
+								ivy.custom.settings.file=${sdk.dir}/jenkins-ivy-settings.xml
+							</echo>
+						</then>
+					</if>
+
 					<copy file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" tofile="${sdk.dir}/build.${env.HOST}.properties" />
 					<copy file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" tofile="${sdk.dir}/build.${env.HOSTNAME}.properties" />
 				</then>

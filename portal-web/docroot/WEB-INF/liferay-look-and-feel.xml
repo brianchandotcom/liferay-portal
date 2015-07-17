@@ -37,9 +37,6 @@
 	</theme>
 	<theme id="admin" name="Admin">
 		<root-path>/html/themes/admin</root-path>
-		<settings>
-			<setting configurable="true" key="footer-text" type="textarea" value="Powered by Liferay" />
-		</settings>
 		<control-panel-theme>true</control-panel-theme>
 		<page-theme>false</page-theme>
 	</theme>

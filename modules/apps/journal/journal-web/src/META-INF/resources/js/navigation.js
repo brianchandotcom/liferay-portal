@@ -39,7 +39,6 @@ AUI.add(
 						var portletContainerId = instance.ns('journalContainer');
 
 						var selectConfig = A.merge(
-							config.select,
 							{
 								checkBoxesId: checkBoxesId,
 								displayStyle: displayStyle,
@@ -48,13 +47,13 @@ AUI.add(
 								namespace: namespace,
 								portletContainerId: portletContainerId,
 								selector: 'entry-selector'
-							}
+							},
+							config.select
 						);
 
 						instance._appViewSelect = new Liferay.AppViewSelect(selectConfig);
 
 						var moveConfig = A.merge(
-							config.move,
 							{
 								displayStyleCSSClass: displayStyleCSSClass,
 								draggableCSSClass: '.entry-link',
@@ -69,7 +68,8 @@ AUI.add(
 										instance.ns('folderIds')
 									]
 								}
-							}
+							},
+							config.move
 						);
 
 						instance._appViewMove = new Liferay.AppViewMove(moveConfig);

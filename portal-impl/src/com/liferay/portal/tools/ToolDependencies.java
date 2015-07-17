@@ -211,6 +211,41 @@ public class ToolDependencies {
 			_portalCacheManager.clearAll();
 		}
 
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getCache(String portalCacheName) {
+
+			return getPortalCache(portalCacheName);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
+		 * boolean)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getCache(String portalCacheName, boolean blocking) {
+
+			return getPortalCache(portalCacheName, blocking);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheManager()}
+		 */
+		@Deprecated
+		@Override
+		public PortalCacheManager
+				<? extends Serializable, ? extends Serializable>
+			getCacheManager() {
+
+			return getPortalCacheManager();
+		}
+
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
 			getPortalCache(String portalCacheName) {
@@ -232,6 +267,16 @@ public class ToolDependencies {
 			 getPortalCacheManager() {
 
 			return _portalCacheManager;
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(
+		 * String)}
+		 */
+		@Deprecated
+		@Override
+		public void removeCache(String portalCacheName) {
+			removePortalCache(portalCacheName);
 		}
 
 		@Override
@@ -258,6 +303,38 @@ public class ToolDependencies {
 			_portalCacheManager.clearAll();
 		}
 
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ?> getCache(
+			String portalCacheName) {
+
+			return getPortalCache(portalCacheName);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
+		 * boolean)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ?> getCache(
+			String portalCacheName, boolean blocking) {
+
+			return getPortalCache(portalCacheName, blocking);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheManager()}
+		 */
+		@Deprecated
+		@Override
+		public PortalCacheManager<? extends Serializable, ?> getCacheManager() {
+			return getPortalCacheManager();
+		}
+
 		@Override
 		public PortalCache<? extends Serializable, ?> getPortalCache(
 			String portalCacheName) {
@@ -278,6 +355,16 @@ public class ToolDependencies {
 			getPortalCacheManager() {
 
 			return _portalCacheManager;
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(
+		 * String)}
+		 */
+		@Deprecated
+		@Override
+		public void removeCache(String portalCacheName) {
+			removePortalCache(portalCacheName);
 		}
 
 		@Override

@@ -38,6 +38,15 @@ public class PortalCacheWrapper<K extends Serializable, V>
 		return portalCache.getKeys();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
+	@Override
+	public String getName() {
+		return portalCache.getName();
+	}
+
 	@Override
 	public PortalCacheManager<K, V> getPortalCacheManager() {
 		return portalCache.getPortalCacheManager();

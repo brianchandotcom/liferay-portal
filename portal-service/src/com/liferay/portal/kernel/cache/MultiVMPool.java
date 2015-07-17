@@ -24,6 +24,28 @@ public interface MultiVMPool {
 
 	public void clear();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String)}
+	 */
+	@Deprecated
+	public PortalCache<? extends Serializable, ? extends Serializable>
+		getCache(String portalCacheName);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
+	 * boolean)}
+	 */
+	@Deprecated
+	public PortalCache<? extends Serializable, ? extends Serializable>
+		getCache(String portalCacheName, boolean blocking);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheManager()}
+	 */
+	@Deprecated
+	public PortalCacheManager<? extends Serializable, ? extends Serializable>
+		getCacheManager();
+
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName);
 
@@ -32,6 +54,12 @@ public interface MultiVMPool {
 
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
 		getPortalCacheManager();
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(String)}
+	 */
+	@Deprecated
+	public void removeCache(String portalCacheName);
 
 	public void removePortalCache(String portalCacheName);
 

@@ -104,6 +104,15 @@ public class CachelessTableMapperImpl
 			return Collections.emptyList();
 		}
 
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheName()}
+		 */
+		@Deprecated
+		@Override
+		public String getName() {
+			return getPortalCacheName();
+		}
+
 		@Override
 		public PortalCacheManager<Long, long[]> getPortalCacheManager() {
 			return portalCacheManager;

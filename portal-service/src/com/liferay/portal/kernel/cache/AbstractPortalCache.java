@@ -35,6 +35,15 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 		return doGet(key);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheName()}
+	 */
+	@Deprecated
+	@Override
+	public String getName() {
+		return getPortalCacheName();
+	}
+
 	@Override
 	public PortalCacheManager<K, V> getPortalCacheManager() {
 		return _portalCacheManager;

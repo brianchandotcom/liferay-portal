@@ -41,6 +41,15 @@ public class DummyPortalCache<K extends Serializable, V>
 		return Collections.emptyList();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheName()}
+	 */
+	@Deprecated
+	@Override
+	public String getName() {
+		return getPortalCacheName();
+	}
+
 	@Override
 	public String getPortalCacheName() {
 		return _portalCacheName;

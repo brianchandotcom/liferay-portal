@@ -174,6 +174,7 @@ public class MemoryPortalCacheTest {
 	public void testGetName() {
 		Assert.assertEquals(
 			_CACHE_NAME, _memoryPortalCache.getPortalCacheName());
+		Assert.assertEquals(_CACHE_NAME, _memoryPortalCache.getName());
 	}
 
 	@Test

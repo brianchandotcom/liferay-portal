@@ -1822,6 +1822,40 @@ public class TableMapperTest {
 			_portalCaches.clear();
 		}
 
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getCache(String name) {
+
+			return getPortalCache(name);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
+		 * boolean)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getCache(String name, boolean blocking) {
+
+			return getPortalCache(name, blocking);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheManager()}
+		 */
+		@Deprecated
+		@Override
+		public PortalCacheManager<? extends Serializable,
+			? extends Serializable> getCacheManager() {
+
+			return getPortalCacheManager();
+		}
+
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
 			getPortalCache(String name) {
@@ -1855,6 +1889,16 @@ public class TableMapperTest {
 
 		public Map<String, PortalCache<?, ?>> getPortalCaches() {
 			return _portalCaches;
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(
+		 * String)}
+		 */
+		@Deprecated
+		@Override
+		public void removeCache(String name) {
+			removePortalCache(name);
 		}
 
 		@Override

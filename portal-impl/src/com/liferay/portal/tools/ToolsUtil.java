@@ -156,7 +156,8 @@ public class ToolsUtil {
 		return stripFullyQualifiedClassNames(content, imports);
 	}
 
-	public static String stripFullyQualifiedClassNames(String content, String imports)
+	public static String stripFullyQualifiedClassNames(
+			String content, String imports)
 		throws IOException {
 
 		if (Validator.isNull(content)) {
@@ -201,7 +202,9 @@ public class ToolsUtil {
 					}
 				}
 
-				if (content.length() > (x + importPackageAndClassName.length())) {
+				if (content.length() >
+						(x + importPackageAndClassName.length())) {
+
 					char nextChar = content.charAt(
 						x + importPackageAndClassName.length());
 

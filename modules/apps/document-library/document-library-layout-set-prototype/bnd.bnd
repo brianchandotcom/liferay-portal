@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Document Library Layout Set Prototype
+Bundle-SymbolicName: com.liferay.document.library.layout.set.prototype
+Bundle-Version: 1.0.0
+Include-Resource: classes

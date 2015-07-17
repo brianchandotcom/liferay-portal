@@ -191,19 +191,21 @@ public class ToolsUtil {
 					}
 				}
 
-				char nextChar = content.charAt(
-					x + importPackageAndClassName.length());
-				char previousChar = content.charAt(x - 1);
+				if (content.length() > (x + importPackageAndClassName.length())) {
+					char nextChar = content.charAt(
+						x + importPackageAndClassName.length());
+					char previousChar = content.charAt(x - 1);
 
-				if (Character.isAlphabetic(nextChar) ||
-					Character.isDigit(nextChar) ||
-					(nextChar == CharPool.PERIOD) ||
-					(nextChar == CharPool.QUOTE) ||
-					(nextChar == CharPool.SEMICOLON) ||
-					(nextChar == CharPool.UNDERLINE) ||
-					(previousChar == CharPool.QUOTE)) {
+					if (Character.isAlphabetic(nextChar) ||
+						Character.isDigit(nextChar) ||
+						(nextChar == CharPool.PERIOD) ||
+						(nextChar == CharPool.QUOTE) ||
+						(nextChar == CharPool.SEMICOLON) ||
+						(nextChar == CharPool.UNDERLINE) ||
+						(previousChar == CharPool.QUOTE)) {
 
-					continue;
+						continue;
+					}
 				}
 
 				String importClassName = importPackageAndClassName.substring(

@@ -146,7 +146,7 @@
 	</command>
 
 	<command name="addContent">
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 	</command>
 
 	<command name="addCP">
@@ -195,7 +195,7 @@
 	<command name="addCustomAbstract">
 		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_RADIO" />
 
-		<execute function="Type#typeCKEditor" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_FIELD" value1="${entryAbstractDescription}" />
+		<execute function="Type#typeAlloyEditor" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_FIELD" value1="${entryAbstractDescription}" />
 	</command>
 
 	<command name="addDefaultAbstract">
@@ -447,16 +447,16 @@
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 
 		<if>
 			<isset var="entrySubtitle" />
 			<then>
-				<execute function="Type#typeCKEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
+				<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
 			</then>
 		</if>
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -545,7 +545,7 @@
 	</command>
 
 	<command name="addSubtitle">
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
 	</command>
 
 	<command name="addTag">
@@ -630,7 +630,7 @@
 	</command>
 
 	<command name="addTitle">
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 	</command>
 
 	<command name="addWithTrackbackURLPG">
@@ -755,7 +755,7 @@
 	<command name="editContent">
 		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContentEdit}" />
 	</command>
 
 	<command name="editContentCP">
@@ -766,7 +766,7 @@
 		<execute function="AssertClick" locator1="CPBlogs#ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPBlogsEdit#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CPBlogsEdit#CONTENT_FIELD" value1="${entryContentEdit}" />
 		<execute function="AssertClick" locator1="CPBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="CPBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -876,13 +876,13 @@
 	<command name="editSubtitle">
 		<execute function="AssertTextEquals" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitle}" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitleEdit}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#SUBTITLE_FIELD" value1="${entrySubtitleEdit}" />
 	</command>
 
 	<command name="editTitle">
 		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitleEdit}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitleEdit}" />
 	</command>
 
 	<command name="editTitleCP">

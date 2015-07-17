@@ -40,7 +40,7 @@
 		<execute function="AssertClick" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute function="Type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="Message Boards Subject" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="Message Boards Body" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="Message Boards Body" />
 		<execute function="Copy" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" />
 		<execute function="Paste#ckEditorPaste" locator1="PGMessageboardsPostthread#BODY_FIELD" />
 		<execute function="AssertClick" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />

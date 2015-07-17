@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//div[contains(@class,'cke_contents')]/iframe</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>

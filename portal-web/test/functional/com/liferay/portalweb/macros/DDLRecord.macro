@@ -200,7 +200,7 @@
 	<command name="populateFieldHTML">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPDynamicdatalistsListAddrecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CPDynamicdatalistsListAddrecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldInteger">

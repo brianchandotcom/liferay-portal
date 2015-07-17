@@ -6,7 +6,7 @@
 		<execute function="AssertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute function="Type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 		<execute function="AssertClick" locator1="CPMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -16,7 +16,7 @@
 		<execute function="AssertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute function="Type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="CPMessageboardsPostthread#ATTACHMENTS_BROWSE_FIELD" />
@@ -78,7 +78,7 @@
 				</if>
 			</then>
 			<else>
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 			</else>
 		</if>
 
@@ -121,7 +121,7 @@
 				</if>
 			</then>
 			<else>
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 			</else>
 		</if>
 
@@ -214,7 +214,7 @@
 		<execute function="AssertClick" locator1="CPMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute function="Type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 		<execute function="Click" locator1="CPMessageboardsPostthread#SUBMIT_FOR_PUBLICATION_BUTTON" />
 
 		<execute function="AssertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -224,7 +224,7 @@
 		<execute function="Click" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" />
 
 		<execute function="Type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
 		<execute function="Click" locator1="PGMessageboardsPostthread#SUBMIT_FOR_PUBLICATION_BUTTON" />
 
 		<execute function="AssertTextEquals#assertText" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -297,7 +297,7 @@
 		<if>
 			<isset var="threadBodyEdit" />
 			<then>
-				<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBodyEdit}" />
+				<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBodyEdit}" />
 			</then>
 		</if>
 
@@ -319,7 +319,7 @@
 		<if>
 			<isset var="threadBodyEdit" />
 			<then>
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBodyEdit}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBodyEdit}" />
 			</then>
 		</if>
 
@@ -469,7 +469,7 @@
 				<execute function="AssertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
 				<execute function="Check" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_CHECKBOX" />
 				<execute function="Type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
-				<execute function="Type#typeFrame" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+				<execute function="Type#typeCKEditor" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 
@@ -518,7 +518,7 @@
 				<execute function="AssertElementPresent" locator1="PGMessageboardsMovethread#CATEGORY_FIELD" />
 				<execute function="Check" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_CHECKBOX" />
 				<execute function="Type" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
-				<execute function="Type#typeFrame" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+				<execute function="Type#typeCKEditor" locator1="PGMessageboardsMovethread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 
@@ -545,7 +545,7 @@
 
 		<execute function="AssertClick" locator1="PGMessageboardsThread#MESSAGE_QUICK_REPLY_1" value1="Quick Reply" />
 
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsThread#QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsThread#QUICK_REPLY_BODY_FIELD" value1="${threadReplyBody}" />
 		<execute function="AssertClick" locator1="PGMessageboardsThread#QUICK_REPLY_PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -594,7 +594,7 @@
 
 		<execute function="AssertClick" locator1="CPMessageboardsThread#MESSAGE_REPLY_1" value1="Reply" />
 
-		<execute function="Type#typeFrame" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadReplyBody}" />
+		<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadReplyBody}" />
 		<execute function="AssertClick" locator1="CPMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -635,7 +635,7 @@
 			</else>
 		</if>
 
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadReplyBody}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadReplyBody}" />
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
@@ -719,7 +719,7 @@
 		<execute function="Check" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_CHECKBOX" />
 		<execute function="AssertTextEquals" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_INFO_MESSAGE" value1="The following post will be added in place of the moved message." />
 		<execute function="Type" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${threadSplitReplySubject}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${threadSplitReplyBody}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsSplitthread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${threadSplitReplyBody}" />
 		<execute function="AssertClick" locator1="PGMessageboardsSplitthread#OK_BUTTON" value1="OK" />
 
 		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSplitSubject}" />

@@ -11,6 +11,33 @@
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
+		<description>Creates an add menu that contains a list of url menu items.</description>
+		<name>add-menu</name>
+		<tag-class>com.liferay.taglib.ui.AddMenuTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>menuItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Creates a menu item.</description>
+		<name>add-menu-item</name>
+		<tag-class>com.liferay.taglib.ui.AddMenuItemTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-aui:nav-item</code>]]>.</description>
 		<name>app-view-display-style</name>
 		<tag-class>com.liferay.taglib.ui.AppViewDisplayStyleTag</tag-class>

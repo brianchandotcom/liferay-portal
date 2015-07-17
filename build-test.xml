@@ -638,25 +638,17 @@ jdbc.default.password=${database.password}]]></echo>
 
 	<macrodef name="get-testray-components">
 		<sequential>
-			<property file="${basedir}/test.run.properties" />
-
-			<if>
+			<condition property="testray.main.component.name" value="">
 				<not>
 					<isset property="testray.main.component.name" />
 				</not>
-				<then>
-					<property name="testray.main.component.name" value="" />
-				</then>
-			</if>
+			</condition>
 
-			<if>
+			<condition property="testray.component.names" value="${testray.main.component.name}">
 				<not>
 					<isset property="testray.component.names" />
 				</not>
-				<then>
-					<property name="testray.component.names" value="${testray.main.component.name}" />
-				</then>
-			</if>
+			</condition>
 		</sequential>
 	</macrodef>
 

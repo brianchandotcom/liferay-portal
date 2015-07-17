@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.web.portlet.action;
 
-import com.liferay.mobile.device.rules.web.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;

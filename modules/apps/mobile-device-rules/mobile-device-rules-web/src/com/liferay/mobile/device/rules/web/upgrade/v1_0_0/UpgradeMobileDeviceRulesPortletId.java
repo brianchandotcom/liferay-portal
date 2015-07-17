@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.web.upgrade.v1_0_0;
 
-import com.liferay.mobile.device.rules.web.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 /**

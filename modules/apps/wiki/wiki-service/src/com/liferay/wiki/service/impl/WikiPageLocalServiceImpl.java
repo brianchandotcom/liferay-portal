@@ -1712,6 +1712,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		assetEntryLocalService.updateVisible(
 			WikiPage.class.getName(), page.getResourcePrimKey(), false);
 
+		// Comment
+
+		CommentManagerUtil.moveDiscussionToTrash(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
 		// Social
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
@@ -2995,6 +3000,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		trashEntryLocalService.deleteEntry(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
+		// Comment
+
+		CommentManagerUtil.restoreDiscussionFromTrash(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
 		// Social

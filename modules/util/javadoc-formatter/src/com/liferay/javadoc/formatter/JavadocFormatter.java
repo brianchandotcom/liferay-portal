@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.Dom4jDocUtil;
@@ -330,11 +331,13 @@ public class JavadocFormatter {
 
 	private String _addDeprecatedTag(
 		String comment, AbstractBaseJavaEntity abstractBaseJavaEntity,
-		String indent) {
+		String indent) throws Exception {
 
 		if (comment == null) {
 			return null;
 		}
+
+		comment = ToolsUtil.stripFullyQualifiedClassNames(comment, _imports);
 
 		if (!comment.contains("* @deprecated ") ||
 			_hasAnnotation(abstractBaseJavaEntity, "Deprecated")) {
@@ -347,13 +350,14 @@ public class JavadocFormatter {
 
 	private void _addDocletElements(
 			Element parentElement, AbstractJavaEntity abstractJavaEntity,
-			String name)
-		throws Exception {
+			String name) throws Exception {
 
 		DocletTag[] docletTags = abstractJavaEntity.getTagsByName(name);
 
 		for (DocletTag docletTag : docletTags) {
 			String value = docletTag.getValue();
+
+			value = ToolsUtil.stripFullyQualifiedClassNames(value, _imports);
 
 			value = _trimMultilineText(value);
 
@@ -612,7 +616,7 @@ public class JavadocFormatter {
 
 	private void _addParamElement(
 		Element methodElement, JavaParameter javaParameter,
-		DocletTag[] paramDocletTags) {
+		DocletTag[] paramDocletTags) throws Exception {
 
 		String name = javaParameter.getName();
 
@@ -639,6 +643,8 @@ public class JavadocFormatter {
 			Dom4jDocUtil.add(paramElement, "required", true);
 		}
 
+		value = ToolsUtil.stripFullyQualifiedClassNames(value, _imports);
+
 		value = _trimMultilineText(value);
 
 		Element commentElement = paramElement.addElement("comment");
@@ -647,7 +653,7 @@ public class JavadocFormatter {
 	}
 
 	private void _addParamElements(
-		Element methodElement, JavaMethod javaMethod) {
+		Element methodElement, JavaMethod javaMethod) throws Exception {
 
 		JavaParameter[] javaParameters = javaMethod.getParameters();
 
@@ -687,6 +693,8 @@ public class JavadocFormatter {
 			Dom4jDocUtil.add(returnElement, "required", true);
 		}
 
+		comment = ToolsUtil.stripFullyQualifiedClassNames(comment, _imports);
+
 		comment = _trimMultilineText(comment);
 
 		Element commentElement = returnElement.addElement("comment");
@@ -696,7 +704,7 @@ public class JavadocFormatter {
 
 	private void _addThrowsElement(
 		Element methodElement, Type exceptionType,
-		DocletTag[] throwsDocletTags) {
+		DocletTag[] throwsDocletTags) throws Exception {
 
 		JavaClass javaClass = exceptionType.getJavaClass();
 
@@ -728,6 +736,8 @@ public class JavadocFormatter {
 			Dom4jDocUtil.add(throwsElement, "required", true);
 		}
 
+		value = ToolsUtil.stripFullyQualifiedClassNames(value, _imports);
+
 		value = _trimMultilineText(value);
 
 		Element commentElement = throwsElement.addElement("comment");
@@ -736,7 +746,7 @@ public class JavadocFormatter {
 	}
 
 	private void _addThrowsElements(
-		Element methodElement, JavaMethod javaMethod) {
+		Element methodElement, JavaMethod javaMethod) throws Exception {
 
 		Type[] exceptionTypes = javaMethod.getExceptions();
 
@@ -835,20 +845,19 @@ public class JavadocFormatter {
 			return;
 		}
 
-		String newContent = ToolsUtil.stripFullyQualifiedClassNames(
-			originalContent);
+		_imports = JavaImportsFormatter.getImports(originalContent);
 
 		JavaClass javaClass = _getJavaClass(
-			fileName, new UnsyncStringReader(newContent));
+			fileName, new UnsyncStringReader(originalContent));
 
 		String javadocLessContent = _removeJavadocFromJava(
-			javaClass, newContent);
+			javaClass, originalContent);
 
 		Document document = _getJavadocDocument(javaClass);
 
 		_updateJavadocsXmlFile(fileName, javaClass, document);
 
-		newContent = _getUpdateJavaFromDocument(
+		String newContent = _getUpdateJavaFromDocument(
 			fileName, javadocLessContent, document);
 
 		if (!originalContent.equals(newContent)) {
@@ -1108,7 +1117,7 @@ public class JavadocFormatter {
 	}
 
 	private String _getJavaClassComment(
-		Element rootElement, JavaClass javaClass) {
+		Element rootElement, JavaClass javaClass) throws Exception {
 
 		StringBundler sb = new StringBundler();
 
@@ -1119,6 +1128,8 @@ public class JavadocFormatter {
 		String comment = rootElement.elementText("comment");
 
 		if (Validator.isNotNull(comment)) {
+			comment = ToolsUtil.stripFullyQualifiedClassNames(comment, _imports);
+
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 
@@ -1297,7 +1308,7 @@ public class JavadocFormatter {
 
 	private String _getJavaFieldComment(
 		Map<String, Element> fieldElementsMap, JavaField javaField,
-		String indent) {
+		String indent) throws Exception {
 
 		String fieldKey = _getFieldKey(javaField);
 
@@ -1315,6 +1326,8 @@ public class JavadocFormatter {
 		String comment = fieldElement.elementText("comment");
 
 		if (Validator.isNotNull(comment)) {
+			comment = ToolsUtil.stripFullyQualifiedClassNames(comment, _imports);
+
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 
@@ -1352,7 +1365,7 @@ public class JavadocFormatter {
 
 	private String _getJavaMethodComment(
 		Map<String, Element> methodElementsMap, JavaMethod javaMethod,
-		String indent) {
+		String indent) throws Exception {
 
 		String methodKey = _getMethodKey(javaMethod);
 
@@ -1370,6 +1383,8 @@ public class JavadocFormatter {
 		String comment = methodElement.elementText("comment");
 
 		if (Validator.isNotNull(comment)) {
+			comment = ToolsUtil.stripFullyQualifiedClassNames(comment, _imports);
+
 			sb.append(_wrapText(comment, indent + " * "));
 		}
 
@@ -2161,5 +2176,7 @@ public class JavadocFormatter {
 	private final Pattern _paragraphTagPattern = Pattern.compile(
 		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
 	private final boolean _updateJavadocs;
+
+	private String _imports;
 
 }

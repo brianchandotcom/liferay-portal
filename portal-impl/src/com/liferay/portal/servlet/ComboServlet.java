@@ -308,13 +308,13 @@ public class ComboServlet extends HttpServlet {
 
 				if (minifierType.equals("css")) {
 					try {
-						stringFileContent = DynamicCSSUtil.parseSass(
-							getServletContext(), request, resourcePath,
-							stringFileContent);
+						stringFileContent = DynamicCSSUtil.replaceToken(
+							getServletContext(), request, stringFileContent);
 					}
 					catch (Exception e) {
 						_log.error(
-							"Unable to parse SASS on CSS " + resourcePath, e);
+							"Unable to replace tokens in CSS " + resourcePath,
+							e);
 
 						if (_log.isDebugEnabled()) {
 							_log.debug(stringFileContent);

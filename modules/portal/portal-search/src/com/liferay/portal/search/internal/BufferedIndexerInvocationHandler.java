@@ -63,7 +63,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			!(args[0] instanceof ClassedModel) &&
 			!(args0Class.isArray() || args0Class.equals(Collection.class)) &&
 			!((args.length == 2) && (args[0] instanceof String) &&
-			  Validator.equals(args[1].getClass(), Long.TYPE))) {
+			  Validator.equals(args[1].getClass(), Long.class))) {
 
 			return method.invoke(_indexer, args);
 		}

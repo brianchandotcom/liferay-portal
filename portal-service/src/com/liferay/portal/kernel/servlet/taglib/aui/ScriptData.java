@@ -229,8 +229,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 						matcher = patternValidCharacters.matcher(nextCharacter);
 
 						if (matcher.matches()) {
-							sb.append(StringUtil.toUpperCase(
-								nextCharacter.toString()));
+							sb.append(
+								StringUtil.toUpperCase(
+									nextCharacter.toString()));
 
 							break;
 						}

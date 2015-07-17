@@ -66,7 +66,7 @@ else {
 		/>
 
 		<portlet:renderURL var="moveURL">
-			<portlet:param name="struts_action" value="/message_boards/move_category" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/move_category" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:renderURL>

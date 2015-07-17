@@ -32,9 +32,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	title='<%= LanguageUtil.format(request, "move-x", category.getName(), false) %>'
 />
 
-<portlet:actionURL var="moveCategoryURL">
-	<portlet:param name="struts_action" value="/message_boards/move_category" />
-</portlet:actionURL>
+<portlet:actionURL name="/message_boards/move_category" var="moveCategoryURL" />
 
 <aui:form action="<%= moveCategoryURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

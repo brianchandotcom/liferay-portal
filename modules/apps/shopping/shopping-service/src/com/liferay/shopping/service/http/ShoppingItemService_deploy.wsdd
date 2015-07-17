@@ -1,35 +1,35 @@
 <?xml version="1.0"?>
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
-	<service name="Portlet_Shopping_ShoppingItemService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.shopping.portlet.liferay.com" xmlns:cmp-ns="http://model.shopping.portlet.liferay.com" qname="ns:ArrayOf_tns2_ShoppingItemSoap" type="java:com.liferay.shopping.model.ShoppingItemSoap[]" innerType="cmp-ns:ShoppingItemSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.shopping.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<arrayMapping xmlns:ns="urn:http.service.shopping.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<typeMapping xmlns:ns="http://model.shopping.portlet.liferay.com" qname="ns:ShoppingItemSoap" type="java:com.liferay.shopping.model.ShoppingItemSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+	<service name="Plugin_Shopping_ShoppingItemService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.shopping.liferay.com" xmlns:cmp-ns="http://model.shopping.liferay.com" qname="ns:ArrayOf_tns2_ShoppingItemSoap" type="java:com.liferay.shopping.model.ShoppingItemSoap[]" innerType="cmp-ns:ShoppingItemSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.shopping.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.shopping.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.shopping.liferay.com" qname="ns:ShoppingItemSoap" type="java:com.liferay.shopping.model.ShoppingItemSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://util.kernel.portal.liferay.com" qname="ns:OrderByComparator" type="java:com.liferay.portal.kernel.util.OrderByComparator" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
-		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" name="deleteItem" qname="operNS:deleteItem" soapAction="">
+		<operation xmlns:operNS="urn:http.service.shopping.liferay.com" name="deleteItem" qname="operNS:deleteItem" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="itemId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCategoriesItemsCount" qname="operNS:getCategoriesItemsCount" returnQName="getCategoriesItemsCountReturn" returnType="rtns:int" soapAction="">
+		<operation xmlns:operNS="urn:http.service.shopping.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCategoriesItemsCount" qname="operNS:getCategoriesItemsCount" returnQName="getCategoriesItemsCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
-			<parameter xmlns:tns="urn:http.service.shopping.portlet.liferay.com" qname="categoryIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="urn:http.service.shopping.liferay.com" qname="categoryIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" xmlns:rtns="http://model.shopping.portlet.liferay.com" name="getItem" qname="operNS:getItem" returnQName="getItemReturn" returnType="rtns:ShoppingItemSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.shopping.liferay.com" xmlns:rtns="http://model.shopping.liferay.com" name="getItem" qname="operNS:getItem" returnQName="getItemReturn" returnType="rtns:ShoppingItemSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="itemId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getItemsCount" qname="operNS:getItemsCount" returnQName="getItemsCountReturn" returnType="rtns:int" soapAction="">
+		<operation xmlns:operNS="urn:http.service.shopping.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getItemsCount" qname="operNS:getItemsCount" returnQName="getItemsCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" xmlns:rtns="urn:http.service.shopping.portlet.liferay.com" xmlns:tns2="http://model.shopping.portlet.liferay.com" name="getItemsPrevAndNext" qname="operNS:getItemsPrevAndNext" returnQName="getItemsPrevAndNextReturn" returnType="rtns:ArrayOf_tns2_ShoppingItemSoap" returnItemType="tns2:ShoppingItemSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.shopping.liferay.com" xmlns:rtns="urn:http.service.shopping.liferay.com" xmlns:tns2="http://model.shopping.liferay.com" name="getItemsPrevAndNext" qname="operNS:getItemsPrevAndNext" returnQName="getItemsPrevAndNextReturn" returnType="rtns:ArrayOf_tns2_ShoppingItemSoap" returnItemType="tns2:ShoppingItemSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="itemId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://util.kernel.portal.liferay.com" qname="obc" type="tns:OrderByComparator"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" xmlns:rtns="urn:http.service.shopping.portlet.liferay.com" xmlns:tns2="http://model.shopping.portlet.liferay.com" name="getItems" qname="operNS:getItems" returnQName="getItemsReturn" returnType="rtns:ArrayOf_tns2_ShoppingItemSoap" returnItemType="tns2:ShoppingItemSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.shopping.liferay.com" xmlns:rtns="urn:http.service.shopping.liferay.com" xmlns:tns2="http://model.shopping.liferay.com" name="getItems" qname="operNS:getItems" returnQName="getItemsReturn" returnType="rtns:ArrayOf_tns2_ShoppingItemSoap" returnItemType="tns2:ShoppingItemSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.shopping.portlet.liferay.com" xmlns:rtns="urn:http.service.shopping.portlet.liferay.com" xmlns:tns2="http://model.shopping.portlet.liferay.com" name="getItems" qname="operNS:getItems" returnQName="getItemsReturn" returnType="rtns:ArrayOf_tns2_ShoppingItemSoap" returnItemType="tns2:ShoppingItemSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.shopping.liferay.com" xmlns:rtns="urn:http.service.shopping.liferay.com" xmlns:tns2="http://model.shopping.liferay.com" name="getItems" qname="operNS:getItems" returnQName="getItemsReturn" returnType="rtns:ArrayOf_tns2_ShoppingItemSoap" returnItemType="tns2:ShoppingItemSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
@@ -38,11 +38,11 @@
 		</operation>
 		<parameter name="allowedMethods" value="deleteItem getCategoriesItemsCount getItem getItems getItemsCount getItemsPrevAndNext" />
 		<parameter name="className" value="com.liferay.shopping.service.http.ShoppingItemServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.shopping.portlet.liferay.com,http://util.kernel.portal.liferay.com,urn:http.service.shopping.portlet.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://model.shopping.liferay.com,http://util.kernel.portal.liferay.com,urn:http.service.shopping.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="ShoppingItemServiceSoap" />
 		<parameter name="wsdlServiceElement" value="ShoppingItemServiceSoapService" />
-		<parameter name="wsdlServicePort" value="Portlet_Shopping_ShoppingItemService" />
-		<parameter name="wsdlTargetNamespace" value="urn:http.service.shopping.portlet.liferay.com" />
+		<parameter name="wsdlServicePort" value="Plugin_Shopping_ShoppingItemService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.shopping.liferay.com" />
 	</service>
 </deployment>

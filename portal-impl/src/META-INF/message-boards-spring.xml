@@ -19,4 +19,6 @@
 	<bean id="com.liferay.portlet.messageboards.action.MoveThreadMVCRenderCommand" class="com.liferay.portlet.messageboards.action.MoveThreadMVCRenderCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.RSSAction" class="com.liferay.portlet.messageboards.action.RSSAction" />
 	<bean id="com.liferay.portlet.messageboards.action.SelectCategoryMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SelectCategoryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.SplitThreadAction" class="com.liferay.portlet.messageboards.action.SplitThreadAction" />
+	<bean id="com.liferay.portlet.messageboards.action.SplitThreadMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SplitThreadMVCRenderCommand" />
 </beans>

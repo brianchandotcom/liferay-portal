@@ -297,11 +297,6 @@
 
 		<action path="/message_boards/search" forward="portlet.message_boards.search" />
 
-		<action path="/message_boards/split_thread" type="com.liferay.portlet.messageboards.action.SplitThreadAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.split_thread" path="portlet.message_boards.split_thread" />
-		</action>
-
 		<action path="/message_boards/view" type="com.liferay.portlet.messageboards.action.ViewAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.view" path="portlet.message_boards.view" />
@@ -335,11 +330,6 @@
 		<action path="/message_boards_admin/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 
 		<action path="/message_boards_admin/search" forward="portlet.message_boards.search" />
-
-		<action path="/message_boards_admin/split_thread" type="com.liferay.portlet.messageboards.action.SplitThreadAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.split_thread" path="portlet.message_boards.split_thread" />
-		</action>
 
 		<action path="/message_boards_admin/view" type="com.liferay.portlet.messageboards.action.ViewAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />

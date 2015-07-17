@@ -469,7 +469,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					<c:if test="<%= (message.getParentMessageId() != MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, category.getCategoryId(), ActionKeys.MOVE_THREAD) %>">
 						<li>
 							<portlet:renderURL var="splitThreadURL">
-								<portlet:param name="struts_action" value="/message_boards/split_thread" />
+								<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 								<portlet:param name="splitThread" value="<%= Boolean.TRUE.toString() %>" />

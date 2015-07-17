@@ -284,10 +284,6 @@
 		<put name="portlet_content" value="/portlet/message_boards/search.jsp" />
 	</definition>
 
-	<definition name="portlet.message_boards.split_thread" extends="portlet.message_boards">
-		<put name="portlet_content" value="/portlet/message_boards/split_thread.jsp" />
-	</definition>
-
 	<definition name="portlet.message_boards.view" extends="portlet.message_boards">
 		<put name="portlet_content" value="/portlet/message_boards/view.jsp" />
 	</definition>

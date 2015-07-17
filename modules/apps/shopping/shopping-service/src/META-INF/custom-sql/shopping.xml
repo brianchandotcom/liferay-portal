@@ -27,7 +27,7 @@
 					(discountType = ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
-	</sql>   
+	</sql>
 	<sql id="com.liferay.shopping.service.persistence.ShoppingOrderFinder.countByG_C_U_N_PPPS">
 		<![CDATA[
 			SELECT

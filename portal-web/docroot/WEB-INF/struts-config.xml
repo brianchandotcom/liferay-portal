@@ -302,11 +302,6 @@
 			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
 		</action>
 
-		<action path="/message_boards/view_message" type="com.liferay.portlet.messageboards.action.ViewMessageAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.view_message" path="portlet.message_boards.view_message" />
-		</action>
-
 		<!-- Message Boards Admin -->
 
 		<action path="/message_boards_admin/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
@@ -329,11 +324,6 @@
 		<action path="/message_boards_admin/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
-		</action>
-
-		<action path="/message_boards_admin/view_message" type="com.liferay.portlet.messageboards.action.ViewMessageAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.view_message" path="portlet.message_boards.view_message" />
 		</action>
 
 		<!-- Mobile Device Rules -->

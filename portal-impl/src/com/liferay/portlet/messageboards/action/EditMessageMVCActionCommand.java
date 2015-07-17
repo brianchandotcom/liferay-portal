@@ -255,7 +255,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		PortletURL portletURL = actionResponseImpl.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/view_message");
+			"mvcRenderCommandName", "/message_boards/view_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(message.getMessageId()));
 

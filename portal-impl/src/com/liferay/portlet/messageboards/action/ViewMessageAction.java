@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +36,7 @@ import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -44,14 +47,20 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewMessageAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/message_boards/view_message"
+	},
+	service = MVCRenderCommand.class
+)
+public class ViewMessageAction implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		try {
 			long messageId = ParamUtil.getLong(renderRequest, "messageId");

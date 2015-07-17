@@ -110,7 +110,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 		%>
 
 		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="struts_action" value="/message_boards/view_message" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
 			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 		</liferay-portlet:renderURL>
 

@@ -117,7 +117,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			%>
 
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="struts_action" value="/message_boards/view_message" />
+				<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 			</portlet:renderURL>

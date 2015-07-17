@@ -120,7 +120,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 			<c:choose>
 				<c:when test="<%= previousThread != null %>">
 					<portlet:renderURL var="previousThreadURL">
-						<portlet:param name="struts_action" value="/message_boards/view_message" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
 						<portlet:param name="messageId" value="<%= String.valueOf(previousThread.getRootMessageId()) %>" />
 					</portlet:renderURL>
 
@@ -136,7 +136,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 			<c:choose>
 				<c:when test="<%= nextThread != null %>">
 					<portlet:renderURL var="nextThreadURL">
-						<portlet:param name="struts_action" value="/message_boards/view_message" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
 						<portlet:param name="messageId" value="<%= String.valueOf(nextThread.getRootMessageId()) %>" />
 					</portlet:renderURL>
 

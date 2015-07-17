@@ -72,7 +72,7 @@ boolean allowPingbacks = PropsValues.MESSAGE_BOARDS_PINGBACK_ENABLED && BeanPara
 if (Validator.isNull(redirect)) {
 	PortletURL viewMessageURL = renderResponse.createRenderURL();
 
-	viewMessageURL.setParameter("struts_action", "/message_boards/view_message");
+	viewMessageURL.setParameter("mvcRenderCommandName", "/message_boards/view_message");
 	viewMessageURL.setParameter("messageId", String.valueOf(messageId));
 
 	redirect = viewMessageURL.toString();

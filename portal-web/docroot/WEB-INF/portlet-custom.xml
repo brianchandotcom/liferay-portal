@@ -861,31 +861,6 @@
 			<role-name>administrator</role-name>
 		</security-role-ref>
 	</portlet>
-	<portlet>
-		<portlet-name>199</portlet-name>
-		<display-name>Documents and Media Admin</display-name>
-		<portlet-class>com.liferay.portlet.documentlibraryadmin.portlet.DLAdminPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/document_library_admin/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/document_library_admin/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
 	<custom-portlet-mode>
 		<portlet-mode>edit_guest</portlet-mode>
 		<portal-managed>true</portal-managed>

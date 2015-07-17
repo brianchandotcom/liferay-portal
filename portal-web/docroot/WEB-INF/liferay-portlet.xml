@@ -568,7 +568,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>199</portlet-name>
-		<icon>/html/icons/document_library.png</icon>
 		<struts-path>document_library_admin</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.documentlibraryadmin.action.ConfigurationActionImpl</configuration-action-class>
@@ -582,24 +581,7 @@
 			</trigger>
 		</scheduler-entry>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler</portlet-data-handler-class>
-		<webdav-storage-token>document_library</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>3.0</control-panel-entry-weight>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
-		<header-portlet-css>/o/ddm-web/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/o/ddm-web/js/main.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/o/ddm-web/js/custom_fields.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/html/portlet/document_library/js/main.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/html/portlet/document_library/js/upload.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-document-library</css-class-wrapper>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

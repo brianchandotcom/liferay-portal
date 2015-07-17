@@ -70,7 +70,7 @@ import org.apache.struts.action.ActionMapping;
 	},
 	service = MVCActionCommand.class
 )
-public class SplitThreadAction extends BaseMVCActionCommand {
+public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

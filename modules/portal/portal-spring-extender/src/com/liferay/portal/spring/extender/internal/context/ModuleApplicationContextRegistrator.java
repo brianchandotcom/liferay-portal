@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisher;
-import com.liferay.portal.spring.extender.internal.blueprint.ModuleBeanFactoryPostProcessor;
 import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 

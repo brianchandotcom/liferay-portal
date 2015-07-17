@@ -51,6 +51,12 @@ public class BeanReferenceAnnotationBeanPostProcessor
 		}
 	}
 
+	public BeanReferenceAnnotationBeanPostProcessor(BeanFactory beanFactory) {
+		this();
+
+		_beanFactory = beanFactory;
+	}
+
 	public void destroy() {
 		_beans.clear();
 	}

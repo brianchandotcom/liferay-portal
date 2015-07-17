@@ -96,7 +96,7 @@ import org.apache.struts.action.ActionMapping;
 	},
 	service = MVCActionCommand.class
 )
-public class EditMessageAction extends BaseMVCActionCommand {
+public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

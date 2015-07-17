@@ -3203,6 +3203,14 @@ go]]></replacevalue>
 		/>
 	</target>
 
+	<target name="invoke-curl">
+		<fail message="Please set the property ${curl.command}." unless="curl.command" />
+
+	    <exec executable="curl">
+	        <arg line="${curl.command}" />
+	    </exec>
+	</target>
+
 	<target name="kill-spi">
 		<if>
 			<os family="unix" />

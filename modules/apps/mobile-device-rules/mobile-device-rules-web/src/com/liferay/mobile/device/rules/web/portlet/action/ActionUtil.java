@@ -14,6 +14,11 @@
 
 package com.liferay.mobile.device.rules.web.portlet.action;
 
+import com.liferay.mobile.device.rules.rulegroup.action.LayoutTemplateModificationActionHandler;
+import com.liferay.mobile.device.rules.rulegroup.action.SimpleRedirectActionHandler;
+import com.liferay.mobile.device.rules.rulegroup.action.SiteRedirectActionHandler;
+import com.liferay.mobile.device.rules.rulegroup.action.ThemeModificationActionHandler;
+import com.liferay.mobile.device.rules.rulegroup.rule.SimpleRuleHandler;
 import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
 import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -21,11 +26,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.mobile.device.rulegroup.action.impl.LayoutTemplateModificationActionHandler;
-import com.liferay.portal.mobile.device.rulegroup.action.impl.SimpleRedirectActionHandler;
-import com.liferay.portal.mobile.device.rulegroup.action.impl.SiteRedirectActionHandler;
-import com.liferay.portal.mobile.device.rulegroup.action.impl.ThemeModificationActionHandler;
-import com.liferay.portal.mobile.device.rulegroup.rule.impl.SimpleRuleHandler;
 
 import java.util.Collection;
 import java.util.HashMap;

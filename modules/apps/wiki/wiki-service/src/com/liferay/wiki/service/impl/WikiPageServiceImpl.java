@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.service.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,6 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.RSSUtil;
 import com.liferay.wiki.constants.WikiConstants;
@@ -827,7 +827,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				String value = null;
 
 				WikiGroupServiceSettings wikiGroupServiceSettings =
-					_settingsFactory.getSettings(
+					settingsFactory.getSettings(
 						WikiGroupServiceSettings.class,
 						new GroupServiceSettingsLocator(
 							page.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -899,7 +899,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(type = SettingsFactory.class)
-	private SettingsFactory _settingsFactory;
+	@ServiceReference(type = SettingsFactory.class)
+	protected SettingsFactory settingsFactory;
 
 }

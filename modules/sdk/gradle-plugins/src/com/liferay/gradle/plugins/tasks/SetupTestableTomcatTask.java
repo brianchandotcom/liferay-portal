@@ -81,6 +81,10 @@ public class SetupTestableTomcatTask
 		return _moduleFrameworkBaseDir;
 	}
 
+	public File getTomcatBinDir() {
+		return new File(getTomcatDir(), "bin");
+	}
+
 	@InputDirectory
 	public File getTomcatDir() {
 		return _tomcatAppServer.getDir();

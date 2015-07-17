@@ -19,6 +19,7 @@
 <liferay-staging:defineObjects />
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
 if (Validator.isNull(cmd)) {
@@ -125,6 +126,7 @@ if (!cmd.equals(Constants.ADD)) {
 
 <c:if test="<%= showHeader %>">
 	<liferay-ui:header
+		backURL="<%= backURL %>"
 		title='<%= privateLayout ? LanguageUtil.get(request, "export-private-pages") : LanguageUtil.get(request, "export-public-pages") %>'
 	/>
 </c:if>
@@ -228,7 +230,7 @@ if (!cmd.equals(Constants.ADD)) {
 						<c:otherwise>
 							<aui:button type="submit" value="export" />
 
-							<aui:button type="cancel" />
+							<aui:button href="<%= backURL %>" type="cancel" />
 						</c:otherwise>
 					</c:choose>
 				</aui:button-row>

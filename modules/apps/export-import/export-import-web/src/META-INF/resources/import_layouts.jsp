@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
 long groupId = ParamUtil.getLong(request, "groupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
@@ -27,6 +28,7 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(groupId, ExportImpor
 
 <c:if test="<%= showHeader %>">
 	<liferay-ui:header
+		backURL="<%= backURL %>"
 		title='<%= privateLayout ? LanguageUtil.get(request, "import-private-pages") : LanguageUtil.get(request, "import-public-pages") %>'
 	/>
 </c:if>

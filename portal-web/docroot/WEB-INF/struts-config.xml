@@ -295,8 +295,6 @@
 
 		<action path="/message_boards/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 
-		<action path="/message_boards/rss" type="com.liferay.portlet.messageboards.action.RSSAction" />
-
 		<action path="/message_boards/search" forward="portlet.message_boards.search" />
 
 		<action path="/message_boards/split_thread" type="com.liferay.portlet.messageboards.action.SplitThreadAction">

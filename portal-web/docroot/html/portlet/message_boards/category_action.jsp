@@ -99,20 +99,11 @@ else {
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
 		<c:if test="<%= enableRSS %>">
 
-			<%
-			if (category.getCategoryId() > 0) {
-				rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
-			}
-			else {
-				rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
-			}
-			%>
-
 			<liferay-ui:rss
 				delta="<%= rssDelta %>"
 				displayStyle="<%= rssDisplayStyle %>"
 				feedType="<%= rssFeedType %>"
-				resourceURL="<%= rssURL %>"
+				url="<%= MBUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
 			/>
 		</c:if>
 

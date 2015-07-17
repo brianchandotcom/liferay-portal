@@ -69,16 +69,11 @@ MBThread thread = message.getThread();
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
 		<c:if test="<%= enableRSS && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
 
-			<%
-			rssURL.setParameter("mbCategoryId", StringPool.BLANK);
-			rssURL.setParameter("threadId", String.valueOf(message.getThreadId()));
-			%>
-
 			<liferay-ui:rss
 				delta="<%= rssDelta %>"
 				displayStyle="<%= rssDisplayStyle %>"
 				feedType="<%= rssFeedType %>"
-				resourceURL="<%= rssURL %>"
+				url="<%= MBUtil.getRSSURL(plid, 0, message.getThreadId(), 0, themeDisplay) %>"
 			/>
 		</c:if>
 

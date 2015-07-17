@@ -22,7 +22,7 @@
 					delta="<%= rssDelta %>"
 					displayStyle="<%= rssDisplayStyle %>"
 					feedType="<%= rssFeedType %>"
-					resourceURL="<%= rssURL %>"
+					url="<%= MBUtil.getRSSURL(plid, 0, 0, 0, themeDisplay) %>"
 				/>
 			</c:if>
 

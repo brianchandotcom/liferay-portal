@@ -147,21 +147,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<c:if test="<%= category != null %>">
 			<div class="category-subscription category-subscription-types">
 				<c:if test="<%= enableRSS %>">
-
-					<%
-					if (category.getCategoryId() > 0) {
-						rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
-					}
-					else {
-						rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
-					}
-					%>
-
 					<liferay-ui:rss
 						delta="<%= rssDelta %>"
 						displayStyle="<%= rssDisplayStyle %>"
 						feedType="<%= rssFeedType %>"
-						resourceURL="<%= rssURL %>"
+						url="<%= MBUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
 					/>
 				</c:if>
 
@@ -292,17 +282,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%@ include file="/html/portlet/message_boards/view_threads.jspf" %>
 
 		<c:if test='<%= enableRSS && topLink.equals("recent-posts") %>'>
-
-			<%
-			rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
-
-			if (groupThreadsUserId > 0) {
-				rssURL.setParameter("userId", String.valueOf(groupThreadsUserId));
-			}
-
-			rssURL.setParameter("mbCategoryId", StringPool.BLANK);
-			%>
-
 			<br />
 
 			<liferay-ui:rss
@@ -310,7 +289,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				displayStyle="<%= rssDisplayStyle %>"
 				feedType="<%= rssFeedType %>"
 				message="subscribe-to-recent-posts"
-				resourceURL="<%= rssURL %>"
+				url="<%= MBUtil.getRSSURL(plid, 0, 0, groupThreadsUserId, themeDisplay) %>"
 			/>
 		</c:if>
 

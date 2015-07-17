@@ -52,7 +52,7 @@
 		</div>
 	</header>
 
-	<div class="portlet-content">
+	<div class="container-fluid-1280 portlet-content">
 		$portlet_display.writeContent($writer)
 	</div>
 </section>

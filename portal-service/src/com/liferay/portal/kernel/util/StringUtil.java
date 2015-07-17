@@ -3919,6 +3919,28 @@ public class StringUtil {
 		return s;
 	}
 
+	/**
+	 * Returns the original string without an appended the parenthedica suffix.
+	 * If the parenthedica suffix is preceded with a space it is also removed.
+	 *
+	 * <p>
+	 * Example:
+	 * <p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * stripParentheticalSuffix("file") returns "file"
+	 * stripParentheticalSuffix("file(0)") returns "file"
+	 * stripParentheticalSuffix("file (0)") returns "file"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the original string
+	 * @return a string representing the string <code>s</code> without the
+	 *         parentheticalSuffix
+	 */
 	public static String stripParentheticalSuffix(String s) {
 		if (!s.contains(StringPool.OPEN_PARENTHESIS) ||
 			!s.contains(StringPool.CLOSE_PARENTHESIS)) {

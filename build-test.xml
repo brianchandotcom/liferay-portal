@@ -3972,10 +3972,10 @@ module.framework.properties.osgi.console=11312</echo>
 
 		<var name="portal-ext.properties.content" unset="true" />
 
-		<loadfile property="portal-ext.properties.content" srcFile="${app.server.classes.portal.dir}/portal-ext.properties" />
+		<loadfile property="portal-ext.properties.content" srcFile="portal-impl/src/portal-ext.properties" />
 
 		<echo>##</echo>
-		<echo>## ${app.server.classes.portal.dir}/portal-ext.properties</echo>
+		<echo>## portal-impl/src/portal-ext.properties</echo>
 		<echo>##</echo>
 		<echo></echo>
 		<echo>${portal-ext.properties.content}</echo>

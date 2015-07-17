@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.rulegroup.action.impl;
+package com.liferay.mobile.device.rules.rulegroup.action;
 
 import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.kernel.util.GetterUtil;

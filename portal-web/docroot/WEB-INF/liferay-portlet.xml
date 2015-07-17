@@ -109,7 +109,6 @@
 	<portlet>
 		<portlet-name>20</portlet-name>
 		<struts-path>document_library</struts-path>
-		<configuration-action-class>com.liferay.portlet.documentlibrary.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler</portlet-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.portlet.documentlibrary.social.DLFileEntryActivityInterpreter</social-activity-interpreter-class>
@@ -126,7 +125,6 @@
 		<portlet-name>31</portlet-name>
 		<struts-path>image_gallery_display</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
-		<configuration-action-class>com.liferay.portlet.imagegallerydisplay.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>image_gallery_display</friendly-url-mapping>
@@ -222,7 +220,6 @@
 		<portlet-name>110</portlet-name>
 		<struts-path>document_library_display</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
-		<configuration-action-class>com.liferay.portlet.documentlibrarydisplay.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>document_library_display</friendly-url-mapping>
@@ -545,7 +542,6 @@
 		<portlet-name>199</portlet-name>
 		<struts-path>document_library_admin</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
-		<configuration-action-class>com.liferay.portlet.documentlibraryadmin.action.ConfigurationActionImpl</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.documentlibrary.messaging.TempFileEntriesMessageListener</scheduler-event-listener-class>
 			<trigger>

@@ -293,11 +293,6 @@
 
 		<action path="/message_boards/find_thread" type="com.liferay.portlet.messageboards.action.FindThreadAction" />
 
-		<action path="/message_boards/move_thread" type="com.liferay.portlet.messageboards.action.MoveThreadAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
-		</action>
-
 		<action path="/message_boards/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 
 		<action path="/message_boards/rss" type="com.liferay.portlet.messageboards.action.RSSAction" />
@@ -338,11 +333,6 @@
 		<action path="/message_boards_admin/find_message" type="com.liferay.portlet.messageboards.action.FindMessageAction" />
 
 		<action path="/message_boards_admin/find_thread" type="com.liferay.portlet.messageboards.action.FindThreadAction" />
-
-		<action path="/message_boards_admin/move_thread" type="com.liferay.portlet.messageboards.action.MoveThreadAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.move_thread" path="portlet.message_boards.move_thread" />
-		</action>
 
 		<action path="/message_boards_admin/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
 

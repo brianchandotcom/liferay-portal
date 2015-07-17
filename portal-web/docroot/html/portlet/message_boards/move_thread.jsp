@@ -39,9 +39,7 @@ boolean quote = false;
 boolean splitThread = false;
 %>
 
-<portlet:actionURL var="moveThreadURL">
-	<portlet:param name="struts_action" value="/message_boards/move_thread" />
-</portlet:actionURL>
+<portlet:actionURL name="/message_boards/move_thread" var="moveThreadURL" />
 
 <aui:form action="<%= moveThreadURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "moveThread();" %>'>
 	<aui:input name="threadId" type="hidden" value="<%= thread.getThreadId() %>" />

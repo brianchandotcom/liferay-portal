@@ -148,7 +148,7 @@ MBThread thread = message.getThread();
 
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, message.getGroupId(), message.getCategoryId(), ActionKeys.MOVE_THREAD) && !thread.isLocked() %>">
 		<portlet:renderURL var="moveThreadURL">
-			<portlet:param name="struts_action" value="/message_boards/move_thread" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/move_thread" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 			<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />

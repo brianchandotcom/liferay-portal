@@ -27,9 +27,7 @@ import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portal.util.PortletKeys;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Sergio González
@@ -44,43 +42,6 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
-	}
-
-	protected void addPrivateSite(
-			long companyId, long defaultUserId,
-			List<LayoutSetPrototype> layoutSetPrototypes)
-		throws Exception {
-
-		LayoutSet layoutSet =
-			DefaultLayoutSetPrototypesUtil.addLayoutSetPrototype(
-				companyId, defaultUserId,
-				"layout-set-prototype-intranet-site-title",
-				"layout-set-prototype-intranet-site-description",
-				layoutSetPrototypes);
-
-		if (layoutSet == null) {
-			return;
-		}
-
-		// Home layout
-
-		DefaultLayoutPrototypesUtil.addLayout(
-			layoutSet, "home", "/home", "2_columns_i");
-
-		// Documents layout
-
-		Layout layout = DefaultLayoutPrototypesUtil.addLayout(
-			layoutSet, "documents-and-media", "/documents", "1_column");
-
-		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
-			layout, PortletKeys.DOCUMENT_LIBRARY, "column-1");
-
-		Map<String, String> preferences = new HashMap<>();
-
-		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
-
-		DefaultLayoutPrototypesUtil.updatePortletSetup(
-			layout, portletId, preferences);
 	}
 
 	protected void addPublicSite(
@@ -124,7 +85,6 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		addPublicSite(companyId, defaultUserId, layoutSetPrototypes);
-		addPrivateSite(companyId, defaultUserId, layoutSetPrototypes);
 	}
 
 }

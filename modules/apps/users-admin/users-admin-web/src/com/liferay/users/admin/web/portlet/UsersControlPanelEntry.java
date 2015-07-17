@@ -25,14 +25,22 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.USERS_ADMIN},
+	service = ControlPanelEntry.class
+)
 public class UsersControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override

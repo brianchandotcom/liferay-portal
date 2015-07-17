@@ -3969,6 +3969,17 @@ module.framework.properties.osgi.console=11312</echo>
 module.framework.properties.osgi.console=11312</echo>
 			</else>
 		</if>
+
+		<var name="portal-ext.properties.content" unset="true" />
+
+		<loadfile property="portal-ext.properties.content" srcFile="${app.server.classes.portal.dir}/portal-ext.properties" />
+
+		<echo>##</echo>
+		<echo>## ${app.server.classes.portal.dir}/portal-ext.properties</echo>
+		<echo>##</echo>
+		<echo></echo>
+		<echo>${portal-ext.properties.content}</echo>
+		<echo></echo>
 	</target>
 
 	<target name="prepare-portal-properties">

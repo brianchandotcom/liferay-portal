@@ -274,9 +274,13 @@ public class PortalPreferencesImpl
 	protected boolean isCausedByStaleObjectException(Throwable t) {
 		Throwable cause = t.getCause();
 
-		while ((cause != null) && (t != cause)) {
+		while (t != cause) {
 			if (t instanceof StaleObjectStateException) {
 				return true;
+			}
+
+			if (cause == null) {
+				return false;
 			}
 
 			t = cause;

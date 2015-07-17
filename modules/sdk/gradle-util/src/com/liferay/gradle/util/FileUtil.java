@@ -162,6 +162,23 @@ public class FileUtil {
 		return false;
 	}
 
+	public static boolean isUpToDate(
+		Project project, Object source, Object target) {
+
+		AntBuilder antBuilder = project.getAnt();
+
+		_invokeAntMethodUpToDate(
+			antBuilder, "uptodate", project.file(source), project.file(target));
+
+		Map<String, Object> antProperties = antBuilder.getProperties();
+
+		if (antProperties.containsKey("uptodate")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void jar(
 		Project project, final File destinationFile, final String duplicate,
 		final boolean update, final String[][] filesets) {
@@ -334,6 +351,19 @@ public class FileUtil {
 		};
 
 		antBuilder.invokeMethod("jar", new Object[] {args, closure});
+	}
+
+	private static void _invokeAntMethodUpToDate(
+		AntBuilder antBuilder, String property, File sourceFile,
+		File targetFile) {
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("property", property);
+		args.put("srcfile", sourceFile);
+		args.put("targetfile", targetFile);
+
+		antBuilder.invokeMethod("uptodate", args);
 	}
 
 }

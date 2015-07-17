@@ -23,6 +23,8 @@ poshiRunner {
 		poshiProperty "test.name", project.properties["poshiTestName"]
 	}
 
+	poshiProperty "ignore.errors.file.path", "ignore.xml"
+
 	if (project.hasProperty("productNames")) {
 		poshiProperty "product.names", project.properties["productNames"]
 	}

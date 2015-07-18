@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.search;
+package com.liferay.document.library.repository.search.internal;
 
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryTermBuilder;

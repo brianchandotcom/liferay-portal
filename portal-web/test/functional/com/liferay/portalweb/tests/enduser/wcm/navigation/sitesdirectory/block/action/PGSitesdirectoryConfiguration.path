@@ -31,12 +31,12 @@
 <!--SETUP-->
 <tr>
 	<td>SETUP_SITES_SELECT</td>
-	<td>//select[@id='_86_sites']</td>
+	<td>//select[contains(@id,'sites')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETUP_DISPLAY_STYLE_SELECT</td>
-	<td>//select[@id='_86_displayStyle']</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
 	<td></td>
 </tr>
 </tbody>

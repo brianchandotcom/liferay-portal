@@ -10,22 +10,22 @@
 <tbody>
 <tr>
 	<td>ADD</td>
-	<td>//a[@id='_145_addPanel']</td>
+	<td>//a[contains(@id,'addPanel')]</td>
 	<td>Add Button</td>
 </tr>
 <tr>
 	<td>ADD_ICON</td>
-	<td>//a[@id='_145_addPanel']</td>
+	<td>//a/i[@class='icon-plus']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW</td>
-	<td>//a[@id='_145_previewPanel']</td>
+	<td>//a/i[@class='icon-desktop']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a[@title='Edit']</td>
+	<td>//a/i[@class='icon-edit']</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>EDIT_CONTROLS</td>
-	<td>//li[@id='_145_toggleControls']/a</td>
+	<td>//a/i[contains(@class,'icon-eye')]</td>
 	<td></td>
 </tr>
 <tr>

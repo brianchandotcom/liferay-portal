@@ -52,7 +52,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'details')]/div</td>
+	<td>//a[contains(@id,'details')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,10 +135,21 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CATEGORIZATION-->
+<tr>
+	<td>CATEGORIZATION_PANEL_TOGGLE</td>
+	<td>//a[contains(@id,'categorization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SEO-->
 <tr>
 	<td>SEO_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'seo')]/div</td>
+	<td>//a[contains(@id,'seo')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -159,7 +170,7 @@
 <!--LOOK_AND_FEEL-->
 <tr>
 	<td>LOOK_AND_FEEL_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'lookAndFeel')]/div</td>
+	<td>//a[contains(@id,'lookAndFeel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -170,7 +181,7 @@
 <!--JAVASCRIPT-->
 <tr>
 	<td>JAVASCRIPT_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'javascript')]/div</td>
+	<td>//a[contains(@id,'javascript')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -181,7 +192,7 @@
 <!--CUSTOM_FIELDS-->
 <tr>
 	<td>CUSTOM_FIELDS_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'customFields')]/div</td>
+	<td>//a[contains(@id,'customFields')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -192,7 +203,7 @@
 <!--ADVANCED_PANEL-->
 <tr>
 	<td>ADVANCED_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'advanced')]/div</td>
+	<td>//a[contains(@id,'advanced')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -203,7 +214,7 @@
 <!--MOBILE_DEVICE_RULES-->
 <tr>
 	<td>MOBILE_DEVICE_RULES_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'mobileDeviceRules')]/div</td>
+	<td>//a[contains(@id,'mobileDeviceRules')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -214,7 +225,7 @@
 <!--EMBEDDED_PORTLETS-->
 <tr>
 	<td>EMBEDDED_PORTLETS_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'embeddedPortlets')]/div</td>
+	<td>//a[contains(@id,'embeddedPortlets')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -265,7 +276,7 @@
 <!--CUSTOMIZATION_SETTINGS-->
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'customizationSettings')]/div</td>
+	<td>//a[contains(@id,'customizationSettings')]</td>
 	<td></td>
 </tr>
 <tr>

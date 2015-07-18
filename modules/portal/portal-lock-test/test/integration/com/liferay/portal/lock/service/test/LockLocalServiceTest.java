@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalServiceUtil;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.BatchUpdateException;
@@ -34,9 +35,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
@@ -66,44 +64,52 @@ public class LockLocalServiceTest {
 		LockLocalServiceUtil.unlock("className", "key");
 	}
 
-	@Test
-	public void testMutualExcludeLockingParallel() throws Exception {
-		try (CaptureAppender captureAppender =
-			Log4JLoggerTestUtil.configureLog4JLogger(
-				JDBCExceptionReporter.class.getName(), Level.ERROR)) {
-
-			ExecutorService executorService = Executors.newFixedThreadPool(10);
-
-			List<Future<Void>> futures = new ArrayList<>();
-
-			for (int i = 0; i < 10; i++) {
-				LockingJob lockingJob = new LockingJob(
-					"className", "key", "owner-" + i, 10);
-
-				futures.add(executorService.submit(lockingJob));
-			}
-
-			executorService.shutdown();
-
-			Assert.assertTrue(
-				executorService.awaitTermination(600, TimeUnit.SECONDS));
-
-			for (Future<Void> future : futures) {
-				future.get();
-			}
-
-			Assert.assertFalse(
-				LockLocalServiceUtil.isLocked("className", "key"));
-
-			for (LoggingEvent loggingEvent :
-					captureAppender.getLoggingEvents()) {
-
-				Assert.assertEquals(
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				dbType = DB.TYPE_MYSQL,
+				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +
 						"transaction",
-					loggingEvent.getMessage());
-			}
+				expectedType = ExpectedType.EXACT
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_POSTGRESQL,
+				expectedLog = "Batch entry 0 insert into Lock_ ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_POSTGRESQL,
+				expectedLog =
+					"ERROR: duplicate key value violates unique constraint ",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "ERROR", loggerClass = JDBCExceptionReporter.class
+	)
+	@Test
+	public void testMutualExcludeLockingParallel() throws Exception {
+		ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+		List<Future<Void>> futures = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			LockingJob lockingJob = new LockingJob(
+				"className", "key", "owner-" + i, 10);
+
+			futures.add(executorService.submit(lockingJob));
 		}
+
+		executorService.shutdown();
+
+		Assert.assertTrue(
+			executorService.awaitTermination(600, TimeUnit.SECONDS));
+
+		for (Future<Void> future : futures) {
+			future.get();
+		}
+
+		Assert.assertFalse(LockLocalServiceUtil.isLocked("className", "key"));
 	}
 
 	@Test

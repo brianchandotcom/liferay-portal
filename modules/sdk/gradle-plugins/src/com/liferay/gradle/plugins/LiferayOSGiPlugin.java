@@ -330,10 +330,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		copy.rename(closure);
 
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		jar.dependsOn(copy);
-
 		return copy;
 	}
 
@@ -513,6 +509,13 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		zip.setArchiveName(
 			bundleSymbolicName + "-xbean." + Jar.DEFAULT_EXTENSION);
+	}
+
+	@Override
+	protected void configureTaskClassesDependsOn(Task classesTask) {
+		super.configureTaskClassesDependsOn(classesTask);
+
+		classesTask.dependsOn(COPY_LIBS_TASK_NAME);
 	}
 
 	@Override

@@ -36,6 +36,7 @@ task buildTinyMCE(type: Copy)
 buildAlloyEditor {
 	File alloyEditorDestinationDir = new File(editorsDestinationDir, "alloyeditor")
 	File alloyEditorSrcDir = new File(editorsSrcDir, "alloyeditor_diffs")
+	File alloyEditorZipFile = new File(thirdPartyDir, "alloy-editor-${alloyEditorVersion}.zip")
 
 	doFirst {
 		delete alloyEditorDestinationDir
@@ -56,7 +57,7 @@ buildAlloyEditor {
 
 	duplicatesStrategy = "exclude"
 
-	from(zipTree(new File(thirdPartyDir, "alloy-editor-${alloyEditorVersion}.zip"))) {
+	from(zipTree(alloyEditorZipFile)) {
 		eachFile new StripPathSegmentsAction(2)
 		include "alloy-editor-${alloyEditorVersion}/alloy-editor/**"
 	}
@@ -64,10 +65,15 @@ buildAlloyEditor {
 	from alloyEditorSrcDir
 	includeEmptyDirs = false
 	into alloyEditorDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, alloyEditorZipFile, alloyEditorDestinationDir)
+	}
 }
 
 buildCKEditor {
 	File ckEditorDestinationDir = new File(editorsDestinationDir, "ckeditor")
+	File ckEditorZipFile = new File(thirdPartyDir, "ckeditor_${ckEditorVersion}_liferay.zip")
 
 	dependsOn buildCKEditorBBCode
 
@@ -77,7 +83,7 @@ buildCKEditor {
 
 	duplicatesStrategy = "exclude"
 
-	from(zipTree(new File(thirdPartyDir, "ckeditor_${ckEditorVersion}_liferay.zip"))) {
+	from(zipTree(ckEditorZipFile)) {
 		eachFile new StripPathSegmentsAction(1)
 
 		include "ckeditor/**"
@@ -86,6 +92,10 @@ buildCKEditor {
 	from new File(editorsSrcDir, "ckeditor_diffs")
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, ckEditorZipFile, ckEditorDestinationDir)
+	}
 }
 
 buildCKEditorBBCode {
@@ -139,6 +149,7 @@ buildCKEditorWsc {
 
 buildTinyMCE {
 	File tinyMCEDestinationDir = new File(editorsDestinationDir, "tiny_mce")
+	File tinyMCEZipFile = new File(thirdPartyDir, "tinymce_${tinyMCEVersion}.zip")
 
 	doFirst {
 		delete tinyMCEDestinationDir
@@ -148,7 +159,7 @@ buildTinyMCE {
 
 	from new File(editorsSrcDir, "tiny_mce_diffs")
 
-	from(zipTree(new File(thirdPartyDir, "tinymce_${tinyMCEVersion}.zip"))) {
+	from(zipTree(tinyMCEZipFile)) {
 		eachFile new StripPathSegmentsAction(3)
 
 		include "tinymce/js/tinymce/**"
@@ -156,6 +167,10 @@ buildTinyMCE {
 
 	includeEmptyDirs = false
 	into tinyMCEDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, tinyMCEZipFile, tinyMCEDestinationDir)
+	}
 }
 
 classes {

@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.net.HttpURLConnection;
-import java.net.Socket;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -116,17 +115,6 @@ public class AppServer {
 		}
 
 		return false;
-	}
-
-	public boolean isStarted() {
-		try {
-			new Socket("localhost", getPortNumber());
-		}
-		catch (IOException ioe) {
-			return false;
-		}
-
-		return true;
 	}
 
 	public void setBinDir(Object binDir) {

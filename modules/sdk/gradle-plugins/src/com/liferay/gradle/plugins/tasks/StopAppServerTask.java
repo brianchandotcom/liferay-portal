@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.DefaultTask;
-import org.gradle.api.Task;
-import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.TaskAction;
@@ -36,25 +34,6 @@ import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
  * @author Andrea Di Giorgi
  */
 public class StopAppServerTask extends DefaultTask implements AppServerTask {
-
-	public StopAppServerTask() {
-		onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					StopAppServerTask stopAppServerTask =
-						(StopAppServerTask)task;
-
-					if (!stopAppServerTask.isAppServerStarted()) {
-						return false;
-					}
-
-					return true;
-				}
-
-			});
-	}
 
 	@InputDirectory
 	public File getAppServerBinDir() {
@@ -79,8 +58,8 @@ public class StopAppServerTask extends DefaultTask implements AppServerTask {
 		return _appServerType;
 	}
 
-	public boolean isAppServerStarted() {
-		return _appServer.isStarted();
+	public boolean isAppServerReachable() {
+		return _appServer.isReachable();
 	}
 
 	@Override
@@ -121,6 +100,10 @@ public class StopAppServerTask extends DefaultTask implements AppServerTask {
 
 	@TaskAction
 	public void stopAppServer() throws Exception {
+		if (!isAppServerReachable()) {
+			return;
+		}
+
 		List<String> commands = new ArrayList<>();
 
 		File appServerStopExecutableFile = getAppServerStopExecutableFile();

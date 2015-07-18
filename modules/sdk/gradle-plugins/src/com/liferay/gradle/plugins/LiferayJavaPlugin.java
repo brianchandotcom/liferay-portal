@@ -59,15 +59,18 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.locks.ReentrantLock;
 
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
+import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -88,12 +91,14 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
@@ -106,6 +111,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
@@ -584,24 +590,30 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected SetupTestableTomcatTask addTaskSetupTestableTomcat(
 		Project project) {
 
-		SetupTestableTomcatTask setupTestableTomcatTask = GradleUtil.addTask(
-			project, SETUP_TESTABLE_TOMCAT_TASK_NAME,
-			SetupTestableTomcatTask.class);
+		final SetupTestableTomcatTask setupTestableTomcatTask =
+			GradleUtil.addTask(
+				project, SETUP_TESTABLE_TOMCAT_TASK_NAME,
+				SetupTestableTomcatTask.class);
 
 		setupTestableTomcatTask.onlyIf(
 			new Spec<Task>() {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					StartAppServerTask startTestableTomcatTask =
-						(StartAppServerTask)GradleUtil.getTask(
-							task.getProject(), START_TESTABLE_TOMCAT_TASK_NAME);
+					_startedAppServersReentrantLock.lock();
 
-					if (startTestableTomcatTask.isAppServerStarted()) {
-						return false;
+					try {
+						if (_startedAppServerBinDirs.contains(
+								setupTestableTomcatTask.getTomcatBinDir())) {
+
+							return false;
+						}
+
+						return true;
 					}
-
-					return true;
+					finally {
+						_startedAppServersReentrantLock.unlock();
+					}
 				}
 
 			});
@@ -614,28 +626,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, START_TESTABLE_TOMCAT_TASK_NAME, StartAppServerTask.class);
 
 		startTestableTomcatTask.dependsOn(SETUP_TESTABLE_TOMCAT_TASK_NAME);
+		startTestableTomcatTask.finalizedBy(STOP_TESTABLE_TOMCAT_TASK_NAME);
 
 		startTestableTomcatTask.setAppServerType("tomcat");
-
-		startTestableTomcatTask.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
-
-					File testablePortalStartedFile = new File(
-						project.getRootDir(),
-						_TESTABLE_PORTAL_STARTED_FILE_NAME);
-
-					try {
-						Files.createFile(testablePortalStartedFile.toPath());
-					}
-					catch (Exception e) {
-					}
-				}
-
-			});
 
 		startTestableTomcatTask.doFirst(
 			new Action<Task>() {
@@ -659,50 +652,139 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 			});
 
+		Action<Task> action = new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				StartAppServerTask startAppServerTask =
+					(StartAppServerTask)task;
+
+				File appServerBinDir = startAppServerTask.getAppServerBinDir();
+
+				boolean started = false;
+
+				_startedAppServersReentrantLock.lock();
+
+				try {
+					if (_startedAppServerBinDirs.contains(appServerBinDir)) {
+						started = true;
+					}
+					else {
+						_startedAppServerBinDirs.add(appServerBinDir);
+					}
+				}
+				finally {
+					_startedAppServersReentrantLock.unlock();
+				}
+
+				if (started) {
+					if (_logger.isDebugEnabled()) {
+						_logger.debug(
+							"App Server " + appServerBinDir +
+								" is already started");
+					}
+
+					Project project = startAppServerTask.getProject();
+
+					Gradle gradle = project.getGradle();
+
+					StartParameter startParameter = gradle.getStartParameter();
+
+					if (startParameter.isParallelProjectExecutionEnabled()) {
+						if (_logger.isDebugEnabled()) {
+							_logger.debug(
+								"Waiting for App Server " + appServerBinDir +
+									" to be reachable");
+						}
+
+						startAppServerTask.waitForAppServer();
+					}
+
+					throw new StopExecutionException();
+				}
+			}
+
+		};
+
+		startTestableTomcatTask.doFirst(action);
+
 		return startTestableTomcatTask;
 	}
 
 	protected StopAppServerTask addTaskStopTestableTomcat(Project project) {
-		StopAppServerTask stopTestableTomcatTask = GradleUtil.addTask(
+		final StopAppServerTask stopTestableTomcatTask = GradleUtil.addTask(
 			project, STOP_TESTABLE_TOMCAT_TASK_NAME, StopAppServerTask.class);
 
 		stopTestableTomcatTask.setAppServerType("tomcat");
 
-		stopTestableTomcatTask.doLast(
-			new Action<Task>() {
+		Action<Task> action = new Action<Task>() {
 
-				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
+			@Override
+			public void execute(Task task) {
+				StopAppServerTask stopAppServerTask = (StopAppServerTask)task;
 
-					File testablePortalStartedFile = new File(
-						project.getRootDir(),
-						_TESTABLE_PORTAL_STARTED_FILE_NAME);
+				File appServerBinDir = stopAppServerTask.getAppServerBinDir();
 
-					project.delete(testablePortalStartedFile);
-				}
+				_startedAppServersReentrantLock.lock();
 
-			});
+				try {
+					if (!_startedAppServerBinDirs.contains(appServerBinDir)) {
+						if (_logger.isDebugEnabled()) {
+							_logger.debug(
+								"App Server " + appServerBinDir +
+									" is already stopped");
+						}
 
-		stopTestableTomcatTask.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
-
-					File testablePortalStartedFile = new File(
-						project.getRootDir(),
-						_TESTABLE_PORTAL_STARTED_FILE_NAME);
-
-					if (testablePortalStartedFile.exists()) {
-						return true;
+						throw new StopExecutionException();
 					}
 
-					return false;
-				}
+					int originalCounter = _updateStartedAppServerStopCounters(
+						appServerBinDir, false);
 
-			});
+					if (originalCounter > 1) {
+						if (_logger.isDebugEnabled()) {
+							_logger.debug(
+								"App Server " + appServerBinDir +
+									" cannot be stopped now, still " +
+										(originalCounter - 1) + " to execute");
+						}
+
+						throw new StopExecutionException();
+					}
+				}
+				finally {
+					_startedAppServersReentrantLock.unlock();
+				}
+			}
+
+		};
+
+		stopTestableTomcatTask.doFirst(action);
+
+		Gradle gradle = project.getGradle();
+
+		TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall(TaskExecutionGraph taskExecutionGraph) {
+				if (taskExecutionGraph.hasTask(stopTestableTomcatTask)) {
+					_startedAppServersReentrantLock.lock();
+
+					try {
+						_updateStartedAppServerStopCounters(
+							stopTestableTomcatTask.getAppServerBinDir(), true);
+					}
+					finally {
+						_startedAppServersReentrantLock.unlock();
+					}
+				}
+			}
+
+		};
+
+		taskExecutionGraph.whenReady(closure);
 
 		return stopTestableTomcatTask;
 	}
@@ -1744,7 +1826,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			configureTaskTestEnabledWithCandidateClassFiles(test)) {
 
 			test.dependsOn(START_TESTABLE_TOMCAT_TASK_NAME);
-			test.finalizedBy(STOP_TESTABLE_TOMCAT_TASK_NAME);
+
+			Task stopTestableTomcatTask = GradleUtil.getTask(
+				project, STOP_TESTABLE_TOMCAT_TASK_NAME);
+
+			stopTestableTomcatTask.mustRunAfter(test);
 		}
 	}
 
@@ -1948,6 +2034,30 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	}
 
+	private int _updateStartedAppServerStopCounters(
+		File appServerBinDir, boolean increment) {
+
+		int originalCounter = 0;
+
+		if (_startedAppServerStopCounters.containsKey(appServerBinDir)) {
+			originalCounter = _startedAppServerStopCounters.get(
+				appServerBinDir);
+		}
+
+		int counter = originalCounter;
+
+		if (increment) {
+			counter++;
+		}
+		else {
+			counter--;
+		}
+
+		_startedAppServerStopCounters.put(appServerBinDir, counter);
+
+		return originalCounter;
+	}
+
 	private static final String _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
 		"com.liferay.adddefaultdependencies";
 
@@ -1979,10 +2089,13 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	private static final String _SKIP_MANAGED_APP_SERVER_FILE_NAME =
 		"skip.managed.app.server";
 
-	private static final String _TESTABLE_PORTAL_STARTED_FILE_NAME =
-		".testable.portal.started";
-
 	private static final Logger _logger = Logging.getLogger(
 		LiferayJavaPlugin.class);
+
+	private static final Set<File> _startedAppServerBinDirs = new HashSet<>();
+	private static final ReentrantLock _startedAppServersReentrantLock =
+		new ReentrantLock();
+	private static final Map<File, Integer> _startedAppServerStopCounters =
+		new HashMap<>();
 
 }

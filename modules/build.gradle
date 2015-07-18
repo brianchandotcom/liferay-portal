@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.FileUtil
+
 buildscript {
 	repositories {
 		mavenLocal()
@@ -21,4 +23,18 @@ gradle.beforeProject {
 	if (buildGradleFile.exists() && project.parent) {
 		project.apply from: rootProject.file("build-module.gradle")
 	}
+}
+
+gradle.taskGraph.useFilter {
+	Task task ->
+
+	if ((task.name == "test") && !FileUtil.exists(task.project, "test/unit")) {
+		return false
+	}
+
+	if ((task.name == "testIntegration") && !FileUtil.exists(task.project, "test/integration")) {
+		return false
+	}
+
+	return true
 }

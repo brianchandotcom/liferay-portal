@@ -26,8 +26,6 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import org.gradle.api.Task;
-import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.TaskAction;
@@ -39,25 +37,6 @@ import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
  * @author Andrea Di Giorgi
  */
 public class StartAppServerTask extends DefaultTask implements AppServerTask {
-
-	public StartAppServerTask() {
-		onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					StartAppServerTask startAppServerTask =
-						(StartAppServerTask)task;
-
-					if (startAppServerTask.isAppServerStarted()) {
-						return false;
-					}
-
-					return true;
-				}
-
-			});
-	}
 
 	@InputDirectory
 	public File getAppServerBinDir() {
@@ -96,10 +75,6 @@ public class StartAppServerTask extends DefaultTask implements AppServerTask {
 
 	public boolean isAppServerReachable() {
 		return _appServer.isReachable();
-	}
-
-	public boolean isAppServerStarted() {
-		return _appServer.isStarted();
 	}
 
 	@Override
@@ -152,6 +127,10 @@ public class StartAppServerTask extends DefaultTask implements AppServerTask {
 
 	@TaskAction
 	public void startAppServer() throws Exception {
+		if (isAppServerReachable()) {
+			return;
+		}
+
 		List<String> commands = new ArrayList<>();
 
 		File appServerStartExecutableFile = getAppServerStartExecutableFile();
@@ -170,6 +149,10 @@ public class StartAppServerTask extends DefaultTask implements AppServerTask {
 
 		processExecutor.start();
 
+		waitForAppServer();
+	}
+
+	public void waitForAppServer() {
 		Callable<Boolean> callable = new Callable<Boolean>() {
 
 			@Override
@@ -183,8 +166,15 @@ public class StartAppServerTask extends DefaultTask implements AppServerTask {
 
 		};
 
-		boolean success = GradleUtil.waitFor(
-			callable, getCheckInterval(), getTimeout());
+		boolean success = false;
+
+		try {
+			success = GradleUtil.waitFor(
+				callable, getCheckInterval(), getTimeout());
+		}
+		catch (Exception e) {
+			throw new GradleException("Unable to wait for App Server", e);
+		}
 
 		if (!success) {
 			throw new GradleException("Timeout while starting App Server");

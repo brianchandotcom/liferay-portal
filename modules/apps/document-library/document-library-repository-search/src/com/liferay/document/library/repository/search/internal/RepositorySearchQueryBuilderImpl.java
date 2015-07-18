@@ -28,30 +28,20 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
-@DoPrivileged
+@Component(immediate = true, service = RepositorySearchQueryBuilder.class)
 public class RepositorySearchQueryBuilderImpl
 	implements RepositorySearchQueryBuilder {
-
-	public RepositorySearchQueryBuilderImpl() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			RepositorySearchQueryTermBuilder.class);
-
-		_serviceTracker.open();
-	}
 
 	@Override
 	public BooleanQuery getFullQuery(SearchContext searchContext)
@@ -136,12 +126,9 @@ public class RepositorySearchQueryBuilderImpl
 			return;
 		}
 
-		RepositorySearchQueryTermBuilder repositorySearchQueryTermBuilder =
-			_serviceTracker.getService();
-
 		BooleanQuery titleQuery = new BooleanQueryImpl();
 
-		repositorySearchQueryTermBuilder.addTerm(
+		_repositorySearchQueryTermBuilder.addTerm(
 			titleQuery, searchContext, Field.TITLE, keywords);
 
 		if (titleQuery.hasClauses() && !contains(searchQuery, titleQuery)) {
@@ -150,7 +137,7 @@ public class RepositorySearchQueryBuilderImpl
 
 		BooleanQuery userNameQuery = new BooleanQueryImpl();
 
-		repositorySearchQueryTermBuilder.addTerm(
+		_repositorySearchQueryTermBuilder.addTerm(
 			userNameQuery, searchContext, Field.USER_NAME, keywords);
 
 		if (userNameQuery.hasClauses() &&
@@ -161,7 +148,7 @@ public class RepositorySearchQueryBuilderImpl
 
 		BooleanQuery contentQuery = new BooleanQueryImpl();
 
-		repositorySearchQueryTermBuilder.addTerm(
+		_repositorySearchQueryTermBuilder.addTerm(
 			contentQuery, searchContext, Field.CONTENT, keywords);
 
 		if (contentQuery.hasClauses() && !contains(searchQuery, contentQuery)) {
@@ -267,8 +254,13 @@ public class RepositorySearchQueryBuilderImpl
 		return false;
 	}
 
-	private final ServiceTracker
-		<RepositorySearchQueryTermBuilder, RepositorySearchQueryTermBuilder>
-			_serviceTracker;
+	@Reference(unbind = "-")
+	protected void setRepositorySearchQueryTermBuilder(
+		RepositorySearchQueryTermBuilder repositorySearchQueryTermBuilder) {
+
+		_repositorySearchQueryTermBuilder = repositorySearchQueryTermBuilder;
+	}
+
+	private RepositorySearchQueryTermBuilder _repositorySearchQueryTermBuilder;
 
 }

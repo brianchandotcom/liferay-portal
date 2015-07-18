@@ -132,7 +132,6 @@ page import="com.liferay.portlet.exportimport.configuration.ExportImportConfigur
 page import="com.liferay.portlet.exportimport.lar.ExportImportDateUtil" %><%@
 page import="com.liferay.portlet.exportimport.lar.ExportImportHelper" %><%@
 page import="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" %><%@
-page import="com.liferay.portlet.exportimport.lar.LayoutExporter" %><%@
 page import="com.liferay.portlet.exportimport.lar.ManifestSummary" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataContext" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil" %><%@

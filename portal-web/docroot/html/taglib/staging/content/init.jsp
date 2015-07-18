@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portlet.exportimport.lar.ExportImportHelperUtil" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -49,5 +51,5 @@ dateRange = ExportImportDateUtil.getDateRange(renderRequest, exportGroupId, priv
 Date startDate = dateRange.getStartDate();
 Date endDate = dateRange.getEndDate();
 
-List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
+List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
 %>

@@ -70,6 +70,21 @@ public class DummyExportImportHelperImpl implements ExportImportHelper {
 		return new GregorianCalendar();
 	}
 
+	@Override
+	public List<Portlet> getDataSiteLevelPortlets(long companyId)
+		throws Exception {
+
+		return Collections.<Portlet>emptyList();
+	}
+
+	@Override
+	public List<Portlet> getDataSiteLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception {
+
+		return Collections.<Portlet>emptyList();
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
 	 *             ExportImportDateUtil#getDateRange(PortletRequest, long,

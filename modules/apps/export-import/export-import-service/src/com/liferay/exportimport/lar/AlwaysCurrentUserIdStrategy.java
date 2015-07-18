@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.lar;
+package com.liferay.exportimport.lar;
 
 import com.liferay.portal.model.User;
+import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 
 /**
  * @author Bruno Farache

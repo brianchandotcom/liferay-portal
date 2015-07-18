@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.lar;
+package com.liferay.exportimport.lar;
 
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +34,43 @@ import java.util.Map;
  * @author Charles May
  */
 public class LayoutCache {
+
+	public Role getNameRole(long companyId, String roleName)
+		throws PortalException {
+
+		Role role = nameRolesMap.get(roleName);
+
+		if (role == null) {
+			try {
+				role = RoleLocalServiceUtil.getRole(companyId, roleName);
+
+				nameRolesMap.put(roleName, role);
+			}
+			catch (NoSuchRoleException nsre) {
+			}
+		}
+
+		return role;
+	}
+
+	public Role getUuidRole(long companyId, String uuid)
+		throws PortalException {
+
+		Role role = uuidRolesMap.get(uuid);
+
+		if (role == null) {
+			try {
+				role = RoleLocalServiceUtil.getRoleByUuidAndCompanyId(
+					uuid, companyId);
+
+				uuidRolesMap.put(uuid, role);
+			}
+			catch (NoSuchRoleException nsre) {
+			}
+		}
+
+		return role;
+	}
 
 	protected List<Role> getGroupRoles(long groupId, String resourceName)
 		throws PortalException {
@@ -81,24 +118,6 @@ public class LayoutCache {
 		return users;
 	}
 
-	protected Role getNameRole(long companyId, String roleName)
-		throws PortalException {
-
-		Role role = nameRolesMap.get(roleName);
-
-		if (role == null) {
-			try {
-				role = RoleLocalServiceUtil.getRole(companyId, roleName);
-
-				nameRolesMap.put(roleName, role);
-			}
-			catch (NoSuchRoleException nsre) {
-			}
-		}
-
-		return role;
-	}
-
 	protected List<Role> getUserRoles(long userId) {
 		List<Role> userRoles = userRolesMap.get(userId);
 
@@ -109,25 +128,6 @@ public class LayoutCache {
 		}
 
 		return userRoles;
-	}
-
-	protected Role getUuidRole(long companyId, String uuid)
-		throws PortalException {
-
-		Role role = uuidRolesMap.get(uuid);
-
-		if (role == null) {
-			try {
-				role = RoleLocalServiceUtil.getRoleByUuidAndCompanyId(
-					uuid, companyId);
-
-				uuidRolesMap.put(uuid, role);
-			}
-			catch (NoSuchRoleException nsre) {
-			}
-		}
-
-		return role;
 	}
 
 	protected Map<Long, List<Role>> groupRolesMap = new HashMap<>();

@@ -93,6 +93,13 @@ public interface ExportImportHelper {
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive);
 
+	public List<Portlet> getDataSiteLevelPortlets(long companyId)
+		throws Exception;
+
+	public List<Portlet> getDataSiteLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception;
+
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
 	 *             ExportImportDateUtil#getDateRange(PortletRequest, long,

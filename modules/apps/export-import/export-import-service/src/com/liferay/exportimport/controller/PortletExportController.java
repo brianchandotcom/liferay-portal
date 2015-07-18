@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.lar;
+package com.liferay.exportimport.controller;
 
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED;
@@ -20,6 +20,8 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import com.liferay.exportimport.lar.DeletionSystemEventExporter;
+import com.liferay.exportimport.lar.PermissionExporter;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,6 +72,20 @@ import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.exportimport.LayoutImportException;
+import com.liferay.portlet.exportimport.controller.ExportController;
+import com.liferay.portlet.exportimport.controller.ExportImportController;
+import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
+import com.liferay.portlet.exportimport.lar.ManifestSummary;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.util.xml.DocUtil;
@@ -86,6 +102,8 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Joel Kozikowski
@@ -97,10 +115,52 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Douglas Wong
  * @author Mate Thurzo
  */
-public class PortletExporter {
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.liferay.portal.model.Portlet"},
+	service = {ExportImportController.class, PortletExportController.class}
+)
+public class PortletExportController implements ExportController {
 
-	public static PortletExporter getInstance() {
-		return _instance;
+	@Override
+	public File export(ExportImportConfiguration exportImportConfiguration)
+		throws Exception {
+
+		PortletDataContext portletDataContext = null;
+
+		try {
+			ExportImportThreadLocal.setPortletExportInProcess(true);
+
+			portletDataContext = getPortletDataContext(
+				exportImportConfiguration);
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
+				PortletDataContextFactoryUtil.clonePortletDataContext(
+					portletDataContext));
+
+			File file = doExport(portletDataContext);
+
+			ExportImportThreadLocal.setPortletExportInProcess(false);
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
+				PortletDataContextFactoryUtil.clonePortletDataContext(
+					portletDataContext));
+
+			return file;
+		}
+		catch (Throwable t) {
+			ExportImportThreadLocal.setPortletExportInProcess(false);
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
+				PortletDataContextFactoryUtil.clonePortletDataContext(
+					portletDataContext),
+				t);
+
+			throw t;
+		}
 	}
 
 	public void exportPortletData(
@@ -232,62 +292,7 @@ public class PortletExporter {
 		}
 	}
 
-	public File exportPortletInfoAsFile(
-			ExportImportConfiguration exportImportConfiguration)
-		throws Exception {
-
-		PortletDataContext portletDataContext = null;
-
-		try {
-			ExportImportThreadLocal.setPortletExportInProcess(true);
-
-			portletDataContext = getPortletDataContext(
-				exportImportConfiguration);
-
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
-					portletDataContext));
-
-			File file = doExportPortletInfoAsFile(portletDataContext);
-
-			ExportImportThreadLocal.setPortletExportInProcess(false);
-
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
-					portletDataContext));
-
-			return file;
-		}
-		catch (Throwable t) {
-			ExportImportThreadLocal.setPortletExportInProcess(false);
-
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
-					portletDataContext),
-				t);
-
-			throw t;
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #exportPortletInfoAsFile(ExportImportConfiguration)}
-	 */
-	@Deprecated
-	public File exportPortletInfoAsFile(
-			long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws Exception {
-
-		return null;
-	}
-
-	protected File doExportPortletInfoAsFile(
-			PortletDataContext portletDataContext)
+	protected File doExport(PortletDataContext portletDataContext)
 		throws Exception {
 
 		boolean exportPermissions = MapUtil.getBoolean(
@@ -1199,13 +1204,8 @@ public class PortletExporter {
 		return PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 	}
 
-	private PortletExporter() {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortletExporter.class);
-
-	private static final PortletExporter _instance = new PortletExporter();
+		PortletExportController.class);
 
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();

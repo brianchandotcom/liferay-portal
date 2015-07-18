@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.lar;
+package com.liferay.exportimport.controller;
 
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED;
@@ -20,6 +20,9 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import com.liferay.exportimport.lar.DeletionSystemEventImporter;
+import com.liferay.exportimport.lar.LayoutCache;
+import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.PortletIdException;
@@ -83,6 +86,20 @@ import com.liferay.portlet.exportimport.LARFileException;
 import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.LayoutImportException;
 import com.liferay.portlet.exportimport.MissingReferenceException;
+import com.liferay.portlet.exportimport.controller.ExportImportController;
+import com.liferay.portlet.exportimport.controller.ImportController;
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
+import com.liferay.portlet.exportimport.lar.ManifestSummary;
+import com.liferay.portlet.exportimport.lar.MissingReference;
+import com.liferay.portlet.exportimport.lar.MissingReferences;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil;
+import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
@@ -98,6 +115,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Joel Kozikowski
@@ -109,10 +128,119 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Douglas Wong
  * @author Mate Thurzo
  */
-public class PortletImporter {
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.liferay.portal.model.Portlet"},
+	service = {ExportImportController.class, PortletImportController.class}
+)
+public class PortletImportController implements ImportController {
 
-	public static PortletImporter getInstance() {
-		return _instance;
+	@Override
+	public void importDataDeletions(
+			ExportImportConfiguration exportImportConfiguration, File file)
+		throws Exception {
+
+		ZipReader zipReader = null;
+
+		try {
+
+			// LAR validation
+
+			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(true);
+
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			Map<String, String[]> parameterMap =
+				(Map<String, String[]>)settingsMap.get("parameterMap");
+			String portletId = MapUtil.getString(settingsMap, "portletId");
+			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(targetPlid);
+
+			zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+			validateFile(
+				layout.getCompanyId(), targetGroupId, portletId, zipReader);
+
+			PortletDataContext portletDataContext = getPortletDataContext(
+				exportImportConfiguration, file);
+
+			boolean deletePortletData = MapUtil.getBoolean(
+				parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
+
+			// Portlet data deletion
+
+			if (deletePortletData) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Deleting portlet data");
+				}
+
+				deletePortletData(portletDataContext);
+			}
+
+			// Deletion system events
+
+			populateDeletionStagedModelTypes(portletDataContext);
+
+			_deletionSystemEventImporter.importDeletionSystemEvents(
+				portletDataContext);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(
+				false);
+
+			if (zipReader != null) {
+				zipReader.close();
+			}
+		}
+	}
+
+	@Override
+	public void importFile(
+			ExportImportConfiguration exportImportConfiguration, File file)
+		throws Exception {
+
+		PortletDataContext portletDataContext = null;
+
+		try {
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			portletDataContext = getPortletDataContext(
+				exportImportConfiguration, file);
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
+				PortletDataContextFactoryUtil.clonePortletDataContext(
+					portletDataContext));
+
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			long userId = MapUtil.getLong(settingsMap, "userId");
+
+			doImportPortletInfo(portletDataContext, userId);
+
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
+				PortletDataContextFactoryUtil.clonePortletDataContext(
+					portletDataContext),
+				userId);
+		}
+		catch (Throwable t) {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+
+			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
+				PortletDataContextFactoryUtil.clonePortletDataContext(
+					portletDataContext),
+				t);
+
+			throw t;
+		}
 	}
 
 	public String importPortletData(
@@ -188,134 +316,6 @@ public class PortletImporter {
 		return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
 	}
 
-	public void importPortletDataDeletions(
-			ExportImportConfiguration exportImportConfiguration, File file)
-		throws Exception {
-
-		ZipReader zipReader = null;
-
-		try {
-
-			// LAR validation
-
-			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(true);
-
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			Map<String, String[]> parameterMap =
-				(Map<String, String[]>)settingsMap.get("parameterMap");
-			String portletId = MapUtil.getString(settingsMap, "portletId");
-			long targetPlid = MapUtil.getLong(settingsMap, "targetPlid");
-			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(targetPlid);
-
-			zipReader = ZipReaderFactoryUtil.getZipReader(file);
-
-			validateFile(
-				layout.getCompanyId(), targetGroupId, portletId, zipReader);
-
-			PortletDataContext portletDataContext = getPortletDataContext(
-				exportImportConfiguration, file);
-
-			boolean deletePortletData = MapUtil.getBoolean(
-				parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
-
-			// Portlet data deletion
-
-			if (deletePortletData) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Deleting portlet data");
-				}
-
-				deletePortletData(portletDataContext);
-			}
-
-			// Deletion system events
-
-			populateDeletionStagedModelTypes(portletDataContext);
-
-			_deletionSystemEventImporter.importDeletionSystemEvents(
-				portletDataContext);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletDataDeletionImportInProcess(
-				false);
-
-			if (zipReader != null) {
-				zipReader.close();
-			}
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #importPortletDataDeletions(ExportImportConfiguration, File)}
-	 */
-	@Deprecated
-	public void importPortletDataDeletions(
-			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
-		throws Exception {
-	}
-
-	public void importPortletInfo(
-			ExportImportConfiguration exportImportConfiguration, File file)
-		throws Exception {
-
-		PortletDataContext portletDataContext = null;
-
-		try {
-			ExportImportThreadLocal.setPortletImportInProcess(true);
-
-			portletDataContext = getPortletDataContext(
-				exportImportConfiguration, file);
-
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
-					portletDataContext));
-
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long userId = MapUtil.getLong(settingsMap, "userId");
-
-			doImportPortletInfo(portletDataContext, userId);
-
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
-					portletDataContext),
-				userId);
-		}
-		catch (Throwable t) {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
-					portletDataContext),
-				t);
-
-			throw t;
-		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #importPortletInfo(ExportImportConfiguration, File)}
-	 */
-	@Deprecated
-	public void importPortletInfo(
-			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
-		throws Exception {
-	}
-
 	public MissingReferences validateFile(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
@@ -362,19 +362,6 @@ public class PortletImporter {
 				zipReader.close();
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #validateFile(ExportImportConfiguration, File)}
-	 */
-	@Deprecated
-	public MissingReferences validateFile(
-			long userId, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
-		throws Exception {
-
-		return new MissingReferences();
 	}
 
 	protected void deletePortletData(PortletDataContext portletDataContext)
@@ -1371,13 +1358,11 @@ public class PortletImporter {
 		}
 	}
 
-	private PortletImporter() {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortletImporter.class);
+		PortletImportController.class);
 
-	private static final PortletImporter _instance = new PortletImporter();
+	private static final PortletImportController _instance =
+		new PortletImportController();
 
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();

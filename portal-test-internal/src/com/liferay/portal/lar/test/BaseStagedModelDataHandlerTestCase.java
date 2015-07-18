@@ -47,7 +47,6 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
-import com.liferay.portlet.exportimport.lar.CurrentUserIdStrategy;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -469,7 +468,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	protected void initImport() throws Exception {
-		userIdStrategy = new CurrentUserIdStrategy(TestPropsValues.getUser());
+		userIdStrategy = new MockUserIdStrategy();
+
 		zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
 
 		String xml = zipReader.getEntryAsString("/manifest.xml");
@@ -831,6 +831,20 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	protected UserIdStrategy userIdStrategy;
 	protected ZipReader zipReader;
 	protected ZipWriter zipWriter;
+
+	protected class MockUserIdStrategy implements UserIdStrategy {
+
+		@Override
+		public long getUserId(String userUuid) {
+			try {
+				return TestPropsValues.getUserId();
+			}
+			catch (Exception e) {
+				return 0L;
+			}
+		}
+
+	}
 
 	protected class StagedModelAssets implements Serializable {
 

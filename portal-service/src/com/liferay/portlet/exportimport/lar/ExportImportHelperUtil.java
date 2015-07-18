@@ -68,6 +68,20 @@ public class ExportImportHelperUtil {
 			portletRequest, paramPrefix, timeZoneSensitive);
 	}
 
+	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
+		throws Exception {
+
+		return getExportImportHelper().getDataSiteLevelPortlets(companyId);
+	}
+
+	public static List<Portlet> getDataSiteLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception {
+
+		return getExportImportHelper().getDataSiteLevelPortlets(
+			companyId, excludeDataAlwaysStaged);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
 	 *             ExportImportDateUtil#getDateRange(PortletRequest, long,

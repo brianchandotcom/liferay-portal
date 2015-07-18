@@ -87,8 +87,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.exportimport.lar.AlwaysCurrentUserIdStrategy;
-import com.liferay.portlet.exportimport.lar.CurrentUserIdStrategy;
 import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
@@ -115,6 +113,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -176,6 +175,46 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		return ExportImportDateUtil.getCalendar(
 			portletRequest, paramPrefix, timeZoneSensitive);
+	}
+
+	@Override
+	public List<Portlet> getDataSiteLevelPortlets(long companyId)
+		throws Exception {
+
+		return getDataSiteLevelPortlets(companyId, false);
+	}
+
+	@Override
+	public List<Portlet> getDataSiteLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception {
+
+		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(companyId);
+
+		Iterator<Portlet> itr = portlets.iterator();
+
+		while (itr.hasNext()) {
+			Portlet portlet = itr.next();
+
+			if (!portlet.isActive()) {
+				itr.remove();
+
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler == null) ||
+				!portletDataHandler.isDataSiteLevel() ||
+				(excludeDataAlwaysStaged &&
+				 portletDataHandler.isDataAlwaysStaged())) {
+
+				itr.remove();
+			}
+		}
+
+		return portlets;
 	}
 
 	/**

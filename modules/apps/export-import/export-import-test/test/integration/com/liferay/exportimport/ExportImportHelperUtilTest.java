@@ -64,13 +64,13 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
-import com.liferay.portlet.exportimport.lar.CurrentUserIdStrategy;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.MissingReference;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
+import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
@@ -164,8 +164,7 @@ public class ExportImportHelperUtilTest {
 		_portletDataContextImport =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
-				new HashMap<String, String[]>(),
-				new CurrentUserIdStrategy(TestPropsValues.getUser()),
+				new HashMap<String, String[]>(), new MockUserIdStrategy(),
 				testReaderWriter);
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
@@ -878,6 +877,20 @@ public class ExportImportHelperUtilTest {
 
 	private Layout _stagingPrivateLayout;
 	private Layout _stagingPublicLayout;
+
+	private class MockUserIdStrategy implements UserIdStrategy {
+
+		@Override
+		public long getUserId(String userUuid) {
+			try {
+				return TestPropsValues.getUserId();
+			}
+			catch (Exception e) {
+				return 0;
+			}
+		}
+
+	}
 
 	private class TestReaderWriter implements ZipReader, ZipWriter {
 

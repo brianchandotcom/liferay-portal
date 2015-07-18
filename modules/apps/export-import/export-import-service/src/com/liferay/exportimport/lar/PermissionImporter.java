@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.lar;
+package com.liferay.exportimport.lar;
 
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -34,6 +34,8 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +58,88 @@ public class PermissionImporter {
 
 	public static PermissionImporter getInstance() {
 		return _instance;
+	}
+
+	public void checkRoles(
+			LayoutCache layoutCache, long companyId, long groupId, long userId,
+			Element portletElement)
+		throws Exception {
+
+		Element permissionsElement = portletElement.element("permissions");
+
+		if (permissionsElement == null) {
+			return;
+		}
+
+		List<Element> roleElements = permissionsElement.elements("role");
+
+		for (Element roleElement : roleElements) {
+			checkRole(layoutCache, companyId, groupId, userId, roleElement);
+		}
+	}
+
+	public void importPortletPermissions(
+			LayoutCache layoutCache, long companyId, long groupId, long userId,
+			Layout layout, Element portletElement, String portletId)
+		throws Exception {
+
+		Element permissionsElement = portletElement.element("permissions");
+
+		if ((layout != null) && (permissionsElement != null)) {
+			String resourceName = PortletConstants.getRootPortletId(portletId);
+
+			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				layout.getPlid(), portletId);
+
+			importPermissions(
+				layoutCache, companyId, groupId, userId, layout, resourceName,
+				resourcePrimKey, permissionsElement, true);
+		}
+	}
+
+	public void readPortletDataPermissions(
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		String xml = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/portlet-data-permissions.xml");
+
+		if (xml == null) {
+			return;
+		}
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> portletDataElements = rootElement.elements(
+			"portlet-data");
+
+		for (Element portletDataElement : portletDataElements) {
+			String resourceName = portletDataElement.attributeValue(
+				"resource-name");
+			long resourcePK = GetterUtil.getLong(
+				portletDataElement.attributeValue("resource-pk"));
+
+			List<KeyValuePair> permissions = new ArrayList<>();
+
+			List<Element> permissionsElements = portletDataElement.elements(
+				"permissions");
+
+			for (Element permissionsElement : permissionsElements) {
+				String roleName = permissionsElement.attributeValue(
+					"role-name");
+				String actions = permissionsElement.attributeValue("actions");
+
+				KeyValuePair permission = new KeyValuePair(roleName, actions);
+
+				permissions.add(permission);
+			}
+
+			portletDataContext.addPermissions(
+				resourceName, resourcePK, permissions);
+		}
 	}
 
 	protected Role checkRole(
@@ -124,24 +208,6 @@ public class PermissionImporter {
 		return role;
 	}
 
-	protected void checkRoles(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Element portletElement)
-		throws Exception {
-
-		Element permissionsElement = portletElement.element("permissions");
-
-		if (permissionsElement == null) {
-			return;
-		}
-
-		List<Element> roleElements = permissionsElement.elements("role");
-
-		for (Element roleElement : roleElements) {
-			checkRole(layoutCache, companyId, groupId, userId, roleElement);
-		}
-	}
-
 	protected List<String> getActions(Element element) {
 		List<String> actions = new ArrayList<>();
 
@@ -193,70 +259,6 @@ public class PermissionImporter {
 		ResourcePermissionLocalServiceUtil.setResourcePermissions(
 			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
 			resourcePrimKey, roleIdsToActionIds);
-	}
-
-	protected void importPortletPermissions(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Layout layout, Element portletElement, String portletId)
-		throws Exception {
-
-		Element permissionsElement = portletElement.element("permissions");
-
-		if ((layout != null) && (permissionsElement != null)) {
-			String resourceName = PortletConstants.getRootPortletId(portletId);
-
-			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-				layout.getPlid(), portletId);
-
-			importPermissions(
-				layoutCache, companyId, groupId, userId, layout, resourceName,
-				resourcePrimKey, permissionsElement, true);
-		}
-	}
-
-	protected void readPortletDataPermissions(
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/portlet-data-permissions.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> portletDataElements = rootElement.elements(
-			"portlet-data");
-
-		for (Element portletDataElement : portletDataElements) {
-			String resourceName = portletDataElement.attributeValue(
-				"resource-name");
-			long resourcePK = GetterUtil.getLong(
-				portletDataElement.attributeValue("resource-pk"));
-
-			List<KeyValuePair> permissions = new ArrayList<>();
-
-			List<Element> permissionsElements = portletDataElement.elements(
-				"permissions");
-
-			for (Element permissionsElement : permissionsElements) {
-				String roleName = permissionsElement.attributeValue(
-					"role-name");
-				String actions = permissionsElement.attributeValue("actions");
-
-				KeyValuePair permission = new KeyValuePair(roleName, actions);
-
-				permissions.add(permission);
-			}
-
-			portletDataContext.addPermissions(
-				resourceName, resourcePK, permissions);
-		}
 	}
 
 	private PermissionImporter() {

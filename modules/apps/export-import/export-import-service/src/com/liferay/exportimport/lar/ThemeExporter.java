@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.lar;
+package com.liferay.exportimport.lar;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +23,8 @@ import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.model.adapter.StagedTheme;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 
 /**
  * @author Mate Thurzo

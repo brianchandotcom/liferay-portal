@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.lar;
+package com.liferay.exportimport.lar;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,6 +29,8 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import java.util.List;
 import java.util.Map;
@@ -52,46 +54,7 @@ public class PermissionExporter {
 		return _instance;
 	}
 
-	protected void exportPermissions(
-			PortletDataContext portletDataContext, String resourceName,
-			String resourcePrimKey, Element permissionsElement)
-		throws Exception {
-
-		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
-			resourceName);
-
-		Map<Long, Set<String>> roleToActionIds =
-			ResourcePermissionLocalServiceUtil.
-				getAvailableResourcePermissionActionIds(
-					portletDataContext.getCompanyId(), resourceName,
-					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
-					actionIds);
-
-		for (Map.Entry<Long, Set<String>> entry : roleToActionIds.entrySet()) {
-			long roleId = entry.getKey();
-
-			Role role = RoleLocalServiceUtil.fetchRole(roleId);
-
-			Element roleElement = permissionsElement.addElement("role");
-
-			roleElement.addAttribute("uuid", role.getUuid());
-			roleElement.addAttribute("name", role.getName());
-			roleElement.addAttribute("title", role.getTitle());
-			roleElement.addAttribute("description", role.getDescription());
-			roleElement.addAttribute("type", String.valueOf(role.getType()));
-			roleElement.addAttribute("subtype", role.getSubtype());
-
-			Set<String> availableActionIds = entry.getValue();
-
-			for (String actionId : availableActionIds) {
-				Element actionKeyElement = roleElement.addElement("action-key");
-
-				actionKeyElement.addText(actionId);
-			}
-		}
-	}
-
-	protected void exportPortletDataPermissions(
+	public void exportPortletDataPermissions(
 			PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -137,7 +100,7 @@ public class PermissionExporter {
 			document.formattedString());
 	}
 
-	protected void exportPortletPermissions(
+	public void exportPortletPermissions(
 			PortletDataContext portletDataContext, String portletId,
 			Layout layout, Element portletElement)
 		throws Exception {
@@ -151,6 +114,45 @@ public class PermissionExporter {
 		exportPermissions(
 			portletDataContext, resourceName, resourcePrimKey,
 			permissionsElement);
+	}
+
+	protected void exportPermissions(
+			PortletDataContext portletDataContext, String resourceName,
+			String resourcePrimKey, Element permissionsElement)
+		throws Exception {
+
+		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
+			resourceName);
+
+		Map<Long, Set<String>> roleToActionIds =
+			ResourcePermissionLocalServiceUtil.
+				getAvailableResourcePermissionActionIds(
+					portletDataContext.getCompanyId(), resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
+					actionIds);
+
+		for (Map.Entry<Long, Set<String>> entry : roleToActionIds.entrySet()) {
+			long roleId = entry.getKey();
+
+			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+
+			Element roleElement = permissionsElement.addElement("role");
+
+			roleElement.addAttribute("uuid", role.getUuid());
+			roleElement.addAttribute("name", role.getName());
+			roleElement.addAttribute("title", role.getTitle());
+			roleElement.addAttribute("description", role.getDescription());
+			roleElement.addAttribute("type", String.valueOf(role.getType()));
+			roleElement.addAttribute("subtype", role.getSubtype());
+
+			Set<String> availableActionIds = entry.getValue();
+
+			for (String actionId : availableActionIds) {
+				Element actionKeyElement = roleElement.addElement("action-key");
+
+				actionKeyElement.addText(actionId);
+			}
+		}
 	}
 
 	private PermissionExporter() {

@@ -38,7 +38,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.AdvancedPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerBag;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -221,21 +220,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		AdvancedPermissionChecker advancedPermissionChecker = null;
-
-		if ((permissionChecker != null) &&
-			(permissionChecker instanceof AdvancedPermissionChecker)) {
-
-			advancedPermissionChecker =
-				(AdvancedPermissionChecker)permissionChecker;
-		}
-
-		if (advancedPermissionChecker == null) {
+		if (permissionChecker.getGuestUserBag() == null) {
 			return booleanFilter;
 		}
 
 		PermissionCheckerBag permissionCheckerBag = getPermissionCheckerBag(
-			advancedPermissionChecker, userId);
+			permissionChecker, userId);
 
 		if (permissionCheckerBag == null) {
 			return booleanFilter;
@@ -247,20 +237,20 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<>();
 
 		populate(
-			companyId, groupIds, userId, advancedPermissionChecker,
+			companyId, groupIds, userId, permissionChecker,
 			permissionCheckerBag, groups, roles, userGroupRoles,
 			groupIdsToRoles);
 
 		return doGetPermissionFilter_6(
-			companyId, groupIds, userId, advancedPermissionChecker, className,
+			companyId, groupIds, userId, permissionChecker, className,
 			booleanFilter, groups, roles, userGroupRoles, groupIdsToRoles);
 	}
 
 	protected BooleanFilter doGetPermissionFilter_6(
 			long companyId, long[] groupIds, long userId,
-			AdvancedPermissionChecker advancedPermissionChecker,
-			String className, BooleanFilter booleanFilter, Set<Group> groups,
-			Set<Role> roles, Set<UserGroupRole> userGroupRoles,
+			PermissionChecker permissionChecker, String className,
+			BooleanFilter booleanFilter, Set<Group> groups, Set<Role> roles,
+			Set<UserGroupRole> userGroupRoles,
 			Map<Long, List<Role>> groupIdsToRoles)
 		throws Exception {
 
@@ -301,7 +291,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 
 			for (Group group : groups) {
-				if (advancedPermissionChecker.isGroupAdmin(
+				if (permissionChecker.isGroupAdmin(
 						group.getGroupId()) ||
 					ResourcePermissionLocalServiceUtil.hasResourcePermission(
 						companyId, className, ResourceConstants.SCOPE_GROUP,
@@ -404,20 +394,20 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	protected PermissionCheckerBag getPermissionCheckerBag(
-			AdvancedPermissionChecker advancedPermissionChecker, long userId)
+			PermissionChecker permissionChecker, long userId)
 		throws Exception {
 
-		if (!advancedPermissionChecker.isSignedIn()) {
-			return advancedPermissionChecker.getGuestUserBag();
+		if (!permissionChecker.isSignedIn()) {
+			return permissionChecker.getGuestUserBag();
 		}
 		else {
-			return advancedPermissionChecker.getUserBag(userId, 0);
+			return permissionChecker.getUserBag(userId, 0);
 		}
 	}
 
 	protected void populate(
 			long companyId, long[] groupIds, long userId,
-			AdvancedPermissionChecker advancedPermissionChecker,
+			PermissionChecker permissionChecker,
 			PermissionCheckerBag permissionCheckerBag, Set<Group> groups,
 			Set<Role> roles, Set<UserGroupRole> userGroupRoles,
 			Map<Long, List<Role>> groupIdsToRoles)
@@ -450,13 +440,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 		}
 
-		if (advancedPermissionChecker.isSignedIn()) {
+		if (permissionChecker.isSignedIn()) {
 			roles.add(
 				RoleLocalServiceUtil.getRole(companyId, RoleConstants.GUEST));
 		}
 
 		for (Group group : groups) {
-			PermissionCheckerBag userBag = advancedPermissionChecker.getUserBag(
+			PermissionCheckerBag userBag = permissionChecker.getUserBag(
 				userId, group.getGroupId());
 
 			List<Role> groupRoles = ListUtil.fromCollection(userBag.getRoles());

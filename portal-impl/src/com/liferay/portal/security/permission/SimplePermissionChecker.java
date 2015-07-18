@@ -25,6 +25,18 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 	}
 
 	@Override
+	public PermissionCheckerBag getGuestUserBag() throws Exception {
+		return null;
+	}
+
+	@Override
+	public PermissionCheckerBag getUserBag(long userId, long groupId)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
 	public boolean hasOwnerPermission(
 		long companyId, String name, String primKey, long ownerId,
 		String actionId) {

@@ -466,11 +466,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				cssServletContext = _servletContext;
 			}
 
-			content = DynamicCSSUtil.parseSass(
-				cssServletContext, request, resourcePath, content);
+			content = DynamicCSSUtil.replaceToken(
+				cssServletContext, request, content);
 		}
 		catch (Exception e) {
-			_log.error("Unable to parse SASS on CSS " + resourcePath, e);
+			_log.error("Unable to replace tokens in CSS " + resourcePath, e);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(content);

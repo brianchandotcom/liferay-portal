@@ -178,7 +178,7 @@ public class DDMStructureManagerUtilTest {
 		List<DDMStructure> structures =
 			DDMStructureManagerUtil.getClassStructures(
 				_group.getCompanyId(), _classNameId,
-				DDMStructureManager.COMPARATOR_STRUCTURE_KEY);
+				DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
 
 		int initialSize = structures.size();
 
@@ -186,7 +186,7 @@ public class DDMStructureManagerUtilTest {
 
 		structures = DDMStructureManagerUtil.getClassStructures(
 			_group.getCompanyId(), _classNameId,
-			DDMStructureManager.COMPARATOR_STRUCTURE_KEY);
+			DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
 
 		Assert.assertEquals(initialSize + 1, structures.size());
 	}

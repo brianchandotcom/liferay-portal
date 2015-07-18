@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public interface DDMStructureManager {
 
-	public static final int COMPARATOR_STRUCTURE_KEY = 1;
+	public static final int STRUCTURE_COMPARATOR_STRUCTURE_KEY = 0;
 
 	public static final long STRUCTURE_DEFAULT_PARENT_STRUCTURE_ID = 0;
 
@@ -92,7 +92,7 @@ public interface DDMStructureManager {
 		long companyId, long classNameId);
 
 	public List<DDMStructure> getClassStructures(
-		long companyId, long classNameId, int comparator);
+		long companyId, long classNameId, int structureComparator);
 
 	public List<DDMStructure> getClassStructures(
 		long companyId, long classNameId, int start, int end);

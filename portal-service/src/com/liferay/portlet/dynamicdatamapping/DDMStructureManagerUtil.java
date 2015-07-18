@@ -109,11 +109,10 @@ public class DDMStructureManagerUtil {
 	}
 
 	public static List<DDMStructure> getClassStructures(
-		long companyId, long classNameId, int comparator) {
+		long companyId, long classNameId, int structureComparator) {
 
-		return
-			_ddmStructureManager.getClassStructures(
-				companyId, classNameId, comparator);
+		return _ddmStructureManager.getClassStructures(
+			companyId, classNameId, structureComparator);
 	}
 
 	public static List<DDMStructure> getClassStructures(

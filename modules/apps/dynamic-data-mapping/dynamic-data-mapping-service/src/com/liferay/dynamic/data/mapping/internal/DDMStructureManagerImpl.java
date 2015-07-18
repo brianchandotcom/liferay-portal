@@ -29,6 +29,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureIdComparator;
 import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureStructureKeyComparator;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -179,25 +180,15 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 	@Override
 	public List<DDMStructure> getClassStructures(
-		long companyId, long classNameId, int comparator) {
-
-		OrderByComparator ddmStructureComparator = null;
-
-		switch (comparator) {
-			case DDMStructureManager.COMPARATOR_STRUCTURE_KEY:
-				ddmStructureComparator = new StructureStructureKeyComparator();
-				break;
-			default:
-				ddmStructureComparator = new StructureStructureKeyComparator();
-				break;
-		}
+		long companyId, long classNameId, int structureComparator) {
 
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
 		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructure
 				ddmStructure :
 					_ddmStructureLocalService.getClassStructures(
-						companyId, classNameId, ddmStructureComparator)) {
+						companyId, classNameId,
+						getStructureOrderByComparator(structureComparator))) {
 
 			ddmStructures.add(new DDMStructureImpl(ddmStructure));
 		}
@@ -334,6 +325,18 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		ddmStructure.setStructureKey(structureKey);
 
 		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
+	}
+
+	protected OrderByComparator getStructureOrderByComparator(
+		int structureComparator) {
+
+		if (structureComparator ==
+				DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY) {
+
+			return new StructureStructureKeyComparator();
+		}
+
+		return new StructureIdComparator();
 	}
 
 	@Reference

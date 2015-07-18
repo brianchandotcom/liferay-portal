@@ -69,9 +69,9 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 
 import java.io.Serializable;
 
@@ -780,12 +780,13 @@ public class AssetUtil {
 	protected static String getDDMFormFieldType(String sortField)
 		throws PortalException {
 
-		String[] sortFields = sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR);
+		String[] sortFields = sortField.split(
+			DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
 
 		long ddmStructureId = GetterUtil.getLong(sortFields[1]);
 		String fieldName = sortFields[2];
 
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
 			ddmStructureId);
 
 		return ddmStructure.getFieldType(fieldName);
@@ -794,7 +795,9 @@ public class AssetUtil {
 	protected static String getOrderByCol(
 		String sortField, int sortType, Locale locale) {
 
-		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+		if (sortField.startsWith(
+				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
+
 			sortField = sortField.concat(StringPool.UNDERLINE).concat(
 				LocaleUtil.toLanguageId(locale));
 
@@ -825,7 +828,9 @@ public class AssetUtil {
 
 		String ddmFormFieldType = sortField;
 
-		if (ddmFormFieldType.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+		if (ddmFormFieldType.startsWith(
+				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
+
 			ddmFormFieldType = getDDMFormFieldType(ddmFormFieldType);
 		}
 
@@ -834,7 +839,9 @@ public class AssetUtil {
 		return SortFactoryUtil.getSort(
 			AssetEntry.class, sortType,
 			getOrderByCol(sortField, sortType, locale),
-			!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX), orderByType);
+			!sortField.startsWith(
+				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX),
+			orderByType);
 	}
 
 	protected static Sort[] getSorts(

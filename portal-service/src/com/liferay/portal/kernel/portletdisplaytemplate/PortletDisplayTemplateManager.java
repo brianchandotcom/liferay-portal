@@ -46,8 +46,6 @@ public interface PortletDisplayTemplateManager {
 
 	public long getDDMTemplateGroupId(long groupId);
 
-	public Class<?> getDDMTemplateStagedModelClass();
-
 	public String getDisplayStyle(String ddmTemplateKey);
 
 	public List<TemplateHandler> getPortletDisplayTemplateHandlers();

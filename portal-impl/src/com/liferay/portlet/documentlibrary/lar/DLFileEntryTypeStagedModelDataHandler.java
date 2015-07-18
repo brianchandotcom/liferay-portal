@@ -28,13 +28,12 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
 import java.util.HashMap;
@@ -209,8 +208,9 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Element referenceElement =
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, fileEntryType, ddmStructure,
+				DDMStructureManagerUtil.exportDDMStructureStagedModel(
+					portletDataContext, fileEntryType,
+					ddmStructure.getStructureId(),
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			referenceElement.addAttribute(
@@ -240,14 +240,15 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		List<Element> ddmStructureReferenceElements =
 			portletDataContext.getReferenceElements(
-				fileEntryType, DDMStructure.class);
+				fileEntryType,
+				DDMStructureManagerUtil.getDDMStructureModelClass());
 
 		long[] ddmStructureIdsArray =
 			new long[ddmStructureReferenceElements.size()];
 
 		Map<Long, Long> ddmStructureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
+				DDMStructureManagerUtil.getDDMStructureModelClass());
 
 		for (int i = 0; i < ddmStructureReferenceElements.size(); i++) {
 			Element ddmStructureReferenceElement =
@@ -337,11 +338,9 @@ public class DLFileEntryTypeStagedModelDataHandler
 				continue;
 			}
 
-			importedDDMStructure.setStructureKey(
+			DDMStructureManagerUtil.updateStructureKey(
+				importedDDMStructure.getStructureId(),
 				importedDLFileEntryDDMStructureKey);
-
-			DDMStructureLocalServiceUtil.updateDDMStructure(
-				importedDDMStructure);
 		}
 	}
 

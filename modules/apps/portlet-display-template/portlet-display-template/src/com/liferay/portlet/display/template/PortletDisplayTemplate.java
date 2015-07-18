@@ -44,8 +44,6 @@ public interface PortletDisplayTemplate {
 
 	public String getDDMTemplateKey(String displayStyle);
 
-	public Class<?> getDDMTemplateStagedModelClass();
-
 	@Deprecated
 	public String getDDMTemplateUuid(String displayStyle);
 

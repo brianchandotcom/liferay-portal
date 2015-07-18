@@ -77,12 +77,12 @@ public class DDMUtil {
 	}
 
 	public static DDMFormValues getDDMFormValues(
-			DDMStructure ddmStructure, String fieldNamespace,
+			long ddmStructureId, String fieldNamespace,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getDDM().getDDMFormValues(
-			ddmStructure, fieldNamespace, serviceContext);
+			ddmStructureId, fieldNamespace, serviceContext);
 	}
 
 	public static DDMPermissionHandler getDDMPermissionHandler(

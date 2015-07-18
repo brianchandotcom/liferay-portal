@@ -175,11 +175,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		return displayStyle.substring(DISPLAY_STYLE_PREFIX.length());
 	}
 
-	@Override
-	public Class<?> getDDMTemplateStagedModelClass() {
-		return DDMTemplate.class;
-	}
-
 	@Deprecated
 	@Override
 	public String getDDMTemplateUuid(String displayStyle) {

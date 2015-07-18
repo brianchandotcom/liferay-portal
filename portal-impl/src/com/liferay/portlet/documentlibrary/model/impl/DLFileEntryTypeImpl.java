@@ -23,10 +23,10 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureLink;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureLinkManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,9 +116,8 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
 		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(
-					ddmStructureLink.getStructureId());
+			DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
+				ddmStructureLink.getStructureId());
 
 			if (ddmStructure != null) {
 				ddmStructures.add(ddmStructure);

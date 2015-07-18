@@ -15,6 +15,9 @@
 package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -34,6 +37,9 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.model.Value;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +76,21 @@ public class DDMStructureManagerUtilTest {
 	}
 
 	@Test
+	public void testAddAttributes() throws Exception {
+		DDMStructure structure = addStructure();
+
+		Document document = new DocumentImpl();
+
+		DDMStructureManagerUtil.addAttributes(
+			structure.getStructureId(), document, createDDMFormValues());
+
+		String fieldProperty = structure.getFieldProperty(
+			"fieldName", "indexType");
+
+		Assert.assertNotNull(fieldProperty);
+	}
+
+	@Test
 	public void testAddStructure() throws Exception {
 		DDMStructure structure = addStructure();
 
@@ -89,6 +110,23 @@ public class DDMStructureManagerUtilTest {
 			structure.getStructureKey());
 
 		Assert.assertNull(structure);
+	}
+
+	@Test
+	public void testExtractAttributes() throws Exception {
+		DDMStructure structure = addStructure();
+
+		Document document = new DocumentImpl();
+
+		DDMFormValues ddmFormValues = createDDMFormValues();
+
+		DDMStructureManagerUtil.addAttributes(
+			structure.getStructureId(), document, ddmFormValues);
+
+		String attributes = DDMStructureManagerUtil.extractAttributes(
+			structure.getStructureId(), ddmFormValues, LocaleUtil.US);
+
+		Assert.assertNotNull(attributes);
 	}
 
 	@Test
@@ -133,6 +171,52 @@ public class DDMStructureManagerUtilTest {
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(initialSize + 1, structures.size());
+	}
+
+	@Test
+	public void testGetClassStructuresUsingComparator() throws Exception {
+		List<DDMStructure> structures =
+			DDMStructureManagerUtil.getClassStructures(
+				_group.getCompanyId(), _classNameId,
+				DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
+
+		int initialSize = structures.size();
+
+		addStructure();
+
+		structures = DDMStructureManagerUtil.getClassStructures(
+			_group.getCompanyId(), _classNameId,
+			DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
+
+		Assert.assertEquals(initialSize + 1, structures.size());
+	}
+
+	@Test
+	public void testGetClassStructuresWithCompanyAndClassNameId()
+		throws Exception {
+
+		List<DDMStructure> structures =
+			DDMStructureManagerUtil.getClassStructures(
+				_group.getCompanyId(), _classNameId);
+
+		int initialSize = structures.size();
+
+		addStructure();
+
+		structures = DDMStructureManagerUtil.getClassStructures(
+			_group.getCompanyId(), _classNameId);
+
+		Assert.assertEquals(initialSize + 1, structures.size());
+	}
+
+	@Test
+	public void testGetDDMFormFieldsJSONArray() throws Exception {
+		DDMStructure structure = addStructure();
+
+		JSONArray jsonArray = DDMStructureManagerUtil.getDDMFormFieldsJSONArray(
+			structure.getStructureId(), structure.getDefinition());
+
+		Assert.assertEquals(1, jsonArray.length());
 	}
 
 	@Test
@@ -189,6 +273,37 @@ public class DDMStructureManagerUtilTest {
 			descriptionMap, actualStructure.getDescriptionMap());
 	}
 
+	@Test
+	public void testUpdateStructureDefinition() throws Exception {
+		DDMStructure expectedStructure = addStructure();
+
+		String definition = expectedStructure.getDefinition();
+
+		definition = definition.replaceAll(
+			"(?s)<dynamic-element[^>]*>.*?</dynamic-element>", "");
+
+		DDMStructureManagerUtil.updateStructureDefinition(
+			expectedStructure.getStructureId(), definition);
+
+		DDMStructure structure = DDMStructureManagerUtil.getStructure(
+			expectedStructure.getStructureId());
+
+		Assert.assertEquals(definition, structure.getDefinition());
+	}
+
+	@Test
+	public void testUpdateStructureKey() throws Exception {
+		DDMStructure expectedStructure = addStructure();
+
+		DDMStructureManagerUtil.updateStructureKey(
+			expectedStructure.getStructureId(), "NEW_KEY");
+
+		DDMStructure structure = DDMStructureManagerUtil.getStructure(
+			expectedStructure.getStructureId());
+
+		Assert.assertEquals("NEW_KEY", structure.getStructureKey());
+	}
+
 	protected DDMStructure addStructure() throws Exception {
 		Map<Locale, String> nameMap = new HashMap<>();
 
@@ -202,7 +317,7 @@ public class DDMStructureManagerUtilTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), null,
 			_classNameId, StringUtil.randomString(), nameMap, descriptionMap,
 			createDDMForm(), createDDMFormLayout(),
-			DDMStructureManager.STRUCTURE_DEFAULT_STORAGE_TYPE,
+			StorageEngineManager.DEFAULT_STORAGE_TYPE,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, _serviceContext);
 	}
 
@@ -296,6 +411,24 @@ public class DDMStructureManagerUtilTest {
 		ddmFormLayoutRow.addDDMFormLayoutColumn(createDDMFormLayoutColumn());
 
 		return ddmFormLayoutRow;
+	}
+
+	protected DDMFormValues createDDMFormValues() {
+		DDMFormValues ddmFormValues = new DDMFormValues(createDDMForm());
+
+		ddmFormValues.addAvailableLocale(LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		ddmFormFieldValue.setName("fieldName");
+
+		Value value = new LocalizedValue(LocaleUtil.US);
+		value.addString(LocaleUtil.US, "name");
+
+		ddmFormFieldValue.setValue(value);
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		return ddmFormValues;
 	}
 
 	private long _classNameId;

@@ -43,8 +43,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.util.HashMap;
@@ -291,7 +291,7 @@ public class FileEntryStagedModelDataHandlerTest
 
 		Assert.assertNull(
 			"Company DDM structure dependency should not be imported",
-			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+			DDMStructureManagerUtil.fetchStructureByUuidAndGroupId(
 				ddmStructure.getUuid(), group.getGroupId()));
 
 		List<StagedModel> dlFileEntryTypesDependentStagedModels =
@@ -323,7 +323,7 @@ public class FileEntryStagedModelDataHandlerTest
 		DDMStructure ddmStructure =
 			(DDMStructure)ddmStructureDependentStagedModels.get(0);
 
-		DDMStructureLocalServiceUtil.getDDMStructureByUuidAndGroupId(
+		DDMStructureManagerUtil.getStructureByUuidAndGroupId(
 			ddmStructure.getUuid(), group.getGroupId());
 
 		List<StagedModel> dlFileEntryTypesDependentStagedModels =

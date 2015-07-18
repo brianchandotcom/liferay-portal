@@ -72,14 +72,12 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
@@ -226,9 +224,10 @@ public class DLFileEntryIndexer
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
 			String[] ddmStructureFieldNameParts = StringUtil.split(
-				ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
+				ddmStructureFieldName,
+				DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
 
-			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
 				GetterUtil.getLong(ddmStructureFieldNameParts[1]));
 
 			String fieldName = StringUtil.replaceLast(
@@ -238,8 +237,10 @@ public class DLFileEntryIndexer
 				StringPool.BLANK);
 
 			try {
-				ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
-					ddmStructureFieldValue, structure.getFieldType(fieldName));
+				ddmStructureFieldValue =
+					DDMStructureManagerUtil.getIndexedFieldValue(
+						ddmStructureFieldValue,
+						ddmStructure.getFieldType(fieldName));
 			}
 			catch (StructureFieldException sfe) {
 				if (_log.isDebugEnabled()) {
@@ -357,12 +358,9 @@ public class DLFileEntryIndexer
 			}
 
 			if (ddmFormValues != null) {
-				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.getStructure(
-						dlFileEntryMetadata.getDDMStructureId());
-
-				DDMIndexerUtil.addAttributes(
-					document, ddmStructure, ddmFormValues);
+				DDMStructureManagerUtil.addAttributes(
+					dlFileEntryMetadata.getDDMStructureId(), document,
+					ddmFormValues);
 			}
 		}
 	}
@@ -589,13 +587,10 @@ public class DLFileEntryIndexer
 			}
 
 			if (ddmFormValues != null) {
-				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.getStructure(
-						dlFileEntryMetadata.getDDMStructureId());
-
 				sb.append(
-					DDMIndexerUtil.extractAttributes(
-						ddmStructure, ddmFormValues, locale));
+					DDMStructureManagerUtil.extractAttributes(
+						dlFileEntryMetadata.getDDMStructureId(), ddmFormValues,
+						locale));
 			}
 		}
 

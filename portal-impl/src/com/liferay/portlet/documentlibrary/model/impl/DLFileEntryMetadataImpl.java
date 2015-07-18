@@ -17,18 +17,11 @@ package com.liferay.portlet.documentlibrary.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 /**
  * @author Alexander Chow
  */
 public class DLFileEntryMetadataImpl extends DLFileEntryMetadataBaseImpl {
-
-	@Override
-	public DDMStructure getDDMStructure() throws PortalException {
-		return DDMStructureLocalServiceUtil.getStructure(getDDMStructureId());
-	}
 
 	@Override
 	public DLFileVersion getFileVersion() throws PortalException {

@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
+import com.liferay.portlet.dynamicdatamapping.util.DDM;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,6 +61,16 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	@Override
+	public DDMFormValues getDDMFormValues(
+			long ddmStructureId, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _ddm.getDDMFormValues(
+			ddmStructureId, fieldNamespace, serviceContext);
+	}
+
+	@Override
 	public void update(
 			long classPK, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
@@ -68,10 +80,16 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	@Reference
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
 	}
 
+	private DDM _ddm;
 	private StorageEngine _storageEngine;
 
 }

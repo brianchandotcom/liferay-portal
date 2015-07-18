@@ -21,8 +21,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -55,12 +56,15 @@ public class LegacyGoogleDocsMetadataHelper {
 	}
 
 	public LegacyGoogleDocsMetadataHelper(
+		DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntry dlFileEntry, StorageEngine storageEngine) {
 
 		try {
-			_storageEngine = storageEngine;
+			_ddmStructureLocalService = ddmStructureLocalService;
 
 			_dlFileVersion = dlFileEntry.getFileVersion();
+
+			_storageEngine = storageEngine;
 
 			_ddmStructure = getGoogleDocsDDMStructure(
 				dlFileEntry.getDLFileEntryType());
@@ -125,7 +129,9 @@ public class LegacyGoogleDocsMetadataHelper {
 				_dlFileEntryMetadata.getDDMStorageId());
 
 			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
-				_ddmStructure, ddmFormValues);
+				_ddmStructureLocalService.getDDMStructure(
+					_ddmStructure.getStructureId()),
+				ddmFormValues);
 
 			for (Field field : fields) {
 				_fields.put(field.getName(), field);
@@ -140,6 +146,7 @@ public class LegacyGoogleDocsMetadataHelper {
 	}
 
 	private final DDMStructure _ddmStructure;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 	private DLFileEntryMetadata _dlFileEntryMetadata;
 	private DLFileVersion _dlFileVersion;
 	private Map<String, Field> _fields;

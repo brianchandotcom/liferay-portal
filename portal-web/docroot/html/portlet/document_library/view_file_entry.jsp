@@ -376,7 +376,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 								<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
 
 									<liferay-ddm:html
-										classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+										classNameId="<%= PortalUtil.getClassNameId(DDMStructureManagerUtil.getDDMStructureModelClass()) %>"
 										classPK="<%= ddmStructure.getPrimaryKey() %>"
 										ddmFormValues="<%= ddmFormValues %>"
 										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
@@ -407,7 +407,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 						<%
 						try {
-							List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(company.getCompanyId(), PortalUtil.getClassNameId(RawMetadataProcessor.class), new StructureStructureKeyComparator(true));
+							List<DDMStructure> ddmStructures = DDMStructureManagerUtil.getClassStructures(company.getCompanyId(), PortalUtil.getClassNameId(RawMetadataProcessor.class), DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
 
 							for (DDMStructure ddmStructure : ddmStructures) {
 								DDMFormValues ddmFormValues = null;
@@ -428,7 +428,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id="documentLibraryAssetMetadataPanel" persistState="<%= true %>" title="<%= name %>">
 
 										<liferay-ddm:html
-											classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+											classNameId="<%= PortalUtil.getClassNameId(DDMStructureManagerUtil.getDDMStructureModelClass()) %>"
 											classPK="<%= ddmStructure.getPrimaryKey() %>"
 											ddmFormValues="<%= ddmFormValues %>"
 											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"

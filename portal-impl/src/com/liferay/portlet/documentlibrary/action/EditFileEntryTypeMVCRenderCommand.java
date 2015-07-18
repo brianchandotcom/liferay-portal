@@ -27,8 +27,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -69,13 +69,13 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, dlFileEntryType);
 
 				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.fetchStructure(
+					DDMStructureManagerUtil.fetchStructure(
 						dlFileEntryType.getGroupId(),
 						PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 						DLUtil.getDDMStructureKey(dlFileEntryType));
 
 				if (ddmStructure == null) {
-					ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+					ddmStructure = DDMStructureManagerUtil.fetchStructure(
 						dlFileEntryType.getGroupId(),
 						PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 						DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));

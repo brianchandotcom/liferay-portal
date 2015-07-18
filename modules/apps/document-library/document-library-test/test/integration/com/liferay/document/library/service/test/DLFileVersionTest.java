@@ -55,7 +55,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -415,7 +416,9 @@ public class DLFileVersionTest {
 
 			DDMFormValues ddmFormValues =
 				FieldsToDDMFormValuesConverterUtil.convert(
-					ddmStructure, fields);
+					DDMStructureLocalServiceUtil.getDDMStructure(
+						ddmStructure.getStructureId()),
+					fields);
 
 			serviceContext.setAttribute(
 				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
@@ -529,8 +532,12 @@ public class DLFileVersionTest {
 					DDMFormValues.class.getName() +
 					ddmStructure.getStructureId());
 
+			com.liferay.portlet.dynamicdatamapping.model.DDMStructure
+				structure = DDMStructureLocalServiceUtil.getDDMStructure(
+					ddmStructure.getStructureId());
+
 			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
-				ddmStructure, ddmFormValues);
+				structure, ddmFormValues);
 
 			for (Field field : fields) {
 				String type = field.getType();
@@ -541,7 +548,7 @@ public class DLFileVersionTest {
 			}
 
 			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
-				ddmStructure, fields);
+				structure, fields);
 
 			_serviceContext.setAttribute(
 				DDMFormValues.class.getName() + ddmStructure.getStructureId(),

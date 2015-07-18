@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -46,6 +47,15 @@ public class StorageEngineManagerUtil {
 		throws StorageException {
 
 		return _storageEngineManager.getDDMFormValues(classPK);
+	}
+
+	public static DDMFormValues getDDMFormValues(
+			long ddmStructureId, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _storageEngineManager.getDDMFormValues(
+			ddmStructureId, fieldNamespace, serviceContext);
 	}
 
 	public static void update(

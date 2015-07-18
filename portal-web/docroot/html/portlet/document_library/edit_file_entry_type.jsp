@@ -29,7 +29,7 @@ long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId"
 
 String script = BeanParamUtil.getString(ddmStructure, request, "definition");
 
-JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, script);
+JSONArray fieldsJSONArray = DDMStructureManagerUtil.getDDMFormFieldsJSONArray(ddmStructureId, script);
 
 List<DDMStructure> ddmStructures = null;
 
@@ -110,7 +110,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				/>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.portlet.dynamicdatamapping.model.DDMStructure"
+					className="com.liferay.portlet.dynamicdatamapping.DDMStructure"
 					escapedModel="<%= true %>"
 					keyProperty="structureId"
 					modelVar="curDDMStructure"

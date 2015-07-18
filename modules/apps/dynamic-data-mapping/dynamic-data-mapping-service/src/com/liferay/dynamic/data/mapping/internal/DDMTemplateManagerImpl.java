@@ -74,6 +74,11 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 	}
 
 	@Override
+	public Class<?> getDDMTemplateModelClass() {
+		return com.liferay.portlet.dynamicdatamapping.model.DDMTemplate.class;
+	}
+
+	@Override
 	public DDMTemplate getTemplate(long templateId) throws PortalException {
 		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate =
 			_ddmTemplateLocalService.getTemplate(templateId);

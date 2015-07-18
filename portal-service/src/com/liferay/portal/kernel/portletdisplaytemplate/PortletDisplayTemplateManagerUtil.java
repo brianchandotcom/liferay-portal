@@ -53,10 +53,6 @@ public class PortletDisplayTemplateManagerUtil {
 		return _portletDisplayTemplateManager.getDDMTemplateGroupId(groupId);
 	}
 
-	public static Class<?> getDDMTemplateStagedModelClass() {
-		return _portletDisplayTemplateManager.getDDMTemplateStagedModelClass();
-	}
-
 	public static String getDisplayStyle(String ddmTemplateKey) {
 		return _portletDisplayTemplateManager.getDisplayStyle(ddmTemplateKey);
 	}

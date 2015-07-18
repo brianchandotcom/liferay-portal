@@ -118,9 +118,15 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
 
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+		List<com.liferay.portlet.dynamicdatamapping.DDMStructure>
+			ddmStructures = dlFileEntryType.getDDMStructures();
 
-		DDMStructure ddmStructure = ddmStructures.get(0);
+		com.liferay.portlet.dynamicdatamapping.DDMStructure structure =
+			ddmStructures.get(0);
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(
+				structure.getStructureId());
 
 		ddmStructure.setCompanyId(12345);
 
@@ -151,11 +157,14 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
 
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+		List<com.liferay.portlet.dynamicdatamapping.DDMStructure>
+			ddmStructures = dlFileEntryType.getDDMStructures();
 
-		DDMStructure ddmStructure = ddmStructures.get(0);
+		com.liferay.portlet.dynamicdatamapping.DDMStructure ddmStructure =
+			ddmStructures.get(0);
 
-		DDMStructureLocalServiceUtil.deleteDDMStructure(ddmStructure);
+		DDMStructureLocalServiceUtil.deleteDDMStructure(
+			ddmStructure.getStructureId());
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
@@ -364,9 +373,11 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 				RandomTestUtil.randomString(), StringPool.BLANK, new long[0],
 				serviceContext);
 
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+		List<com.liferay.portlet.dynamicdatamapping.DDMStructure>
+			ddmStructures = dlFileEntryType.getDDMStructures();
 
-		DDMStructure ddmStructure = ddmStructures.get(0);
+		com.liferay.portlet.dynamicdatamapping.DDMStructure ddmStructure =
+			ddmStructures.get(0);
 
 		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
 			ddmStructure.getStructureKey(), user.getLocale());

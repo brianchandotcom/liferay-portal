@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.NoSuchClassTypeFieldException;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +56,8 @@ public class DDMStructureClassType implements ClassType {
 
 	@Override
 	public List<ClassTypeField> getClassTypeFields() throws PortalException {
-		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.getDDMStructure(getClassTypeId());
-
-		List<ClassTypeField> classTypeFields = getClassTypeFields(ddmStructure);
+		List<ClassTypeField> classTypeFields = getClassTypeFields(
+			getClassTypeId());
 
 		return classTypeFields;
 	}
@@ -86,10 +84,13 @@ public class DDMStructureClassType implements ClassType {
 		return _classTypeName;
 	}
 
-	protected List<ClassTypeField> getClassTypeFields(
-		DDMStructure ddmStructure) {
+	protected List<ClassTypeField> getClassTypeFields(long ddmStructureId)
+		throws PortalException {
 
 		List<ClassTypeField> classTypeFields = new ArrayList<>();
+
+		DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
+			ddmStructureId);
 
 		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
 

@@ -23,7 +23,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -65,12 +66,16 @@ public class GoogleDocsMetadataHelper {
 	}
 
 	public GoogleDocsMetadataHelper(
+		DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntry dlFileEntry,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		StorageEngine storageEngine) {
 
 		try {
+			_ddmStructureLocalService = ddmStructureLocalService;
+
 			_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
+
 			_storageEngine = storageEngine;
 
 			_dlFileVersion = dlFileEntry.getFileVersion();
@@ -84,10 +89,12 @@ public class GoogleDocsMetadataHelper {
 	}
 
 	public GoogleDocsMetadataHelper(
+		DDMStructureLocalService ddmStructureLocalService,
 		DLFileVersion dlFileVersion,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		StorageEngine storageEngine) {
 
+		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileVersion = dlFileVersion;
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 		_storageEngine = storageEngine;
@@ -245,7 +252,9 @@ public class GoogleDocsMetadataHelper {
 				_dlFileEntryMetadata.getDDMStorageId());
 
 			_fields = DDMFormValuesToFieldsConverterUtil.convert(
-				_ddmStructure, ddmFormValues);
+				_ddmStructureLocalService.getDDMStructure(
+					_ddmStructure.getStructureId()),
+				ddmFormValues);
 
 			for (Field field : _fields) {
 				_fieldsMap.put(field.getName(), field);
@@ -263,7 +272,9 @@ public class GoogleDocsMetadataHelper {
 		throws PortalException {
 
 		return FieldsToDDMFormValuesConverterUtil.convert(
-			_ddmStructure, fields);
+			_ddmStructureLocalService.getDDMStructure(
+				_ddmStructure.getStructureId()),
+			fields);
 	}
 
 	private Field _getField(String fieldName) {
@@ -279,6 +290,7 @@ public class GoogleDocsMetadataHelper {
 	}
 
 	private final DDMStructure _ddmStructure;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 	private DLFileEntryMetadata _dlFileEntryMetadata;
 	private final DLFileEntryMetadataLocalService
 		_dlFileEntryMetadataLocalService;

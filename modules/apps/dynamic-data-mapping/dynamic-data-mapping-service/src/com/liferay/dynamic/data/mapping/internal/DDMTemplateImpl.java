@@ -124,6 +124,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
+	public long getPrimaryKey() {
+		return _ddmTemplate.getPrimaryKey();
+	}
+
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _ddmTemplate.getPrimaryKeyObj();
 	}

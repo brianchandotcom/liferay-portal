@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
@@ -21,6 +22,8 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
  * @author Rafael Praxedes
  */
 public interface StorageEngineManager {
+
+	public static final String DEFAULT_STORAGE_TYPE = "json";
 
 	public long create(
 			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
@@ -33,6 +36,11 @@ public interface StorageEngineManager {
 		throws StorageException;
 
 	public DDMFormValues getDDMFormValues(long classPK) throws StorageException;
+
+	public DDMFormValues getDDMFormValues(
+			long ddmStructureId, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	public void update(
 			long classPK, DDMFormValues ddmFormValues,

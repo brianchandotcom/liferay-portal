@@ -19,7 +19,7 @@ import com.liferay.portlet.asset.model.ClassTypeField;
 import com.liferay.portlet.asset.model.DDMStructureClassType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,8 @@ public class DLFileEntryClassType extends DDMStructureClassType {
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			classTypeFields.addAll(super.getClassTypeFields(ddmStructure));
+			classTypeFields.addAll(
+				getClassTypeFields(ddmStructure.getStructureId()));
 		}
 
 		return classTypeFields;

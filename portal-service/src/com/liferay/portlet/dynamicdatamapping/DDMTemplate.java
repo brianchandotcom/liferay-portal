@@ -47,6 +47,8 @@ public interface DDMTemplate extends StagedModel {
 
 	public String getName(Locale locale);
 
+	public long getPrimaryKey();
+
 	public long getResourceClassNameId();
 
 	public String getScript();

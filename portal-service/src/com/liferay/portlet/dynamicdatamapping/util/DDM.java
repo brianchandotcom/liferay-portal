@@ -54,7 +54,7 @@ public interface DDM {
 		DDMStructureVersion ddmStructureVersion, String script);
 
 	public DDMFormValues getDDMFormValues(
-			DDMStructure ddmStructure, String fieldNamespace,
+			long ddmStructureId, String fieldNamespace,
 			ServiceContext serviceContext)
 		throws PortalException;
 

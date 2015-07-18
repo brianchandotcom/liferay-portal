@@ -24,7 +24,7 @@ import com.liferay.portlet.documentlibrary.display.context.BaseDLEditFileEntryDi
 import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.portlet.documentlibrary.display.context.DLFilePicker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 
 import java.util.UUID;
 

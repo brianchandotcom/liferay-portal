@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Leonardo Barros
@@ -35,9 +36,10 @@ import java.util.Map;
 public class DDMStructureImpl implements DDMStructure {
 
 	public DDMStructureImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmTemplate) {
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure
+			ddmStructure) {
 
-		_ddmStructure = ddmTemplate;
+		_ddmStructure = ddmStructure;
 	}
 
 	@Override
@@ -47,6 +49,13 @@ public class DDMStructureImpl implements DDMStructure {
 				_ddmStructure.clone());
 
 		return structureImpl;
+	}
+
+	@Override
+	public List<String> getChildrenFieldNames(String fieldName)
+		throws PortalException {
+
+		return _ddmStructure.getChildrenFieldNames(fieldName);
 	}
 
 	@Override
@@ -70,6 +79,13 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public DDMFormField getDDMFormField(String fieldName)
+		throws PortalException {
+
+		return _ddmStructure.getDDMFormField(fieldName);
+	}
+
+	@Override
 	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields) {
 		return _ddmStructure.getDDMFormFields(includeTransientFields);
 	}
@@ -81,7 +97,7 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public String getDefinition() {
-		return _ddmStructure.getDescription();
+		return _ddmStructure.getDefinition();
 	}
 
 	@Override
@@ -105,8 +121,30 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String getFieldDataType(String fieldName) throws PortalException {
+		return _ddmStructure.getFieldDataType(fieldName);
+	}
+
+	@Override
+	public Set<String> getFieldNames() {
+		return _ddmStructure.getFieldNames();
+	}
+
+	@Override
+	public String getFieldProperty(String fieldName, String property)
+		throws PortalException {
+
+		return _ddmStructure.getFieldProperty(fieldName, property);
+	}
+
+	@Override
 	public String getFieldType(String fieldName) throws PortalException {
 		return _ddmStructure.getFieldType(fieldName);
+	}
+
+	@Override
+	public DDMForm getFullHierarchyDDMForm() {
+		return _ddmStructure.getFullHierarchyDDMForm();
 	}
 
 	@Override
@@ -140,13 +178,33 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public String getName(Locale locale, boolean useDefault) {
+		return _ddmStructure.getName(locale, useDefault);
+	}
+
+	@Override
 	public Map<Locale, String> getNameMap() {
 		return _ddmStructure.getNameMap();
 	}
 
 	@Override
+	public long getParentStructureId() {
+		return _ddmStructure.getParentStructureId();
+	}
+
+	@Override
+	public long getPrimaryKey() {
+		return _ddmStructure.getPrimaryKey();
+	}
+
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _ddmStructure.getPrimaryKeyObj();
+	}
+
+	@Override
+	public List<String> getRootFieldNames() {
+		return _ddmStructure.getRootFieldNames();
 	}
 
 	@Override
@@ -165,8 +223,28 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public int getType() {
+		return _ddmStructure.getType();
+	}
+
+	@Override
+	public long getUserId() {
+		return _ddmStructure.getUserId();
+	}
+
+	@Override
 	public String getUuid() {
 		return _ddmStructure.getUuid();
+	}
+
+	@Override
+	public boolean hasField(String fieldName) {
+		return _ddmStructure.hasField(fieldName);
+	}
+
+	@Override
+	public boolean isFieldTransient(String fieldName) throws PortalException {
+		return _ddmStructure.isFieldTransient(fieldName);
 	}
 
 	@Override
@@ -177,6 +255,11 @@ public class DDMStructureImpl implements DDMStructure {
 	@Override
 	public void setCreateDate(Date createDate) {
 		_ddmStructure.setCreateDate(createDate);
+	}
+
+	@Override
+	public void setDefinition(String definition) {
+		_ddmStructure.setDefinition(definition);
 	}
 
 	@Override

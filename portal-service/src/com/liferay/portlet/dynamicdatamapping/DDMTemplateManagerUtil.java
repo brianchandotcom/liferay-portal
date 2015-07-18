@@ -53,6 +53,10 @@ public class DDMTemplateManagerUtil {
 			groupId, classNameId, templateKey);
 	}
 
+	public static Class<?> getDDMTemplateModelClass() {
+		return _ddmTemplateManager.getDDMTemplateModelClass();
+	}
+
 	public static DDMTemplate getTemplate(long templateId)
 		throws PortalException {
 

@@ -27,7 +27,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 
@@ -71,7 +72,7 @@ public class LegacyGoogleDocsMigration {
 	}
 
 	public void migrate() throws PortalException {
-		DDMStructure ddmStructure =
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
 			_googleDocsDLFileEntryTypeHelper.addGoogleDocsDDMStructure();
 
 		_dlFileEntryType.setFileEntryTypeKey(
@@ -89,7 +90,9 @@ public class LegacyGoogleDocsMigration {
 		deleteLegacyGoogleDocsDDMStructureFields();
 	}
 
-	protected void deleteLegacyGoogleDocsDDMStructureFields() {
+	protected void deleteLegacyGoogleDocsDDMStructureFields()
+		throws PortalException {
+
 		DDMStructure legacyDDMStructure =
 			LegacyGoogleDocsMetadataHelper.getGoogleDocsDDMStructure(
 				_dlFileEntryType);
@@ -99,9 +102,8 @@ public class LegacyGoogleDocsMigration {
 		definition = definition.replaceAll(
 			"(?s)<dynamic-element[^>]*>.*?</dynamic-element>", "");
 
-		legacyDDMStructure.setDefinition(definition);
-
-		_ddmStructureLocalService.updateDDMStructure(legacyDDMStructure);
+		DDMStructureManagerUtil.updateStructureDefinition(
+			legacyDDMStructure.getStructureId(), definition);
 	}
 
 	protected void upgradeDLFileEntries() throws PortalException {
@@ -117,13 +119,14 @@ public class LegacyGoogleDocsMigration {
 
 					GoogleDocsMetadataHelper googleDocsMetadataHelper =
 						new GoogleDocsMetadataHelper(
-							dlFileEntry, _dlFileEntryMetadataLocalService,
-							_storageEngine);
+							_ddmStructureLocalService, dlFileEntry,
+							_dlFileEntryMetadataLocalService, _storageEngine);
 
 					LegacyGoogleDocsMetadataHelper
 						legacyGoogleDocsMetadataHelper =
 							new LegacyGoogleDocsMetadataHelper(
-								dlFileEntry, _storageEngine);
+								_ddmStructureLocalService, dlFileEntry,
+								_storageEngine);
 
 					googleDocsMetadataHelper.setFieldValue(
 						GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL,

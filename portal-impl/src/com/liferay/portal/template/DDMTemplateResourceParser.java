@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
  * @author Tina Tian
@@ -86,7 +86,8 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 					companyGroup.getGroupId(), classNameId, ddmTemplateKey);
 
 				if (ddmTemplate == null) {
-					classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+					classNameId = PortalUtil.getClassNameId(
+						DDMStructureManagerUtil.getDDMStructureModelClass());
 
 					ddmTemplate = DDMTemplateManagerUtil.fetchTemplate(
 						groupId, classNameId, ddmTemplateKey);

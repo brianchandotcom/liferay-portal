@@ -78,11 +78,6 @@ public class PortletDisplayTemplateManagerImpl
 	}
 
 	@Override
-	public Class<?> getDDMTemplateStagedModelClass() {
-		return _portletDisplayTemplate.getDDMTemplateStagedModelClass();
-	}
-
-	@Override
 	public String getDisplayStyle(String ddmTemplateKey) {
 		return _portletDisplayTemplate.getDisplayStyle(ddmTemplateKey);
 	}

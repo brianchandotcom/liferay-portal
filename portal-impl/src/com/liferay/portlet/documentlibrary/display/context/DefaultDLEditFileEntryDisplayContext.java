@@ -30,7 +30,7 @@ import com.liferay.portlet.documentlibrary.display.context.logic.FileVersionDisp
 import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 
 import java.util.UUID;
 

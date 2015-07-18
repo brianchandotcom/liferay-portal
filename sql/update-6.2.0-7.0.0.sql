@@ -14,6 +14,9 @@ alter table BlogsEntry add coverImageFileEntryId LONG;
 alter table BlogsEntry add coverImageURL STRING null;
 alter table BlogsEntry add smallImageFileEntryId LONG;
 
+alter table BookmarksEntry add lastPublishDate DATE null;
+alter table BookmarksFolder add lastPublishDate DATE null;
+
 alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;

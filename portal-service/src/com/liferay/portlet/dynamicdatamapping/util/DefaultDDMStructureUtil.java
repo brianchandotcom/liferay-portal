@@ -58,7 +58,7 @@ public class DefaultDDMStructureUtil {
 
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
-		List<Element> structureElements = getDDMStructures(
+		List<Element> structureElements = getDDMStructureElements(
 			classLoader, fileName, locale);
 
 		for (Element structureElement : structureElements) {
@@ -154,12 +154,27 @@ public class DefaultDDMStructureUtil {
 		}
 	}
 
+	public static List<Element> getDDMStructureElements(
+			ClassLoader classLoader, String fileName, Locale locale)
+		throws Exception {
+
+		String xml = StringUtil.read(classLoader, fileName);
+
+		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
+
+		Document document = UnsecureSAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.elements("structure");
+	}
+
 	public static String getDynamicDDMStructureDefinition(
 			ClassLoader classLoader, String fileName,
 			String dynamicDDMStructureName, Locale locale)
 		throws Exception {
 
-		List<Element> structureElements = getDDMStructures(
+		List<Element> structureElements = getDDMStructureElements(
 			classLoader, fileName, locale);
 
 		for (Element structureElement : structureElements) {
@@ -183,21 +198,6 @@ public class DefaultDDMStructureUtil {
 		}
 
 		return null;
-	}
-
-	protected static List<Element> getDDMStructures(
-			ClassLoader classLoader, String fileName, Locale locale)
-		throws Exception {
-
-		String xml = StringUtil.read(classLoader, fileName);
-
-		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
-
-		Document document = UnsecureSAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		return rootElement.elements("structure");
 	}
 
 }

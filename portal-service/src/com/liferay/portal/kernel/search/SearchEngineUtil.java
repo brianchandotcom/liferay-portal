@@ -81,7 +81,7 @@ public class SearchEngineUtil {
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
-		_searchPermissionChecker.addPermissionFields(companyId, document);
+		getSearchPermissionChecker().addPermissionFields(companyId, document);
 
 		SearchContext searchContext = new SearchContext();
 
@@ -123,7 +123,8 @@ public class SearchEngineUtil {
 				_log.debug("Add document " + document.toString());
 			}
 
-			_searchPermissionChecker.addPermissionFields(companyId, document);
+			getSearchPermissionChecker().addPermissionFields(
+				companyId, document);
 		}
 
 		SearchContext searchContext = new SearchContext();
@@ -405,7 +406,7 @@ public class SearchEngineUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			SearchEngineUtil.class, "searchPermissionChecker");
 
-		return _searchPermissionChecker;
+		return _instance._searchPermissionCheckerServiceTracker.getService();
 	}
 
 	public static String getSearchReaderDestinationName(String searchEngineId) {
@@ -587,7 +588,7 @@ public class SearchEngineUtil {
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
-		_searchPermissionChecker.addPermissionFields(companyId, document);
+		getSearchPermissionChecker().addPermissionFields(companyId, document);
 
 		SearchContext searchContext = new SearchContext();
 
@@ -616,7 +617,8 @@ public class SearchEngineUtil {
 				_log.debug("Document " + document.toString());
 			}
 
-			_searchPermissionChecker.addPermissionFields(companyId, document);
+			getSearchPermissionChecker().addPermissionFields(
+				companyId, document);
 		}
 
 		SearchContext searchContext = new SearchContext();
@@ -886,7 +888,7 @@ public class SearchEngineUtil {
 
 		IndexWriter indexWriter = searchEngine.getIndexWriter();
 
-		_searchPermissionChecker.addPermissionFields(companyId, document);
+		getSearchPermissionChecker().addPermissionFields(companyId, document);
 
 		SearchContext searchContext = new SearchContext();
 
@@ -928,7 +930,8 @@ public class SearchEngineUtil {
 				_log.debug("Document " + document.toString());
 			}
 
-			_searchPermissionChecker.addPermissionFields(companyId, document);
+			getSearchPermissionChecker().addPermissionFields(
+				companyId, document);
 		}
 
 		SearchContext searchContext = new SearchContext();
@@ -948,7 +951,7 @@ public class SearchEngineUtil {
 		if (PermissionThreadLocal.isFlushResourcePermissionEnabled(
 				name, primKey)) {
 
-			_searchPermissionChecker.updatePermissionFields(name, primKey);
+			getSearchPermissionChecker().updatePermissionFields(name, primKey);
 		}
 	}
 
@@ -965,15 +968,6 @@ public class SearchEngineUtil {
 		_queueCapacity = queueCapacity;
 	}
 
-	public void setSearchPermissionChecker(
-		SearchPermissionChecker searchPermissionChecker) {
-
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "searchPermissionChecker");
-
-		_searchPermissionChecker = searchPermissionChecker;
-	}
-
 	private SearchEngineUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -982,10 +976,17 @@ public class SearchEngineUtil {
 			new SearchEngineConfiguratorServiceTrackerCustomizer());
 
 		_serviceTracker.open();
+
+		_searchPermissionCheckerServiceTracker = registry.trackServices(
+			SearchPermissionChecker.class);
+
+		_searchPermissionCheckerServiceTracker.open();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineUtil.class);
+
+	private static final SearchEngineUtil _instance = new SearchEngineUtil();
 
 	private static final Map<Long, Long> _companyIds =
 		new ConcurrentHashMap<>();
@@ -998,8 +999,10 @@ public class SearchEngineUtil {
 		_queuingSearchEngines = new HashMap<>();
 	private static final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
-	private static SearchPermissionChecker _searchPermissionChecker;
 
+	private final ServiceTracker
+		<SearchPermissionChecker, SearchPermissionChecker>
+			_searchPermissionCheckerServiceTracker;
 	private final ServiceTracker
 		<SearchEngineConfigurator, SearchEngineConfigurator> _serviceTracker;
 

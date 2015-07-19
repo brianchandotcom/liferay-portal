@@ -79,6 +79,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -99,11 +100,14 @@ public class JournalConverterUtilTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() {
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
+	}
 
+	@Before
+	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		_ddmStructureTestHelper = new DDMStructureTestHelper(_group);
@@ -991,14 +995,15 @@ public class JournalConverterUtilTest {
 
 	private static final String _PUBLIC_USER_LAYOUT = "publicUserLayout";
 
+	private static Locale _enLocale;
+	private static Locale _ptLocale;
+
 	private DDMStructure _ddmStructure;
 	private DDMStructureTestHelper _ddmStructureTestHelper;
-	private Locale _enLocale;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private JournalConverter _journalConverter;
-	private Locale _ptLocale;
 
 }

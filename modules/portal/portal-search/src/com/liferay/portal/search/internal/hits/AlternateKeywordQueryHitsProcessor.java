@@ -27,9 +27,15 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"sort.order=1"},
+	service = HitsProcessor.class
+)
 public class AlternateKeywordQueryHitsProcessor implements HitsProcessor {
 
 	@Override

@@ -24,10 +24,16 @@ import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Josef Sustacek
  */
+@Component(
+	immediate = true, property = {"sort.order=2"},
+	service = HitsProcessor.class
+)
 public class QueryIndexingHitsProcessor implements HitsProcessor {
 
 	@Override

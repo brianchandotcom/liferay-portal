@@ -22,10 +22,16 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Josef Sustacek
  */
+@Component(
+	immediate = true, property = {"sort.order=3"},
+	service = HitsProcessor.class
+)
 public class QuerySuggestionHitsProcessor implements HitsProcessor {
 
 	@Override

@@ -14,38 +14,48 @@
 
 package com.liferay.portal.kernel.search.hits;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Michael C. Han
  */
 public class HitsProcessorRegistryUtil {
 
-	public static HitsProcessor getDefaultHitsProcessor() {
-		return _defaultHitsProcessor;
-	}
+	public static HitsProcessorRegistry getHitsProcessorRegistry() {
+		HitsProcessorRegistry hitsProcessorRegistry =
+			_instance._serviceTracker.getService();
 
-	public static HitsProcessor getHitsProcessor(String className) {
-		HitsProcessor hitsProcessor = _hitsProcessors.get(className);
-
-		if (hitsProcessor != null) {
-			return hitsProcessor;
+		if (hitsProcessorRegistry == null) {
+			throw new IllegalStateException(
+				"HitsProcessorRegistry not properly initialized");
 		}
 
-		return _defaultHitsProcessor;
+		return hitsProcessorRegistry;
 	}
 
-	public void setDefaultHitsProcessor(HitsProcessor hitsProcessor) {
-		_defaultHitsProcessor = hitsProcessor;
+	public static boolean process(SearchContext searchContext, Hits hits)
+		throws SearchException {
+
+		return getHitsProcessorRegistry().process(searchContext, hits);
 	}
 
-	public void setHitsProcessors(Map<String, HitsProcessor> hitsProcessors) {
-		_hitsProcessors.putAll(hitsProcessors);
+	private HitsProcessorRegistryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(HitsProcessorRegistry.class);
+
+		_serviceTracker.open();
 	}
 
-	private static HitsProcessor _defaultHitsProcessor;
-	private static final Map<String, HitsProcessor> _hitsProcessors =
-		new HashMap<>();
+	private static final HitsProcessorRegistryUtil _instance =
+		new HitsProcessorRegistryUtil();
+
+	private final ServiceTracker<HitsProcessorRegistry, HitsProcessorRegistry>
+		_serviceTracker;
 
 }

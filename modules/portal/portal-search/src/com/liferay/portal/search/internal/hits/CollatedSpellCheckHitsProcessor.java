@@ -12,20 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.hits;
+package com.liferay.portal.search.internal.hits;
 
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.search.hits.HitsProcessor;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Michael C. Han
  * @author Josef Sustacek
  */
-public class QuerySuggestionHitsProcessor implements HitsProcessor {
+public class CollatedSpellCheckHitsProcessor implements HitsProcessor {
 
 	@Override
 	public boolean process(SearchContext searchContext, Hits hits)
@@ -33,23 +34,25 @@ public class QuerySuggestionHitsProcessor implements HitsProcessor {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		if (!queryConfig.isQuerySuggestionEnabled()) {
+		if (!queryConfig.isCollatedSpellCheckResultEnabled()) {
 			return true;
 		}
 
-		if (hits.getLength() >=
-				queryConfig.getQuerySuggestionScoresThreshold()) {
+		int collatedSpellCheckResultScoresThreshold =
+			queryConfig.getCollatedSpellCheckResultScoresThreshold();
 
+		if (hits.getLength() >= collatedSpellCheckResultScoresThreshold) {
 			return true;
 		}
 
-		String[] querySuggestions = SearchEngineUtil.suggestKeywordQueries(
-			searchContext, queryConfig.getQuerySuggestionMax());
+		String collatedKeywords = SearchEngineUtil.spellCheckKeywords(
+			searchContext);
 
-		querySuggestions = ArrayUtil.remove(
-			querySuggestions, searchContext.getKeywords());
+		if (collatedKeywords.equals(searchContext.getKeywords())) {
+			collatedKeywords = StringPool.BLANK;
+		}
 
-		hits.setQuerySuggestions(querySuggestions);
+		hits.setCollatedSpellCheckResult(collatedKeywords);
 
 		return true;
 	}

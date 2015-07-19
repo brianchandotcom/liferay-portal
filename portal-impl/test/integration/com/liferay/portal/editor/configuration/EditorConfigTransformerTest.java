@@ -161,7 +161,8 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigTransformedWhenEditorConfigTransformerIsRegistered()
+	public void
+			testEditorConfigTransformedWhenEditorConfigTransformerIsRegistered()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -211,7 +212,8 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigTransformedWithMultipleEditorOptionsContributors()
+	public void 
+			testEditorConfigTransformedWithMultipleEditorOptionsContributors()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -295,7 +297,8 @@ public class EditorConfigTransformerTest {
 		public void populateConfigJSONObject(
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put("textMode", "html");
 			jsonObject.put("toolbar", "HTMLToolbar");
@@ -311,7 +314,8 @@ public class EditorConfigTransformerTest {
 		public void transform(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 			JSONObject configJSONObject) {
 
 			String uploadURL = editorOptions.getUploadURL();
@@ -337,7 +341,8 @@ public class EditorConfigTransformerTest {
 		public void populateEditorOptions(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			editorOptions.setTextMode(true);
 		}
@@ -351,7 +356,8 @@ public class EditorConfigTransformerTest {
 		public void populateEditorOptions(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			editorOptions.setUploadURL("http://upload.com");
 		}

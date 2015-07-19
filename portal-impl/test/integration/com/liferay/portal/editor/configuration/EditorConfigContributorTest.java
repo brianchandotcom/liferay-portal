@@ -412,7 +412,8 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
+	public void 
+			testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -532,7 +533,8 @@ public class EditorConfigContributorTest {
 		public void populateConfigJSONObject(
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put(
 				"className", EmoticonsEditorConfigContributor.class.getName());
@@ -558,7 +560,8 @@ public class EditorConfigContributorTest {
 		public void populateConfigJSONObject(
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put(
 				"className", ImageEditorConfigContributor.class.getName());
@@ -580,7 +583,8 @@ public class EditorConfigContributorTest {
 		public void populateConfigJSONObject(
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put(
 				"className", TablesEditorConfigContributor.class.getName());
@@ -606,7 +610,8 @@ public class EditorConfigContributorTest {
 		public void populateConfigJSONObject(
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put(
 				"className", TextFormatEditorConfigContributor.class.getName());
@@ -635,7 +640,8 @@ public class EditorConfigContributorTest {
 		public void populateConfigJSONObject(
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay, RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+			ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			JSONObject toolbarsJSONObject = jsonObject.getJSONObject(
 				"toolbars");

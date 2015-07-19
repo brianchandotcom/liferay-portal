@@ -52,24 +52,6 @@
 	<bean id="com.liferay.portal.kernel.search.facet.RangeFacetFactory" class="com.liferay.portal.kernel.search.facet.RangeFacetFactory" />
 	<bean id="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" class="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" />
 	<bean id="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" class="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" />
-	<bean id="com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration" class="com.liferay.portal.search.query.QueryPreProcessConfigurationImpl">
-		<property name="fieldNames">
-			<util:set>
-				<value>assetCategoryTitles?(_.+)?</value>
-				<value>assetTagNames</value>
-				<value>emailAddress</value>
-				<value>firstName</value>
-				<value>lastName</value>
-				<value>license</value>
-				<value>middleName</value>
-				<value>path</value>
-				<value>screenName</value>
-				<value>tag</value>
-				<value>treePath</value>
-				<value>userName</value>
-			</util:set>
-		</property>
-	</bean>
 
 	<!-- Generic search engine -->
 

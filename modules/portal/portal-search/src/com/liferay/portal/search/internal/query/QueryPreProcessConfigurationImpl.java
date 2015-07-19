@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.query;
+package com.liferay.portal.search.internal.query;
 
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 

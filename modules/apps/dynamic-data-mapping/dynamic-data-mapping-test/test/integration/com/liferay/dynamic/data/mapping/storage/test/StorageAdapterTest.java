@@ -78,7 +78,6 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		_CLASS_NAME_ID = PortalUtil.getClassNameId(StringUtil.randomString());
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
-
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 	}
 

@@ -102,7 +102,6 @@ public class JournalConverterUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
-
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 
 		_group = GroupTestUtil.addGroup();

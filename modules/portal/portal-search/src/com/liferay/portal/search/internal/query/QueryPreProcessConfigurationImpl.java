@@ -14,17 +14,25 @@
 
 package com.liferay.portal.search.internal.query;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
+@Component(
+	configurationPid = "com.liferay.portal.search.configuration.QueryPreProcessConfiguration",
+	immediate = true, service = QueryPreProcessConfiguration.class
+)
 public class QueryPreProcessConfigurationImpl
 	implements QueryPreProcessConfiguration {
 
@@ -45,9 +53,19 @@ public class QueryPreProcessConfigurationImpl
 		return false;
 	}
 
-	public void setFieldNames(Set<String> fieldNames) {
-		for (String fieldName : fieldNames) {
-			_fieldNamePatterns.put(fieldName, Pattern.compile(fieldName));
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		com.liferay.portal.search.configuration.QueryPreProcessConfiguration
+			queryPreProcessConfiguration = Configurable.createConfigurable(
+				com.liferay.portal.search.configuration.
+					QueryPreProcessConfiguration.class, properties);
+
+		String[] fieldNamePatterns =
+			queryPreProcessConfiguration.fieldNamePatterns();
+
+		for (String fieldNamePattern : fieldNamePatterns) {
+			_fieldNamePatterns.put(
+				fieldNamePattern, Pattern.compile(fieldNamePattern));
 		}
 	}
 

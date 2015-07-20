@@ -201,9 +201,28 @@ public interface Staging {
 		throws Exception;
 
 	public JSONArray getErrorMessagesJSONArray(
+		Locale locale, Map<String, MissingReference> missingReferences);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getErrorMessagesJSONArray(Locale, Map<String,
+	 *             MissingReference>)}
+	 */
+	@Deprecated
+	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
 		Map<String, Serializable> contextMap);
 
+	public JSONObject getExceptionMessagesJSONObject(
+		Locale locale, Exception e,
+		ExportImportConfiguration exportImportConfiguration);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExceptionMessagesJSONObject(Locale, Exception,
+	 *             ExportImportConfiguration)}
+	 */
+	@Deprecated
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap);
 
@@ -256,6 +275,15 @@ public interface Staging {
 	public Map<String, String[]> getStagingParameters(
 		PortletRequest PortletRequest);
 
+	public JSONArray getWarningMessagesJSONArray(
+		Locale locale, Map<String, MissingReference> missingReferences);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getWarningMessagesJSONArray(Locale, Map<String,
+	 *             MissingReference>)}
+	 */
+	@Deprecated
 	public JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
 		Map<String, Serializable> contextMap);

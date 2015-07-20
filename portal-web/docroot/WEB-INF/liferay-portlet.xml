@@ -113,8 +113,6 @@
 		<user-notification-definitions>com/liferay/portlet/documentlibrary/document-library-user-notification-definitions.xml</user-notification-definitions>
 		<user-notification-handler-class>com.liferay.portlet.documentlibrary.notifications.DocumentLibraryUserNotificationHandler</user-notification-handler-class>
 		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
-		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFileEntryCustomAttributesDisplay</custom-attributes-display>
-		<custom-attributes-display>com.liferay.portlet.documentlibrary.DLFolderCustomAttributesDisplay</custom-attributes-display>
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>

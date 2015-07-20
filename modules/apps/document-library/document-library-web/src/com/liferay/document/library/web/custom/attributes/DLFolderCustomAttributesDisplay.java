@@ -12,26 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary;
+package com.liferay.document.library.web.custom.attributes;
 
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-public class DLFileEntryCustomAttributesDisplay
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	service = CustomAttributesDisplay.class
+)
+public class DLFolderCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
 	@Override
 	public String getClassName() {
-		return DLFileEntry.class.getName();
+		return DLFolder.class.getName();
 	}
 
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/clip.png";
+		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
 
 }

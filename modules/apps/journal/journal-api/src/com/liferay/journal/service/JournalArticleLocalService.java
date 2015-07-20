@@ -2306,9 +2306,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.search.Sort sort);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #search(long, long, java.util.List,
-	long, String, String, String, String, int, String, String,
-	java.util.LinkedHashMap, boolean, int, int, Sort)}
+	* @deprecated As of 7.0.0, replaced by {@link #search(long, long,
+	java.util.List, long, String, String, String, String, int,
+	String, String, java.util.LinkedHashMap, boolean, int, int,
+	Sort)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -2327,10 +2328,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* parameters without using the indexer, including keyword parameters for
 	* article ID, title, description, and content, a DDM structure key
 	* parameter, a DDM template key parameter, and an AND operator switch. It
-	* is preferable to use the indexed version {@link #search(long, long, java.util.List,
-	* long, String, String, String, String, int, String, String, java.util.LinkedHashMap,
-	* boolean, int, int, Sort)} instead of this method wherever possible for
-	* performance reasons.
+	* is preferable to use the indexed version {@link #search(long, long,
+	* java.util.List, long, String, String, String, String, int, String,
+	* String, java.util.LinkedHashMap, boolean, int, int, Sort)} instead of
+	* this method wherever possible for performance reasons.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -2528,9 +2529,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* parameters without using the indexer, including a keywords parameter for
 	* matching with the article's ID, title, description, and content, a DDM
 	* structure key parameter, and a DDM template key parameter. It is
-	* preferable to use the indexed version {@link #search(long, long, java.util.List,
-	* long, String, String, String, java.util.LinkedHashMap, int, int, Sort)} instead of
-	* this method wherever possible for performance reasons.
+	* preferable to use the indexed version {@link #search(long, long,
+	* java.util.List, long, String, String, String, java.util.LinkedHashMap,
+	* int, int, Sort)} instead of this method wherever possible for performance
+	* reasons.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -3275,8 +3277,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
-	#updateArticleTranslation(long, String, double, java.util.Locale,
-	String, String, String, Map, ServiceContext)}
+	#updateArticleTranslation(long, String, double,
+	java.util.Locale, String, String, String, Map,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.journal.model.JournalArticle updateArticleTranslation(

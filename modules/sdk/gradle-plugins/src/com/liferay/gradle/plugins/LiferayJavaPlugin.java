@@ -1746,6 +1746,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				public void execute(Test test) {
 					configureTaskTestDefaultCharacterEncoding(test);
 					configureTaskTestForkEvery(test);
+					configureTaskTestIgnoreFailures(test);
 					configureTaskTestJvmArgs(test);
 					configureTaskTestLogging(test);
 					configureTaskTestWhip(test);
@@ -1805,6 +1806,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		else if (name.equals(TEST_INTEGRATION_TASK_NAME)) {
 			test.setForkEvery(null);
 		}
+	}
+
+	protected void configureTaskTestIgnoreFailures(Test test) {
+		test.setIgnoreFailures(true);
 	}
 
 	protected void configureTaskTestIntegration(

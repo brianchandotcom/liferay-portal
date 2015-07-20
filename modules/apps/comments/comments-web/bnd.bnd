@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Comments Web
-Bundle-SymbolicName: com.liferay.comments.web
+Bundle-Name: Liferay Comment Comments Web
+Bundle-SymbolicName: com.liferay.comment.comments.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

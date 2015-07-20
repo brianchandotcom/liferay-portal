@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="comments-web" />
+	<property name="import.shared" value="comment-comments-web" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

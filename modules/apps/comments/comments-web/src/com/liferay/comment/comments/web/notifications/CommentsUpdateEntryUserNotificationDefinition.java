@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.comments.web.notifications;
+package com.liferay.comment.comments.web.notifications;
 
-import com.liferay.comments.web.constants.CommentsPortletKeys;
+import com.liferay.comment.comments.web.constants.CommentsPortletKeys;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -29,15 +29,15 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + CommentsPortletKeys.COMMENTS},
 	service = UserNotificationDefinition.class
 )
-public class CommentsAddEntryUserNotificationDefinition
+public class CommentsUpdateEntryUserNotificationDefinition
 	extends UserNotificationDefinition {
 
-	public CommentsAddEntryUserNotificationDefinition() {
+	public CommentsUpdateEntryUserNotificationDefinition() {
 		super(
 			CommentsPortletKeys.COMMENTS, 0,
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-			"receive-a-notification-when-someone-adds-a-new-comment-to-" +
-				"comments-you-are-subscribed-to");
+			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+			"receive-a-notification-when-someone-updates-a-comment-you-are-" +
+				"subscribed-to");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

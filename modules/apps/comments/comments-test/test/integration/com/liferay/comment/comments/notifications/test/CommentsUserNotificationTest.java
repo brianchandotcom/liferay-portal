@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.comments.notifications.test;
+package com.liferay.comment.comments.notifications.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.comments.web.constants.CommentsPortletKeys;
+import com.liferay.comment.comments.web.constants.CommentsPortletKeys;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;

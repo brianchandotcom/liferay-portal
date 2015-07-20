@@ -24,6 +24,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -234,6 +235,16 @@ public class DDMStructureImpl implements DDMStructure, StagedGroupedModel {
 	}
 
 	@Override
+	public String getUserName() {
+		return _ddmStructure.getUserName();
+	}
+
+	@Override
+	public String getUserUuid() {
+		return _ddmStructure.getUserUuid();
+	}
+
+	@Override
 	public String getUuid() {
 		return _ddmStructure.getUuid();
 	}
@@ -264,6 +275,11 @@ public class DDMStructureImpl implements DDMStructure, StagedGroupedModel {
 	}
 
 	@Override
+	public void setGroupId(long groupId) {
+		_ddmStructure.setGroupId(groupId);
+	}
+
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_ddmStructure.setModifiedDate(modifiedDate);
 	}
@@ -271,26 +287,6 @@ public class DDMStructureImpl implements DDMStructure, StagedGroupedModel {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_ddmStructure.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		_ddmStructure.setUuid(uuid);
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_ddmStructure.setGroupId(groupId);
-	}
-
-	@Override
-	public String getUserName() {
-		return _ddmStructure.getUserName();
-	}
-
-	@Override
-	public String getUserUuid() {
-		return _ddmStructure.getUserUuid();
 	}
 
 	@Override
@@ -308,6 +304,12 @@ public class DDMStructureImpl implements DDMStructure, StagedGroupedModel {
 		_ddmStructure.setUserUuid(userUuid);
 	}
 
+	@Override
+	public void setUuid(String uuid) {
+		_ddmStructure.setUuid(uuid);
+	}
+
 	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructure
 		_ddmStructure;
+
 }

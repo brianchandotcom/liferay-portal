@@ -31,7 +31,6 @@ import java.util.Map;
  * @author Rafael Praxedes
  */
 public class DDMTemplateTestUtil {
-	
 
 	public static DDMTemplate addTemplate(
 			long groupId, long classNameId, long classPK)

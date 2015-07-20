@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 
@@ -68,13 +68,11 @@ public class DDMStructureTestUtil {
 			null, nameMap, null, ddmForm, ddmFormLayout,
 			StorageType.JSON.toString(),
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
-
 	}
 
 	public static DDMStructure addStructure(String className) throws Exception {
 		return addStructure(
-			TestPropsValues.getGroupId(), className, 
-			null, getSampleDDMForm(),
+			TestPropsValues.getGroupId(), className, null, getSampleDDMForm(),
 			LocaleUtil.getSiteDefault(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -128,14 +126,14 @@ public class DDMStructureTestUtil {
 
 		return ddmForm;
 	}
-	
-	private static DDMFormLayout getSampleDDMFormLayout(DDMForm ddmForm){
+
+	private static DDMFormLayout getSampleDDMFormLayout(DDMForm ddmForm) {
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-		
+
 		Locale defaultLocale = ddmForm.getDefaultLocale();
 
 		ddmFormLayout.setDefaultLocale(defaultLocale);
-		
+
 		return ddmFormLayout;
 	}
 

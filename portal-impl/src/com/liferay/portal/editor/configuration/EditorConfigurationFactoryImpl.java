@@ -55,8 +55,8 @@ public class EditorConfigurationFactoryImpl
 
 		if (editorConfigTransformer != null) {
 			editorConfigTransformer.transform(
-				editorOptions, inputEditorTaglibAttributes, themeDisplay,
-				requestBackedPortletURLFactory, configJSONObject);
+				editorOptions, inputEditorTaglibAttributes, configJSONObject, themeDisplay,
+				requestBackedPortletURLFactory);
 		}
 
 		return new EditorConfigurationImpl(configJSONObject, editorOptions);

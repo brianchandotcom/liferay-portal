@@ -20,11 +20,6 @@ body {
 				font-size: 145%;
 				margin-left: 20px;
 			}
-
-			li.dropdown:hover .dropdown-menu {
-				display: block;
-				margin-top: -10px;
-			}
 		}
 
 		#footer {

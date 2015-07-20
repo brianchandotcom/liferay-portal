@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.comments.page.comments.web.lar;
+package com.liferay.comment.page.comments.web.lar;
 
-import com.liferay.comments.page.comments.web.constants.PageCommentsPortletKeys;
+import com.liferay.comment.page.comments.web.constants.PageCommentsPortletKeys;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -45,11 +45,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + PageCommentsPortletKeys.PAGE_COMMENTS},
 	service = PortletDataHandler.class
 )
-public class CommentsPortletDataHandler extends BasePortletDataHandler {
+public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "comments";
+	public static final String NAMESPACE = "comment";
 
-	public CommentsPortletDataHandler() {
+	public PageCommentsPortletDataHandler() {
 		setDataAlwaysStaged(true);
 		setPublishToLiveByDefault(true);
 	}
@@ -80,7 +80,7 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 
 		PortletDataHandlerBoolean portletDataHandlerBoolean =
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "comments", true, false, null,
+				NAMESPACE, "comment", true, false, null,
 				discussionStagingHandler.getClassName());
 
 		return new PortletDataHandlerControl[] {portletDataHandlerBoolean};
@@ -98,7 +98,7 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		if (portletDataContext.addPrimaryKey(
-				CommentsPortletDataHandler.class, "deleteData")) {
+				PageCommentsPortletDataHandler.class, "deleteData")) {
 
 			return portletPreferences;
 		}
@@ -127,7 +127,7 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "comments")) {
+		if (!portletDataContext.getBooleanParameter(NAMESPACE, "comment")) {
 			return getExportDataRootElementString(rootElement);
 		}
 
@@ -191,7 +191,7 @@ public class CommentsPortletDataHandler extends BasePortletDataHandler {
 				discussionStagingHandler.getResourceName());
 
 			if (!_portletDataContext.getBooleanParameter(
-					NAMESPACE, "comments")) {
+					NAMESPACE, "comment")) {
 
 				return null;
 			}

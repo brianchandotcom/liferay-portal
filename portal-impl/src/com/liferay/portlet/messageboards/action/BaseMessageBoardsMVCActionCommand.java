@@ -19,26 +19,16 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.WebKeys;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import java.io.IOException;
 
 /**
  * @author Adolfo Pérez
  */
 public abstract class BaseMessageBoardsMVCActionCommand
 	extends BaseMVCActionCommand {
-
-	protected void sendRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
-
-		String redirect = getRedirect(actionRequest);
-
-		if (Validator.isNotNull(redirect)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-	}
 
 	protected String getRedirect(ActionRequest actionRequest) {
 		String redirect = (String)actionRequest.getAttribute(WebKeys.REDIRECT);
@@ -48,6 +38,17 @@ public abstract class BaseMessageBoardsMVCActionCommand
 		}
 
 		return ParamUtil.getString(actionRequest, "redirect");
+	}
+
+	protected void sendRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
+		String redirect = getRedirect(actionRequest);
+
+		if (Validator.isNotNull(redirect)) {
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
 	}
 
 }

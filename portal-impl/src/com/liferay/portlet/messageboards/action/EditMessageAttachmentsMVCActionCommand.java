@@ -17,7 +17,6 @@ package com.liferay.portlet.messageboards.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -28,10 +27,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -40,13 +37,6 @@ import com.liferay.taglib.util.RestoreEntryUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Eudaldo Alonso
@@ -62,6 +52,16 @@ import org.apache.struts.action.ActionMapping;
 )
 public class EditMessageAttachmentsMVCActionCommand
 	extends BaseMVCActionCommand {
+
+	protected void deleteAttachment(ActionRequest actionRequest)
+		throws PortalException {
+
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		String fileName = ParamUtil.getString(actionRequest, "fileName");
+
+		MBMessageLocalServiceUtil.deleteMessageAttachment(messageId, fileName);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -109,16 +109,6 @@ public class EditMessageAttachmentsMVCActionCommand
 			actionResponse.setRenderParameter(
 				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
-	}
-
-	protected void deleteAttachment(ActionRequest actionRequest)
-		throws PortalException {
-
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-		MBMessageLocalServiceUtil.deleteMessageAttachment(messageId, fileName);
 	}
 
 	protected void emptyTrash(ActionRequest actionRequest) throws Exception {

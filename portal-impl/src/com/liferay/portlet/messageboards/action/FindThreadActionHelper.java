@@ -21,6 +21,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -70,8 +71,7 @@ public class FindThreadActionHelper extends BaseFindActionHelper {
 
 	@Override
 	protected void addRequiredParameters(
-			HttpServletRequest request, String portletId,
-			PortletURL portletURL) {
+		HttpServletRequest request, String portletId, PortletURL portletURL) {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "message_boards/view_message");

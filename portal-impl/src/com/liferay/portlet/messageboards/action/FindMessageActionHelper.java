@@ -20,6 +20,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -58,8 +59,7 @@ public class FindMessageActionHelper extends BaseFindActionHelper {
 	}
 
 	@Override
-	public void setPrimaryKeyParameter(
-			PortletURL portletURL, long primaryKey)
+	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
 
 		portletURL.setParameter(

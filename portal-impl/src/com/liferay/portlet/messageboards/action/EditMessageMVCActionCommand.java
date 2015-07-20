@@ -40,7 +40,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -73,15 +72,8 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -97,6 +89,12 @@ import org.apache.struts.action.ActionMapping;
 	service = MVCActionCommand.class
 )
 public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteMessage(ActionRequest actionRequest) throws Exception {
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		MBMessageServiceUtil.deleteMessage(messageId);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -209,12 +207,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
-	}
-
-	protected void deleteMessage(ActionRequest actionRequest) throws Exception {
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-
-		MBMessageServiceUtil.deleteMessage(messageId);
 	}
 
 	protected String getRedirect(

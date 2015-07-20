@@ -14,25 +14,20 @@
 
 package com.liferay.portlet.messageboards.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import java.io.IOException;
 
 /**
  * @author Michael Young
@@ -46,6 +41,15 @@ import java.io.IOException;
 	service = MVCActionCommand.class
 )
 public class BanUserMVCActionCommand extends BaseMessageBoardsMVCActionCommand {
+
+	protected void banUser(ActionRequest actionRequest) throws Exception {
+		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			MBBan.class.getName(), actionRequest);
+
+		MBBanServiceUtil.addBan(banUserId, serviceContext);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -70,15 +74,6 @@ public class BanUserMVCActionCommand extends BaseMessageBoardsMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
-	}
-
-	protected void banUser(ActionRequest actionRequest) throws Exception {
-		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBBan.class.getName(), actionRequest);
-
-		MBBanServiceUtil.addBan(banUserId, serviceContext);
 	}
 
 	protected void unbanUser(ActionRequest actionRequest) throws Exception {

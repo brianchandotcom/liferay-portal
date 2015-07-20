@@ -66,6 +66,47 @@ import javax.portlet.ActionResponse;
 public class EditCategoryMVCActionCommand
 	extends BaseMessageBoardsMVCActionCommand {
 
+	protected void deleteCategories(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] deleteCategoryIds = null;
+
+		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
+
+		if (categoryId > 0) {
+			deleteCategoryIds = new long[] {categoryId};
+		}
+		else {
+			deleteCategoryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCategoryIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteCategoryId : deleteCategoryIds) {
+			if (moveToTrash) {
+				MBCategory category = MBCategoryServiceUtil.moveCategoryToTrash(
+					deleteCategoryId);
+
+				trashedModels.add(category);
+			}
+			else {
+				MBCategoryServiceUtil.deleteCategory(
+					themeDisplay.getScopeGroupId(), deleteCategoryId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -111,47 +152,6 @@ public class EditCategoryMVCActionCommand
 				MailingListOutUserNameException e) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-		}
-	}
-
-	protected void deleteCategories(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long[] deleteCategoryIds = null;
-
-		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
-
-		if (categoryId > 0) {
-			deleteCategoryIds = new long[] {categoryId};
-		}
-		else {
-			deleteCategoryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCategoryIds"), 0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (long deleteCategoryId : deleteCategoryIds) {
-			if (moveToTrash) {
-				MBCategory category = MBCategoryServiceUtil.moveCategoryToTrash(
-					deleteCategoryId);
-
-				trashedModels.add(category);
-			}
-			else {
-				MBCategoryServiceUtil.deleteCategory(
-					themeDisplay.getScopeGroupId(), deleteCategoryId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

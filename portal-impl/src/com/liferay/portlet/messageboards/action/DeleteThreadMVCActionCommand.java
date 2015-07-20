@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -35,10 +33,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Deepak Gothe
@@ -55,31 +49,6 @@ import org.apache.struts.action.ActionMapping;
 )
 public class DeleteThreadMVCActionCommand
 	extends BaseMessageBoardsMVCActionCommand {
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteThreads(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteThreads(actionRequest, true);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (LockedThreadException | PrincipalException e) {
-			SessionErrors.add(actionRequest, e.getClass());
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/html/portlet/message_boards/error.jsp");
-		}
-	}
 
 	protected void deleteThreads(
 			ActionRequest actionRequest, boolean moveToTrash)
@@ -115,6 +84,31 @@ public class DeleteThreadMVCActionCommand
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.DELETE)) {
+				deleteThreads(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteThreads(actionRequest, true);
+			}
+
+			sendRedirect(actionRequest, actionResponse);
+		}
+		catch (LockedThreadException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
 	}
 

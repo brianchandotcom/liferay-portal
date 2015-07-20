@@ -27,8 +27,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
-import javax.portlet.PortletRequest;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**

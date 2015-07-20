@@ -17,7 +17,6 @@ package com.liferay.portal.service;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -68,24 +67,24 @@ public class UserServiceTest {
 
 		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotAddUser() throws Exception {
-			boolean companySecurityStrangersWithMx =
+			Object companySecurityStrangersWithMx =
 				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;
 
 			String name = PrincipalThreadLocal.getName();
 
 			try {
-				ReflectionTestUtil.setFieldValue(
-					PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX",
-					false);
+				PropsUtil.set(
+					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+					Boolean.TRUE.toString());
 
 				PrincipalThreadLocal.setName(0);
 
 				UserTestUtil.addUser(true);
 			}
 			finally {
-				ReflectionTestUtil.setFieldValue(
-					PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX",
-					companySecurityStrangersWithMx);
+				PropsUtil.set(
+					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+					companySecurityStrangersWithMx.toString());
 
 				PrincipalThreadLocal.setName(name);
 			}
@@ -93,15 +92,15 @@ public class UserServiceTest {
 
 		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotUpdateEmailAddress() throws Exception {
-			boolean companySecurityStrangersWithMx =
+			Object companySecurityStrangersWithMx =
 				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;
 
 			String name = PrincipalThreadLocal.getName();
 
 			try {
-				ReflectionTestUtil.setFieldValue(
-					PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX",
-					false);
+				PropsUtil.set(
+					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+					Boolean.FALSE.toString());
 
 				User user = UserTestUtil.addUser(false);
 
@@ -116,9 +115,9 @@ public class UserServiceTest {
 					emailAddress, new ServiceContext());
 			}
 			finally {
-				ReflectionTestUtil.setFieldValue(
-					PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX",
-					companySecurityStrangersWithMx);
+				PropsUtil.set(
+					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+					companySecurityStrangersWithMx.toString());
 
 				PrincipalThreadLocal.setName(name);
 			}
@@ -126,7 +125,7 @@ public class UserServiceTest {
 
 		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotUpdateUser() throws Exception {
-			boolean companySecurityStrangersWithMx =
+			Object companySecurityStrangersWithMx =
 				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;
 
 			String name = PrincipalThreadLocal.getName();
@@ -134,18 +133,18 @@ public class UserServiceTest {
 			User user = UserTestUtil.addUser(false);
 
 			try {
-				ReflectionTestUtil.setFieldValue(
-					PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX",
-					false);
+				PropsUtil.set(
+					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+					Boolean.FALSE.toString());
 
 				PrincipalThreadLocal.setName(user.getUserId());
 
 				UserTestUtil.updateUser(user);
 			}
 			finally {
-				ReflectionTestUtil.setFieldValue(
-					PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX",
-					companySecurityStrangersWithMx);
+				PropsUtil.set(
+					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
+					companySecurityStrangersWithMx.toString());
 
 				PrincipalThreadLocal.setName(name);
 

@@ -76,6 +76,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	@BeforeClass
 	public static void setUpClass() {
 		_CLASS_NAME_ID = PortalUtil.getClassNameId(StringUtil.randomString());
+
+		_enLocale = LocaleUtil.fromLanguageId("en_US");
+		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 	}
 
 	@Test
@@ -545,9 +548,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	private static long _CLASS_NAME_ID;
 
-	private final Locale _enLocale = LocaleUtil.fromLanguageId("en_US");
+	private static Locale _enLocale;
+	private static Locale _ptLocale;
+
 	private final StorageAdapter _jsonStorageAdapater =
 		new JSONStorageAdapter();
-	private final Locale _ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 
 }

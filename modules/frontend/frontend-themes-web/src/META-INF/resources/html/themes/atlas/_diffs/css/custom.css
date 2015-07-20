@@ -41,4 +41,10 @@ body {
 			padding: 40px 20px;
 		}
 	}
+
+	.modify-pages .delete-tab {
+		height: 20px;
+		right: inherit;
+		top: 22px;
+	}
 }

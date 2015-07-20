@@ -71,7 +71,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
 				EhcacheConfigurationHelperUtil.getConfigurationObjectValuePair(
-					configurationURL, isClusterAware(), _usingDefault, props);
+					getPortalCacheManagerName(), configurationURL,
+					isClusterAware(), _usingDefault, props);
 
 		reconfigEhcache(configurationObjectValuePair.getKey());
 
@@ -214,14 +215,13 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
 				EhcacheConfigurationHelperUtil.getConfigurationObjectValuePair(
-					configFileURL, isClusterAware(), _usingDefault, props);
+					getPortalCacheManagerName(), configFileURL,
+					isClusterAware(), _usingDefault, props);
 
 		_cacheManager = new CacheManager(configurationObjectValuePair.getKey());
 
 		_portalCacheManagerConfiguration =
 			configurationObjectValuePair.getValue();
-
-		_cacheManager.setName(getPortalCacheManagerName());
 
 		if (_stopCacheManagerTimer) {
 			FailSafeTimer failSafeTimer = _cacheManager.getTimer();

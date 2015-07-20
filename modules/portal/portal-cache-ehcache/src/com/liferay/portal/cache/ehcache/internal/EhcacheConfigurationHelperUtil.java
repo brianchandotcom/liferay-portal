@@ -63,8 +63,8 @@ public class EhcacheConfigurationHelperUtil {
 	public static ObjectValuePair
 		<Configuration, PortalCacheManagerConfiguration>
 			getConfigurationObjectValuePair(
-				URL configurationURL, boolean clusterAware,
-				boolean usingDefault, Props props) {
+				String portalCacheManagerName, URL configurationURL,
+				boolean clusterAware, boolean usingDefault, Props props) {
 
 		if (configurationURL == null) {
 			throw new NullPointerException("Configuration path is null");
@@ -76,6 +76,8 @@ public class EhcacheConfigurationHelperUtil {
 			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 		boolean clusterLinkReplicationEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
+
+		ehcacheConfiguration.setName(portalCacheManagerName);
 
 		_handlePeerFactoryConfigurations(
 			ehcacheConfiguration.
@@ -140,9 +142,8 @@ public class EhcacheConfigurationHelperUtil {
 			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
 			_parseFactoryClassName(
 				factoryConfiguration.getFullyQualifiedClassPath(), props));
-		properties.put(
-			EhcacheConstants.PORTAL_CACHE_MANAGER_NAME,
-			ehcacheConfiguration.getName());
+
+		factoryConfiguration.setClass(null);
 
 		return Collections.singleton(
 			new CallbackConfiguration(

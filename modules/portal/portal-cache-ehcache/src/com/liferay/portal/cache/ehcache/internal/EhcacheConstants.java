@@ -28,7 +28,4 @@ public interface EhcacheConstants {
 	public static final String CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME =
 		"CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME";
 
-	public static final String PORTAL_CACHE_MANAGER_NAME =
-		"PORTAL_CACHE_MANAGER_NAME";
-
 }

@@ -21,7 +21,7 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public interface CallbackFactory {
+public interface CallbackFactory<T extends PortalCacheManager<?, ?>> {
 
 	public PortalCacheBootstrapLoader createPortalCacheBootstrapLoader(
 		Properties properties);
@@ -30,6 +30,6 @@ public interface CallbackFactory {
 		createPortalCacheListener(Properties properties);
 
 	public PortalCacheManagerListener createPortalCacheManagerListener(
-		Properties properties);
+		T portalCacheManager, Properties properties);
 
 }

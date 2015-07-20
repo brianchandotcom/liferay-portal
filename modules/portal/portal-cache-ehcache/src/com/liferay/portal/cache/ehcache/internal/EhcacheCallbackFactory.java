@@ -21,9 +21,7 @@ import com.liferay.portal.cache.ehcache.internal.event.EhcachePortalCacheManager
 import com.liferay.portal.kernel.cache.CallbackFactory;
 import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
-import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -42,9 +40,11 @@ import net.sf.ehcache.event.CacheManagerEventListenerFactory;
 /**
  * @author Tina Tian
  */
-public class EhcacheCallbackFactory implements CallbackFactory {
+public class EhcacheCallbackFactory
+	implements CallbackFactory<EhcachePortalCacheManager<?, ?>> {
 
-	public static final CallbackFactory INSTANCE = new EhcacheCallbackFactory();
+	public static final CallbackFactory<EhcachePortalCacheManager<?, ?>>
+		INSTANCE = new EhcacheCallbackFactory();
 
 	@Override
 	public PortalCacheBootstrapLoader createPortalCacheBootstrapLoader(
@@ -115,6 +115,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 
 	@Override
 	public PortalCacheManagerListener createPortalCacheManagerListener(
+		EhcachePortalCacheManager<?, ?> ehcachePortalCacheManager,
 		Properties properties) {
 
 		String className = properties.getProperty(
@@ -123,26 +124,6 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 		if (Validator.isNull(className)) {
 			return null;
 		}
-
-		String portalCacheManagerName = properties.getProperty(
-			EhcacheConstants.PORTAL_CACHE_MANAGER_NAME);
-
-		if (Validator.isNull(portalCacheManagerName)) {
-			return null;
-		}
-
-		PortalCacheManager<?, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
-				portalCacheManagerName);
-
-		if (!(portalCacheManager instanceof EhcachePortalCacheManager)) {
-			throw new IllegalArgumentException(
-				"PortalCacheManager with name " + portalCacheManagerName +
-					" is not a " + EhcachePortalCacheManager.class.getName());
-		}
-
-		EhcachePortalCacheManager<?, ?> ehcachePortalCacheManager =
-			(EhcachePortalCacheManager<?, ?>)portalCacheManager;
 
 		try {
 			CacheManagerEventListenerFactory cacheManagerEventListenerFactory =

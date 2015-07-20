@@ -266,7 +266,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 			PortalCacheManagerListener portalCacheManagerListener =
 				callbackFactory.createPortalCacheManagerListener(
-					callbackConfiguration.getProperties());
+					this, callbackConfiguration.getProperties());
 
 			if (portalCacheManagerListener != null) {
 				registerPortalCacheManagerListener(portalCacheManagerListener);

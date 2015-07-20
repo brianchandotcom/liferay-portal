@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.parser;
+package com.liferay.portal.workflow.kaleo.parser.impl;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,9 +47,9 @@ import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.UserAssignment;
 import com.liferay.portal.workflow.kaleo.definition.UserRecipient;
+import com.liferay.portal.workflow.kaleo.parser.WorkflowModelParser;
 
 import java.io.InputStream;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;

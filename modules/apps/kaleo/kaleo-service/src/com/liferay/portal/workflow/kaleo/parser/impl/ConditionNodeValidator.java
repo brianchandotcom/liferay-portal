@@ -12,31 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.parser;
+package com.liferay.portal.workflow.kaleo.parser.impl;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.kaleo.definition.Condition;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
-import com.liferay.portal.workflow.kaleo.definition.JoinXor;
 
 /**
  * @author Michael C. Han
+ * @author Marcellus Tavares
  */
-public class JoinXorNodeValidator extends BaseNodeValidator<JoinXor> {
+public class ConditionNodeValidator extends BaseNodeValidator<Condition> {
 
 	@Override
-	protected void doValidate(Definition definition, JoinXor joinXor)
+	protected void doValidate(Definition definition, Condition condition)
 		throws WorkflowException {
 
-		if (joinXor.getIncomingTransitionsCount() == 0) {
+		if (condition.getIncomingTransitionsCount() == 0) {
 			throw new WorkflowException(
-				"No incoming transition found for join-xor " +
-					joinXor.getName());
+				"No incoming transition found for condition " +
+					condition.getName());
 		}
 
-		if (joinXor.getOutgoingTransitionsCount() == 0) {
+		if (condition.getOutgoingTransitionsCount() < 2) {
 			throw new WorkflowException(
-				"No outgoing transition found for join-xor " +
-					joinXor.getName());
+				"Less than 2 outgoing transitions found for condition " +
+					condition.getName());
 		}
 	}
 

@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.parser;
+package com.liferay.portal.workflow.kaleo.parser.impl;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.State;
+import com.liferay.portal.workflow.kaleo.parser.NodeValidator;
+import com.liferay.portal.workflow.kaleo.parser.WorkflowValidator;
 
 import java.util.Collection;
 import java.util.List;

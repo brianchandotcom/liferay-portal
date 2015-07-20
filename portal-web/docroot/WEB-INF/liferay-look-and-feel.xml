@@ -40,6 +40,11 @@
 		<control-panel-theme>true</control-panel-theme>
 		<page-theme>false</page-theme>
 	</theme>
+	<theme id="atlas" name="Atlas">
+		<root-path>/html/themes/atlas</root-path>
+		<control-panel-theme>false</control-panel-theme>
+		<page-theme>true</page-theme>
+	</theme>
 	<theme id="control-panel" name="Control Panel">
 		<root-path>/html/themes/control_panel</root-path>
 		<settings>

@@ -17,7 +17,6 @@ package com.liferay.portlet.exportimport.service.impl;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
@@ -87,7 +86,6 @@ public class ExportImportLocalServiceImpl
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		taskContextMap.put(Constants.CMD, Constants.EXPORT);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
@@ -154,7 +152,6 @@ public class ExportImportLocalServiceImpl
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		taskContextMap.put(Constants.CMD, Constants.EXPORT);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
@@ -272,7 +269,6 @@ public class ExportImportLocalServiceImpl
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		taskContextMap.put(Constants.CMD, Constants.IMPORT);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
@@ -447,7 +443,6 @@ public class ExportImportLocalServiceImpl
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		taskContextMap.put(Constants.CMD, Constants.IMPORT);
 		taskContextMap.put(
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());

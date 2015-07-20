@@ -18,6 +18,7 @@
 	<bean id="com.liferay.portlet.messageboards.action.FindCategoryAction" class="com.liferay.portlet.messageboards.action.FindCategoryAction" />
 	<bean id="com.liferay.portlet.messageboards.action.FindMessageAction" class="com.liferay.portlet.messageboards.action.FindMessageAction" />
 	<bean id="com.liferay.portlet.messageboards.action.FindRecentPostsAction" class="com.liferay.portlet.messageboards.action.FindRecentPostsAction" />
+	<bean id="com.liferay.portlet.messageboards.action.FindThreadAction" class="com.liferay.portlet.messageboards.action.FindThreadAction" />
 	<bean id="com.liferay.portlet.messageboards.action.MoveCategoryMVCActionCommand" class="com.liferay.portlet.messageboards.action.MoveCategoryMVCActionCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.MoveCategoryMVCRenderAction" class="com.liferay.portlet.messageboards.action.MoveCategoryMVCRenderAction" />
 	<bean id="com.liferay.portlet.messageboards.action.MoveThreadMVCActionCommand" class="com.liferay.portlet.messageboards.action.MoveThreadMVCActionCommand" />

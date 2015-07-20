@@ -55,7 +55,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
-	property = "path=/portal/edit_discussion", service = StrutsAction.class
+	property = "path=/portal/comment/edit_discussion",
+	service = StrutsAction.class
 )
 public class EditDiscussionStrutsAction extends BaseStrutsAction {
 

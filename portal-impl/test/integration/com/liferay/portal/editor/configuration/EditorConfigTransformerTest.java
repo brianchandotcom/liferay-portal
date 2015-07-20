@@ -314,9 +314,8 @@ public class EditorConfigTransformerTest {
 		public void transform(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-			JSONObject configJSONObject) {
+			JSONObject configJSONObject, ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			String uploadURL = editorOptions.getUploadURL();
 

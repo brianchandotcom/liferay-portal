@@ -90,7 +90,7 @@ public class DiscussionTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return themeDisplay.getPathMain() + "/portal/edit_discussion";
+		return themeDisplay.getPathMain() + "/portal/comment/edit_discussion";
 	}
 
 	@Override
@@ -107,7 +107,8 @@ public class DiscussionTag extends IncludeTag {
 		String portletId = portletDisplay.getId();
 
 		return themeDisplay.getPathMain() +
-			"/portal/get_comments?p_p_isolated=1&portletId=" + portletId;
+			"/portal/comment/get_comments?p_p_isolated=1&portletId=" +
+				portletId;
 	}
 
 	@Override

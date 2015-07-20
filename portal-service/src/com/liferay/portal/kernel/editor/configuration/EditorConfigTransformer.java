@@ -53,20 +53,18 @@ public interface EditorConfigTransformer {
 	/**
 	 * Transforms the editor options in configuration that the editor can
 	 * handle, by populating the configuration JSON object.
-	 *
-	 * @param editorOptions the {@link EditorOptions} object composed of the
+	 *  @param editorOptions the {@link EditorOptions} object composed of the
 	 *        options set by {@link EditorOptionsContributor} modules
 	 * @param inputEditorTaglibAttributes the attributes specified to the input
 	 *        taglib tag that renders the editor
-	 * @param themeDisplay the theme display
 	 * @param configJSONObject the JSON object composed of the entire
 	 *        configuration set by {@link EditorConfigContributor} modules
+	 * @param themeDisplay the theme display
 	 */
 	public void transform(
 		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-		JSONObject configJSONObject);
+		JSONObject configJSONObject, ThemeDisplay themeDisplay,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory);
 
 }

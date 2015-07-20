@@ -18,37 +18,25 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
+ * @author Rafael Praxedes
  */
 public class DDMStructureTestUtil {
 
@@ -61,45 +49,7 @@ public class DDMStructureTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	public static DDMStructure addStructure(
-			long groupId, String className, DDMForm ddmForm)
-		throws Exception {
-
-		return addStructure(
-			groupId, className, 0, ddmForm, LocaleUtil.getSiteDefault(),
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static DDMStructure addStructure(
-			long groupId, String className, DDMForm ddmForm,
-			Locale defaultLocale)
-		throws Exception {
-
-		return addStructure(
-			groupId, className, 0, ddmForm, defaultLocale,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static DDMStructure addStructure(
-			long groupId, String className, Locale defaultLocale)
-		throws Exception {
-
-		return addStructure(
-			groupId, className, 0, getSampleDDMForm(), defaultLocale,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static DDMStructure addStructure(
-			long groupId, String className, long parentStructureId)
-		throws Exception {
-
-		return addStructure(
-			groupId, className, parentStructureId, getSampleDDMForm(),
-			LocaleUtil.getSiteDefault(),
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static DDMStructure addStructure(
+	private static DDMStructure addStructure(
 			long groupId, String className, long parentStructureId,
 			DDMForm ddmForm, Locale defaultLocale,
 			ServiceContext serviceContext)
@@ -114,11 +64,12 @@ public class DDMStructureTestUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		return DDMStructureLocalServiceUtil.addStructure(
-			TestPropsValues.getUserId(), groupId, parentStructureId,
-			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm,
+		return DDMStructureManagerUtil.addStructure(TestPropsValues.getUserId(),
+			groupId, String.valueOf(parentStructureId),
+			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm, 
 			ddmFormLayout, StorageType.JSON.toString(),
-			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
+
 	}
 
 	public static DDMStructure addStructure(String className) throws Exception {
@@ -126,45 +77,6 @@ public class DDMStructureTestUtil {
 			TestPropsValues.getGroupId(), className, 0, getSampleDDMForm(),
 			LocaleUtil.getSiteDefault(),
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static DDMStructure addStructure(String className, DDMForm ddmForm)
-		throws Exception {
-
-		return addStructure(
-			TestPropsValues.getGroupId(), className, 0, ddmForm,
-			LocaleUtil.getSiteDefault(),
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static DDMStructure addStructure(
-			String className, DDMForm ddmForm, Locale defaultLocale)
-		throws Exception {
-
-		return addStructure(
-			TestPropsValues.getGroupId(), className, 0, ddmForm, defaultLocale,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static DDMStructure addStructure(
-			String className, Locale defaultLocale)
-		throws Exception {
-
-		return addStructure(
-			TestPropsValues.getGroupId(), className, 0,
-			getSampleDDMForm(
-				"name", new Locale[] {LocaleUtil.US}, defaultLocale),
-			defaultLocale, ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static DDMStructure addStructure(
-			String className, Locale[] availableLocales, Locale defaultLocale)
-		throws Exception {
-
-		return addStructure(
-			TestPropsValues.getGroupId(), className, 0,
-			getSampleDDMForm("name", availableLocales, defaultLocale),
-			defaultLocale, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static DDMForm getSampleDDMForm() {
@@ -215,186 +127,6 @@ public class DDMStructureTestUtil {
 		ddmForm.addDDMFormField(ddmFormField);
 
 		return ddmForm;
-	}
-
-	public static String getSampleStructuredContent() {
-		return getSampleStructuredContent("name", "title");
-	}
-
-	public static String getSampleStructuredContent(
-		Map<Locale, String> contents, String defaultLocale) {
-
-		return getSampleStructuredContent(
-			"name", Collections.singletonList(contents), defaultLocale);
-	}
-
-	public static String getSampleStructuredContent(String keywords) {
-		return getSampleStructuredContent("name", keywords);
-	}
-
-	public static String getSampleStructuredContent(
-		String name, List<Map<Locale, String>> contents, String defaultLocale) {
-
-		StringBundler availableLocales = new StringBundler(2 * contents.size());
-
-		for (Map<Locale, String> map : contents) {
-			StringBundler sb = new StringBundler(2 * map.size());
-
-			for (Locale locale : map.keySet()) {
-				sb.append(LocaleUtil.toLanguageId(locale));
-				sb.append(StringPool.COMMA);
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			availableLocales.append(sb);
-		}
-
-		Document document = createDocumentContent(
-			availableLocales.toString(), defaultLocale);
-
-		Element rootElement = document.getRootElement();
-
-		for (Map<Locale, String> map : contents) {
-			Element dynamicElementElement = rootElement.addElement(
-				"dynamic-element");
-
-			dynamicElementElement.addAttribute("index-type", "keyword");
-			dynamicElementElement.addAttribute("name", name);
-			dynamicElementElement.addAttribute("type", "text");
-
-			for (Map.Entry<Locale, String> entry : map.entrySet()) {
-				Element element = dynamicElementElement.addElement(
-					"dynamic-content");
-
-				element.addAttribute(
-					"language-id", LocaleUtil.toLanguageId(entry.getKey()));
-				element.addCDATA(entry.getValue());
-			}
-		}
-
-		return document.asXML();
-	}
-
-	public static String getSampleStructuredContent(
-		String name, String keywords) {
-
-		Map<Locale, String> contents = new HashMap<>();
-
-		contents.put(Locale.US, keywords);
-
-		return getSampleStructuredContent(
-			name, Collections.singletonList(contents), "en_US");
-	}
-
-	public static Map<String, Map<String, String>> getXSDMap(String xsd)
-		throws Exception {
-
-		Map<String, Map<String, String>> map = new HashMap<>();
-
-		Document document = UnsecureSAXReaderUtil.read(xsd);
-
-		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
-
-		List<Node> nodes = xPathSelector.selectNodes(document);
-
-		for (Node node : nodes) {
-			Element dynamicElementElement = (Element)node;
-
-			String elementName = getElementName(dynamicElementElement);
-
-			map.put(elementName, getElementMap(dynamicElementElement));
-		}
-
-		return map;
-	}
-
-	protected static Document createDocumentContent(
-		String availableLocales, String defaultLocale) {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute("available-locales", availableLocales);
-		rootElement.addAttribute("default-locale", defaultLocale);
-		rootElement.addElement("request");
-
-		return document;
-	}
-
-	protected static Document createDocumentStructure(
-		Locale[] availableLocales, Locale defaultLocale) {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute(
-			"available-locales",
-			StringUtil.merge(LocaleUtil.toLanguageIds(availableLocales)));
-		rootElement.addAttribute(
-			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
-
-		return document;
-	}
-
-	protected static Map<String, String> getElementMap(Element element) {
-		Map<String, String> elementMap = new HashMap<>();
-
-		// Attributes
-
-		for (Attribute attribute : element.attributes()) {
-			elementMap.put(attribute.getName(), attribute.getValue());
-		}
-
-		// Metadata
-
-		for (Element metadadataElement : element.elements("meta-data")) {
-			String metadataLanguageId = metadadataElement.attributeValue(
-				"locale");
-
-			for (Element entryElement : metadadataElement.elements("entry")) {
-				String entryName = entryElement.attributeValue("name");
-
-				elementMap.put(
-					entryName.concat(metadataLanguageId),
-					entryElement.getText());
-			}
-		}
-
-		return elementMap;
-	}
-
-	protected static String getElementName(Element element) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(element.attributeValue("name"));
-
-		Element parentElement = element.getParent();
-
-		while (true) {
-			if ((parentElement == null) ||
-				parentElement.getName().equals("root")) {
-
-				break;
-			}
-
-			sb.insert(
-				0, parentElement.attributeValue("name") + StringPool.SLASH);
-
-			parentElement = parentElement.getParent();
-		}
-
-		String type = element.attributeValue("type");
-
-		if (Validator.equals(type, "option")) {
-			sb.append(StringPool.SLASH);
-
-			sb.append(element.attributeValue("value"));
-		}
-
-		return sb.toString();
 	}
 
 }

@@ -323,8 +323,8 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, null,
-				actionRequest.getParameterMap(), StringPool.BLANK,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone(), fileName);
+				actionRequest.getParameterMap(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone(), fileName);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -401,9 +401,8 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, null,
-				actionRequest.getParameterMap(), StringPool.BLANK,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone(),
-				StringPool.BLANK);
+				actionRequest.getParameterMap(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone(), StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

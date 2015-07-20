@@ -15,170 +15,188 @@
 	<property name="tinymce.file" value="tinymce_4.1.7.zip" />
 	<property name="wsc.file" value="wsc_4.4.5.zip" />
 
-	<target name="build-alloy-editor">
-		<path id="alloyeditor.zip.path">
-			<fileset dir="${third.party.dir}">
-				<include name="alloy-editor-${alloyeditor.version}.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloyeditor.zip.path" refid="alloyeditor.zip.path" />
-
-		<basename file="${alloyeditor.zip.path}" property="alloyeditor.file" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="${third.party.dir}/${alloyeditor.file}"
-					targetfile="tmp/META-INF/resources/html/editors/alloyeditor"
-				/>
-			</not>
-			<then>
-				<delete dir="tmp/META-INF/resources/html/editors/alloyeditor" />
-
-				<echo>${alloyeditor.file}</echo>
-
-				<unzip src="${third.party.dir}/${alloyeditor.file}" dest="tmp/META-INF/resources/html/editors/_tmp" />
-
-				<copy todir="tmp/META-INF/resources/html/editors/alloyeditor" overwrite="true" preservelastmodified="true">
-					<fileset dir="tmp/META-INF/resources/html/editors/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
-				</copy>
-
-				<delete dir="tmp/META-INF/resources/html/editors/_tmp" />
-			</then>
-		</if>
-
-		<copy todir="tmp/META-INF/resources/html/editors/alloyeditor" preservelastmodified="true">
-			<fileset dir="${html.editor.dir}/alloyeditor_diffs" />
-		</copy>
-
-		<for param="alloy.editor.file">
-			<path>
-				<fileset dir="tmp/META-INF/resources/html/editors/alloyeditor" includes="alloy-editor*.js" />
+	<macrodef name="build-alloy-editor">
+		<sequential>
+			<path id="alloyeditor.zip.path">
+				<fileset dir="${third.party.dir}">
+					<include name="alloy-editor-${alloyeditor.version}.zip" />
+				</fileset>
 			</path>
-			<sequential>
-				<basename property="alloy.editor.file.name" file="@{alloy.editor.file}" suffix=".js" />
 
-				<concat destfile="tmp/META-INF/resources/html/editors/alloyeditor/liferay-${alloy.editor.file.name}.js">
-					<fileset file="@{alloy.editor.file}" />
-					<fileset dir="${html.editor.dir}/alloyeditor_diffs/buttons" >
-						<include name="**/*.js" />
-					</fileset>
-				</concat>
+			<property name="alloyeditor.zip.path" refid="alloyeditor.zip.path" />
 
-				<var name="alloy.editor.file.name" unset="true" />
-			</sequential>
-		</for>
-	</target>
+			<basename file="${alloyeditor.zip.path}" property="alloyeditor.file" />
 
-	<target name="build-ckeditor">
-		<if>
-			<not>
-				<uptodate
-					srcfile="${third.party.dir}/${ckeditor.file}"
-					targetfile="tmp/META-INF/resources/html/editors/ckeditor"
+			<if>
+				<not>
+					<uptodate
+						srcfile="${third.party.dir}/${alloyeditor.file}"
+						targetfile="tmp/META-INF/resources/html/editors/alloyeditor"
+					/>
+				</not>
+				<then>
+					<delete dir="tmp/META-INF/resources/html/editors/alloyeditor" />
+
+					<echo>${alloyeditor.file}</echo>
+
+					<unzip src="${third.party.dir}/${alloyeditor.file}" dest="tmp/META-INF/resources/html/editors/_tmp" />
+
+					<copy todir="tmp/META-INF/resources/html/editors/alloyeditor" overwrite="true" preservelastmodified="true">
+						<fileset dir="tmp/META-INF/resources/html/editors/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
+					</copy>
+
+					<delete dir="tmp/META-INF/resources/html/editors/_tmp" />
+				</then>
+			</if>
+
+			<copy todir="tmp/META-INF/resources/html/editors/alloyeditor" preservelastmodified="true">
+				<fileset dir="${html.editor.dir}/alloyeditor_diffs" />
+			</copy>
+
+			<for param="alloy.editor.file">
+				<path>
+					<fileset dir="tmp/META-INF/resources/html/editors/alloyeditor" includes="alloy-editor*.js" />
+				</path>
+				<sequential>
+					<basename property="alloy.editor.file.name" file="@{alloy.editor.file}" suffix=".js" />
+
+					<concat destfile="tmp/META-INF/resources/html/editors/alloyeditor/liferay-${alloy.editor.file.name}.js">
+						<fileset file="@{alloy.editor.file}" />
+						<fileset dir="${html.editor.dir}/alloyeditor_diffs/buttons" >
+							<include name="**/*.js" />
+						</fileset>
+					</concat>
+
+					<var name="alloy.editor.file.name" unset="true" />
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="build-ckeditor">
+		<sequential>
+			<if>
+				<not>
+					<uptodate
+						srcfile="${third.party.dir}/${ckeditor.file}"
+						targetfile="tmp/META-INF/resources/html/editors/ckeditor"
+					/>
+				</not>
+				<then>
+					<delete dir="tmp/META-INF/resources/html/editors/ckeditor" />
+
+					<unzip src="${third.party.dir}/${ckeditor.file}" dest="tmp/META-INF/resources/html/editors" />
+
+					<copy todir="tmp/META-INF/resources/html/editors/ckeditor" overwrite="true" preservelastmodified="true">
+						<fileset dir="${html.editor.dir}/ckeditor_diffs" />
+					</copy>
+
+					<build-ckeditor-plugins-scayt />
+
+					<build-ckeditor-plugins-wsc />
+				</then>
+				<else>
+					<copy todir="tmp/META-INF/resources/html/editors/ckeditor" preservelastmodified="true">
+						<fileset dir="${html.editor.dir}/ckeditor_diffs" />
+					</copy>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="build-ckeditor-plugins-bbcode">
+		<sequential>
+			<concat destfile="${html.editor.dir}/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
+				<filelist
+					dir="${html.editor.dir}/ckeditor_diffs/plugins/bbcode"
+					files="bbcode_utils.js,lexer.js,parser.js,converter.js"
 				/>
-			</not>
-			<then>
-				<delete dir="tmp/META-INF/resources/html/editors/ckeditor" />
+			</concat>
+		</sequential>
+	</macrodef>
 
-				<unzip src="${third.party.dir}/${ckeditor.file}" dest="tmp/META-INF/resources/html/editors" />
+	<macrodef name="build-ckeditor-plugins-scayt">
+		<sequential>
+			<if>
+				<not>
+					<available file="${third.party.dir}/${scayt.file}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${third.party.dir}/${scayt.file}"
+						src="http://download.ckeditor.com/scayt/releases/${scayt.file}"
+					/>
+				</then>
+			</if>
 
-				<copy todir="tmp/META-INF/resources/html/editors/ckeditor" overwrite="true" preservelastmodified="true">
-					<fileset dir="${html.editor.dir}/ckeditor_diffs" />
-				</copy>
-
-				<antcall target="build-ckeditor-plugins-scayt" />
-
-				<antcall target="build-ckeditor-plugins-wsc" />
-			</then>
-			<else>
-				<copy todir="tmp/META-INF/resources/html/editors/ckeditor" preservelastmodified="true">
-					<fileset dir="${html.editor.dir}/ckeditor_diffs" />
-				</copy>
-			</else>
-		</if>
-	</target>
-
-	<target name="build-ckeditor-plugins-bbcode">
-		<concat destfile="${html.editor.dir}/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
-			<filelist
-				dir="${html.editor.dir}/ckeditor_diffs/plugins/bbcode"
-				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
+			<unzip
+				dest="tmp/META-INF/resources/html/editors/ckeditor/plugins"
+				src="${third.party.dir}/${scayt.file}"
 			/>
-		</concat>
-	</target>
+		</sequential>
+	</macrodef>
 
-	<target name="build-ckeditor-plugins-scayt">
-		<if>
-			<not>
-				<available file="${third.party.dir}/${scayt.file}" />
-			</not>
-			<then>
-				<mirrors-get
-					dest="${third.party.dir}/${scayt.file}"
-					src="http://download.ckeditor.com/scayt/releases/${scayt.file}"
-				/>
-			</then>
-		</if>
+	<macrodef name="build-ckeditor-plugins-wsc">
+		<sequential>
+			<if>
+				<not>
+					<available file="${third.party.dir}/${wsc.file}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${third.party.dir}/${wsc.file}"
+						src="http://download.ckeditor.com/wsc/releases/${wsc.file}"
+					/>
+				</then>
+			</if>
 
-		<unzip
-			dest="tmp/META-INF/resources/html/editors/ckeditor/plugins"
-			src="${third.party.dir}/${scayt.file}"
-		/>
-	</target>
+			<unzip
+				dest="tmp/META-INF/resources/html/editors/ckeditor/plugins"
+				src="${third.party.dir}/${wsc.file}"
+			/>
+		</sequential>
+	</macrodef>
 
-	<target name="build-ckeditor-plugins-wsc">
-		<if>
-			<not>
-				<available file="${third.party.dir}/${wsc.file}" />
-			</not>
-			<then>
-				<mirrors-get
-					dest="${third.party.dir}/${wsc.file}"
-					src="http://download.ckeditor.com/wsc/releases/${wsc.file}"
-				/>
-			</then>
-		</if>
+	<macrodef name="build-tinymce">
+		<sequential>
+			<if>
+				<not>
+					<uptodate
+						srcfile="${third.party.dir}/${tinymce.file}"
+						targetfile="tmp/META-INF/resources/html/editors/tiny_mce"
+					/>
+				</not>
+				<then>
+					<delete dir="tmp/META-INF/resources/html/editors/tiny_mce" />
+					<delete dir="tmp/META-INF/resources/html/editors/tinymce" />
 
-		<unzip
-			dest="tmp/META-INF/resources/html/editors/ckeditor/plugins"
-			src="${third.party.dir}/${wsc.file}"
-		/>
-	</target>
+					<unzip src="${third.party.dir}/${tinymce.file}" dest="tmp/META-INF/resources/html/editors" />
 
-	<target name="build-tinymce">
-		<if>
-			<not>
-				<uptodate
-					srcfile="${third.party.dir}/${tinymce.file}"
-					targetfile="tmp/META-INF/resources/html/editors/tiny_mce"
-				/>
-			</not>
-			<then>
-				<delete dir="tmp/META-INF/resources/html/editors/tiny_mce" />
-				<delete dir="tmp/META-INF/resources/html/editors/tinymce" />
+					<move todir="tmp/META-INF/resources/html/editors/tiny_mce" preservelastmodified="true">
+						<fileset dir="tmp/META-INF/resources/html/editors/tinymce/js/tinymce">
+							<include name="*/**" />
+						</fileset>
+					</move>
 
-				<unzip src="${third.party.dir}/${tinymce.file}" dest="tmp/META-INF/resources/html/editors" />
+					<copy todir="tmp/META-INF/resources/html/editors/tiny_mce" overwrite="true" preservelastmodified="true">
+						<fileset dir="${html.editor.dir}/tiny_mce_diffs" />
+					</copy>
 
-				<move todir="tmp/META-INF/resources/html/editors/tiny_mce" preservelastmodified="true">
-					<fileset dir="tmp/META-INF/resources/html/editors/tinymce/js/tinymce">
-						<include name="*/**" />
-					</fileset>
-				</move>
+					<delete dir="tmp/META-INF/resources/html/editors/tinymce" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
 
-				<copy todir="tmp/META-INF/resources/html/editors/tiny_mce" overwrite="true" preservelastmodified="true">
-					<fileset dir="${html.editor.dir}/tiny_mce_diffs" />
-				</copy>
-
-				<delete dir="tmp/META-INF/resources/html/editors/tinymce" />
-			</then>
-		</if>
-	</target>
-
-	<target name="jar" depends="build-common.compile,build-alloy-editor,build-ckeditor,build-tinymce">
-		<jar-macro
+	<target name="compile">
+		<compile
 			module.dir="${basedir}"
 		/>
+
+		<build-alloy-editor />
+
+		<build-ckeditor />
+
+		<build-tinymce />
 	</target>
 </project>

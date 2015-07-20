@@ -265,6 +265,10 @@
 		</sequential>
 	</macrodef>
 
+	<target name="build-alloy">
+		<build-alloy />
+	</target>
+
 	<target name="build-alloy-bootstrap">
 		<build-alloy-bootstrap />
 	</target>

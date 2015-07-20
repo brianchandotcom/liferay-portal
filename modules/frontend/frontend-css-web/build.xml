@@ -10,55 +10,67 @@
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
+	<macrodef name="build-bourbon">
+		<sequential>
+			<property name="portal.common.dir" value="${common.css.dir}" />
+
+			<property name="bourbon.version" value="3.2.3" />
+
+			<property name="bourbon.deploy" value="${portal.common.dir}/bourbon" />
+
+			<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
+
+			<property name="bourbon.tmp.dir" value="${css.dir}/BOURBON_ZIP" />
+
+			<if>
+				<not>
+					<uptodate
+						srcfile="${third.party.dir}/${bourbon.file}"
+						targetfile="${bourbon.deploy}"
+					/>
+				</not>
+				<then>
+					<delete dir="${bourbon.tmp.dir}" />
+					<delete dir="${bourbon.deploy}" />
+
+					<unzip src="${third.party.dir}/${bourbon.file}" dest="${bourbon.tmp.dir}" />
+
+					<property name="bourbon.lib.dir" value="${bourbon.tmp.dir}/bourbon-${bourbon.version}/app/assets/stylesheets" />
+
+					<copy todir="${bourbon.deploy}" overwrite="true" preservelastmodified="true">
+						<fileset dir="${bourbon.lib.dir}/" />
+					</copy>
+
+					<delete dir="${bourbon.tmp.dir}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="clean-css">
+		<sequential>
+			<delete includeemptydirs="true">
+				<fileset dir="${css.dir}" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
+			</delete>
+		</sequential>
+	</macrodef>
+
 	<target name="build-bourbon">
-		<property name="portal.common.dir" value="${common.css.dir}" />
-
-		<property name="bourbon.version" value="3.2.3" />
-
-		<property name="bourbon.deploy" value="${portal.common.dir}/bourbon" />
-
-		<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
-
-		<property name="bourbon.tmp.dir" value="${css.dir}/BOURBON_ZIP" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="${third.party.dir}/${bourbon.file}"
-					targetfile="${bourbon.deploy}"
-				/>
-			</not>
-			<then>
-				<delete dir="${bourbon.tmp.dir}" />
-				<delete dir="${bourbon.deploy}" />
-
-				<unzip src="${third.party.dir}/${bourbon.file}" dest="${bourbon.tmp.dir}" />
-
-				<property name="bourbon.lib.dir" value="${bourbon.tmp.dir}/bourbon-${bourbon.version}/app/assets/stylesheets" />
-
-				<copy todir="${bourbon.deploy}" overwrite="true" preservelastmodified="true">
-					<fileset dir="${bourbon.lib.dir}/" />
-				</copy>
-
-				<delete dir="${bourbon.tmp.dir}" />
-			</then>
-		</if>
+		<build-bourbon />
 	</target>
 
-	<target name="clean" depends="clean-css">
+	<target name="clean">
+		<clean-css />
+
 		<clean
 			module.dir="${basedir}"
 		/>
 	</target>
 
-	<target name="clean-css">
-		<delete includeemptydirs="true">
-			<fileset dir="${css.dir}" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-		</delete>
-	</target>
+	<target name="compile">
+		<build-bourbon />
 
-	<target name="jar" depends="build-bourbon,build-common.compile">
-		<jar-macro
+		<compile
 			module.dir="${basedir}"
 		/>
 	</target>

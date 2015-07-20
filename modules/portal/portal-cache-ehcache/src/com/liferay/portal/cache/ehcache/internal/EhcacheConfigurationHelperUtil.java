@@ -143,6 +143,8 @@ public class EhcacheConfigurationHelperUtil {
 			_parseFactoryClassName(
 				factoryConfiguration.getFullyQualifiedClassPath(), props));
 
+		factoryConfiguration.setClass(null);
+
 		return Collections.singleton(
 			new CallbackConfiguration(
 				EhcacheCallbackFactory.INSTANCE, properties));

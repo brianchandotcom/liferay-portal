@@ -42,7 +42,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				<liferay-ui:app-view-display-style
 					displayStyle="<%= displayStyle %>"
 					displayStyleURL="<%= displayStyleURL %>"
-					displayStyles='<%= new String[] {"icon", "descriptive", "list"} %>'
+					displayStyles="<%= BrowserTag.DISPLAY_STYLES %>"
 				/>
 			</aui:nav>
 

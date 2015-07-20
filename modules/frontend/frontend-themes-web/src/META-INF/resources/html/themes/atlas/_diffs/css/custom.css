@@ -1,6 +1,8 @@
 @import "bourbon";
 @import "mixins";
 
+@import url(custom_responsive.css);
+
 $bg-color: #F5F7F8;
 
 body {

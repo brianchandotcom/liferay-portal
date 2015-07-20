@@ -12,30 +12,40 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.parser;
+package com.liferay.portal.workflow.kaleo.parser.impl;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
-import com.liferay.portal.workflow.kaleo.definition.Join;
+import com.liferay.portal.workflow.kaleo.definition.Task;
+
+import java.util.Set;
 
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
-public class JoinNodeValidator extends BaseNodeValidator<Join> {
+public class TaskNodeValidator extends BaseNodeValidator<Task> {
 
 	@Override
-	protected void doValidate(Definition definition, Join join)
+	protected void doValidate(Definition definition, Task task)
 		throws WorkflowException {
 
-		if (join.getIncomingTransitionsCount() == 0) {
+		if (task.getIncomingTransitionsCount() == 0) {
 			throw new WorkflowException(
-				"No incoming transition found for join " + join.getName());
+				"No incoming transition found for task " + task.getName());
 		}
 
-		if (join.getOutgoingTransitionsCount() == 0) {
+		if (task.getOutgoingTransitionsCount() == 0) {
 			throw new WorkflowException(
-				"No outgoing transition found for join " + join.getName());
+				"No outgoing transition found for task " + task.getName());
+		}
+
+		Set<Assignment> assignments = task.getAssignments();
+
+		if ((assignments == null) || assignments.isEmpty()) {
+			throw new WorkflowException(
+				"No assignments for task " + task.getName());
 		}
 	}
 

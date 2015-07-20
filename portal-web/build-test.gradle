@@ -42,7 +42,7 @@ poshiRunner {
 	}
 
 	if (project.hasProperty("testConsoleLogFileName")) {
-		poshiProperty "test.console.log.file.name", project.properties["test.console.log.file.name"]
+		poshiProperty "test.console.log.file.name", project.properties["testConsoleLogFileName"]
 	}
 
 	poshiProperty "test.dependencies.dir.name", "com/liferay/portalweb/dependencies"
@@ -51,7 +51,7 @@ poshiRunner {
 		poshiProperty "test.skip.tear.down", project.properties["testSkipTearDown"]
 	}
 
-	version = "1.0.8"
+	version = "1.0.9"
 }
 
 repositories {

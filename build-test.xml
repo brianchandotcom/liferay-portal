@@ -3596,17 +3596,6 @@ custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
 custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 			<elseif>
-				<equals arg1="${database.type}" arg2="oracle" />
-				<then>
-					<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-jdbc.default.acquireIncrement=1
-jdbc.default.maxPoolSize=5
-jdbc.default.minPoolSize=1
-jdbc.default.numHelperThreads=1</echo>
-				</then>
-			</elseif>
-			<elseif>
 				<equals arg1="${database.type}" arg2="sybase" />
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">

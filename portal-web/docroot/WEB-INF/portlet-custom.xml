@@ -87,10 +87,14 @@
 	<portlet>
 		<portlet-name>19</portlet-name>
 		<display-name>Message Boards</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/message_boards/</value>
+			<value>/</value>
+		</init-param>
+		<init-param>
+			<name>view-template</name>
+			<value>/message_boards/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -649,14 +653,18 @@
 	<portlet>
 		<portlet-name>162</portlet-name>
 		<display-name>Message Boards Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/message_boards_admin/configuration.jsp</value>
 		</init-param>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/message_boards_admin/</value>
+			<value>/</value>
+		</init-param>
+		<init-param>
+			<name>view-template</name>
+			<value>/message_boards/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

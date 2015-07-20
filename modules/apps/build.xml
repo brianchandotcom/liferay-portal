@@ -9,7 +9,7 @@
 		<dirset dir="blogs" includes="*" />
 		<dirset dir="bookmarks" includes="*" />
 		<dirset dir="calendar" includes="*" />
-		<dirset dir="comments" includes="*" />
+		<dirset dir="comment" includes="*" />
 		<dirset dir="configuration-admin" includes="*" />
 		<dirset dir="control-menu" includes="*" />
 		<dirset dir="control-panel" includes="*" />

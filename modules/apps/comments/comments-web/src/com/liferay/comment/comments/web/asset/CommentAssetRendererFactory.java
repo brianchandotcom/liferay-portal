@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.comments.web.asset;
+package com.liferay.comment.comments.web.asset;
 
-import com.liferay.comments.web.constants.CommentsPortletKeys;
+import com.liferay.comment.comments.web.constants.CommentsPortletKeys;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -129,7 +129,7 @@ public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.comments.web)",
+		target = "(osgi.web.symbolicname=com.liferay.comment.comments.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

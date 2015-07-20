@@ -274,9 +274,13 @@
 	<target name="portal-web">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>
-				<run-build-selenium />
+				<database-test-run-test database.type="mysql">
+					<test-action>
+						<run-build-selenium />
 
-				<run-source-formatter />
+						<run-source-formatter />
+					</test-action>
+				</database-test-run-test>
 			</test-action>
 		</run-batch-test>
 	</target>

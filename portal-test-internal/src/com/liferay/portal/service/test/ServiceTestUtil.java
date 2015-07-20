@@ -264,10 +264,6 @@ public class ServiceTestUtil {
 
 		PortalRegisterTestUtil.registerWorkflowHandlers();
 
-		// Asset renderers
-
-		PortalRegisterTestUtil.registerAssetRendererFactories();
-
 		// Company
 
 		try {

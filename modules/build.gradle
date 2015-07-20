@@ -28,12 +28,22 @@ gradle.beforeProject {
 gradle.taskGraph.useFilter {
 	Task task ->
 
-	if ((task.name == "test") && !FileUtil.exists(task.project, "test/unit")) {
-		return false
-	}
+	if (task.name == "compileJSP") {
+		FileTree jspFileTree = fileTree(dir: task.project.projectDir, excludes: ["**/custom_jsps/**/*", "**/dependencies/**/*"], includes: ["docroot/**/*.jsp", "src/META-INF/resources/**/*.jsp"])
 
-	if ((task.name == "testIntegration") && !FileUtil.exists(task.project, "test/integration")) {
-		return false
+		if (jspFileTree.empty) {
+			return false
+		}
+	}
+	else if (task.name == "test") {
+		if (!FileUtil.exists(task.project, "test/unit")) {
+			return false
+		}
+	}
+	else if (task.name == "testIntegration") {
+		if (!FileUtil.exists(task.project, "test/integration")) {
+			return false
+		}
 	}
 
 	return true

@@ -45,59 +45,17 @@
 	<div class="note-content" id="<portlet:namespace />note"><%= StringUtil.replace(HtmlUtil.escape(data), "&lt;br /&gt;", "<br />") %></div>
 </div>
 
-<c:if test="<%= portletDisplay.isShowConfigurationIcon() %>">
-	<aui:script use="aui-editable-deprecated,aui-io-request">
-		var quickNotePad = A.one('#<portlet:namespace />pad');
+<script src="/o/metal-components-1.0.0/soyutils.js"></script>
 
-		if (quickNotePad) {
-			quickNotePad.all('.note-color').on(
-				'click',
-				function(event) {
-					var box = event.currentTarget;
+<aui:script require="crystal-modal/src/Modal,metal/src/soy/SoyComponent">
+	var Modal = crystalModalSrcModal;
+	var SoyComponent = metalSrcSoySoyComponent;
 
-					var bgColor = box.getStyle('backgroundColor');
-
-					quickNotePad.setStyle('backgroundColor', bgColor);
-
-					<portlet:actionURL name="save" var="saveURL" />
-
-					A.io.request(
-						'<%= saveURL %>',
-						{
-							data: {
-								<portlet:namespace />color: bgColor
-							}
-						}
-					);
-				}
-			);
-		}
-
-		new A.Editable(
-			{
-				inputType: 'textarea',
-				node: '#<portlet:namespace />note',
-				on: {
-					contentTextChange: function(event) {
-						var instance = this;
-
-						if (!event.initial) {
-							var newValue = event.newVal.replace(/\n/gi, '<br />');
-
-							event.newVal = instance._toText(event.newVal);
-
-							A.io.request(
-								'<%= saveURL %>',
-								{
-									data: {
-										<portlet:namespace />data: newValue
-									}
-								}
-							);
-						}
-					}
-				}
-			}
-		);
-	</aui:script>
-</c:if>
+	//new Modal({
+	$('body').modal({
+		header: SoyComponent.sanitizeHtml('<h4 class="modal-title">Modal header</h4>'),
+		body: 'One fine body...',
+		footer: SoyComponent.sanitizeHtml('<button type="button" class="btn btn-primary">OK</button>')
+	});
+	//}).render();
+</aui:script>

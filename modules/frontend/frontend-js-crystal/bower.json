@@ -1,0 +1,7 @@
+{
+  "name": "crystal-components",
+  "version": "1.0.0",
+  "dependencies": {
+    "crystal-components": "metal/crystal-components#master"
+  }
+}

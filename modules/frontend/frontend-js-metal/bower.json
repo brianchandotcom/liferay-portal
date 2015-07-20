@@ -1,0 +1,7 @@
+{
+  "name": "metal-components",
+  "version": "1.0.0",
+  "dependencies": {
+    "metal": "metal/metal.js#master"
+  }
+}

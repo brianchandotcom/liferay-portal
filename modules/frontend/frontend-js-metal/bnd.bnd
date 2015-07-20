@@ -1,0 +1,6 @@
+Bundle-Name: Metal Components Bundle
+Bundle-SymbolicName: com.liferay.javascript.metal
+Bundle-Version: 1.0.0
+Include-Resource:\
+	bower.json,\
+	classes

@@ -2789,6 +2789,14 @@ go]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="execute-curl">
+		<fail message="Please set the property ${curl.args}." unless="curl.args" />
+
+		<exec executable="curl">
+			<arg line="${curl.args}" />
+		</exec>
+	</target>
+
 	<target name="evaluate-logs">
 		<if>
 			<available file="portal-web/test-ant-scripts/log" />

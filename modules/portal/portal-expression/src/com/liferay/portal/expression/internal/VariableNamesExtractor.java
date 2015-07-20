@@ -54,7 +54,7 @@ public class VariableNamesExtractor {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"\\b([a-zA-Z]+[\\w\\._]*)(?!\\()\\b", Pattern.MULTILINE);
+		"\\b([a-zA-Z]+[\\w_]*)(?!\\()\\b", Pattern.MULTILINE);
 	private static final String[] _reservedWords = {"false", "true"};
 
 }

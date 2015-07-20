@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.service.PortalPreferencesLocalService;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.service.persistence.PortalPreferencesUtil;
@@ -443,13 +444,8 @@ public class PortalPreferencesImplTest {
 						platformTransactionManager, transactionAttribute,
 						transactionStatus);
 				}
-				catch (RuntimeException re) {
-					throw re;
-				}
-				catch (Error e) {
-					throw e;
-				}
-				catch (Exception e) {
+				catch (Throwable t) {
+					ReflectionUtil.throwException(t);
 				}
 				finally {
 					_semaphore.release();

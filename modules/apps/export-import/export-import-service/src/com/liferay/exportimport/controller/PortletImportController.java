@@ -20,6 +20,9 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessor;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessorCapability;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessorRegistryUtil;
 import com.liferay.exportimport.lar.DeletionSystemEventImporter;
 import com.liferay.exportimport.lar.LayoutCache;
 import com.liferay.exportimport.lar.PermissionImporter;
@@ -911,13 +914,38 @@ public class PortletImportController implements ImportController {
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(
 						portletDataContext.getCompanyId(), curPortletId);
 
-					PortletDataHandler portletDataHandler =
-						portlet.getPortletDataHandlerInstance();
+					ExportImportPreferencesProcessor
+						exportImportPreferencesProcessor =
+							ExportImportPreferencesProcessorRegistryUtil.
+								getExportImportPreferencesProcessor(
+									portlet.getRootPortletId());
 
-					jxPortletPreferences =
-						portletDataHandler.processImportPortletPreferences(
-							portletDataContext, curPortletId,
-							jxPortletPreferences);
+					if (exportImportPreferencesProcessor != null) {
+						List<ExportImportPreferencesProcessorCapability>
+							importCapabilities =
+								exportImportPreferencesProcessor.
+									getImportCapabilities();
+
+						for (ExportImportPreferencesProcessorCapability
+								importCapability : importCapabilities) {
+
+							importCapability.process(
+								portletDataContext, jxPortletPreferences);
+						}
+
+						exportImportPreferencesProcessor.
+							processImportPortletPreferences(
+								portletDataContext, jxPortletPreferences);
+					}
+					else {
+						PortletDataHandler portletDataHandler =
+							portlet.getPortletDataHandlerInstance();
+
+						jxPortletPreferences =
+							portletDataHandler.processImportPortletPreferences(
+								portletDataContext, curPortletId,
+								jxPortletPreferences);
+					}
 				}
 				finally {
 					portletDataContext.setImportDataRootElement(

@@ -152,7 +152,12 @@ public class BuildCSSTask extends JavaExec {
 				dirName += "/";
 			}
 
-			args.put("include", dirName + "**/*.css");
+			List<String> includes = new ArrayList<>(2);
+
+			includes.add(dirName + "**/*.css");
+			includes.add(dirName + "**/*.scss");
+
+			args.put("includes", includes);
 		}
 
 		return _project.fileTree(args);

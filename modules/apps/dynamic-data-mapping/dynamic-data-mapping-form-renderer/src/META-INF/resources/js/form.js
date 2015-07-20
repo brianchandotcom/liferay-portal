@@ -17,7 +17,7 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Renderer.DefinitionSupport, Renderer.NestedFieldsSupport],
+				AUGMENTS: [Renderer.DefinitionSupport, Renderer.FormValidationSupport, Renderer.NestedFieldsSupport],
 
 				EXTENDS: A.Base,
 
@@ -77,6 +77,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-tabview', 'liferay-ddm-form-renderer-definition', 'liferay-ddm-form-renderer-nested-fields']
+		requires: ['aui-component', 'aui-tabview', 'liferay-ddm-form-renderer-definition', 'liferay-ddm-form-renderer-nested-fields', 'liferay-ddm-form-renderer-validation']
 	}
 );

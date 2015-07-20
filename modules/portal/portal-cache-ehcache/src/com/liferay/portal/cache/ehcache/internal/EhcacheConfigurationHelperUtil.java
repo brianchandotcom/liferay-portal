@@ -140,9 +140,6 @@ public class EhcacheConfigurationHelperUtil {
 			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
 			_parseFactoryClassName(
 				factoryConfiguration.getFullyQualifiedClassPath(), props));
-		properties.put(
-			EhcacheConstants.PORTAL_CACHE_MANAGER_NAME,
-			ehcacheConfiguration.getName());
 
 		return Collections.singleton(
 			new CallbackConfiguration(

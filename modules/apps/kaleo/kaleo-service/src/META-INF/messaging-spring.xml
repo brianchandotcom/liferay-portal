@@ -59,7 +59,7 @@
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
+	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
 		<property name="destinationEventListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
 				<entry key="liferay/workflow_engine">
@@ -85,14 +85,6 @@
 		</property>
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/hot_deploy">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<bean class="com.liferay.portal.workflow.kaleo.manager.messaging.KaleoDeploymentEventMessageListener">
-							<property name="portalKaleoManager" ref="com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager" />
-							<property name="servletContextName" value="kaleo-web" />
-						</bean>
-					</list>
-				</entry>
 				<entry key="liferay/kaleo_graph_walker">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.kaleo_graph_walker" />

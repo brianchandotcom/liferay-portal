@@ -12,24 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.hook.upgrade;
+package com.liferay.portal.workflow.kaleo.upgrade.v1_2_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.workflow.kaleo.hook.upgrade.v1_1_0.UpgradeWorkflowContext;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 /**
- * @author Jang Kim
+ * @author Michael C. Han
  */
-public class UpgradeProcess_1_1_0 extends UpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return 110;
-	}
+public class UpgradeKaleoNotificationRecipient extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeWorkflowContext.class);
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update KaleoNotificationRecipient set recipientClassName = " +
+					"'ADDRESS' where recipientClassName is null or " +
+						"recipientClassName = ''");
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
 	}
 
 }

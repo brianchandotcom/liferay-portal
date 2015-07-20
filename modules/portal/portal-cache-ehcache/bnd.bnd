@@ -1,40 +1,5 @@
 Bundle-Name: Liferay Portal Cache Ehcache
 Bundle-SymbolicName: com.liferay.portal.cache.ehcache
 Bundle-Version: 1.0.0
-Import-Package:\
-	!org.quartz,\
-	!org.quartz.impl,\
-	!org.quartz.impl.jdbcjobstore,\
-	!org.quartz.impl.matchers,\
-	!org.quartz.simpl,\
-	!org.terracotta.quartz,\
-	!org.terracotta.toolkit,\
-	!org.terracotta.toolkit.atomic,\
-	!org.terracotta.toolkit.builder,\
-	!org.terracotta.toolkit.cache,\
-	!org.terracotta.toolkit.cluster,\
-	!org.terracotta.toolkit.collections,\
-	!org.terracotta.toolkit.concurrent.locks,\
-	!org.terracotta.toolkit.config,\
-	!org.terracotta.toolkit.events,\
-	!org.terracotta.toolkit.feature,\
-	!org.terracotta.toolkit.internal,\
-	!org.terracotta.toolkit.internal.cache,\
-	!org.terracotta.toolkit.internal.cluster,\
-	!org.terracotta.toolkit.internal.collections,\
-	!org.terracotta.toolkit.internal.concurrent.locks,\
-	!org.terracotta.toolkit.internal.feature,\
-	!org.terracotta.toolkit.monitoring,\
-	!org.terracotta.toolkit.nonstop,\
-	!org.terracotta.toolkit.rejoin,\
-	!org.terracotta.toolkit.search,\
-	!org.terracotta.toolkit.search.attribute,\
-	!org.terracotta.toolkit.store,\
-	!sun.misc,\
-	*
 Include-Resource:\
-	classes,\
-	@lib/ehcache.jar!/com/*,\
-	@lib/ehcache.jar!/net/*,\
-	@lib/ehcache.jar!/org/*,\
-	@lib/ehcache.jar!/META-INF/*
+	classes

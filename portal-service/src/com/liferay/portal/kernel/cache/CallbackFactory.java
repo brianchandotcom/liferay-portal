@@ -30,6 +30,6 @@ public interface CallbackFactory {
 		createPortalCacheListener(Properties properties);
 
 	public PortalCacheManagerListener createPortalCacheManagerListener(
-		Properties properties);
+		PortalCacheManager<?, ?> portalCacheManager, Properties properties);
 
 }

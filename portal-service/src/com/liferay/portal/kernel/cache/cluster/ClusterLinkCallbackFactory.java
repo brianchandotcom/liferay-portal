@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.cache.cluster;
 import com.liferay.portal.kernel.cache.CallbackFactory;
 import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkPortalCacheBootstrapLoader;
 
@@ -49,7 +50,7 @@ public class ClusterLinkCallbackFactory implements CallbackFactory {
 
 	@Override
 	public PortalCacheManagerListener createPortalCacheManagerListener(
-		Properties properties) {
+		PortalCacheManager<?, ?> portalCacheManager, Properties properties) {
 
 		throw new UnsupportedOperationException();
 	}

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
-import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -115,7 +114,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 
 	@Override
 	public PortalCacheManagerListener createPortalCacheManagerListener(
-		Properties properties) {
+		PortalCacheManager<?, ?> portalCacheManager, Properties properties) {
 
 		String className = properties.getProperty(
 			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME);
@@ -124,21 +123,12 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 			return null;
 		}
 
-		String portalCacheManagerName = properties.getProperty(
-			EhcacheConstants.PORTAL_CACHE_MANAGER_NAME);
-
-		if (Validator.isNull(portalCacheManagerName)) {
-			return null;
-		}
-
-		PortalCacheManager<?, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
-				portalCacheManagerName);
-
 		if (!(portalCacheManager instanceof EhcachePortalCacheManager)) {
 			throw new IllegalArgumentException(
-				"PortalCacheManager with name " + portalCacheManagerName +
-					" is not a " + EhcachePortalCacheManager.class.getName());
+				"PortalCacheManager with name " +
+					portalCacheManager.getPortalCacheManagerName() +
+						" is not a " +
+							EhcachePortalCacheManager.class.getName());
 		}
 
 		EhcachePortalCacheManager<?, ?> ehcachePortalCacheManager =

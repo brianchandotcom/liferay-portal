@@ -89,7 +89,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	*/
 	public KaleoTask findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Returns the first kaleo task in the ordered set where companyId = &#63;.
@@ -111,7 +111,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	*/
 	public KaleoTask findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Returns the last kaleo task in the ordered set where companyId = &#63;.
@@ -135,7 +135,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	public KaleoTask[] findByCompanyId_PrevAndNext(long kaleoTaskId,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Removes all the kaleo tasks where companyId = &#63; from the database.
@@ -203,7 +203,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	*/
 	public KaleoTask findByKaleoDefinitionId_First(long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Returns the first kaleo task in the ordered set where kaleoDefinitionId = &#63;.
@@ -225,7 +225,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	*/
 	public KaleoTask findByKaleoDefinitionId_Last(long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Returns the last kaleo task in the ordered set where kaleoDefinitionId = &#63;.
@@ -249,7 +249,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	public KaleoTask[] findByKaleoDefinitionId_PrevAndNext(long kaleoTaskId,
 		long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Removes all the kaleo tasks where kaleoDefinitionId = &#63; from the database.
@@ -274,7 +274,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	* @throws NoSuchTaskException if a matching kaleo task could not be found
 	*/
 	public KaleoTask findByKaleoNodeId(long kaleoNodeId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Returns the kaleo task where kaleoNodeId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -301,7 +301,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	* @return the kaleo task that was removed
 	*/
 	public KaleoTask removeByKaleoNodeId(long kaleoNodeId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Returns the number of kaleo tasks where kaleoNodeId = &#63;.
@@ -341,7 +341,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	* @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	*/
 	public KaleoTask remove(long kaleoTaskId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	public KaleoTask updateImpl(KaleoTask kaleoTask);
 
@@ -353,7 +353,7 @@ public interface KaleoTaskPersistence extends BasePersistence<KaleoTask> {
 	* @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	*/
 	public KaleoTask findByPrimaryKey(long kaleoTaskId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 
 	/**
 	* Returns the kaleo task with the primary key or returns <code>null</code> if it could not be found.

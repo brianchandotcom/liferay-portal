@@ -164,7 +164,7 @@ public class KaleoTaskUtil {
 	*/
 	public static KaleoTask findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -192,7 +192,7 @@ public class KaleoTaskUtil {
 	*/
 	public static KaleoTask findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -221,7 +221,7 @@ public class KaleoTaskUtil {
 	*/
 	public static KaleoTask[] findByCompanyId_PrevAndNext(long kaleoTaskId,
 		long companyId, OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(kaleoTaskId, companyId,
 			orderByComparator);
@@ -306,7 +306,7 @@ public class KaleoTaskUtil {
 	*/
 	public static KaleoTask findByKaleoDefinitionId_First(
 		long kaleoDefinitionId, OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_First(kaleoDefinitionId,
 			orderByComparator);
@@ -336,7 +336,7 @@ public class KaleoTaskUtil {
 	*/
 	public static KaleoTask findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId, OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_Last(kaleoDefinitionId,
 			orderByComparator);
@@ -368,7 +368,7 @@ public class KaleoTaskUtil {
 	public static KaleoTask[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoTaskId, long kaleoDefinitionId,
 		OrderByComparator<KaleoTask> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_PrevAndNext(kaleoTaskId,
 			kaleoDefinitionId, orderByComparator);
@@ -401,7 +401,7 @@ public class KaleoTaskUtil {
 	* @throws NoSuchTaskException if a matching kaleo task could not be found
 	*/
 	public static KaleoTask findByKaleoNodeId(long kaleoNodeId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence().findByKaleoNodeId(kaleoNodeId);
 	}
 
@@ -435,7 +435,7 @@ public class KaleoTaskUtil {
 	* @return the kaleo task that was removed
 	*/
 	public static KaleoTask removeByKaleoNodeId(long kaleoNodeId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence().removeByKaleoNodeId(kaleoNodeId);
 	}
 
@@ -485,7 +485,7 @@ public class KaleoTaskUtil {
 	* @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	*/
 	public static KaleoTask remove(long kaleoTaskId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence().remove(kaleoTaskId);
 	}
 
@@ -501,7 +501,7 @@ public class KaleoTaskUtil {
 	* @throws NoSuchTaskException if a kaleo task with the primary key could not be found
 	*/
 	public static KaleoTask findByPrimaryKey(long kaleoTaskId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException {
 		return getPersistence().findByPrimaryKey(kaleoTaskId);
 	}
 

@@ -164,7 +164,7 @@ public class KaleoNodeUtil {
 	*/
 	public static KaleoNode findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -192,7 +192,7 @@ public class KaleoNodeUtil {
 	*/
 	public static KaleoNode findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -221,7 +221,7 @@ public class KaleoNodeUtil {
 	*/
 	public static KaleoNode[] findByCompanyId_PrevAndNext(long kaleoNodeId,
 		long companyId, OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(kaleoNodeId, companyId,
 			orderByComparator);
@@ -306,7 +306,7 @@ public class KaleoNodeUtil {
 	*/
 	public static KaleoNode findByKaleoDefinitionId_First(
 		long kaleoDefinitionId, OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_First(kaleoDefinitionId,
 			orderByComparator);
@@ -336,7 +336,7 @@ public class KaleoNodeUtil {
 	*/
 	public static KaleoNode findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId, OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_Last(kaleoDefinitionId,
 			orderByComparator);
@@ -368,7 +368,7 @@ public class KaleoNodeUtil {
 	public static KaleoNode[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoNodeId, long kaleoDefinitionId,
 		OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_PrevAndNext(kaleoNodeId,
 			kaleoDefinitionId, orderByComparator);
@@ -457,7 +457,7 @@ public class KaleoNodeUtil {
 	*/
 	public static KaleoNode findByC_KDI_First(long companyId,
 		long kaleoDefinitionId, OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByC_KDI_First(companyId, kaleoDefinitionId,
 			orderByComparator);
@@ -489,7 +489,7 @@ public class KaleoNodeUtil {
 	*/
 	public static KaleoNode findByC_KDI_Last(long companyId,
 		long kaleoDefinitionId, OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByC_KDI_Last(companyId, kaleoDefinitionId,
 			orderByComparator);
@@ -523,7 +523,7 @@ public class KaleoNodeUtil {
 	public static KaleoNode[] findByC_KDI_PrevAndNext(long kaleoNodeId,
 		long companyId, long kaleoDefinitionId,
 		OrderByComparator<KaleoNode> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence()
 				   .findByC_KDI_PrevAndNext(kaleoNodeId, companyId,
 			kaleoDefinitionId, orderByComparator);
@@ -586,7 +586,7 @@ public class KaleoNodeUtil {
 	* @throws NoSuchNodeException if a kaleo node with the primary key could not be found
 	*/
 	public static KaleoNode remove(long kaleoNodeId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence().remove(kaleoNodeId);
 	}
 
@@ -602,7 +602,7 @@ public class KaleoNodeUtil {
 	* @throws NoSuchNodeException if a kaleo node with the primary key could not be found
 	*/
 	public static KaleoNode findByPrimaryKey(long kaleoNodeId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNodeException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException {
 		return getPersistence().findByPrimaryKey(kaleoNodeId);
 	}
 

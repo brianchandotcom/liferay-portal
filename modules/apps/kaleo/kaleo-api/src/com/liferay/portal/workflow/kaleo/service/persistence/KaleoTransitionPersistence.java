@@ -89,7 +89,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	*/
 	public KaleoTransition findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the first kaleo transition in the ordered set where companyId = &#63;.
@@ -111,7 +111,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	*/
 	public KaleoTransition findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the last kaleo transition in the ordered set where companyId = &#63;.
@@ -135,7 +135,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	public KaleoTransition[] findByCompanyId_PrevAndNext(
 		long kaleoTransitionId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Removes all the kaleo transitions where companyId = &#63; from the database.
@@ -204,7 +204,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	public KaleoTransition findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the first kaleo transition in the ordered set where kaleoDefinitionId = &#63;.
@@ -228,7 +228,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	public KaleoTransition findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the last kaleo transition in the ordered set where kaleoDefinitionId = &#63;.
@@ -253,7 +253,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	public KaleoTransition[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoTransitionId, long kaleoDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Removes all the kaleo transitions where kaleoDefinitionId = &#63; from the database.
@@ -320,7 +320,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	*/
 	public KaleoTransition findByKaleoNodeId_First(long kaleoNodeId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the first kaleo transition in the ordered set where kaleoNodeId = &#63;.
@@ -342,7 +342,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	*/
 	public KaleoTransition findByKaleoNodeId_Last(long kaleoNodeId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the last kaleo transition in the ordered set where kaleoNodeId = &#63;.
@@ -366,7 +366,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	public KaleoTransition[] findByKaleoNodeId_PrevAndNext(
 		long kaleoTransitionId, long kaleoNodeId,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Removes all the kaleo transitions where kaleoNodeId = &#63; from the database.
@@ -392,7 +392,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @throws NoSuchTransitionException if a matching kaleo transition could not be found
 	*/
 	public KaleoTransition findByKNI_N(long kaleoNodeId, java.lang.String name)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -422,7 +422,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @return the kaleo transition that was removed
 	*/
 	public KaleoTransition removeByKNI_N(long kaleoNodeId, java.lang.String name)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the number of kaleo transitions where kaleoNodeId = &#63; and name = &#63;.
@@ -443,7 +443,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	*/
 	public KaleoTransition findByKNI_DT(long kaleoNodeId,
 		boolean defaultTransition)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -475,7 +475,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	*/
 	public KaleoTransition removeByKNI_DT(long kaleoNodeId,
 		boolean defaultTransition)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the number of kaleo transitions where kaleoNodeId = &#63; and defaultTransition = &#63;.
@@ -516,7 +516,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	*/
 	public KaleoTransition remove(long kaleoTransitionId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	public KaleoTransition updateImpl(KaleoTransition kaleoTransition);
 
@@ -528,7 +528,7 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	*/
 	public KaleoTransition findByPrimaryKey(long kaleoTransitionId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 
 	/**
 	* Returns the kaleo transition with the primary key or returns <code>null</code> if it could not be found.

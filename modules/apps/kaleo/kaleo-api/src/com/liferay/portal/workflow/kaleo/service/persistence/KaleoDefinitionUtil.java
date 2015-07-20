@@ -164,7 +164,7 @@ public class KaleoDefinitionUtil {
 	*/
 	public static KaleoDefinition findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -192,7 +192,7 @@ public class KaleoDefinitionUtil {
 	*/
 	public static KaleoDefinition findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -222,7 +222,7 @@ public class KaleoDefinitionUtil {
 	public static KaleoDefinition[] findByCompanyId_PrevAndNext(
 		long kaleoDefinitionId, long companyId,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(kaleoDefinitionId, companyId,
 			orderByComparator);
@@ -310,7 +310,7 @@ public class KaleoDefinitionUtil {
 	public static KaleoDefinition findByC_N_First(long companyId,
 		java.lang.String name,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_N_First(companyId, name, orderByComparator);
 	}
@@ -342,7 +342,7 @@ public class KaleoDefinitionUtil {
 	public static KaleoDefinition findByC_N_Last(long companyId,
 		java.lang.String name,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_N_Last(companyId, name, orderByComparator);
 	}
@@ -375,7 +375,7 @@ public class KaleoDefinitionUtil {
 	public static KaleoDefinition[] findByC_N_PrevAndNext(
 		long kaleoDefinitionId, long companyId, java.lang.String name,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_N_PrevAndNext(kaleoDefinitionId, companyId, name,
 			orderByComparator);
@@ -463,7 +463,7 @@ public class KaleoDefinitionUtil {
 	*/
 	public static KaleoDefinition findByC_A_First(long companyId,
 		boolean active, OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_A_First(companyId, active, orderByComparator);
 	}
@@ -493,7 +493,7 @@ public class KaleoDefinitionUtil {
 	*/
 	public static KaleoDefinition findByC_A_Last(long companyId,
 		boolean active, OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_A_Last(companyId, active, orderByComparator);
 	}
@@ -525,7 +525,7 @@ public class KaleoDefinitionUtil {
 	public static KaleoDefinition[] findByC_A_PrevAndNext(
 		long kaleoDefinitionId, long companyId, boolean active,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_A_PrevAndNext(kaleoDefinitionId, companyId, active,
 			orderByComparator);
@@ -563,7 +563,7 @@ public class KaleoDefinitionUtil {
 	*/
 	public static KaleoDefinition findByC_N_V(long companyId,
 		java.lang.String name, int version)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().findByC_N_V(companyId, name, version);
 	}
 
@@ -605,7 +605,7 @@ public class KaleoDefinitionUtil {
 	*/
 	public static KaleoDefinition removeByC_N_V(long companyId,
 		java.lang.String name, int version)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().removeByC_N_V(companyId, name, version);
 	}
 
@@ -690,7 +690,7 @@ public class KaleoDefinitionUtil {
 	public static KaleoDefinition findByC_N_A_First(long companyId,
 		java.lang.String name, boolean active,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_N_A_First(companyId, name, active, orderByComparator);
 	}
@@ -725,7 +725,7 @@ public class KaleoDefinitionUtil {
 	public static KaleoDefinition findByC_N_A_Last(long companyId,
 		java.lang.String name, boolean active,
 		OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_N_A_Last(companyId, name, active, orderByComparator);
 	}
@@ -760,7 +760,7 @@ public class KaleoDefinitionUtil {
 	public static KaleoDefinition[] findByC_N_A_PrevAndNext(
 		long kaleoDefinitionId, long companyId, java.lang.String name,
 		boolean active, OrderByComparator<KaleoDefinition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence()
 				   .findByC_N_A_PrevAndNext(kaleoDefinitionId, companyId, name,
 			active, orderByComparator);
@@ -827,7 +827,7 @@ public class KaleoDefinitionUtil {
 	* @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
 	*/
 	public static KaleoDefinition remove(long kaleoDefinitionId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().remove(kaleoDefinitionId);
 	}
 
@@ -843,7 +843,7 @@ public class KaleoDefinitionUtil {
 	* @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
 	*/
 	public static KaleoDefinition findByPrimaryKey(long kaleoDefinitionId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchDefinitionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException {
 		return getPersistence().findByPrimaryKey(kaleoDefinitionId);
 	}
 

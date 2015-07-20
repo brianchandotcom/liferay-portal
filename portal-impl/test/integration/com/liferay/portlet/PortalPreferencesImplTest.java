@@ -395,11 +395,11 @@ public class PortalPreferencesImplTest {
 
 		SynchronousInvocationHandler.synchronize(true);
 
-		Thread thread1 = new Thread(futureTask1);
+		Thread thread1 = new Thread(futureTask1, "Update Thread 1");
 
 		thread1.start();
 
-		Thread thread2 = new Thread(futureTask2);
+		Thread thread2 = new Thread(futureTask2, "Update Thread 2");
 
 		thread2.start();
 

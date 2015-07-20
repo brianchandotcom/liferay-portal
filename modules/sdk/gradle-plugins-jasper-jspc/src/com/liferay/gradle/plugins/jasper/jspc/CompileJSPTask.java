@@ -28,12 +28,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.gradle.api.GradleException;
+import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.SkipWhenEmpty;
 
 /**
  * @author Andrea Di Giorgi
@@ -90,6 +93,27 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 		return GradleUtil.toFile(getProject(), _destinationDir);
 	}
 
+	@InputFiles
+	@SkipWhenEmpty
+	public FileCollection getJSPFiles() {
+		Project project = getProject();
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", getWebAppDir());
+
+		List<String> excludes = new ArrayList<>(2);
+
+		excludes.add("**/custom_jsps/**/*");
+		excludes.add("**/dependencies/**/*");
+
+		args.put("excludes", excludes);
+
+		args.put("include", "**/*.jsp");
+
+		return project.fileTree(args);
+	}
+
 	@InputDirectory
 	@Optional
 	@Override
@@ -97,7 +121,6 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 		return GradleUtil.toFile(getProject(), _portalDir);
 	}
 
-	@InputDirectory
 	@Override
 	public File getWebAppDir() {
 		return GradleUtil.toFile(getProject(), _webAppDir);

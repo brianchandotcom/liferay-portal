@@ -8,6 +8,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean id="com.liferay.portlet.messageboards.action.BanUserMVCActionCommand" class="com.liferay.portlet.messageboards.action.BanUserMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.CaptchaMVCResourceCommand" class="com.liferay.portlet.messageboards.action.CaptchaMVCResourceCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.DeleteThreadMVCActionCommand" class="com.liferay.portlet.messageboards.action.DeleteThreadMVCActionCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.EditCategoryMVCActionCommand" class="com.liferay.portlet.messageboards.action.EditCategoryMVCActionCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.EditCategoryMVCRenderCommand" class="com.liferay.portlet.messageboards.action.EditCategoryMVCRenderCommand" />

@@ -433,9 +433,7 @@ else {
 	</aui:fieldset>
 
 	<c:if test="<%= (message == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE %>">
-		<portlet:resourceURL var="captchaURL">
-			<portlet:param name="struts_action" value="/message_boards/captcha" />
-		</portlet:resourceURL>
+		<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
 
 		<liferay-ui:captcha url="<%= captchaURL %>" />
 	</c:if>

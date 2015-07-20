@@ -278,14 +278,6 @@
 
 		<action path="/maps/view" forward="portlet.maps.view" name="mapsMapsForm" scope="request" />
 
-		<!-- Message Boards -->
-
-		<action path="/message_boards/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
-		<!-- Message Boards Admin -->
-
-		<action path="/message_boards_admin/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
 		<!-- Mobile Device Rules -->
 
 		<action path="/mobile_device_rules/edit_action" type="com.liferay.portlet.mobiledevicerules.action.EditActionAction">

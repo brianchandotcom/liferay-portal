@@ -269,7 +269,7 @@ public class CustomSQLTest {
 	}
 
 	private static final String _SQL =
-		"([$USER_ID$] [$USER_ID_AND_OR_CONNECTOR$] [$STATUS$]) ";
+		"([$OWNER_USER_ID$] [$USER_ID_AND_OR_CONNECTOR$] [$STATUS$]) ";
 
 	private static final String _TABLE_NAME = "TestModel";
 

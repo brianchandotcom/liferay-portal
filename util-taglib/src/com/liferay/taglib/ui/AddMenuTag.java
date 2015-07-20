@@ -29,13 +29,13 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		request.setAttribute("liferay-ui:add-menu:menuItems", _menuItems);
+		request.setAttribute("liferay-ui:add-menu:addMenuItems", _addMenuItems);
 
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public void setMenuItems(List<AddMenuItem> menuItems) {
-		_menuItems = menuItems;
+	public void setAddMenuItems(List<AddMenuItem> addMenuItems) {
+		_addMenuItems = addMenuItems;
 	}
 
 	@Override
@@ -45,12 +45,12 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		List<AddMenuItem> menuItems = (List)request.getAttribute(
-			"liferay-ui:add-menu:menuItems");
+		List<AddMenuItem> addMenuItems = (List)request.getAttribute(
+			"liferay-ui:add-menu:addMenuItems");
 
-		request.setAttribute("liferay-ui:add-menu:menuItems", menuItems);
+		request.setAttribute("liferay-ui:add-menu:addMenuItems", addMenuItems);
 	}
 
-	private List<AddMenuItem> _menuItems = new ArrayList<>();
+	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
 
 }

@@ -17,22 +17,18 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 /**
  * @author Ambrín Chaudhary
  */
-public class AddMenuItem {
+public class AddMenuItem extends MenuItem {
 
-	public AddMenuItem(String title, String url) {
-		_title = title;
+	public AddMenuItem(String label, String url) {
+		setLabel(label);
+
 		_url = url;
-	}
-
-	public String getTitle() {
-		return _title;
 	}
 
 	public String getUrl() {
 		return _url;
 	}
 
-	private final String _title;
 	private final String _url;
 
 }

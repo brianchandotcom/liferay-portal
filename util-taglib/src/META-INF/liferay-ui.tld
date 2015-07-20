@@ -11,18 +11,18 @@
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
-		<description>Creates an add menu that contains a list of url menu items.</description>
+		<description>Creates an add menu that contains a list of add menu items.</description>
 		<name>add-menu</name>
 		<tag-class>com.liferay.taglib.ui.AddMenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>menuItems</name>
+			<name>addMenuItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a menu item.</description>
+		<description>Creates an add menu item.</description>
 		<name>add-menu-item</name>
 		<tag-class>com.liferay.taglib.ui.AddMenuItemTag</tag-class>
 		<body-content>JSP</body-content>

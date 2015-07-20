@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.hook.upgrade.v1_2_0.util;
+package com.liferay.portal.workflow.kaleo.upgrade.v1_2_0.util;
 
 import java.sql.Types;
 

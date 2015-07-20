@@ -83,6 +83,12 @@ public class LockLocalServiceTest {
 				expectedLog =
 					"ERROR: duplicate key value violates unique constraint ",
 				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_ORACLE,
+				expectedLog =
+					"ORA-00001: unique constraint",
+				expectedType = ExpectedType.PREFIX
 			)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class

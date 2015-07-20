@@ -81,7 +81,7 @@ public class CommentAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			return "/comments/asset/discussion_" + template + ".jsp";
+			return "/asset/discussion_" + template + ".jsp";
 		}
 		else {
 			return null;
@@ -150,7 +150,7 @@ public class CommentAssetRenderer
 			request, CommentsPortletKeys.COMMENTS,
 			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
 
-		editPortletURL.setParameter("mvcPath", "/comments/edit_discussion.jsp");
+		editPortletURL.setParameter("mvcPath", "/edit_discussion.jsp");
 		editPortletURL.setParameter(
 			"commentId", String.valueOf(_workflowableComment.getCommentId()));
 
@@ -168,7 +168,7 @@ public class CommentAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("mvcPath", "/comments/view_comment.jsp");
+		portletURL.setParameter("mvcPath", "/view_comment.jsp");
 		portletURL.setParameter(
 			"commentId", String.valueOf(_workflowableComment.getCommentId()));
 		portletURL.setWindowState(windowState);

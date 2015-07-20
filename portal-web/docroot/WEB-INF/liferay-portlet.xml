@@ -110,7 +110,6 @@
 		<portlet-name>20</portlet-name>
 		<struts-path>document_library</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
@@ -118,7 +117,6 @@
 		<parent-struts-path>document_library</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<template-handler>com.liferay.portlet.documentlibrary.template.DocumentLibraryPortletDisplayTemplateHandler</template-handler>
-		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 	</portlet>
 	<portlet>
 		<portlet-name>34</portlet-name>
@@ -208,7 +206,6 @@
 		<struts-path>document_library_display</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 	</portlet>
 	<portlet>
 		<portlet-name>119</portlet-name>
@@ -534,7 +531,6 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
-		<webdav-storage-class>com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl</webdav-storage-class>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

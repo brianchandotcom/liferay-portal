@@ -80,7 +80,7 @@ if (comment instanceof WorkflowableComment) {
 		request.setAttribute(WebKeys.COMMENT, parentComment);
 		%>
 
-		<liferay-util:include page="/comments/asset/discussion_full_content.jsp" />
+		<liferay-util:include page="/asset/discussion_full_content.jsp" />
 	</c:if>
 
 	<c:if test="<%= pending %>">

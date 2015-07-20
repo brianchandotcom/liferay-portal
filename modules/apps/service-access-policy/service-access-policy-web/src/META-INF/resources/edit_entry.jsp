@@ -73,7 +73,182 @@ if (sapEntry != null) {
 
 	<aui:input name="title" required="<%= true %>" />
 
-	<aui:input helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />
+	<portlet:resourceURL var="getServicesURL">
+		<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="getServices" />
+		<portlet:param name="mvcPath" value="<%= StringPool.SPACE %>" />
+	</portlet:resourceURL>
+	<portlet:resourceURL var="getMethodsURL">
+		<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="getMethods" />
+		<portlet:param name="mvcPath" value="<%= StringPool.SPACE %>" />
+	</portlet:resourceURL>
+
+	<div id="<portlet:namespace />allowedServiceSignatures">
+
+		<%
+		for (int i = 0; i < allowedServiceSignaturesIndexes.length; i++) {
+			int allowedServiceIndex = allowedServiceSignaturesIndexes[i];
+
+			String packageName = ParamUtil.getString(request, "packageName" + allowedServiceIndex, "0");
+			String methodName = ParamUtil.getString(request, "methodName" + allowedServiceIndex, "All methods");
+		%>
+
+			<div class="lfr-form-row">
+				<div class="row-fields">
+					<aui:col md="6">
+						<aui:select id='<%= "serviceClass" + allowedServiceIndex %>' name="serviceClass"></aui:select>
+					</aui:col>
+					<aui:col md="6">
+						<aui:select id='<%= "methodName" + allowedServiceIndex %>' name="methodName"></aui:select>
+					</aui:col>
+				</div>
+			</div>
+
+			<aui:script use="liferay-dynamic-select,io-base">
+				function getJSON(URL, callback, data) {
+					A.io(
+						URL,
+						{
+							arguments: {
+								callback: callback
+							},
+							data: data,
+							on: {
+								success: <portlet:namespace />processRequest
+							}
+						}
+					);
+				}
+
+				function getMethods(callback, key) {
+					var dataKey = key.split('/');
+
+					getJSON(
+						'<%= getMethodsURL %>',
+						callback,
+						{
+							<portlet:namespace />context: dataKey[0],
+							<portlet:namespace />serviceClass: dataKey[1]
+						}
+					);
+				}
+
+				function getServices(callback) {
+					getJSON('<%= getServicesURL %>', callback);
+				}
+
+				new Liferay.DynamicSelect(
+					[
+						{
+							select: '<portlet:namespace />serviceClass<%= allowedServiceIndex %>',
+							selectData: getServices,
+							selectDesc: 'serviceClass',
+							selectId: 'serviceClass',
+							selectSort: '<%= true %>',
+							selectVal: '<%= packageName %>'
+						},
+						{
+							select: '<portlet:namespace />methodName<%= allowedServiceIndex %>',
+							selectData: getMethods,
+							selectDesc: 'method',
+							selectId: 'method',
+							selectVal: '<%= methodName %>'
+						}
+					]
+				);
+			</aui:script>
+
+		<%
+		}
+		%>
+
+		<aui:input name="allowedServiceSignaturesIndexes" type="hidden" value="<%= StringUtil.merge(allowedServiceSignaturesIndexes) %>" />
+	</div>
+
+	<aui:script use="liferay-auto-fields,liferay-dynamic-select,io-base">
+		function getJSON(URL, callback, data) {
+			A.io(
+				URL,
+				{
+					arguments: {
+						callback: callback
+					},
+					data: data,
+					on: {
+						success: <portlet:namespace />processRequest
+					}
+				}
+			);
+		}
+
+		function getMethods(callback, key) {
+			var dataKey = key.split('/');
+
+			getJSON(
+				'<%= getMethodsURL %>',
+				callback,
+				{
+					<portlet:namespace />context: dataKey[0],
+					<portlet:namespace />serviceClass: dataKey[1]
+				}
+			);
+		}
+
+		function getServices(callback) {
+			getJSON('<%= getServicesURL %>', callback);
+		}
+
+		var allowedServiceSignatures = new Liferay.AutoFields(
+			{
+				contentBox: '#<portlet:namespace />allowedServiceSignatures',
+				fieldIndexes: '<portlet:namespace />allowedServiceSignaturesIndexes',
+				namespace: '<portlet:namespace />',
+				on: {
+					'clone': function(event) {
+						var guid = event.guid;
+						var row = event.row;
+
+						var dynamicSelects = row.one('select[data-componentType=dynamic_select]');
+
+						if (dynamicSelects) {
+							dynamicSelects.detach('change');
+						}
+
+						var dynamicSelect = new Liferay.DynamicSelect(
+							[
+								{
+									select: '<portlet:namespace />serviceClass' + guid,
+									selectData: getServices,
+									selectDesc: 'serviceClass',
+									selectId: 'serviceClass',
+									selectSort: '<%= true %>',
+									selectVal: '0'
+								},
+								{
+									select: '<portlet:namespace />methodName' + guid,
+									selectData: getMethods,
+									selectDesc: 'method',
+									selectId: 'method',
+									selectVal: 'All methods'
+								}
+							]
+						);
+
+						dynamicSelect._updateSelect(1, []);
+					}
+				}
+			}
+		).render();
+	</aui:script>
+
+	<aui:script>
+		function <portlet:namespace />processRequest(index, data, args) {
+			if (data.response) {
+				var response = JSON.parse(data.response);
+
+				args.callback(response);
+			}
+		}
+	</aui:script>
 
 	<aui:button-row>
 		<aui:button type="submit" value="save" />

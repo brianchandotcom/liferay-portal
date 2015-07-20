@@ -147,11 +147,11 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 							modal: true,
 							width: 680
 						},
-						id: '<%= PortalUtil.getPortletNamespace(PortletKeys.USER_GROUPS_ADMIN) %>selectUserGroup',
+						id: '<portlet:namespace />selectUserGroup',
 						title: '<liferay-ui:message arguments="user-group" key="select-x" />',
 
-						<liferay-portlet:renderURL portletName="<%= PortletKeys.USER_GROUPS_ADMIN %>" var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="mvcPath" value="/html/portlet/user_groups_admin/select_user_group.jsp" />
+						<liferay-portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/html/portlet/users_admin/select_user_group.jsp" />
 							<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
 						</liferay-portlet:renderURL>
 

@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.template;
+package com.liferay.document.library.web.template;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.document.library.configuration.DLSystemConfiguration;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
@@ -36,9 +39,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	configurationPid = "com.liferay.document.library.configuration.DLSystemConfiguration",
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	service = TemplateHandler.class
+)
 public class DocumentLibraryPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
@@ -119,12 +132,21 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 		return templateVariableGroups;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_dlSystemConfiguration = Configurable.createConfigurable(
+			DLSystemConfiguration.class, properties);
+	}
+
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.DL_DISPLAY_TEMPLATES_CONFIG;
+		return _dlSystemConfiguration.displayTemplatesConfig();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentLibraryPortletDisplayTemplateHandler.class);
+
+	private volatile DLSystemConfiguration _dlSystemConfiguration;
 
 }

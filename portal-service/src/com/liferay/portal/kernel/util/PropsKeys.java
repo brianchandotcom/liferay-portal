@@ -589,8 +589,6 @@ public interface PropsKeys {
 
 	public static final String DL_DEFAULT_DISPLAY_VIEW = "dl.default.display.view";
 
-	public static final String DL_DISPLAY_TEMPLATES_CONFIG = "dl.display.templates.config";
-
 	public static final String DL_DISPLAY_VIEWS = "dl.display.views";
 
 	public static final String DL_EMAIL_FILE_ENTRY_ADDED_BODY = "dl.email.file.entry.added.body";

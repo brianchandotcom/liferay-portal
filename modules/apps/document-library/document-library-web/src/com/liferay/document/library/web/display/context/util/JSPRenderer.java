@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context.util;
+package com.liferay.document.library.web.display.context.util;
 
 import java.io.IOException;
 

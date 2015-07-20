@@ -12,8 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context;
+package com.liferay.document.library.web.display.context;
 
+import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
+import com.liferay.document.library.web.display.context.logic.FileVersionDisplayContextHelper;
+import com.liferay.document.library.web.display.context.util.DLRequestHelper;
+import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -24,10 +28,8 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.portlet.documentlibrary.display.context.logic.FileVersionDisplayContextHelper;
-import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
+import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext;
+import com.liferay.portlet.documentlibrary.display.context.DLFilePicker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;

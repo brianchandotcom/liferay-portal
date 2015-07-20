@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrarydisplay.display.context.util;
-
-import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
+package com.liferay.document.library.web.display.context.util;
 
 import javax.servlet.http.HttpServletRequest;
 

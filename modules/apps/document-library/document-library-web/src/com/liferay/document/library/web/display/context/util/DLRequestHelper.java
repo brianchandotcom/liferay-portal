@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context.util;
+package com.liferay.document.library.web.display.context.util;
 
+import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 
 import javax.servlet.http.HttpServletRequest;
 

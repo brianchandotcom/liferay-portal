@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.display.context;
+package com.liferay.document.library.web.display.context;
 
+import com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper;
+import com.liferay.document.library.web.display.context.logic.UIItemsBuilder;
+import com.liferay.document.library.web.display.context.util.IGRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper;
-import com.liferay.portlet.documentlibrary.display.context.logic.UIItemsBuilder;
-import com.liferay.portlet.imagegallerydisplay.display.context.util.IGRequestHelper;
+import com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext;
 
 import java.util.ArrayList;
 import java.util.List;

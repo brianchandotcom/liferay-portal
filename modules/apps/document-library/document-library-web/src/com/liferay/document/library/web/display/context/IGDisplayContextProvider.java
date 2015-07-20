@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.display.context;
+package com.liferay.document.library.web.display.context;
 
+import com.liferay.portal.kernel.display.context.DisplayContextProvider;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,40 +25,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class IGDisplayContextProviderUtil {
+public interface IGDisplayContextProvider extends DisplayContextProvider {
 
-	public static IGDisplayContextProvider getIGDisplayContextProvider() {
-		return _igDisplayContextProvider;
-	}
-
-	public static IGViewFileVersionDisplayContext
+	public IGViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut) {
+			FileShortcut fileShortcut);
 
-		return getIGDisplayContextProvider().
-			getIGFileVersionActionsDisplayContext(
-				request, response, fileShortcut);
-	}
-
-	public static IGViewFileVersionDisplayContext
+	public IGViewFileVersionDisplayContext
 		getIGFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
-
-		return getIGDisplayContextProvider().
-			getIGFileVersionActionsDisplayContext(
-				request, response, fileVersion);
-	}
-
-	public void setIGDisplayContextProvider(
-		IGDisplayContextProvider igDisplayContextProvider) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_igDisplayContextProvider = igDisplayContextProvider;
-	}
-
-	private static IGDisplayContextProvider _igDisplayContextProvider;
+			FileVersion fileVersion);
 
 }

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context.logic;
+package com.liferay.document.library.web.display.context.logic;
 
+import com.liferay.document.library.web.display.context.util.DLRequestHelper;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
 
 /**
  * @author Iván Zaera

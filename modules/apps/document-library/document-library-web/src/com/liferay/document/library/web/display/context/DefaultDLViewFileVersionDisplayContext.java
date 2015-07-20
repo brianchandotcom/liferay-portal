@@ -12,8 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context;
+package com.liferay.document.library.web.display.context;
 
+import com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper;
+import com.liferay.document.library.web.display.context.logic.DLVisualizationHelper;
+import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
+import com.liferay.document.library.web.display.context.logic.FileVersionDisplayContextHelper;
+import com.liferay.document.library.web.display.context.logic.UIItemsBuilder;
+import com.liferay.document.library.web.display.context.util.DLRequestHelper;
+import com.liferay.document.library.web.display.context.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -24,13 +31,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper;
-import com.liferay.portlet.documentlibrary.display.context.logic.DLVisualizationHelper;
-import com.liferay.portlet.documentlibrary.display.context.logic.FileEntryDisplayContextHelper;
-import com.liferay.portlet.documentlibrary.display.context.logic.FileVersionDisplayContextHelper;
-import com.liferay.portlet.documentlibrary.display.context.logic.UIItemsBuilder;
-import com.liferay.portlet.documentlibrary.display.context.util.DLRequestHelper;
-import com.liferay.portlet.documentlibrary.display.context.util.JSPRenderer;
+import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;

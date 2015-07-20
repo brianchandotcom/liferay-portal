@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context;
+package com.liferay.document.library.web.display.context;
 
 import com.liferay.portal.kernel.display.context.BaseDisplayContextProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
+import com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext;
+import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
 import javax.servlet.http.HttpServletRequest;

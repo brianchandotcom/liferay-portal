@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.display.context.logic;
+package com.liferay.document.library.web.display.context.logic;
 
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -401,7 +401,7 @@ public class UIItemsBuilder {
 			DLUIItemKeys.OPEN_IN_MS_OFFICE, "open-in-ms-office", onClick);
 
 		String javaScript =
-			"/com/liferay/portlet/documentlibrary/context/dependencies" +
+			"/com/liferay/document/library/web/display/context/dependencies" +
 				"/open_in_ms_office_js.ftl";
 
 		Class<?> clazz = getClass();

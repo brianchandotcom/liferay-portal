@@ -16,6 +16,7 @@
 	<bean id="com.liferay.portlet.messageboards.action.EditMessageMVCActionCommand" class="com.liferay.portlet.messageboards.action.EditMessageMVCActionCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.EditMessageMVCRenderCommand" class="com.liferay.portlet.messageboards.action.EditMessageMVCRenderCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.FindCategoryAction" class="com.liferay.portlet.messageboards.action.FindCategoryAction" />
+	<bean id="com.liferay.portlet.messageboards.action.FindMessageAction" class="com.liferay.portlet.messageboards.action.FindMessageAction" />
 	<bean id="com.liferay.portlet.messageboards.action.MoveCategoryMVCActionCommand" class="com.liferay.portlet.messageboards.action.MoveCategoryMVCActionCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.MoveCategoryMVCRenderAction" class="com.liferay.portlet.messageboards.action.MoveCategoryMVCRenderAction" />
 	<bean id="com.liferay.portlet.messageboards.action.MoveThreadMVCActionCommand" class="com.liferay.portlet.messageboards.action.MoveThreadMVCActionCommand" />

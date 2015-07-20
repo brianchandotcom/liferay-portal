@@ -282,8 +282,6 @@
 
 		<action path="/message_boards/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
 
-		<action path="/message_boards/find_message" type="com.liferay.portlet.messageboards.action.FindMessageAction" />
-
 		<action path="/message_boards/find_thread" type="com.liferay.portlet.messageboards.action.FindThreadAction" />
 
 		<action path="/message_boards/restore_entry" forward="/portlet/message_boards/restore_entry.jsp" />
@@ -293,8 +291,6 @@
 		<!-- Message Boards Admin -->
 
 		<action path="/message_boards_admin/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
-		<action path="/message_boards_admin/find_message" type="com.liferay.portlet.messageboards.action.FindMessageAction" />
 
 		<action path="/message_boards_admin/find_thread" type="com.liferay.portlet.messageboards.action.FindThreadAction" />
 

@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Level;
@@ -437,8 +436,6 @@ public class PortalPreferencesImplTest {
 				try {
 					_cyclicBarrier.await();
 
-					_semaphore.acquire();
-
 					_originalTransactionExecutor.commit(
 						platformTransactionManager, transactionAttribute,
 						transactionStatus);
@@ -447,8 +444,6 @@ public class PortalPreferencesImplTest {
 					ReflectionUtil.throwException(t);
 				}
 				finally {
-					_semaphore.release();
-
 					_synchronize.set(false);
 
 					PortalPreferencesWrapperCacheUtil.remove(
@@ -469,7 +464,6 @@ public class PortalPreferencesImplTest {
 
 		private static final CyclicBarrier _cyclicBarrier = new CyclicBarrier(
 			2);
-		private static final Semaphore _semaphore = new Semaphore(1);
 		private static final AtomicBoolean _synchronize = new AtomicBoolean();
 
 	}

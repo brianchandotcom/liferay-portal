@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -83,11 +85,6 @@ public class DefaultDDMStructureUtil {
 				continue;
 			}
 
-			Element structureElementRootElement = structureElement.element(
-				"root");
-
-			String definition = structureElementRootElement.asXML();
-
 			Map<Locale, String> nameMap = new HashMap<>();
 			Map<Locale, String> descriptionMap = new HashMap<>();
 
@@ -97,26 +94,16 @@ public class DefaultDDMStructureUtil {
 					curLocale, LanguageUtil.get(curLocale, description));
 			}
 
-			Attribute defaultLocaleAttribute =
-				structureElementRootElement.attribute("default-locale");
-
-			Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
-				defaultLocaleAttribute.getValue());
-
-			definition = DDMXMLUtil.updateXMLDefaultLocale(
-				definition, ddmStructureDefaultLocale, locale);
-
 			if (name.equals(DLFileEntryTypeConstants.NAME_IG_IMAGE) &&
 				!UpgradeProcessUtil.isCreateIGImageDocumentType()) {
 
 				continue;
 			}
 
-			DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-				definition);
+			DDMForm ddmForm = getDDMForm(structureElement, locale);
 
-			DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
-				ddmForm);
+			DDMFormLayout ddmFormLayout = getDDMFormLayout(
+				structureElement, ddmForm);
 
 			serviceContext.setAttribute(
 				"status", WorkflowConstants.STATUS_APPROVED);
@@ -183,6 +170,48 @@ public class DefaultDDMStructureUtil {
 		}
 
 		return null;
+	}
+
+	protected static DDMForm getDDMForm(Element structureElement, Locale locale)
+		throws Exception {
+
+		Element structureElementDefinitionElement = structureElement.element(
+			"definition");
+
+		if (structureElementDefinitionElement != null) {
+			return DDMFormJSONDeserializerUtil.deserialize(
+				structureElementDefinitionElement.getTextTrim());
+		}
+
+		Element structureElementRootElement = structureElement.element("root");
+
+		String definition = structureElementRootElement.asXML();
+
+		Attribute defaultLocaleAttribute =
+			structureElementRootElement.attribute("default-locale");
+
+		Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
+			defaultLocaleAttribute.getValue());
+
+		definition = DDMXMLUtil.updateXMLDefaultLocale(
+			definition, ddmStructureDefaultLocale, locale);
+
+		return DDMFormXSDDeserializerUtil.deserialize(definition);
+	}
+
+	protected static DDMFormLayout getDDMFormLayout(
+			Element structureElement, DDMForm ddmForm)
+		throws Exception {
+
+		Element structureElementLayoutElement = structureElement.element(
+			"layout");
+
+		if (structureElementLayoutElement != null) {
+			return DDMFormLayoutJSONDeserializerUtil.deserialize(
+				structureElementLayoutElement.getTextTrim());
+		}
+
+		return DDMUtil.getDefaultDDMFormLayout(ddmForm);
 	}
 
 	protected static List<Element> getDDMStructures(

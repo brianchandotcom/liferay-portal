@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -38,7 +39,7 @@ import java.util.Map;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class UpgradeBaseJournal extends UpgradeDynamicDataMapping {
+public abstract class UpgradeBaseJournal extends UpgradeProcess {
 
 	protected void addResourcePermission(
 			long companyId, String className, long primKey, long roleId,

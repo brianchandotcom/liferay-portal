@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comments.ratings.definition;
+package com.liferay.comment.ratings.definition;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion"
 	}
 )
-public class CommentsPortletRatingsDefinition
+public class CommentPortletRatingsDefinition
 	implements PortletRatingsDefinition {
 
 	@Override

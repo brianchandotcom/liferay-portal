@@ -26,7 +26,7 @@ public interface DDMFormFieldTypeSettings {
 	@DDMFormField(visibilityExpression = "false")
 	public String dataType();
 
-	@DDMFormField(label = "%name")
+	@DDMFormField(label = "%name", validationExpression = "!name.equals(\"\")")
 	public String name();
 
 	@DDMFormField(visibilityExpression = "false")

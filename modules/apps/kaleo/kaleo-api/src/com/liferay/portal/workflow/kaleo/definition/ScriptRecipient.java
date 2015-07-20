@@ -51,6 +51,6 @@ public class ScriptRecipient extends Recipient {
 
 	private String _script;
 	private ScriptLanguage _scriptLanguage;
-	private String _scriptRequiredContexts;
+	private final String _scriptRequiredContexts;
 
 }

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.manager;
 
+import com.liferay.portal.workflow.kaleo.service.configuration.configurator.KaleoServiceConfigurator;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import com.liferay.portal.workflow.kaleo.service.configuration.configurator.KaleoServiceConfigurator;
 
 /**
  * @author Marcellus Tavares
@@ -31,10 +31,10 @@ public class KaleoEngineActivator {
 	protected void activate() throws Exception {
 		PortalKaleoManagerUtil.deployKaleoDefaults();
 	}
-	
+
 	@Reference
 	protected void setKaleoServiceConfigurator(
 		KaleoServiceConfigurator kaleoServiceConfigurator) {
 	}
-	
+
 }

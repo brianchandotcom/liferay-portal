@@ -52,10 +52,10 @@ public class Transition {
 		_timer = timer;
 	}
 
-	private boolean _default;
-	private String _name;
-	private Node _sourceNode;
-	private Node _targetNode;
+	private final boolean _default;
+	private final String _name;
+	private final Node _sourceNode;
+	private final Node _targetNode;
 	private Timer _timer;
 
 }

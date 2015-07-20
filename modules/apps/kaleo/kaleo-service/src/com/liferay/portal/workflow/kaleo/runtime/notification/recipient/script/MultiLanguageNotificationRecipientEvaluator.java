@@ -65,7 +65,7 @@ public class MultiLanguageNotificationRecipientEvaluator
 		}
 	}
 
-	private Map<ScriptLanguage, NotificationRecipientEvaluator>
+	private final Map<ScriptLanguage, NotificationRecipientEvaluator>
 		_notificationRecipientEvaluators = new HashMap<>();
 
 }

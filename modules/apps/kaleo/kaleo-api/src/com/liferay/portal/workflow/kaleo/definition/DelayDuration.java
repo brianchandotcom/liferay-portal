@@ -32,7 +32,7 @@ public class DelayDuration {
 		return _durationScale;
 	}
 
-	private double _duration;
-	private DurationScale _durationScale;
+	private final double _duration;
+	private final DurationScale _durationScale;
 
 }

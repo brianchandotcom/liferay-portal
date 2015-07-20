@@ -27,6 +27,8 @@ public class RoleAssignment extends Assignment {
 		super(AssignmentType.ROLE);
 
 		_roleId = roleId;
+		_roleName = null;
+		_roleType = null;
 	}
 
 	public RoleAssignment(String roleName, String roleType) {
@@ -90,7 +92,7 @@ public class RoleAssignment extends Assignment {
 
 	private boolean _autoCreate;
 	private long _roleId;
-	private String _roleName;
-	private String _roleType;
+	private final String _roleName;
+	private final String _roleType;
 
 }

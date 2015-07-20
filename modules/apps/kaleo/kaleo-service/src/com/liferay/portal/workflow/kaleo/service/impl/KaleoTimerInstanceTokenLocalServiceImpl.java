@@ -332,7 +332,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			SchedulerUtil.WORKFLOW_TIMER_DESTINATION_NAME, message, 0);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTimerInstanceTokenLocalServiceImpl.class);
 
 }

@@ -48,9 +48,9 @@ public class Condition extends Node {
 		return _scriptRequiredContexts;
 	}
 
-	private String _description;
-	private String _script;
-	private ScriptLanguage _scriptLanguage;
-	private String _scriptRequiredContexts;
+	private final String _description;
+	private final String _script;
+	private final ScriptLanguage _scriptLanguage;
+	private final String _scriptRequiredContexts;
 
 }

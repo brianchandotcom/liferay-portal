@@ -36,7 +36,7 @@ public class NodeValidatorRegistry {
 		_nodeValidators.setNodeTypeDependentObjects(nodeValidators);
 	}
 
-	private static NodeTypeDependentObjectRegistry<NodeValidator<Node>>
+	private static final NodeTypeDependentObjectRegistry<NodeValidator<Node>>
 		_nodeValidators = new NodeTypeDependentObjectRegistry<>();
 
 }

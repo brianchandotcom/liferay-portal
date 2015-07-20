@@ -27,6 +27,6 @@ public class Assignment {
 		return _assignmentType;
 	}
 
-	private AssignmentType _assignmentType;
+	private final AssignmentType _assignmentType;
 
 }

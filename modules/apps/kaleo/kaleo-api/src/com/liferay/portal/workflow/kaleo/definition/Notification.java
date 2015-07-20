@@ -114,13 +114,13 @@ public class Notification {
 		return _name.hashCode();
 	}
 
-	private String _description;
-	private ExecutionType _executionType;
-	private String _name;
-	private Set<NotificationType> _notificationTypes = new HashSet<>();
-	private Map<NotificationReceptionType, Set<Recipient>> _recipientsMap =
-		new HashMap<>();
-	private String _template;
-	private TemplateLanguage _templateLanguage;
+	private final String _description;
+	private final ExecutionType _executionType;
+	private final String _name;
+	private final Set<NotificationType> _notificationTypes = new HashSet<>();
+	private final Map<NotificationReceptionType, Set<Recipient>>
+		_recipientsMap = new HashMap<>();
+	private final String _template;
+	private final TemplateLanguage _templateLanguage;
 
 }

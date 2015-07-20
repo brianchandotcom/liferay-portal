@@ -89,6 +89,7 @@ public class ActionExecutorUtil {
 	private static final String _COMMENT_ACTION_SUCCESS =
 		"Action completed successfully.";
 
-	private static Log _log = LogFactoryUtil.getLog(ActionExecutorUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ActionExecutorUtil.class);
 
 }

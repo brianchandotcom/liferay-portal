@@ -25,6 +25,7 @@ public class RoleRecipient extends Recipient {
 		super(RecipientType.ROLE);
 
 		_roleId = roleId;
+		_roleName = null;
 		_roleType = roleType;
 	}
 
@@ -89,7 +90,7 @@ public class RoleRecipient extends Recipient {
 
 	private boolean _autoCreate;
 	private long _roleId;
-	private String _roleName;
-	private String _roleType;
+	private final String _roleName;
+	private final String _roleType;
 
 }

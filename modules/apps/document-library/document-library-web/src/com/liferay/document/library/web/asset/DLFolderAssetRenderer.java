@@ -153,8 +153,7 @@ public class DLFolderAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			return "/html/portlet/document_library/asset/folder_" + template +
-				".jsp";
+			return "/document_library/asset/folder_" + template + ".jsp";
 		}
 		else {
 			return null;

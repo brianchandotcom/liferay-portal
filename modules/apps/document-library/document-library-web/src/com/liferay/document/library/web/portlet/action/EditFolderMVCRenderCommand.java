@@ -39,7 +39,7 @@ public class EditFolderMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/document_library/edit_folder.jsp";
+		return "/document_library/edit_folder.jsp";
 	}
 
 }

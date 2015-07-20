@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);

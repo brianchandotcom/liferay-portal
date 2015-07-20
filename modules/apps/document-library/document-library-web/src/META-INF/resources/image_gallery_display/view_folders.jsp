@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
+<%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
@@ -142,7 +142,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		<liferay-ui:search-container-column-jsp
 			align="right"
 			cssClass="entry-action"
-			path="/html/portlet/document_library/folder_action.jsp"
+			path="/document_library/folder_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

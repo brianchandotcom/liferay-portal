@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
@@ -121,7 +121,7 @@ else {
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
+	<liferay-util:include page="/document_library/top_links.jsp" />
 </c:if>
 
 <c:if test="<%= checkedOut %>">
@@ -319,7 +319,7 @@ else {
 			</c:if>
 		</div>
 
-		<%@ include file="/html/portlet/document_library/edit_file_entry_picker.jspf" %>
+		<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
 
 		<aui:input name="title">
 			<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">

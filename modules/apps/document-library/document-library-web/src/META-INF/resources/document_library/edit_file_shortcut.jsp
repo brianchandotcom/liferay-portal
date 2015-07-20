@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
@@ -66,7 +66,7 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 %>
 
-<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp" />
 
 <portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL" />
 
@@ -144,7 +144,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					title: '<liferay-ui:message arguments="site" key="select-x" />',
 
 					<portlet:renderURL var="selectGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcPath" value="/html/portlet/document_library/select_group.jsp" />
+						<portlet:param name="mvcPath" value="/document_library/select_group.jsp" />
 					</portlet:renderURL>
 
 					uri: '<%= selectGroupURL.toString() %>'

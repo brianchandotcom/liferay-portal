@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String randomNamespace = GetterUtil.getString(request.getAttribute("view_file_entry.jsp-randomNamespace"));

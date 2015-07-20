@@ -130,8 +130,7 @@ public class DLFileEntryAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			return "/html/portlet/document_library/asset/file_entry_" +
-				template + ".jsp";
+			return "/document_library/asset/file_entry_" + template + ".jsp";
 		}
 		else {
 			return null;

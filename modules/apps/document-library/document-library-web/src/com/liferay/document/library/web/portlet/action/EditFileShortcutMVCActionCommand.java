@@ -101,7 +101,7 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet.document_library/error.jsp");
+					"mvcPath", "/document_library/error.jsp");
 			}
 			else if (e instanceof FileShortcutPermissionException ||
 					 e instanceof NoSuchFileEntryException) {

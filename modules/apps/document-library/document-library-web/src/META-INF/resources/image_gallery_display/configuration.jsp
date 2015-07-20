@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
+<%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(igRequestHelper);

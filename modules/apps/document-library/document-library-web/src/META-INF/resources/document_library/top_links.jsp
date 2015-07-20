@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library_display/init.jsp" %>
+<%@ include file="/document_library_display/init.jsp" %>
 
 <%
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlDisplayRequestHelper);
@@ -74,7 +74,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 				<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
 					<liferay-portlet:renderURL varImpl="searchURL">
-						<portlet:param name="mvcPath" value="/html/portlet/document_library_display/search.jsp" />
+						<portlet:param name="mvcPath" value="/document_library_display/search.jsp" />
 					</liferay-portlet:renderURL>
 
 					<aui:nav-bar-search>

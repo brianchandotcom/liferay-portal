@@ -91,7 +91,7 @@
 			keyProperty="primaryKey"
 			modelVar="result"
 		>
-			<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+			<%@ include file="/document_library/cast_result.jspf" %>
 
 			<%
 			if (curFolder != null) {
@@ -103,7 +103,7 @@
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</liferay-portlet:renderURL>
 
-				<%@ include file="/html/portlet/document_library/folder_columns.jspf" %>
+				<%@ include file="/document_library/folder_columns.jspf" %>
 
 			<%
 			}
@@ -128,7 +128,7 @@
 				}
 			%>
 
-				<%@ include file="/html/portlet/document_library/file_entry_columns.jspf" %>
+				<%@ include file="/document_library/file_entry_columns.jspf" %>
 
 			<%
 			}

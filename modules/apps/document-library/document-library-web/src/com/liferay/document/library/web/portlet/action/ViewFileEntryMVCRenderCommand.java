@@ -37,7 +37,7 @@ public class ViewFileEntryMVCRenderCommand
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/document_library/view_file_entry.jsp";
+		return "/document_library/view_file_entry.jsp";
 	}
 
 }

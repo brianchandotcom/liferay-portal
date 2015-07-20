@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -52,7 +52,7 @@ if (workflowEnabled) {
 }
 %>
 
-<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp" />
 
 <liferay-util:buffer var="removeFileEntryTypeIcon">
 	<liferay-ui:icon
@@ -314,7 +314,7 @@ if (workflowEnabled) {
 				eventName: '<portlet:namespace />selectFileEntryType',
 				id: '<portlet:namespace />fileEntryTypeSelector',
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>'
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>'
 			},
 			function(event) {
 				<portlet:namespace />selectFileEntryType(event.fileentrytypeid, event.fileentrytypename);

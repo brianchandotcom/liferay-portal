@@ -33,7 +33,7 @@ public class IGViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/image_gallery_display/view.jsp";
+		return "/image_gallery_display/view.jsp";
 	}
 
 }

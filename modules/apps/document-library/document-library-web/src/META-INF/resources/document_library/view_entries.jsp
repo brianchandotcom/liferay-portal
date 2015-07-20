@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 boolean emailFileEntryAnyEventEnabled = dlGroupServiceSettings.isEmailFileEntryAddedEnabled() || dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled();
@@ -279,7 +279,7 @@ dlSearchContainer.setResults(results);
 			for (Object result : results) {
 			%>
 
-				<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+				<%@ include file="/document_library/cast_result.jspf" %>
 
 				<c:choose>
 					<c:when test="<%= fileEntry != null %>">
@@ -301,10 +301,10 @@ dlSearchContainer.setResults(results);
 
 								<c:choose>
 									<c:when test='<%= displayStyle.equals("icon") %>'>
-										<liferay-util:include page="/html/portlet/document_library/view_file_entry_icon.jsp" />
+										<liferay-util:include page="/document_library/view_file_entry_icon.jsp" />
 									</c:when>
 									<c:otherwise>
-										<liferay-util:include page="/html/portlet/document_library/view_file_entry_descriptive.jsp" />
+										<liferay-util:include page="/document_library/view_file_entry_descriptive.jsp" />
 									</c:otherwise>
 								</c:choose>
 							</c:when>
@@ -342,11 +342,11 @@ dlSearchContainer.setResults(results);
 
 						<c:choose>
 							<c:when test='<%= displayStyle.equals("icon") %>'>
-								<liferay-util:include page="/html/portlet/document_library/view_folder_icon.jsp" />
+								<liferay-util:include page="/document_library/view_folder_icon.jsp" />
 							</c:when>
 
 							<c:otherwise>
-								<liferay-util:include page="/html/portlet/document_library/view_folder_descriptive.jsp" />
+								<liferay-util:include page="/document_library/view_folder_descriptive.jsp" />
 							</c:otherwise>
 						</c:choose>
 					</c:when>
@@ -378,7 +378,7 @@ dlSearchContainer.setResults(results);
 					modelVar="result"
 				>
 
-					<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+					<%@ include file="/document_library/cast_result.jspf" %>
 
 					<c:choose>
 						<c:when test="<%= fileEntry != null %>">
@@ -484,7 +484,7 @@ dlSearchContainer.setResults(results);
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
 								<liferay-ui:search-container-column-jsp
 									cssClass="entry-action"
-									path="/html/portlet/document_library/file_entry_action.jsp"
+									path="/document_library/file_entry_action.jsp"
 								/>
 							</c:if>
 						</c:when>
@@ -582,7 +582,7 @@ dlSearchContainer.setResults(results);
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
 								<liferay-ui:search-container-column-jsp
 									cssClass="entry-action"
-									path="/html/portlet/document_library/folder_action.jsp"
+									path="/document_library/folder_action.jsp"
 								/>
 							</c:if>
 						</c:otherwise>

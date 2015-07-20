@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library_display/init.jsp" %>
+<%@ include file="/document_library_display/init.jsp" %>
 
 <%
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlDisplayRequestHelper);

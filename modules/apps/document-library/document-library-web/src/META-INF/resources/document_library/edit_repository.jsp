@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -26,7 +26,7 @@ long repositoryId = BeanParamUtil.getLong(repository, request, "repositoryId");
 long folderId = ParamUtil.getLong(request, "folderId");
 %>
 
-<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp" />
 
 <portlet:actionURL name="/document_library/edit_repository" var="editRepositoryURL" />
 

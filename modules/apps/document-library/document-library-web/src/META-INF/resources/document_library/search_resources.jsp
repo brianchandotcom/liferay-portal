@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -193,7 +193,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 							%>
 
 							<liferay-ui:app-view-search-entry
-								actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+								actionJsp="/document_library/file_entry_action.jsp"
 								commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
@@ -237,7 +237,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 							%>
 
 							<liferay-ui:app-view-search-entry
-								actionJsp="/html/portlet/document_library/folder_action.jsp"
+								actionJsp="/document_library/folder_action.jsp"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : curFolder.getDescription() %>"

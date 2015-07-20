@@ -247,7 +247,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/document_library/error.jsp");
+					"mvcPath", "/document_library/error.jsp");
 			}
 			else if (e instanceof DuplicateFileException ||
 					 e instanceof DuplicateFolderNameException ||

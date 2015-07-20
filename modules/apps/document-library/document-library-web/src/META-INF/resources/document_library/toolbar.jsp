@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
@@ -33,7 +33,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 <aui:nav-bar>
 	<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
 		<c:if test="<%= !search %>">
-			<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
+			<liferay-util:include page="/document_library/display_style_buttons.jsp" />
 		</c:if>
 	</aui:nav>
 
@@ -84,10 +84,10 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" label="delete" />
 		</aui:nav-item>
 
-		<liferay-util:include page="/html/portlet/document_library/add_button.jsp" />
+		<liferay-util:include page="/document_library/add_button.jsp" />
 
 		<c:if test="<%= !search %>">
-			<liferay-util:include page="/html/portlet/document_library/sort_button.jsp" />
+			<liferay-util:include page="/document_library/sort_button.jsp" />
 		</c:if>
 
 		<c:if test="<%= !user.isDefaultUser() %>">
@@ -159,7 +159,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 				},
 				id: '<portlet:namespace />openFileEntryTypeView',
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/document_library/view_file_entry_type.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
+				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/view_file_entry_type.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
 			}
 		);
 	}

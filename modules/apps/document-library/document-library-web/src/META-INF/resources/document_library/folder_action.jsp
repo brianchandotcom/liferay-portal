@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String randomNamespace = null;
@@ -327,7 +327,7 @@ String iconMenuId = null;
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
 						<portlet:renderURL var="editFileEntryURL">
-							<portlet:param name="mvcPath" value="/html/portlet/document_library/upload_multiple_file_entries.jsp" />
+							<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="backURL" value="<%= currentURL %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -349,7 +349,7 @@ String iconMenuId = null;
 					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
 						<c:choose>
 							<c:when test="<%= ((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0) %>">
-								<portlet:param name="mvcPath" value="/html/portlet/document_library_display/select_add_file_entry_type.jsp" />
+								<portlet:param name="mvcPath" value="/document_library_display/select_add_file_entry_type.jsp" />
 							</c:when>
 							<c:otherwise>
 								<portlet:param name="mvcRenderCommandName" value="/document_library_display/edit_file_entry" />

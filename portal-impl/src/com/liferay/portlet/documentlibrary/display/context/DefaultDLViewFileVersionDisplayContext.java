@@ -187,7 +187,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		throws IOException, ServletException {
 
 		JSPRenderer jspRenderer = new JSPRenderer(
-			"/html/portlet/document_library/view_file_entry_preview.jsp");
+			"/document_library/view_file_entry_preview.jsp");
 
 		jspRenderer.setAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library_display/init.jsp" %>
+<%@ include file="/document_library_display/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -34,7 +34,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/html/portlet/document_library_display/search.jsp" />
+	<portlet:param name="mvcPath" value="/document_library_display/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm">
@@ -68,7 +68,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 			PortletURL searchExternalRepositoryURL = renderResponse.createRenderURL();
 
-			searchExternalRepositoryURL.setParameter("mvcPath", "/html/portlet/document_library_display/search.jsp");
+			searchExternalRepositoryURL.setParameter("mvcPath", "/document_library_display/search.jsp");
 			searchExternalRepositoryURL.setParameter("redirect", redirect);
 			searchExternalRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 			searchExternalRepositoryURL.setParameter("folderId", String.valueOf(mountFolder.getFolderId()));
@@ -96,7 +96,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("mvcPath", "/html/portlet/document_library_display/search.jsp");
+	portletURL.setParameter("mvcPath", "/document_library_display/search.jsp");
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 	portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -166,7 +166,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					</portlet:renderURL>
 
 					<liferay-ui:app-view-search-entry
-						actionJsp='<%= (dlPortletInstanceSettingsHelper.isShowActions()) ? "/html/portlet/document_library/file_entry_action.jsp" : StringPool.BLANK %>'
+						actionJsp='<%= (dlPortletInstanceSettingsHelper.isShowActions()) ? "/document_library/file_entry_action.jsp" : StringPool.BLANK %>'
 						commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, fileEntry.getFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
@@ -198,7 +198,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					</portlet:renderURL>
 
 					<liferay-ui:app-view-search-entry
-						actionJsp='<%= (dlPortletInstanceSettingsHelper.isShowActions()) ? "/html/portlet/document_library/folder_action.jsp" : StringPool.BLANK %>'
+						actionJsp='<%= (dlPortletInstanceSettingsHelper.isShowActions()) ? "/document_library/folder_action.jsp" : StringPool.BLANK %>'
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, folder.getParentFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 						description="<%= (summary != null) ? summary.getContent() : folder.getDescription() %>"

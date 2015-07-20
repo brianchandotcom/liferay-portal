@@ -37,7 +37,7 @@ public class EditFileEntryMVCRenderCommand
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/document_library/edit_file_entry.jsp";
+		return "/document_library/edit_file_entry.jsp";
 	}
 
 }

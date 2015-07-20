@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
-String mvcPath = ParamUtil.getString(request, "mvcPath", "/html/portlet/document_library/view_file_entry_type.jsp");
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/document_library/view_file_entry_type.jsp");
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
@@ -33,7 +33,7 @@ boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicF
 
 		<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DOCUMENT_TYPE) %>">
 			<portlet:renderURL var="addFileEntryTypeURL">
-				<portlet:param name="mvcPath" value="/html/portlet/document_library/edit_file_entry_type.jsp" />
+				<portlet:param name="mvcPath" value="/document_library/edit_file_entry_type.jsp" />
 				<portlet:param name="redirect" value="<%= viewFileEntryTypesURL %>" />
 			</portlet:renderURL>
 

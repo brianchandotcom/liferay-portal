@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
+<%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
 boolean supportedAudio = false;
@@ -72,4 +72,4 @@ request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL)
 	</c:when>
 </c:choose>
 
-<liferay-util:include page="/html/portlet/document_library/player.jsp" />
+<liferay-util:include page="/document_library/player.jsp" />

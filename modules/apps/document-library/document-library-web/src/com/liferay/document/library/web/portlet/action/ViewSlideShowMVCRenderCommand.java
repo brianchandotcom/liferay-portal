@@ -33,7 +33,7 @@ public class ViewSlideShowMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/image_gallery_display/view_slide_show.jsp";
+		return "/image_gallery_display/view_slide_show.jsp";
 	}
 
 }

@@ -42,7 +42,7 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else {
 				throw new PortletException(e);

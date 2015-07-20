@@ -63,4 +63,4 @@ boolean mergedView = false;
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<%@ include file="/html/portlet/document_library_display/init-ext.jsp" %>
+<%@ include file="/document_library_display/init-ext.jsp" %>

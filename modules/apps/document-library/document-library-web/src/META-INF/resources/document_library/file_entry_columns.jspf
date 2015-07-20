@@ -42,7 +42,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				align="<%= align %>"
 				cssClass="entry-action"
 				index="<%= j %>"
-				path="/html/portlet/document_library/file_entry_action.jsp"
+				path="/document_library/file_entry_action.jsp"
 			/>
 
 		</c:when>

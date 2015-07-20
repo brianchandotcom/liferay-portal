@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
@@ -31,4 +31,4 @@ boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 boolean showImageContainer = true;
 %>
 
-<%@ include file="/html/portlet/document_library/view_file_entry_preview.jspf" %>
+<%@ include file="/document_library/view_file_entry_preview.jspf" %>

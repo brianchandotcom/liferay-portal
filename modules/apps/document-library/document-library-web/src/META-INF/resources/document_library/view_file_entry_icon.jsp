@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
@@ -39,7 +39,7 @@ if (fileShortcut != null) {
 %>
 
 <liferay-ui:app-view-entry
-	actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+	actionJsp="/document_library/file_entry_action.jsp"
 	description="<%= latestFileVersion.getDescription() %>"
 	displayStyle="icon"
 	locked="<%= fileEntry.isCheckedOut() %>"

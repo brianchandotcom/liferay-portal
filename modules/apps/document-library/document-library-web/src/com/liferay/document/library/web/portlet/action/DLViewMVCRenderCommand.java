@@ -36,7 +36,7 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/document_library/view.jsp";
+		return "/document_library/view.jsp";
 	}
 
 }

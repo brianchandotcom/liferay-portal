@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 Folder folder = (Folder)request.getAttribute("view_entries.jsp-folder");
@@ -25,7 +25,7 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 %>
 
 <liferay-ui:app-view-entry
-	actionJsp="/html/portlet/document_library/folder_action.jsp"
+	actionJsp="/document_library/folder_action.jsp"
 	author="<%= folder.getUserName() %>"
 	createDate="<%= folder.getCreateDate() %>"
 	description="<%= folder.getDescription() %>"

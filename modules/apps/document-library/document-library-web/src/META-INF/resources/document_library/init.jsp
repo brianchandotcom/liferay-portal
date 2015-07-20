@@ -121,4 +121,4 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<%@ include file="/html/portlet/document_library/init-ext.jsp" %>
+<%@ include file="/document_library/init-ext.jsp" %>

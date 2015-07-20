@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-image-gallery-display",
 		"com.liferay.portlet.display-category=category.cms",
-		"com.liferay.portlet.header-portlet-css=/html/portlet/image_gallery_display/css/main.css",
+		"com.liferay.portlet.header-portlet-css=/image_gallery_display/css/main.css",
 		"com.liferay.portlet.icon=/image_gallery_display/icons/image_gallery.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",

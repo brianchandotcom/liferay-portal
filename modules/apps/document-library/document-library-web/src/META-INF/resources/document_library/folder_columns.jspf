@@ -51,7 +51,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 			<liferay-ui:search-container-column-jsp
 				align="<%= align %>"
 				cssClass="entry-action"
-				path="/html/portlet/document_library/folder_action.jsp"
+				path="/document_library/folder_action.jsp"
 			/>
 		</c:when>
 		<c:when test='<%= folderColumn.equals("downloads") %>'>

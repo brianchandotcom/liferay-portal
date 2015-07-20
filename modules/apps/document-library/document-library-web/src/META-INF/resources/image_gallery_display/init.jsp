@@ -66,4 +66,4 @@ long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displ
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 
-<%@ include file="/html/portlet/image_gallery_display/init-ext.jsp" %>
+<%@ include file="/image_gallery_display/init-ext.jsp" %>

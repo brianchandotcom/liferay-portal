@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectGroup");
@@ -28,7 +28,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("mvcPath", "/html/portlet/document_library/select_group.jsp");
+	portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 	%>
 
 	<liferay-ui:search-container

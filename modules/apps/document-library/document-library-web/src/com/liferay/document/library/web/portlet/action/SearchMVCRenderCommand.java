@@ -41,7 +41,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/document_library/view.jsp";
+		return "/document_library/view.jsp";
 	}
 
 }

@@ -36,7 +36,7 @@ public class SelectFileEntryMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/document_library/select_file_entry.jsp";
+		return "/document_library/select_file_entry.jsp";
 	}
 
 }

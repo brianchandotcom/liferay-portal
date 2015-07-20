@@ -115,7 +115,7 @@
 						<div class="lfr-preview-audio-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent"></div>
 					</div>
 
-					<liferay-util:include page="/html/portlet/document_library/player.jsp" />
+					<liferay-util:include page="/document_library/player.jsp" />
 				</c:when>
 				<c:when test="<%= hasImages %>">
 					<c:choose>
@@ -144,7 +144,7 @@
 						</div>
 					</div>
 
-					<liferay-util:include page="/html/portlet/document_library/player.jsp" />
+					<liferay-util:include page="/document_library/player.jsp" />
 				</c:when>
 				<c:otherwise>
 					<div class="lfr-preview-file" id="<portlet:namespace /><%= randomNamespace %>previewFile">

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
+<%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
@@ -100,7 +100,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 		portletURL="<%= restoreTrashEntriesURL %>"
 	/>
 
-	<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
+	<liferay-util:include page="/document_library/top_links.jsp" />
 
 	<c:choose>
 		<c:when test="<%= useAssetEntryQuery %>">
@@ -133,7 +133,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 			request.setAttribute("view.jsp-searchContainer", searchContainer);
 			%>
 
-			<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
+			<liferay-util:include page="/image_gallery_display/view_images.jsp" />
 		</c:when>
 		<c:when test='<%= topLink.equals("home") %>'>
 			<aui:row>
@@ -204,7 +204,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 							</liferay-ui:custom-attributes-available>
 						</c:if>
 
-						<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
+						<liferay-util:include page="/image_gallery_display/view_images.jsp" />
 					</div>
 				</aui:col>
 
@@ -226,7 +226,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						%>
 
-						<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
+						<liferay-util:include page="/document_library/folder_action.jsp" />
 					</aui:col>
 				</c:if>
 			</aui:row>
@@ -271,7 +271,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 					title="<%= topLink %>"
 				/>
 
-				<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
+				<liferay-util:include page="/image_gallery_display/view_images.jsp" />
 			</aui:row>
 
 			<%

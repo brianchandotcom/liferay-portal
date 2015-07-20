@@ -90,8 +90,8 @@ public class UserAssignment extends Assignment {
 		return sb.toString();
 	}
 
-	private String _emailAddress;
-	private String _screenName;
+	private final String _emailAddress;
+	private final String _screenName;
 	private long _userId;
 
 }

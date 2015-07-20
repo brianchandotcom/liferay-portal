@@ -149,13 +149,14 @@ public abstract class Node implements ActionAware, NotificationAware {
 	}
 
 	private Set<Action> _actions;
-	private String _description;
-	private Set<Transition> _incomingTransitions = new HashSet<>();
+	private final String _description;
+	private final Set<Transition> _incomingTransitions = new HashSet<>();
 	private String _metadata;
-	private String _name;
-	private NodeType _nodeType;
+	private final String _name;
+	private final NodeType _nodeType;
 	private Set<Notification> _notifications;
-	private Map<String, Transition> _outgoingTransitions = new HashMap<>();
+	private final Map<String, Transition> _outgoingTransitions =
+		new HashMap<>();
 	private Set<Timer> _timers;
 
 }

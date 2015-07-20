@@ -63,6 +63,6 @@ public class KaleoInstanceOrderByComparator
 		_serviceContext = serviceContext;
 	}
 
-	private ServiceContext _serviceContext;
+	private final ServiceContext _serviceContext;
 
 }

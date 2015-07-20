@@ -108,7 +108,7 @@ public class BaseKaleoUpgradeTableListener extends BaseUpgradeTableListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseKaleoUpgradeTableListener.class);
 
 }

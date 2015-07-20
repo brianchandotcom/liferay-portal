@@ -101,11 +101,11 @@ public class ExecutionContext implements Serializable {
 		_transitionName = transitionName;
 	}
 
-	private KaleoInstanceToken _kaleoInstanceToken;
+	private final KaleoInstanceToken _kaleoInstanceToken;
 	private KaleoTaskInstanceToken _kaleoTaskInstanceToken;
 	private KaleoTimerInstanceToken _kaleoTimerInstanceToken;
-	private ServiceContext _serviceContext;
+	private final ServiceContext _serviceContext;
 	private String _transitionName;
-	private Map<String, Serializable> _workflowContext;
+	private final Map<String, Serializable> _workflowContext;
 
 }

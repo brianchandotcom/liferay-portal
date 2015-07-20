@@ -54,7 +54,7 @@ public class CompositeTaskAssignmentSelector implements TaskAssignmentSelector {
 		_taskAssignmentSelectors.putAll(taskAssignmentSelectors);
 	}
 
-	private Map<String, TaskAssignmentSelector> _taskAssignmentSelectors =
+	private final Map<String, TaskAssignmentSelector> _taskAssignmentSelectors =
 		new HashMap<>();
 
 }

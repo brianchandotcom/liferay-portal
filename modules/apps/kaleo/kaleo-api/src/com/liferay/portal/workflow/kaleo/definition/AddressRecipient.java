@@ -55,6 +55,6 @@ public class AddressRecipient extends Recipient {
 		return _address.hashCode();
 	}
 
-	private String _address;
+	private final String _address;
 
 }

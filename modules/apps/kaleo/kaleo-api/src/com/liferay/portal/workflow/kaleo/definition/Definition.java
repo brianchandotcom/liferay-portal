@@ -124,14 +124,14 @@ public class Definition {
 		return _nodesMap.containsKey(name);
 	}
 
-	private String _content;
-	private String _description;
-	private List<Fork> _forks = new ArrayList<>();
+	private final String _content;
+	private final String _description;
+	private final List<Fork> _forks = new ArrayList<>();
 	private State _initialState;
-	private List<Join> _joins = new ArrayList<>();
-	private String _name;
-	private Map<String, Node> _nodesMap = new HashMap<>();
+	private final List<Join> _joins = new ArrayList<>();
+	private final String _name;
+	private final Map<String, Node> _nodesMap = new HashMap<>();
 	private List<State> _terminalStates;
-	private int _version;
+	private final int _version;
 
 }

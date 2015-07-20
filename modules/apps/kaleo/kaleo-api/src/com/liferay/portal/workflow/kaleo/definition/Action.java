@@ -93,12 +93,12 @@ public class Action {
 		return _name.hashCode();
 	}
 
-	private String _description;
-	private ExecutionType _executionType;
-	private String _name;
-	private int _priority;
-	private String _script;
-	private ScriptLanguage _scriptLanguage;
-	private String _scriptRequiredContexts;
+	private final String _description;
+	private final ExecutionType _executionType;
+	private final String _name;
+	private final int _priority;
+	private final String _script;
+	private final ScriptLanguage _scriptLanguage;
+	private final String _scriptRequiredContexts;
 
 }

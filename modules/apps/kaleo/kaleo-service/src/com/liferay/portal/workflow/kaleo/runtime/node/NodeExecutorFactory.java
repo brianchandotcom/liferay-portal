@@ -31,7 +31,7 @@ public class NodeExecutorFactory {
 		_nodeExecutors.setNodeTypeDependentObjects(nodeExecutors);
 	}
 
-	private static NodeTypeDependentObjectRegistry<NodeExecutor>
+	private static final NodeTypeDependentObjectRegistry<NodeExecutor>
 		_nodeExecutors = new NodeTypeDependentObjectRegistry<>();
 
 }

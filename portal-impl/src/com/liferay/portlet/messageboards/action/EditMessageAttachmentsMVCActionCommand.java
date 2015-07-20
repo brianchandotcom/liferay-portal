@@ -45,8 +45,7 @@ import javax.portlet.ActionResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/edit_message_attachments",
-		"mvc.command.name=/message_boards/view_deleted_message_attachments"
+		"mvc.command.name=/message_boards/edit_message_attachments"
 	},
 	service = MVCActionCommand.class
 )

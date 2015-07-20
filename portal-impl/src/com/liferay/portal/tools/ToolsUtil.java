@@ -148,6 +148,32 @@ public class ToolsUtil {
 		return document.asXML();
 	}
 
+	public static boolean isInsideQuotes(String s, int pos) {
+		boolean insideQuotes = false;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (insideQuotes) {
+				if ((c == CharPool.QUOTE) &&
+					((c <= 1) || (s.charAt(i - 1) != CharPool.BACK_SLASH) ||
+					 (s.charAt(i - 2) == CharPool.BACK_SLASH))) {
+
+					insideQuotes = false;
+				}
+			}
+			else if (c == CharPool.QUOTE) {
+				insideQuotes = true;
+			}
+
+			if (pos == i) {
+				return insideQuotes;
+			}
+		}
+
+		return false;
+	}
+
 	public static String stripFullyQualifiedClassNames(String content)
 		throws IOException {
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -63,7 +64,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		while (true) {
 			y = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, y + 1);
 
-			if (!isInsideQuotes(annotation, y)) {
+			if (!ToolsUtil.isInsideQuotes(annotation, y)) {
 				break;
 			}
 		}
@@ -88,7 +89,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			while (true) {
 				z = parameterProperty.indexOf(CharPool.QUOTE, z + 1);
 
-				if ((z == -1) || !isInsideQuotes(parameterProperty, z)) {
+				if ((z == -1) ||
+					!ToolsUtil.isInsideQuotes(parameterProperty, z)) {
+
 					break;
 				}
 			}
@@ -2698,7 +2701,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return x;
 			}
 
-			if (isInsideQuotes(line, x)) {
+			if (ToolsUtil.isInsideQuotes(line, x)) {
 				continue;
 			}
 

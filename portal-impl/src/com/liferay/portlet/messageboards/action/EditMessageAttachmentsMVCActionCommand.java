@@ -16,16 +16,19 @@ package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -34,24 +37,35 @@ import com.liferay.taglib.util.RestoreEntryUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Eudaldo Alonso
  */
-public class EditMessageAttachmentsAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/message_boards/edit_message_attachments",
+		"mvc.command.name=/message_boards/view_deleted_message_attachments"
+	},
+	service = MVCActionCommand.class
+)
+public class EditMessageAttachmentsMVCActionCommand
+	extends BaseMVCActionCommand {
+
+	protected void deleteAttachment(ActionRequest actionRequest)
+		throws PortalException {
+
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		String fileName = ParamUtil.getString(actionRequest, "fileName");
+
+		MBMessageLocalServiceUtil.deleteMessageAttachment(messageId, fileName);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -61,7 +75,8 @@ public class EditMessageAttachmentsAction extends PortletAction {
 				JSONObject jsonObject = RestoreEntryUtil.checkEntry(
 					actionRequest);
 
-				writeJSON(actionRequest, actionResponse, jsonObject);
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 
 				return;
 			}
@@ -88,56 +103,12 @@ public class EditMessageAttachmentsAction extends PortletAction {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (PrincipalException pe) {
+			SessionErrors.add(actionRequest, pe.getClass());
 
-				setForward(actionRequest, "portlet.message_boards.error");
-			}
-			else {
-				throw e;
-			}
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getMessage(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchMessageException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.message_boards.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.message_boards.view_deleted_message_attachments"));
-	}
-
-	protected void deleteAttachment(ActionRequest actionRequest)
-		throws PortalException {
-
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-		MBMessageLocalServiceUtil.deleteMessageAttachment(messageId, fileName);
 	}
 
 	protected void emptyTrash(ActionRequest actionRequest) throws Exception {

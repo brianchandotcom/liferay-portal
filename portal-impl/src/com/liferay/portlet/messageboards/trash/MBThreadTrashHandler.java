@@ -259,24 +259,12 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		if (isContainerModel) {
-			if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
-				portletURL.setParameter(
-					"struts_action", "/message_boards/view");
-			}
-			else {
-				portletURL.setParameter(
-					"struts_action", "/message_boards_admin/view");
-			}
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
 		}
 		else {
-			if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
-				portletURL.setParameter(
-					"struts_action", "/message_boards/view_message");
-			}
-			else {
-				portletURL.setParameter(
-					"struts_action", "/message_boards_admin/view_message");
-			}
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view_message");
 		}
 
 		return portletURL;

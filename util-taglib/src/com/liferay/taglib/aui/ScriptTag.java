@@ -149,7 +149,7 @@ public class ScriptTag extends BaseScriptTag {
 						portletId, bodyContentSB, require,
 						ScriptData.ModulesType.ES6);
 				}
-				else if (use != null) {
+				else {
 					scriptData.append(
 						portletId, bodyContentSB, use,
 						ScriptData.ModulesType.AUI);
@@ -181,7 +181,7 @@ public class ScriptTag extends BaseScriptTag {
 						portletId, bodyContentSB, require,
 						ScriptData.ModulesType.ES6);
 				}
-				else if (use != null) {
+				else {
 					scriptData.append(
 						portletId, bodyContentSB, use,
 						ScriptData.ModulesType.AUI);

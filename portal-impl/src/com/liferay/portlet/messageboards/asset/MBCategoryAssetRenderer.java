@@ -104,7 +104,7 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/edit_category");
+			"mvcRenderCommandName", "/message_boards/edit_category");
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(_category.getCategoryId()));
 
@@ -122,7 +122,7 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("struts_action", "/message_boards/view");
+		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(_category.getCategoryId()));
 		portletURL.setWindowState(windowState);

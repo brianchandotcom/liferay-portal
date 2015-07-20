@@ -17,7 +17,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/message_boards/view_message");
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_message");
 portletURL.setParameter("messageId", String.valueOf(message.getMessageId()));
 
 SearchContainer searchContainer = null;

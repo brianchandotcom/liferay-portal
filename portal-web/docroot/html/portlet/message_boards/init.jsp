@@ -89,12 +89,6 @@ int rssDelta = mbGroupServiceSettings.getRSSDelta();
 String rssDisplayStyle = mbGroupServiceSettings.getRSSDisplayStyle();
 String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
 
-ResourceURL rssURL = liferayPortletResponse.createResourceURL();
-
-rssURL.setParameter("struts_action", "/message_boards/rss");
-rssURL.setParameter("p_l_id", String.valueOf(plid));
-rssURL.setParameter("mbCategoryId", String.valueOf(scopeGroupId));
-
 boolean categoriesPanelCollapsible = true;
 boolean categoriesPanelExtended = true;
 boolean threadsPanelCollapsible = true;

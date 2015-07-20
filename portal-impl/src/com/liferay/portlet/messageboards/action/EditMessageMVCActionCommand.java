@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -37,9 +40,9 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
@@ -69,28 +72,33 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Sanz
  * @author Shuyang Zhou
  */
-public class EditMessageAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/message_boards/edit_message"
+	},
+	service = MVCActionCommand.class
+)
+public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteMessage(ActionRequest actionRequest) throws Exception {
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		MBMessageServiceUtil.deleteMessage(messageId);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -152,97 +160,53 @@ public class EditMessageAction extends PortletAction {
 				}
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchMessageException ||
-				e instanceof PrincipalException ||
-				e instanceof RequiredMessageException) {
+		catch (NoSuchMessageException | PrincipalException |
+				RequiredMessageException e) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.message_boards.error");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/message_boards/error.jsp");
+		}
+		catch (AntivirusScannerException | CaptchaConfigurationException |
+				CaptchaMaxChallengesException | CaptchaTextException |
+				DuplicateFileException | FileExtensionException |
+				FileNameException | FileSizeException |
+				LiferayFileItemException | LockedThreadException |
+				MessageBodyException | MessageSubjectException |
+				SanitizerException e) {
+
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				String uploadExceptionRedirect = ParamUtil.getString(
+					actionRequest, "uploadExceptionRedirect");
+
+				actionResponse.sendRedirect(uploadExceptionRedirect);
 			}
-			else if (e instanceof AntivirusScannerException ||
-					 e instanceof CaptchaConfigurationException ||
-					 e instanceof CaptchaMaxChallengesException ||
-					 e instanceof CaptchaTextException ||
-					 e instanceof DuplicateFileException ||
-					 e instanceof FileExtensionException ||
-					 e instanceof FileNameException ||
-					 e instanceof FileSizeException ||
-					 e instanceof LiferayFileItemException ||
-					 e instanceof LockedThreadException ||
-					 e instanceof MessageBodyException ||
-					 e instanceof MessageSubjectException ||
-					 e instanceof SanitizerException) {
 
-				UploadException uploadException =
-					(UploadException)actionRequest.getAttribute(
-						WebKeys.UPLOAD_EXCEPTION);
-
-				if (uploadException != null) {
-					String uploadExceptionRedirect = ParamUtil.getString(
-						actionRequest, "uploadExceptionRedirect");
-
-					actionResponse.sendRedirect(uploadExceptionRedirect);
-				}
-
-				if (e instanceof AntivirusScannerException) {
-					SessionErrors.add(actionRequest, e.getClass(), e);
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
-
+			if (e instanceof AntivirusScannerException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
-				Throwable cause = e.getCause();
-
-				if (cause instanceof SanitizerException) {
-					SessionErrors.add(actionRequest, SanitizerException.class);
-				}
-				else {
-					throw e;
-				}
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getMessage(renderRequest);
+		catch (AssetCategoryException | AssetTagException e) {
+			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchMessageException ||
-				e instanceof PrincipalException) {
+			Throwable cause = e.getCause();
 
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.message_boards.error");
+			if (cause instanceof SanitizerException) {
+				SessionErrors.add(actionRequest, SanitizerException.class);
 			}
 			else {
 				throw e;
 			}
 		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.message_boards.edit_message"));
-	}
-
-	protected void deleteMessage(ActionRequest actionRequest) throws Exception {
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-
-		MBMessageServiceUtil.deleteMessage(messageId);
 	}
 
 	protected String getRedirect(
@@ -272,7 +236,7 @@ public class EditMessageAction extends PortletAction {
 		PortletURL portletURL = actionResponseImpl.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/view_message");
+			"mvcRenderCommandName", "/message_boards/view_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(message.getMessageId()));
 

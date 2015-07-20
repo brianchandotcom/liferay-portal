@@ -36,7 +36,7 @@ MBThread thread = message.getThread();
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) && !thread.isLocked() %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/message_boards/edit_message" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 		</portlet:renderURL>
@@ -69,24 +69,18 @@ MBThread thread = message.getThread();
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
 		<c:if test="<%= enableRSS && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
 
-			<%
-			rssURL.setParameter("mbCategoryId", StringPool.BLANK);
-			rssURL.setParameter("threadId", String.valueOf(message.getThreadId()));
-			%>
-
 			<liferay-ui:rss
 				delta="<%= rssDelta %>"
 				displayStyle="<%= rssDisplayStyle %>"
 				feedType="<%= rssFeedType %>"
-				resourceURL="<%= rssURL %>"
+				url="<%= MBUtil.getRSSURL(plid, 0, message.getThreadId(), 0, themeDisplay) %>"
 			/>
 		</c:if>
 
 		<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
 			<c:choose>
 				<c:when test="<%= (threadSubscriptionClassPKs != null) && threadSubscriptionClassPKs.contains(message.getThreadId()) %>">
-					<portlet:actionURL var="unsubscribeURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_message" />
+					<portlet:actionURL name="/message_boards/edit_message" var="unsubscribeURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
@@ -99,8 +93,7 @@ MBThread thread = message.getThread();
 					/>
 				</c:when>
 				<c:otherwise>
-					<portlet:actionURL var="subscribeURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_message" />
+					<portlet:actionURL name="/message_boards/edit_message" var="subscribeURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
@@ -119,8 +112,7 @@ MBThread thread = message.getThread();
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, message.getGroupId(), message.getCategoryId(), ActionKeys.LOCK_THREAD) %>">
 		<c:choose>
 			<c:when test="<%= thread.isLocked() %>">
-				<portlet:actionURL var="unlockThreadURL">
-					<portlet:param name="struts_action" value="/message_boards/edit_message" />
+				<portlet:actionURL name="/message_boards/edit_message" var="unlockThreadURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNLOCK %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
@@ -133,8 +125,7 @@ MBThread thread = message.getThread();
 				/>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL var="lockThreadURL">
-					<portlet:param name="struts_action" value="/message_boards/edit_message" />
+				<portlet:actionURL name="/message_boards/edit_message" var="lockThreadURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.LOCK %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
@@ -152,7 +143,7 @@ MBThread thread = message.getThread();
 
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, message.getGroupId(), message.getCategoryId(), ActionKeys.MOVE_THREAD) && !thread.isLocked() %>">
 		<portlet:renderURL var="moveThreadURL">
-			<portlet:param name="struts_action" value="/message_boards/move_thread" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/move_thread" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 			<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
@@ -166,8 +157,7 @@ MBThread thread = message.getThread();
 	</c:if>
 
 	<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) && !thread.isLocked() %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/message_boards/delete_thread" />
+		<portlet:actionURL name="/message_boards/delete_thread" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />

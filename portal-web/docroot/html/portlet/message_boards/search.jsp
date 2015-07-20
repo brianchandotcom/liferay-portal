@@ -39,7 +39,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/message_boards/search" />
+	<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm">
@@ -62,7 +62,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/message_boards/search");
+	portletURL.setParameter("mvcRenderCommandName", "/message_boards/search");
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("breadcrumbsCategoryId", String.valueOf(breadcrumbsCategoryId));
 	portletURL.setParameter("breadcrumbsMessageId", String.valueOf(breadcrumbsMessageId));
@@ -117,7 +117,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			%>
 
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="struts_action" value="/message_boards/view_message" />
+				<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 			</portlet:renderURL>

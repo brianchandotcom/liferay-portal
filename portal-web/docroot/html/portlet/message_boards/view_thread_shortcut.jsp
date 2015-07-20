@@ -57,7 +57,7 @@ if (threadFlag != null) {
 			if (portletName.equals(PortletKeys.MESSAGE_BOARDS_ADMIN)) {
 				PortletURL selMessageURL = renderResponse.createRenderURL();
 
-				selMessageURL.setParameter("struts_action", "/message_boards/view_message");
+				selMessageURL.setParameter("mvcRenderCommandName", "/message_boards/view_message");
 				selMessageURL.setParameter("messageId", String.valueOf(selMessage.getMessageId()));
 
 				messageURL = selMessageURL.toString();

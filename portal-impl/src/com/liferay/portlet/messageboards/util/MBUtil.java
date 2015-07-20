@@ -160,7 +160,8 @@ public class MBUtil {
 				portletURL.toString());
 		}
 		else {
-			portletURL.setParameter("struts_action", "/message_boards/view");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
 		}
 
 		List<MBCategory> ancestorCategories = category.getAncestors();
@@ -203,7 +204,7 @@ public class MBUtil {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/view_message");
+			"mvcRenderCommandName", "/message_boards/view_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(message.getMessageId()));
 
@@ -681,6 +682,39 @@ public class MBUtil {
 		sb.append(PropsValues.POP_SERVER_SUBDOMAIN);
 		sb.append(StringPool.PERIOD);
 		sb.append(mx);
+
+		return sb.toString();
+	}
+
+	public static String getRSSURL(
+		long plid, long categoryId, long threadId, long userId,
+		ThemeDisplay themeDisplay) {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/message_boards/rss?p_l_id=");
+		sb.append(plid);
+
+		if (categoryId > 0) {
+			sb.append("&mbCategoryId=");
+			sb.append(categoryId);
+		}
+		else {
+			sb.append("&groupId=");
+			sb.append(themeDisplay.getScopeGroupId());
+		}
+
+		if (threadId > 0) {
+			sb.append("&threadId=");
+			sb.append(threadId);
+		}
+
+		if (userId > 0) {
+			sb.append("&userId=");
+			sb.append(userId);
+		}
 
 		return sb.toString();
 	}

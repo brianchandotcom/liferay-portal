@@ -12,20 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.social;
+package com.liferay.document.library.web.social;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	service = SocialActivityInterpreter.class
+)
 public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override

@@ -521,15 +521,6 @@
 		<portlet-name>199</portlet-name>
 		<struts-path>document_library_admin</struts-path>
 		<parent-struts-path>document_library</parent-struts-path>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.documentlibrary.messaging.TempFileEntriesMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>dl.temporary.file.entries.check.interval</property-key>
-					<time-unit>hour</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

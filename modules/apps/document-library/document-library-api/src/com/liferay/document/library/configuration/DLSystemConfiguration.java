@@ -34,4 +34,12 @@ public interface DLSystemConfiguration {
 	)
 	public String displayTemplatesConfig();
 
+	/**
+	 * Set the interval in hours on how often
+	 * TemporaryFileEntriesMessageListener will run to check for expired
+	 * temporary file entries.
+	 */
+	@Meta.AD(deflt = "1", required = false)
+	public int temporaryFileEntriesCheckInterval();
+
 }

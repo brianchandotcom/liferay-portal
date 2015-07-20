@@ -12,24 +12,55 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.messaging;
+package com.liferay.document.library.web.messaging;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.document.library.configuration.DLSystemConfiguration;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.util.PortletKeys;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Iván Zaera
  */
-public class TempFileEntriesMessageListener extends BaseMessageListener {
+@Component(
+	configurationPid = "com.liferay.document.library.configuration.DLSystemConfiguration",
+	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN},
+	service = SchedulerEntry.class
+)
+public class TempFileEntriesMessageListener
+	extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_dlSystemConfiguration = Configurable.createConfigurable(
+			DLSystemConfiguration.class, properties);
+
+		schedulerEntry.setTimeUnit(TimeUnit.HOUR);
+		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
+		schedulerEntry.setTriggerValue(
+			_dlSystemConfiguration.temporaryFileEntriesCheckInterval());
+	}
 
 	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
 		LocalRepository localRepository = null;
@@ -93,5 +124,7 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TempFileEntriesMessageListener.class);
+
+	private volatile DLSystemConfiguration _dlSystemConfiguration;
 
 }

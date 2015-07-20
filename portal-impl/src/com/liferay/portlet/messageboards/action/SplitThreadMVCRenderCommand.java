@@ -15,15 +15,8 @@
 package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
-
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Adolfo Pérez
@@ -36,28 +29,10 @@ import javax.portlet.RenderResponse;
 	},
 	service = MVCRenderCommand.class
 )
-public class SplitThreadMVCRenderCommand implements MVCRenderCommand {
+public class SplitThreadMVCRenderCommand extends GetMessageMVCRenderCommand {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			ActionUtil.getMessage(renderRequest);
-		}
-		catch (NoSuchMessageException | PrincipalException e) {
-			SessionErrors.add(renderRequest, e.getClass());
-
-			return "/html/portlet/message_boards/error.jsp";
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-
+	protected String getPath() {
 		return "/html/portlet/message_boards/split_thread.jsp";
 	}
 

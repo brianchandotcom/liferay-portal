@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.comments.web.notifications;
+package com.liferay.comment.comments.web.notifications;
 
-import com.liferay.comments.web.constants.CommentsPortletKeys;
+import com.liferay.comment.comments.web.constants.CommentsPortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;

@@ -72,7 +72,7 @@ public class PortalPreferencesImplTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws NoSuchMethodException {
 		_transactionInterceptor =
 			(TransactionInterceptor)PortalBeanLocatorUtil.locate(
 				"transactionAdvice");
@@ -93,6 +93,11 @@ public class PortalPreferencesImplTest {
 				new Class<?>[] {PortalPreferencesLocalService.class},
 				new SynchronousInvocationHandler(
 					_originalPortalPreferencesLocalService)));
+
+		_updatePreferencesMethod =
+			PortalPreferencesLocalService.class.getMethod(
+				"updatePreferences", long.class, int.class,
+				PortalPreferences.class);
 	}
 
 	@AfterClass
@@ -489,16 +494,8 @@ public class PortalPreferencesImplTest {
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
-			Class<?>[] parameterTypes = method.getParameterTypes();
-
-			Class<?>[] expectedTypes = new Class<?>[] {
-				long.class, int.class,
-				com.liferay.portlet.PortalPreferences.class
-			};
-
 			if (_synchronize.get() && _synchronizeThreadLocal.get() &&
-				method.getName().equals("updatePreferences") &&
-				Arrays.equals(parameterTypes, expectedTypes)) {
+				_updatePreferencesMethod.equals(method)) {
 
 				_cyclicBarrier.await();
 
@@ -548,5 +545,6 @@ public class PortalPreferencesImplTest {
 	private static final ThreadLocal<Boolean> _synchronizeThreadLocal =
 		new InheritableThreadLocal<>();
 	private static TransactionInterceptor _transactionInterceptor;
+	private static Method _updatePreferencesMethod;
 
 }

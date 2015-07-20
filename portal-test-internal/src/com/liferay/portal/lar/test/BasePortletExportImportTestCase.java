@@ -412,8 +412,8 @@ public abstract class BasePortletExportImportTestCase
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
 				user.getUserId(), layout.getPlid(), layout.getGroupId(),
-				portletId, exportParameterMap, StringPool.BLANK,
-				user.getLocale(), user.getTimeZone(), StringPool.BLANK);
+				portletId, exportParameterMap, user.getLocale(),
+				user.getTimeZone(), StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -439,7 +439,7 @@ public abstract class BasePortletExportImportTestCase
 					buildImportSettingsMap(
 						user.getUserId(), importedLayout.getPlid(),
 						importedGroup.getGroupId(), portletId,
-						importParameterMap, StringPool.BLANK, user.getLocale(),
+						importParameterMap, user.getLocale(),
 						user.getTimeZone(), StringPool.BLANK);
 
 			exportImportConfiguration =

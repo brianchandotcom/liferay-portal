@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -719,8 +718,7 @@ public class AssetPublisherExportImportTest
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), importedGroup.getGroupId(),
 				layout.isPrivateLayout(), null, getImportParameterMap(),
-				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
-				larFile.getName());
+				user.getLocale(), user.getTimeZone(), larFile.getName());
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

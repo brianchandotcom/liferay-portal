@@ -204,8 +204,8 @@ public class ExportImportLifecycleEventTest {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
 				TestPropsValues.getUserId(), plid, _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, StringPool.BLANK, Locale.US,
-				TimeZoneUtil.GMT, StringPool.BLANK);
+				StringPool.BLANK, _parameterMap, Locale.US, TimeZoneUtil.GMT,
+				StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -238,8 +238,8 @@ public class ExportImportLifecycleEventTest {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				TestPropsValues.getUserId(), 0, _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, StringPool.BLANK, Locale.US,
-				TimeZoneUtil.GMT, StringPool.BLANK);
+				StringPool.BLANK, _parameterMap, Locale.US, TimeZoneUtil.GMT,
+				StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

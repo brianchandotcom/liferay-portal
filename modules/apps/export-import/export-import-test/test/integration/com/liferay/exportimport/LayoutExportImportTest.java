@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -493,8 +492,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), importedGroup.getGroupId(), false, null,
-				parameterMap, Constants.IMPORT, user.getLocale(),
-				user.getTimeZone(), larFile.getName());
+				parameterMap, user.getLocale(), user.getTimeZone(),
+				larFile.getName());
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

@@ -66,6 +66,11 @@ public class MediaItemSelectorView
 			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
 	}
 
+	@Override
+	public boolean supportsSearch() {
+		return false;
+	}
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(

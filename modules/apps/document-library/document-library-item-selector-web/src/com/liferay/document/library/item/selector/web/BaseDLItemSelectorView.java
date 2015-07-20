@@ -79,6 +79,11 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		_servletContext = servletContext;
 	}
 
+	@Override
+	public boolean supportsSearch() {
+		return true;
+	}
+
 	private ServletContext _servletContext;
 
 }

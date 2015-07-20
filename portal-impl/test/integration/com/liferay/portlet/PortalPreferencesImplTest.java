@@ -86,13 +86,6 @@ public class PortalPreferencesImplTest {
 		_originalPortalPreferencesLocalService =
 			PortalPreferencesLocalServiceUtil.getService();
 
-		ReflectionTestUtil.setFieldValue(
-			PortalPreferencesLocalServiceUtil.class, "_service",
-			ProxyUtil.newProxyInstance(
-				PortalPreferencesLocalService.class.getClassLoader(),
-				new Class<?>[] {PortalPreferencesLocalService.class},
-				new SynchronousInvocationHandler()));
-
 		_updatePreferencesMethod =
 			PortalPreferencesLocalService.class.getMethod(
 				"updatePreferences", long.class, int.class,
@@ -103,10 +96,6 @@ public class PortalPreferencesImplTest {
 	public static void tearDownClass() {
 		_transactionInterceptor.setTransactionExecutor(
 			_originalTransactionExecutor);
-
-		ReflectionTestUtil.setFieldValue(
-			PortalPreferencesLocalServiceUtil.class, "_service",
-			_originalPortalPreferencesLocalService);
 	}
 
 	@Before
@@ -393,7 +382,12 @@ public class PortalPreferencesImplTest {
 			CaptureAppender captureAppender)
 		throws Exception {
 
-		SynchronousInvocationHandler.synchronize(true);
+		ReflectionTestUtil.setFieldValue(
+			PortalPreferencesLocalServiceUtil.class, "_service",
+			ProxyUtil.newProxyInstance(
+				PortalPreferencesLocalService.class.getClassLoader(),
+				new Class<?>[] {PortalPreferencesLocalService.class},
+				new SynchronousInvocationHandler()));
 
 		Thread thread1 = new Thread(futureTask1, "Update Thread 1");
 
@@ -473,26 +467,22 @@ public class PortalPreferencesImplTest {
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
-			if (_synchronize.get() && _synchronizeThreadLocal.get() &&
+			if (_synchronizeThreadLocal.get() &&
 				_updatePreferencesMethod.equals(method)) {
 
 				_cyclicBarrier.await();
 
 				SynchronizedTransactionExecutor.synchronize(true);
 
-				_synchronize.set(false);
+				ReflectionTestUtil.setFieldValue(
+					PortalPreferencesLocalServiceUtil.class, "_service",
+					_originalPortalPreferencesLocalService);
 			}
 
 			return method.invoke(_originalPortalPreferencesLocalService, args);
 		}
 
-		protected static void synchronize(boolean synchronize) {
-			_synchronize.set(synchronize);
-		}
-
-		private static final CyclicBarrier _cyclicBarrier = new CyclicBarrier(
-			2);
-		private static final AtomicBoolean _synchronize = new AtomicBoolean();
+		private final CyclicBarrier _cyclicBarrier = new CyclicBarrier(2);
 
 	}
 

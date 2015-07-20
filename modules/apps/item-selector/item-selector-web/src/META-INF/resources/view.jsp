@@ -43,7 +43,25 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:tabs names="<%= StringUtil.merge(titles) %>" refresh="<%= false %>" type="pills" value="<%= localizedItemSelectorRendering.getSelectedTab() %>">
+
+		<%
+		String selectedTab = localizedItemSelectorRendering.getSelectedTab();
+
+		if (Validator.isNull(selectedTab)) {
+			selectedTab = titles.get(0);
+		}
+		%>
+
+		<div class="form-search">
+			<aui:form action="<%= currentURL %>"  name="searchFm">
+				<input id="<portlet:namespace />selectedTab" name="<portlet:namespace />selectedTab" type="hidden" value="<%= selectedTab %>">
+				<input id="<portlet:namespace />tabName" name="<portlet:namespace />tabName" type="hidden" value="<%= selectedTab %>">
+
+				<liferay-ui:input-search />
+			</aui:form>
+		</div>
+
+		<liferay-ui:tabs names="<%= StringUtil.merge(titles) %>" refresh="<%= false %>" type="pills" value="<%= selectedTab %>">
 
 			<%
 			for (String title : titles) {
@@ -67,6 +85,20 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		</liferay-ui:tabs>
 	</c:otherwise>
 </c:choose>
+
+<aui:script sandbox="<%= true %>">
+	Liferay.on(
+		'showTab',
+		function(event) {
+			var searchForm = $('#<portlet:namespace />searchFm');
+
+			if (searchForm) {
+				searchForm.find('#<portlet:namespace />selectedTab').val(event.id);
+				searchForm.find('#<portlet:namespace />tabName').val(event.id);
+			}
+		}
+	);
+</aui:script>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_item_selector_web.view_jsp");

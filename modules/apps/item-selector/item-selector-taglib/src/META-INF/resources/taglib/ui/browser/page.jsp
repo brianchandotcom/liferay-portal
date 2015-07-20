@@ -45,18 +45,6 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 					displayStyles="<%= BrowserTag.DISPLAY_STYLES %>"
 				/>
 			</aui:nav>
-
-			<c:if test="<%= searchURL != null %>">
-				<aui:nav-bar-search>
-					<div class="form-search">
-						<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-							<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
-
-							<liferay-ui:input-search />
-						</aui:form>
-					</div>
-				</aui:nav-bar-search>
-			</c:if>
 		</aui:nav-bar>
 	</c:if>
 

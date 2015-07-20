@@ -1035,7 +1035,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreDMDocumentFromFolderCP" priority="4">
+	<command name="RestoreDMDocumentFromFolderCP" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />

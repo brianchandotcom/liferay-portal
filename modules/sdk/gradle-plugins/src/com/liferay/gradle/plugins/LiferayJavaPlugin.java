@@ -294,7 +294,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Jar jar = (Jar)GradleUtil.getTask(
 			copy.getProject(), JavaPlugin.JAR_TASK_NAME);
 
-		copy.from(jar.getOutputs());
+		copy.from(jar);
 
 		return copy;
 	}

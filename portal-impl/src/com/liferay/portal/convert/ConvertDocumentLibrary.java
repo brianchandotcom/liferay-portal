@@ -94,7 +94,7 @@ public class ConvertDocumentLibrary
 
 		for (String storeType : storeTypes) {
 			Class<?> clazz = store.getClass();
-			
+
 			if (!storeType.equals(clazz.getName())) {
 				sb.append(storeType);
 				sb.append(StringPool.SEMICOLON);

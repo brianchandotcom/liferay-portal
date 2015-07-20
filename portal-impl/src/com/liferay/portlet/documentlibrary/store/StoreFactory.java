@@ -58,7 +58,7 @@ public class StoreFactory {
 
 		for (String key : _storeServiceTrackerMap.keySet()) {
 			Store store = getStore(key);
-			
+
 			Class<?> clazz = store.getClass();
 
 			String className = clazz.getName();
@@ -159,7 +159,6 @@ public class StoreFactory {
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static StoreFactory _storeFactory;
-
 	private static boolean _warned;
 
 	private volatile Store _store = null;

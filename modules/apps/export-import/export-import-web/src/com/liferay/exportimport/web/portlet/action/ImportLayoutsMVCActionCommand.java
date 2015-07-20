@@ -273,7 +273,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
 
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			themeDisplay.getLocale(), e, null);
+			themeDisplay.getLocale(), e, (ExportImportConfiguration)null);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
@@ -376,7 +376,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				jsonObject.put(
 					"warningMessages",
 					StagingUtil.getWarningMessagesJSONArray(
-						themeDisplay.getLocale(), weakMissingReferences, null));
+						themeDisplay.getLocale(), weakMissingReferences));
 			}
 
 			JSONPortletResponseUtil.writeJSON(

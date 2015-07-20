@@ -152,8 +152,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 					backgroundTaskId);
 
 			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
-				getLocale(backgroundTask), weakMissingReferences,
-				backgroundTask.getTaskContextMap());
+				getLocale(backgroundTask), weakMissingReferences);
 
 			backgroundTaskResult.setStatusMessage(jsonArray.toString());
 		}

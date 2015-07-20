@@ -37,7 +37,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.MailServiceTestUtil;
 
 import javax.portlet.PortletPreferences;
@@ -68,9 +67,6 @@ public class UserServiceTest {
 
 		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotAddUser() throws Exception {
-			Object companySecurityStrangersWithMx =
-				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;
-
 			String name = PrincipalThreadLocal.getName();
 
 			try {
@@ -83,19 +79,12 @@ public class UserServiceTest {
 				UserTestUtil.addUser(true);
 			}
 			finally {
-				PropsUtil.set(
-					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-					companySecurityStrangersWithMx.toString());
-
 				PrincipalThreadLocal.setName(name);
 			}
 		}
 
 		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotUpdateEmailAddress() throws Exception {
-			Object companySecurityStrangersWithMx =
-				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;
-
 			String name = PrincipalThreadLocal.getName();
 
 			try {
@@ -116,19 +105,12 @@ public class UserServiceTest {
 					emailAddress, new ServiceContext());
 			}
 			finally {
-				PropsUtil.set(
-					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-					companySecurityStrangersWithMx.toString());
-
 				PrincipalThreadLocal.setName(name);
 			}
 		}
 
 		@Test(expected = UserEmailAddressException.MustNotUseCompanyMx.class)
 		public void shouldNotUpdateUser() throws Exception {
-			Object companySecurityStrangersWithMx =
-				PropsValues.COMPANY_SECURITY_STRANGERS_WITH_MX;
-
 			String name = PrincipalThreadLocal.getName();
 
 			User user = UserTestUtil.addUser(false);
@@ -143,10 +125,6 @@ public class UserServiceTest {
 				UserTestUtil.updateUser(user);
 			}
 			finally {
-				PropsUtil.set(
-					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-					companySecurityStrangersWithMx.toString());
-
 				PrincipalThreadLocal.setName(name);
 
 				UserLocalServiceUtil.deleteUser(user);

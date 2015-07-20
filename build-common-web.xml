@@ -77,7 +77,12 @@
 						<available file="docroot" type="dir" />
 						<then>
 							<copy todir="${war.file.dest}" preservelastmodified="true">
-								<fileset dir="docroot" excludes="/html/themes/*/_diffs/**" />
+								<fileset dir="docroot">
+									<exclude name="**/css/*.scss" />
+								</fileset>
+								<filtermapper>
+									<replacestring from=".sass-cache/" to="" />
+								</filtermapper>
 							</copy>
 						</then>
 					</elseif>

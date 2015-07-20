@@ -553,8 +553,4 @@
 	<definition name="portlet.users_admin.error" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/error.jsp" />
 	</definition>
-
-	<definition name="portlet.users_admin.select_user_group" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/select_user_group.jsp" />
-	</definition>
 </tiles-definitions>

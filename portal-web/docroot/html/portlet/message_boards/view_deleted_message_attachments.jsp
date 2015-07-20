@@ -120,7 +120,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 </portlet:actionURL>
 
 <portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/message_boards/restore_entry" />
+	<portlet:param name="mvcRenderCommandName" value="/message_boards/restore_entry" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:renderURL>
 

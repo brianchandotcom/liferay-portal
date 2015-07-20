@@ -54,7 +54,7 @@ public class AddMenuItemTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		List<AddMenuItem> menuItemList =
 			(List<AddMenuItem>)request.getAttribute(
-				"liferay-ui:add-menu:menuItems");
+				"liferay-ui:add-menu:addMenuItems");
 
 		if (menuItemList != null) {
 			AddMenuItem menuItem = new AddMenuItem(_title, _url);

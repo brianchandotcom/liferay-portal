@@ -31,7 +31,7 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 			<span class="icon-plus"></span>
 		</a>
 
-		<aui:script>
+		<aui:script sandbox="<%= true %>">
 			$(document).ready(
 				function() {
 					$('[data-toggle="tooltip"]').tooltip();

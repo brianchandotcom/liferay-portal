@@ -12,36 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.hook.upgrade.v1_2_0;
+package com.liferay.portal.workflow.kaleo.upgrade.v1_2_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.workflow.kaleo.upgrade.v1_2_0.util.KaleoLogTable;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
- * @author Michael C. Han
+ * @author Kenneth Chang
  */
-public class UpgradeKaleoNotificationRecipient extends UpgradeProcess {
+public class UpgradeKaleoLog extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update KaleoNotificationRecipient set recipientClassName = " +
-					"'ADDRESS' where recipientClassName is null or " +
-						"recipientClassName = ''");
-
-			ps.executeUpdate();
+			runSQL("alter_column_type KaleoLog comment TEXT null");
 		}
-		finally {
-			DataAccess.cleanUp(con, ps);
+		catch (SQLException sqle) {
+			upgradeTable(
+				KaleoLogTable.TABLE_NAME, KaleoLogTable.TABLE_COLUMNS,
+				KaleoLogTable.TABLE_SQL_CREATE,
+				KaleoLogTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

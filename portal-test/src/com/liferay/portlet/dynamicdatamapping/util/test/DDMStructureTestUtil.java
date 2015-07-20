@@ -28,7 +28,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -44,13 +43,13 @@ public class DDMStructureTestUtil {
 		throws Exception {
 
 		return addStructure(
-			groupId, className, 0, getSampleDDMForm(),
+			groupId, className, null, getSampleDDMForm(),
 			LocaleUtil.getSiteDefault(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private static DDMStructure addStructure(
-			long groupId, String className, long parentStructureId,
+	public static DDMStructure addStructure(
+			long groupId, String className, String parentStructureId,
 			DDMForm ddmForm, Locale defaultLocale,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -59,22 +58,23 @@ public class DDMStructureTestUtil {
 
 		nameMap.put(defaultLocale, "Test Structure");
 
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		DDMFormLayout ddmFormLayout = getSampleDDMFormLayout(ddmForm);
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
 		return DDMStructureManagerUtil.addStructure(TestPropsValues.getUserId(),
-			groupId, String.valueOf(parentStructureId),
-			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm, 
-			ddmFormLayout, StorageType.JSON.toString(),
+			groupId, parentStructureId, PortalUtil.getClassNameId(className),
+			null, nameMap, null, ddmForm, ddmFormLayout,
+			StorageType.JSON.toString(),
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
 
 	}
 
 	public static DDMStructure addStructure(String className) throws Exception {
 		return addStructure(
-			TestPropsValues.getGroupId(), className, 0, getSampleDDMForm(),
+			TestPropsValues.getGroupId(), className, 
+			null, getSampleDDMForm(),
 			LocaleUtil.getSiteDefault(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -127,6 +127,16 @@ public class DDMStructureTestUtil {
 		ddmForm.addDDMFormField(ddmFormField);
 
 		return ddmForm;
+	}
+	
+	private static DDMFormLayout getSampleDDMFormLayout(DDMForm ddmForm){
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+		
+		Locale defaultLocale = ddmForm.getDefaultLocale();
+
+		ddmFormLayout.setDefaultLocale(defaultLocale);
+		
+		return ddmFormLayout;
 	}
 
 }

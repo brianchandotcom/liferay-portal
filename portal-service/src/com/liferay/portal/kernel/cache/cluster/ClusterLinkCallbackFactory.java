@@ -28,9 +28,10 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public class ClusterLinkCallbackFactory implements CallbackFactory {
+public class ClusterLinkCallbackFactory
+	implements CallbackFactory<PortalCacheManager<?, ?>> {
 
-	public static final CallbackFactory INSTANCE =
+	public static final CallbackFactory<PortalCacheManager<?, ?>> INSTANCE =
 		new ClusterLinkCallbackFactory();
 
 	@Override

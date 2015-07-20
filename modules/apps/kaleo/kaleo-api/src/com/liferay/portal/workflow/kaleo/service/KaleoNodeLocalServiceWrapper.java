@@ -272,14 +272,6 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 		return _kaleoNodeLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoNodeLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

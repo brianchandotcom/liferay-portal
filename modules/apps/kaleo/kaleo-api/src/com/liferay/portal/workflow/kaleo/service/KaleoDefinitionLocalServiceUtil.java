@@ -16,9 +16,10 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for KaleoDefinition. This utility wraps
@@ -363,12 +364,6 @@ public class KaleoDefinitionLocalServiceUtil {
 				   .incrementKaleoDefinition(definition, title, serviceContext);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -396,27 +391,8 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().updateTitle(name, version, title, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static KaleoDefinitionLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					KaleoDefinitionLocalService.class.getName());
-
-			if (invokableLocalService instanceof KaleoDefinitionLocalService) {
-				_service = (KaleoDefinitionLocalService)invokableLocalService;
-			}
-			else {
-				_service = new KaleoDefinitionLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(KaleoDefinitionLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -426,5 +402,14 @@ public class KaleoDefinitionLocalServiceUtil {
 	public void setService(KaleoDefinitionLocalService service) {
 	}
 
-	private static KaleoDefinitionLocalService _service;
+	private static ServiceTracker<KaleoDefinitionLocalService, KaleoDefinitionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoDefinitionLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoDefinitionLocalService, KaleoDefinitionLocalService>(bundle.getBundleContext(),
+				KaleoDefinitionLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

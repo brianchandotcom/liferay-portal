@@ -16,12 +16,15 @@ package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -162,7 +165,7 @@ public class KaleoInstanceTokenUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoInstanceToken> orderByComparator)
@@ -190,7 +193,7 @@ public class KaleoInstanceTokenUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoInstanceToken> orderByComparator)
@@ -219,7 +222,7 @@ public class KaleoInstanceTokenUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo instance token
-	* @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
 	*/
 	public static KaleoInstanceToken[] findByCompanyId_PrevAndNext(
 		long kaleoInstanceTokenId, long companyId,
@@ -305,7 +308,7 @@ public class KaleoInstanceTokenUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
@@ -337,7 +340,7 @@ public class KaleoInstanceTokenUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId,
@@ -370,7 +373,7 @@ public class KaleoInstanceTokenUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo instance token
-	* @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
 	*/
 	public static KaleoInstanceToken[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoInstanceTokenId, long kaleoDefinitionId,
@@ -456,7 +459,7 @@ public class KaleoInstanceTokenUtil {
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByKaleoInstanceId_First(
 		long kaleoInstanceId,
@@ -488,7 +491,7 @@ public class KaleoInstanceTokenUtil {
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByKaleoInstanceId_Last(
 		long kaleoInstanceId,
@@ -521,7 +524,7 @@ public class KaleoInstanceTokenUtil {
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo instance token
-	* @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
 	*/
 	public static KaleoInstanceToken[] findByKaleoInstanceId_PrevAndNext(
 		long kaleoInstanceTokenId, long kaleoInstanceId,
@@ -613,7 +616,7 @@ public class KaleoInstanceTokenUtil {
 	* @param parentKaleoInstanceTokenId the parent kaleo instance token ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByC_PKITI_First(long companyId,
 		long parentKaleoInstanceTokenId,
@@ -647,7 +650,7 @@ public class KaleoInstanceTokenUtil {
 	* @param parentKaleoInstanceTokenId the parent kaleo instance token ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByC_PKITI_Last(long companyId,
 		long parentKaleoInstanceTokenId,
@@ -682,7 +685,7 @@ public class KaleoInstanceTokenUtil {
 	* @param parentKaleoInstanceTokenId the parent kaleo instance token ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo instance token
-	* @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
 	*/
 	public static KaleoInstanceToken[] findByC_PKITI_PrevAndNext(
 		long kaleoInstanceTokenId, long companyId,
@@ -787,7 +790,7 @@ public class KaleoInstanceTokenUtil {
 	* @param completionDate the completion date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByC_PKITI_CD_First(long companyId,
 		long parentKaleoInstanceTokenId, java.util.Date completionDate,
@@ -823,7 +826,7 @@ public class KaleoInstanceTokenUtil {
 	* @param completionDate the completion date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo instance token
-	* @throws NoSuchInstanceTokenException if a matching kaleo instance token could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a matching kaleo instance token could not be found
 	*/
 	public static KaleoInstanceToken findByC_PKITI_CD_Last(long companyId,
 		long parentKaleoInstanceTokenId, java.util.Date completionDate,
@@ -860,7 +863,7 @@ public class KaleoInstanceTokenUtil {
 	* @param completionDate the completion date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo instance token
-	* @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
 	*/
 	public static KaleoInstanceToken[] findByC_PKITI_CD_PrevAndNext(
 		long kaleoInstanceTokenId, long companyId,
@@ -935,7 +938,7 @@ public class KaleoInstanceTokenUtil {
 	*
 	* @param kaleoInstanceTokenId the primary key of the kaleo instance token
 	* @return the kaleo instance token that was removed
-	* @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
 	*/
 	public static KaleoInstanceToken remove(long kaleoInstanceTokenId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException {
@@ -948,11 +951,11 @@ public class KaleoInstanceTokenUtil {
 	}
 
 	/**
-	* Returns the kaleo instance token with the primary key or throws a {@link NoSuchInstanceTokenException} if it could not be found.
+	* Returns the kaleo instance token with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException} if it could not be found.
 	*
 	* @param kaleoInstanceTokenId the primary key of the kaleo instance token
 	* @return the kaleo instance token
-	* @throws NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException if a kaleo instance token with the primary key could not be found
 	*/
 	public static KaleoInstanceToken findByPrimaryKey(long kaleoInstanceTokenId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException {
@@ -1033,15 +1036,7 @@ public class KaleoInstanceTokenUtil {
 	}
 
 	public static KaleoInstanceTokenPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (KaleoInstanceTokenPersistence)PortletBeanLocatorUtil.locate(com.liferay.portal.workflow.kaleo.service.ClpSerializer.getServletContextName(),
-					KaleoInstanceTokenPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(KaleoInstanceTokenUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -1051,5 +1046,14 @@ public class KaleoInstanceTokenUtil {
 	public void setPersistence(KaleoInstanceTokenPersistence persistence) {
 	}
 
-	private static KaleoInstanceTokenPersistence _persistence;
+	private static ServiceTracker<KaleoInstanceTokenPersistence, KaleoInstanceTokenPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoInstanceTokenUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoInstanceTokenPersistence, KaleoInstanceTokenPersistence>(bundle.getBundleContext(),
+				KaleoInstanceTokenPersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

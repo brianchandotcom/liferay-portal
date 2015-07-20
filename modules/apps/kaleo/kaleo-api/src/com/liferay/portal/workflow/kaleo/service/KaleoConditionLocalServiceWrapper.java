@@ -275,14 +275,6 @@ public class KaleoConditionLocalServiceWrapper
 		return _kaleoConditionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoConditionLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

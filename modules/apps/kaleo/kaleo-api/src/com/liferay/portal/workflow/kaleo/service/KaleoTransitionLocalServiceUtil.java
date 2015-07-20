@@ -16,9 +16,10 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for KaleoTransition. This utility wraps
@@ -283,12 +284,6 @@ public class KaleoTransitionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -309,27 +304,8 @@ public class KaleoTransitionLocalServiceUtil {
 		return getService().updateKaleoTransition(kaleoTransition);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static KaleoTransitionLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					KaleoTransitionLocalService.class.getName());
-
-			if (invokableLocalService instanceof KaleoTransitionLocalService) {
-				_service = (KaleoTransitionLocalService)invokableLocalService;
-			}
-			else {
-				_service = new KaleoTransitionLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(KaleoTransitionLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -339,5 +315,14 @@ public class KaleoTransitionLocalServiceUtil {
 	public void setService(KaleoTransitionLocalService service) {
 	}
 
-	private static KaleoTransitionLocalService _service;
+	private static ServiceTracker<KaleoTransitionLocalService, KaleoTransitionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoTransitionLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoTransitionLocalService, KaleoTransitionLocalService>(bundle.getBundleContext(),
+				KaleoTransitionLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

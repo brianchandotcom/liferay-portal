@@ -16,9 +16,10 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for KaleoCondition. This utility wraps
@@ -262,12 +263,6 @@ public class KaleoConditionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -288,27 +283,8 @@ public class KaleoConditionLocalServiceUtil {
 		return getService().updateKaleoCondition(kaleoCondition);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static KaleoConditionLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					KaleoConditionLocalService.class.getName());
-
-			if (invokableLocalService instanceof KaleoConditionLocalService) {
-				_service = (KaleoConditionLocalService)invokableLocalService;
-			}
-			else {
-				_service = new KaleoConditionLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(KaleoConditionLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -318,5 +294,14 @@ public class KaleoConditionLocalServiceUtil {
 	public void setService(KaleoConditionLocalService service) {
 	}
 
-	private static KaleoConditionLocalService _service;
+	private static ServiceTracker<KaleoConditionLocalService, KaleoConditionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoConditionLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoConditionLocalService, KaleoConditionLocalService>(bundle.getBundleContext(),
+				KaleoConditionLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

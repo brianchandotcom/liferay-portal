@@ -119,6 +119,14 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
+					focus: function() {
+						var instance = this;
+
+						instance.get('container').scrollIntoView();
+
+						instance.getInputNode().focus();
+					},
+
 					getInputNode: function() {
 						var instance = this;
 

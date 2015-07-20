@@ -22,15 +22,14 @@
 					delta="<%= rssDelta %>"
 					displayStyle="<%= rssDisplayStyle %>"
 					feedType="<%= rssFeedType %>"
-					resourceURL="<%= rssURL %>"
+					url="<%= MBUtil.getRSSURL(plid, 0, 0, 0, themeDisplay) %>"
 				/>
 			</c:if>
 
 			<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
 				<c:choose>
 					<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), MBCategory.class.getName(), scopeGroupId) %>">
-						<portlet:actionURL var="unsubscribeURL">
-							<portlet:param name="struts_action" value="/message_boards/edit_category" />
+						<portlet:actionURL name="/message_boards/edit_category" var="unsubscribeURL">
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="mbCategoryId" value="<%= String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
@@ -44,8 +43,7 @@
 						/>
 					</c:when>
 					<c:otherwise>
-						<portlet:actionURL var="subscribeURL">
-							<portlet:param name="struts_action" value="/message_boards/edit_category" />
+						<portlet:actionURL name="/message_boards/edit_category" var="subscribeURL">
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="mbCategoryId" value="<%= String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />

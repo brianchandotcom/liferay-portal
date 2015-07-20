@@ -32,9 +32,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	title='<%= LanguageUtil.format(request, "move-x", category.getName(), false) %>'
 />
 
-<portlet:actionURL var="moveCategoryURL">
-	<portlet:param name="struts_action" value="/message_boards/move_category" />
-</portlet:actionURL>
+<portlet:actionURL name="/message_boards/move_category" var="moveCategoryURL" />
 
 <aui:form action="<%= moveCategoryURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -100,7 +98,7 @@ if (category != null) {
 					},
 					id: '<portlet:namespace />selectCategory',
 					title: '<liferay-ui:message arguments="category" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /><portlet:param name="excludedMBCategoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /><portlet:param name="excludedMBCategoryId" value="<%= String.valueOf(categoryId) %>" /></portlet:renderURL>'
 				},
 				function(event) {
 					var form = $(document.<portlet:namespace />fm);

@@ -14,39 +14,26 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
-import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.util.PortletKeys;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"path=/message_boards/find_category"
+		"mvc.command.name=/message_boards/edit_message"
 	},
-	service = StrutsAction.class
+	service = MVCRenderCommand.class
 )
-public class FindCategoryAction extends BaseStrutsAction {
+public class EditMessageMVCRenderCommand extends GetMessageMVCRenderCommand {
 
 	@Override
-	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-
-		_findActionHelper.execute(request, response);
-
-		return null;
+	protected String getPath() {
+		return "/html/portlet/message_boards/edit_message.jsp";
 	}
-
-	private final FindActionHelper _findActionHelper =
-		new FindCategoryActionHelper();
 
 }

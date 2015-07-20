@@ -72,7 +72,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 						<c:if test="<%= showRecentPosts %>">
 							<portlet:renderURL var="recentPostsURL">
-								<portlet:param name="struts_action" value="/message_boards/view" />
+								<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 								<portlet:param name="topLink" value="recent-posts" />
 								<portlet:param name="groupThreadsUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
 							</portlet:renderURL>
@@ -91,8 +91,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 
 							<c:choose>
 								<c:when test="<%= MBBanLocalServiceUtil.hasBan(scopeGroupId, userDisplay.getUserId()) %>">
-									<portlet:actionURL var="unbanUserURL">
-										<portlet:param name="struts_action" value="/message_boards/ban_user" />
+									<portlet:actionURL name="/message_boards/ban_user" var="unbanUserURL">
 										<portlet:param name="<%= Constants.CMD %>" value="unban" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="banUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
@@ -106,8 +105,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 									/>
 								</c:when>
 								<c:otherwise>
-									<portlet:actionURL var="banUserURL">
-										<portlet:param name="struts_action" value="/message_boards/ban_user" />
+									<portlet:actionURL name="/message_boards/ban_user" var="banUserURL">
 										<portlet:param name="<%= Constants.CMD %>" value="ban" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="banUserId" value="<%= String.valueOf(userDisplay.getUserId()) %>" />
@@ -186,7 +184,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						<%
 						PortletURL parentMessageURL = renderResponse.createRenderURL();
 
-						parentMessageURL.setParameter("struts_action", "/message_boards/view_message");
+						parentMessageURL.setParameter("mvcRenderCommandName", "/message_boards/view_message");
 						parentMessageURL.setParameter("messageId", String.valueOf(parentMessage.getMessageId()));
 
 						String author = parentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(parentMessage.getUserId(), parentMessage.getUserName()));
@@ -228,7 +226,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<c:if test="<%= hasReplyPermission && !thread.isLocked() %>">
 								<li>
 									<portlet:renderURL var="replyURL">
-										<portlet:param name="struts_action" value="/message_boards/edit_message" />
+										<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
 										<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
@@ -244,7 +242,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								</li>
 								<li>
 									<portlet:renderURL var="quoteURL">
-										<portlet:param name="struts_action" value="/message_boards/edit_message" />
+										<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
 										<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
@@ -366,7 +364,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								<c:if test="<%= showDeletedAttachmentsFileEntries && (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 									<li class="message-attachment">
 										<portlet:renderURL var="viewTrashAttachmentsURL">
-											<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
+											<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
 											<portlet:param name="redirect" value="<%= currentURL %>" />
 											<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 										</portlet:renderURL>
@@ -433,7 +431,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					<c:if test="<%= !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 						<li>
 							<portlet:renderURL var="editURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_message" />
+								<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 							</portlet:renderURL>
@@ -471,7 +469,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					<c:if test="<%= (message.getParentMessageId() != MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) && MBCategoryPermission.contains(permissionChecker, scopeGroupId, category.getCategoryId(), ActionKeys.MOVE_THREAD) %>">
 						<li>
 							<portlet:renderURL var="splitThreadURL">
-								<portlet:param name="struts_action" value="/message_boards/split_thread" />
+								<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 								<portlet:param name="splitThread" value="<%= Boolean.TRUE.toString() %>" />
@@ -492,12 +490,11 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<%
 							PortletURL categoryURL = renderResponse.createRenderURL();
 
-							categoryURL.setParameter("struts_action", "/message_boards/view");
+							categoryURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 							categoryURL.setParameter("mbCategoryId", String.valueOf(message.getCategoryId()));
 							%>
 
-							<portlet:actionURL var="deleteURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_message" />
+							<portlet:actionURL name="/message_boards/edit_message" var="deleteURL">
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 								<portlet:param name="redirect" value="<%= categoryURL.toString() %>" />
 								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />

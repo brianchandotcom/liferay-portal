@@ -73,9 +73,7 @@ else {
 	title='<%= (category == null) ? "add-category[message-board]" : LanguageUtil.format(request, "edit-x", category.getName(), false) %>'
 />
 
-<portlet:actionURL var="editCategoryURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_category" />
-</portlet:actionURL>
+<portlet:actionURL name="/message_boards/edit_category" var="editCategoryURL" />
 
 <aui:form action="<%= editCategoryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCategory();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -216,9 +214,7 @@ else {
 	<br />
 
 	<c:if test="<%= (category == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY %>">
-		<portlet:resourceURL var="captchaURL">
-			<portlet:param name="struts_action" value="/message_boards/captcha" />
-		</portlet:resourceURL>
+		<portlet:resourceURL id="/message_boards/captcha" var="captchaURL" />
 
 		<liferay-ui:captcha url="<%= captchaURL %>" />
 	</c:if>

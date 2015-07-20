@@ -61,7 +61,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
 
 					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="struts_action" value="/message_boards/view" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 					</liferay-portlet:renderURL>
 
@@ -110,7 +110,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 				%>
 
 				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="struts_action" value="/message_boards/view_message" />
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
 					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 				</liferay-portlet:renderURL>
 

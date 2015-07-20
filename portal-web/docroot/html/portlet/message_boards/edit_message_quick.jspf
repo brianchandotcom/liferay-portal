@@ -52,9 +52,7 @@ boolean quote = ParamUtil.getBoolean(request, "quote");
 boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 %>
 
-<portlet:actionURL var="editMessageURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_message" />
-</portlet:actionURL>
+<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
 <aui:form action="<%= editMessageURL %>" method="post" name="addQuickReplyFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />

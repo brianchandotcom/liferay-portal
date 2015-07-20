@@ -14,51 +14,49 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.messageboards.BannedUserException;
-import com.liferay.portlet.messageboards.NoSuchCategoryException;
+import com.liferay.portal.util.PortletKeys;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-public class ViewAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/message_boards/move_category"
+	},
+	service = MVCRenderCommand.class
+)
+public class MoveCategoryMVCRenderAction implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		try {
 			ActionUtil.getCategory(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof BannedUserException ||
-				e instanceof NoSuchCategoryException ||
-				e instanceof PrincipalException) {
-
+			if (e instanceof PrincipalException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.message_boards.error");
+				return "/html/portlet/message_boards/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward("portlet.message_boards.view");
+		return "/html/portlet/message_boards/move_category.jsp";
 	}
 
 }

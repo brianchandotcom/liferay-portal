@@ -48,7 +48,7 @@ else {
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/message_boards/select_category");
+	portletURL.setParameter("mvcRenderCommandName", "/message_boards/select_category");
 	portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 	%>
 
@@ -69,7 +69,7 @@ else {
 		>
 
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="struts_action" value="/message_boards/select_category" />
+				<portlet:param name="mvcRenderCommandName" value="/message_boards/select_category" />
 				<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 			</portlet:renderURL>
 

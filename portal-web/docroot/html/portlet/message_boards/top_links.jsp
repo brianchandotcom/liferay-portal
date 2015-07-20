@@ -25,7 +25,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/message_boards/view");
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 %>
 
 <aui:nav-bar>
@@ -92,7 +92,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 
 	<c:if test="<%= showSearch %>">
 		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="struts_action" value="/message_boards/search" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/search" />
 		</liferay-portlet:renderURL>
 
 		<aui:nav-bar-search>

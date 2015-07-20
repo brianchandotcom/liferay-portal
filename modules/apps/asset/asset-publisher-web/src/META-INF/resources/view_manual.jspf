@@ -26,43 +26,74 @@ searchContainer.setResults(assetEntries);
 request.setAttribute("view.jsp-results", assetEntries);
 %>
 
-<liferay-ui:ddm-template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetEntries %>">
+<c:choose>
+	<c:when test="<%= !assetEntries.isEmpty() %>">
+		<liferay-ui:ddm-template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetEntries %>">
 
-	<%
-	for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
-		AssetEntry assetEntry = assetEntries.get(assetEntryIndex);
+			<%
+			for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
+				AssetEntry assetEntry = assetEntries.get(assetEntryIndex);
 
-		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-		String title = assetRenderer.getTitle(locale);
+				String title = assetRenderer.getTitle(locale);
 
-		boolean show = true;
-		boolean print = false;
+				boolean show = true;
+				boolean print = false;
 
-		request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(assetEntryIndex));
+				request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(assetEntryIndex));
 
-		request.setAttribute("view.jsp-assetEntry", assetEntry);
-		request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
-		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+				request.setAttribute("view.jsp-assetEntry", assetEntry);
+				request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
+				request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
-		request.setAttribute("view.jsp-title", title);
+				request.setAttribute("view.jsp-title", title);
 
-		request.setAttribute("view.jsp-show", Boolean.valueOf(show));
-		request.setAttribute("view.jsp-print", Boolean.valueOf(print));
+				request.setAttribute("view.jsp-show", Boolean.valueOf(show));
+				request.setAttribute("view.jsp-print", Boolean.valueOf(print));
 
-		try {
-	%>
+				try {
+			%>
 
-			<%@ include file="/view_display.jspf" %>
+					<%@ include file="/view_display.jspf" %>
 
-	<%
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
-		}
-	}
-	%>
+			<%
+				}
+				catch (Exception e) {
+					_log.error(e.getMessage());
+				}
+			}
+			%>
 
-</liferay-ui:ddm-template-renderer>
+		</liferay-ui:ddm-template-renderer>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:ddm-template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= new ArrayList<AssetEntry>() %>">
+
+			<%
+			boolean hasAddPortletURLs = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:hasAddPortletURLs"));
+			%>
+
+			<c:if test="<%= !hasAddPortletURLs %>">
+
+				<%
+				renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+				%>
+
+			</c:if>
+
+			<div class="alert alert-info">
+				<c:choose>
+					<c:when test="<%= !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
+						<liferay-ui:message key="there-are-no-results" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="there-are-no-related-assets" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</liferay-ui:ddm-template-renderer>
+	</c:otherwise>
+</c:choose>

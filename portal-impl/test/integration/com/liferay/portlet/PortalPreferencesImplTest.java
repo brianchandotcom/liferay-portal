@@ -43,13 +43,11 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -80,9 +78,6 @@ public class PortalPreferencesImplTest {
 		_originalTransactionExecutor = ReflectionTestUtil.getFieldValue(
 			_transactionInterceptor, "transactionExecutor");
 
-		_transactionInterceptor.setTransactionExecutor(
-			new SynchronizedTransactionExecutor());
-
 		_originalPortalPreferencesLocalService =
 			PortalPreferencesLocalServiceUtil.getService();
 
@@ -90,12 +85,6 @@ public class PortalPreferencesImplTest {
 			PortalPreferencesLocalService.class.getMethod(
 				"updatePreferences", long.class, int.class,
 				PortalPreferences.class);
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_transactionInterceptor.setTransactionExecutor(
-			_originalTransactionExecutor);
 	}
 
 	@Before
@@ -424,7 +413,7 @@ public class PortalPreferencesImplTest {
 			TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus) {
 
-			if (_synchronize.get() && _synchronizeThreadLocal.get()) {
+			if (_synchronizeThreadLocal.get()) {
 				try {
 					_cyclicBarrier.await();
 
@@ -436,8 +425,6 @@ public class PortalPreferencesImplTest {
 					ReflectionUtil.throwException(t);
 				}
 				finally {
-					_synchronize.set(false);
-
 					PortalPreferencesWrapperCacheUtil.remove(
 						PortletKeys.PREFS_OWNER_ID_DEFAULT,
 						PortletKeys.PREFS_OWNER_TYPE_USER);
@@ -450,13 +437,16 @@ public class PortalPreferencesImplTest {
 			}
 		}
 
-		protected static void synchronize(boolean synchronize) {
-			_synchronize.set(synchronize);
-		}
+		private final CyclicBarrier _cyclicBarrier = new CyclicBarrier(
+			2, new Runnable() {
 
-		private static final CyclicBarrier _cyclicBarrier = new CyclicBarrier(
-			2);
-		private static final AtomicBoolean _synchronize = new AtomicBoolean();
+				@Override
+				public void run() {
+					_transactionInterceptor.setTransactionExecutor(
+						_originalTransactionExecutor);
+				}
+
+			});
 
 	}
 
@@ -471,18 +461,25 @@ public class PortalPreferencesImplTest {
 				_updatePreferencesMethod.equals(method)) {
 
 				_cyclicBarrier.await();
-
-				SynchronizedTransactionExecutor.synchronize(true);
-
-				ReflectionTestUtil.setFieldValue(
-					PortalPreferencesLocalServiceUtil.class, "_service",
-					_originalPortalPreferencesLocalService);
 			}
 
 			return method.invoke(_originalPortalPreferencesLocalService, args);
 		}
 
-		private final CyclicBarrier _cyclicBarrier = new CyclicBarrier(2);
+		private final CyclicBarrier _cyclicBarrier = new CyclicBarrier(
+			2, new Runnable() {
+
+				@Override
+				public void run() {
+					_transactionInterceptor.setTransactionExecutor(
+						new SynchronizedTransactionExecutor());
+
+					ReflectionTestUtil.setFieldValue(
+						PortalPreferencesLocalServiceUtil.class, "_service",
+						_originalPortalPreferencesLocalService);
+				}
+
+			});
 
 	}
 

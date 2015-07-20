@@ -40,14 +40,13 @@ import org.gradle.api.tasks.compile.JavaCompile;
  */
 public class JspCPlugin implements Plugin<Project> {
 
-	public static final String COMPILE_JSP_SOURCES_TASK_NAME =
-		"compileJSPSources";
-
 	public static final String COMPILE_JSP_TASK_NAME = "compileJSP";
 
 	public static final String CONFIGURATION_NAME = "jspC";
 
 	public static final String EXTENSION_NAME = "jspC";
+
+	public static final String GENERATE_JSP_JAVA_TASK_NAME = "generateJSPJava";
 
 	@Override
 	public void apply(Project project) {
@@ -55,7 +54,7 @@ public class JspCPlugin implements Plugin<Project> {
 
 		addJasperJspCConfiguration(project);
 
-		addTaskCompileJSPSources(project);
+		addTaskGenerateJSPJava(project);
 
 		addTaskCompileJSP(project);
 
@@ -69,7 +68,7 @@ public class JspCPlugin implements Plugin<Project> {
 
 					addJspCDependencies(project);
 					configureJspcExtension(project, jspCExtension);
-					configureTaskCompileJSPSources(project, jspCExtension);
+					configureTaskGenerateJSPJava(project, jspCExtension);
 				}
 
 			});
@@ -120,17 +119,17 @@ public class JspCPlugin implements Plugin<Project> {
 		javaCompile.setDestinationDir(javaCompile.getTemporaryDir());
 		javaCompile.setGroup("verification");
 
-		Task compileJSPSourcesTask = GradleUtil.getTask(
-			project, COMPILE_JSP_SOURCES_TASK_NAME);
+		Task generateJSPJavaTask = GradleUtil.getTask(
+			project, GENERATE_JSP_JAVA_TASK_NAME);
 
-		javaCompile.setSource(compileJSPSourcesTask.getOutputs());
+		javaCompile.setSource(generateJSPJavaTask.getOutputs());
 
 		return javaCompile;
 	}
 
-	protected CompileJSPTask addTaskCompileJSPSources(Project project) {
+	protected CompileJSPTask addTaskGenerateJSPJava(Project project) {
 		CompileJSPTask compileJSPTask = GradleUtil.addTask(
-			project, COMPILE_JSP_SOURCES_TASK_NAME, CompileJSPTask.class);
+			project, GENERATE_JSP_JAVA_TASK_NAME, CompileJSPTask.class);
 
 		compileJSPTask.setDestinationDir(
 			new File(project.getBuildDir(), "jspc"));
@@ -177,24 +176,24 @@ public class JspCPlugin implements Plugin<Project> {
 		jspCExtension.setWebAppDir(webAppDir);
 	}
 
-	protected void configureTaskCompileJSPSources(
+	protected void configureTaskGenerateJSPJava(
 		Project project, JspCExtension jspCExtension) {
 
 		CompileJSPTask compileJSPTask = (CompileJSPTask)GradleUtil.getTask(
-			project, COMPILE_JSP_SOURCES_TASK_NAME);
+			project, GENERATE_JSP_JAVA_TASK_NAME);
 
-		configureTaskCompileJSPSourcesModuleWeb(compileJSPTask, jspCExtension);
-		configureTaskCompileJSPSourcesPortalDir(compileJSPTask, jspCExtension);
-		configureTaskCompileJSPSourcesWebAppDir(compileJSPTask, jspCExtension);
+		configureTaskGenerateJSPJavaModuleWeb(compileJSPTask, jspCExtension);
+		configureTaskGenerateJSPJavaPortalDir(compileJSPTask, jspCExtension);
+		configureTaskGenerateJSPJavaWebAppDir(compileJSPTask, jspCExtension);
 	}
 
-	protected void configureTaskCompileJSPSourcesModuleWeb(
+	protected void configureTaskGenerateJSPJavaModuleWeb(
 		CompileJSPTask compileJSPTask, JspCExtension jspCExtension) {
 
 		compileJSPTask.setModuleWeb(jspCExtension.isModuleWeb());
 	}
 
-	protected void configureTaskCompileJSPSourcesPortalDir(
+	protected void configureTaskGenerateJSPJavaPortalDir(
 		CompileJSPTask compileJSPTask, JspCExtension jspCExtension) {
 
 		if (compileJSPTask.getPortalDir() != null) {
@@ -204,7 +203,7 @@ public class JspCPlugin implements Plugin<Project> {
 		compileJSPTask.setPortalDir(jspCExtension.getPortalDir());
 	}
 
-	protected void configureTaskCompileJSPSourcesWebAppDir(
+	protected void configureTaskGenerateJSPJavaWebAppDir(
 		CompileJSPTask compileJSPTask, JspCExtension jspCExtension) {
 
 		if (compileJSPTask.getWebAppDir() != null) {

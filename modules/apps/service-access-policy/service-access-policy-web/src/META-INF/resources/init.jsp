@@ -43,6 +43,7 @@ page import="com.liferay.service.access.policy.service.SAPEntryServiceUtil" %><%
 page import="com.liferay.service.access.policy.service.permission.SAPEntryPermission" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
+<%@ page import="javax.portlet.ActionRequest" %>
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />

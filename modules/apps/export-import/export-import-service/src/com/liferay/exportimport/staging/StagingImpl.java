@@ -570,8 +570,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) {
+		Locale locale, Map<String, MissingReference> missingReferences) {
 
 		JSONArray errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -653,15 +652,24 @@ public class StagingImpl implements Staging {
 		return errorMessagesJSONArray;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getErrorMessagesJSONArray(Locale, Map<String,
+	 *             MissingReference>)}
+	 */
+	@Deprecated
+	@Override
+	public JSONArray getErrorMessagesJSONArray(
+		Locale locale, Map<String, MissingReference> missingReferences,
+		Map<String, Serializable> contextMap) {
+
+		return getErrorMessagesJSONArray(locale, missingReferences);
+	}
+
 	@Override
 	public JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e, Map<String, Serializable> contextMap) {
-
-		String cmd = null;
-
-		if (contextMap != null) {
-			cmd = (String)contextMap.get(Constants.CMD);
-		}
+		Locale locale, Exception e,
+		ExportImportConfiguration exportImportConfiguration) {
 
 		JSONObject exceptionMessagesJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -705,8 +713,16 @@ public class StagingImpl implements Staging {
 			catch (Exception e1) {
 			}
 
-			if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) ||
-				Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+			if ((exportImportConfiguration != null) &&
+				((exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL) ||
+				(exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_REMOTE) ||
+				(exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -804,8 +820,16 @@ public class StagingImpl implements Staging {
 		else if (e instanceof MissingReferenceException) {
 			MissingReferenceException mre = (MissingReferenceException)e;
 
-			if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) ||
-				Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+			if ((exportImportConfiguration != null) &&
+				((exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL) ||
+				(exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_REMOTE) ||
+				(exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -822,12 +846,10 @@ public class StagingImpl implements Staging {
 			MissingReferences missingReferences = mre.getMissingReferences();
 
 			errorMessagesJSONArray = getErrorMessagesJSONArray(
-				locale, missingReferences.getDependencyMissingReferences(),
-				contextMap);
+				locale, missingReferences.getDependencyMissingReferences());
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			warningMessagesJSONArray = getWarningMessagesJSONArray(
-				locale, missingReferences.getWeakMissingReferences(),
-				contextMap);
+				locale, missingReferences.getWeakMissingReferences());
 		}
 		else if (e instanceof PortletDataException) {
 			PortletDataException pde = (PortletDataException)e;
@@ -925,6 +947,19 @@ public class StagingImpl implements Staging {
 		}
 
 		return exceptionMessagesJSONObject;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExceptionMessagesJSONObject(Locale, Exception,
+	 *             ExportImportConfiguration)}
+	 */
+	@Deprecated
+	@Override
+	public JSONObject getExceptionMessagesJSONObject(
+		Locale locale, Exception e, Map<String, Serializable> contextMap) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1080,8 +1115,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONArray getWarningMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) {
+		Locale locale, Map<String, MissingReference> missingReferences) {
 
 		JSONArray warningMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -1118,6 +1152,20 @@ public class StagingImpl implements Staging {
 		}
 
 		return warningMessagesJSONArray;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getWarningMessagesJSONArray(Locale, Map<String,
+	 *             MissingReference>)}
+	 */
+	@Deprecated
+	@Override
+	public JSONArray getWarningMessagesJSONArray(
+		Locale locale, Map<String, MissingReference> missingReferences,
+		Map<String, Serializable> contextMap) {
+
+		return getWarningMessagesJSONArray(locale, missingReferences);
 	}
 
 	@Override

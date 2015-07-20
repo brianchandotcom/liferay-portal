@@ -16,11 +16,20 @@ package com.liferay.users.admin.web.custom.attributes;
 
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.USERS_ADMIN},
+	service = CustomAttributesDisplay.class
+)
 public class LayoutCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	@Override

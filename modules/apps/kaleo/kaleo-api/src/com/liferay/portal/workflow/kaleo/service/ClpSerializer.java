@@ -1053,97 +1053,97 @@ public class ClpSerializer {
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchActionException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchActionException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchActionException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchConditionException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchConditionException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchDefinitionException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchDefinitionException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchInstanceException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchInstanceException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchInstanceTokenException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchLogException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchLogException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchLogException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchNodeException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchNodeException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchNotificationException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchNotificationException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchTaskException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchTaskException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchTimerException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchTimerException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchTimerInstanceTokenException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchTimerInstanceTokenException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		if (className.equals(
 					"com.liferay.portal.workflow.kaleo.NoSuchTransitionException")) {
-			return new com.liferay.portal.workflow.kaleo.NoSuchTransitionException(throwable.getMessage(),
+			return new com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException(throwable.getMessage(),
 				throwable.getCause());
 		}
 

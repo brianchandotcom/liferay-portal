@@ -171,7 +171,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient findByCompanyId_First(
 		long companyId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -201,7 +201,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient findByCompanyId_Last(
 		long companyId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -232,7 +232,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient[] findByCompanyId_PrevAndNext(
 		long kaleoNotificationRecipientId, long companyId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(kaleoNotificationRecipientId,
 			companyId, orderByComparator);
@@ -318,7 +318,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_First(kaleoDefinitionId,
 			orderByComparator);
@@ -350,7 +350,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_Last(kaleoDefinitionId,
 			orderByComparator);
@@ -383,7 +383,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoNotificationRecipientId, long kaleoDefinitionId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_PrevAndNext(kaleoNotificationRecipientId,
 			kaleoDefinitionId, orderByComparator);
@@ -469,7 +469,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient findByKaleoNotificationId_First(
 		long kaleoNotificationId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByKaleoNotificationId_First(kaleoNotificationId,
 			orderByComparator);
@@ -501,7 +501,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient findByKaleoNotificationId_Last(
 		long kaleoNotificationId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByKaleoNotificationId_Last(kaleoNotificationId,
 			orderByComparator);
@@ -534,7 +534,7 @@ public class KaleoNotificationRecipientUtil {
 	public static KaleoNotificationRecipient[] findByKaleoNotificationId_PrevAndNext(
 		long kaleoNotificationRecipientId, long kaleoNotificationId,
 		OrderByComparator<KaleoNotificationRecipient> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence()
 				   .findByKaleoNotificationId_PrevAndNext(kaleoNotificationRecipientId,
 			kaleoNotificationId, orderByComparator);
@@ -599,7 +599,7 @@ public class KaleoNotificationRecipientUtil {
 	*/
 	public static KaleoNotificationRecipient remove(
 		long kaleoNotificationRecipientId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence().remove(kaleoNotificationRecipientId);
 	}
 
@@ -617,7 +617,7 @@ public class KaleoNotificationRecipientUtil {
 	*/
 	public static KaleoNotificationRecipient findByPrimaryKey(
 		long kaleoNotificationRecipientId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchNotificationRecipientException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException {
 		return getPersistence().findByPrimaryKey(kaleoNotificationRecipientId);
 	}
 

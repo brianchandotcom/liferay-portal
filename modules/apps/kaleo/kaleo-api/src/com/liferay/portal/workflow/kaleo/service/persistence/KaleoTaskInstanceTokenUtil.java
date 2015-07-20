@@ -167,7 +167,7 @@ public class KaleoTaskInstanceTokenUtil {
 	*/
 	public static KaleoTaskInstanceToken findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -196,7 +196,7 @@ public class KaleoTaskInstanceTokenUtil {
 	*/
 	public static KaleoTaskInstanceToken findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -226,7 +226,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken[] findByCompanyId_PrevAndNext(
 		long kaleoTaskInstanceTokenId, long companyId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(kaleoTaskInstanceTokenId,
 			companyId, orderByComparator);
@@ -312,7 +312,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_First(kaleoDefinitionId,
 			orderByComparator);
@@ -344,7 +344,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_Last(kaleoDefinitionId,
 			orderByComparator);
@@ -377,7 +377,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoTaskInstanceTokenId, long kaleoDefinitionId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_PrevAndNext(kaleoTaskInstanceTokenId,
 			kaleoDefinitionId, orderByComparator);
@@ -463,7 +463,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken findByKaleoInstanceId_First(
 		long kaleoInstanceId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByKaleoInstanceId_First(kaleoInstanceId,
 			orderByComparator);
@@ -495,7 +495,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken findByKaleoInstanceId_Last(
 		long kaleoInstanceId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByKaleoInstanceId_Last(kaleoInstanceId,
 			orderByComparator);
@@ -528,7 +528,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken[] findByKaleoInstanceId_PrevAndNext(
 		long kaleoTaskInstanceTokenId, long kaleoInstanceId,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByKaleoInstanceId_PrevAndNext(kaleoTaskInstanceTokenId,
 			kaleoInstanceId, orderByComparator);
@@ -563,7 +563,7 @@ public class KaleoTaskInstanceTokenUtil {
 	*/
 	public static KaleoTaskInstanceToken findByKII_KTI(long kaleoInstanceId,
 		long kaleoTaskId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence().findByKII_KTI(kaleoInstanceId, kaleoTaskId);
 	}
 
@@ -603,7 +603,7 @@ public class KaleoTaskInstanceTokenUtil {
 	*/
 	public static KaleoTaskInstanceToken removeByKII_KTI(long kaleoInstanceId,
 		long kaleoTaskId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence().removeByKII_KTI(kaleoInstanceId, kaleoTaskId);
 	}
 
@@ -682,7 +682,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken findByCN_CPK_First(
 		java.lang.String className, long classPK,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByCN_CPK_First(className, classPK, orderByComparator);
 	}
@@ -714,7 +714,7 @@ public class KaleoTaskInstanceTokenUtil {
 	public static KaleoTaskInstanceToken findByCN_CPK_Last(
 		java.lang.String className, long classPK,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByCN_CPK_Last(className, classPK, orderByComparator);
 	}
@@ -748,7 +748,7 @@ public class KaleoTaskInstanceTokenUtil {
 		long kaleoTaskInstanceTokenId, java.lang.String className,
 		long classPK,
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence()
 				   .findByCN_CPK_PrevAndNext(kaleoTaskInstanceTokenId,
 			className, classPK, orderByComparator);
@@ -813,7 +813,7 @@ public class KaleoTaskInstanceTokenUtil {
 	* @throws NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
 	*/
 	public static KaleoTaskInstanceToken remove(long kaleoTaskInstanceTokenId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence().remove(kaleoTaskInstanceTokenId);
 	}
 
@@ -831,7 +831,7 @@ public class KaleoTaskInstanceTokenUtil {
 	*/
 	public static KaleoTaskInstanceToken findByPrimaryKey(
 		long kaleoTaskInstanceTokenId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException {
 		return getPersistence().findByPrimaryKey(kaleoTaskInstanceTokenId);
 	}
 

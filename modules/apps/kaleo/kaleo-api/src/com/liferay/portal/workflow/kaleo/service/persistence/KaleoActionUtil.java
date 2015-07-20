@@ -164,7 +164,7 @@ public class KaleoActionUtil {
 	*/
 	public static KaleoAction findByCompanyId_First(long companyId,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -192,7 +192,7 @@ public class KaleoActionUtil {
 	*/
 	public static KaleoAction findByCompanyId_Last(long companyId,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -222,7 +222,7 @@ public class KaleoActionUtil {
 	public static KaleoAction[] findByCompanyId_PrevAndNext(
 		long kaleoActionId, long companyId,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(kaleoActionId, companyId,
 			orderByComparator);
@@ -307,7 +307,7 @@ public class KaleoActionUtil {
 	*/
 	public static KaleoAction findByKaleoDefinitionId_First(
 		long kaleoDefinitionId, OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_First(kaleoDefinitionId,
 			orderByComparator);
@@ -337,7 +337,7 @@ public class KaleoActionUtil {
 	*/
 	public static KaleoAction findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId, OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_Last(kaleoDefinitionId,
 			orderByComparator);
@@ -369,7 +369,7 @@ public class KaleoActionUtil {
 	public static KaleoAction[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoActionId, long kaleoDefinitionId,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_PrevAndNext(kaleoActionId,
 			kaleoDefinitionId, orderByComparator);
@@ -459,7 +459,7 @@ public class KaleoActionUtil {
 	public static KaleoAction findByKCN_KCPK_First(
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_First(kaleoClassName, kaleoClassPK,
 			orderByComparator);
@@ -493,7 +493,7 @@ public class KaleoActionUtil {
 	public static KaleoAction findByKCN_KCPK_Last(
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_Last(kaleoClassName, kaleoClassPK,
 			orderByComparator);
@@ -528,7 +528,7 @@ public class KaleoActionUtil {
 	public static KaleoAction[] findByKCN_KCPK_PrevAndNext(long kaleoActionId,
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_PrevAndNext(kaleoActionId, kaleoClassName,
 			kaleoClassPK, orderByComparator);
@@ -633,7 +633,7 @@ public class KaleoActionUtil {
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		java.lang.String executionType,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_ET_First(kaleoClassName, kaleoClassPK,
 			executionType, orderByComparator);
@@ -671,7 +671,7 @@ public class KaleoActionUtil {
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		java.lang.String executionType,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_ET_Last(kaleoClassName, kaleoClassPK,
 			executionType, orderByComparator);
@@ -710,7 +710,7 @@ public class KaleoActionUtil {
 		long kaleoActionId, java.lang.String kaleoClassName, long kaleoClassPK,
 		java.lang.String executionType,
 		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence()
 				   .findByKCN_KCPK_ET_PrevAndNext(kaleoActionId,
 			kaleoClassName, kaleoClassPK, executionType, orderByComparator);
@@ -780,7 +780,7 @@ public class KaleoActionUtil {
 	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public static KaleoAction remove(long kaleoActionId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence().remove(kaleoActionId);
 	}
 
@@ -796,7 +796,7 @@ public class KaleoActionUtil {
 	* @throws NoSuchActionException if a kaleo action with the primary key could not be found
 	*/
 	public static KaleoAction findByPrimaryKey(long kaleoActionId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchActionException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
 		return getPersistence().findByPrimaryKey(kaleoActionId);
 	}
 

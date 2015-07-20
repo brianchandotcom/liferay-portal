@@ -42,7 +42,7 @@ poshiRunner {
 	}
 
 	if (project.hasProperty("testConsoleLogFileName")) {
-		poshiProperty "test.console.log.file.name", project.properties["test.console.log.file.name"]
+		poshiProperty "test.console.log.file.name", project.properties["testConsoleLogFileName"]
 	}
 
 	poshiProperty "test.dependencies.dir.name", "com/liferay/portalweb/dependencies"

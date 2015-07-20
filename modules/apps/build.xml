@@ -58,6 +58,7 @@
 		<dirset dir="translator" includes="*" />
 		<dirset dir="trash" includes="*" />
 		<dirset dir="unit-converter" includes="*" />
+		<dirset dir="user-groups-admin" includes="*" />
 		<dirset dir="user-personal-bar" includes="*" />
 		<dirset dir="web-proxy" includes="*" />
 		<dirset dir="wiki" includes="*" />

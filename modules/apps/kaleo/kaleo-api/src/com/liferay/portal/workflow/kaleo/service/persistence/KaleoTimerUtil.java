@@ -16,12 +16,15 @@ package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -168,7 +171,7 @@ public class KaleoTimerUtil {
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer
-	* @throws NoSuchTimerException if a matching kaleo timer could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerException if a matching kaleo timer could not be found
 	*/
 	public static KaleoTimer findByKCN_KCPK_First(
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -202,7 +205,7 @@ public class KaleoTimerUtil {
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer
-	* @throws NoSuchTimerException if a matching kaleo timer could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerException if a matching kaleo timer could not be found
 	*/
 	public static KaleoTimer findByKCN_KCPK_Last(
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -237,7 +240,7 @@ public class KaleoTimerUtil {
 	* @param kaleoClassPK the kaleo class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo timer
-	* @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerException if a kaleo timer with the primary key could not be found
 	*/
 	public static KaleoTimer[] findByKCN_KCPK_PrevAndNext(long kaleoTimerId,
 		java.lang.String kaleoClassName, long kaleoClassPK,
@@ -339,7 +342,7 @@ public class KaleoTimerUtil {
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer
-	* @throws NoSuchTimerException if a matching kaleo timer could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerException if a matching kaleo timer could not be found
 	*/
 	public static KaleoTimer findByKCN_KCPK_Blocking_First(
 		java.lang.String kaleoClassName, long kaleoClassPK, boolean blocking,
@@ -375,7 +378,7 @@ public class KaleoTimerUtil {
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer
-	* @throws NoSuchTimerException if a matching kaleo timer could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerException if a matching kaleo timer could not be found
 	*/
 	public static KaleoTimer findByKCN_KCPK_Blocking_Last(
 		java.lang.String kaleoClassName, long kaleoClassPK, boolean blocking,
@@ -412,7 +415,7 @@ public class KaleoTimerUtil {
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo timer
-	* @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerException if a kaleo timer with the primary key could not be found
 	*/
 	public static KaleoTimer[] findByKCN_KCPK_Blocking_PrevAndNext(
 		long kaleoTimerId, java.lang.String kaleoClassName, long kaleoClassPK,
@@ -484,7 +487,7 @@ public class KaleoTimerUtil {
 	*
 	* @param kaleoTimerId the primary key of the kaleo timer
 	* @return the kaleo timer that was removed
-	* @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerException if a kaleo timer with the primary key could not be found
 	*/
 	public static KaleoTimer remove(long kaleoTimerId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
@@ -496,11 +499,11 @@ public class KaleoTimerUtil {
 	}
 
 	/**
-	* Returns the kaleo timer with the primary key or throws a {@link NoSuchTimerException} if it could not be found.
+	* Returns the kaleo timer with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTimerException} if it could not be found.
 	*
 	* @param kaleoTimerId the primary key of the kaleo timer
 	* @return the kaleo timer
-	* @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTimerException if a kaleo timer with the primary key could not be found
 	*/
 	public static KaleoTimer findByPrimaryKey(long kaleoTimerId)
 		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
@@ -580,15 +583,7 @@ public class KaleoTimerUtil {
 	}
 
 	public static KaleoTimerPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (KaleoTimerPersistence)PortletBeanLocatorUtil.locate(com.liferay.portal.workflow.kaleo.service.ClpSerializer.getServletContextName(),
-					KaleoTimerPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(KaleoTimerUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -598,5 +593,14 @@ public class KaleoTimerUtil {
 	public void setPersistence(KaleoTimerPersistence persistence) {
 	}
 
-	private static KaleoTimerPersistence _persistence;
+	private static ServiceTracker<KaleoTimerPersistence, KaleoTimerPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoTimerUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoTimerPersistence, KaleoTimerPersistence>(bundle.getBundleContext(),
+				KaleoTimerPersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

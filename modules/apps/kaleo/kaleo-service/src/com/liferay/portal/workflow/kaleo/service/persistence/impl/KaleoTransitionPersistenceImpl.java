@@ -34,7 +34,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.workflow.kaleo.NoSuchTransitionException;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTransitionImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTransitionModelImpl;
@@ -257,7 +257,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
 	 */
 	@Override
 	public KaleoTransition findByCompanyId_First(long companyId,
@@ -308,7 +308,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
 	 */
 	@Override
 	public KaleoTransition findByCompanyId_Last(long companyId,
@@ -366,7 +366,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	 */
 	@Override
 	public KaleoTransition[] findByCompanyId_PrevAndNext(
@@ -746,7 +746,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
 	 */
 	@Override
 	public KaleoTransition findByKaleoDefinitionId_First(
@@ -799,7 +799,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
 	 */
 	@Override
 	public KaleoTransition findByKaleoDefinitionId_Last(
@@ -859,7 +859,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	 */
 	@Override
 	public KaleoTransition[] findByKaleoDefinitionId_PrevAndNext(
@@ -1236,7 +1236,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
 	 */
 	@Override
 	public KaleoTransition findByKaleoNodeId_First(long kaleoNodeId,
@@ -1287,7 +1287,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
 	 */
 	@Override
 	public KaleoTransition findByKaleoNodeId_Last(long kaleoNodeId,
@@ -1345,7 +1345,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	 */
 	@Override
 	public KaleoTransition[] findByKaleoNodeId_PrevAndNext(
@@ -1563,12 +1563,12 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or throws a {@link NoSuchTransitionException} if it could not be found.
+	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTransitionException} if it could not be found.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param name the name
 	 * @return the matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
 	 */
 	@Override
 	public KaleoTransition findByKNI_N(long kaleoNodeId, String name)
@@ -1827,12 +1827,12 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 			new String[] { Long.class.getName(), Boolean.class.getName() });
 
 	/**
-	 * Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or throws a {@link NoSuchTransitionException} if it could not be found.
+	 * Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTransitionException} if it could not be found.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param defaultTransition the default transition
 	 * @return the matching kaleo transition
-	 * @throws NoSuchTransitionException if a matching kaleo transition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
 	 */
 	@Override
 	public KaleoTransition findByKNI_DT(long kaleoNodeId,
@@ -2147,8 +2147,9 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		}
 	}
 
-	protected void cacheUniqueFindersCache(KaleoTransition kaleoTransition) {
-		if (kaleoTransition.isNew()) {
+	protected void cacheUniqueFindersCache(KaleoTransition kaleoTransition,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					kaleoTransition.getKaleoNodeId(), kaleoTransition.getName()
 				};
@@ -2261,7 +2262,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 *
 	 * @param kaleoTransitionId the primary key of the kaleo transition
 	 * @return the kaleo transition that was removed
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	 */
 	@Override
 	public KaleoTransition remove(long kaleoTransitionId)
@@ -2274,7 +2275,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 *
 	 * @param primaryKey the primary key of the kaleo transition
 	 * @return the kaleo transition that was removed
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	 */
 	@Override
 	public KaleoTransition remove(Serializable primaryKey)
@@ -2465,7 +2466,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 			kaleoTransition, false);
 
 		clearUniqueFindersCache(kaleoTransition);
-		cacheUniqueFindersCache(kaleoTransition);
+		cacheUniqueFindersCache(kaleoTransition, isNew);
 
 		kaleoTransition.resetOriginalValues();
 
@@ -2507,7 +2508,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	 *
 	 * @param primaryKey the primary key of the kaleo transition
 	 * @return the kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	 */
 	@Override
 	public KaleoTransition findByPrimaryKey(Serializable primaryKey)
@@ -2527,11 +2528,11 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 	}
 
 	/**
-	 * Returns the kaleo transition with the primary key or throws a {@link NoSuchTransitionException} if it could not be found.
+	 * Returns the kaleo transition with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTransitionException} if it could not be found.
 	 *
 	 * @param kaleoTransitionId the primary key of the kaleo transition
 	 * @return the kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
 	 */
 	@Override
 	public KaleoTransition findByPrimaryKey(long kaleoTransitionId)

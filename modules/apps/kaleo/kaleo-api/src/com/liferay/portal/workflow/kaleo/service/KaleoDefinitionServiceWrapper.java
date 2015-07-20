@@ -55,14 +55,6 @@ public class KaleoDefinitionServiceWrapper implements KaleoDefinitionService,
 		return _kaleoDefinitionService.getKaleoDefinitions(start, end);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoDefinitionService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

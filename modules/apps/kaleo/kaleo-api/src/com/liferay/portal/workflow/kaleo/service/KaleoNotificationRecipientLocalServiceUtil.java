@@ -16,9 +16,10 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for KaleoNotificationRecipient. This utility wraps
@@ -267,12 +268,6 @@ public class KaleoNotificationRecipientLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -294,27 +289,8 @@ public class KaleoNotificationRecipientLocalServiceUtil {
 				   .updateKaleoNotificationRecipient(kaleoNotificationRecipient);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static KaleoNotificationRecipientLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					KaleoNotificationRecipientLocalService.class.getName());
-
-			if (invokableLocalService instanceof KaleoNotificationRecipientLocalService) {
-				_service = (KaleoNotificationRecipientLocalService)invokableLocalService;
-			}
-			else {
-				_service = new KaleoNotificationRecipientLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(KaleoNotificationRecipientLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -324,5 +300,14 @@ public class KaleoNotificationRecipientLocalServiceUtil {
 	public void setService(KaleoNotificationRecipientLocalService service) {
 	}
 
-	private static KaleoNotificationRecipientLocalService _service;
+	private static ServiceTracker<KaleoNotificationRecipientLocalService, KaleoNotificationRecipientLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoNotificationRecipientLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoNotificationRecipientLocalService, KaleoNotificationRecipientLocalService>(bundle.getBundleContext(),
+				KaleoNotificationRecipientLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

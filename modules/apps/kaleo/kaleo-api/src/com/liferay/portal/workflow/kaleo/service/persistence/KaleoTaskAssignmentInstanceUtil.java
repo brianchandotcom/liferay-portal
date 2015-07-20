@@ -16,12 +16,15 @@ package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -166,7 +169,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByCompanyId_First(
 		long companyId,
@@ -196,7 +199,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByCompanyId_Last(
 		long companyId,
@@ -227,7 +230,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance[] findByCompanyId_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long companyId,
@@ -313,7 +316,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
@@ -345,7 +348,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId,
@@ -378,7 +381,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoDefinitionId the kaleo definition ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long kaleoDefinitionId,
@@ -464,7 +467,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByKaleoInstanceId_First(
 		long kaleoInstanceId,
@@ -496,7 +499,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByKaleoInstanceId_Last(
 		long kaleoInstanceId,
@@ -529,7 +532,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoInstanceId the kaleo instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance[] findByKaleoInstanceId_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long kaleoInstanceId,
@@ -617,7 +620,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoTaskInstanceTokenId the kaleo task instance token ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findBykaleoTaskInstanceTokenId_First(
 		long kaleoTaskInstanceTokenId,
@@ -649,7 +652,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoTaskInstanceTokenId the kaleo task instance token ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findBykaleoTaskInstanceTokenId_Last(
 		long kaleoTaskInstanceTokenId,
@@ -682,7 +685,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param kaleoTaskInstanceTokenId the kaleo task instance token ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance[] findBykaleoTaskInstanceTokenId_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long kaleoTaskInstanceTokenId,
@@ -772,7 +775,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassName the assignee class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByassigneeClassName_First(
 		java.lang.String assigneeClassName,
@@ -804,7 +807,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassName the assignee class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByassigneeClassName_Last(
 		java.lang.String assigneeClassName,
@@ -837,7 +840,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassName the assignee class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance[] findByassigneeClassName_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, java.lang.String assigneeClassName,
@@ -929,7 +932,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassPK the assignee class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByG_ACPK_First(long groupId,
 		long assigneeClassPK,
@@ -963,7 +966,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassPK the assignee class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByG_ACPK_Last(long groupId,
 		long assigneeClassPK,
@@ -998,7 +1001,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassPK the assignee class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance[] findByG_ACPK_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long groupId, long assigneeClassPK,
@@ -1094,7 +1097,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassPK the assignee class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByACN_ACPK_First(
 		java.lang.String assigneeClassName, long assigneeClassPK,
@@ -1128,7 +1131,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassPK the assignee class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByACN_ACPK_Last(
 		java.lang.String assigneeClassName, long assigneeClassPK,
@@ -1163,7 +1166,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	* @param assigneeClassPK the assignee class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance[] findByACN_ACPK_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, java.lang.String assigneeClassName,
@@ -1235,7 +1238,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	*
 	* @param kaleoTaskAssignmentInstanceId the primary key of the kaleo task assignment instance
 	* @return the kaleo task assignment instance that was removed
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance remove(
 		long kaleoTaskAssignmentInstanceId)
@@ -1249,11 +1252,11 @@ public class KaleoTaskAssignmentInstanceUtil {
 	}
 
 	/**
-	* Returns the kaleo task assignment instance with the primary key or throws a {@link NoSuchTaskAssignmentInstanceException} if it could not be found.
+	* Returns the kaleo task assignment instance with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException} if it could not be found.
 	*
 	* @param kaleoTaskAssignmentInstanceId the primary key of the kaleo task assignment instance
 	* @return the kaleo task assignment instance
-	* @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	*/
 	public static KaleoTaskAssignmentInstance findByPrimaryKey(
 		long kaleoTaskAssignmentInstanceId)
@@ -1335,15 +1338,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	}
 
 	public static KaleoTaskAssignmentInstancePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (KaleoTaskAssignmentInstancePersistence)PortletBeanLocatorUtil.locate(com.liferay.portal.workflow.kaleo.service.ClpSerializer.getServletContextName(),
-					KaleoTaskAssignmentInstancePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(KaleoTaskAssignmentInstanceUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -1354,5 +1349,14 @@ public class KaleoTaskAssignmentInstanceUtil {
 		KaleoTaskAssignmentInstancePersistence persistence) {
 	}
 
-	private static KaleoTaskAssignmentInstancePersistence _persistence;
+	private static ServiceTracker<KaleoTaskAssignmentInstancePersistence, KaleoTaskAssignmentInstancePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoTaskAssignmentInstanceUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoTaskAssignmentInstancePersistence, KaleoTaskAssignmentInstancePersistence>(bundle.getBundleContext(),
+				KaleoTaskAssignmentInstancePersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

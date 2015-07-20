@@ -33,7 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.workflow.kaleo.NoSuchConditionException;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionModelImpl;
@@ -256,7 +256,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo condition
-	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
 	 */
 	@Override
 	public KaleoCondition findByCompanyId_First(long companyId,
@@ -307,7 +307,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo condition
-	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
 	 */
 	@Override
 	public KaleoCondition findByCompanyId_Last(long companyId,
@@ -365,7 +365,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo condition
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
 	 */
 	@Override
 	public KaleoCondition[] findByCompanyId_PrevAndNext(long kaleoConditionId,
@@ -744,7 +744,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo condition
-	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
 	 */
 	@Override
 	public KaleoCondition findByKaleoDefinitionId_First(
@@ -797,7 +797,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo condition
-	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
 	 */
 	@Override
 	public KaleoCondition findByKaleoDefinitionId_Last(long kaleoDefinitionId,
@@ -856,7 +856,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo condition
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
 	 */
 	@Override
 	public KaleoCondition[] findByKaleoDefinitionId_PrevAndNext(
@@ -1073,11 +1073,11 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns the kaleo condition where kaleoNodeId = &#63; or throws a {@link NoSuchConditionException} if it could not be found.
+	 * Returns the kaleo condition where kaleoNodeId = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchConditionException} if it could not be found.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
 	 * @return the matching kaleo condition
-	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a matching kaleo condition could not be found
 	 */
 	@Override
 	public KaleoCondition findByKaleoNodeId(long kaleoNodeId)
@@ -1362,8 +1362,9 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 		}
 	}
 
-	protected void cacheUniqueFindersCache(KaleoCondition kaleoCondition) {
-		if (kaleoCondition.isNew()) {
+	protected void cacheUniqueFindersCache(KaleoCondition kaleoCondition,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { kaleoCondition.getKaleoNodeId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KALEONODEID, args,
@@ -1424,7 +1425,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 *
 	 * @param kaleoConditionId the primary key of the kaleo condition
 	 * @return the kaleo condition that was removed
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
 	 */
 	@Override
 	public KaleoCondition remove(long kaleoConditionId)
@@ -1437,7 +1438,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 *
 	 * @param primaryKey the primary key of the kaleo condition
 	 * @return the kaleo condition that was removed
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
 	 */
 	@Override
 	public KaleoCondition remove(Serializable primaryKey)
@@ -1609,7 +1610,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 			kaleoCondition, false);
 
 		clearUniqueFindersCache(kaleoCondition);
-		cacheUniqueFindersCache(kaleoCondition);
+		cacheUniqueFindersCache(kaleoCondition, isNew);
 
 		kaleoCondition.resetOriginalValues();
 
@@ -1647,7 +1648,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	 *
 	 * @param primaryKey the primary key of the kaleo condition
 	 * @return the kaleo condition
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
 	 */
 	@Override
 	public KaleoCondition findByPrimaryKey(Serializable primaryKey)
@@ -1667,11 +1668,11 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 	}
 
 	/**
-	 * Returns the kaleo condition with the primary key or throws a {@link NoSuchConditionException} if it could not be found.
+	 * Returns the kaleo condition with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchConditionException} if it could not be found.
 	 *
 	 * @param kaleoConditionId the primary key of the kaleo condition
 	 * @return the kaleo condition
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchConditionException if a kaleo condition with the primary key could not be found
 	 */
 	@Override
 	public KaleoCondition findByPrimaryKey(long kaleoConditionId)

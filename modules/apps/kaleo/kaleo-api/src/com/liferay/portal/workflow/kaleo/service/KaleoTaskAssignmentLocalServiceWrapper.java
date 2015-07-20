@@ -304,14 +304,6 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 		return _kaleoTaskAssignmentLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoTaskAssignmentLocalService.invokeMethod(name,
-			parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

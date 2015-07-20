@@ -16,9 +16,10 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for KaleoTaskAssignment. This utility wraps
@@ -282,12 +283,6 @@ public class KaleoTaskAssignmentLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -308,27 +303,8 @@ public class KaleoTaskAssignmentLocalServiceUtil {
 		return getService().updateKaleoTaskAssignment(kaleoTaskAssignment);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static KaleoTaskAssignmentLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					KaleoTaskAssignmentLocalService.class.getName());
-
-			if (invokableLocalService instanceof KaleoTaskAssignmentLocalService) {
-				_service = (KaleoTaskAssignmentLocalService)invokableLocalService;
-			}
-			else {
-				_service = new KaleoTaskAssignmentLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(KaleoTaskAssignmentLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -338,5 +314,14 @@ public class KaleoTaskAssignmentLocalServiceUtil {
 	public void setService(KaleoTaskAssignmentLocalService service) {
 	}
 
-	private static KaleoTaskAssignmentLocalService _service;
+	private static ServiceTracker<KaleoTaskAssignmentLocalService, KaleoTaskAssignmentLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoTaskAssignmentLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoTaskAssignmentLocalService, KaleoTaskAssignmentLocalService>(bundle.getBundleContext(),
+				KaleoTaskAssignmentLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.InvokableService;
 
 /**
  * Provides the remote service interface for KaleoDefinition. Methods of this
@@ -42,7 +41,7 @@ import com.liferay.portal.service.InvokableService;
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface KaleoDefinitionService extends BaseService, InvokableService {
+public interface KaleoDefinitionService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -63,11 +62,6 @@ public interface KaleoDefinitionService extends BaseService, InvokableService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
 		int start, int end);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	/**
 	* Sets the Spring bean ID for this bean.

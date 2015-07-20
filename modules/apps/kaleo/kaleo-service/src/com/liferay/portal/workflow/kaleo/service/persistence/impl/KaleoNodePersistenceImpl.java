@@ -33,7 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.workflow.kaleo.NoSuchNodeException;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeModelImpl;
@@ -251,7 +251,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
 	 */
 	@Override
 	public KaleoNode findByCompanyId_First(long companyId,
@@ -302,7 +302,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
 	 */
 	@Override
 	public KaleoNode findByCompanyId_Last(long companyId,
@@ -359,7 +359,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
 	 */
 	@Override
 	public KaleoNode[] findByCompanyId_PrevAndNext(long kaleoNodeId,
@@ -735,7 +735,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
 	 */
 	@Override
 	public KaleoNode findByKaleoDefinitionId_First(long kaleoDefinitionId,
@@ -786,7 +786,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
 	 */
 	@Override
 	public KaleoNode findByKaleoDefinitionId_Last(long kaleoDefinitionId,
@@ -844,7 +844,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
 	 */
 	@Override
 	public KaleoNode[] findByKaleoDefinitionId_PrevAndNext(long kaleoNodeId,
@@ -1229,7 +1229,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
 	 */
 	@Override
 	public KaleoNode findByC_KDI_First(long companyId, long kaleoDefinitionId,
@@ -1285,7 +1285,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo node
-	 * @throws NoSuchNodeException if a matching kaleo node could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a matching kaleo node could not be found
 	 */
 	@Override
 	public KaleoNode findByC_KDI_Last(long companyId, long kaleoDefinitionId,
@@ -1348,7 +1348,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 * @param kaleoDefinitionId the kaleo definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
 	 */
 	@Override
 	public KaleoNode[] findByC_KDI_PrevAndNext(long kaleoNodeId,
@@ -1665,7 +1665,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 *
 	 * @param kaleoNodeId the primary key of the kaleo node
 	 * @return the kaleo node that was removed
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
 	 */
 	@Override
 	public KaleoNode remove(long kaleoNodeId) throws NoSuchNodeException {
@@ -1677,7 +1677,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 *
 	 * @param primaryKey the primary key of the kaleo node
 	 * @return the kaleo node that was removed
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
 	 */
 	@Override
 	public KaleoNode remove(Serializable primaryKey) throws NoSuchNodeException {
@@ -1902,7 +1902,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 *
 	 * @param primaryKey the primary key of the kaleo node
 	 * @return the kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
 	 */
 	@Override
 	public KaleoNode findByPrimaryKey(Serializable primaryKey)
@@ -1922,11 +1922,11 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	}
 
 	/**
-	 * Returns the kaleo node with the primary key or throws a {@link NoSuchNodeException} if it could not be found.
+	 * Returns the kaleo node with the primary key or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchNodeException} if it could not be found.
 	 *
 	 * @param kaleoNodeId the primary key of the kaleo node
 	 * @return the kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchNodeException if a kaleo node with the primary key could not be found
 	 */
 	@Override
 	public KaleoNode findByPrimaryKey(long kaleoNodeId)

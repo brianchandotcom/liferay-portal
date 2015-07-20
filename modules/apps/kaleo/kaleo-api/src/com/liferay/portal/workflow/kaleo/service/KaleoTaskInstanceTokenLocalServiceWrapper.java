@@ -409,14 +409,6 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _kaleoTaskInstanceTokenLocalService.invokeMethod(name,
-			parameterTypes, arguments);
-	}
-
-	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> search(
 		java.lang.String keywords, java.lang.String[] assetTypes,
 		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,

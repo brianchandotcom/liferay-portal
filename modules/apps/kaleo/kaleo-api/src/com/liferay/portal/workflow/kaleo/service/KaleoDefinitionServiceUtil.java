@@ -16,9 +16,10 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for KaleoDefinition. This utility wraps
@@ -61,12 +62,6 @@ public class KaleoDefinitionServiceUtil {
 		return getService().getKaleoDefinitions(start, end);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -76,27 +71,8 @@ public class KaleoDefinitionServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static KaleoDefinitionService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					KaleoDefinitionService.class.getName());
-
-			if (invokableService instanceof KaleoDefinitionService) {
-				_service = (KaleoDefinitionService)invokableService;
-			}
-			else {
-				_service = new KaleoDefinitionServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(KaleoDefinitionServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -106,5 +82,14 @@ public class KaleoDefinitionServiceUtil {
 	public void setService(KaleoDefinitionService service) {
 	}
 
-	private static KaleoDefinitionService _service;
+	private static ServiceTracker<KaleoDefinitionService, KaleoDefinitionService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(KaleoDefinitionServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<KaleoDefinitionService, KaleoDefinitionService>(bundle.getBundleContext(),
+				KaleoDefinitionService.class, null);
+
+		_serviceTracker.open();
+	}
 }

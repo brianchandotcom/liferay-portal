@@ -1771,6 +1771,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(Test test) {
+								configureTaskTestIncludes(test);
 								configureTaskTestSystemProperties(
 									test, liferayExtension);
 							}
@@ -1810,6 +1811,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void configureTaskTestIgnoreFailures(Test test) {
 		test.setIgnoreFailures(true);
+	}
+
+	protected void configureTaskTestIncludes(Test test) {
+		Set<String> includes = test.getIncludes();
+
+		if (includes.isEmpty()) {
+			test.setIncludes(Collections.singleton("**/*Test.class"));
+		}
 	}
 
 	protected void configureTaskTestIntegration(

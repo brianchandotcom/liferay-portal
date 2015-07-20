@@ -25,7 +25,7 @@ long groupId = BeanParamUtil.getLong(folder, request, "groupId");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFileEntry_" + groupId);
 
 if (folder != null) {
-	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
 %>
 

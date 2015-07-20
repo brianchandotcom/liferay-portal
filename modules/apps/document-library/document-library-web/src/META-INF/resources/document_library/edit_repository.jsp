@@ -222,7 +222,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 <%
 if (repository != null) {
-	DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }

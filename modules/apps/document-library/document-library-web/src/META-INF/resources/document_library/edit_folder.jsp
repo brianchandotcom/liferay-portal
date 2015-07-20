@@ -434,12 +434,12 @@ if (workflowEnabled) {
 
 <%
 if (!rootFolder && (folder == null)) {
-	DLUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(parentFolderId, request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-folder"), currentURL);
 }
 else {
-	DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }

@@ -541,12 +541,12 @@ else {
 
 <%
 if (fileEntry != null) {
-	DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
-	DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-file-entry"), currentURL);
 }

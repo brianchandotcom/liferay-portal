@@ -217,7 +217,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 <%
 if (searchFolderId > 0) {
-	DLUtil.addPortletBreadcrumbEntries(searchFolderId, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(searchFolderId, request, renderResponse);
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + keywords, currentURL);

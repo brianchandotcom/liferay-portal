@@ -17,9 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
@@ -36,10 +34,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -58,36 +52,9 @@ public interface DL {
 	public static final String OFFICE_EXTENSION_PATH =
 		StringPool.SLASH + OFFICE_EXTENSION;
 
+	public static final String TEMP_RANDOM_SUFFIX = "--tempRandomSuffix--";
+
 	public static final String WEBDAV_CHECK_IN_MODE = "webDAVCheckInMode";
-
-	public void addPortletBreadcrumbEntries(
-			FileEntry fileEntry, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception;
-
-	public void addPortletBreadcrumbEntries(
-			FileShortcut dlFileShortcut, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception;
-
-	public void addPortletBreadcrumbEntries(
-			Folder folder, HttpServletRequest request,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception;
-
-	public void addPortletBreadcrumbEntries(
-			Folder folder, HttpServletRequest request, PortletURL portletURL)
-		throws Exception;
-
-	public void addPortletBreadcrumbEntries(
-			Folder folder, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception;
-
-	public void addPortletBreadcrumbEntries(
-			long folderId, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws Exception;
 
 	public int compareVersions(String version1, String version2);
 

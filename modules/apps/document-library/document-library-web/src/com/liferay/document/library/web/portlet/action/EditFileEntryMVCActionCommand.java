@@ -74,6 +74,7 @@ import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -121,8 +122,6 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
-
-	public static final String TEMP_RANDOM_SUFFIX = "--tempRandomSuffix--";
 
 	protected void addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
@@ -251,7 +250,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(FileUtil.stripExtension(sourceFileName));
-		sb.append(TEMP_RANDOM_SUFFIX);
+		sb.append(DL.TEMP_RANDOM_SUFFIX);
 		sb.append(StringUtil.randomString());
 
 		String extension = FileUtil.getExtension(sourceFileName);

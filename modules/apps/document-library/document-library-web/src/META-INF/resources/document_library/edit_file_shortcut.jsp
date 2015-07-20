@@ -219,12 +219,12 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 <%
 if (fileShortcut != null) {
-	DLUtil.addPortletBreadcrumbEntries(fileShortcut, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(fileShortcut, request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
-	DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-file-shortcut"), currentURL);
 }

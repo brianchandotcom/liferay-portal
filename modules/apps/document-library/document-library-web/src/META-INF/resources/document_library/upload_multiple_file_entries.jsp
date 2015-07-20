@@ -83,7 +83,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 									groupId: <%= scopeGroupId %>
 								}
 							},
-							tempRandomSuffix: '<%= EditFileEntryMVCActionCommand.TEMP_RANDOM_SUFFIX %>',
+							tempRandomSuffix: '<%= DL.TEMP_RANDOM_SUFFIX %>',
 							uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />'
 						}
 					);
@@ -95,7 +95,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 				</div>
 
 				<%
-				DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
+				DLBreadcrumbUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
 				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-multiple-file-entries"), currentURL);
 				%>
@@ -169,7 +169,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 													var originalFileName = item.originalFileName;
 
-													var pos = originalFileName.indexOf('<%= EditFileEntryMVCActionCommand.TEMP_RANDOM_SUFFIX %>');
+													var pos = originalFileName.indexOf('<%= DL.TEMP_RANDOM_SUFFIX %>');
 
 													if (pos != -1) {
 														originalFileName = originalFileName.substr(0, pos);

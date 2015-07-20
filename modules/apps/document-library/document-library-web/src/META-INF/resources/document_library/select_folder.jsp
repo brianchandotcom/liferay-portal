@@ -30,7 +30,7 @@ if (folder != null) {
 	repositoryId = folder.getRepositoryId();
 	folderName = folder.getName();
 
-	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
 
 DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);

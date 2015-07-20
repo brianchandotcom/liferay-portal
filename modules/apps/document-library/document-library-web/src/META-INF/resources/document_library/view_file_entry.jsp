@@ -662,6 +662,6 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 boolean addPortletBreadcrumbEntries = ParamUtil.getBoolean(request, "addPortletBreadcrumbEntries", true);
 
 if (addPortletBreadcrumbEntries) {
-	DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
+	DLBreadcrumbUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
 }
 %>

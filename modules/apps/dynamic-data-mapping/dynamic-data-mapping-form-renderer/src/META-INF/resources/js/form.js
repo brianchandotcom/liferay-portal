@@ -55,8 +55,12 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
+						var definition = instance.get('definition');
+
 						return {
-							fields: AArray.invoke(instance.get('fields'), 'toJSON')
+							availableLanguageIds: definition.availableLanguageIds,
+							defaultLanguageId: definition.defaultLanguageId,
+							fieldValues: AArray.invoke(instance.get('fields'), 'toJSON')
 						};
 					},
 

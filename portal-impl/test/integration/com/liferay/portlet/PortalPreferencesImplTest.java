@@ -114,12 +114,12 @@ public class PortalPreferencesImplTest {
 
 		portalPreferences.setValue(_NAMESPACE, "testKey", "testValue");
 
-		_testThread.set(true);
+		_synchronizeThreadLocal.set(true);
 	}
 
 	@After
 	public void tearDown() throws Throwable {
-		_testThread.set(false);
+		_synchronizeThreadLocal.set(false);
 
 		Builder builder = new Builder();
 
@@ -428,7 +428,7 @@ public class PortalPreferencesImplTest {
 			TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus) {
 
-			if (_synchronize.get() && _testThread.get()) {
+			if (_synchronize.get() && _synchronizeThreadLocal.get()) {
 				try {
 					_cyclicBarrier.await();
 
@@ -496,7 +496,7 @@ public class PortalPreferencesImplTest {
 				com.liferay.portlet.PortalPreferences.class
 			};
 
-			if (_synchronize.get() && _testThread.get() &&
+			if (_synchronize.get() && _synchronizeThreadLocal.get() &&
 				method.getName().equals("updatePreferences") &&
 				Arrays.equals(parameterTypes, expectedTypes)) {
 
@@ -545,7 +545,7 @@ public class PortalPreferencesImplTest {
 	private static PortalPreferencesLocalService
 		_originalPortalPreferencesLocalService;
 	private static DefaultTransactionExecutor _originalTransactionExecutor;
-	private static final InheritableThreadLocal<Boolean> _testThread =
+	private static final ThreadLocal<Boolean> _synchronizeThreadLocal =
 		new InheritableThreadLocal<>();
 	private static TransactionInterceptor _transactionInterceptor;
 

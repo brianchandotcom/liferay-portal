@@ -600,6 +600,9 @@ Please set the property "jdk.7.home" in build.properties.
 						<include name="**/*.wsdd" />
 						<include name="**/*.xml" />
 					</fileset>
+					<filtermapper>
+						<replacestring from=".sass-cache/" to="" />
+					</filtermapper>
 				</copy>
 			</then>
 		</if>
@@ -635,11 +638,21 @@ Please set the property "jdk.7.home" in build.properties.
 		<manifest-macro />
 
 		<war
-			basedir="docroot"
 			destfile="${war.file}.war"
-			excludes="WEB-INF/web.xml"
 			webxml="docroot/WEB-INF/web.xml"
 		>
+            <fileset dir="docroot">
+                <exclude name="**/css/*.scss" />
+                <exclude name="**/.sass-cache/**" />
+            </fileset>
+
+            <mappedresources>
+                <fileset dir="docroot" includes="**/.sass-cache/*.css" />
+                <filtermapper>
+                    <replacestring from=".sass-cache/" to="" />
+                </filtermapper>
+            </mappedresources>
+
 			<metainf dir="${project.dir}/oss-licenses">
 				<exclude name="**/development/**" />
 			</metainf>

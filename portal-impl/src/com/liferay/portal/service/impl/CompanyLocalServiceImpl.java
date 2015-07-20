@@ -1042,7 +1042,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  properties the company's properties. See {@link
-	 *         com.liferay.portal.kernel.util.UnicodeProperties}
+	 *         UnicodeProperties}
 	 * @throws PortalException if the properties contained new locales that were
 	 *         not supported
 	 */

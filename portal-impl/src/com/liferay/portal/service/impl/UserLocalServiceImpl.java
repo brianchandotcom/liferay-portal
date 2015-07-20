@@ -1050,15 +1050,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         a successful authentication the user's primary key will be placed
 	 *         under the key <code>userId</code>.
 	 * @return the authentication status. This can be {@link
-	 *         com.liferay.portal.security.auth.Authenticator#FAILURE}
-	 *         indicating that the user's credentials are invalid, {@link
-	 *         com.liferay.portal.security.auth.Authenticator#SUCCESS}
-	 *         indicating a successful login, or {@link
-	 *         com.liferay.portal.security.auth.Authenticator#DNE} indicating
-	 *         that a user with that login does not exist.
+	 *         Authenticator#FAILURE} indicating that the user's credentials are
+	 *         invalid, {@link Authenticator#SUCCESS} indicating a successful
+	 *         login, or {@link Authenticator#DNE} indicating that a user with
+	 *         that login does not exist.
 	 * @throws PortalException if <code>emailAddress</code> or
 	 *         <code>password</code> was <code>null</code>
-	 * @see    com.liferay.portal.security.auth.AuthPipeline
+	 * @see    AuthPipeline
 	 */
 	@Override
 	public int authenticateByEmailAddress(
@@ -1085,15 +1083,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         a successful authentication the user's primary key will be placed
 	 *         under the key <code>userId</code>.
 	 * @return the authentication status. This can be {@link
-	 *         com.liferay.portal.security.auth.Authenticator#FAILURE}
-	 *         indicating that the user's credentials are invalid, {@link
-	 *         com.liferay.portal.security.auth.Authenticator#SUCCESS}
-	 *         indicating a successful login, or {@link
-	 *         com.liferay.portal.security.auth.Authenticator#DNE} indicating
-	 *         that a user with that login does not exist.
+	 *         Authenticator#FAILURE} indicating that the user's credentials are
+	 *         invalid, {@link Authenticator#SUCCESS} indicating a successful
+	 *         login, or {@link Authenticator#DNE} indicating that a user with
+	 *         that login does not exist.
 	 * @throws PortalException if <code>screenName</code> or
 	 *         <code>password</code> was <code>null</code>
-	 * @see    com.liferay.portal.security.auth.AuthPipeline
+	 * @see    AuthPipeline
 	 */
 	@Override
 	public int authenticateByScreenName(
@@ -1120,15 +1116,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         a successful authentication the user's primary key will be placed
 	 *         under the key <code>userId</code>.
 	 * @return the authentication status. This can be {@link
-	 *         com.liferay.portal.security.auth.Authenticator#FAILURE}
-	 *         indicating that the user's credentials are invalid, {@link
-	 *         com.liferay.portal.security.auth.Authenticator#SUCCESS}
-	 *         indicating a successful login, or {@link
-	 *         com.liferay.portal.security.auth.Authenticator#DNE} indicating
-	 *         that a user with that login does not exist.
+	 *         Authenticator#FAILURE} indicating that the user's credentials are
+	 *         invalid, {@link Authenticator#SUCCESS} indicating a successful
+	 *         login, or {@link Authenticator#DNE} indicating that a user with
+	 *         that login does not exist.
 	 * @throws PortalException if <code>userId</code> or <code>password</code>
 	 *         was <code>null</code>
-	 * @see    com.liferay.portal.security.auth.AuthPipeline
+	 * @see    AuthPipeline
 	 */
 	@Override
 	public int authenticateByUserId(
@@ -2063,8 +2057,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2287,15 +2280,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
 	 * @param      userId the primary key of the user
 	 * @param      socialRelationType the type of social relation. The possible
-	 *             types can be found in {@link
-	 *             com.liferay.portlet.social.model.SocialRelationConstants}.
+	 *             types can be found in {@link SocialRelationConstants}.
 	 * @param      start the lower bound of the range of users
 	 * @param      end the upper bound of the range of users (not inclusive)
 	 * @param      obc the comparator to order the users by (optionally
@@ -2327,8 +2318,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2422,16 +2412,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
 	 * @param  userId1 the primary key of the first user
 	 * @param  userId2 the primary key of the second user
 	 * @param  socialRelationType the type of social relation. The possible
-	 *         types can be found in {@link
-	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 *         types can be found in {@link SocialRelationConstants}.
 	 * @param  start the lower bound of the range of users
 	 * @param  end the upper bound of the range of users (not inclusive)
 	 * @param  obc the comparator to order the users by (optionally
@@ -2470,8 +2458,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -2526,8 +2513,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param      userId the primary key of the user
 	 * @param      socialRelationType the type of social relation. The possible
-	 *             types can be found in {@link
-	 *             com.liferay.portlet.social.model.SocialRelationConstants}.
+	 *             types can be found in {@link SocialRelationConstants}.
 	 * @return     the number of users with a social relation of the type with
 	 *             the user
 	 * @throws     PortalException if a user with the primary key could not be
@@ -2549,8 +2535,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  socialRelationType the type of social relation. The possible
-	 *         types can be found in {@link
-	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 *         types can be found in {@link SocialRelationConstants}.
 	 * @return the number of users with a social relation with the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 */
@@ -2606,8 +2591,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  userId1 the primary key of the first user
 	 * @param  userId2 the primary key of the second user
 	 * @param  socialRelationType the type of social relation. The possible
-	 *         types can be found in {@link
-	 *         com.liferay.portlet.social.model.SocialRelationConstants}.
+	 *         types can be found in {@link SocialRelationConstants}.
 	 * @return the number of users with a mutual social relation of the type
 	 *         with the user
 	 * @throws PortalException if a user with the primary key could not be found
@@ -3003,8 +2987,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -3057,8 +3040,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -3155,8 +3137,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -3220,8 +3201,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -5509,8 +5489,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             long, String, boolean, byte[], String, String, String,
 	 *             String, String, String, String, int, int, boolean, int, int,
 	 *             int, String, String, String, String, String, String, String,
-	 *             String, String, String, String, long[], long[], long[],
-	 *             java.util.List, long[], ServiceContext)}
+	 *             String, String, String, String, long[], long[], long[], List,
+	 *             long[], ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -5704,15 +5684,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         a successful authentication the user's primary key will be placed
 	 *         under the key <code>userId</code>.
 	 * @return the authentication status. This can be {@link
-	 *         com.liferay.portal.security.auth.Authenticator#FAILURE}
-	 *         indicating that the user's credentials are invalid, {@link
-	 *         com.liferay.portal.security.auth.Authenticator#SUCCESS}
-	 *         indicating a successful login, or {@link
-	 *         com.liferay.portal.security.auth.Authenticator#DNE} indicating
-	 *         that a user with that login does not exist.
+	 *         Authenticator#FAILURE} indicating that the user's credentials are
+	 *         invalid, {@link Authenticator#SUCCESS} indicating a successful
+	 *         login, or {@link Authenticator#DNE} indicating that a user with
+	 *         that login does not exist.
 	 * @throws PortalException if <code>login</code> or <code>password</code>
 	 *         was <code>null</code>
-	 * @see    com.liferay.portal.security.auth.AuthPipeline
+	 * @see    AuthPipeline
 	 */
 	protected int authenticate(
 			long companyId, String login, String password, String authType,

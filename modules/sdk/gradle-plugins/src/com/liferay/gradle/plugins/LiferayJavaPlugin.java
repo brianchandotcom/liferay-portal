@@ -118,7 +118,6 @@ import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
-import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.ProcessResult;
@@ -1748,7 +1747,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 					configureTaskTestForkEvery(test);
 					configureTaskTestIgnoreFailures(test);
 					configureTaskTestJvmArgs(test);
-					configureTaskTestLogging(test);
 					configureTaskTestWhip(test);
 				}
 
@@ -1856,12 +1854,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		jvmArgs.add("-Duser.timezone=GMT");
 
 		test.jvmArgs(jvmArgs);
-	}
-
-	protected void configureTaskTestLogging(Test test) {
-		TestLoggingContainer testLoggingContainer = test.getTestLogging();
-
-		testLoggingContainer.setShowStandardStreams(true);
 	}
 
 	protected void configureTaskTestSystemProperties(

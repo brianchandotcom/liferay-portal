@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comments.sanitizer;
+package com.liferay.comment.sanitizer;
 
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -34,10 +34,10 @@ import org.owasp.html.PolicyFactory;
  * @author Sergio González
  */
 @Component(immediate = true)
-public class CommentsSanitizerImpl implements Sanitizer {
+public class CommentSanitizerImpl implements Sanitizer {
 
-	public CommentsSanitizerImpl() {
-		_commentsAllowedContent = new CommentsAllowedContent(
+	public CommentSanitizerImpl() {
+		_commentAllowedContent = new CommentAllowedContent(
 			PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
 	}
 
@@ -83,7 +83,7 @@ public class CommentsSanitizerImpl implements Sanitizer {
 		htmlPolicyBuilder.allowStandardUrlProtocols();
 
 		Map<String, String[]> attributeNames =
-			_commentsAllowedContent.getAttributeNames();
+			_commentAllowedContent.getAttributeNames();
 
 		for (String elementName : attributeNames.keySet()) {
 			String[] attributesNames = attributeNames.get(elementName);
@@ -103,6 +103,6 @@ public class CommentsSanitizerImpl implements Sanitizer {
 		return policyFactory.sanitize(html);
 	}
 
-	private final CommentsAllowedContent _commentsAllowedContent;
+	private final CommentAllowedContent _commentAllowedContent;
 
 }

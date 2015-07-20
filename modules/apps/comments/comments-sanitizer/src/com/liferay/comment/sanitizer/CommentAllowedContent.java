@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comments.sanitizer;
+package com.liferay.comment.sanitizer;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,9 +25,9 @@ import java.util.regex.Pattern;
 /**
  * @author Sergio González
  */
-public class CommentsAllowedContent {
+public class CommentAllowedContent {
 
-	public CommentsAllowedContent(String allowedContent) {
+	public CommentAllowedContent(String allowedContent) {
 		Matcher matcher = _pattern.matcher(allowedContent);
 
 		allowedContent = matcher.replaceAll(StringPool.BLANK);

@@ -30,6 +30,6 @@
 	<bean id="com.liferay.portlet.messageboards.action.SelectCategoryMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SelectCategoryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.SplitThreadMVCActionCommand" class="com.liferay.portlet.messageboards.action.SplitThreadMVCActionCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.SplitThreadMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SplitThreadMVCRenderCommand" />
-	<bean id="com.liferay.portlet.messageboards.action.ViewMVCRenderCommand" class="com.liferay.portlet.messageboards.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.ViewMessageMVCRenderCommand" class="com.liferay.portlet.messageboards.action.ViewMessageMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.ViewMVCRenderCommand" class="com.liferay.portlet.messageboards.action.ViewMVCRenderCommand" />
 </beans>

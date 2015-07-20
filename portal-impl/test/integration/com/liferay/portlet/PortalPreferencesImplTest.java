@@ -406,8 +406,6 @@ public class PortalPreferencesImplTest {
 		futureTask1.get();
 		futureTask2.get();
 
-		SynchronousInvocationHandler.synchronize(false);
-
 		List<LoggingEvent> loggingEvents = captureAppender.getLoggingEvents();
 
 		Assert.assertEquals(1, loggingEvents.size());

@@ -160,11 +160,7 @@ public class ToolsUtil {
 			String content, String imports)
 		throws IOException {
 
-		if (Validator.isNull(content)) {
-			return content;
-		}
-
-		if (Validator.isNull(imports)) {
+		if (Validator.isNull(content) || Validator.isNull(imports)) {
 			return content;
 		}
 
@@ -183,7 +179,9 @@ public class ToolsUtil {
 			String importPackageAndClassName = line.substring(
 				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
 
-			for (x = -1;;) {
+			x = -1;
+
+			while (true) {
 				x = content.indexOf(importPackageAndClassName, x + 1);
 
 				if (x == -1) {

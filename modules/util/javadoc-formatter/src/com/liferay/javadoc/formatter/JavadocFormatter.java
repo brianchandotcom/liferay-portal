@@ -330,8 +330,9 @@ public class JavadocFormatter {
 	}
 
 	private String _addDeprecatedTag(
-		String comment, AbstractBaseJavaEntity abstractBaseJavaEntity,
-		String indent) throws Exception {
+			String comment, AbstractBaseJavaEntity abstractBaseJavaEntity,
+			String indent)
+		throws Exception {
 
 		if (comment == null) {
 			return null;
@@ -616,8 +617,9 @@ public class JavadocFormatter {
 	}
 
 	private void _addParamElement(
-		Element methodElement, JavaParameter javaParameter,
-		DocletTag[] paramDocletTags) throws Exception {
+			Element methodElement, JavaParameter javaParameter,
+			DocletTag[] paramDocletTags)
+		throws Exception {
 
 		String name = javaParameter.getName();
 
@@ -704,8 +706,9 @@ public class JavadocFormatter {
 	}
 
 	private void _addThrowsElement(
-		Element methodElement, Type exceptionType,
-		DocletTag[] throwsDocletTags) throws Exception {
+			Element methodElement, Type exceptionType,
+			DocletTag[] throwsDocletTags)
+		throws Exception {
 
 		JavaClass javaClass = exceptionType.getJavaClass();
 
@@ -1311,8 +1314,9 @@ public class JavadocFormatter {
 	}
 
 	private String _getJavaFieldComment(
-		Map<String, Element> fieldElementsMap, JavaField javaField,
-		String indent) throws Exception {
+			Map<String, Element> fieldElementsMap, JavaField javaField,
+			String indent)
+		throws Exception {
 
 		String fieldKey = _getFieldKey(javaField);
 
@@ -1369,8 +1373,9 @@ public class JavadocFormatter {
 	}
 
 	private String _getJavaMethodComment(
-		Map<String, Element> methodElementsMap, JavaMethod javaMethod,
-		String indent) throws Exception {
+			Map<String, Element> methodElementsMap, JavaMethod javaMethod,
+			String indent)
+		throws Exception {
 
 		String methodKey = _getMethodKey(javaMethod);
 

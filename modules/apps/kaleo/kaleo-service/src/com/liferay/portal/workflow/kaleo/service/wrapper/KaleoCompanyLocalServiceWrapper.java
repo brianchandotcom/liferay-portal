@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.hook.service.impl;
+package com.liferay.portal.workflow.kaleo.service.wrapper;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.CompanyLocalServiceWrapper;
+import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManagerUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class KaleoCompanyLocalServiceImpl extends CompanyLocalServiceWrapper {
+@Component(immediate = true, service = ServiceWrapper.class)
+public class KaleoCompanyLocalServiceWrapper
+	extends CompanyLocalServiceWrapper {
 
-	public KaleoCompanyLocalServiceImpl(
+	public KaleoCompanyLocalServiceWrapper() {
+		super(null);
+	}
+
+	public KaleoCompanyLocalServiceWrapper(
 		CompanyLocalService companyLocalService) {
 
 		super(companyLocalService);

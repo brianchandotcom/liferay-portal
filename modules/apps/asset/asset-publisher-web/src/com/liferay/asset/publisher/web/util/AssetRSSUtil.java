@@ -14,6 +14,9 @@
 
 package com.liferay.asset.publisher.web.util;
 
+import com.liferay.asset.publisher.web.context.AssetEntryResult;
+import com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -53,6 +56,8 @@ import javax.portlet.PortletResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
@@ -83,10 +88,39 @@ public class AssetRSSUtil {
 		String format = RSSUtil.getFeedTypeFormat(rssFeedType);
 		double version = RSSUtil.getFeedTypeVersion(rssFeedType);
 
+		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		if (selectionStyle.equals("dynamic")) {
+			int rssDelta = GetterUtil.getInteger(
+				portletPreferences.getValue("rssDelta", "20"));
+
+			SearchContainer<Object> searchContainer =
+				new SearchContainer<Object>(
+					portletRequest, null, null,
+					SearchContainer.DEFAULT_CUR_PARAM,
+				0, rssDelta, portletResponse.createRenderURL(), null, null);
+
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
+
+			AssetPublisherDisplayContext displayContext =
+				new AssetPublisherDisplayContext(
+					httpServletRequest, portletPreferences);
+
+			List<AssetEntryResult> assetEntryResults =
+				displayContext.getAssetEntryResults(searchContainer);
+
+			for (AssetEntryResult assetEntryResult : assetEntryResults) {
+				assetEntries.addAll(assetEntryResult.getAssetEntries());
+			}
+		}
+		else {
+			assetEntries = getAssetEntries(portletRequest, portletPreferences);
+		}
+
 		String rss = exportToRSS(
 			portletRequest, portletResponse, rssName, null, format, version,
-			rssDisplayStyle, assetLinkBehavior,
-			getAssetEntries(portletRequest, portletPreferences));
+			rssDisplayStyle, assetLinkBehavior, assetEntries);
 
 		return rss.getBytes(StringPool.UTF8);
 	}

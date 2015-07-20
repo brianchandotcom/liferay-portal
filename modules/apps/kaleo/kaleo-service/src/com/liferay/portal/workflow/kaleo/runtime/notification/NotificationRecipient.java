@@ -34,18 +34,21 @@ public class NotificationRecipient {
 		String emailAddress,
 		NotificationReceptionType notificationReceptionType) {
 
+		_companyId = 0;
 		_emailAddress = emailAddress;
+		_fullName = null;
 		_notificationReceptionType = notificationReceptionType;
+		_screenName = null;
+		_userId = 0;
 	}
 
 	public NotificationRecipient(
 		User user, NotificationReceptionType notificationReceptionType) {
 
-		_notificationReceptionType = notificationReceptionType;
-
 		_companyId = user.getCompanyId();
 		_emailAddress = user.getEmailAddress();
 		_fullName = user.getFullName();
+		_notificationReceptionType = notificationReceptionType;
 		_screenName = user.getScreenName();
 		_userId = user.getUserId();
 	}
@@ -124,11 +127,11 @@ public class NotificationRecipient {
 		return hashCode.toHashCode();
 	}
 
-	private long _companyId;
-	private String _emailAddress;
-	private String _fullName;
-	private NotificationReceptionType _notificationReceptionType;
-	private String _screenName;
-	private long _userId;
+	private final long _companyId;
+	private final String _emailAddress;
+	private final String _fullName;
+	private final NotificationReceptionType _notificationReceptionType;
+	private final String _screenName;
+	private final long _userId;
 
 }

@@ -218,6 +218,7 @@ public class WorkflowModelUtil {
 		return defaultWorkflowTask;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WorkflowModelUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowModelUtil.class);
 
 }

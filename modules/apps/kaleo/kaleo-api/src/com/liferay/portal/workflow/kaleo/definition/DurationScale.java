@@ -58,7 +58,7 @@ public enum DurationScale {
 		_frequency = frequency;
 	}
 
-	private int _frequency;
-	private String _value;
+	private final int _frequency;
+	private final String _value;
 
 }

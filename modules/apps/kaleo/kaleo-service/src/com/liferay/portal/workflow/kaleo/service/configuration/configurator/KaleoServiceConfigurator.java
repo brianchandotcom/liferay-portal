@@ -14,6 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.service.configuration.configurator;
 
+import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
+import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
+import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
@@ -22,10 +26,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-
-import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
-import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
-import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
 
 /**
  * @author Marcellus Tavares
@@ -68,5 +68,5 @@ public class KaleoServiceConfigurator {
 	}
 
 	private ServiceConfigurator _serviceConfigurator;
-	
+
 }

@@ -271,13 +271,13 @@ public class DefaultPortalKaleoManager
 			workflowDefinition.getVersion());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalKaleoManager.class);
 
 	private String _defaultDefinitionName;
-	private Map<String, String> _defaultRoles = new HashMap<>();
-	private Map<String, String> _definitionAssets = new HashMap<>();
-	private Map<String, String> _definitionFiles = new HashMap<>();
+	private final Map<String, String> _defaultRoles = new HashMap<>();
+	private final Map<String, String> _definitionAssets = new HashMap<>();
+	private final Map<String, String> _definitionFiles = new HashMap<>();
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

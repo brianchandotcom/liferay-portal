@@ -37,6 +37,6 @@ public class State extends Node {
 		return outgoingTransitions.isEmpty();
 	}
 
-	private boolean _initial;
+	private final boolean _initial;
 
 }

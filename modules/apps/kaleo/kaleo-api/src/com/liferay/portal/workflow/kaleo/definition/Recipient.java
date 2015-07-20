@@ -38,6 +38,6 @@ public abstract class Recipient {
 	}
 
 	private NotificationReceptionType _notificationReceptionType;
-	private RecipientType _recipientType;
+	private final RecipientType _recipientType;
 
 }

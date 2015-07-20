@@ -36,7 +36,7 @@ public class WorkflowEngineManagerImpl implements WorkflowEngineManager {
 
 	@Override
 	public Map<String, Object> getOptionalAttributes() {
-		return _OPTIONAL_ATTRIBUTES;
+		return _optionalAttributes;
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class WorkflowEngineManagerImpl implements WorkflowEngineManager {
 
 	private static final String _NAME = "Liferay Kaleo Workflow Engine";
 
-	private static final Map<String, Object> _OPTIONAL_ATTRIBUTES =
-		Collections.emptyMap();
-
 	private static final String _VERSION = "6.0.0";
+
+	private static final Map<String, Object> _optionalAttributes =
+		Collections.emptyMap();
 
 }

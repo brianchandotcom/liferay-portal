@@ -45,8 +45,8 @@ public class PathElement implements Serializable {
 		return _targetNode;
 	}
 
-	private ExecutionContext _executionContext;
-	private KaleoNode _startNode;
-	private KaleoNode _targetNode;
+	private final ExecutionContext _executionContext;
+	private final KaleoNode _startNode;
+	private final KaleoNode _targetNode;
 
 }

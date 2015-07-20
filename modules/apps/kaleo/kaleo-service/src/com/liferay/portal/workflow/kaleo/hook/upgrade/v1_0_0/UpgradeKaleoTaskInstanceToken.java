@@ -156,6 +156,6 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 		}
 	}
 
-	private Set<Long> _kaleoInstanceTokenIds = new HashSet<>();
+	private final Set<Long> _kaleoInstanceTokenIds = new HashSet<>();
 
 }

@@ -32,7 +32,7 @@ public class NodeExporterRegistry {
 		_nodeExporters.setNodeTypeDependentObjects(nodeExporters);
 	}
 
-	private static NodeTypeDependentObjectRegistry<NodeExporter>
+	private static final NodeTypeDependentObjectRegistry<NodeExporter>
 		_nodeExporters = new NodeTypeDependentObjectRegistry<>();
 
 }

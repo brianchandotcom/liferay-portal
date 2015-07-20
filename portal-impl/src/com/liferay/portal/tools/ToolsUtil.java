@@ -214,16 +214,8 @@ public class ToolsUtil {
 					break;
 				}
 
-				// Continue if the class reference is part of a string literal
-
-				String[] lines = StringUtil.splitLines(content.substring(x));
-
-				if (lines.length > 0) {
-					int quotes = StringUtil.count(lines[0], "\"");
-
-					if ((quotes % 2) != 0) {
-						continue;
-					}
+				if (!isInsideQuotes(content, x)) {
+					continue;
 				}
 
 				if (content.length() >

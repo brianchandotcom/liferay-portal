@@ -15,17 +15,31 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Ambrin Chaudhary
  */
 public class AddMenuTag extends IncludeTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		List<AddMenuItem> addMenuItems = (List)request.getAttribute(
+			"liferay-ui:add-menu:addMenuItems");
+
+		if (ListUtil.isEmpty(addMenuItems)) {
+			return SKIP_BODY;
+		}
+
+		return super.doEndTag();
+	}
 
 	@Override
 	public int doStartTag() {
@@ -36,6 +50,11 @@ public class AddMenuTag extends IncludeTag {
 
 	public void setAddMenuItems(List<AddMenuItem> addMenuItems) {
 		_addMenuItems = addMenuItems;
+	}
+
+	@Override
+	protected void cleanUp() {
+		_addMenuItems = new ArrayList<>();
 	}
 
 	@Override

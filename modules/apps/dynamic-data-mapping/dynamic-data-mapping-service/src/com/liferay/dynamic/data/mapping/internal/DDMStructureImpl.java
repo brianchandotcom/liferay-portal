@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
@@ -23,7 +24,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -32,8 +32,9 @@ import java.util.Set;
 
 /**
  * @author Leonardo Barros
+ * @author Rafael Praxedes
  */
-public class DDMStructureImpl implements DDMStructure {
+public class DDMStructureImpl implements DDMStructure, StagedGroupedModel {
 
 	public DDMStructureImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure
@@ -277,7 +278,36 @@ public class DDMStructureImpl implements DDMStructure {
 		_ddmStructure.setUuid(uuid);
 	}
 
+	@Override
+	public void setGroupId(long groupId) {
+		_ddmStructure.setGroupId(groupId);
+	}
+
+	@Override
+	public String getUserName() {
+		return _ddmStructure.getUserName();
+	}
+
+	@Override
+	public String getUserUuid() {
+		return _ddmStructure.getUserUuid();
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_ddmStructure.setUserId(userId);
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		_ddmStructure.setUserName(userName);
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+		_ddmStructure.setUserUuid(userUuid);
+	}
+
 	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructure
 		_ddmStructure;
-
 }

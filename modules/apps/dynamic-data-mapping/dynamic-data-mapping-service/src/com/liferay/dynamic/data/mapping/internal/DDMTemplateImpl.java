@@ -14,19 +14,20 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
+ * @author Rafael Praxedes
  */
-public class DDMTemplateImpl implements DDMTemplate {
+public class DDMTemplateImpl implements DDMTemplate, StagedGroupedModel {
 
 	public DDMTemplateImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate) {
@@ -241,6 +242,31 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public void setUuid(String uuid) {
 		_ddmTemplate.setUuid(uuid);
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_ddmTemplate.setGroupId(groupId);
+	}
+
+	@Override
+	public String getUserUuid() {
+		return _ddmTemplate.getUserUuid();
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_ddmTemplate.setUserId(userId);
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		_ddmTemplate.setUserName(userName);
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+		_ddmTemplate.setUserUuid(userUuid);
 	}
 
 	private final com.liferay.portlet.dynamicdatamapping.model.DDMTemplate

@@ -49,7 +49,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	%>
 
 	<liferay-ui:user-group-search-container-results
-		searchContainer="<%= searchContainer %>"
 		searchTerms="<%= searchTerms %>"
 		userGroupParams="<%= userGroupParams %>"
 	/>

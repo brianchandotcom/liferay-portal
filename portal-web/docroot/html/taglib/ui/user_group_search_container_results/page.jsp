@@ -21,7 +21,7 @@ UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)request.getAttribute(
 LinkedHashMap<String, Object> userGroupParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-group-search-container-results:userGroupParams");
 %>
 
-<liferay-ui:search-container searchContainer="<%= (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer") %>">
+<liferay-ui:search-container searchContainer='<%= (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer") %>'>
 	<liferay-ui:search-container-results>
 		<c:choose>
 			<c:when test="<%= Validator.equals(themeDisplay.getPpid(), PortletKeys.DIRECTORY) && PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">

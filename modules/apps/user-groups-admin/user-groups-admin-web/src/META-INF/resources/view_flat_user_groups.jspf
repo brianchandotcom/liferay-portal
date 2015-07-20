@@ -55,7 +55,6 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 	%>
 
 	<liferay-ui:user-group-search-container-results
-		searchContainer="<%= searchContainer %>"
 		searchTerms="<%= searchTerms %>"
 		userGroupParams="<%= userGroupParams %>"
 	/>

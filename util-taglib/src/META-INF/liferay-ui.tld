@@ -5530,11 +5530,6 @@
 		<tag-class>com.liferay.taglib.ui.UserGroupSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>searchContainer</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>searchTerms</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

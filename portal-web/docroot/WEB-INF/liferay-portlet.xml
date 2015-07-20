@@ -107,17 +107,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>20</portlet-name>
-		<struts-path>document_library</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-	</portlet>
-	<portlet>
-		<portlet-name>31</portlet-name>
-		<struts-path>image_gallery_display</struts-path>
-		<parent-struts-path>document_library</parent-struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-	</portlet>
-	<portlet>
 		<portlet-name>34</portlet-name>
 		<icon>/html/icons/shopping.png</icon>
 		<struts-path>shopping</struts-path>
@@ -199,12 +188,6 @@
 		<render-weight>50</render-weight>
 		<css-class-wrapper>portlet-software-catalog</css-class-wrapper>
 		<active>false</active>
-	</portlet>
-	<portlet>
-		<portlet-name>110</portlet-name>
-		<struts-path>document_library_display</struts-path>
-		<parent-struts-path>document_library</parent-struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 	</portlet>
 	<portlet>
 		<portlet-name>119</portlet-name>
@@ -516,11 +499,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<css-class-wrapper>portlet-shopping</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>199</portlet-name>
-		<struts-path>document_library_admin</struts-path>
-		<parent-struts-path>document_library</parent-struts-path>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

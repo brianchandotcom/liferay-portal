@@ -15,7 +15,7 @@
 	<route>
 		<pattern>/search</pattern>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/message_boards/search</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/search</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{topLink}</pattern>
@@ -44,7 +44,7 @@
 	</route>
 	<route>
 		<pattern>/search/{p_p_state}</pattern>
-		<implicit-parameter name="struts_action">/message_boards/search</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/message_boards/search</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{topLink}/{p_p_state}</pattern>

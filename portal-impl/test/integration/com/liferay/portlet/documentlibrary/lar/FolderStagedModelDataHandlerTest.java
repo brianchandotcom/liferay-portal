@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -224,8 +226,11 @@ public class FolderStagedModelDataHandlerTest
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
-				uuid, group.getGroupId());
+			DLFolder dlFolder =
+				DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
+					uuid, group.getGroupId());
+
+			return new LiferayFolder(dlFolder);
 		}
 		catch (Exception e) {
 			return null;
@@ -307,6 +312,28 @@ public class FolderStagedModelDataHandlerTest
 
 		DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
 			parentFolder.getUuid(), group.getGroupId());
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		Assert.assertTrue(
+			stagedModel.getCreateDate() + " " +
+				importedStagedModel.getCreateDate(),
+			DateUtil.equals(
+				stagedModel.getCreateDate(),
+				importedStagedModel.getCreateDate(), true));
+		Assert.assertEquals(
+			stagedModel.getUuid(), importedStagedModel.getUuid());
+
+		Folder folder = (Folder)stagedModel;
+		Folder importedFolder = (Folder)importedStagedModel;
+
+		Assert.assertEquals(folder.getName(), importedFolder.getName());
+		Assert.assertEquals(
+			folder.getDescription(), importedFolder.getDescription());
 	}
 
 }

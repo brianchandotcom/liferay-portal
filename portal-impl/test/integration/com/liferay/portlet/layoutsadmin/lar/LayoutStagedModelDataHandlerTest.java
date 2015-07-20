@@ -17,6 +17,7 @@ package com.liferay.portlet.layoutsadmin.lar;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -220,6 +221,34 @@ public class LayoutStagedModelDataHandlerTest
 
 		LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLByUuidAndGroupId(
 			parentLayoutFriendlyURL.getUuid(), group.getGroupId());
+	}
+
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		Assert.assertTrue(
+			stagedModel.getCreateDate() + " " +
+				importedStagedModel.getCreateDate(),
+			DateUtil.equals(
+				stagedModel.getCreateDate(),
+				importedStagedModel.getCreateDate(), true));
+		Assert.assertEquals(
+			stagedModel.getUuid(), importedStagedModel.getUuid());
+
+		Layout layout = (Layout)stagedModel;
+		Layout importedLayout = (Layout)importedStagedModel;
+
+		Assert.assertEquals(layout.getName(), importedLayout.getName());
+		Assert.assertEquals(layout.getTitle(), importedLayout.getTitle());
+		Assert.assertEquals(
+			layout.getDescription(), importedLayout.getDescription());
+		Assert.assertEquals(layout.getKeywords(), importedLayout.getKeywords());
+		Assert.assertEquals(layout.getRobots(), importedLayout.getRobots());
+		Assert.assertEquals(layout.getType(), importedLayout.getType());
+		Assert.assertEquals(
+			layout.getFriendlyURL(), importedLayout.getFriendlyURL());
+		Assert.assertEquals(layout.getCss(), importedLayout.getCss());
 	}
 
 }

@@ -16,7 +16,7 @@
 
 	<!-- Deployment -->
 
-	<bean id="com.liferay.portal.workflow.kaleo.deployment.WorkflowDeployer" class="com.liferay.portal.workflow.kaleo.deployment.DefaultWorkflowDeployer" />
+	<bean id="com.liferay.portal.workflow.kaleo.deployment.WorkflowDeployer" class="com.liferay.portal.workflow.kaleo.deployment.impl.DefaultWorkflowDeployer" />
 
 	<!-- Export -->
 
@@ -347,37 +347,37 @@
 
 	<!-- Parser -->
 
-	<bean id="com.liferay.portal.workflow.kaleo.parser.WorkflowModelParser" class="com.liferay.portal.workflow.kaleo.parser.XMLWorkflowModelParser">
+	<bean id="com.liferay.portal.workflow.kaleo.parser.WorkflowModelParser" class="com.liferay.portal.workflow.kaleo.parser.impl.XMLWorkflowModelParser">
 		<property name="validate" value="true" />
 	</bean>
 
 	<!-- Validator -->
 
-	<bean id="com.liferay.portal.workflow.kaleo.parser.NodeValidatorRegistry" class="com.liferay.portal.workflow.kaleo.parser.NodeValidatorRegistry">
+	<bean id="com.liferay.portal.workflow.kaleo.parser.NodeValidatorRegistry" class="com.liferay.portal.workflow.kaleo.parser.impl.NodeValidatorRegistry">
 		<property name="nodeValidators">
 			<util:map>
 				<entry key="CONDITION">
-					<bean class="com.liferay.portal.workflow.kaleo.parser.ConditionNodeValidator" />
+					<bean class="com.liferay.portal.workflow.kaleo.parser.impl.ConditionNodeValidator" />
 				</entry>
 				<entry key="FORK">
-					<bean class="com.liferay.portal.workflow.kaleo.parser.ForkNodeValidator" />
+					<bean class="com.liferay.portal.workflow.kaleo.parser.impl.ForkNodeValidator" />
 				</entry>
 				<entry key="JOIN">
-					<bean class="com.liferay.portal.workflow.kaleo.parser.JoinNodeValidator" />
+					<bean class="com.liferay.portal.workflow.kaleo.parser.impl.JoinNodeValidator" />
 				</entry>
 				<entry key="JOIN_XOR">
-					<bean class="com.liferay.portal.workflow.kaleo.parser.JoinXorNodeValidator" />
+					<bean class="com.liferay.portal.workflow.kaleo.parser.impl.JoinXorNodeValidator" />
 				</entry>
 				<entry key="STATE">
-					<bean class="com.liferay.portal.workflow.kaleo.parser.StateNodeValidator" />
+					<bean class="com.liferay.portal.workflow.kaleo.parser.impl.StateNodeValidator" />
 				</entry>
 				<entry key="TASK">
-					<bean class="com.liferay.portal.workflow.kaleo.parser.TaskNodeValidator" />
+					<bean class="com.liferay.portal.workflow.kaleo.parser.impl.TaskNodeValidator" />
 				</entry>
 			</util:map>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.workflow.kaleo.parser.WorkflowValidator" class="com.liferay.portal.workflow.kaleo.parser.DefaultWorkflowValidator">
+	<bean id="com.liferay.portal.workflow.kaleo.parser.WorkflowValidator" class="com.liferay.portal.workflow.kaleo.parser.impl.DefaultWorkflowValidator">
 		<property name="nodeValidatorRegistry" ref="com.liferay.portal.workflow.kaleo.parser.NodeValidatorRegistry" />
 	</bean>
 </beans>

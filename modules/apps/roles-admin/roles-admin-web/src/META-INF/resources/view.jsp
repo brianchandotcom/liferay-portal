@@ -73,7 +73,20 @@ String portletURLString = portletURL.toString();
 				</c:if>
 			</aui:nav>
 
-			<aui:nav-bar-search file="/role_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+
+				<%
+				String cssClass = "form-search";
+
+				if (windowState.equals(WindowState.MAXIMIZED)) {
+					cssClass += " col-xs-12";
+				}
+				%>
+
+				<div class="<%= cssClass %>">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+				</div>
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>

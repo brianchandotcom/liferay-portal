@@ -234,6 +234,10 @@
 		<run-functional-test database.type="mysql" />
 	</target>
 
+	<target name="integration-db2">
+		<run-integration-test database.type="db2" />
+	</target>
+
 	<target name="integration-mysql">
 		<run-integration-test database.type="mysql" />
 	</target>

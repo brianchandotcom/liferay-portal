@@ -171,7 +171,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByCompanyId_First(
 		long companyId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -201,7 +201,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByCompanyId_Last(
 		long companyId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -232,7 +232,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance[] findByCompanyId_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long companyId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(kaleoTaskAssignmentInstanceId,
 			companyId, orderByComparator);
@@ -318,7 +318,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByKaleoDefinitionId_First(
 		long kaleoDefinitionId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_First(kaleoDefinitionId,
 			orderByComparator);
@@ -350,7 +350,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByKaleoDefinitionId_Last(
 		long kaleoDefinitionId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_Last(kaleoDefinitionId,
 			orderByComparator);
@@ -383,7 +383,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance[] findByKaleoDefinitionId_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long kaleoDefinitionId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByKaleoDefinitionId_PrevAndNext(kaleoTaskAssignmentInstanceId,
 			kaleoDefinitionId, orderByComparator);
@@ -469,7 +469,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByKaleoInstanceId_First(
 		long kaleoInstanceId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByKaleoInstanceId_First(kaleoInstanceId,
 			orderByComparator);
@@ -501,7 +501,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByKaleoInstanceId_Last(
 		long kaleoInstanceId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByKaleoInstanceId_Last(kaleoInstanceId,
 			orderByComparator);
@@ -534,7 +534,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance[] findByKaleoInstanceId_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long kaleoInstanceId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByKaleoInstanceId_PrevAndNext(kaleoTaskAssignmentInstanceId,
 			kaleoInstanceId, orderByComparator);
@@ -622,7 +622,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findBykaleoTaskInstanceTokenId_First(
 		long kaleoTaskInstanceTokenId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findBykaleoTaskInstanceTokenId_First(kaleoTaskInstanceTokenId,
 			orderByComparator);
@@ -654,7 +654,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findBykaleoTaskInstanceTokenId_Last(
 		long kaleoTaskInstanceTokenId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findBykaleoTaskInstanceTokenId_Last(kaleoTaskInstanceTokenId,
 			orderByComparator);
@@ -687,7 +687,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance[] findBykaleoTaskInstanceTokenId_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long kaleoTaskInstanceTokenId,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findBykaleoTaskInstanceTokenId_PrevAndNext(kaleoTaskAssignmentInstanceId,
 			kaleoTaskInstanceTokenId, orderByComparator);
@@ -777,7 +777,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByassigneeClassName_First(
 		java.lang.String assigneeClassName,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByassigneeClassName_First(assigneeClassName,
 			orderByComparator);
@@ -809,7 +809,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByassigneeClassName_Last(
 		java.lang.String assigneeClassName,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByassigneeClassName_Last(assigneeClassName,
 			orderByComparator);
@@ -842,7 +842,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance[] findByassigneeClassName_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, java.lang.String assigneeClassName,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByassigneeClassName_PrevAndNext(kaleoTaskAssignmentInstanceId,
 			assigneeClassName, orderByComparator);
@@ -934,7 +934,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByG_ACPK_First(long groupId,
 		long assigneeClassPK,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByG_ACPK_First(groupId, assigneeClassPK,
 			orderByComparator);
@@ -968,7 +968,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByG_ACPK_Last(long groupId,
 		long assigneeClassPK,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByG_ACPK_Last(groupId, assigneeClassPK,
 			orderByComparator);
@@ -1003,7 +1003,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance[] findByG_ACPK_PrevAndNext(
 		long kaleoTaskAssignmentInstanceId, long groupId, long assigneeClassPK,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByG_ACPK_PrevAndNext(kaleoTaskAssignmentInstanceId,
 			groupId, assigneeClassPK, orderByComparator);
@@ -1099,7 +1099,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByACN_ACPK_First(
 		java.lang.String assigneeClassName, long assigneeClassPK,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByACN_ACPK_First(assigneeClassName, assigneeClassPK,
 			orderByComparator);
@@ -1133,7 +1133,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	public static KaleoTaskAssignmentInstance findByACN_ACPK_Last(
 		java.lang.String assigneeClassName, long assigneeClassPK,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByACN_ACPK_Last(assigneeClassName, assigneeClassPK,
 			orderByComparator);
@@ -1169,7 +1169,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 		long kaleoTaskAssignmentInstanceId, java.lang.String assigneeClassName,
 		long assigneeClassPK,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence()
 				   .findByACN_ACPK_PrevAndNext(kaleoTaskAssignmentInstanceId,
 			assigneeClassName, assigneeClassPK, orderByComparator);
@@ -1239,7 +1239,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	*/
 	public static KaleoTaskAssignmentInstance remove(
 		long kaleoTaskAssignmentInstanceId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence().remove(kaleoTaskAssignmentInstanceId);
 	}
 
@@ -1257,7 +1257,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	*/
 	public static KaleoTaskAssignmentInstance findByPrimaryKey(
 		long kaleoTaskAssignmentInstanceId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentInstanceException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException {
 		return getPersistence().findByPrimaryKey(kaleoTaskAssignmentInstanceId);
 	}
 

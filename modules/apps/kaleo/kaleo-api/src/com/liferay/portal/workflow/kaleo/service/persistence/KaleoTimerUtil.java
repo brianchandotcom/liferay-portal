@@ -173,7 +173,7 @@ public class KaleoTimerUtil {
 	public static KaleoTimer findByKCN_KCPK_First(
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTimerException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
 		return getPersistence()
 				   .findByKCN_KCPK_First(kaleoClassName, kaleoClassPK,
 			orderByComparator);
@@ -207,7 +207,7 @@ public class KaleoTimerUtil {
 	public static KaleoTimer findByKCN_KCPK_Last(
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTimerException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
 		return getPersistence()
 				   .findByKCN_KCPK_Last(kaleoClassName, kaleoClassPK,
 			orderByComparator);
@@ -242,7 +242,7 @@ public class KaleoTimerUtil {
 	public static KaleoTimer[] findByKCN_KCPK_PrevAndNext(long kaleoTimerId,
 		java.lang.String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTimerException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
 		return getPersistence()
 				   .findByKCN_KCPK_PrevAndNext(kaleoTimerId, kaleoClassName,
 			kaleoClassPK, orderByComparator);
@@ -344,7 +344,7 @@ public class KaleoTimerUtil {
 	public static KaleoTimer findByKCN_KCPK_Blocking_First(
 		java.lang.String kaleoClassName, long kaleoClassPK, boolean blocking,
 		OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTimerException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
 		return getPersistence()
 				   .findByKCN_KCPK_Blocking_First(kaleoClassName, kaleoClassPK,
 			blocking, orderByComparator);
@@ -380,7 +380,7 @@ public class KaleoTimerUtil {
 	public static KaleoTimer findByKCN_KCPK_Blocking_Last(
 		java.lang.String kaleoClassName, long kaleoClassPK, boolean blocking,
 		OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTimerException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
 		return getPersistence()
 				   .findByKCN_KCPK_Blocking_Last(kaleoClassName, kaleoClassPK,
 			blocking, orderByComparator);
@@ -417,7 +417,7 @@ public class KaleoTimerUtil {
 	public static KaleoTimer[] findByKCN_KCPK_Blocking_PrevAndNext(
 		long kaleoTimerId, java.lang.String kaleoClassName, long kaleoClassPK,
 		boolean blocking, OrderByComparator<KaleoTimer> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTimerException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
 		return getPersistence()
 				   .findByKCN_KCPK_Blocking_PrevAndNext(kaleoTimerId,
 			kaleoClassName, kaleoClassPK, blocking, orderByComparator);
@@ -487,7 +487,7 @@ public class KaleoTimerUtil {
 	* @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
 	*/
 	public static KaleoTimer remove(long kaleoTimerId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTimerException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
 		return getPersistence().remove(kaleoTimerId);
 	}
 
@@ -503,7 +503,7 @@ public class KaleoTimerUtil {
 	* @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
 	*/
 	public static KaleoTimer findByPrimaryKey(long kaleoTimerId)
-		throws com.liferay.portal.workflow.kaleo.NoSuchTimerException {
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException {
 		return getPersistence().findByPrimaryKey(kaleoTimerId);
 	}
 

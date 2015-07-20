@@ -31,9 +31,9 @@ request.setAttribute("edit_role_permissions.jsp-portletResource", portletResourc
 
 <c:choose>
 	<c:when test="<%= cmd.equals(Constants.EDIT) %>">
-		<liferay-util:include page="/edit_role_permissions_form.jsp" />
+		<liferay-util:include page="/edit_role_permissions_form.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/edit_role_permissions_summary.jsp" />
+		<liferay-util:include page="/edit_role_permissions_summary.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>

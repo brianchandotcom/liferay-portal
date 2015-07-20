@@ -53,7 +53,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	title="<%= role.getTitle(locale) %>"
 />
 
-<liferay-util:include page="/edit_role_tabs.jsp">
+<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="assign-members" />
 	<liferay-util:param name="backURL" value="<%= redirect %>" />
 </liferay-util:include>

@@ -67,7 +67,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			title="<%= role.getTitle(locale) %>"
 		/>
 
-		<liferay-util:include page="/edit_role_tabs.jsp">
+		<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="tabs1" value="define-permissions" />
 			<liferay-util:param name="backURL" value="<%= backURL %>" />
 		</liferay-util:include>
@@ -97,7 +97,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		<aui:col id="permissionContentContainer" width="<%= portletName.equals(PortletKeys.ADMIN_SERVER) ? 100 : 75 %>">
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.VIEW) %>">
-					<liferay-util:include page="/edit_role_permissions_summary.jsp" />
+					<liferay-util:include page="/edit_role_permissions_summary.jsp" servletContext="<%= application %>" />
 
 					<c:if test="<%= portletName.equals(PortletKeys.ADMIN_SERVER) %>">
 						<br />
@@ -106,7 +106,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/edit_role_permissions_form.jsp" />
+					<liferay-util:include page="/edit_role_permissions_form.jsp" servletContext="<%= application %>" />
 				</c:otherwise>
 			</c:choose>
 		</aui:col>

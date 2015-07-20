@@ -85,7 +85,7 @@ if (Validator.isNotNull(portletResource)) {
 		<h4><liferay-ui:message key="<%= applicationPermissionsLabel %>" /> <liferay-ui:icon-help message='<%= applicationPermissionsLabel + "-help" %>' /></h4>
 	</c:if>
 
-	<liferay-util:include page="/edit_role_permissions_resource.jsp" />
+	<liferay-util:include page="/edit_role_permissions_resource.jsp" servletContext="<%= application %>" />
 
 	<c:if test="<%= (modelResources != null) && !modelResources.isEmpty() %>">
 		<h4><liferay-ui:message key="resource-permissions" /> <liferay-ui:icon-help message="resource-permissions-help" /></h4>
@@ -108,7 +108,7 @@ if (Validator.isNotNull(portletResource)) {
 				request.setAttribute("edit_role_permissions.jsp-curModelResourceName", curModelResourceName);
 				%>
 
-				<liferay-util:include page="/edit_role_permissions_resource.jsp" />
+				<liferay-util:include page="/edit_role_permissions_resource.jsp" servletContext="<%= application %>" />
 
 			<%
 			}

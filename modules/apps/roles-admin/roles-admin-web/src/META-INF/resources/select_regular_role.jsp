@@ -44,6 +44,7 @@ portletURL.setParameter("eventName", eventName);
 	>
 		<liferay-ui:search-form
 			page="/role_search.jsp"
+			servletContext="<%= application %>"
 		/>
 
 		<%

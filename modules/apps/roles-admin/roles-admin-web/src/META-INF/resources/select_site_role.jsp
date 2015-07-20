@@ -173,6 +173,7 @@ if (step == 1) {
 			>
 				<liferay-ui:search-form
 					page="/role_search.jsp"
+					servletContext="<%= application %>"
 				/>
 
 				<%

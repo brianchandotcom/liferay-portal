@@ -36,7 +36,7 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 />
 
 <c:if test="<%= role != null %>">
-	<liferay-util:include page="/edit_role_tabs.jsp">
+	<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="edit" />
 		<liferay-util:param name="backURL" value="<%= backURL %>" />
 	</liferay-util:include>

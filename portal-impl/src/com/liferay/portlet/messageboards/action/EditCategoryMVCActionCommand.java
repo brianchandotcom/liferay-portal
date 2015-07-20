@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -63,8 +64,7 @@ import javax.portlet.ActionResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCategoryMVCActionCommand
-	extends BaseMessageBoardsMVCActionCommand {
+public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteCategories(
 			ActionRequest actionRequest, boolean moveToTrash)
@@ -133,8 +133,6 @@ public class EditCategoryMVCActionCommand
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
 				unsubscribeCategory(actionRequest);
 			}
-
-			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (NoSuchCategoryException | PrincipalException e) {
 			SessionErrors.add(actionRequest, e.getClass());

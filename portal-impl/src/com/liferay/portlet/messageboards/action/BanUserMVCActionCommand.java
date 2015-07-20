@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -40,7 +41,7 @@ import javax.portlet.ActionResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class BanUserMVCActionCommand extends BaseMessageBoardsMVCActionCommand {
+public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void banUser(ActionRequest actionRequest) throws Exception {
 		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
@@ -65,8 +66,6 @@ public class BanUserMVCActionCommand extends BaseMessageBoardsMVCActionCommand {
 			else if (cmd.equals("unban")) {
 				unbanUser(actionRequest);
 			}
-
-			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(actionRequest, pe.getClass());

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -47,8 +48,7 @@ import javax.portlet.ActionResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteThreadMVCActionCommand
-	extends BaseMessageBoardsMVCActionCommand {
+public class DeleteThreadMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteThreads(
 			ActionRequest actionRequest, boolean moveToTrash)
@@ -101,8 +101,6 @@ public class DeleteThreadMVCActionCommand
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteThreads(actionRequest, true);
 			}
-
-			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (LockedThreadException | PrincipalException e) {
 			SessionErrors.add(actionRequest, e.getClass());

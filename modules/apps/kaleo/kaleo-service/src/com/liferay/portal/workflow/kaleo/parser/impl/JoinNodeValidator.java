@@ -12,32 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.parser;
+package com.liferay.portal.workflow.kaleo.parser.impl;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.kaleo.definition.Condition;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
+import com.liferay.portal.workflow.kaleo.definition.Join;
 
 /**
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
-public class ConditionNodeValidator extends BaseNodeValidator<Condition> {
+public class JoinNodeValidator extends BaseNodeValidator<Join> {
 
 	@Override
-	protected void doValidate(Definition definition, Condition condition)
+	protected void doValidate(Definition definition, Join join)
 		throws WorkflowException {
 
-		if (condition.getIncomingTransitionsCount() == 0) {
+		if (join.getIncomingTransitionsCount() == 0) {
 			throw new WorkflowException(
-				"No incoming transition found for condition " +
-					condition.getName());
+				"No incoming transition found for join " + join.getName());
 		}
 
-		if (condition.getOutgoingTransitionsCount() < 2) {
+		if (join.getOutgoingTransitionsCount() == 0) {
 			throw new WorkflowException(
-				"Less than 2 outgoing transitions found for condition " +
-					condition.getName());
+				"No outgoing transition found for join " + join.getName());
 		}
 	}
 

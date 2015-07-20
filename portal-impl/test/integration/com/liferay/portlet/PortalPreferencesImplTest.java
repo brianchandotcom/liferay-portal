@@ -61,6 +61,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Matthew Tambara
+ * @author Shuyang Zhou
  */
 public class PortalPreferencesImplTest {
 
@@ -413,27 +414,26 @@ public class PortalPreferencesImplTest {
 			TransactionAttribute transactionAttribute,
 			TransactionStatus transactionStatus) {
 
-			if (_synchronizeThreadLocal.get()) {
-				try {
-					_cyclicBarrier.await();
-
-					_originalTransactionExecutor.commit(
-						platformTransactionManager, transactionAttribute,
-						transactionStatus);
-				}
-				catch (Throwable t) {
-					ReflectionUtil.throwException(t);
-				}
-				finally {
-					PortalPreferencesWrapperCacheUtil.remove(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_USER);
-				}
-			}
-			else {
+			if (!_synchronizeThreadLocal.get()) {
 				_originalTransactionExecutor.commit(
 					platformTransactionManager, transactionAttribute,
 					transactionStatus);
+			}
+
+			try {
+				_cyclicBarrier.await();
+
+				_originalTransactionExecutor.commit(
+					platformTransactionManager, transactionAttribute,
+					transactionStatus);
+			}
+			catch (Throwable t) {
+				ReflectionUtil.throwException(t);
+			}
+			finally {
+				PortalPreferencesWrapperCacheUtil.remove(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_USER);
 			}
 		}
 

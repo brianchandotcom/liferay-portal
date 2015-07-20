@@ -270,7 +270,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.MOVE_THREAD) %>">
 				<portlet:renderURL var="editThreadURL">
-					<portlet:param name="mvcRenderCommand" value="/message_boards/move_thread" />
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/move_thread" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
 					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />

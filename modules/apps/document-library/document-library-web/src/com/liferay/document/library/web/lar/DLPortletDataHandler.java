@@ -14,6 +14,9 @@
 
 package com.liferay.document.library.web.lar;
 
+import com.liferay.document.library.lar.xstream.FileEntryConverter;
+import com.liferay.document.library.lar.xstream.FileVersionConverter;
+import com.liferay.document.library.lar.xstream.FolderConverter;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -46,9 +49,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
-import com.liferay.portlet.documentlibrary.lar.xstream.FileEntryConverter;
-import com.liferay.portlet.documentlibrary.lar.xstream.FileVersionConverter;
-import com.liferay.portlet.documentlibrary.lar.xstream.FolderConverter;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;

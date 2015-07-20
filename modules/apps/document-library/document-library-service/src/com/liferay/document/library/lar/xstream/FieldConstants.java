@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar.xstream;
+package com.liferay.document.library.lar.xstream;
 
 /**
  * @author Akos Thurzo

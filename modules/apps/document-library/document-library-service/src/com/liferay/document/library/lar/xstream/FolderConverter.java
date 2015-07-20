@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar.xstream;
+package com.liferay.document.library.lar.xstream;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
-import com.liferay.portal.repository.proxy.FileVersionProxyBean;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.repository.proxy.FolderProxyBean;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.exportimport.xstream.BaseXStreamConverter;
 import com.liferay.portlet.exportimport.xstream.XStreamHierarchicalStreamReader;
 import com.liferay.portlet.exportimport.xstream.XStreamUnmarshallingContext;
@@ -29,11 +29,11 @@ import java.util.List;
 /**
  * @author Akos Thurzo
  */
-public class FileVersionConverter extends BaseXStreamConverter {
+public class FolderConverter extends BaseXStreamConverter {
 
 	@Override
 	public boolean canConvert(Class<?> clazz) {
-		return clazz.equals(FileVersionProxyBean.class);
+		return clazz.equals(FolderProxyBean.class);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class FileVersionConverter extends BaseXStreamConverter {
 			XStreamUnmarshallingContext xStreamUnmarshallingContext)
 		throws Exception {
 
-		DLFileVersion dlFileVersion = new DLFileVersionImpl();
+		DLFolder dlFolder = new DLFolderImpl();
 		boolean escapedModel = false;
 
 		while (xStreamHierarchicalStreamReader.hasMoreChildren()) {
@@ -51,7 +51,7 @@ public class FileVersionConverter extends BaseXStreamConverter {
 			String nodeName = xStreamHierarchicalStreamReader.getNodeName();
 
 			Class<?> clazz = BeanPropertiesUtil.getObjectType(
-				dlFileVersion, nodeName);
+				dlFolder, nodeName);
 
 			Object convertedValue = xStreamUnmarshallingContext.convertAnother(
 				xStreamHierarchicalStreamReader.getValue(), clazz);
@@ -62,14 +62,14 @@ public class FileVersionConverter extends BaseXStreamConverter {
 				}
 				else {
 					BeanPropertiesUtil.setProperty(
-						dlFileVersion, nodeName, convertedValue);
+						dlFolder, nodeName, convertedValue);
 				}
 			}
 
 			xStreamHierarchicalStreamReader.moveUp();
 		}
 
-		return new LiferayFileVersion(dlFileVersion, escapedModel);
+		return new LiferayFolder(dlFolder, escapedModel);
 	}
 
 	@Override
@@ -80,29 +80,22 @@ public class FileVersionConverter extends BaseXStreamConverter {
 	protected static List<String> fields = new LinkedList<>();
 
 	static {
-		fields.add(FieldConstants.CHANGE_LOG);
 		fields.add(FieldConstants.COMPANY_ID);
 		fields.add(FieldConstants.CREATE_DATE);
 		fields.add(FieldConstants.DESCRIPTION);
 		fields.add(FieldConstants.ESCAPED_MODEL);
-		fields.add(FieldConstants.EXTENSION);
-		fields.add(FieldConstants.EXTRA_SETTINGS);
-		fields.add(FieldConstants.FILE_ENTRY_ID);
-		fields.add(FieldConstants.FILE_VERSION_ID);
+		fields.add(FieldConstants.FOLDER_ID);
 		fields.add(FieldConstants.GROUP_ID);
-		fields.add(FieldConstants.MIME_TYPE);
+		fields.add(FieldConstants.LAST_POST_DATE);
 		fields.add(FieldConstants.MODIFIED_DATE);
+		fields.add(FieldConstants.MOUNT_POINT);
+		fields.add(FieldConstants.NAME);
+		fields.add(FieldConstants.PARENT_FOLDER_ID);
 		fields.add(FieldConstants.REPOSITORY_ID);
-		fields.add(FieldConstants.SIZE);
-		fields.add(FieldConstants.STATUS);
-		fields.add(FieldConstants.STATUS_BY_USER_ID);
-		fields.add(FieldConstants.STATUS_BY_USER_NAME);
-		fields.add(FieldConstants.STATUS_DATE);
-		fields.add(FieldConstants.TITLE);
 		fields.add(FieldConstants.USER_ID);
 		fields.add(FieldConstants.USER_NAME);
+		fields.add(FieldConstants.USER_UUID);
 		fields.add(FieldConstants.UUID);
-		fields.add(FieldConstants.VERSION);
 	}
 
 }

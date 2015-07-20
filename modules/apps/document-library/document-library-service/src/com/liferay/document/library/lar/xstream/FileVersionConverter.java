@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar.xstream;
+package com.liferay.document.library.lar.xstream;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
-import com.liferay.portal.repository.proxy.FileEntryProxyBean;
 import com.liferay.portal.repository.proxy.FileVersionProxyBean;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.exportimport.xstream.BaseXStreamConverter;
 import com.liferay.portlet.exportimport.xstream.XStreamHierarchicalStreamReader;
 import com.liferay.portlet.exportimport.xstream.XStreamUnmarshallingContext;
@@ -31,11 +29,11 @@ import java.util.List;
 /**
  * @author Akos Thurzo
  */
-public class FileEntryConverter extends BaseXStreamConverter {
+public class FileVersionConverter extends BaseXStreamConverter {
 
 	@Override
 	public boolean canConvert(Class<?> clazz) {
-		return clazz.equals(FileEntryProxyBean.class);
+		return clazz.equals(FileVersionProxyBean.class);
 	}
 
 	@Override
@@ -44,9 +42,8 @@ public class FileEntryConverter extends BaseXStreamConverter {
 			XStreamUnmarshallingContext xStreamUnmarshallingContext)
 		throws Exception {
 
-		DLFileEntry dlFileEntry = new DLFileEntryImpl();
+		DLFileVersion dlFileVersion = new DLFileVersionImpl();
 		boolean escapedModel = false;
-		LiferayFileVersion liferayFileVersion = null;
 
 		while (xStreamHierarchicalStreamReader.hasMoreChildren()) {
 			xStreamHierarchicalStreamReader.moveDown();
@@ -54,11 +51,7 @@ public class FileEntryConverter extends BaseXStreamConverter {
 			String nodeName = xStreamHierarchicalStreamReader.getNodeName();
 
 			Class<?> clazz = BeanPropertiesUtil.getObjectType(
-				dlFileEntry, nodeName);
-
-			if (nodeName.equals(FieldConstants.FILE_VERSION)) {
-				clazz = FileVersionProxyBean.class;
-			}
+				dlFileVersion, nodeName);
 
 			Object convertedValue = xStreamUnmarshallingContext.convertAnother(
 				xStreamHierarchicalStreamReader.getValue(), clazz);
@@ -67,24 +60,16 @@ public class FileEntryConverter extends BaseXStreamConverter {
 				if (nodeName.equals(FieldConstants.ESCAPED_MODEL)) {
 					escapedModel = (Boolean)convertedValue;
 				}
-				else if (nodeName.equals(FieldConstants.FILE_VERSION)) {
-					liferayFileVersion = (LiferayFileVersion)convertedValue;
-				}
 				else {
 					BeanPropertiesUtil.setProperty(
-						dlFileEntry, nodeName, convertedValue);
+						dlFileVersion, nodeName, convertedValue);
 				}
 			}
 
 			xStreamHierarchicalStreamReader.moveUp();
 		}
 
-		LiferayFileEntry liferayFileEntry = new LiferayFileEntry(
-			dlFileEntry, escapedModel);
-
-		liferayFileEntry.setCachedFileVersion(liferayFileVersion);
-
-		return liferayFileEntry;
+		return new LiferayFileVersion(dlFileVersion, escapedModel);
 	}
 
 	@Override
@@ -95,25 +80,27 @@ public class FileEntryConverter extends BaseXStreamConverter {
 	protected static List<String> fields = new LinkedList<>();
 
 	static {
+		fields.add(FieldConstants.CHANGE_LOG);
 		fields.add(FieldConstants.COMPANY_ID);
 		fields.add(FieldConstants.CREATE_DATE);
 		fields.add(FieldConstants.DESCRIPTION);
 		fields.add(FieldConstants.ESCAPED_MODEL);
 		fields.add(FieldConstants.EXTENSION);
+		fields.add(FieldConstants.EXTRA_SETTINGS);
 		fields.add(FieldConstants.FILE_ENTRY_ID);
-		fields.add(FieldConstants.FILE_VERSION);
-		fields.add(FieldConstants.FOLDER_ID);
+		fields.add(FieldConstants.FILE_VERSION_ID);
 		fields.add(FieldConstants.GROUP_ID);
-		fields.add(FieldConstants.MANUAL_CHECK_IN_REQUIRED);
 		fields.add(FieldConstants.MIME_TYPE);
 		fields.add(FieldConstants.MODIFIED_DATE);
-		fields.add(FieldConstants.READ_COUNT);
 		fields.add(FieldConstants.REPOSITORY_ID);
 		fields.add(FieldConstants.SIZE);
+		fields.add(FieldConstants.STATUS);
+		fields.add(FieldConstants.STATUS_BY_USER_ID);
+		fields.add(FieldConstants.STATUS_BY_USER_NAME);
+		fields.add(FieldConstants.STATUS_DATE);
 		fields.add(FieldConstants.TITLE);
 		fields.add(FieldConstants.USER_ID);
 		fields.add(FieldConstants.USER_NAME);
-		fields.add(FieldConstants.USER_UUID);
 		fields.add(FieldConstants.UUID);
 		fields.add(FieldConstants.VERSION);
 	}

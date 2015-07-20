@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.comments.page.comments.web.upgrade;
+package com.liferay.comment.page.comments.web.upgrade;
 
-import com.liferay.comments.page.comments.web.constants.PageCommentsPortletKeys;
+import com.liferay.comment.page.comments.web.constants.PageCommentsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -59,7 +59,7 @@ public class PageCommentsWebUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.comments.page.comments.web",
+			"com.liferay.comment.page.comments.web",
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}

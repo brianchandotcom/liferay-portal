@@ -32,8 +32,10 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -41,9 +43,12 @@ import org.junit.Test;
  */
 public class CustomSQLTest {
 
-	public CustomSQLTest() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		Field props = ReflectionUtil.getDeclaredField(
 			PropsUtil.class, "_props");
+
+		_props = (Props)props.get(null);
 
 		props.set(
 			null,
@@ -65,6 +70,8 @@ public class CustomSQLTest {
 		Field portal = ReflectionUtil.getDeclaredField(
 			PortalUtil.class, "_portal");
 
+		_portal = (Portal)portal.get(null);
+
 		portal.set(
 			null,
 			ProxyUtil.newProxyInstance(
@@ -83,6 +90,8 @@ public class CustomSQLTest {
 				}));
 
 		Field pacl = ReflectionUtil.getDeclaredField(DataAccess.class, "_pacl");
+
+		_pacl = (DataAccess.PACL)pacl.get(null);
 
 		pacl.set(
 			null,
@@ -122,8 +131,25 @@ public class CustomSQLTest {
 				}));
 	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		Field props = ReflectionUtil.getDeclaredField(
+			PropsUtil.class, "_props");
+
+		props.set(null, _props);
+
+		Field portal = ReflectionUtil.getDeclaredField(
+			PortalUtil.class, "_portal");
+
+		portal.set(null, _portal);
+
+		Field pacl = ReflectionUtil.getDeclaredField(DataAccess.class, "_pacl");
+
+		pacl.set(null, _pacl);
+	}
+
 	@Before
-	public void setUp() throws SQLException {
+	public void setUp() throws Exception {
 		_queryDefinition = new QueryDefinition<>();
 		_customSQL = new TestCustomSQL();
 	}
@@ -248,6 +274,10 @@ public class CustomSQLTest {
 	private static final String _TABLE_NAME = "TestModel";
 
 	private static final long _USER_ID = 1234L;
+
+	private static DataAccess.PACL _pacl;
+	private static Portal _portal;
+	private static Props _props;
 
 	private CustomSQL _customSQL;
 	private QueryDefinition<Object> _queryDefinition;

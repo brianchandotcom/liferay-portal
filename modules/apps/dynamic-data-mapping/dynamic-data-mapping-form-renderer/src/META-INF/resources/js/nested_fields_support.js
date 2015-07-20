@@ -42,11 +42,13 @@ AUI.add(
 			eachField: function(fn) {
 				var instance = this;
 
-				var queue = new A.Queue(instance);
+				var queue = new A.Queue();
 
 				var addToQueue = function(item) {
 					queue.add(item);
 				};
+
+				instance.get('fields').forEach(addToQueue);
 
 				while (queue.size() > 0) {
 					var field = queue.next();

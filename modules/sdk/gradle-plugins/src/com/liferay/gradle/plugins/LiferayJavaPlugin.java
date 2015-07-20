@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
+import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
@@ -195,6 +196,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 					LiferayExtension liferayExtension = GradleUtil.getExtension(
 						project, LiferayExtension.class);
 
+					addDependenciesJspC(project, liferayExtension);
+
 					configureVersion(project, liferayExtension);
 
 					configureTasks(project, liferayExtension);
@@ -227,6 +230,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void addConfigurations(Project project) {
 		addConfigurationPortalWeb(project);
+	}
+
+	protected void addDependenciesJspC(
+		Project project, LiferayExtension liferayExtension) {
+
+		GradleUtil.addDependency(
+			project, JspCPlugin.CONFIGURATION_NAME,
+			liferayExtension.getAppServerLibGlobalDir());
 	}
 
 	protected void addDependenciesPortalWeb(Project project) {
@@ -897,6 +908,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
+		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);

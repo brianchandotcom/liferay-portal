@@ -4781,6 +4781,11 @@
 		<tag-class>com.liferay.taglib.ui.SectionTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SectionTei</tei-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>sites-directory</name>

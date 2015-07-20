@@ -66,9 +66,15 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 			<%
 			for (String title : titles) {
 				ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
+
+				data.put("showSearch", itemSelectorView.supportsSearch());
 			%>
 
-				<liferay-ui:section>
+				<liferay-ui:section data="<%= data %>">
 					<div>
 
 						<%
@@ -95,6 +101,12 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 			if (searchForm) {
 				searchForm.find('#<portlet:namespace />selectedTab').val(event.id);
 				searchForm.find('#<portlet:namespace />tabName').val(event.id);
+
+				var tabSection = event.tabSection;
+
+				var showSearch = tabSection.attr('data-showSearch');
+
+				$('.form-search').toggle(showSearch === 'true');
 			}
 		}
 	);

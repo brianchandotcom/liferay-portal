@@ -29,6 +29,9 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.compile.JavaCompile;
 
@@ -148,16 +151,30 @@ public class JspCPlugin implements Plugin<Project> {
 			return;
 		}
 
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+		File webAppDir = null;
 
-		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
+		PluginContainer pluginContainer = project.getPlugins();
 
-		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+		if (pluginContainer.hasPlugin(WarPlugin.class)) {
+			WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+				project, WarPluginConvention.class);
 
-		Iterator<File> iterator = srcDirs.iterator();
+			webAppDir = warPluginConvention.getWebAppDir();
+		}
+		else {
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		jspCExtension.setWebAppDir(iterator.next());
+			SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
+
+			Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+			Iterator<File> iterator = srcDirs.iterator();
+
+			webAppDir = iterator.next();
+		}
+
+		jspCExtension.setWebAppDir(webAppDir);
 	}
 
 	protected void configureTaskCompileJSPSources(

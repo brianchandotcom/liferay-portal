@@ -22,6 +22,9 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.lar.PermissionExporter;
+import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessor;
+import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorCapability;
+import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorRegistryUtil;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -896,12 +899,38 @@ public class PortletExportController implements ExportController {
 				portletDataContext.setExportDataRootElement(
 					preferenceDataElement);
 
-				PortletDataHandler portletDataHandler =
-					portlet.getPortletDataHandlerInstance();
+				ExportImportPreferencesProcessor
+					exportImportPreferencesProcessor =
+						ExportImportPreferencesProcessorRegistryUtil.
+							getExportImportPreferencesProcessor(
+								portlet.getRootPortletId());
 
-				jxPortletPreferences =
-					portletDataHandler.processExportPortletPreferences(
-						portletDataContext, portletId, jxPortletPreferences);
+				if (exportImportPreferencesProcessor != null) {
+					List<ExportImportPreferencesProcessorCapability>
+						exportCapabilities =
+							exportImportPreferencesProcessor.
+								getExportCapabilities();
+
+					for (ExportImportPreferencesProcessorCapability
+							exportCapability : exportCapabilities) {
+
+						exportCapability.process(
+							portletDataContext, jxPortletPreferences);
+					}
+
+					exportImportPreferencesProcessor.
+						processExportPortletPreferences(
+							portletDataContext, jxPortletPreferences);
+				}
+				else {
+					PortletDataHandler portletDataHandler =
+						portlet.getPortletDataHandlerInstance();
+
+					jxPortletPreferences =
+						portletDataHandler.processExportPortletPreferences(
+							portletDataContext, portletId,
+							jxPortletPreferences);
+				}
 			}
 			finally {
 				portletDataContext.setExportDataRootElement(

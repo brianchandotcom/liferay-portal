@@ -76,7 +76,7 @@ public class UserServiceTest {
 			try {
 				PropsUtil.set(
 					PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
-					Boolean.TRUE.toString());
+					Boolean.FALSE.toString());
 
 				PrincipalThreadLocal.setName(0);
 

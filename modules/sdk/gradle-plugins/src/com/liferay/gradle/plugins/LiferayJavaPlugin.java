@@ -118,7 +118,6 @@ import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
-import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.ProcessResult;
@@ -1746,8 +1745,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				public void execute(Test test) {
 					configureTaskTestDefaultCharacterEncoding(test);
 					configureTaskTestForkEvery(test);
+					configureTaskTestIgnoreFailures(test);
 					configureTaskTestJvmArgs(test);
-					configureTaskTestLogging(test);
 					configureTaskTestWhip(test);
 				}
 
@@ -1770,6 +1769,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(Test test) {
+								configureTaskTestIncludes(test);
 								configureTaskTestSystemProperties(
 									test, liferayExtension);
 							}
@@ -1804,6 +1804,18 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 		else if (name.equals(TEST_INTEGRATION_TASK_NAME)) {
 			test.setForkEvery(null);
+		}
+	}
+
+	protected void configureTaskTestIgnoreFailures(Test test) {
+		test.setIgnoreFailures(true);
+	}
+
+	protected void configureTaskTestIncludes(Test test) {
+		Set<String> includes = test.getIncludes();
+
+		if (includes.isEmpty()) {
+			test.setIncludes(Collections.singleton("**/*Test.class"));
 		}
 	}
 
@@ -1842,12 +1854,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		jvmArgs.add("-Duser.timezone=GMT");
 
 		test.jvmArgs(jvmArgs);
-	}
-
-	protected void configureTaskTestLogging(Test test) {
-		TestLoggingContainer testLoggingContainer = test.getTestLogging();
-
-		testLoggingContainer.setShowStandardStreams(true);
 	}
 
 	protected void configureTaskTestSystemProperties(

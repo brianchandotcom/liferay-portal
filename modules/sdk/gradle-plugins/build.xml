@@ -2,7 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="ant-bnd,gradle-plugins-css-builder,gradle-plugins-javadoc-formatter,gradle-plugins-lang-builder,gradle-plugins-patcher,gradle-plugins-service-builder,gradle-plugins-source-formatter,gradle-plugins-tld-formatter,gradle-plugins-whip,gradle-plugins-wsdd-builder,gradle-plugins-wsdl-builder,gradle-plugins-xml-formatter,gradle-plugins-xsd-builder,gradle-util" />
-
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

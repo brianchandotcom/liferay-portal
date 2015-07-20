@@ -19,6 +19,7 @@
 String cssClass = (String)request.getAttribute("liferay-ui:icon-menu:css-class");
 String direction = (String)request.getAttribute("liferay-ui:icon-menu:direction");
 String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
+boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-menu:scroll"));
 %>
 
 <div class="dropdown <%= cssClass %>">
@@ -26,4 +27,12 @@ String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
 		<span class="icon-ellipsis-vertical icon-monospaced"></span>
 	</a>
 
-	<ul class="dropdown-menu dropdown-menu-<%= direction %>">
+	<c:choose>
+		<c:when test="<%= scroll %>">
+			<div class="dropdown-menu dropdown-menu-<%= direction %>">
+				<ul class="inline-scroller">
+		</c:when>
+		<c:otherwise>
+			<ul class="dropdown-menu dropdown-menu-<%= direction %>">
+		</c:otherwise>
+	</c:choose>

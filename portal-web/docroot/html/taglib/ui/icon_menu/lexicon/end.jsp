@@ -13,6 +13,14 @@
  * details.
  */
 --%>
+<%@ include file="/html/taglib/init.jsp" %>
 
-	</ul>
+<%
+boolean scroll = GetterUtil.getBoolean(request.getAttribute("iferay-ui:icon-menu:scroll"));
+%>
+
+		</ul>
+	<c:if test="<%= scroll %>">
+		</div>
+	</c:if>
 </div>

@@ -16,13 +16,15 @@ package com.liferay.portal.spring.extender.internal.bean;
 
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.felix.utils.log.Logger;
@@ -31,8 +33,11 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
+import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.annotation.AnnotationUtils;
 
 /**
  * @author Miguel Pastor
@@ -82,18 +87,71 @@ public class ApplicationContextServicePublisher {
 		_serviceRegistrations.clear();
 	}
 
-	protected Dictionary<String, Object> getBeanProperties(Object bean) {
+	protected Dictionary<String, Object> getBeanProperties(Object object) {
+		Class<? extends Object> clazz = null;
+
+		try {
+			clazz = getTargetClass(object);
+		}
+		catch (Exception e) {
+			return new HashMapDictionary<>();
+		}
+
+		OSGiBeanProperties osgiBeanProperties = AnnotationUtils.findAnnotation(
+			clazz, OSGiBeanProperties.class);
+
+		if (osgiBeanProperties == null) {
+			return null;
+		}
+
 		HashMapDictionary<String, Object> properties =
 			new HashMapDictionary<>();
 
-		Map<String, Object> osgiBeanProperties =
-			OSGiBeanProperties.Convert.fromObject(bean);
-
-		if (osgiBeanProperties != null) {
-			properties.putAll(osgiBeanProperties);
-		}
+		properties.putAll(OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
 
 		return properties;
+	}
+
+	protected Set<Class<?>> getInterfaces(Object object) throws Exception {
+		Class<? extends Object> clazz = getTargetClass(object);
+
+		OSGiBeanProperties osgiBeanProperties = AnnotationUtils.findAnnotation(
+			clazz, OSGiBeanProperties.class);
+
+		if (osgiBeanProperties == null) {
+			return new HashSet<>(
+				Arrays.asList(ReflectionUtil.getInterfaces(object)));
+		}
+
+		Class<?>[] serviceClasses = osgiBeanProperties.service();
+
+		if (serviceClasses.length == 0) {
+			return new HashSet<>(
+				Arrays.asList(ReflectionUtil.getInterfaces(object)));
+		}
+
+		for (Class<?> serviceClazz : serviceClasses) {
+			serviceClazz.cast(object);
+		}
+
+		return new HashSet<>(Arrays.asList(osgiBeanProperties.service()));
+	}
+
+	protected Class<?> getTargetClass(Object service) throws Exception {
+		Class<?> clazz = service.getClass();
+
+		if (ProxyUtil.isProxyClass(clazz)) {
+			AdvisedSupport advisedSupport =
+				ServiceBeanAopProxy.getAdvisedSupport(service);
+
+			TargetSource targetSource = advisedSupport.getTargetSource();
+
+			Object target = targetSource.getTarget();
+
+			clazz = target.getClass();
+		}
+
+		return clazz;
 	}
 
 	protected void registerApplicationContext(
@@ -111,7 +169,14 @@ public class ApplicationContextServicePublisher {
 	}
 
 	protected void registerService(BundleContext bundleContext, Object bean) {
-		Set<Class<?>> interfaces = OSGiBeanProperties.Service.interfaces(bean);
+		Set<Class<?>> interfaces = null;
+
+		try {
+			interfaces = getInterfaces(bean);
+		}
+		catch (Exception e) {
+			_log.log(Logger.LOG_ERROR, "Unable to register service " + bean, e);
+		}
 
 		interfaces.add(bean.getClass());
 

@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.service.configuration.configurator;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
+import com.liferay.portal.workflow.kaleo.upgrade.KaleoServiceUpgrade;
 
 import javax.servlet.ServletContext;
 
@@ -54,6 +55,11 @@ public class KaleoServiceConfigurator {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		return new ModuleResourceLoader(bundle);
+	}
+
+	@Reference(unbind = "-")
+	protected void setKaleoServiceUpgrade(
+		KaleoServiceUpgrade kaleoServiceUpgrade) {
 	}
 
 	@Reference(unbind = "-")

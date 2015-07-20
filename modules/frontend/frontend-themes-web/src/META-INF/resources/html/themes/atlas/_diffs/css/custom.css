@@ -14,6 +14,18 @@ body {
 
 			#heading {
 				margin-left: 20px;
+
+				.navbar-toggle {
+					margin: 12px;
+				}
+			}
+
+			.nav>li>a {
+				display: inline-block;
+
+				&.dropdown-lft {
+					margin-left: -20px;
+				}
 			}
 
 			.site-name {

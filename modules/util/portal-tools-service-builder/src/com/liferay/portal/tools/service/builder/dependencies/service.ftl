@@ -57,6 +57,10 @@ import ${import};
 
 <#if entity.hasRemoteService() && sessionTypeName != "Local">
 	@AccessControlled
+</#if>
+
+<#if entity.hasRemoteService() && sessionTypeName != "Local" && !osgiModule>
+	@AccessControlled
 	@JSONWebService
 </#if>
 

@@ -485,7 +485,7 @@
 		<column name="recipientRoleType" type="int" />
 		<column name="recipientScript" type="String" />
 		<column name="recipientScriptLanguage" type="String" />
-		<column name="recipientScriptRequiredContexts" type="String" />
+		<column name="recipientScriptContexts" type="String" />
 		<column name="address" type="String" />
 		<column name="notificationReceptionType" type="String" />
 

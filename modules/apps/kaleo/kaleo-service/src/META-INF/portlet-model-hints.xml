@@ -269,7 +269,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="recipientScriptLanguage" type="String" />
-		<field name="recipientScriptRequiredContexts" type="String">
+		<field name="recipientScriptContexts" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="address" type="String">

@@ -50,7 +50,7 @@ public class DRLNotificationRecipientEvaluator
 		Query query = Query.createStandardQuery();
 
 		String[] recipientScriptRequiredContexts = StringUtil.split(
-			kaleoNotificationRecipient.getRecipientScriptRequiredContexts());
+			kaleoNotificationRecipient.getRecipientScriptContexts());
 
 		ClassLoader[] classLoaders = ClassLoaderUtil.getClassLoaders(
 			recipientScriptRequiredContexts);

@@ -220,7 +220,7 @@ public class ExpressionEvaluationTest {
 	public void testEvaluateWithStringConstant() throws Exception {
 		Expression<Boolean> expression =
 			_expressionFactory.createBooleanExpression(
-				"var1 == \"Life\" + \"ray\"");
+				"var1.equals(\"Life\" + \"ray\")");
 
 		expression.setStringVariableValue("var1", "Liferay");
 

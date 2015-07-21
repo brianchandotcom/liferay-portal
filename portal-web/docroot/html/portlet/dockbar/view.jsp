@@ -24,8 +24,6 @@ if (layout != null) {
 	group = layout.getGroup();
 	layoutSet = layout.getLayoutSet();
 }
-
-boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
 %>
 
 <aui:nav-bar cssClass="dockbar navbar-static-top" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">

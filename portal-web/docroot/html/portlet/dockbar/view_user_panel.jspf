@@ -15,8 +15,6 @@
 --%>
 
 <aui:nav collapsible="<%= false %>" cssClass='<%= portalMessageUseAnimation ? "nav-account-controls navbar-nav" : "nav-account-controls nav-account-controls-notice navbar-nav" %>' icon="user" id="navAccountControls">
-	<%@ include file="/html/portlet/dockbar/view_page_customization_bar.jspf" %>
-
 	<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
 		<aui:nav-item cssClass="staging-controls">
 			<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />

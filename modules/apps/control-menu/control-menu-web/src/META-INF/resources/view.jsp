@@ -111,6 +111,10 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					</li>
 				</c:if>
 
+				<c:if test="<%= user.isSetupComplete() || themeDisplay.isImpersonated() %>">
+					<%@ include file="/view_page_customization_bar.jspf" %>
+				</c:if>
+
 				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
 					<li id="<portlet:namespace />toggleControls">
 						<liferay-ui:icon

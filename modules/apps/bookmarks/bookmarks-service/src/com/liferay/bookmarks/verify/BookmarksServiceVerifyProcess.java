@@ -18,7 +18,6 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.bookmarks.service.configuration.configurator.BookmarksServiceConfigurator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -57,11 +56,6 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 		BookmarksFolderLocalService bookmarksFolderLocalService) {
 
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBookmarksServiceConfigurator(
-		BookmarksServiceConfigurator bookmarksServiceConfigurator) {
 	}
 
 	protected void updateEntryAssets() throws Exception {

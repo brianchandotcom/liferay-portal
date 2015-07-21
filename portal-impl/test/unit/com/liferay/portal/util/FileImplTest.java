@@ -30,7 +30,7 @@ public class FileImplTest {
 		String fileName = _fileImpl.appendParentheticalSuffix(
 			"test(1).jsp", "1");
 
-		Assert.assertEquals("test(1)(1).jsp", fileName);
+		Assert.assertEquals("test(1) (1).jsp", fileName);
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class FileImplTest {
 		String fileName = _fileImpl.appendParentheticalSuffix(
 			"test.jsp", "1!$eae1");
 
-		Assert.assertEquals("test(1!$eae1).jsp", fileName);
+		Assert.assertEquals("test (1!$eae1).jsp", fileName);
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class FileImplTest {
 		String fileName = _fileImpl.appendParentheticalSuffix(
 			"test.jsp", "1111111");
 
-		Assert.assertEquals("test(1111111).jsp", fileName);
+		Assert.assertEquals("test (1111111).jsp", fileName);
 	}
 
 	@Test
@@ -54,21 +54,21 @@ public class FileImplTest {
 		String fileName = _fileImpl.appendParentheticalSuffix(
 			"test.jsp", "AAAAAAA");
 
-		Assert.assertEquals("test(AAAAAAA).jsp", fileName);
+		Assert.assertEquals("test (AAAAAAA).jsp", fileName);
 	}
 
 	@Test
 	public void testAppendSuffixWithSingleNumericalValue() {
 		String fileName = _fileImpl.appendParentheticalSuffix("test.jsp", "1");
 
-		Assert.assertEquals("test(1).jsp", fileName);
+		Assert.assertEquals("test (1).jsp", fileName);
 	}
 
 	@Test
 	public void testAppendSuffixWithSingleStringValue() {
-		String fileName3 = _fileImpl.appendParentheticalSuffix("test.jsp", "A");
+		String fileName = _fileImpl.appendParentheticalSuffix("test.jsp", "A");
 
-		Assert.assertEquals("test(A).jsp", fileName3);
+		Assert.assertEquals("test (A).jsp", fileName);
 	}
 
 	@Test

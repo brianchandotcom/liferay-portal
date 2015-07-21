@@ -305,7 +305,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 *
 	 * @return the journal article image local service
 	 */
-	public JournalArticleImageLocalService getJournalArticleImageLocalService() {
+	public com.liferay.journal.service.JournalArticleImageLocalService getJournalArticleImageLocalService() {
 		return journalArticleImageLocalService;
 	}
 
@@ -315,7 +315,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @param journalArticleImageLocalService the journal article image local service
 	 */
 	public void setJournalArticleImageLocalService(
-		JournalArticleImageLocalService journalArticleImageLocalService) {
+		com.liferay.journal.service.JournalArticleImageLocalService journalArticleImageLocalService) {
 		this.journalArticleImageLocalService = journalArticleImageLocalService;
 	}
 
@@ -475,8 +475,8 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = JournalArticleImageLocalService.class)
-	protected JournalArticleImageLocalService journalArticleImageLocalService;
+	@BeanReference(type = com.liferay.journal.service.JournalArticleImageLocalService.class)
+	protected com.liferay.journal.service.JournalArticleImageLocalService journalArticleImageLocalService;
 	@BeanReference(type = JournalArticleImagePersistence.class)
 	protected JournalArticleImagePersistence journalArticleImagePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

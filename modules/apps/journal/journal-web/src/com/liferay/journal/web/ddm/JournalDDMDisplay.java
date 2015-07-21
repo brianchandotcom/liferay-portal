@@ -15,8 +15,8 @@
 package com.liferay.journal.web.ddm;
 
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;

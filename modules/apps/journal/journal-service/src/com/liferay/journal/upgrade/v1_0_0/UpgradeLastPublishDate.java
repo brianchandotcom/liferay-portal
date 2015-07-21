@@ -12,32 +12,31 @@
  * details.
  */
 
-package com.liferay.journal.web.portlet.route;
+package com.liferay.journal.upgrade.v1_0_0;
 
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Mate Thurzo
  */
-@Component(
-	immediate = true,
-	property = {
-		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
-	},
-	service = FriendlyURLMapper.class
-)
-public class JournalFriendlyURLMapper extends DefaultFriendlyURLMapper {
+public class UpgradeLastPublishDate
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
 
 	@Override
-	public String getMapping() {
-		return _MAPPING;
-	}
+	protected void doUpgrade() throws Exception {
+		runSQL("alter table JournalArticle add lastPublishDate DATE null");
 
-	private static final String _MAPPING = "journal";
+		super.updateLastPublishDates(
+			JournalPortletKeys.JOURNAL, "JournalArticle");
+
+		runSQL("alter table JournalFeed add lastPublishDate DATE null");
+
+		super.updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalFeed");
+
+		runSQL("alter table JournalFolder add lastPublishDate DATE null");
+
+		super.updateLastPublishDates(
+			JournalPortletKeys.JOURNAL, "JournalFolder");
+	}
 
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.journal.web.messaging;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.upgrade.JournalServiceUpgrade;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
-import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;

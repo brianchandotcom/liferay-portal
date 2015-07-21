@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.constants;
+package com.liferay.journal.constants;
 
 /**
  * @author Eduardo Garcia

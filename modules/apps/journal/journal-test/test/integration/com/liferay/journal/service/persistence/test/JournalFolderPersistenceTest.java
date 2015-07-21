@@ -146,6 +146,8 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setRestrictionType(RandomTestUtil.nextInt());
 
+		newJournalFolder.setLastPublishDate(RandomTestUtil.nextDate());
+
 		newJournalFolder.setStatus(RandomTestUtil.nextInt());
 
 		newJournalFolder.setStatusByUserId(RandomTestUtil.nextLong());
@@ -186,6 +188,9 @@ public class JournalFolderPersistenceTest {
 			newJournalFolder.getDescription());
 		Assert.assertEquals(existingJournalFolder.getRestrictionType(),
 			newJournalFolder.getRestrictionType());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingJournalFolder.getLastPublishDate()),
+			Time.getShortTimestamp(newJournalFolder.getLastPublishDate()));
 		Assert.assertEquals(existingJournalFolder.getStatus(),
 			newJournalFolder.getStatus());
 		Assert.assertEquals(existingJournalFolder.getStatusByUserId(),
@@ -332,8 +337,8 @@ public class JournalFolderPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentFolderId", true, "treePath", true,
 			"name", true, "description", true, "restrictionType", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -591,6 +596,8 @@ public class JournalFolderPersistenceTest {
 		journalFolder.setDescription(RandomTestUtil.randomString());
 
 		journalFolder.setRestrictionType(RandomTestUtil.nextInt());
+
+		journalFolder.setLastPublishDate(RandomTestUtil.nextDate());
 
 		journalFolder.setStatus(RandomTestUtil.nextInt());
 

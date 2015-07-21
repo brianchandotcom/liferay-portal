@@ -14,11 +14,11 @@
 
 package com.liferay.journal.web.portlet.action;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.ArticleIdException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.service.JournalArticleServiceUtil;
-import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;

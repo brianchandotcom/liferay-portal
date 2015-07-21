@@ -628,27 +628,42 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testray-case-defect">
+		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="known.issues" />
+				</then>
+			</if>
+
+			<condition property="testray.case.defect" value="${known.issues}" else="">
+				<isset property="known.issues" />
+			</condition>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testray-components">
 		<sequential>
-			<property file="${basedir}/test.run.properties" />
-
 			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="testray.component.names" />
+					<get-testcase-property property.name="testray.main.component.name" />
+				</then>
+			</if>
+
+			<condition property="testray.main.component.name" value="">
 				<not>
 					<isset property="testray.main.component.name" />
 				</not>
-				<then>
-					<property name="testray.main.component.name" value="" />
-				</then>
-			</if>
+			</condition>
 
-			<if>
+			<condition property="testray.component.names" value="${testray.main.component.name}">
 				<not>
 					<isset property="testray.component.names" />
 				</not>
-				<then>
-					<property name="testray.component.names" value="${testray.main.component.name}" />
-				</then>
-			</if>
+			</condition>
 		</sequential>
 	</macrodef>
 
@@ -757,6 +772,68 @@ jdbc.default.password=${database.password}]]></echo>
 					}
 				]]>
 			</script>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-description">
+		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="description" />
+				</then>
+			</if>
+
+			<condition property="testray.testcase.description" value="${description}" else="">
+				<isset property="description" />
+			</condition>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-name">
+		<sequential>
+			<var name="testray.testcase.name" unset="true" />
+
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-poshi-test-name />
+
+					<property name="testray.testcase.name" value="${poshi.test.name}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-priority">
+		<sequential>
+			<var name="testray.testcase.priority" unset="true" />
+
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="priority" />
+
+					<property name="testray.testcase.priority" value="${priority}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-product-edition">
+		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="testray.testcase.product.edition" />
+				</then>
+			</if>
+
+			<condition property="testray.testcase.product.edition" value="CE">
+				<not>
+					<isset property="testray.testcase.product.edition" />
+				</not>
+			</condition>
 		</sequential>
 	</macrodef>
 
@@ -2187,24 +2264,16 @@ go]]></replacevalue>
 		<get-env-java-jdk />
 		<get-env-liferay-portal />
 		<get-env-operating-system />
-
-		<if>
-			<isset property="test.class" />
-			<then>
-				<get-testcase-property property.name="testray.component.names" />
-				<get-testcase-property property.name="testray.main.component.name" />
-				<get-testcase-property property.name="testray.testcase.description" />
-				<get-testcase-property property.name="testray.testcase.name" />
-				<get-testcase-property property.name="testray.testcase.priority" />
-				<get-testcase-property property.name="testray.testcase.product.edition" />
-			</then>
-		</if>
-
+		<get-testray-case-defect />
 		<get-testray-components />
 		<get-testray-logs />
 		<get-testray-project-name />
 		<get-testray-run-id />
 		<get-testray-team-name />
+		<get-testray-testcase-description />
+		<get-testray-testcase-name />
+		<get-testray-testcase-priority />
+		<get-testray-testcase-product-edition />
 
 		<if>
 			<isset property="env.TEST_BUILD_FIX_PACK_NAME" />
@@ -2245,6 +2314,7 @@ go]]></replacevalue>
 		<property name="test.case.properties">
 			<![CDATA[
 				<properties>
+					<property name="testray.case.defect" value="${testray.case.defect}" />
 					<property name="testray.component.names" value="${testray.component.names}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
 					<property name="testray.team.name" value="${testray.team.name}" />

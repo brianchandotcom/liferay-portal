@@ -750,8 +750,8 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isIgnorableErrorLine(String line) throws Exception {
-		if (Validator.isNotNull(PropsValues.IGNORE_ERRORS_FILE_PATH)) {
-			String content = FileUtil.read(PropsValues.IGNORE_ERRORS_FILE_PATH);
+		if (Validator.isNotNull(PropsValues.IGNORE_ERRORS_FILE_NAME)) {
+			String content = FileUtil.read(PropsValues.IGNORE_ERRORS_FILE_NAME);
 
 			InputStream inputStream = new ByteArrayInputStream(
 				content.getBytes("UTF-8"));

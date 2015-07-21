@@ -69,8 +69,8 @@ public class PropsValues {
 	public static final String IGNORE_ERRORS_DELIMITER = PropsUtil.get(
 		"ignore.errors.delimiter");
 
-	public static final String IGNORE_ERRORS_FILE_PATH = PropsUtil.get(
-		"ignore.errors.file.path");
+	public static final String IGNORE_ERRORS_FILE_NAME = PropsUtil.get(
+		"ignore.errors.file.name");
 
 	public static final String LIFERAY_HOME = PropsUtil.get("liferay.home");
 

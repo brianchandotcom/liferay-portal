@@ -16,6 +16,7 @@ package com.liferay.journal.upgrade;
 
 import com.liferay.journal.service.configuration.configurator.JournalServiceConfigurator;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -67,6 +68,8 @@ public class JournalServiceUpgrade {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradeClassNames());
+
+		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);

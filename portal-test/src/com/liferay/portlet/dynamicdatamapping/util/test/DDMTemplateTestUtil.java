@@ -55,10 +55,10 @@ public class DDMTemplateTestUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		return DDMTemplateManagerUtil.addTemplate(TestPropsValues.getUserId(),
-			groupId, classNameId, classPK, 0l, null, nameMap, null,
-			DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null, language, script,
-			false, false, null, null, serviceContext);
+		return DDMTemplateManagerUtil.addTemplate(
+			TestPropsValues.getUserId(), groupId, classNameId, classPK, 0l,
+			null, nameMap, null, DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null,
+			language, script, false, false, null, null, serviceContext);
 	}
 
 	public static String getSampleTemplateXSL() {

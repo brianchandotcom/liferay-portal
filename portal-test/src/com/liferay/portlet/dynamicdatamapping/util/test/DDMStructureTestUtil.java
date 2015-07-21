@@ -63,10 +63,10 @@ public class DDMStructureTestUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		return DDMStructureManagerUtil.addStructure(TestPropsValues.getUserId(),
-			groupId, parentStructureId, PortalUtil.getClassNameId(className),
-			null, nameMap, null, ddmForm, ddmFormLayout,
-			StorageType.JSON.toString(),
+		return DDMStructureManagerUtil.addStructure(
+			TestPropsValues.getUserId(), groupId, parentStructureId,
+			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm,
+			ddmFormLayout, StorageType.JSON.toString(),
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
 	}
 

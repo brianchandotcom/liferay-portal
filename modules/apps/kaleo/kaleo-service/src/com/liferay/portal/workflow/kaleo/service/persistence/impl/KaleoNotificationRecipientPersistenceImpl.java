@@ -1927,7 +1927,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 		kaleoNotificationRecipientImpl.setRecipientRoleType(kaleoNotificationRecipient.getRecipientRoleType());
 		kaleoNotificationRecipientImpl.setRecipientScript(kaleoNotificationRecipient.getRecipientScript());
 		kaleoNotificationRecipientImpl.setRecipientScriptLanguage(kaleoNotificationRecipient.getRecipientScriptLanguage());
-		kaleoNotificationRecipientImpl.setRecipientScriptRequiredContexts(kaleoNotificationRecipient.getRecipientScriptRequiredContexts());
+		kaleoNotificationRecipientImpl.setRecipientScriptContexts(kaleoNotificationRecipient.getRecipientScriptContexts());
 		kaleoNotificationRecipientImpl.setAddress(kaleoNotificationRecipient.getAddress());
 		kaleoNotificationRecipientImpl.setNotificationReceptionType(kaleoNotificationRecipient.getNotificationReceptionType());
 

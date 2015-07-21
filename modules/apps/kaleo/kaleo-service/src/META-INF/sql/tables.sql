@@ -174,7 +174,7 @@ create table KaleoNotificationRecipient (
 	recipientRoleType INTEGER,
 	recipientScript TEXT null,
 	recipientScriptLanguage VARCHAR(75) null,
-	recipientScriptRequiredContexts STRING null,
+	recipientScriptContexts STRING null,
 	address VARCHAR(255) null,
 	notificationReceptionType VARCHAR(3) null
 );

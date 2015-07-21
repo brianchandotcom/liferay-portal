@@ -144,7 +144,7 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		newKaleoNotificationRecipient.setRecipientScriptLanguage(RandomTestUtil.randomString());
 
-		newKaleoNotificationRecipient.setRecipientScriptRequiredContexts(RandomTestUtil.randomString());
+		newKaleoNotificationRecipient.setRecipientScriptContexts(RandomTestUtil.randomString());
 
 		newKaleoNotificationRecipient.setAddress(RandomTestUtil.randomString());
 
@@ -187,8 +187,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 			newKaleoNotificationRecipient.getRecipientScript());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientScriptLanguage(),
 			newKaleoNotificationRecipient.getRecipientScriptLanguage());
-		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientScriptRequiredContexts(),
-			newKaleoNotificationRecipient.getRecipientScriptRequiredContexts());
+		Assert.assertEquals(existingKaleoNotificationRecipient.getRecipientScriptContexts(),
+			newKaleoNotificationRecipient.getRecipientScriptContexts());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getAddress(),
 			newKaleoNotificationRecipient.getAddress());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getNotificationReceptionType(),
@@ -247,7 +247,7 @@ public class KaleoNotificationRecipientPersistenceTest {
 			"kaleoNotificationId", true, "recipientClassName", true,
 			"recipientClassPK", true, "recipientRoleType", true,
 			"recipientScript", true, "recipientScriptLanguage", true,
-			"recipientScriptRequiredContexts", true, "address", true,
+			"recipientScriptContexts", true, "address", true,
 			"notificationReceptionType", true);
 	}
 
@@ -494,7 +494,7 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		kaleoNotificationRecipient.setRecipientScriptLanguage(RandomTestUtil.randomString());
 
-		kaleoNotificationRecipient.setRecipientScriptRequiredContexts(RandomTestUtil.randomString());
+		kaleoNotificationRecipient.setRecipientScriptContexts(RandomTestUtil.randomString());
 
 		kaleoNotificationRecipient.setAddress(RandomTestUtil.randomString());
 

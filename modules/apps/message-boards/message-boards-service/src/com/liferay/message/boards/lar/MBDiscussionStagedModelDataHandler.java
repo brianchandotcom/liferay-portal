@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -31,13 +31,14 @@ import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -50,7 +51,7 @@ public class MBDiscussionStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MBDiscussion discussion) {
-		MBDiscussionLocalServiceUtil.deleteMBDiscussion(discussion);
+		_mbDiscussionLocalService.deleteMBDiscussion(discussion);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class MBDiscussionStagedModelDataHandler
 	public MBDiscussion fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return MBDiscussionLocalServiceUtil.fetchMBDiscussionByUuidAndGroupId(
+		return _mbDiscussionLocalService.fetchMBDiscussionByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -77,7 +78,7 @@ public class MBDiscussionStagedModelDataHandler
 	public List<MBDiscussion> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MBDiscussionLocalServiceUtil.getMBDiscussionsByUuidAndCompanyId(
+		return _mbDiscussionLocalService.getMBDiscussionsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MBDiscussion>());
 	}
@@ -90,7 +91,7 @@ public class MBDiscussionStagedModelDataHandler
 	@Override
 	public String getDisplayName(MBDiscussion discussion) {
 		try {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 				discussion.getClassName(), discussion.getClassPK());
 
 			return assetEntry.getTitleCurrentValue();
@@ -129,7 +130,7 @@ public class MBDiscussionStagedModelDataHandler
 			relatedClassPKs, discussion.getClassPK(), discussion.getClassPK());
 
 		MBDiscussion existingDiscussion =
-			MBDiscussionLocalServiceUtil.fetchDiscussion(
+			_mbDiscussionLocalService.fetchDiscussion(
 				discussion.getClassName(), newClassPK);
 
 		if (existingDiscussion == null) {
@@ -137,13 +138,13 @@ public class MBDiscussionStagedModelDataHandler
 				PropsValues.LAYOUT_COMMENTS_ENABLED) {
 
 				MBMessage rootMessage =
-					MBMessageLocalServiceUtil.addDiscussionMessage(
+					_mbMessageLocalService.addDiscussionMessage(
 						userId, discussion.getUserName(),
 						portletDataContext.getScopeGroupId(), className,
 						newClassPK, WorkflowConstants.ACTION_PUBLISH);
 
 				existingDiscussion =
-					MBDiscussionLocalServiceUtil.getThreadDiscussion(
+					_mbDiscussionLocalService.getThreadDiscussion(
 						rootMessage.getThreadId());
 			}
 			else {
@@ -165,5 +166,30 @@ public class MBDiscussionStagedModelDataHandler
 		threadIds.put(
 			discussion.getThreadId(), existingDiscussion.getThreadId());
 	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private MBDiscussionLocalService _mbDiscussionLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

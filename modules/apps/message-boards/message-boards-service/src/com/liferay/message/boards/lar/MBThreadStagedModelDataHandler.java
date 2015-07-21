@@ -19,11 +19,12 @@ import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -36,7 +37,7 @@ public class MBThreadStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MBThread thread) throws PortalException {
-		MBThreadLocalServiceUtil.deleteThread(thread);
+		_mbThreadLocalService.deleteThread(thread);
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class MBThreadStagedModelDataHandler
 	public MBThread fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return MBThreadLocalServiceUtil.fetchMBThreadByUuidAndGroupId(
+		return _mbThreadLocalService.fetchMBThreadByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -63,7 +64,7 @@ public class MBThreadStagedModelDataHandler
 	public List<MBThread> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MBThreadLocalServiceUtil.getMBThreadsByUuidAndCompanyId(
+		return _mbThreadLocalService.getMBThreadsByUuidAndCompanyId(
 			uuid, companyId);
 	}
 
@@ -83,5 +84,14 @@ public class MBThreadStagedModelDataHandler
 			PortletDataContext portletDataContext, MBThread thread)
 		throws Exception {
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

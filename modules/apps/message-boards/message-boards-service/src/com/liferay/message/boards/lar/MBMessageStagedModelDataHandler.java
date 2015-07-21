@@ -41,11 +41,11 @@ import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
 
 import java.io.InputStream;
 
@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -67,7 +68,7 @@ public class MBMessageStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MBMessage message) throws PortalException {
-		MBMessageLocalServiceUtil.deleteMessage(message);
+		_mbMessageLocalService.deleteMessage(message);
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class MBMessageStagedModelDataHandler
 	public MBMessage fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+		return _mbMessageLocalService.fetchMBMessageByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -94,7 +95,7 @@ public class MBMessageStagedModelDataHandler
 	public List<MBMessage> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MBMessageLocalServiceUtil.getMBMessagesByUuidAndCompanyId(
+		return _mbMessageLocalService.getMBMessagesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MBMessage>());
 	}
@@ -115,22 +116,22 @@ public class MBMessageStagedModelDataHandler
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBDiscussion discussion =
-			MBDiscussionLocalServiceUtil.getThreadDiscussion(threadId);
+		MBDiscussion discussion = _mbDiscussionLocalService.getThreadDiscussion(
+			threadId);
 
 		MBMessage importedMessage = null;
 
 		if (!message.isRoot()) {
-			importedMessage = MBMessageLocalServiceUtil.addDiscussionMessage(
+			importedMessage = _mbMessageLocalService.addDiscussionMessage(
 				userId, message.getUserName(),
 				portletDataContext.getScopeGroupId(), discussion.getClassName(),
 				discussion.getClassPK(), threadId, parentMessageId,
 				message.getSubject(), message.getBody(), serviceContext);
 		}
 		else {
-			MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
+			MBThread thread = _mbThreadLocalService.getThread(threadId);
 
-			importedMessage = MBMessageLocalServiceUtil.getMBMessage(
+			importedMessage = _mbMessageLocalService.getMBMessage(
 				thread.getRootMessageId());
 		}
 
@@ -143,9 +144,8 @@ public class MBMessageStagedModelDataHandler
 		throws Exception {
 
 		if (message.isDiscussion()) {
-			MBDiscussion discussion =
-				MBDiscussionLocalServiceUtil.getDiscussion(
-					message.getClassName(), message.getClassPK());
+			MBDiscussion discussion = _mbDiscussionLocalService.getDiscussion(
+				message.getClassName(), message.getClassPK());
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, message, discussion,
@@ -155,7 +155,7 @@ public class MBMessageStagedModelDataHandler
 			// automatically because of the special class name and class PK pair
 
 			List<RatingsEntry> ratingsEntries =
-				RatingsEntryLocalServiceUtil.getEntries(
+				_ratingsEntryLocalService.getEntries(
 					MBDiscussion.class.getName(), message.getMessageId());
 
 			for (RatingsEntry ratingsEntry : ratingsEntries) {
@@ -173,7 +173,7 @@ public class MBMessageStagedModelDataHandler
 		}
 
 		if (!message.isRoot()) {
-			MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
+			MBMessage parentMessage = _mbMessageLocalService.getMessage(
 				message.getParentMessageId());
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -251,7 +251,7 @@ public class MBMessageStagedModelDataHandler
 			String threadUuid = messageElement.attributeValue("threadUuid");
 
 			MBThread thread =
-				MBThreadLocalServiceUtil.fetchMBThreadByUuidAndGroupId(
+				_mbThreadLocalService.fetchMBThreadByUuidAndGroupId(
 					threadUuid, portletDataContext.getScopeGroupId());
 
 			if (thread != null) {
@@ -289,7 +289,7 @@ public class MBMessageStagedModelDataHandler
 							parentMessageId, message, serviceContext);
 					}
 					else {
-						importedMessage = MBMessageLocalServiceUtil.addMessage(
+						importedMessage = _mbMessageLocalService.addMessage(
 							userId, message.getUserName(),
 							portletDataContext.getScopeGroupId(),
 							parentCategoryId, threadId, parentMessageId,
@@ -302,24 +302,23 @@ public class MBMessageStagedModelDataHandler
 				else {
 					if (!message.isRoot() && message.isDiscussion()) {
 						MBDiscussion discussion =
-							MBDiscussionLocalServiceUtil.getThreadDiscussion(
+							_mbDiscussionLocalService.getThreadDiscussion(
 								threadId);
 
 						importedMessage =
-							MBMessageLocalServiceUtil.updateDiscussionMessage(
+							_mbMessageLocalService.updateDiscussionMessage(
 								userId, existingMessage.getMessageId(),
 								discussion.getClassName(),
 								discussion.getClassPK(), message.getSubject(),
 								message.getBody(), serviceContext);
 					}
 					else {
-						importedMessage =
-							MBMessageLocalServiceUtil.updateMessage(
-								userId, existingMessage.getMessageId(),
-								message.getSubject(), message.getBody(),
-								inputStreamOVPs, new ArrayList<String>(),
-								message.getPriority(),
-								message.getAllowPingbacks(), serviceContext);
+						importedMessage = _mbMessageLocalService.updateMessage(
+							userId, existingMessage.getMessageId(),
+							message.getSubject(), message.getBody(),
+							inputStreamOVPs, new ArrayList<String>(),
+							message.getPriority(), message.getAllowPingbacks(),
+							serviceContext);
 					}
 				}
 			}
@@ -330,7 +329,7 @@ public class MBMessageStagedModelDataHandler
 						message, serviceContext);
 				}
 				else {
-					importedMessage = MBMessageLocalServiceUtil.addMessage(
+					importedMessage = _mbMessageLocalService.addMessage(
 						userId, message.getUserName(),
 						portletDataContext.getScopeGroupId(), parentCategoryId,
 						threadId, parentMessageId, message.getSubject(),
@@ -340,11 +339,11 @@ public class MBMessageStagedModelDataHandler
 				}
 			}
 
-			MBMessageLocalServiceUtil.updateAnswer(
+			_mbMessageLocalService.updateAnswer(
 				importedMessage, message.isAnswer(), false);
 
 			if (importedMessage.isRoot() && !importedMessage.isDiscussion()) {
-				MBThreadLocalServiceUtil.updateQuestion(
+				_mbThreadLocalService.updateQuestion(
 					importedMessage.getThreadId(),
 					GetterUtil.getBoolean(
 						messageElement.attributeValue("question")));
@@ -367,7 +366,7 @@ public class MBMessageStagedModelDataHandler
 
 			thread.setUuid(messageElement.attributeValue("threadUuid"));
 
-			MBThreadLocalServiceUtil.updateMBThread(thread);
+			_mbThreadLocalService.updateMBThread(thread);
 
 			portletDataContext.importClassedModel(message, importedMessage);
 		}
@@ -485,7 +484,40 @@ public class MBMessageStagedModelDataHandler
 		return inputStreamOVPs;
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRatingsEntryLocalService(
+		RatingsEntryLocalService ratingsEntryLocalService) {
+
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageStagedModelDataHandler.class);
+
+	private MBDiscussionLocalService _mbDiscussionLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
+	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

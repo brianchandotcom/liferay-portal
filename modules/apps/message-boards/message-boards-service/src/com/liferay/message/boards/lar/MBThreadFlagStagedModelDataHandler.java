@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -32,14 +32,15 @@ import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadFlagLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -52,7 +53,7 @@ public class MBThreadFlagStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MBThreadFlag threadFlag) {
-		MBThreadFlagLocalServiceUtil.deleteThreadFlag(threadFlag);
+		_mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class MBThreadFlagStagedModelDataHandler
 	public MBThreadFlag fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return MBThreadFlagLocalServiceUtil.fetchMBThreadFlagByUuidAndGroupId(
+		return _mbThreadFlagLocalService.fetchMBThreadFlagByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -79,7 +80,7 @@ public class MBThreadFlagStagedModelDataHandler
 	public List<MBThreadFlag> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MBThreadFlagLocalServiceUtil.getMBThreadFlagsByUuidAndCompanyId(
+		return _mbThreadFlagLocalService.getMBThreadFlagsByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MBThreadFlag>());
 	}
@@ -94,10 +95,10 @@ public class MBThreadFlagStagedModelDataHandler
 			PortletDataContext portletDataContext, MBThreadFlag threadFlag)
 		throws Exception {
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(
+		MBThread thread = _mbThreadLocalService.getThread(
 			threadFlag.getThreadId());
 
-		MBMessage rootMessage = MBMessageLocalServiceUtil.getMessage(
+		MBMessage rootMessage = _mbMessageLocalService.getMessage(
 			thread.getRootMessageId());
 
 		if ((rootMessage.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
@@ -126,7 +127,7 @@ public class MBThreadFlagStagedModelDataHandler
 			PortletDataContext portletDataContext, MBThreadFlag threadFlag)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
+		User user = _userLocalService.fetchUserByUuidAndCompanyId(
 			threadFlag.getUserUuid(), portletDataContext.getCompanyId());
 
 		if (user == null) {
@@ -155,7 +156,7 @@ public class MBThreadFlagStagedModelDataHandler
 		long threadId = MapUtil.getLong(
 			threadIds, threadFlag.getThreadId(), threadFlag.getThreadId());
 
-		MBThread thread = MBThreadLocalServiceUtil.fetchThread(threadId);
+		MBThread thread = _mbThreadLocalService.fetchThread(threadId);
 
 		if (thread == null) {
 			return;
@@ -166,8 +167,39 @@ public class MBThreadFlagStagedModelDataHandler
 
 		serviceContext.setUuid(threadFlag.getUuid());
 
-		MBThreadFlagLocalServiceUtil.addThreadFlag(
+		_mbThreadFlagLocalService.addThreadFlag(
 			user.getUserId(), thread, serviceContext);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadFlagLocalService(
+		MBThreadFlagLocalService mbThreadFlagLocalService) {
+
+		_mbThreadFlagLocalService = mbThreadFlagLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBThreadFlagLocalService _mbThreadFlagLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
+	private UserLocalService _userLocalService;
 
 }

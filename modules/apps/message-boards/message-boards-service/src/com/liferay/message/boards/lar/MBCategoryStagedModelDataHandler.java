@@ -28,12 +28,13 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
 
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -46,7 +47,7 @@ public class MBCategoryStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MBCategory category) throws PortalException {
-		MBCategoryLocalServiceUtil.deleteCategory(category);
+		_mbCategoryLocalService.deleteCategory(category);
 	}
 
 	@Override
@@ -65,7 +66,7 @@ public class MBCategoryStagedModelDataHandler
 	public MBCategory fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
+		return _mbCategoryLocalService.fetchMBCategoryByUuidAndGroupId(
 			uuid, groupId);
 	}
 
@@ -73,7 +74,7 @@ public class MBCategoryStagedModelDataHandler
 	public List<MBCategory> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MBCategoryLocalServiceUtil.getMBCategoriesByUuidAndCompanyId(
+		return _mbCategoryLocalService.getMBCategoriesByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MBCategory>());
 	}
@@ -162,7 +163,7 @@ public class MBCategoryStagedModelDataHandler
 			if (existingCategory == null) {
 				serviceContext.setUuid(category.getUuid());
 
-				importedCategory = MBCategoryLocalServiceUtil.addCategory(
+				importedCategory = _mbCategoryLocalService.addCategory(
 					userId, parentCategoryId, category.getName(),
 					category.getDescription(), category.getDisplayStyle(),
 					emailAddress, inProtocol, inServerName, inServerPort,
@@ -172,7 +173,7 @@ public class MBCategoryStagedModelDataHandler
 					mailingListActive, serviceContext);
 			}
 			else {
-				importedCategory = MBCategoryLocalServiceUtil.updateCategory(
+				importedCategory = _mbCategoryLocalService.updateCategory(
 					existingCategory.getCategoryId(), parentCategoryId,
 					category.getName(), category.getDescription(),
 					category.getDisplayStyle(), emailAddress, inProtocol,
@@ -184,7 +185,7 @@ public class MBCategoryStagedModelDataHandler
 			}
 		}
 		else {
-			importedCategory = MBCategoryLocalServiceUtil.addCategory(
+			importedCategory = _mbCategoryLocalService.addCategory(
 				userId, parentCategoryId, category.getName(),
 				category.getDescription(), category.getDisplayStyle(),
 				emailAddress, inProtocol, inServerName, inServerPort, inUseSSL,
@@ -217,5 +218,14 @@ public class MBCategoryStagedModelDataHandler
 				userId, existingCategory.getCategoryId());
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

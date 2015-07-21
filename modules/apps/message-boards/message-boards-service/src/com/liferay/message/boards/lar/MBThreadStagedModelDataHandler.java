@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.lar;
+package com.liferay.message.boards.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;

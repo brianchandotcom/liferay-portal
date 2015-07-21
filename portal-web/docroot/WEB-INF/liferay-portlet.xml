@@ -92,12 +92,6 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>message_boards</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/messageboards/message-boards-friendly-url-routes.xml</friendly-url-routes>
-		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBBanStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBCategoryStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBDiscussionStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBMessageStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBThreadFlagStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBThreadStagedModelDataHandler</staged-model-data-handler-class>
 		<pop-message-listener-class>com.liferay.portlet.messageboards.pop.MessageListenerImpl</pop-message-listener-class>
 		<social-activity-interpreter-class>com.liferay.portlet.messageboards.social.MBMessageActivityInterpreter</social-activity-interpreter-class>
 		<social-activity-interpreter-class>com.liferay.portlet.messageboards.social.MBThreadActivityInterpreter</social-activity-interpreter-class>

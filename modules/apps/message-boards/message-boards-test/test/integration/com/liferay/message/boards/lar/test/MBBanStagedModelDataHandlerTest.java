@@ -12,26 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.lar;
+package com.liferay.message.boards.lar.test;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
+import com.liferay.portlet.messageboards.model.MBBan;
+import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +39,7 @@ import org.junit.Rule;
 /**
  * @author Daniel Kocsis
  */
-public class MBCategoryStagedModelDataHandlerTest
+public class MBBanStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -53,80 +50,57 @@ public class MBCategoryStagedModelDataHandlerTest
 			TransactionalTestRule.INSTANCE);
 
 	@Override
-	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
-			Group group)
-		throws Exception {
-
-		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<>();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
-		MBCategory category = MBCategoryServiceUtil.addCategory(
-			TestPropsValues.getUserId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, MBCategory.class, category);
-
-		return dependentStagedModelsMap;
-	}
-
-	@Override
 	protected StagedModel addStagedModel(
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBCategory.class.getSimpleName());
-
-		MBCategory category = (MBCategory)dependentStagedModels.get(0);
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		return MBCategoryServiceUtil.addCategory(
-				TestPropsValues.getUserId(), category.getCategoryId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
+		User user = UserTestUtil.addUser(TestPropsValues.getGroupId());
+
+		return MBBanLocalServiceUtil.addBan(
+			TestPropsValues.getUserId(), user.getUserId(), serviceContext);
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
+		List<MBBan> bans = null;
+
 		try {
-			return MBCategoryLocalServiceUtil.getMBCategoryByUuidAndGroupId(
-				uuid, group.getGroupId());
+			bans = MBBanLocalServiceUtil.getBans(group.getGroupId(), 0, 1);
+
+			if (!bans.isEmpty()) {
+				return bans.get(0);
+			}
 		}
 		catch (Exception e) {
-			return null;
 		}
+
+		return null;
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return MBCategory.class;
+		return MBBan.class;
 	}
 
 	@Override
 	protected void validateImport(
+			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
 
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBCategory.class.getSimpleName());
+		super.validateImport(
+			stagedModel, stagedModelAssets, dependentStagedModelsMap, group);
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		MBBan ban = (MBBan)stagedModel;
+		MBBan importedBan = (MBBan)getStagedModel(stagedModel.getUuid(), group);
 
-		MBCategory category = (MBCategory)dependentStagedModels.get(0);
-
-		MBCategoryLocalServiceUtil.getMBCategoryByUuidAndGroupId(
-			category.getUuid(), group.getGroupId());
+		Assert.assertEquals(ban.getBanUserUuid(), importedBan.getBanUserUuid());
 	}
 
 }

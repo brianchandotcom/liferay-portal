@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.lar;
+package com.liferay.message.boards.lar.test;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThreadFlag;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +42,7 @@ import org.junit.Rule;
 /**
  * @author Daniel Kocsis
  */
-public class MBThreadFlagStagedModelDataHandlerTest
+public class MBCategoryStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -64,45 +64,52 @@ public class MBThreadFlagStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		MBCategory category = MBCategoryServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		addDependentStagedModel(
-			dependentStagedModelsMap, MBMessage.class, message);
+			dependentStagedModelsMap, MBCategory.class, category);
 
 		return dependentStagedModelsMap;
 	}
 
 	@Override
 	protected StagedModel addStagedModel(
-			Group group, Map<String,
-			List<StagedModel>> dependentStagedModelsMap)
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getSimpleName());
+			MBCategory.class.getSimpleName());
 
-		MBMessage message = (MBMessage)dependentStagedModels.get(0);
+		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		return MBThreadFlagLocalServiceUtil.addThreadFlag(
-			TestPropsValues.getUserId(), message.getThread(), serviceContext);
+		return MBCategoryServiceUtil.addCategory(
+				TestPropsValues.getUserId(), category.getCategoryId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				serviceContext);
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
-		return null;
+		try {
+			return MBCategoryLocalServiceUtil.getMBCategoryByUuidAndGroupId(
+				uuid, group.getGroupId());
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return MBThreadFlag.class;
+		return MBCategory.class;
 	}
 
 	@Override
@@ -112,35 +119,14 @@ public class MBThreadFlagStagedModelDataHandlerTest
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getSimpleName());
+			MBCategory.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 
-		MBMessage message = (MBMessage)dependentStagedModels.get(0);
+		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 
-		MBMessageLocalServiceUtil.getMBMessageByUuidAndGroupId(
-			message.getUuid(), group.getGroupId());
-	}
-
-	@Override
-	protected void validateImport(
-			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
-			Map<String, List<StagedModel>> dependentStagedModelsMap,
-			Group group)
-		throws Exception {
-
-		validateImport(dependentStagedModelsMap, group);
-
-		MBThreadFlag threadFlag = (MBThreadFlag)stagedModel;
-
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			MBMessage.class.getSimpleName());
-
-		MBMessage message = (MBMessage)dependentStagedModels.get(0);
-
-		Assert.assertTrue(
-			MBThreadFlagLocalServiceUtil.hasThreadFlag(
-				threadFlag.getUserId(), message.getThread()));
+		MBCategoryLocalServiceUtil.getMBCategoryByUuidAndGroupId(
+			category.getUuid(), group.getGroupId());
 	}
 
 }

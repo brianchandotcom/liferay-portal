@@ -42,4 +42,11 @@ public class ExceedMaxLineLength {
 	)
 	public String[] restrictedClasses();
 
+	public void thisIsAMethodWithAnIncrediblyLongNameAndWillThereforeGoOverTheMaxLineLength1() {
+	}
+
+	public void
+		thisIsAMethodWithAnIncrediblyLongNameAndWillThereforeGoOverTheMaxLineLength2() {
+	}
+
 }

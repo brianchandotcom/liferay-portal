@@ -72,7 +72,8 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigNotTransformedWhenEditorConfigTransformerIsRegisteredToOtherEditorName()
+	public void
+			testEditorConfigNotTransformedWhenEditorConfigTransformerIsRegisteredToOtherEditorName()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -122,7 +123,8 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigNotTransformedWhenNoEditorConfigTransformerIsRegistered()
+	public void
+			testEditorConfigNotTransformedWhenNoEditorConfigTransformerIsRegistered()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();

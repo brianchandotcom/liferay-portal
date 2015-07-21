@@ -207,7 +207,8 @@ public class WikiPageDependentsTrashHandlerTest {
 	}
 
 	@Test
-	public void testMoveExplicitlyParentPageAndChildPageAndRedirectorPageToTrash()
+	public void
+			testMoveExplicitlyParentPageAndChildPageAndRedirectorPageToTrash()
 		throws Exception {
 
 		RelatedPages relatedPages = buildRelatedPages();
@@ -745,7 +746,8 @@ public class WikiPageDependentsTrashHandlerTest {
 	}
 
 	@Test
-	public void testRestoreExplicitlyTrashedParentPageWithRedirectorPageToTrash()
+	public void
+			testRestoreExplicitlyTrashedParentPageWithRedirectorPageToTrash()
 		throws Exception {
 
 		RelatedPages relatedPages = buildRelatedPages();

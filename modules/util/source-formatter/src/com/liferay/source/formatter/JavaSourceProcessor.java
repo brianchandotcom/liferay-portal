@@ -1895,19 +1895,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								lineCount) &&
 							!isAnnotationParameter(content, trimmedLine)) {
 
-							String truncateLongLinesContent =
-								getTruncateLongLinesContent(
-									content, line, trimmedLine, lineCount);
+							matcher = _longLinePattern.matcher(trimmedLine);
 
-							if ((truncateLongLinesContent != null) &&
-								!truncateLongLinesContent.equals(content)) {
+							if (!matcher.find()) {
+								String truncateLongLinesContent =
+									getTruncateLongLinesContent(
+										content, line, trimmedLine, lineCount);
 
-								return truncateLongLinesContent;
+								if ((truncateLongLinesContent != null) &&
+									!truncateLongLinesContent.equals(content)) {
+
+									return truncateLongLinesContent;
+								}
+
+								processErrorMessage(
+									fileName,
+									"> 80: " + fileName + " " + lineCount);
 							}
-
-							processErrorMessage(
-								fileName,
-								"> 80: " + fileName + " " + lineCount);
 						}
 					}
 					else {
@@ -2651,7 +2655,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		for (x = 0;;) {
 			x = line.indexOf(CharPool.OPEN_PARENTHESIS, x + 1);
 
-			if (x == -1) {
+			if ((x == -1) ||
+				(line.charAt(x + 1) == CharPool.CLOSE_PARENTHESIS)) {
+
 				break;
 			}
 
@@ -3218,6 +3224,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
+	private Pattern _longLinePattern = Pattern.compile(
+		"^[_a-zA-Z0-9-]+[\\(\\),;\\.]*( \\{)*$");
 	private Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
 	private List<String> _proxyExclusionFiles;

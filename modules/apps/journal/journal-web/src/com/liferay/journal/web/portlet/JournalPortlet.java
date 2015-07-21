@@ -15,6 +15,7 @@
 package com.liferay.journal.web.portlet;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.exception.ArticleContentSizeException;
@@ -49,7 +50,6 @@ import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.service.configuration.configurator.JournalServiceConfigurator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
-import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.journal.web.upgrade.JournalWebUpgrade;
 import com.liferay.journal.web.util.JournalRSSUtil;

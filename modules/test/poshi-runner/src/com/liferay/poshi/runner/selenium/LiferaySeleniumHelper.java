@@ -768,26 +768,27 @@ public class LiferaySeleniumHelper {
 			for (Element ignoreErrorElement : ignoreErrorElements) {
 				Element containsElement = ignoreErrorElement.element(
 					"contains");
-
 				Element matchesElement = ignoreErrorElement.element("matches");
 
-				String partialMessage = containsElement.getText();
-				String regex = matchesElement.getText();
+				String containsText = containsElement.getText();
+				String matchesText = matchesElement.getText();
 
-				if (Validator.isNotNull(partialMessage) &&
-					Validator.isNotNull(regex)) {
+				if (Validator.isNotNull(containsText) &&
+					Validator.isNotNull(matchesText)) {
 
-					if (line.matches(regex) && line.contains(partialMessage)) {
+					if (line.contains(containsText) &&
+						line.matches(matchesText)) {
+
 						return true;
 					}
 				}
-				else if (Validator.isNotNull(partialMessage)) {
-					if (line.contains(partialMessage)) {
+				else if (Validator.isNotNull(containsText)) {
+					if (line.contains(containsText)) {
 						return true;
 					}
 				}
-				else if (Validator.isNotNull(regex)) {
-					if (line.matches(regex)) {
+				else if (Validator.isNotNull(matchesText)) {
+					if (line.matches(matchesText)) {
 						return true;
 					}
 				}

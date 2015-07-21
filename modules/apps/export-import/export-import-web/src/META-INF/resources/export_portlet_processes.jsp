@@ -91,50 +91,30 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 			<%
 			List<FileEntry> attachmentsFileEntries = backgroundTask.getAttachmentsFileEntries();
+
+			for (FileEntry fileEntry : attachmentsFileEntries) {
 			%>
 
-			<c:choose>
-				<c:when test="<%= !attachmentsFileEntries.isEmpty() %>">
+				<%
+				StringBundler sb = new StringBundler(4);
 
-					<%
-					for (FileEntry fileEntry : attachmentsFileEntries) {
-					%>
+				sb.append(fileEntry.getTitle());
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				%>
 
-						<%
-						StringBundler sb = new StringBundler(4);
+				<liferay-ui:icon
+					iconCssClass="icon-download"
+					label="<%= true %>"
+					message="<%= sb.toString() %>"
+					method="get"
+					url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
+				/>
 
-						sb.append(fileEntry.getTitle());
-						sb.append(StringPool.OPEN_PARENTHESIS);
-						sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
-						sb.append(StringPool.CLOSE_PARENTHESIS);
-						%>
-
-						<liferay-ui:icon
-							iconCssClass="icon-download"
-							label="<%= true %>"
-							message="<%= sb.toString() %>"
-							method="get"
-							url="<%= PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"
-						/>
-
-					<%
-					}
-					%>
-
-				</c:when>
-				<c:otherwise>
-
-					<%
-					Map taskContextMap = backgroundTask.getTaskContextMap();
-					%>
-
-					<liferay-ui:icon
-						iconCssClass="icon-download"
-						label="<%= true %>"
-						message='<%= HtmlUtil.escape(MapUtil.getString(taskContextMap, "fileName")) %>'
-					/>
-				</c:otherwise>
-			</c:choose>
+			<%
+			}
+			%>
 
 		</liferay-ui:search-container-column-text>
 

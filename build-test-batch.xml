@@ -30,9 +30,17 @@
 
 			<property name="database.type" value="@{database.type}" />
 
-			<local name="database.service.name" />
+			<local name="database.service.executable" />
 
-			<get-database-property property.name="database.service.name" />
+			<get-database-property property.name="database.service.executable" />
+
+			<local name="database.service.cmd.start" />
+
+			<get-database-property property.name="database.service.cmd.start" />
+
+			<local name="database.service.cmd.stop" />
+
+			<get-database-property property.name="database.service.cmd.stop" />
 
 			<action />
 		</sequential>
@@ -45,8 +53,8 @@
 		<sequential>
 			<database-test-action database.type="@{database.type}">
 				<action>
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} stop" />
+					<exec executable="${database.service.executable}" failonerror="true">
+						<arg line="${database.service.cmd.stop}" />
 					</exec>
 				</action>
 			</database-test-action>
@@ -59,8 +67,8 @@
 
 					<set-portal-impl-system-ext-properties />
 
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} start" />
+					<exec executable="${database.service.executable}" failonerror="true">
+						<arg line="${database.service.cmd.start}" />
 					</exec>
 
 					<antcall target="copy-optional-jars" inheritall="false" >
@@ -79,8 +87,8 @@
 
 					<test-action />
 
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} stop" />
+					<exec executable="${database.service.executable}" failonerror="true">
+						<arg line="${database.service.cmd.stop}" />
 					</exec>
 				</action>
 			</database-test-action>
@@ -305,8 +313,8 @@
 	<target name="tck">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>
-				<exec executable="service" failonerror="true">
-					<arg line="${database.mysql.service.name} start" />
+				<exec executable="${database.mysql.service.executable}" failonerror="true">
+					<arg line="${database.mysql.service.cmd.start}" />
 				</exec>
 
 				<antcall target="rebuild-database" inheritAll="false" />

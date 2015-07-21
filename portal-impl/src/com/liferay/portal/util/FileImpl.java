@@ -95,7 +95,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		sb.append(
 			StringUtil.appendParentheticalSuffix(
-				fileNameWithoutExtension, suffix, false));
+				fileNameWithoutExtension, suffix));
 		sb.append(StringPool.PERIOD);
 		sb.append(extension);
 

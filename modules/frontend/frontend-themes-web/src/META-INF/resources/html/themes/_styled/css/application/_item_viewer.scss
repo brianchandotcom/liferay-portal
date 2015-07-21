@@ -30,6 +30,10 @@
 			font-weight: normal;
 		}
 	}
+
+	&.uploading > div:not(.progressbar) {
+		opacity: 0.3;
+	}
 }
 
 .lfr-item-viewer-close {

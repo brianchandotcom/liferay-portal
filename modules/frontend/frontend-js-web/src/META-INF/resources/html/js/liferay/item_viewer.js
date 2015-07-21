@@ -132,6 +132,20 @@ AUI.add(
 						];
 					},
 
+					updateCurrentImage: function(imageData) {
+						var instance = this;
+
+						var imageUrl = imageData.image.url;
+
+						var image = instance._getCurrentImage();
+
+						image.attr('src', imageUrl);
+
+						var link = instance.get('links').item(instance.get('currentIndex'));
+
+						link.setData('value', imageUrl);
+					},
+
 					_afterBindUI: function() {
 						var instance = this;
 
@@ -158,7 +172,7 @@ AUI.add(
 
 						var metadata = link.getData('metadata');
 
-						var image = this._getCurrentImage();
+						var image = instance._getCurrentImage();
 
 						if (metadata && !image.attr(STR_DATA_METADATA_RENDERED)) {
 							instance._populateImageMetadata(image, metadata);

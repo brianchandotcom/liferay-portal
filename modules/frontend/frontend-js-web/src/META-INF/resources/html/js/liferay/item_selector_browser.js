@@ -58,6 +58,12 @@ AUI.add(
 							}
 						);
 
+						instance._itemSelectorUploader = new A.LiferayItemSelectorUploader(
+							{
+								rootNode: instance.rootNode
+							}
+						);
+
 						instance._dropArea = A.one('.drop-zone');
 
 						instance._bindUI();
@@ -69,6 +75,7 @@ AUI.add(
 
 						instance._itemViewer.destroy();
 						instance._uploadItemViewer.destroy();
+						instance._itemSelectorUploader.destroy();
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
@@ -88,14 +95,17 @@ AUI.add(
 
 						var uploadItemViewer = instance._uploadItemViewer;
 
+						var itemSelectorUploader = instance._itemSelectorUploader;
+
 						var rootNode = instance.rootNode;
 
 						instance._eventHandles = [
 							itemViewer.get(STR_LINKS).on('click', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
 							itemViewer.after('currentIndexChange', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
 							itemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
-							uploadItemViewer.after('linksChange', A.bind(STR_ITEM_SELECTED, instance, uploadItemViewer)),
 							uploadItemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
+							itemSelectorUploader.after('itemUploadComplete', instance._onItemUploadComplete, instance),
+							itemSelectorUploader.after('itemUploadError', instance._onItemUploadError, instance),
 							rootNode.on(STR_DRAG_OVER, instance._ddEventHandler, instance),
 							rootNode.on(STR_DRAG_LEAVE, instance._ddEventHandler, instance),
 							rootNode.on(STR_DROP, instance._ddEventHandler, instance)
@@ -163,6 +173,41 @@ AUI.add(
 						);
 					},
 
+					_onItemUploadComplete: function(itemData) {
+						var instance = this;
+
+						var uploadItemViewer = instance._uploadItemViewer;
+
+						if (uploadItemViewer) {
+							uploadItemViewer.updateCurrentImage(itemData);
+						}
+
+						instance._onItemSelected(uploadItemViewer);
+					},
+
+					_onItemUploadError: function() {
+						var instance = this;
+
+						var uploadItemViewer = instance._uploadItemViewer;
+
+						if (uploadItemViewer) {
+							uploadItemViewer.hide();
+						}
+
+						var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+
+						new Liferay.Notice(
+							{
+								closeText: false,
+								content: message + '<button class="close" type="button">&times;</button>',
+								noticeClass: 'hide',
+								toggleText: false,
+								type: 'warning',
+								useAnimation: false
+							}
+						).show();
+					},
+
 					_previewFile: function(file) {
 						var instance = this;
 
@@ -222,6 +267,8 @@ AUI.add(
 
 						instance._uploadItemViewer.set(STR_LINKS, new A.NodeList(linkNode));
 						instance._uploadItemViewer.show();
+
+						instance._itemSelectorUploader.startUpload(file, dropArea.getData('uploadurl'));
 					}
 				}
 			}
@@ -231,6 +278,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-item-viewer', 'liferay-portlet-base']
+		requires: ['liferay-item-selector-uploader', 'liferay-item-viewer', 'liferay-notice', 'liferay-portlet-base']
 	}
 );

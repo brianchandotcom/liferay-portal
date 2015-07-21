@@ -429,7 +429,9 @@
 					'liferay-item-selector-browser': {
 						path: 'item_selector_browser.js',
 						requires: [
+							'liferay-item-selector-uploader',
 							'liferay-item-viewer',
+							'liferay-notice',
 							'liferay-portlet-base'
 						]
 					},
@@ -443,6 +445,8 @@
 						path: 'item_selector_uploader.js',
 						requires: [
 							'aui-base',
+							'aui-progressbar',
+							'liferay-portlet-base',
 							'uploader'
 						]
 					},
@@ -456,7 +460,6 @@
 					'liferay-item-viewer': {
 						path: 'item_viewer.js',
 						requires: [
-							'aui-component',
 							'aui-image-viewer'
 						]
 					},

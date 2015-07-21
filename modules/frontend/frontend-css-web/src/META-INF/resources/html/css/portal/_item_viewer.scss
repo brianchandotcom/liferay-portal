@@ -37,6 +37,13 @@
 		}
 	}
 
+	.progressbar {
+		position: absolute;
+		top: 0;
+		visibility: hidden;
+		z-index: 1000;
+	}
+
 	.sidenav-menu-slider {
 		top: 0;
 	}
@@ -47,6 +54,10 @@
 
 	.url-view {
 		margin: 15px;
+	}
+
+	&.uploading > .progressbar {
+		visibility: visible;
 	}
 }
 

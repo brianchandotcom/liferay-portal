@@ -570,6 +570,18 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
+	protected void configureTaskBuildServiceHbmFileName(
+		BuildServiceTask buildServiceTask) {
+
+		Project project = buildServiceTask.getProject();
+
+		File hbmFile = new File(
+			getResourcesDir(project), "META-INF/module-hbm.xml");
+
+		buildServiceTask.setHbmFileName(project.relativePath(hbmFile));
+	}
+
+	@Override
 	protected void configureTaskBuildServiceOsgiModule(
 		BuildServiceTask buildServiceTask) {
 
@@ -584,10 +596,44 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
+	protected void configureTaskBuildServicePropsUtil(
+		BuildServiceTask buildServiceTask) {
+
+		String bundleSymbolicName = getBundleInstruction(
+			buildServiceTask.getProject(), Constants.BUNDLE_SYMBOLICNAME);
+
+		buildServiceTask.setPropsUtil(
+			bundleSymbolicName + ".util.ServiceProps");
+	}
+
+	@Override
+	protected void configureTaskBuildServiceSpringFileName(
+		BuildServiceTask buildServiceTask) {
+
+		Project project = buildServiceTask.getProject();
+
+		File springFile = new File(
+			getResourcesDir(project), "META-INF/spring/module-spring.xml");
+
+		buildServiceTask.setSpringFileName(project.relativePath(springFile));
+	}
+
+	@Override
 	protected void configureTaskBuildServiceSpringNamespaces(
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setSpringNamespaces(new String[] {"beans", "osgi"});
+	}
+
+	@Override
+	protected void configureTaskBuildServiceSqlDirName(
+		BuildServiceTask buildServiceTask) {
+
+		Project project = buildServiceTask.getProject();
+
+		File sqlDir = new File(getResourcesDir(project), "META-INF/sql");
+
+		buildServiceTask.setSqlDirName(project.relativePath(sqlDir));
 	}
 
 	@Override

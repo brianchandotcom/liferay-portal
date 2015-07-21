@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -53,9 +54,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class MBMessageStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBMessage> {
 

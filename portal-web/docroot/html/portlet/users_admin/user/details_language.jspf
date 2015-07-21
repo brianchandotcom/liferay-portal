@@ -34,7 +34,7 @@ String portletKey = portletName.equals(PortletKeys.MY_ACCOUNT) ? PortletKeys.USE
 
 <liferay-portlet:renderURL portletName="<%= portletKey %>" var="userDetailsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<c:choose>
-		<c:when test="<%= portletKey.equals(PortletKeys.LOGIN) %>">
+		<c:when test="<%= portletName.equals(PortletKeys.LOGIN) %>">
 			<portlet:param name="struts_action" value="/login/create_account" />
 		</c:when>
 		<c:otherwise>

@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-ddm-form-renderer-validation',
 	function(A) {
-		var JSON = A.JSON;
 		var Renderer = Liferay.DDM.Renderer;
 
 		var Util = Renderer.Util;
@@ -56,7 +55,7 @@ AUI.add(
 					{
 						data: {
 							serializedDDMForm: JSON.stringify(instance.get('definition')),
-							serializedDDMFormValues: JSON.stringify(instance.toJSON()),
+							serializedDDMFormValues: JSON.stringify(instance.toJSON())
 						},
 						dataType: 'JSON',
 						method: 'POST',

@@ -431,7 +431,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 	protected void processDependentSyncFiles(SyncFile syncFile) {
 		List<SyncFile> dependentSyncFiles = _dependentSyncFilesMap.remove(
-			syncFile.getTypePK());
+			getSyncAccountId() + "#" + syncFile.getTypePK());
 
 		if (dependentSyncFiles == null) {
 			return;
@@ -561,12 +561,14 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	}
 
 	protected void queueSyncFile(long parentFolderId, SyncFile syncFile) {
-		List<SyncFile> syncFiles = _dependentSyncFilesMap.get(parentFolderId);
+		List<SyncFile> syncFiles = _dependentSyncFilesMap.get(
+			getSyncAccountId() + "#" + parentFolderId);
 
 		if (syncFiles == null) {
 			syncFiles = new ArrayList<>();
 
-			_dependentSyncFilesMap.put(parentFolderId, syncFiles);
+			_dependentSyncFilesMap.put(
+				getSyncAccountId() + "#" + parentFolderId, syncFiles);
 		}
 
 		syncFiles.add(syncFile);
@@ -644,11 +646,11 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	private static final Logger _logger = LoggerFactory.getLogger(
 		GetSyncDLObjectUpdateHandler.class);
 
+	private static final Map<String, List<SyncFile>> _dependentSyncFilesMap =
+		new HashMap<>();
 	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(5);
 
-	private final Map<Long, List<SyncFile>> _dependentSyncFilesMap =
-		new HashMap<>();
 	private final ScheduledFuture<?> _scheduledFuture;
 	private SyncDLObjectUpdate _syncDLObjectUpdate;
 

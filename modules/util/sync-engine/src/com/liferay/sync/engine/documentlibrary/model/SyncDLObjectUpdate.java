@@ -14,6 +14,8 @@
 
 package com.liferay.sync.engine.documentlibrary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import com.liferay.sync.engine.model.SyncFile;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 /**
  * @author Michael Young
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SyncDLObjectUpdate {
 
 	public long getLastAccessTime() {

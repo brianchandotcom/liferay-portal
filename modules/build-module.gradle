@@ -87,13 +87,13 @@ sourceSets {
 	}
 
 	test {
-		compileClasspath += configurations.portal + configurations.portalTest
-		runtimeClasspath += configurations.portal + configurations.portalTest
+		compileClasspath = configurations.portal + compileClasspath + configurations.portalTest
+		runtimeClasspath = configurations.portal + runtimeClasspath + configurations.portalTest
 	}
 
 	testIntegration {
-		compileClasspath += configurations.portal + configurations.portalTest
-		runtimeClasspath += configurations.portal + configurations.portalTest
+		compileClasspath = configurations.portal + compileClasspath + configurations.portalTest
+		runtimeClasspath = configurations.portal + runtimeClasspath + configurations.portalTest
 	}
 }
 

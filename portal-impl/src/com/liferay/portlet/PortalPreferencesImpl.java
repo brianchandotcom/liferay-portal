@@ -26,9 +26,13 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ReadOnlyException;
+
+import org.hibernate.StaleObjectStateException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -55,7 +59,7 @@ public class PortalPreferencesImpl
 	public PortalPreferencesImpl clone() {
 		return new PortalPreferencesImpl(
 			getOwnerId(), getOwnerType(), getOriginalXML(),
-			getOriginalPreferences(), isSignedIn());
+			new HashMap<>(getOriginalPreferences()), isSignedIn());
 	}
 
 	@Override
@@ -139,19 +143,28 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void resetValues(String namespace) {
+	public void resetValues(final String namespace) {
 		try {
-			Map<String, Preference> preferences = getPreferences();
+			retryableStore(new Callable<Void>() {
 
-			for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
-				String key = entry.getKey();
+				@Override
+				public Void call() throws ReadOnlyException {
+					Map<String, Preference> preferences = getPreferences();
 
-				if (key.startsWith(namespace) && !isReadOnly(key)) {
-					reset(key);
+					for (Map.Entry<String, Preference> entry :
+							preferences.entrySet()) {
+
+						String key = entry.getKey();
+
+						if (key.startsWith(namespace) && !isReadOnly(key)) {
+							reset(key);
+						}
+					}
+
+					return null;
 				}
-			}
 
-			store();
+			});
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -169,23 +182,37 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void setValue(String namespace, String key, String value) {
+	public void setValue(
+		final String namespace, final String key, final String value) {
+
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 
-		key = _encodeKey(namespace, key);
-
 		try {
-			if (value != null) {
-				super.setValue(key, value);
-			}
-			else {
-				reset(key);
-			}
+			Callable<Void> callable = new Callable<Void>() {
+
+				@Override
+				public Void call() throws ReadOnlyException {
+					String encodedKey = _encodeKey(namespace, key);
+
+					if (value != null) {
+						PortalPreferencesImpl.super.setValue(encodedKey, value);
+					}
+					else {
+						reset(encodedKey);
+					}
+
+					return null;
+				}
+
+			};
 
 			if (_signedIn) {
-				store();
+				retryableStore(callable);
+			}
+			else {
+				callable.call();
 			}
 		}
 		catch (Exception e) {
@@ -194,23 +221,38 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void setValues(String namespace, String key, String[] values) {
+	public void setValues(
+		final String namespace, final String key, final String[] values) {
+
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 
-		key = _encodeKey(namespace, key);
-
 		try {
-			if (values != null) {
-				super.setValues(key, values);
-			}
-			else {
-				reset(key);
-			}
+			Callable<Void> callable = new Callable<Void>() {
+
+				@Override
+				public Void call() throws ReadOnlyException {
+					String encodedKey = _encodeKey(namespace, key);
+
+					if (values != null) {
+						PortalPreferencesImpl.super.setValues(
+							encodedKey, values);
+					}
+					else {
+						reset(encodedKey);
+					}
+
+					return null;
+				}
+
+			};
 
 			if (_signedIn) {
-				store();
+				retryableStore(callable);
+			}
+			else {
+				callable.call();
 			}
 		}
 		catch (Exception e) {
@@ -226,6 +268,56 @@ public class PortalPreferencesImpl
 		}
 		catch (SystemException se) {
 			throw new IOException(se);
+		}
+	}
+
+	protected boolean isCausedByStaleObjectException(Throwable t) {
+		Throwable cause = t.getCause();
+
+		while (t != cause) {
+			if (t instanceof StaleObjectStateException) {
+				return true;
+			}
+
+			if (cause == null) {
+				return false;
+			}
+
+			t = cause;
+
+			cause = t.getCause();
+		}
+
+		return false;
+	}
+
+	protected void retryableStore(Callable<?> callable) throws Exception {
+		while (true) {
+			try {
+				callable.call();
+
+				store();
+
+				return;
+			}
+			catch (Exception e) {
+				if (isCausedByStaleObjectException(e)) {
+					PortalPreferencesImpl portalPreferencesImpl =
+						(PortalPreferencesImpl)
+							PortletPreferencesFactoryUtil.getPortalPreferences(
+								getOwnerId(), isSignedIn());
+
+					reset();
+
+					setOriginalPreferences(
+						portalPreferencesImpl.getOriginalPreferences());
+
+					setOriginalXML(portalPreferencesImpl.getOriginalXML());
+				}
+				else {
+					throw e;
+				}
+			}
 		}
 	}
 

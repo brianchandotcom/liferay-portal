@@ -3888,8 +3888,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the original string without an appended the parenthedica suffix.
-	 * If the parenthedica suffix is preceded with a space it is also removed.
+	 * Returns the original string without an appended the parenthetical suffix.
+	 * If the parenthetical suffix is preceded with a space it is also removed.
 	 *
 	 * <p>
 	 * Example:

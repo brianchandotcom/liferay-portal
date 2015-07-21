@@ -60,6 +60,7 @@ import ${import};
 	@AccessControlled
 	@JSONWebService
 </#if>
+
 <#if entity.hasRemoteService() && sessionTypeName != "Local" && osgiModule>
 	@OSGiBeanProperties(
 		property = {
@@ -69,6 +70,7 @@ import ${import};
 		service = ${entity.name}${sessionTypeName}Service.class
 	)
 </#if>
+
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor = {PortalException.class, SystemException.class})
 public interface ${entity.name}${sessionTypeName}Service

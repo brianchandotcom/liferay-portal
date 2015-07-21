@@ -30,9 +30,9 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -40,9 +40,9 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageService;
 import com.liferay.portlet.messageboards.util.MBMailMessage;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
@@ -56,6 +56,7 @@ import javax.mail.MessagingException;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -85,7 +86,7 @@ public class MessageListenerImpl implements MessageListener {
 			Company company = getCompany(messageIdString);
 			long categoryId = MBUtil.getCategoryId(messageIdString);
 
-			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
+			MBCategory category = _mbCategoryLocalService.getCategory(
 				categoryId);
 
 			if ((category.getCompanyId() != company.getCompanyId()) &&
@@ -106,7 +107,7 @@ public class MessageListenerImpl implements MessageListener {
 				return false;
 			}
 
-			UserLocalServiceUtil.getUserByEmailAddress(
+			_userLocalService.getUserByEmailAddress(
 				company.getCompanyId(), from);
 
 			return true;
@@ -152,7 +153,7 @@ public class MessageListenerImpl implements MessageListener {
 			MBMessage parentMessage = null;
 
 			if (parentMessageId > 0) {
-				parentMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+				parentMessage = _mbMessageLocalService.fetchMBMessage(
 					parentMessageId);
 			}
 
@@ -163,7 +164,7 @@ public class MessageListenerImpl implements MessageListener {
 			long groupId = 0;
 			long categoryId = MBUtil.getCategoryId(messageIdString);
 
-			MBCategory category = MBCategoryLocalServiceUtil.fetchMBCategory(
+			MBCategory category = _mbCategoryLocalService.fetchMBCategory(
 				categoryId);
 
 			if (category == null) {
@@ -182,7 +183,7 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Category id " + categoryId);
 			}
 
-			User user = UserLocalServiceUtil.getUserByEmailAddress(
+			User user = _userLocalService.getUserByEmailAddress(
 				company.getCompanyId(), from);
 
 			String subject = null;
@@ -210,13 +211,13 @@ public class MessageListenerImpl implements MessageListener {
 			serviceContext.setScopeGroupId(groupId);
 
 			if (parentMessage == null) {
-				MBMessageServiceUtil.addMessage(
+				_mbMessageService.addMessage(
 					groupId, categoryId, subject, mbMailMessage.getBody(),
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
 					0.0, true, serviceContext);
 			}
 			else {
-				MBMessageServiceUtil.addMessage(
+				_mbMessageService.addMessage(
 					parentMessage.getMessageId(), subject,
 					mbMailMessage.getBody(), MBMessageConstants.DEFAULT_FORMAT,
 					inputStreamOVPs, false, 0.0, true, serviceContext);
@@ -276,7 +277,7 @@ public class MessageListenerImpl implements MessageListener {
 
 		String mx = messageIdString.substring(pos, endPos);
 
-		return CompanyLocalServiceUtil.getCompanyByMx(mx);
+		return _companyLocalService.getCompanyByMx(mx);
 	}
 
 	protected String getMessageIdString(String recipient, Message message)
@@ -312,7 +313,44 @@ public class MessageListenerImpl implements MessageListener {
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageService(MBMessageService mbMessageService) {
+		_mbMessageService = mbMessageService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MessageListenerImpl.class);
+
+	private CompanyLocalService _companyLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBMessageService _mbMessageService;
+	private UserLocalService _userLocalService;
 
 }

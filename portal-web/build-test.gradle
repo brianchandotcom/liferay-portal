@@ -19,7 +19,7 @@ poshiRunner {
 		poshiProperty "component.names", project.properties["componentNames"]
 	}
 
-	poshiProperty "ignore.errors.file.name", "ignore-errors.xml"
+	poshiProperty "ignore.errors.file.name", "test-ignorable-error-lines.xml"
 
 	if (project.hasProperty("poshiTestName")) {
 		poshiProperty "test.name", project.properties["poshiTestName"]

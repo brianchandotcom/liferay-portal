@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.social;
+package com.liferay.message.boards.web.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -34,10 +33,12 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
+@Component(
 	property = "model.className=com.liferay.portlet.messageboards.model.MBMessage",
 	service = SocialActivityManager.class
 )

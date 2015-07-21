@@ -58,23 +58,23 @@ public class ExportImportConfigurationSettingsMapFactory {
 	public static Map<String, Serializable> buildImportSettingsMap(
 		long userId, long targetGroupId, boolean privateLayout,
 		long[] layoutIds, Map<String, String[]> parameterMap, Locale locale,
-		TimeZone timeZone, String fileName) {
+		TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, 0, StringPool.BLANK, privateLayout,
 			null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, locale, timeZone, fileName);
+			StringPool.BLANK, null, 0, null, locale, timeZone,
+			StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(
 		long userId, long targetPlid, long targetGroupId, String portletId,
-		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone,
-		String fileName) {
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, targetPlid, portletId, null, null,
 			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
-			null, locale, timeZone, fileName);
+			null, locale, timeZone, StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(

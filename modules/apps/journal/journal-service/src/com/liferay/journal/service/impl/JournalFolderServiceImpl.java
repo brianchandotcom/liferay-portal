@@ -163,11 +163,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		long groupId, long folderId, int status, int start, int end,
 		OrderByComparator<?> obc) {
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-			status, start, end, (OrderByComparator<Object>)obc);
-
-		return journalFolderFinder.filterFindF_A_ByG_F(
-			groupId, folderId, queryDefinition);
+		return getFoldersAndArticles(
+			groupId, 0, folderId, status, start, end, obc);
 	}
 
 	@Override
@@ -177,6 +174,18 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 		return getFoldersAndArticles(
 			groupId, folderId, WorkflowConstants.STATUS_ANY, start, end, obc);
+	}
+
+	@Override
+	public List<Object> getFoldersAndArticles(
+		long groupId, long userId, long folderId, int status, int start,
+		int end, OrderByComparator<?> obc) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, userId, true, start, end, (OrderByComparator<Object>)obc);
+
+		return journalFolderFinder.filterFindF_A_ByG_F(
+			groupId, folderId, queryDefinition);
 	}
 
 	@Override
@@ -216,8 +225,18 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public int getFoldersAndArticlesCount(
 		long groupId, long folderId, int status) {
 
+		return getFoldersAndArticlesCount(groupId, 0, folderId, status);
+	}
+
+	@Override
+	public int getFoldersAndArticlesCount(
+		long groupId, long userId, long folderId, int status) {
+
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
+			status, userId, true);
+
 		return journalFolderFinder.filterCountF_A_ByG_F(
-			groupId, folderId, new QueryDefinition<Object>(status));
+			groupId, folderId, queryDefinition);
 	}
 
 	@Override

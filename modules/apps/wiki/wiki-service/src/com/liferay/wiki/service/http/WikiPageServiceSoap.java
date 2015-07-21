@@ -447,6 +447,24 @@ public class WikiPageServiceSoap {
 	}
 
 	public static com.liferay.wiki.model.WikiPageSoap[] getPages(long groupId,
+		long nodeId, boolean head, long userId, boolean includeOwner,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,
+					nodeId, head, userId, includeOwner, status, start, end, obc);
+
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.wiki.model.WikiPageSoap[] getPages(long groupId,
 		long userId, long nodeId, int status, int start, int end)
 		throws RemoteException {
 		try {
@@ -467,6 +485,22 @@ public class WikiPageServiceSoap {
 		try {
 			int returnValue = WikiPageServiceUtil.getPagesCount(groupId,
 					nodeId, head);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getPagesCount(long groupId, long nodeId, boolean head,
+		long userId, boolean includeOwner, int status)
+		throws RemoteException {
+		try {
+			int returnValue = WikiPageServiceUtil.getPagesCount(groupId,
+					nodeId, head, userId, includeOwner, status);
 
 			return returnValue;
 		}

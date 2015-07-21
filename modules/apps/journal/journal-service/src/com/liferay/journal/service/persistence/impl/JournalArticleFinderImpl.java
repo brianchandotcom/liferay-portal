@@ -147,6 +147,15 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
+	public int countByG_F_C(
+		long groupId, List<Long> folderIds, long classNameId,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doCountByG_F_C(
+			groupId, folderIds, classNameId, queryDefinition, false);
+	}
+
+	@Override
 	public int countByG_C_S(
 		long groupId, long classNameId, String ddmStructureKey,
 		QueryDefinition<JournalArticle> queryDefinition) {
@@ -154,15 +163,6 @@ public class JournalArticleFinderImpl
 		return doCountByG_C_S(
 			groupId, classNameId, new String[] {ddmStructureKey},
 			queryDefinition, false);
-	}
-
-	@Override
-	public int countByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doCountByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, false);
 	}
 
 	@Override
@@ -272,6 +272,15 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
+	public int filterCountByG_F_C(
+		long groupId, List<Long> folderIds, long classNameId,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doCountByG_F_C(
+			groupId, folderIds, classNameId, queryDefinition, true);
+	}
+
+	@Override
 	public int filterCountByG_C_S(
 		long groupId, long classNameId, String ddmStructureKey,
 		QueryDefinition<JournalArticle> queryDefinition) {
@@ -279,15 +288,6 @@ public class JournalArticleFinderImpl
 		return doCountByG_C_S(
 			groupId, classNameId, new String[] {ddmStructureKey},
 			queryDefinition, true);
-	}
-
-	@Override
-	public int filterCountByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doCountByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, true);
 	}
 
 	@Override
@@ -408,21 +408,21 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
+	public List<JournalArticle> filterFindByG_F_C(
+		long groupId, List<Long> folderIds, long classNameId,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_F_C(
+			groupId, folderIds, classNameId, queryDefinition, true);
+	}
+
+	@Override
 	public List<JournalArticle> filterFindByG_C_S(
 		long groupId, long classNameId, String[] ddmStructureKeys,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_C_S(
 			groupId, classNameId, ddmStructureKeys, queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> filterFindByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, true);
 	}
 
 	@Override
@@ -715,21 +715,21 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
+	public List<JournalArticle> findByG_F_C(
+		long groupId, List<Long> folderIds, long classNameId,
+		QueryDefinition<JournalArticle> queryDefinition) {
+
+		return doFindByG_F_C(
+			groupId, folderIds, classNameId, queryDefinition, false);
+	}
+
+	@Override
 	public List<JournalArticle> findByG_C_S(
 		long groupId, long classNameId, String[] ddmStructureKeys,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_C_S(
 			groupId, classNameId, ddmStructureKeys, queryDefinition, false);
-	}
-
-	@Override
-	public List<JournalArticle> findByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doFindByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, false);
 	}
 
 	@Override
@@ -852,6 +852,80 @@ public class JournalArticleFinderImpl
 		}
 	}
 
+	protected int doCountByG_F_C(
+		long groupId, List<Long> folderIds, long classNameId,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				COUNT_BY_G_U_F_C, queryDefinition, "JournalArticle");
+
+			sql = replaceStatusJoin(sql, queryDefinition);
+
+			if (folderIds.isEmpty()) {
+				sql = StringUtil.replace(
+					sql, "([$FOLDER_ID$]) AND", StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$FOLDER_ID$]",
+					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(classNameId);
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
+			for (long folderId : folderIds) {
+				qPos.add(folderId);
+			}
+
+			qPos.add(queryDefinition.getStatus());
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	protected int doCountByG_C_S(
 		long groupId, long classNameId, String[] ddmStructureKeys,
 		QueryDefinition<JournalArticle> queryDefinition,
@@ -895,81 +969,6 @@ public class JournalArticleFinderImpl
 
 			qPos.add(classNameId);
 			qPos.add(ddmStructureKeys);
-			qPos.add(queryDefinition.getStatus());
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected int doCountByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(
-				COUNT_BY_G_U_F_C, queryDefinition, "JournalArticle");
-
-			sql = replaceStatusJoin(sql, queryDefinition);
-
-			if (folderIds.isEmpty()) {
-				sql = StringUtil.replace(
-					sql, "([$FOLDER_ID$]) AND", StringPool.BLANK);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$FOLDER_ID$]",
-					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
-			}
-
-			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(JournalArticle.userId = ?) AND", StringPool.BLANK);
-			}
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, JournalArticle.class.getName(),
-					"JournalArticle.resourcePrimKey", groupId);
-			}
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(classNameId);
-
-			if (userId > 0) {
-				qPos.add(userId);
-			}
-
-			for (long folderId : folderIds) {
-				qPos.add(folderId);
-			}
-
 			qPos.add(queryDefinition.getStatus());
 
 			Iterator<Long> itr = q.iterate();
@@ -1202,6 +1201,76 @@ public class JournalArticleFinderImpl
 		}
 	}
 
+	protected List<JournalArticle> doFindByG_F_C(
+		long groupId, List<Long> folderIds, long classNameId,
+		QueryDefinition<JournalArticle> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
+
+			sql = replaceStatusJoin(sql, queryDefinition);
+
+			sql = CustomSQLUtil.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator("JournalArticle"));
+
+			if (folderIds.isEmpty()) {
+				sql = StringUtil.replace(
+					sql, "([$FOLDER_ID$]) AND", StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$FOLDER_ID$]",
+					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, JournalArticle.class.getName(),
+					"JournalArticle.resourcePrimKey", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(
+				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(classNameId);
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
+			for (long folderId : folderIds) {
+				qPos.add(folderId);
+			}
+
+			qPos.add(queryDefinition.getStatus());
+
+			return (List<JournalArticle>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	protected List<JournalArticle> doFindByG_C_S(
 		long groupId, long classNameId, String[] ddmStructureKeys,
 		QueryDefinition<JournalArticle> queryDefinition,
@@ -1249,77 +1318,6 @@ public class JournalArticleFinderImpl
 
 			qPos.add(classNameId);
 			qPos.add(ddmStructureKeys);
-			qPos.add(queryDefinition.getStatus());
-
-			return (List<JournalArticle>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected List<JournalArticle> doFindByG_U_F_C(
-		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition,
-		boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(
-				FIND_BY_G_U_F_C, queryDefinition, "JournalArticle");
-
-			sql = replaceStatusJoin(sql, queryDefinition);
-
-			sql = CustomSQLUtil.replaceOrderBy(
-				sql, queryDefinition.getOrderByComparator("JournalArticle"));
-
-			if (folderIds.isEmpty()) {
-				sql = StringUtil.replace(
-					sql, "([$FOLDER_ID$]) AND", StringPool.BLANK);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$FOLDER_ID$]",
-					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
-			}
-
-			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(JournalArticle.userId = ?) AND", StringPool.BLANK);
-			}
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, JournalArticle.class.getName(),
-					"JournalArticle.resourcePrimKey", groupId);
-			}
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity(
-				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(classNameId);
-
-			if (userId > 0) {
-				qPos.add(userId);
-			}
-
-			for (long folderId : folderIds) {
-				qPos.add(folderId);
-			}
-
 			qPos.add(queryDefinition.getStatus());
 
 			return (List<JournalArticle>)QueryUtil.list(

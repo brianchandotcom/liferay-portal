@@ -25,6 +25,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -36,9 +37,12 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class MBDiscussionStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBDiscussion> {
 

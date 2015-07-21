@@ -25,6 +25,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -38,9 +39,12 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class MBThreadFlagStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBThreadFlag> {
 

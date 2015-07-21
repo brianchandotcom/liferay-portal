@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -38,10 +38,12 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Kocsis
  */
+@RunWith(Arquillian.class)
 public class MBCategoryStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
@@ -49,8 +51,7 @@ public class MBCategoryStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

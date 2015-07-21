@@ -84,7 +84,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	public void apply(Project project) {
 		super.apply(project);
 
-		configureBundleExtension(project);
 		configureJspCExtension(project);
 
 		configureArchivesBaseName(project);
@@ -411,7 +410,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, BundlePlugin.class);
 
-		replaceJarBuilderFactory(project);
+		configureBundleExtension(project);
 
 		super.applyPlugins(project);
 	}
@@ -427,6 +426,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	protected void configureBundleExtension(Project project) {
+		replaceJarBuilderFactory(project);
+
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
 		Properties bundleProperties = null;

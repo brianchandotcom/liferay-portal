@@ -187,8 +187,14 @@ if (project.hasProperty("testClassGroupIndex")) {
 	properties.load(new StringReader(file.text.replace("\\", "/")))
 
 	String testClassGroup = properties["TEST_CLASS_GROUP_" + testClassGroupIndex]
+	String testClassGroups = properties["TEST_CLASS_GROUPS"]
 
 	List<String> testClasses = testClassGroup.tokenize(",")
 
-	[test, testIntegration]*.include testClasses
+	configure([test, testIntegration]) {
+		include testClasses
+
+		jvmArgs "-Dtest.class.group.index=" + testClassGroupIndex
+		jvmArgs "-Dtest.class.groups=" + testClassGroups
+	}
 }

@@ -630,6 +630,13 @@ jdbc.default.password=${database.password}]]></echo>
 
 	<macrodef name="get-testray-case-defect">
 		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="known.issues" />
+				</then>
+			</if>
+
 			<condition property="testray.case.defect" value="${known.issues}" else="">
 				<isset property="known.issues" />
 			</condition>
@@ -762,6 +769,13 @@ jdbc.default.password=${database.password}]]></echo>
 
 	<macrodef name="get-testray-testcase-description">
 		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="description" />
+				</then>
+			</if>
+
 			<condition property="testray.testcase.description" value="${description}" else="">
 				<isset property="description" />
 			</condition>
@@ -770,6 +784,13 @@ jdbc.default.password=${database.password}]]></echo>
 
 	<macrodef name="get-testray-testcase-product-edition">
 		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="testray.testcase.product.edition" />
+				</then>
+			</if>
+
 			<condition property="testray.testcase.product.edition" value="CE">
 				<not>
 					<isset property="testray.testcase.product.edition" />
@@ -2213,15 +2234,12 @@ go]]></replacevalue>
 
 				<property name="testray.testcase.name" value="${poshi.test.name}" />
 
-				<get-testcase-property property.name="description" />
-				<get-testcase-property property.name="known.issues" />
 				<get-testcase-property property.name="priority" />
 
 				<property name="testray.testcase.priority" value="${priority}" />
 
 				<get-testcase-property property.name="testray.component.names" />
 				<get-testcase-property property.name="testray.main.component.name" />
-				<get-testcase-property property.name="testray.testcase.product.edition" />
 			</then>
 		</if>
 

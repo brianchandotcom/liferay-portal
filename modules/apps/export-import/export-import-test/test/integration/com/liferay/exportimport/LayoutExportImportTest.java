@@ -492,8 +492,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), importedGroup.getGroupId(), false, null,
-				parameterMap, user.getLocale(), user.getTimeZone(),
-				larFile.getName());
+				parameterMap, user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

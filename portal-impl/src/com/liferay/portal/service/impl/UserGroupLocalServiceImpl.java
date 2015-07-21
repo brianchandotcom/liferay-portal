@@ -1126,8 +1126,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 				ExportImportConfigurationSettingsMapFactory.
 					buildImportSettingsMap(
 						user.getUserId(), groupId, true, null, parameterMap,
-						user.getLocale(), user.getTimeZone(),
-						privateLayoutsFile.getName());
+						user.getLocale(), user.getTimeZone());
 
 			ExportImportConfiguration exportImportConfiguration =
 				exportImportConfigurationLocalService.
@@ -1147,8 +1146,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 				ExportImportConfigurationSettingsMapFactory.
 					buildImportSettingsMap(
 						user.getUserId(), groupId, false, null, parameterMap,
-						user.getLocale(), user.getTimeZone(),
-						publicLayoutsFile.getName());
+						user.getLocale(), user.getTimeZone());
 
 			ExportImportConfiguration exportImportConfiguration =
 				exportImportConfigurationLocalService.

@@ -440,7 +440,7 @@ public abstract class BasePortletExportImportTestCase
 						user.getUserId(), importedLayout.getPlid(),
 						importedGroup.getGroupId(), portletId,
 						importParameterMap, user.getLocale(),
-						user.getTimeZone(), StringPool.BLANK);
+						user.getTimeZone());
 
 			exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.

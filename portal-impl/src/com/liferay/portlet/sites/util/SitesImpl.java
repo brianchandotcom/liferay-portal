@@ -320,7 +320,7 @@ public class SitesImpl implements Sites {
 					buildImportSettingsMap(
 						userId, targetLayout.getGroupId(),
 						targetLayout.isPrivateLayout(), null, parameterMap,
-						user.getLocale(), user.getTimeZone(), file.getName());
+						user.getLocale(), user.getTimeZone());
 
 			ExportImportConfiguration importConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
@@ -893,7 +893,7 @@ public class SitesImpl implements Sites {
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), layoutSet.getGroupId(),
 				layoutSet.isPrivateLayout(), null, parameterMap,
-				user.getLocale(), user.getTimeZone(), StringPool.BLANK);
+				user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -1917,7 +1917,7 @@ public class SitesImpl implements Sites {
 		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), groupId, privateLayout, null, parameterMap,
-				user.getLocale(), user.getTimeZone(), file.getName());
+				user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

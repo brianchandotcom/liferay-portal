@@ -294,20 +294,19 @@ public interface KaleoNotificationRecipientModel extends BaseModel<KaleoNotifica
 	public void setRecipientScriptLanguage(String recipientScriptLanguage);
 
 	/**
-	 * Returns the recipient script required contexts of this kaleo notification recipient.
+	 * Returns the recipient script contexts of this kaleo notification recipient.
 	 *
-	 * @return the recipient script required contexts of this kaleo notification recipient
+	 * @return the recipient script contexts of this kaleo notification recipient
 	 */
 	@AutoEscape
-	public String getRecipientScriptRequiredContexts();
+	public String getRecipientScriptContexts();
 
 	/**
-	 * Sets the recipient script required contexts of this kaleo notification recipient.
+	 * Sets the recipient script contexts of this kaleo notification recipient.
 	 *
-	 * @param recipientScriptRequiredContexts the recipient script required contexts of this kaleo notification recipient
+	 * @param recipientScriptContexts the recipient script contexts of this kaleo notification recipient
 	 */
-	public void setRecipientScriptRequiredContexts(
-		String recipientScriptRequiredContexts);
+	public void setRecipientScriptContexts(String recipientScriptContexts);
 
 	/**
 	 * Returns the address of this kaleo notification recipient.

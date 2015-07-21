@@ -204,7 +204,7 @@
 		<property name="recipientRoleType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="recipientScript" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="recipientScriptLanguage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="recipientScriptRequiredContexts" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="recipientScriptContexts" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="notificationReceptionType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>

@@ -52,7 +52,7 @@ public class JspCPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.addExtension(project, EXTENSION_NAME, JspCExtension.class);
 
-		addJasperJspCConfiguration(project);
+		addJspCConfiguration(project);
 
 		addTaskGenerateJSPJava(project);
 
@@ -74,7 +74,7 @@ public class JspCPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected Configuration addJasperJspCConfiguration(final Project project) {
+	protected Configuration addJspCConfiguration(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
@@ -115,7 +115,7 @@ public class JspCPlugin implements Plugin<Project> {
 
 		javaCompile.setClasspath(
 			GradleUtil.getConfiguration(project, CONFIGURATION_NAME));
-		javaCompile.setDescription("Compile JSP files to check for errors");
+		javaCompile.setDescription("Compile JSP files to check for errors.");
 		javaCompile.setDestinationDir(javaCompile.getTemporaryDir());
 		javaCompile.setGroup("verification");
 

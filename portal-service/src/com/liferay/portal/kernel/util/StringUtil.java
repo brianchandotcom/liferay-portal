@@ -3913,7 +3913,7 @@ public class StringUtil {
 		int x = s.lastIndexOf(StringPool.OPEN_PARENTHESIS);
 		int y = s.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
 
-		if ((x != -1) || (y != -1)) {
+		if ((x == -1) || (y == -1)) {
 			return s;
 		}
 

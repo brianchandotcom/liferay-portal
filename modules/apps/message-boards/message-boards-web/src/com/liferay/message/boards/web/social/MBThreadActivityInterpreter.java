@@ -23,8 +23,8 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
@@ -32,6 +32,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
@@ -75,10 +76,10 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	protected MBMessage getMessage(SocialActivity activity) throws Exception {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(
+		MBThread thread = _mbThreadLocalService.getThread(
 			activity.getClassPK());
 
-		return MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
+		return _mbMessageLocalService.getMessage(thread.getRootMessageId());
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(
+		MBThread thread = _mbThreadLocalService.getThread(
 			activity.getClassPK());
 
 		return "/message_boards/find_message?messageId=" +
@@ -151,6 +152,23 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 			permissionChecker, message.getMessageId(), actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {MBThread.class.getName()};
+
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

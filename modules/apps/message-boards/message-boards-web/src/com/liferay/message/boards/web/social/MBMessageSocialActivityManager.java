@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.web.social;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,6 +33,7 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -54,10 +54,10 @@ public class MBMessageSocialActivityManager
 			String className, MBMessage message)
 		throws PortalException {
 
-		MBDiscussion discussion = mbDiscussionLocalService.getThreadDiscussion(
+		MBDiscussion discussion = _mbDiscussionLocalService.getThreadDiscussion(
 			message.getThreadId());
 
-		long classNameId = classNameLocalService.getClassNameId(className);
+		long classNameId = _classNameLocalService.getClassNameId(className);
 		long classPK = discussion.getClassPK();
 
 		if (discussion.getClassNameId() != classNameId) {
@@ -65,7 +65,7 @@ public class MBMessageSocialActivityManager
 		}
 
 		List<SocialActivity> socialActivities =
-			socialActivityLocalService.getActivities(
+			_socialActivityLocalService.getActivities(
 				0, className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (SocialActivity socialActivity : socialActivities) {
@@ -79,7 +79,7 @@ public class MBMessageSocialActivityManager
 			long extraDataMessageId = extraDataJSONObject.getLong("messageId");
 
 			if (message.getMessageId() == extraDataMessageId) {
-				socialActivityLocalService.deleteActivity(
+				_socialActivityLocalService.deleteActivity(
 					socialActivity.getActivityId());
 			}
 		}
@@ -87,19 +87,40 @@ public class MBMessageSocialActivityManager
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return socialActivityLocalService;
+		return _socialActivityLocalService;
 	}
 
-	@BeanReference(type = ClassNameLocalService.class)
-	protected ClassNameLocalService classNameLocalService;
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
 
-	@BeanReference(type = MBDiscussionLocalService.class)
-	protected MBDiscussionLocalService mbDiscussionLocalService;
+		_classNameLocalService = classNameLocalService;
+	}
 
-	@BeanReference(type = MBMessageLocalService.class)
-	protected MBMessageLocalService mbMessageLocalService;
+	@Reference(unbind = "-")
+	protected void setMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
 
-	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService socialActivityLocalService;
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	private ClassNameLocalService _classNameLocalService;
+	private MBDiscussionLocalService _mbDiscussionLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

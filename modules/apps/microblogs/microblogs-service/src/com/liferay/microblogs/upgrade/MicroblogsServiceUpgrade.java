@@ -14,13 +14,14 @@
 
 package com.liferay.microblogs.upgrade;
 
-import com.liferay.microblogs.service.configuration.configurator.MicroblogsServiceConfigurator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -33,15 +34,14 @@ import org.osgi.service.component.annotations.Reference;
 public class MicroblogsServiceUpgrade {
 
 	@Reference(unbind = "-")
-	protected void setMicroblogsServiceConfigurator(
-		MicroblogsServiceConfigurator microblogsServiceConfigurator) {
-	}
-
-	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

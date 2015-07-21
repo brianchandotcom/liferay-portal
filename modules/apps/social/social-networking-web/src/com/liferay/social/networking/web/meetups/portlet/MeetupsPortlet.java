@@ -24,7 +24,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
 import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
-import com.liferay.social.networking.service.configuration.configurator.SocialNetworkingServiceConfigurator;
 
 import java.io.File;
 
@@ -193,17 +192,6 @@ public class MeetupsPortlet extends MVCPortlet {
 		MeetupsRegistrationLocalService meetupsRegistrationLocalService) {
 
 		_meetupsRegistrationLocalService = meetupsRegistrationLocalService;
-	}
-
-	@Reference
-	protected void setSocialNetworkingServiceConfigurator(
-		SocialNetworkingServiceConfigurator
-			socialNetworkingServiceConfigurator) {
-	}
-
-	protected void unsetSocialNetworkingServiceConfigurator(
-		SocialNetworkingServiceConfigurator
-			socialNetworkingServiceConfigurator) {
 	}
 
 	private MeetupsEntryLocalService _meetupsEntryLocalService;

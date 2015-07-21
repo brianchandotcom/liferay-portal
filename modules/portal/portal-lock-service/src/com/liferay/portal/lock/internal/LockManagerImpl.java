@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.lock.service.LockLocalService;
-import com.liferay.portal.lock.service.configuration.configurator.LockServiceConfigurator;
 
 import java.util.Date;
 import java.util.Map;
@@ -197,11 +196,6 @@ public class LockManagerImpl implements LockManager {
 	@Reference(unbind = "-")
 	protected void setLockLocalService(LockLocalService lockLocalService) {
 		_lockLocalService = lockLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLockServiceConfigurator(
-		LockServiceConfigurator lockServiceConfigurator) {
 	}
 
 	protected PortalException translate(PortalException portalException) {

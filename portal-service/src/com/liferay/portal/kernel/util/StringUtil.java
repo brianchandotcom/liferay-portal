@@ -3910,14 +3910,12 @@ public class StringUtil {
 	 *         parentheticalSuffix
 	 */
 	public static String stripParentheticalSuffix(String s) {
-		if (!s.contains(StringPool.OPEN_PARENTHESIS) ||
-			!s.contains(StringPool.CLOSE_PARENTHESIS)) {
-
-			return s;
-		}
-
 		int x = s.lastIndexOf(StringPool.OPEN_PARENTHESIS);
 		int y = s.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+		if ((x != -1) || (y != -1)) {
+			return s;
+		}
 
 		if ((x > y) || !s.endsWith(StringPool.CLOSE_PARENTHESIS)) {
 			return s;

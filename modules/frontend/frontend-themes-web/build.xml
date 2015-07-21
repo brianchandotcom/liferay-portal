@@ -273,14 +273,14 @@
 					<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
 						<fileset
 							dir="${themes.dir}/_unstyled"
-							excludes="package.json,templates/init.ftl,templates/init.vm"
+							excludes="npm-debug.log,package.json,templates/init.ftl,templates/init.vm"
 						/>
 					</copy>
 
 					<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
 						<fileset
 							dir="${themes.dir}/_styled"
-							excludes="package.json"
+							excludes="npm-debug.log,package.json"
 						/>
 					</copy>
 

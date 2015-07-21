@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Comment Manager JSONWS
+Bundle-SymbolicName: com.liferay.comment.manager.jsonws
+Bundle-Version: 1.0.0
+Include-Resource: classes
+Private-Package: com.liferay.comment.manager.jsonws

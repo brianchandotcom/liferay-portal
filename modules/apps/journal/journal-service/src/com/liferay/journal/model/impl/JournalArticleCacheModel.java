@@ -66,7 +66,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -126,6 +126,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(smallImageId);
 		sb.append(", smallImageURL=");
 		sb.append(smallImageURL);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -278,6 +280,13 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			journalArticleImpl.setSmallImageURL(smallImageURL);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			journalArticleImpl.setLastPublishDate(null);
+		}
+		else {
+			journalArticleImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		journalArticleImpl.setStatus(status);
 		journalArticleImpl.setStatusByUserId(statusByUserId);
 
@@ -336,6 +345,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		smallImage = objectInput.readBoolean();
 		smallImageId = objectInput.readLong();
 		smallImageURL = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
@@ -453,6 +463,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			objectOutput.writeUTF(smallImageURL);
 		}
 
+		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(statusByUserId);
 
@@ -498,6 +509,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public boolean smallImage;
 	public long smallImageId;
 	public String smallImageURL;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

@@ -50,7 +50,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	public void addArticleImageId(long articleImageId, long groupId,
 		java.lang.String articleId, double version,
 		java.lang.String elInstanceId, java.lang.String elName,
-		java.lang.String languageId) throws PortalException;
+		java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the journal article image to the database. Also notifies the appropriate model listeners.
@@ -92,7 +93,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.journal.model.JournalArticleImage deleteJournalArticleImage(
-		long articleImageId) throws PortalException;
+		long articleImageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the journal article image from the database. Also notifies the appropriate model listeners.
@@ -110,7 +112,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -186,7 +188,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleImage getArticleImage(
-		long articleImageId) throws PortalException;
+		long articleImageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getArticleImageId(long groupId, java.lang.String articleId,
@@ -225,7 +228,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleImage getJournalArticleImage(
-		long articleImageId) throws PortalException;
+		long articleImageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the journal article images.
@@ -253,7 +257,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

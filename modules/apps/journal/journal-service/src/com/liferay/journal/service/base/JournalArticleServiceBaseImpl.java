@@ -103,7 +103,7 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the journal article remote service
 	 */
-	public JournalArticleService getJournalArticleService() {
+	public com.liferay.journal.service.JournalArticleService getJournalArticleService() {
 		return journalArticleService;
 	}
 
@@ -113,7 +113,7 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 	 * @param journalArticleService the journal article remote service
 	 */
 	public void setJournalArticleService(
-		JournalArticleService journalArticleService) {
+		com.liferay.journal.service.JournalArticleService journalArticleService) {
 		this.journalArticleService = journalArticleService;
 	}
 
@@ -1557,8 +1557,8 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.journal.service.JournalArticleLocalService.class)
 	protected com.liferay.journal.service.JournalArticleLocalService journalArticleLocalService;
-	@BeanReference(type = JournalArticleService.class)
-	protected JournalArticleService journalArticleService;
+	@BeanReference(type = com.liferay.journal.service.JournalArticleService.class)
+	protected com.liferay.journal.service.JournalArticleService journalArticleService;
 	@BeanReference(type = JournalArticlePersistence.class)
 	protected JournalArticlePersistence journalArticlePersistence;
 	@BeanReference(type = JournalArticleFinder.class)

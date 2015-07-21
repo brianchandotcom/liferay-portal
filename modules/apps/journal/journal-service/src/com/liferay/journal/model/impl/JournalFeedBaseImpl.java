@@ -28,7 +28,7 @@ import com.liferay.journal.service.JournalFeedLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see JournalFeedImpl
- * @see JournalFeed
+ * @see com.liferay.journal.model.JournalFeed
  * @generated
  */
 @ProviderType

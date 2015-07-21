@@ -28,6 +28,7 @@ create table JournalArticle (
 	smallImage BOOLEAN,
 	smallImageId LONG,
 	smallImageURL STRING null,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -84,7 +85,8 @@ create table JournalFeed (
 	targetPortletId VARCHAR(75) null,
 	contentField VARCHAR(75) null,
 	feedFormat VARCHAR(75) null,
-	feedVersion DOUBLE
+	feedVersion DOUBLE,
+	lastPublishDate DATE null
 );
 
 create table JournalFolder (
@@ -101,6 +103,7 @@ create table JournalFolder (
 	name VARCHAR(100) null,
 	description STRING null,
 	restrictionType INTEGER,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,

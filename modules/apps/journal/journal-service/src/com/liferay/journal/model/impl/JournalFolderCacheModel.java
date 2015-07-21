@@ -66,7 +66,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -94,6 +94,8 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		sb.append(description);
 		sb.append(", restrictionType=");
 		sb.append(restrictionType);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -168,6 +170,14 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		}
 
 		journalFolderImpl.setRestrictionType(restrictionType);
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			journalFolderImpl.setLastPublishDate(null);
+		}
+		else {
+			journalFolderImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		journalFolderImpl.setStatus(status);
 		journalFolderImpl.setStatusByUserId(statusByUserId);
 
@@ -205,6 +215,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		restrictionType = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
@@ -259,6 +270,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		}
 
 		objectOutput.writeInt(restrictionType);
+		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(statusByUserId);
 
@@ -285,6 +297,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 	public String name;
 	public String description;
 	public int restrictionType;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

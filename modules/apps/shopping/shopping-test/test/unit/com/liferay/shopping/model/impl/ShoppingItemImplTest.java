@@ -14,10 +14,6 @@
 
 package com.liferay.shopping.model.impl;
 
-import jodd.bean.BeanUtil;
-
-import jodd.typeconverter.Convert;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,16 +26,12 @@ public class ShoppingItemImplTest {
 	public void testInfiniteStock() {
 		ShoppingItemImpl shoppingItemImpl = new ShoppingItemImpl();
 
-		Assert.assertFalse(
-			Convert.toBooleanValue(
-				BeanUtil.getProperty(shoppingItemImpl, "infiniteStock")));
+		Assert.assertFalse(shoppingItemImpl.isInfiniteStock());
 
 		shoppingItemImpl.setStockQuantity(
 			ShoppingItemImpl.STOCK_QUANTITY_INFINITE_STOCK);
 
-		Assert.assertTrue(
-			Convert.toBooleanValue(
-				BeanUtil.getProperty(shoppingItemImpl, "infiniteStock")));
+		Assert.assertTrue(shoppingItemImpl.isInfiniteStock());
 	}
 
 }

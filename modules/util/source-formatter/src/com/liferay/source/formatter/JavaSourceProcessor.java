@@ -2655,7 +2655,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		for (x = 0;;) {
 			x = line.indexOf(CharPool.OPEN_PARENTHESIS, x + 1);
 
-			if (x == -1) {
+			if ((x == -1) ||
+				(line.charAt(x + 1) == CharPool.CLOSE_PARENTHESIS)) {
+
 				break;
 			}
 

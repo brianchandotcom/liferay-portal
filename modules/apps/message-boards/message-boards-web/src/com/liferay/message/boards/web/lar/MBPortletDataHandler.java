@@ -46,12 +46,12 @@ import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
-import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBBanLocalService;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBStatsUserLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadFlagLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.portlet.messageboards.util.MBConstants;
 
@@ -60,6 +60,7 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -123,16 +124,16 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		MBBanLocalServiceUtil.deleteBansByGroupId(
+		_mbBanLocalService.deleteBansByGroupId(
 			portletDataContext.getScopeGroupId());
 
-		MBCategoryLocalServiceUtil.deleteCategories(
+		_mbCategoryLocalService.deleteCategories(
 			portletDataContext.getScopeGroupId());
 
-		MBStatsUserLocalServiceUtil.deleteStatsUsersByGroupId(
+		_mbStatsUserLocalService.deleteStatsUsersByGroupId(
 			portletDataContext.getScopeGroupId());
 
-		MBThreadLocalServiceUtil.deleteThreads(
+		_mbThreadLocalService.deleteThreads(
 			portletDataContext.getScopeGroupId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
@@ -154,7 +155,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
 			ActionableDynamicQuery categoryActionableDynamicQuery =
-				MBCategoryLocalServiceUtil.getExportActionableDynamicQuery(
+				_mbCategoryLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			categoryActionableDynamicQuery.performActions();
@@ -167,7 +168,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "thread-flags")) {
 			ActionableDynamicQuery threadFlagActionableDynamicQuery =
-				MBThreadFlagLocalServiceUtil.getExportActionableDynamicQuery(
+				_mbThreadFlagLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			threadFlagActionableDynamicQuery.performActions();
@@ -175,7 +176,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "user-bans")) {
 			ActionableDynamicQuery banActionableDynamicQuery =
-				MBBanLocalServiceUtil.getExportActionableDynamicQuery(
+				_mbBanLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			banActionableDynamicQuery.performActions();
@@ -249,13 +250,13 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery banActionableDynamicQuery =
-			MBBanLocalServiceUtil.getExportActionableDynamicQuery(
+			_mbBanLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		banActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery categoryActionableDynamicQuery =
-			MBCategoryLocalServiceUtil.getExportActionableDynamicQuery(
+			_mbCategoryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		categoryActionableDynamicQuery.performCount();
@@ -266,13 +267,13 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		messageActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery threadActionableDynamicQuery =
-			MBThreadLocalServiceUtil.getExportActionableDynamicQuery(
+			_mbThreadLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		threadActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery threadFlagActionableDynamicQuery =
-			MBThreadFlagLocalServiceUtil.getExportActionableDynamicQuery(
+			_mbThreadFlagLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		threadFlagActionableDynamicQuery.performCount();
@@ -282,7 +283,7 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		final ExportActionableDynamicQuery actionableDynamicQuery =
-			MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
+			_mbMessageLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.setAddCriteriaMethod(
@@ -337,5 +338,52 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 		return actionableDynamicQuery;
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
+		_mbBanLocalService = mbBanLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBStatsUserLocalService(
+		MBStatsUserLocalService mbStatsUserLocalService) {
+
+		_mbStatsUserLocalService = mbStatsUserLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadFlagLocalService(
+		MBThreadFlagLocalService mbThreadFlagLocalService) {
+
+		_mbThreadFlagLocalService = mbThreadFlagLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	private MBBanLocalService _mbBanLocalService;
+	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBStatsUserLocalService _mbStatsUserLocalService;
+	private MBThreadFlagLocalService _mbThreadFlagLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

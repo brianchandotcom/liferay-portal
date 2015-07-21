@@ -39,7 +39,7 @@ public class ScriptingNotificationRecipientEvaluator
 		throws PortalException {
 
 		String[] recipientScriptRequiredContexts = StringUtil.split(
-			kaleoNotificationRecipient.getRecipientScriptRequiredContexts());
+			kaleoNotificationRecipient.getRecipientScriptContexts());
 
 		Map<String, Object> inputObjects =
 			ScriptingContextBuilderUtil.buildScriptingContext(executionContext);

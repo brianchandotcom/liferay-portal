@@ -77,6 +77,7 @@ public class JournalFeedWrapper implements JournalFeed,
 		attributes.put("contentField", getContentField());
 		attributes.put("feedFormat", getFeedFormat());
 		attributes.put("feedVersion", getFeedVersion());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -216,6 +217,12 @@ public class JournalFeedWrapper implements JournalFeed,
 		if (feedVersion != null) {
 			setFeedVersion(feedVersion);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -254,7 +261,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the create date of this journal feed
 	*/
 	@Override
-	public Date getCreateDate() {
+	public java.util.Date getCreateDate() {
 		return _journalFeed.getCreateDate();
 	}
 
@@ -364,12 +371,22 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
+	* Returns the last publish date of this journal feed.
+	*
+	* @return the last publish date of this journal feed
+	*/
+	@Override
+	public java.util.Date getLastPublishDate() {
+		return _journalFeed.getLastPublishDate();
+	}
+
+	/**
 	* Returns the modified date of this journal feed.
 	*
 	* @return the modified date of this journal feed
 	*/
 	@Override
-	public Date getModifiedDate() {
+	public java.util.Date getModifiedDate() {
 		return _journalFeed.getModifiedDate();
 	}
 
@@ -561,7 +578,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param createDate the create date of this journal feed
 	*/
 	@Override
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(java.util.Date createDate) {
 		_journalFeed.setCreateDate(createDate);
 	}
 
@@ -685,12 +702,22 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
+	* Sets the last publish date of this journal feed.
+	*
+	* @param lastPublishDate the last publish date of this journal feed
+	*/
+	@Override
+	public void setLastPublishDate(java.util.Date lastPublishDate) {
+		_journalFeed.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
 	* Sets the modified date of this journal feed.
 	*
 	* @param modifiedDate the modified date of this journal feed
 	*/
 	@Override
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(java.util.Date modifiedDate) {
 		_journalFeed.setModifiedDate(modifiedDate);
 	}
 

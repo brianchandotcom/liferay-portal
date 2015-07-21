@@ -58,22 +58,23 @@ public interface JournalFeedLocalService extends BaseLocalService,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedFormat, double feedVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addFeedResources(com.liferay.journal.model.JournalFeed feed,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addFeedResources(com.liferay.journal.model.JournalFeed feed,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addFeedResources(long feedId, boolean addGroupPermissions,
-		boolean addGuestPermissions) throws PortalException;
+		boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void addFeedResources(long feedId,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the journal feed to the database. Also notifies the appropriate model listeners.
@@ -95,12 +96,13 @@ public interface JournalFeedLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteFeed(com.liferay.journal.model.JournalFeed feed)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteFeed(long feedId) throws PortalException;
+	public void deleteFeed(long feedId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteFeed(long groupId, java.lang.String feedId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the journal feed with the primary key from the database. Also notifies the appropriate model listeners.
@@ -111,7 +113,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.journal.model.JournalFeed deleteJournalFeed(long id)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the journal feed from the database. Also notifies the appropriate model listeners.
@@ -129,7 +131,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -230,11 +232,12 @@ public interface JournalFeedLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getFeed(long feedId)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		java.lang.String feedId) throws PortalException;
+		java.lang.String feedId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.journal.model.JournalFeed> getFeeds();
@@ -259,7 +262,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getJournalFeed(long id)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the journal feed matching the UUID and group.
@@ -271,7 +274,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getJournalFeedByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the journal feeds.
@@ -325,7 +329,8 @@ public interface JournalFeedLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj) throws PortalException;
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.journal.model.JournalFeed> search(
@@ -366,7 +371,7 @@ public interface JournalFeedLocalService extends BaseLocalService,
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedFormat, double feedVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the journal feed in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

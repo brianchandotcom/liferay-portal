@@ -334,7 +334,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @return the journal article resource local service
 	 */
-	public JournalArticleResourceLocalService getJournalArticleResourceLocalService() {
+	public com.liferay.journal.service.JournalArticleResourceLocalService getJournalArticleResourceLocalService() {
 		return journalArticleResourceLocalService;
 	}
 
@@ -344,7 +344,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param journalArticleResourceLocalService the journal article resource local service
 	 */
 	public void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
+		com.liferay.journal.service.JournalArticleResourceLocalService journalArticleResourceLocalService) {
 		this.journalArticleResourceLocalService = journalArticleResourceLocalService;
 	}
 
@@ -448,8 +448,8 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = JournalArticleResourceLocalService.class)
-	protected JournalArticleResourceLocalService journalArticleResourceLocalService;
+	@BeanReference(type = com.liferay.journal.service.JournalArticleResourceLocalService.class)
+	protected com.liferay.journal.service.JournalArticleResourceLocalService journalArticleResourceLocalService;
 	@BeanReference(type = JournalArticleResourcePersistence.class)
 	protected JournalArticleResourcePersistence journalArticleResourcePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -728,6 +728,20 @@ public interface JournalArticleModel extends AttachedModel,
 	public void setSmallImageURL(String smallImageURL);
 
 	/**
+	 * Returns the last publish date of this journal article.
+	 *
+	 * @return the last publish date of this journal article
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this journal article.
+	 *
+	 * @param lastPublishDate the last publish date of this journal article
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this journal article.
 	 *
 	 * @return the status of this journal article

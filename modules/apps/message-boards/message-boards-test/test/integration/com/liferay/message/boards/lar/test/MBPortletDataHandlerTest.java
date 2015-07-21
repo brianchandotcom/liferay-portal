@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.lar;
+package com.liferay.message.boards.lar.test;
 
+import com.liferay.message.boards.web.lar.MBPortletDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

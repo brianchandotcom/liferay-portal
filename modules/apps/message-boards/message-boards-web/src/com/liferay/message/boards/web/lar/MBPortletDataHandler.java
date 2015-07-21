@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.lar;
+package com.liferay.message.boards.web.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;

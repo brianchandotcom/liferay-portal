@@ -92,7 +92,6 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>message_boards</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/messageboards/message-boards-friendly-url-routes.xml</friendly-url-routes>
-		<portlet-data-handler-class>com.liferay.portlet.messageboards.lar.MBPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBBanStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBCategoryStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.messageboards.lar.MBDiscussionStagedModelDataHandler</staged-model-data-handler-class>
@@ -461,7 +460,6 @@
 		<parent-struts-path>message_boards</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.messageboards.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<portlet-data-handler-class>com.liferay.portlet.messageboards.lar.MBPortletDataHandler</portlet-data-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>6.0</control-panel-entry-weight>
 		<permission-propagator>com.liferay.portlet.messageboards.security.permission.MBPermissionPropagatorImpl</permission-propagator>

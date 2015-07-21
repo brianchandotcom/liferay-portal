@@ -12,26 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards;
+package com.liferay.message.boards.web.custom.attributes;
 
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
-import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.portlet.messageboards.model.MBCategory;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-public class MBMessageCustomAttributesDisplay
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS},
+	service = CustomAttributesDisplay.class
+)
+public class MBCategoryCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
 	@Override
 	public String getClassName() {
-		return MBMessage.class.getName();
+		return MBCategory.class.getName();
 	}
 
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
+		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
 
 }

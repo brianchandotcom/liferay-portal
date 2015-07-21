@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.social;
+package com.liferay.message.boards.web.social;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -28,10 +29,17 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS},
+	service = SocialActivityInterpreter.class
+)
 public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override

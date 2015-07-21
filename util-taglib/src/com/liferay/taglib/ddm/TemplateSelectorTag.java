@@ -36,7 +36,7 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 
 	@Override
 	public String getDisplayStyle() {
-		String displayStyle = getDisplayStyle();
+		String displayStyle = super.getDisplayStyle();
 
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = getDefaultDisplayStyle();
@@ -56,8 +56,10 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 
 	@Override
 	public long getDisplayStyleGroupId() {
-		if (getDisplayStyleGroupId() > 0) {
-			return getDisplayStyleGroupId();
+		long displayStyleGroupId = super.getDisplayStyleGroupId();
+
+		if (displayStyleGroupId > 0) {
+			return displayStyleGroupId;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -74,7 +76,7 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 	}
 
 	protected DDMTemplate getPortletDisplayDDMTemplate() {
-		String displayStyle = getDisplayStyle();
+		String displayStyle = super.getDisplayStyle();
 
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = getDefaultDisplayStyle();

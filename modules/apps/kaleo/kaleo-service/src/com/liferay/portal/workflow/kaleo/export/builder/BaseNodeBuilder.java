@@ -127,8 +127,7 @@ public abstract class BaseNodeBuilder
 				recipient = new ScriptRecipient(
 					kaleoNotificationRecipient.getRecipientScript(),
 					kaleoNotificationRecipient.getRecipientScriptLanguage(),
-					kaleoNotificationRecipient.
-						getRecipientScriptRequiredContexts());
+					kaleoNotificationRecipient.getRecipientScriptContexts());
 			}
 			else if (recipientClassName.equals(RecipientType.USER.getValue())) {
 				if (recipientClassPK > 0) {

@@ -507,12 +507,11 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			String script = scriptedRecipientElement.elementText("script");
 			String scriptLanguage = scriptedRecipientElement.elementText(
 				"script-language");
-			String scriptRequiredContexts =
-				scriptedRecipientElement.elementText(
-					"script-required-contexts");
+			String scriptContexts = scriptedRecipientElement.elementText(
+				"script-contexts");
 
 			ScriptRecipient scriptRecipient = new ScriptRecipient(
-				script, scriptLanguage, scriptRequiredContexts);
+				script, scriptLanguage, scriptContexts);
 
 			scriptRecipient.setNotificationReceptionType(
 				notificationReceptionType);

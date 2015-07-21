@@ -50,13 +50,24 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		if (Validator.isNull(selectedTab)) {
 			selectedTab = titles.get(0);
 		}
+
+		String keywords = ParamUtil.getString(request, "keywords");
 		%>
 
 		<div class="form-search">
-			<aui:form action="<%= currentURL %>"  name="searchFm">
-				<input id="<portlet:namespace />selectedTab" name="<portlet:namespace />selectedTab" type="hidden" value="<%= selectedTab %>">
+			<aui:form action="<%= currentURL %>" cssClass="basic-search input-group"  name="searchFm">
+				<div class="input-group-input">
+					<div class="basic-search-slider">
+						<button class="basic-search-close btn btn-default" type="button"><span class="icon-remove"></span></button>
 
-				<liferay-ui:input-search />
+						<aui:input name="selectedTab" type="hidden" value="<%= selectedTab %>" />
+
+						<input class="form-control" name="<portlet:namespace />keywords" placeholder=" Search..." type="text" value="<%= keywords %>" />
+					</div>
+				</div>
+				<div class="input-group-btn">
+					<button class="btn btn-default" type="submit"><span class="icon-search"></span></button>
+				</div>
 			</aui:form>
 		</div>
 

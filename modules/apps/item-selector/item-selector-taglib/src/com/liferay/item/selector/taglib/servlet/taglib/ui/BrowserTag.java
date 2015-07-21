@@ -53,10 +53,6 @@ public class BrowserTag extends IncludeTag {
 		_displayStyle = displayStyle;
 	}
 
-	public void setDisplayStyleURL(PortletURL displayStyleURL) {
-		_displayStyleURL = displayStyleURL;
-	}
-
 	public void setItemSelectedEventName(String itemSelectedEventName) {
 		_itemSelectedEventName = itemSelectedEventName;
 	}
@@ -68,12 +64,12 @@ public class BrowserTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setSearchContainer(SearchContainer<?> searchContainer) {
-		_searchContainer = searchContainer;
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
 	}
 
-	public void setSearchURL(PortletURL searchURL) {
-		_searchURL = searchURL;
+	public void setSearchContainer(SearchContainer<?> searchContainer) {
+		_searchContainer = searchContainer;
 	}
 
 	public void setShowBreadcrumb(boolean showBreadcrumb) {
@@ -94,10 +90,9 @@ public class BrowserTag extends IncludeTag {
 
 		_desiredItemSelectorReturnTypes = null;
 		_displayStyle = null;
-		_displayStyleURL = null;
 		_itemSelectedEventName = null;
+		_portletURL = null;
 		_searchContainer = null;
-		_searchURL = null;
 		_showBreadcrumb = false;
 		_tabName = null;
 		_uploadURL = null;
@@ -155,9 +150,6 @@ public class BrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:displayStyle", getDisplayStyle());
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:displayStyleURL",
-			_displayStyleURL);
-		request.setAttribute(
 			"liferay-ui:item-selector-browser:draggableFileReturnType",
 			getDraggableFileReturnType());
 		request.setAttribute(
@@ -169,10 +161,10 @@ public class BrowserTag extends IncludeTag {
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);
 		request.setAttribute(
+			"liferay-ui:item-selector-browser:portletURL", _portletURL);
+		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchContainer",
 			_searchContainer);
-		request.setAttribute(
-			"liferay-ui:item-selector-browser:searchURL", _searchURL);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:showBreadcrumb", _showBreadcrumb);
 		request.setAttribute(
@@ -185,10 +177,9 @@ public class BrowserTag extends IncludeTag {
 
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
-	private PortletURL _displayStyleURL;
 	private String _itemSelectedEventName;
+	private PortletURL _portletURL;
 	private SearchContainer<?> _searchContainer;
-	private PortletURL _searchURL;
 	private boolean _showBreadcrumb;
 	private String _tabName;
 	private PortletURL _uploadURL;

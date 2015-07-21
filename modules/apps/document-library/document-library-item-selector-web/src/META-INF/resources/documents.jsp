@@ -82,10 +82,9 @@ searchContainer.setResults(results);
 <item-selector-ui:browser
 	desiredItemSelectorReturnTypes="<%= itemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	displayStyle="<%= dlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	displayStyleURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
+	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	searchContainer="<%= searchContainer %>"
-	searchURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	showBreadcrumb="<%= true %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

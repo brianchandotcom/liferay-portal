@@ -20,13 +20,12 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_browser_page") + StringPool.UNDERLINE;
 
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"));
-PortletURL displayStyleURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:displayStyleURL");
 ItemSelectorReturnType draggableFileReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-ui:item-selector-browser:draggableFileReturnType");
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-ui:item-selector-browser:existingFileEntryReturnType");
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:itemSelectedEventName"));
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:portletURL");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-ui:item-selector-browser:showBreadcrumb"));
-PortletURL searchURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:searchURL");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:uploadURL");
 %>
@@ -36,17 +35,15 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 </liferay-util:html-top>
 
 <div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
-	<c:if test="<%= displayStyleURL != null %>">
-		<aui:nav-bar>
-			<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
-				<liferay-ui:app-view-display-style
-					displayStyle="<%= displayStyle %>"
-					displayStyleURL="<%= displayStyleURL %>"
-					displayStyles="<%= BrowserTag.DISPLAY_STYLES %>"
-				/>
-			</aui:nav>
-		</aui:nav-bar>
-	</c:if>
+	<aui:nav-bar>
+		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+			<liferay-ui:app-view-display-style
+				displayStyle="<%= displayStyle %>"
+				displayStyleURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				displayStyles="<%= BrowserTag.DISPLAY_STYLES %>"
+			/>
+		</aui:nav>
+	</aui:nav-bar>
 
 	<%
 	long folderId = ParamUtil.getLong(request, "folderId");
@@ -60,7 +57,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 	}
 
 	if (showBreadcrumb && !showSearchInfo) {
-		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, searchContainer.getIteratorURL());
+		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, PortletURLUtil.clone(portletURL, liferayPortletResponse));
 	%>
 
 		<liferay-ui:breadcrumb
@@ -117,6 +114,8 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 				<span class="change-search-folder">
 
 					<%
+					PortletURL searchURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
 					searchURL.setParameter("folderId", !searchEverywhere ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId));
 					searchURL.setParameter("searchFolderId", String.valueOf(folderId));
 					searchURL.setParameter("keywords", keywords);
@@ -127,10 +126,9 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 			</c:if>
 
 			<%
-			PortletURL closeSearchURL = PortletURLUtil.clone(searchURL, liferayPortletResponse);
+			PortletURL closeSearchURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
 			closeSearchURL.setParameter("folderId", String.valueOf(folderId));
-			closeSearchURL.setParameter("keywords", StringPool.BLANK);
 			%>
 
 			<liferay-ui:icon cssClass="close-search" iconCssClass="icon-remove" id="closeSearch" message="remove" url="<%= closeSearchURL.toString() %>" />
@@ -223,10 +221,9 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 							<%
 							}
 							if (folder != null) {
-								PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
+								PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
 								viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
-								viewFolderURL.setParameter("keywords", StringPool.BLANK);
 							%>
 
 								<liferay-ui:search-container-column-text name="title">
@@ -286,7 +283,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 
 							<%
 							for (Folder folder : folders) {
-								PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
+								PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
 								viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 							%>
@@ -349,7 +346,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 
 							<%
 							for (Folder folder : folders) {
-								PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
+								PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
 								viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 

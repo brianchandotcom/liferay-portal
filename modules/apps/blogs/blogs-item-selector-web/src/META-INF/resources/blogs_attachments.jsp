@@ -79,10 +79,9 @@ searchContainer.setResults(results);
 <item-selector-ui:browser
 	desiredItemSelectorReturnTypes="<%= blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	displayStyle="<%= blogsItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	displayStyleURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
+	portletURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	searchContainer="<%= searchContainer %>"
-	searchURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= blogsItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />

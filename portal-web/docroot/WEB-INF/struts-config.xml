@@ -201,15 +201,9 @@
 
 		<action path="/directory/view" forward="portlet.directory.view" />
 
-		<action path="/directory/view_organization" type="com.liferay.portlet.usersadmin.action.EditOrganizationAction">
-			<forward name="portlet.users_admin.edit_organization" path="portlet.directory.view_organization" />
-			<forward name="portlet.users_admin.error" path="portlet.directory.error" />
-		</action>
+		<action path="/directory/view_organization" forward="portlet.directory.view_organization" />
 
-		<action path="/directory/view_user" type="com.liferay.portlet.usersadmin.action.EditUserAction">
-			<forward name="portlet.users_admin.edit_user" path="portlet.directory.view_user" />
-			<forward name="portlet.users_admin.error" path="portlet.directory.error" />
-		</action>
+		<action path="/directory/view_user" forward="portlet.directory.view_user" />
 
 		<!-- Dockbar -->
 
@@ -324,20 +318,6 @@
 		</action>
 
 		<action path="/monitoring/view" forward="portlet.monitoring.view" />
-
-		<!-- My Account -->
-
-		<action path="/my_account/edit_user" type="com.liferay.portlet.myaccount.action.EditUserAction">
-			<forward name="portlet.users_admin.edit_user" path="portlet.users_admin.edit_user" />
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
-		<action path="/my_account/edit_user_details" forward="portlet.users_admin.edit_user_details" />
-
-		<action path="/my_account/view" type="com.liferay.portlet.myaccount.action.ViewAction">
-			<forward name="portlet.my_account.edit_user" path="portlet.users_admin.edit_user" />
-			<forward name="portlet.my_account.view" path="portlet.my_account.view" />
-		</action>
 
 		<!-- News -->
 
@@ -493,45 +473,6 @@
 			<forward name="portlet.software_catalog.view_product_entry" path="portlet.software_catalog.view_product_entry" />
 			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />
 		</action>
-
-		<!-- Users Admin -->
-
-		<action path="/users_admin/edit_organization" type="com.liferay.portlet.usersadmin.action.EditOrganizationAction">
-			<forward name="portlet.users_admin.edit_organization" path="portlet.users_admin.edit_organization" />
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
-		<action path="/users_admin/edit_organization_assignments" type="com.liferay.portlet.usersadmin.action.EditOrganizationAssignmentsAction">
-			<forward name="portlet.users_admin.edit_organization_assignments" path="portlet.users_admin.edit_organization_assignments" />
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
-		<action path="/users_admin/edit_user" type="com.liferay.portlet.usersadmin.action.EditUserAction">
-			<forward name="portlet.users_admin.edit_user" path="portlet.users_admin.edit_user" />
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
-		<action path="/users_admin/edit_user_details" forward="portlet.users_admin.edit_user_details" />
-
-		<action path="/users_admin/export_users" type="com.liferay.portlet.usersadmin.action.ExportUsersAction">
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
-		<action path="/users_admin/get_users_count" type="com.liferay.portlet.usersadmin.action.GetUsersCountAction" />
-
-		<action path="/users_admin/select_organization" forward="portlet.users_admin.select_organization" />
-
-		<action path="/users_admin/select_organization_role" forward="portlet.roles_admin.select_organization_role" />
-
-		<action path="/users_admin/select_regular_role" forward="portlet.roles_admin.select_regular_role" />
-
-		<action path="/users_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
-
-		<action path="/users_admin/select_user_group" forward="portlet.users_admin.select_user_group" />
-
-		<action path="/users_admin/view" forward="portlet.users_admin.view" />
-
-		<action path="/users_admin/view_users" forward="portlet.users_admin.view" />
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

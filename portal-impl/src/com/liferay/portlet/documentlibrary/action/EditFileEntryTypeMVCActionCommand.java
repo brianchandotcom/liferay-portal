@@ -113,7 +113,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getString(actionRequest, "redirect"));
 
 				if (Validator.isNotNull(redirect)) {
-					actionResponse.sendRedirect(redirect);
+					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 			}
 		}

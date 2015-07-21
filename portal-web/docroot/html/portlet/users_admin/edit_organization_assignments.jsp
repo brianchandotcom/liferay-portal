@@ -30,7 +30,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/users_admin/edit_organization_assignments");
+portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_organization_assignments");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
@@ -49,9 +49,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 
 <liferay-ui:membership-policy-error />
 
-<portlet:actionURL var="editAssignmentsURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_organization_assignments" />
-</portlet:actionURL>
+<portlet:actionURL name="/users_admin/edit_organization_assignments" var="editAssignmentsURL" />
 
 <aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

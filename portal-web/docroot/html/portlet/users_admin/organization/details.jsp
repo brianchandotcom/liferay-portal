@@ -198,7 +198,7 @@ if (parentOrganization != null) {
 		modelVar="curOrganization"
 	>
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+			<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
 		</portlet:renderURL>
@@ -282,12 +282,12 @@ if (parentOrganization != null) {
 						},
 						id: '<portlet:namespace />selectOrganization',
 						title: '<liferay-ui:message arguments="organization" key="select-x" />',
-						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
+						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/users_admin/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
 					function(event) {
 						var rowColumns = [];
 
-						var href = '<portlet:renderURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=' + event.organizationid;
+						var href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=' + event.organizationid;
 
 						rowColumns.push(<portlet:namespace />createURL(href, event.name));
 						rowColumns.push(<portlet:namespace />createURL(href, event.type));

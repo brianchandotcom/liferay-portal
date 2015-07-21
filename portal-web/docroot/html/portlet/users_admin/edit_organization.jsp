@@ -68,12 +68,10 @@ else {
 	title="<%= headerTitle %>"
 />
 
-<portlet:actionURL var="editOrganizationActionURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_organization" />
-</portlet:actionURL>
+<portlet:actionURL name="/users_admin/edit_organization" var="editOrganizationActionURL" />
 
 <portlet:renderURL var="editOrganizationRenderURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_organization" />
+	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 

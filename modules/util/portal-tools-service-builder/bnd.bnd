@@ -19,6 +19,10 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportPackage.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportPackage.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportsFormatter.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/JavaImportsFormatter.class,\

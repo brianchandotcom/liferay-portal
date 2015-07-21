@@ -14,6 +14,7 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/bean/BeanProperties.class,\

@@ -81,7 +81,7 @@
 									<exclude name="**/css/*.scss" />
 								</fileset>
 								<filtermapper>
-									<replacestring from=".sass-cache/" to="" />
+									<replacestring from=".sass-cache" to="" />
 								</filtermapper>
 							</copy>
 						</then>

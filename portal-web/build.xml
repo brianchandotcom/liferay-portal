@@ -601,7 +601,7 @@ Please set the property "jdk.7.home" in build.properties.
 						<include name="**/*.xml" />
 					</fileset>
 					<filtermapper>
-						<replacestring from=".sass-cache/" to="" />
+						<replacestring from=".sass-cache" to="" />
 					</filtermapper>
 				</copy>
 			</then>
@@ -649,7 +649,7 @@ Please set the property "jdk.7.home" in build.properties.
             <mappedresources>
                 <fileset dir="docroot" includes="**/.sass-cache/*.css" />
                 <filtermapper>
-                    <replacestring from=".sass-cache/" to="" />
+                    <replacestring from=".sass-cache" to="" />
                 </filtermapper>
             </mappedresources>
 

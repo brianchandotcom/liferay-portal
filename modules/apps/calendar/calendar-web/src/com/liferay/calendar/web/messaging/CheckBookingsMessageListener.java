@@ -18,7 +18,6 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
-import com.liferay.calendar.service.configuration.configurator.CalendarServiceConfigurator;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -60,11 +59,6 @@ public class CheckBookingsMessageListener
 	@Reference
 	protected void setCalendarBookingLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {
-	}
-
-	@Reference
-	protected void setCalendarServiceConfigurator(
-		CalendarServiceConfigurator calendarServiceConfigurator) {
 	}
 
 	@Reference(

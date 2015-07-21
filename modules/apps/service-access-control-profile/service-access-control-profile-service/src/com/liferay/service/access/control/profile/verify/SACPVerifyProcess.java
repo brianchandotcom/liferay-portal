@@ -27,8 +27,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import org.springframework.context.ApplicationContext;
-
 /**
  * @author Mika Koivisto
  */
@@ -39,14 +37,6 @@ public class SACPVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyDefaultSACPEntry();
-	}
-
-	@Reference(
-		target = "(org.springframework.context.service.name=com.liferay.service.access.control.profile.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
 	}
 
 	@Reference

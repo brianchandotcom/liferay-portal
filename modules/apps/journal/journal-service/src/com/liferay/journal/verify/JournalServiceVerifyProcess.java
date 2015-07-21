@@ -25,7 +25,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.service.configuration.configurator.JournalServiceConfigurator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -147,11 +146,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		JournalFolderLocalService journalFolderLocalService) {
 
 		_journalFolderLocalService = journalFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalServiceConfigurator(
-		JournalServiceConfigurator JournalServiceConfigurator) {
 	}
 
 	@Reference(unbind = "-")

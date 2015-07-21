@@ -2,13 +2,13 @@ buildService {
 	apiDirName = "../microblogs-api/src"
 	autoNamespaceTables = true
 	hbmFileName = "src/META-INF/module-hbm.xml"
-	springFileName = "src/META-INF/module-spring.xml"
+	springFileName = "src/META-INF/spring/module-spring.xml"
 	sqlDirName = "src/META-INF/sql"
 	testDirName = "../microblogs-test/test/integration"
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.0-SNAPSHOT"
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.1"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:microblogs:microblogs-api")
 }

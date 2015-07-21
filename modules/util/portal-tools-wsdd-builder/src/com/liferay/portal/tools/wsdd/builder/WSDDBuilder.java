@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.ant.Java2WsddTask;
 import com.liferay.util.xml.XMLSafeReader;
@@ -81,7 +81,7 @@ public class WSDDBuilder {
 
 		SAXReader saxReader = _getSAXReader();
 
-		String content = ServiceBuilder.getContent(_fileName);
+		String content = ToolsUtil.getContent(_fileName);
 
 		Document document = saxReader.read(new XMLSafeReader(content));
 

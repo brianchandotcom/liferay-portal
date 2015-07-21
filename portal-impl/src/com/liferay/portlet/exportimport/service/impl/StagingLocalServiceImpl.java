@@ -461,7 +461,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	 *             long, boolean, java.util.Map)}
+	 *             long, boolean, Map)}
 	 */
 	@Deprecated
 	@Override

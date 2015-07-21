@@ -91,7 +91,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	 *             boolean, java.util.Map)}
+	 *             boolean, Map)}
 	 */
 	@Deprecated
 	@Override

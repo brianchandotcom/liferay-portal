@@ -98,8 +98,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
-	 *             String, String, java.util.List, boolean, double, boolean,
-	 *             com.liferay.portal.service.ServiceContext)}
+	 *             String, String, List, boolean, double, boolean,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

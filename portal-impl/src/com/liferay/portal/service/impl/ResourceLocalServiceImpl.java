@@ -108,9 +108,9 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * <li>
 	 * If the service context specifies that default group or default guest
 	 * permissions are to be added, then only default permissions are added. See
-	 * {@link com.liferay.portal.service.ServiceContext#setAddGroupPermissions(
+	 * {@link ServiceContext#setAddGroupPermissions(
 	 * boolean)} and {@link
-	 * com.liferay.portal.service.ServiceContext#setAddGuestPermissions(
+	 * ServiceContext#setAddGuestPermissions(
 	 * boolean)}.
 	 * </li>
 	 * <li>
@@ -120,15 +120,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * If the service context specifies to derive default permissions, then
 	 * default group and guest permissions are derived from the model and
 	 * added. See {@link
-	 * com.liferay.portal.service.ServiceContext#setDeriveDefaultPermissions(
+	 * ServiceContext#setDeriveDefaultPermissions(
 	 * boolean)}.
 	 * </li>
 	 * <li>
 	 * Lastly group and guest permissions from the service
 	 * context are applied. See {@link
-	 * com.liferay.portal.service.ServiceContext#setGroupPermissions(String[])}
+	 * ServiceContext#setGroupPermissions(String[])}
 	 * and {@link
-	 * com.liferay.portal.service.ServiceContext#setGuestPermissions(String[])}.
+	 * ServiceContext#setGuestPermissions(String[])}.
 	 * </li>
 	 * </ol>
 	 *
@@ -354,7 +354,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *
 	 * @param  auditedModel the model associated with the resource
 	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
+	 *         ResourceConstants}.
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
@@ -374,7 +374,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param  name the resource's name, which should be a portlet ID if the
 	 *         resource is a portlet or the resource's class name otherwise
 	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
+	 *         ResourceConstants}.
 	 * @param  primKey the primary key of the resource instance
 	 * @throws PortalException if a portal exception occurred
 	 */
@@ -393,7 +393,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param  name the resource's name, which should be a portlet ID if the
 	 *         resource is a portlet or the resource's class name otherwise
 	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
+	 *         ResourceConstants}.
 	 * @param  primKey the primary key string of the resource instance
 	 * @throws PortalException if a portal exception occurred
 	 */
@@ -412,7 +412,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param  name a name for the resource, which should be a portlet ID if the
 	 *         resource is a portlet or the resource's class name otherwise
 	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
+	 *         ResourceConstants}.
 	 * @param  primKey the primary key string of the resource
 	 * @return the new resource
 	 */
@@ -550,7 +550,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param name the resource's name, which should be a portlet ID if the
 	 *        resource is a portlet or the resource's class name otherwise
 	 * @param scope the scope of the resource. For more information see {@link
-	 *        com.liferay.portal.model.ResourceConstants}.
+	 *        ResourceConstants}.
 	 * @param primKey the primary key string of the resource instance
 	 * @param newPrimKey the new primary key string of the resource
 	 */

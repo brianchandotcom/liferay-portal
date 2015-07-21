@@ -87,8 +87,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      groupId the primary key of the group
 	 * @param      privateLayout whether the layout is private to the group
 	 * @param      parentLayoutId the primary key of the parent layout
-	 *             (optionally {@link
-	 *             com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 *             (optionally {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
 	 * @param      localeNamesMap the layout's locales and localized names
 	 * @param      localeTitlesMap the layout's locales and localized titles
 	 * @param      descriptionMap the layout's locales and localized
@@ -96,9 +95,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      keywordsMap the layout's locales and localized keywords
 	 * @param      robotsMap the layout's locales and localized robots
 	 * @param      type the layout's type (optionally {@link
-	 *             com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
-	 *             possible types can be found in {@link
-	 *             com.liferay.portal.model.LayoutConstants}.
+	 *             LayoutConstants#TYPE_PORTLET}). The possible types can be
+	 *             found in {@link LayoutConstants}.
 	 * @param      hidden whether the layout is hidden
 	 * @param      friendlyURL the layout's locales and localized friendly URLs.
 	 *             To see how the URL is normalized when accessed, see {@link
@@ -162,17 +160,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the primary key of the parent layout (optionally
-	 *         {@link
-	 *         com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 *         {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
 	 * @param  localeNamesMap the layout's locales and localized names
 	 * @param  localeTitlesMap the layout's locales and localized titles
 	 * @param  descriptionMap the layout's locales and localized descriptions
 	 * @param  keywordsMap the layout's locales and localized keywords
 	 * @param  robotsMap the layout's locales and localized robots
 	 * @param  type the layout's type (optionally {@link
-	 *         com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
-	 *         possible types can be found in {@link
-	 *         com.liferay.portal.model.LayoutConstants}.
+	 *         LayoutConstants#TYPE_PORTLET}). The possible types can be found
+	 *         in {@link LayoutConstants}.
 	 * @param  typeSettings the settings to load the unicode properties object.
 	 *         See {@link com.liferay.portal.kernel.util.UnicodeProperties
 	 *         #fastLoad(String)}.
@@ -236,15 +232,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  parentLayoutId the primary key of the parent layout (optionally
-	 *         {@link
-	 *         com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 *         {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
 	 * @param  name the layout's locales and localized names
 	 * @param  title the layout's locales and localized titles
 	 * @param  description the layout's locales and localized descriptions
 	 * @param  type the layout's type (optionally {@link
-	 *         com.liferay.portal.model.LayoutConstants#TYPE_PORTLET}). The
-	 *         possible types can be found in {@link
-	 *         com.liferay.portal.model.LayoutConstants}.
+	 *         LayoutConstants#TYPE_PORTLET}). The possible types can be found
+	 *         in {@link LayoutConstants}.
 	 * @param  hidden whether the layout is hidden
 	 * @param  friendlyURL the layout's locales and localized friendly URLs. To
 	 *         see how the URL is normalized when accessed, see {@link
@@ -777,11 +771,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  scopeGroupId the primary key of the scope group. See {@link
-	 *         com.liferay.portal.service.ServiceContext#getScopeGroupId()}.
+	 *         ServiceContext#getScopeGroupId()}.
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  portletId the primary key of the portlet
 	 * @return Returns the primary key of the default layout group; {@link
-	 *         com.liferay.portal.model.LayoutConstants#DEFAULT_PLID} otherwise
+	 *         LayoutConstants#DEFAULT_PLID} otherwise
 	 * @throws PortalException if a group, layout, or portlet with the primary
 	 *         key could not be found
 	 */
@@ -926,7 +920,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  privateLayout whether the layout is private to the group
 	 * @param  layoutId the primary key of the layout
 	 * @param  languageId the primary key of the language. For more information
-	 *         See {@link java.util.Locale}.
+	 *         See {@link Locale}.
 	 * @return the layout's name
 	 * @throws PortalException if a matching layout could not be found
 	 */
@@ -1432,8 +1426,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  startDate the start date
 	 * @param  endDate the end date
 	 * @param  groupName the group name (optionally {@link
-	 *         com.liferay.portal.kernel.messaging.DestinationNames#LAYOUTS_LOCAL_PUBLISHER}).
-	 *         See {@link com.liferay.portal.kernel.messaging.DestinationNames}.
+	 *         DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *         DestinationNames}.
 	 * @param  cronText the cron text. See {@link
 	 *         com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
 	 * @param  schedulerStartDate the scheduler start date
@@ -1495,9 +1489,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the start date
 	 * @param      endDate the end date
 	 * @param      groupName the group name (optionally {@link
-	 *             com.liferay.portal.kernel.messaging.DestinationNames#LAYOUTS_LOCAL_PUBLISHER}).
-	 *             See {@link
-	 *             com.liferay.portal.kernel.messaging.DestinationNames}.
+	 *             DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *             DestinationNames}.
 	 * @param      cronText the cron text. See {@link
 	 *             com.liferay.portal.kernel.cal.RecurrenceSerializer
 	 *             #toCronText}
@@ -1546,8 +1539,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  startDate the start date
 	 * @param  endDate the end date
 	 * @param  groupName the group name. Optionally {@link
-	 *         com.liferay.portal.kernel.messaging.DestinationNames#LAYOUTS_LOCAL_PUBLISHER}).
-	 *         See {@link com.liferay.portal.kernel.messaging.DestinationNames}.
+	 *         DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *         DestinationNames}.
 	 * @param  cronText the cron text. See {@link
 	 *         com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
 	 * @param  schedulerStartDate the scheduler start date
@@ -1631,8 +1624,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  jobName the job name
 	 * @param  groupName the group name (optionally {@link
-	 *         com.liferay.portal.kernel.messaging.DestinationNames#LAYOUTS_LOCAL_PUBLISHER}).
-	 *         See {@link com.liferay.portal.kernel.messaging.DestinationNames}.
+	 *         DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *         DestinationNames}.
 	 * @throws PortalException if the group did not permission to manage staging
 	 *         and publish
 	 */
@@ -1654,8 +1647,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  jobName the job name
 	 * @param  groupName the group name (optionally {@link
-	 *         com.liferay.portal.kernel.messaging.DestinationNames#LAYOUTS_LOCAL_PUBLISHER}).
-	 *         See {@link com.liferay.portal.kernel.messaging.DestinationNames}.
+	 *         DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *         DestinationNames}.
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found or if the group did not have permission to publish
 	 */
@@ -1697,7 +1690,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  robotsMap the locales and localized robots to merge (optionally
 	 *         <code>null</code>)
 	 * @param  type the layout's new type (optionally {@link
-	 *         com.liferay.portal.model.LayoutConstants#TYPE_PORTLET})
+	 *         LayoutConstants#TYPE_PORTLET})
 	 * @param  hidden whether the layout is hidden
 	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
 	 *         To see how the URL is normalized when accessed see {@link
@@ -1752,7 +1745,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      robotsMap the locales and localized robots to merge
 	 *             (optionally <code>null</code>)
 	 * @param      type the layout's new type (optionally {@link
-	 *             com.liferay.portal.model.LayoutConstants#TYPE_PORTLET})
+	 *             LayoutConstants#TYPE_PORTLET})
 	 * @param      hidden whether the layout is hidden
 	 * @param      friendlyURL the layout's locales and new friendly URLs. To
 	 *             see how the URL is normalized when accessed, see {@link
@@ -1866,7 +1859,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  layoutId the primary key of the layout
 	 * @param  name the layout's new name
 	 * @param  languageId the primary key of the language. For more information
-	 *         see {@link java.util.Locale}.
+	 *         see {@link Locale}.
 	 * @return the updated layout
 	 * @throws PortalException if a matching layout could not be found, if the
 	 *         user did not have permission to update the layout, or if the new
@@ -1892,7 +1885,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  plid the primary key of the layout
 	 * @param  name the name to be assigned
 	 * @param  languageId the primary key of the language. For more information
-	 *         see {@link java.util.Locale}.
+	 *         see {@link Locale}.
 	 * @return the updated layout
 	 * @throws PortalException if a layout with the primary key could not be
 	 *         found, or if the user did not have permission to update the
@@ -1940,8 +1933,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Updates the parent layout ID of the layout matching the primary key. If a
 	 * layout matching the parent primary key is found, the layout ID of that
 	 * layout is assigned, otherwise {@link
-	 * com.liferay.portal.model.LayoutConstants#DEFAULT_PARENT_LAYOUT_ID} is
-	 * assigned.
+	 * LayoutConstants#DEFAULT_PARENT_LAYOUT_ID} is assigned.
 	 *
 	 * @param  plid the primary key of the layout
 	 * @param  parentPlid the primary key of the parent layout

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -407,7 +407,7 @@ public class SeleniumBuilderFileUtil {
 		File file = new File(baseDirName + "/" + fileName);
 
 		if (format) {
-			ServiceBuilder.writeFile(file, content);
+			ToolsUtil.writeFile(file, content, null);
 		}
 		else {
 			System.out.println("Writing " + file);

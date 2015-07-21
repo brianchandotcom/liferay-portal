@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -194,32 +195,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		for (String exclusionPath : exclusionPaths) {
 			if (absolutePath.contains(exclusionPath)) {
 				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected static boolean isInsideQuotes(String s, int pos) {
-		boolean insideQuotes = false;
-
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (insideQuotes) {
-				if ((c == CharPool.QUOTE) &&
-					((c <= 1) || (s.charAt(i - 1) != CharPool.BACK_SLASH) ||
-					 (s.charAt(i - 2) == CharPool.BACK_SLASH))) {
-
-					insideQuotes = false;
-				}
-			}
-			else if (c == CharPool.QUOTE) {
-				insideQuotes = true;
-			}
-
-			if (pos == i) {
-				return insideQuotes;
 			}
 		}
 
@@ -807,7 +782,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				return line;
 			}
 
-			if (!isInsideQuotes(line, x)) {
+			if (!ToolsUtil.isInsideQuotes(line, x)) {
 				line = StringUtil.replaceFirst(
 					line, incorrectSyntax, correctSyntax, x);
 			}
@@ -880,7 +855,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				break;
 			}
 
-			if (isInsideQuotes(line, x)) {
+			if (ToolsUtil.isInsideQuotes(line, x)) {
 				continue;
 			}
 
@@ -922,7 +897,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				break;
 			}
 
-			if (isInsideQuotes(trimmedLine, x)) {
+			if (ToolsUtil.isInsideQuotes(trimmedLine, x)) {
 				continue;
 			}
 
@@ -941,7 +916,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		int pos = line.indexOf(") ");
 
 		if ((pos != -1) && !line.contains(StringPool.AT) &&
-			!isInsideQuotes(line, pos)) {
+			!ToolsUtil.isInsideQuotes(line, pos)) {
 
 			String linePart = line.substring(pos + 2);
 
@@ -958,7 +933,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		pos = line.indexOf(" (");
 
 		if ((pos != -1) && !line.contains(StringPool.EQUAL) &&
-			!isInsideQuotes(line, pos) &&
+			!ToolsUtil.isInsideQuotes(line, pos) &&
 			(trimmedLine.startsWith("private ") ||
 			 trimmedLine.startsWith("protected ") ||
 			 trimmedLine.startsWith("public "))) {
@@ -980,7 +955,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				x = Math.max(posComma, posSemicolon);
 			}
 
-			if (isInsideQuotes(line, x)) {
+			if (ToolsUtil.isInsideQuotes(line, x)) {
 				continue;
 			}
 

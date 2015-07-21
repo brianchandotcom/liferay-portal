@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.servicebuilder;
+package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -21,13 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.sourceformatter.JavaImportsFormatter;
 import com.liferay.portal.xml.SAXReaderFactory;
-
-import com.thoughtworks.qdox.model.AbstractBaseJavaEntity;
-import com.thoughtworks.qdox.model.Annotation;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.Type;
 
 import de.hunsicker.io.FileFormat;
 import de.hunsicker.jalopy.Jalopy;
@@ -40,12 +34,15 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
-
-import org.apache.commons.io.FileUtils;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -67,7 +64,7 @@ import org.dom4j.io.SAXReader;
  * @author James Hinkey
  * @author Hugo Huijser
  */
-public class ServiceBuilder {
+public class ToolsUtil {
 
 	public static final String AUTHOR = "Brian Wing Shun Chan";
 
@@ -151,41 +148,124 @@ public class ServiceBuilder {
 		return document.asXML();
 	}
 
-	public static boolean hasAnnotation(
-		AbstractBaseJavaEntity abstractBaseJavaEntity, String annotationName) {
+	public static boolean isInsideQuotes(String s, int pos) {
+		boolean insideQuotes = false;
 
-		Annotation[] annotations = abstractBaseJavaEntity.getAnnotations();
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
 
-		if (annotations == null) {
-			return false;
-		}
+			if (insideQuotes) {
+				if ((c == CharPool.QUOTE) &&
+					((c <= 1) || (s.charAt(i - 1) != CharPool.BACK_SLASH) ||
+					 (s.charAt(i - 2) == CharPool.BACK_SLASH))) {
 
-		for (int i = 0; i < annotations.length; i++) {
-			Type type = annotations[i].getType();
+					insideQuotes = false;
+				}
+			}
+			else if (c == CharPool.QUOTE) {
+				insideQuotes = true;
+			}
 
-			JavaClass javaClass = type.getJavaClass();
-
-			if (annotationName.equals(javaClass.getName())) {
-				return true;
+			if (pos == i) {
+				return insideQuotes;
 			}
 		}
 
 		return false;
 	}
 
-	public static void writeFile(File file, String content) throws IOException {
-		writeFile(file, content, AUTHOR);
-	}
-
-	public static void writeFile(File file, String content, String author)
+	public static String stripFullyQualifiedClassNames(String content)
 		throws IOException {
 
-		writeFile(file, content, author, null);
+		String imports = JavaImportsFormatter.getImports(content);
+
+		return stripFullyQualifiedClassNames(content, imports);
+	}
+
+	public static String stripFullyQualifiedClassNames(
+			String content, String imports)
+		throws IOException {
+
+		if (Validator.isNull(content) || Validator.isNull(imports)) {
+			return content;
+		}
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			int x = line.indexOf("import ");
+
+			if (x == -1) {
+				continue;
+			}
+
+			String importPackageAndClassName = line.substring(
+				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
+
+			x = -1;
+
+			while (true) {
+				x = content.indexOf(importPackageAndClassName, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (!isInsideQuotes(content, x)) {
+					continue;
+				}
+
+				if (content.length() >
+						(x + importPackageAndClassName.length())) {
+
+					char nextChar = content.charAt(
+						x + importPackageAndClassName.length());
+
+					if (Character.isAlphabetic(nextChar) ||
+						Character.isDigit(nextChar) ||
+						(nextChar == CharPool.PERIOD) ||
+						(nextChar == CharPool.SEMICOLON) ||
+						(nextChar == CharPool.UNDERLINE)) {
+
+						continue;
+					}
+
+					if (x > 0) {
+						char previousChar = content.charAt(x - 1);
+
+						if ((previousChar == CharPool.QUOTE) &&
+							(nextChar == CharPool.QUOTE)) {
+
+							continue;
+						}
+					}
+				}
+
+				String importClassName = importPackageAndClassName.substring(
+					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
+						1);
+
+				content = StringUtil.replaceFirst(
+					content, importPackageAndClassName, importClassName, x);
+			}
+		}
+
+		return content;
+	}
+
+	public static void writeFile(
+			File file, String content, Set<String> modifiedFileNames)
+		throws IOException {
+
+		writeFile(file, content, AUTHOR, modifiedFileNames);
 	}
 
 	public static void writeFile(
 			File file, String content, String author,
-			Map<String, Object> jalopySettings)
+			Map<String, Object> jalopySettings, Set<String> modifiedFileNames)
 		throws IOException {
 
 		String packagePath = _getPackagePath(file);
@@ -197,11 +277,11 @@ public class ServiceBuilder {
 		content = JavaImportsFormatter.stripJavaImports(
 			content, packagePath, className);
 
-		content = _stripFullyQualifiedClassNames(content);
+		content = stripFullyQualifiedClassNames(content);
 
-		File tempFile = new File("ServiceBuilder.temp");
+		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
 
-		FileUtils.write(tempFile, content);
+		_write(tempFile, content);
 
 		// Beautify
 
@@ -297,20 +377,31 @@ public class ServiceBuilder {
 		newContent = newContent.substring(0, newContent.length() - 2) + "\n\n}";
 		*/
 
-		writeFileRaw(file, newContent);
+		writeFileRaw(file, newContent, modifiedFileNames);
 
 		tempFile.deleteOnExit();
 	}
 
-	public static void writeFileRaw(File file, String content)
+	public static void writeFile(
+			File file, String content, String author,
+			Set<String> modifiedFileNames)
+		throws IOException {
+
+		writeFile(file, content, author, null, modifiedFileNames);
+	}
+
+	public static void writeFileRaw(
+			File file, String content, Set<String> modifiedFileNames)
 		throws IOException {
 
 		// Write file if and only if the file has changed
 
-		if (!file.exists() ||
-			!content.equals(FileUtils.readFileToString(file))) {
+		if (!file.exists() || !content.equals(_read(file))) {
+			_write(file, content);
 
-			FileUtils.write(file, content);
+			if (modifiedFileNames != null) {
+				modifiedFileNames.add(file.getAbsolutePath());
+			}
 
 			System.out.println("Writing " + file);
 		}
@@ -392,8 +483,16 @@ public class ServiceBuilder {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
+	private static String _read(File file) throws IOException {
+		String s = new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
 	private static URL _readJalopyXmlFromClassLoader() {
-		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
+		ClassLoader classLoader = ToolsUtil.class.getClassLoader();
 
 		URL url = classLoader.getResource("jalopy.xml");
 
@@ -405,59 +504,14 @@ public class ServiceBuilder {
 		return url;
 	}
 
-	private static String _stripFullyQualifiedClassNames(String content)
-		throws IOException {
+	private static void _write(File file, String s) throws IOException {
+		Path path = file.toPath();
 
-		String imports = JavaImportsFormatter.getImports(content);
+		Files.createDirectories(path.getParent());
 
-		if (Validator.isNull(imports)) {
-			return content;
-		}
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int x = line.indexOf("import ");
-
-			if (x == -1) {
-				continue;
-			}
-
-			String importPackageAndClassName = line.substring(
-				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
-
-			for (x = -1;;) {
-				x = content.indexOf(importPackageAndClassName, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				char nextChar = content.charAt(
-					x + importPackageAndClassName.length());
-				char previousChar = content.charAt(x - 1);
-
-				if (Character.isAlphabetic(nextChar) ||
-					(nextChar == CharPool.QUOTE) ||
-					(nextChar == CharPool.SEMICOLON) ||
-					(previousChar == CharPool.QUOTE)) {
-
-					continue;
-				}
-
-				String importClassName = importPackageAndClassName.substring(
-					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
-						1);
-
-				content = StringUtil.replaceFirst(
-					content, importPackageAndClassName, importClassName, x);
-			}
-		}
-
-		return content;
+		Files.write(path, s.getBytes(StandardCharsets.UTF_8));
 	}
+
+	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 
 }

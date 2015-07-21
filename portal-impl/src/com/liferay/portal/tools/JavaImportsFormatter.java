@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.sourceformatter;
+package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;

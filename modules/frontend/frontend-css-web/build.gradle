@@ -50,8 +50,5 @@ buildBourbon {
 
 classes {
 	dependsOn buildAlloyTheme
-}
-
-jar {
 	dependsOn buildBourbon
 }

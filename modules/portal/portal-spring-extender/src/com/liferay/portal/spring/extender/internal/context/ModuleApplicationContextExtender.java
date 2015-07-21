@@ -52,6 +52,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
+		setSynchronous(true);
+
 		_bundleContext = bundleContext;
 
 		_dependencyManager = new DependencyManager(bundleContext);

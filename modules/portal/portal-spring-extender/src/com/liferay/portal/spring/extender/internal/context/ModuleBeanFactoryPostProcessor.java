@@ -46,6 +46,7 @@ public class ModuleBeanFactoryPostProcessor
 		configurableListableBeanFactory.registerSingleton(
 			ServiceReferenceAnnotationBeanPostProcessor.class.getName(),
 			beanPostProcessor);
+
 		configurableListableBeanFactory.addBeanPostProcessor(beanPostProcessor);
 
 		configurableListableBeanFactory.addBeanPostProcessor(

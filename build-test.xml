@@ -645,6 +645,14 @@ jdbc.default.password=${database.password}]]></echo>
 
 	<macrodef name="get-testray-components">
 		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="testray.component.names" />
+					<get-testcase-property property.name="testray.main.component.name" />
+				</then>
+			</if>
+
 			<condition property="testray.main.component.name" value="">
 				<not>
 					<isset property="testray.main.component.name" />
@@ -779,6 +787,36 @@ jdbc.default.password=${database.password}]]></echo>
 			<condition property="testray.testcase.description" value="${description}" else="">
 				<isset property="description" />
 			</condition>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-name">
+		<sequential>
+			<var name="testray.testcase.name" unset="true" />
+
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-poshi-test-name />
+
+					<property name="testray.testcase.name" value="${poshi.test.name}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-priority">
+		<sequential>
+			<var name="testray.testcase.priority" unset="true" />
+
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="priority" />
+
+					<property name="testray.testcase.priority" value="${priority}" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -2226,23 +2264,6 @@ go]]></replacevalue>
 		<get-env-java-jdk />
 		<get-env-liferay-portal />
 		<get-env-operating-system />
-
-		<if>
-			<isset property="test.class" />
-			<then>
-				<get-poshi-test-name />
-
-				<property name="testray.testcase.name" value="${poshi.test.name}" />
-
-				<get-testcase-property property.name="priority" />
-
-				<property name="testray.testcase.priority" value="${priority}" />
-
-				<get-testcase-property property.name="testray.component.names" />
-				<get-testcase-property property.name="testray.main.component.name" />
-			</then>
-		</if>
-
 		<get-testray-case-defect />
 		<get-testray-components />
 		<get-testray-logs />
@@ -2250,6 +2271,8 @@ go]]></replacevalue>
 		<get-testray-run-id />
 		<get-testray-team-name />
 		<get-testray-testcase-description />
+		<get-testray-testcase-name />
+		<get-testray-testcase-priority />
 		<get-testray-testcase-product-edition />
 
 		<if>

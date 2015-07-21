@@ -24,6 +24,9 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface NavigationMenuWebConfiguration {
 
+	@Meta.AD(deflt = "relative-with-breadcrumb-ftl", required = false)
+	public String ddmTemplateKeyDefault();
+
 	@Meta.AD(deflt = "dots", required = false)
 	public String defaultBulletStyle();
 

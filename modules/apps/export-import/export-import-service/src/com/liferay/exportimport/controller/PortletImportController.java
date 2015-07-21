@@ -316,6 +316,7 @@ public class PortletImportController implements ImportController {
 		return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
 	}
 
+	@Override
 	public MissingReferences validateFile(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {

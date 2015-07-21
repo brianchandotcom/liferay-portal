@@ -54,7 +54,7 @@ public class SingleVMPoolImpl implements SingleVMPool {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
-	 * boolean)}
+	 *             boolean)}
 	 */
 	@Deprecated
 	@Override

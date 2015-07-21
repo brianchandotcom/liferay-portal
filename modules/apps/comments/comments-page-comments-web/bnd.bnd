@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Comments Page Comments Web
-Bundle-SymbolicName: com.liferay.comments.page.comments.web
-Bundle-Version: 1.0.0
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/META-INF/resources

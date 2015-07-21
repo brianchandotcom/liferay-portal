@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Comments Ratings Definition
-Bundle-SymbolicName: com.liferay.comments.ratings.definition
-Bundle-Version: 1.0.0
-Include-Resource: classes

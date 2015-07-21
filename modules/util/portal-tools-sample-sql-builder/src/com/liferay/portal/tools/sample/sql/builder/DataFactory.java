@@ -1536,7 +1536,6 @@ public class DataFactory {
 		journalArticleModel.setUserId(_sampleUserId);
 		journalArticleModel.setUserName(_SAMPLE_USER_NAME);
 		journalArticleModel.setCreateDate(new Date());
-		journalArticleModel.setLastPublishDate(new Date());
 		journalArticleModel.setModifiedDate(new Date());
 		journalArticleModel.setClassNameId(
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT);
@@ -1575,6 +1574,7 @@ public class DataFactory {
 		journalArticleModel.setExpirationDate(nextFutureDate());
 		journalArticleModel.setReviewDate(new Date());
 		journalArticleModel.setIndexable(true);
+		journalArticleModel.setLastPublishDate(new Date());
 		journalArticleModel.setStatusDate(new Date());
 
 		return journalArticleModel;

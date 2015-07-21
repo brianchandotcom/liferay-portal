@@ -91,6 +91,13 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteFileEntryMetadata(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fileEntryMetadata)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryMetadataLocalService.deleteFileEntryMetadata(fileEntryMetadata);
+	}
+
+	@Override
 	public void deleteFileVersionFileEntryMetadata(long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryMetadataLocalService.deleteFileVersionFileEntryMetadata(fileVersionId);

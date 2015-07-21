@@ -92,6 +92,12 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		getService().deleteFileEntryMetadata(fileEntryId);
 	}
 
+	public static void deleteFileEntryMetadata(
+		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fileEntryMetadata)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileEntryMetadata(fileEntryMetadata);
+	}
+
 	public static void deleteFileVersionFileEntryMetadata(long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteFileVersionFileEntryMetadata(fileVersionId);

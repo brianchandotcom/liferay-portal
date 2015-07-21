@@ -117,25 +117,43 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 			_bindInetAddress = bindInfo.getInetAddress();
 
 			_bindNetworkInterface = bindInfo.getNetworkInterface();
-
-			System.setProperty(
-				"jgroups.bind_addr", _bindInetAddress.getHostAddress());
-			System.setProperty(
-				"jgroups.bind_interface", _bindNetworkInterface.getName());
-
-			if (_log.isInfoEnabled()) {
-				String hostAddress = _bindInetAddress.getHostAddress();
-				String name = _bindNetworkInterface.getName();
-
-				_log.info(
-					"Setting JGroups outgoing IP address to " + hostAddress +
-						" and interface to " + name);
-			}
 		}
 		catch (IOException e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to detect bind address for JGroups", e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to detect bind address for JGroups, using " +
+						"loopback");
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
 			}
+
+			_bindInetAddress = InetAddress.getLoopbackAddress();
+
+			try {
+				_bindNetworkInterface = NetworkInterface.getByInetAddress(
+					_bindInetAddress);
+			}
+			catch (IOException ie) {
+				if (_log.isErrorEnabled()) {
+					_log.error("Unable to bind to lopoback interface", ie);
+				}
+			}
+		}
+
+		System.setProperty(
+			"jgroups.bind_addr", _bindInetAddress.getHostAddress());
+		System.setProperty(
+			"jgroups.bind_interface", _bindNetworkInterface.getName());
+
+		if (_log.isInfoEnabled()) {
+			String hostAddress = _bindInetAddress.getHostAddress();
+			String name = _bindNetworkInterface.getName();
+
+			_log.info(
+				"Setting JGroups outgoing IP address to " + hostAddress +
+					" and interface to " + name);
 		}
 	}
 

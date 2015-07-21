@@ -24,7 +24,7 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import javax.portlet.PortletRequest;
@@ -33,6 +33,7 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -59,7 +60,7 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getMBCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);
 
 		MBCategoryAssetRenderer mbCategoryAssetRenderer =
 			new MBCategoryAssetRenderer(category);
@@ -107,7 +108,7 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getMBCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);
 
 		return MBCategoryPermission.contains(
 			permissionChecker, category, actionId);
@@ -117,5 +118,14 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

@@ -255,7 +255,8 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
-	public void testPortletPreferencesPropagationWithPreferencesUniquePerLayoutEnabled()
+	public void
+			testPortletPreferencesPropagationWithPreferencesUniquePerLayoutEnabled()
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

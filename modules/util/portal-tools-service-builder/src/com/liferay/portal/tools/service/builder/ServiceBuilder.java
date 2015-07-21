@@ -1700,6 +1700,19 @@ public class ServiceBuilder {
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
+	private static URL _readJalopyXmlFromClassLoader() {
+		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
+
+		URL url = classLoader.getResource("jalopy.xml");
+
+		if (url == null) {
+			throw new RuntimeException(
+				"Unable to load jalopy.xml from the class loader");
+		}
+
+		return url;
+	}
+
 	private static void _readResourceActionModels(
 			String implDir, InputStream inputStream,
 			Set<String> resourceActionModels)

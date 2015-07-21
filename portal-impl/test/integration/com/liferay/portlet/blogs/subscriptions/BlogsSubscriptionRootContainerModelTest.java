@@ -51,25 +51,29 @@ public class BlogsSubscriptionRootContainerModelTest
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel() {
+	public void
+		testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionRootContainerModelWhenAddingBaseModelInSubcontainerModel() {
+	public void
+		testSubscriptionRootContainerModelWhenAddingBaseModelInSubcontainerModel() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInContainerModel() {
+	public void
+		testSubscriptionRootContainerModelWhenUpdatingBaseModelInContainerModel() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
+	public void
+		testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
 	}
 
 	@Override

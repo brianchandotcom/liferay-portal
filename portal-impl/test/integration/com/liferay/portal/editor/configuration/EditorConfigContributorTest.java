@@ -60,7 +60,8 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorNameEditorConfig()
+	public void
+			testEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorNameEditorConfig()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -307,7 +308,8 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testPortletNameAndEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorConfigKeyEditorConfig()
+	public void
+			testPortletNameAndEditorConfigKeyAndEditorNameOverridesPortletNameAndEditorConfigKeyEditorConfig()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -360,7 +362,8 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testPortletNameAndEditorConfigKeyOverridesEditorConfigKeyAndEditorNameEditorConfig()
+	public void
+			testPortletNameAndEditorConfigKeyOverridesEditorConfigKeyAndEditorNameEditorConfig()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();

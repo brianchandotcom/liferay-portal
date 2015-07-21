@@ -32,12 +32,4 @@ import org.osgi.service.component.annotations.Component;
 	service = FriendlyURLMapper.class
 )
 public class CalendarFriendlyURLMapper extends DefaultFriendlyURLMapper {
-
-	@Override
-	public String getMapping() {
-		return _MAPPING;
-	}
-
-	private static final String _MAPPING = "calendar";
-
 }

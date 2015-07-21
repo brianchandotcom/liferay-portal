@@ -82,12 +82,6 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 		}
 	}
 
-	@Override
-	public FileCollection getClasspath() {
-		return GradleUtil.getConfiguration(
-			getProject(), JspCPlugin.CONFIGURATION_NAME);
-	}
-
 	@OutputDirectory
 	public File getDestinationDir() {
 		return GradleUtil.toFile(getProject(), _destinationDir);
@@ -130,11 +124,6 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 	@Override
 	public boolean isModuleWeb() {
 		return _moduleWeb;
-	}
-
-	@Override
-	public JavaExec setClasspath(FileCollection classpath) {
-		throw new UnsupportedOperationException();
 	}
 
 	public void setDestinationDir(Object destinationDir) {

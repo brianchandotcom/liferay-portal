@@ -27,6 +27,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -48,11 +49,14 @@ public class JspCPlugin implements Plugin<Project> {
 
 	public static final String GENERATE_JSP_JAVA_TASK_NAME = "generateJSPJava";
 
+	public static final String TOOL_CONFIGURATION_NAME = "jspCTool";
+
 	@Override
 	public void apply(Project project) {
 		GradleUtil.addExtension(project, EXTENSION_NAME, JspCExtension.class);
 
 		addJspCConfiguration(project);
+		addJspCToolConfiguration(project);
 
 		addTaskGenerateJSPJava(project);
 
@@ -67,6 +71,7 @@ public class JspCPlugin implements Plugin<Project> {
 						project, JspCExtension.class);
 
 					addJspCDependencies(project);
+					addJspCToolDependencies(project);
 					configureJspcExtension(project, jspCExtension);
 					configureTaskGenerateJSPJava(project, jspCExtension);
 				}
@@ -74,28 +79,18 @@ public class JspCPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected Configuration addJspCConfiguration(final Project project) {
+	protected Configuration addJspCConfiguration(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Configures Liferay Jasper JspC for this project.");
+			"Configures the classpath of the JSP compilation tasks.");
 		configuration.setVisible(false);
 
 		return configuration;
 	}
 
 	protected void addJspCDependencies(Project project) {
-		JspCExtension jspCExtension = GradleUtil.getExtension(
-			project, JspCExtension.class);
-
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "org.apache.ant", "ant",
-			jspCExtension.getAntVersion());
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.jasper.jspc", jspCExtension.getJspCVersion());
-
 		DependencyHandler dependencyHandler = project.getDependencies();
 
 		SourceSet sourceSet = GradleUtil.getSourceSet(
@@ -109,12 +104,34 @@ public class JspCPlugin implements Plugin<Project> {
 		dependencyHandler.add(CONFIGURATION_NAME, configuration);
 	}
 
+	protected Configuration addJspCToolConfiguration(Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, TOOL_CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures Liferay Jasper JspC for this project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	protected void addJspCToolDependencies(Project project) {
+		JspCExtension jspCExtension = GradleUtil.getExtension(
+			project, JspCExtension.class);
+
+		GradleUtil.addDependency(
+			project, TOOL_CONFIGURATION_NAME, "org.apache.ant", "ant",
+			jspCExtension.getAntVersion());
+		GradleUtil.addDependency(
+			project, TOOL_CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.jasper.jspc", jspCExtension.getJspCVersion());
+	}
+
 	protected JavaCompile addTaskCompileJSP(Project project) {
 		JavaCompile javaCompile = GradleUtil.addTask(
 			project, COMPILE_JSP_TASK_NAME, JavaCompile.class);
 
-		javaCompile.setClasspath(
-			GradleUtil.getConfiguration(project, CONFIGURATION_NAME));
+		javaCompile.setClasspath(getClasspath(project));
 		javaCompile.setDescription("Compile JSP files to check for errors.");
 		javaCompile.setDestinationDir(javaCompile.getTemporaryDir());
 		javaCompile.setGroup("verification");
@@ -131,6 +148,7 @@ public class JspCPlugin implements Plugin<Project> {
 		CompileJSPTask compileJSPTask = GradleUtil.addTask(
 			project, GENERATE_JSP_JAVA_TASK_NAME, CompileJSPTask.class);
 
+		compileJSPTask.setClasspath(getClasspath(project));
 		compileJSPTask.setDestinationDir(
 			new File(project.getBuildDir(), "jspc"));
 
@@ -183,6 +201,16 @@ public class JspCPlugin implements Plugin<Project> {
 			project, GENERATE_JSP_JAVA_TASK_NAME);
 
 		jspCExtension.copyTo(compileJSPTask);
+	}
+
+	protected FileCollection getClasspath(Project project) {
+		Configuration toolConfiguration = GradleUtil.getConfiguration(
+			project, TOOL_CONFIGURATION_NAME);
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, CONFIGURATION_NAME);
+
+		return toolConfiguration.plus(configuration);
 	}
 
 }

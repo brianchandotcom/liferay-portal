@@ -261,9 +261,9 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				_portalCacheManagerConfiguration.
 					getPortalCacheManagerListenerConfigurations()) {
 
-			@SuppressWarnings("rawtypes")
-			CallbackFactory callbackFactory =
-				callbackConfiguration.getCallbackFactory();
+			CallbackFactory<PortalCacheManager<?, ?>> callbackFactory =
+				(CallbackFactory<PortalCacheManager<?, ?>>)
+					callbackConfiguration.getCallbackFactory();
 
 			PortalCacheManagerListener portalCacheManagerListener =
 				callbackFactory.createPortalCacheManagerListener(

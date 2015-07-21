@@ -182,35 +182,7 @@ public class JspCPlugin implements Plugin<Project> {
 		CompileJSPTask compileJSPTask = (CompileJSPTask)GradleUtil.getTask(
 			project, GENERATE_JSP_JAVA_TASK_NAME);
 
-		configureTaskGenerateJSPJavaModuleWeb(compileJSPTask, jspCExtension);
-		configureTaskGenerateJSPJavaPortalDir(compileJSPTask, jspCExtension);
-		configureTaskGenerateJSPJavaWebAppDir(compileJSPTask, jspCExtension);
-	}
-
-	protected void configureTaskGenerateJSPJavaModuleWeb(
-		CompileJSPTask compileJSPTask, JspCExtension jspCExtension) {
-
-		compileJSPTask.setModuleWeb(jspCExtension.isModuleWeb());
-	}
-
-	protected void configureTaskGenerateJSPJavaPortalDir(
-		CompileJSPTask compileJSPTask, JspCExtension jspCExtension) {
-
-		if (compileJSPTask.getPortalDir() != null) {
-			return;
-		}
-
-		compileJSPTask.setPortalDir(jspCExtension.getPortalDir());
-	}
-
-	protected void configureTaskGenerateJSPJavaWebAppDir(
-		CompileJSPTask compileJSPTask, JspCExtension jspCExtension) {
-
-		if (compileJSPTask.getWebAppDir() != null) {
-			return;
-		}
-
-		compileJSPTask.setWebAppDir(jspCExtension.getWebAppDir());
+		jspCExtension.copyTo(compileJSPTask);
 	}
 
 }

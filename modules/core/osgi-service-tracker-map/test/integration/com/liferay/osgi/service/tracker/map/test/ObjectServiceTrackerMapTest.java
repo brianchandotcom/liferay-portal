@@ -427,7 +427,8 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testGetServiceWithServiceTrackerCustomizerAndServiceReferenceMapper()
+	public void
+			testGetServiceWithServiceTrackerCustomizerAndServiceReferenceMapper()
 		throws InvalidSyntaxException {
 
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =

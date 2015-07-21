@@ -176,7 +176,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testMoveBaseModelToTrashIndexableWithEqualsParentAndBaseModelClass()
+	public void
+			testMoveBaseModelToTrashIndexableWithEqualsParentAndBaseModelClass()
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
@@ -354,7 +355,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashAndDeleteWithApprovedStatusIndexableAndEqualsParentAndBaseModelClass()
+	public void
+			testTrashAndDeleteWithApprovedStatusIndexableAndEqualsParentAndBaseModelClass()
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
@@ -607,7 +609,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashAndRestoreWithApprovedStatusIndexableAndEqualsParentAndBaseModelClass()
+	public void
+			testTrashAndRestoreWithApprovedStatusIndexableAndEqualsParentAndBaseModelClass()
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
@@ -1505,7 +1508,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashGrandparentBaseModelAndRestoreParentModelIsNotInTrashContainer()
+	public void
+			testTrashGrandparentBaseModelAndRestoreParentModelIsNotInTrashContainer()
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
@@ -1580,7 +1584,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashGrandparentBaseModelAndRestoreParentModelIsVisibleParent()
+	public void
+			testTrashGrandparentBaseModelAndRestoreParentModelIsVisibleParent()
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenHasGrandParent);
@@ -2203,7 +2208,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashVersionBaseModelAndDeleteIndexableWithEqualsParentAndBaseModelClass()
+	public void
+			testTrashVersionBaseModelAndDeleteIndexableWithEqualsParentAndBaseModelClass()
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
@@ -2375,7 +2381,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashVersionBaseModelAndRestoreIndexableWithEqualsParentAndBaseModelClass()
+	public void
+			testTrashVersionBaseModelAndRestoreIndexableWithEqualsParentAndBaseModelClass()
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
@@ -2506,7 +2513,8 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashVersionBaseModelIndexableWithEqualsParentAndBaseModelClass()
+	public void
+			testTrashVersionBaseModelIndexableWithEqualsParentAndBaseModelClass()
 		throws Exception {
 
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);

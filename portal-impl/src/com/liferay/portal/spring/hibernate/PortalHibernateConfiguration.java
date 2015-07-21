@@ -260,7 +260,8 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	}
 
 	private static final String[] _PRELOAD_CLASS_NAMES =
-		PropsValues.SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
+		PropsValues.
+			SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);

@@ -23,11 +23,11 @@ import com.liferay.portal.service.ReleaseLocalService;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Iván Zaera
@@ -35,19 +35,15 @@ import org.springframework.context.ApplicationContext;
 @Component(immediate = true, service = CalendarServiceUpgrade.class)
 public class CalendarServiceUpgrade {
 
-	@Reference(
-		target = "(org.springframework.context.service.name=com.liferay.calendar.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
-	}
-
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

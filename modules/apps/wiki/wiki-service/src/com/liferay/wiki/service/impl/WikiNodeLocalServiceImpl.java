@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.service.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,6 +32,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -68,7 +68,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		throws PortalException {
 
 		return addNode(
-			userId, _wikiGroupServiceConfiguration.initialNodeName(),
+			userId, wikiGroupServiceConfiguration.initialNodeName(),
 			StringPool.BLANK, serviceContext);
 	}
 
@@ -556,10 +556,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		validate(0, groupId, name);
 	}
 
+	@ServiceReference(type = WikiGroupServiceConfiguration.class)
+	protected WikiGroupServiceConfiguration wikiGroupServiceConfiguration;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
-
-	@BeanReference(type = WikiGroupServiceConfiguration.class)
-	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

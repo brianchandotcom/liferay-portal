@@ -14,6 +14,8 @@
 
 package com.liferay.bookmarks.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.EntryURLException;
@@ -25,7 +27,6 @@ import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionCheck
 import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -63,6 +64,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.SubscriptionSender;
@@ -80,6 +82,7 @@ import java.util.List;
  * @author Raymond Augé
  * @author Levente Hudák
  */
+@ProviderType
 public class BookmarksEntryLocalServiceImpl
 	extends BookmarksEntryLocalServiceBaseImpl {
 
@@ -721,7 +724,7 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		BookmarksGroupServiceSettings bookmarksGroupServiceSettings =
-			_settingsFactory.getSettings(
+			settingsFactory.getSettings(
 				BookmarksGroupServiceSettings.class,
 				new GroupServiceSettingsLocator(
 					entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
@@ -842,10 +845,10 @@ public class BookmarksEntryLocalServiceImpl
 		}
 	}
 
+	@ServiceReference(type = SettingsFactory.class)
+	protected SettingsFactory settingsFactory;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryLocalServiceImpl.class);
-
-	@BeanReference(type = SettingsFactory.class)
-	private SettingsFactory _settingsFactory;
 
 }

@@ -20,18 +20,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.messageboards.model.MBBan;
-import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBBanLocalService;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -44,7 +45,7 @@ public class MBBanStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(MBBan ban) {
-		MBBanLocalServiceUtil.deleteBan(ban);
+		_mbBanLocalService.deleteBan(ban);
 	}
 
 	@Override
@@ -60,14 +61,14 @@ public class MBBanStagedModelDataHandler
 
 	@Override
 	public MBBan fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return MBBanLocalServiceUtil.fetchMBBanByUuidAndGroupId(uuid, groupId);
+		return _mbBanLocalService.fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
 	public List<MBBan> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return MBBanLocalServiceUtil.getMBBansByUuidAndCompanyId(
+		return _mbBanLocalService.getMBBansByUuidAndCompanyId(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new StagedModelModifiedDateComparator<MBBan>());
 	}
@@ -86,7 +87,7 @@ public class MBBanStagedModelDataHandler
 
 		ban.setBanUserUuid(ban.getBanUserUuid());
 
-		User bannedUser = UserLocalServiceUtil.getUser(ban.getUserId());
+		User bannedUser = _userLocalService.getUser(ban.getUserId());
 
 		portletDataContext.addReferenceElement(
 			ban, userBanElement, bannedUser,
@@ -101,7 +102,7 @@ public class MBBanStagedModelDataHandler
 			PortletDataContext portletDataContext, MBBan ban)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
+		User user = _userLocalService.fetchUserByUuidAndCompanyId(
 			ban.getBanUserUuid(), portletDataContext.getCompanyId());
 
 		if (user == null) {
@@ -121,7 +122,7 @@ public class MBBanStagedModelDataHandler
 
 		serviceContext.setUuid(ban.getUuid());
 
-		MBBanLocalServiceUtil.addBan(userId, user.getUserId(), serviceContext);
+		_mbBanLocalService.addBan(userId, user.getUserId(), serviceContext);
 	}
 
 	@Override
@@ -129,7 +130,20 @@ public class MBBanStagedModelDataHandler
 		PortletDataContext portletDataContext, MBBan ban) {
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
+		_mbBanLocalService = mbBanLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBBanStagedModelDataHandler.class);
+
+	private MBBanLocalService _mbBanLocalService;
+	private UserLocalService _userLocalService;
 
 }

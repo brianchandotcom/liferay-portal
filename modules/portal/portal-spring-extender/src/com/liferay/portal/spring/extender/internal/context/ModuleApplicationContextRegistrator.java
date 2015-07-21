@@ -17,10 +17,12 @@ package com.liferay.portal.spring.extender.internal.context;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisher;
 import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
+import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
 
 import java.beans.Introspector;
 
@@ -39,21 +41,30 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class ModuleApplicationContextRegistrator {
 
 	public ModuleApplicationContextRegistrator(
-		Bundle extendeeBundle, Bundle extenderBundle) {
+		Bundle extendeeBundle, Bundle extenderBundle,
+		ServiceConfigurator serviceConfigurator) {
 
 		_extendeeBundle = extendeeBundle;
 		_extenderBundle = extenderBundle;
+		_serviceConfigurator = serviceConfigurator;
+
+		BundleWiring bundleWiring = _extendeeBundle.adapt(BundleWiring.class);
+
+		_extendeeClassLoader = bundleWiring.getClassLoader();
 
 		_logger = new Logger(_extendeeBundle.getBundleContext());
 	}
 
-	protected void start() {
+	protected void start() throws Exception {
 		ConfigurableApplicationContext configurableApplicationContext =
 			_createApplicationContext(_extenderBundle, _extendeeBundle);
 
 		_registerBeanLocator(_extendeeBundle, configurableApplicationContext);
 
 		_refreshBeanFactory(configurableApplicationContext);
+
+		_serviceConfigurator.initServices(
+			new ModuleResourceLoader(_extendeeBundle), _extendeeClassLoader);
 
 		_configurableApplicationContext = configurableApplicationContext;
 
@@ -65,13 +76,16 @@ public class ModuleApplicationContextRegistrator {
 		_applicationContextServicePublisher.register();
 	}
 
-	protected void stop() {
+	protected void stop() throws Exception {
 		_cleanInstropectionCaches(_extendeeBundle);
 
 		_applicationContextServicePublisher.unregister();
 
 		PortletBeanLocatorUtil.setBeanLocator(
 			_extendeeBundle.getSymbolicName(), null);
+
+		_serviceConfigurator.destroyServices(
+			new ModuleResourceLoader(_extendeeBundle), _extendeeClassLoader);
 
 		_extendeeBundle = null;
 		_extenderBundle = null;
@@ -152,7 +166,9 @@ public class ModuleApplicationContextRegistrator {
 		_applicationContextServicePublisher;
 	private ConfigurableApplicationContext _configurableApplicationContext;
 	private Bundle _extendeeBundle;
+	private final ClassLoader _extendeeClassLoader;
 	private Bundle _extenderBundle;
 	private final Logger _logger;
+	private final ServiceConfigurator _serviceConfigurator;
 
 }

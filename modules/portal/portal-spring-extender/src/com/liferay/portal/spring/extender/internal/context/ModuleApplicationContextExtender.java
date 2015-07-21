@@ -17,6 +17,7 @@ package com.liferay.portal.spring.extender.internal.context;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 
 import java.io.IOException;
 
@@ -100,6 +101,13 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	}
 
 	@Reference(target = "(original.bean=true)")
+	protected void setServiceConfigurator(
+		ServiceConfigurator serviceConfigurator) {
+
+		_serviceConfigurator = serviceConfigurator;
+	}
+
+	@Reference(target = "(original.bean=true)")
 	protected void setServletContext(ServletContext servletContext) {
 	}
 
@@ -111,6 +119,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	private BundleContext _bundleContext;
 	private DependencyManager _dependencyManager;
 	private Logger _logger;
+	private ServiceConfigurator _serviceConfigurator;
 
 	private class ModuleApplicationContextExtension implements Extension {
 
@@ -131,7 +140,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 			_component.setImplementation(
 				new ModuleApplicationContextRegistrator(
-					_bundle, _bundleContext.getBundle()));
+					_bundle, _bundleContext.getBundle(), _serviceConfigurator));
 
 			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 

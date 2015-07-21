@@ -125,26 +125,8 @@ public class WebDriverHelper {
 					continue;
 				}
 
-				// LPS-41634
-
-				if (javaScriptErrorValue.contains(
-						"TypeError: d.config.doc.defaultView is null")) {
-
-					continue;
-				}
-
-				// LPS-41634
-
-				if (javaScriptErrorValue.contains(
-						"NS_ERROR_NOT_INITIALIZED:")) {
-
-					continue;
-				}
-
-				// LPS-42469
-
-				if (javaScriptErrorValue.contains(
-						"Permission denied to access property 'type'")) {
+				if (LiferaySeleniumHelper.isInIgnoreErrorsFile(
+						javaScriptErrorValue, "javascript")) {
 
 					continue;
 				}

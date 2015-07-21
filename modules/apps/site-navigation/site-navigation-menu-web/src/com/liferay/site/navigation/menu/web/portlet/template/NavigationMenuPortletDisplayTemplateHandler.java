@@ -14,25 +14,39 @@
 
 package com.liferay.site.navigation.menu.web.portlet.template;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.NavItem;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.menu.web.configuration.NavigationMenuConfigurationValues;
+import com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration;
 import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Juergen Kappler
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"javax.portlet.name=" + NavigationMenuPortletKeys.NAVIGATION},
 	service = TemplateHandler.class
 )
@@ -42,6 +56,25 @@ public class NavigationMenuPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return NavItem.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		try {
+			contextObjects.put("navItem", NavItem.class);
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		return contextObjects;
+	}
+
+	@Override
+	public String getDefaultTemplateKey() {
+		return _navigationMenuWebConfiguration.ddmTemplateKeyDefault();
 	}
 
 	@Override
@@ -62,8 +95,54 @@ public class NavigationMenuPortletDisplayTemplateHandler
 	}
 
 	@Override
+	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
+			long classPK, String language, Locale locale)
+		throws Exception {
+
+		Map<String, TemplateVariableGroup> templateVariableGroups =
+			super.getTemplateVariableGroups(classPK, language, locale);
+
+		TemplateVariableGroup templateVariableGroup =
+			templateVariableGroups.get("fields");
+
+		templateVariableGroup.empty();
+
+		templateVariableGroup.addCollectionVariable(
+			"navigation-items", List.class,
+			PortletDisplayTemplateConstants.ENTRIES, "navigation-item",
+			NavItem.class, "navigationEntry", "getName()");
+
+		templateVariableGroups.put(
+			"navigation-util", getUtilTemplateVariableGroup());
+
+		return templateVariableGroups;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_navigationMenuWebConfiguration = Configurable.createConfigurable(
+			NavigationMenuWebConfiguration.class, properties);
+	}
+
+	@Override
 	protected String getTemplatesConfigPath() {
 		return NavigationMenuConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
+
+	protected TemplateVariableGroup getUtilTemplateVariableGroup() {
+		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
+			"navigation-util");
+
+		templateVariableGroup.addVariable("nav-item", NavItem.class, "navItem");
+
+		return templateVariableGroup;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		NavigationMenuPortletDisplayTemplateHandler.class);
+
+	private volatile NavigationMenuWebConfiguration
+		_navigationMenuWebConfiguration;
 
 }

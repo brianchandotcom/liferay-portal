@@ -14,7 +14,6 @@
 
 package com.liferay.polls.verify;
 
-import com.liferay.polls.service.configuration.configurator.PollsServiceConfigurator;
 import com.liferay.polls.verify.model.PollsChoiceVerifiableModel;
 import com.liferay.polls.verify.model.PollsQuestionVerifiableModel;
 import com.liferay.polls.verify.model.PollsVoteVerifiableModel;
@@ -25,6 +24,8 @@ import com.liferay.portal.verify.VerifyResourcePermissions;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Miguel Pastor
@@ -39,9 +40,12 @@ public class PollsServiceVerifyProcess extends VerifyProcess {
 		verifyResourcedModels();
 	}
 
-	@Reference(unbind = "-")
-	protected void setPollsServiceConfigurator(
-		PollsServiceConfigurator pollsServiceConfigurator) {
+	@Reference(
+		target = "(org.springframework.context.service.name=com.liferay.polls.service)",
+		unbind = "-"
+	)
+	protected void setApplicationContext(
+		ApplicationContext applicationContext) {
 	}
 
 	protected void verifyAuditedModels() throws Exception {

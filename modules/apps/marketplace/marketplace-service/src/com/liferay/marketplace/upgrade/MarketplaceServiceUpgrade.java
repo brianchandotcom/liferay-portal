@@ -14,7 +14,6 @@
 
 package com.liferay.marketplace.upgrade;
 
-import com.liferay.marketplace.service.configuration.configurator.MarketplaceServiceConfigurator;
 import com.liferay.marketplace.upgrade.v1_0_0.UpgradeExpando;
 import com.liferay.marketplace.upgrade.v1_0_1.UpgradeModule;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +22,8 @@ import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -35,15 +36,14 @@ import org.osgi.service.component.annotations.Reference;
 public class MarketplaceServiceUpgrade {
 
 	@Reference(unbind = "-")
-	protected void setMarketplaceServiceConfigurator(
-		MarketplaceServiceConfigurator marketplaceServiceConfigurator) {
-	}
-
-	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

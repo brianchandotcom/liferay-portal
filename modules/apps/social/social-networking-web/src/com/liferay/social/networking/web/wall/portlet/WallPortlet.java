@@ -28,7 +28,6 @@ import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.service.WallEntryLocalService;
-import com.liferay.social.networking.service.configuration.configurator.SocialNetworkingServiceConfigurator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,7 +35,6 @@ import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Brian Wing Shun Chan
@@ -155,12 +153,6 @@ public class WallPortlet extends MVCPortlet {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference(policy = ReferencePolicy.DYNAMIC)
-	protected void setSocialNetworkingServiceConfigurator(
-		SocialNetworkingServiceConfigurator
-			socialNetworkingServiceConfigurator) {
-	}
-
 	@Reference(unbind = "-")
 	protected void setSocialRelationLocalService(
 		SocialRelationLocalService socialRelationLocalService) {
@@ -178,11 +170,6 @@ public class WallPortlet extends MVCPortlet {
 		WallEntryLocalService wallEntryLocalService) {
 
 		_wallEntryLocalService = wallEntryLocalService;
-	}
-
-	protected void unsetSocialNetworkingServiceConfigurator(
-		SocialNetworkingServiceConfigurator
-			socialNetworkingServiceConfigurator) {
 	}
 
 	private GroupLocalService _groupLocalService;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.asset;
+package com.liferay.message.boards.web.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -21,6 +21,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -31,6 +32,8 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Julio Camarero
  * @author Juan Fernández
@@ -38,6 +41,11 @@ import javax.portlet.WindowStateException;
  * @author Sergio González
  * @author Jonathan Lee
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS},
+	service = AssetRendererFactory.class
+)
 public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "category";

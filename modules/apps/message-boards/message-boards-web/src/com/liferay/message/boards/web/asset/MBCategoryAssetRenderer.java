@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.asset;
+package com.liferay.message.boards.web.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -27,11 +24,9 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -46,32 +41,27 @@ import javax.servlet.http.HttpServletResponse;
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Sergio González
+ * @author Jonathan Lee
  */
-public class MBMessageAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 
-	public MBMessageAssetRenderer(MBMessage message) {
-		_message = message;
+	public MBCategoryAssetRenderer(MBCategory category) {
+		_category = category;
 	}
 
 	@Override
 	public String getClassName() {
-		return MBMessage.class.getName();
+		return MBCategory.class.getName();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _message.getMessageId();
-	}
-
-	@Override
-	public Date getDisplayDate() {
-		return _message.getModifiedDate();
+		return _category.getCategoryId();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _message.getGroupId();
+		return _category.getGroupId();
 	}
 
 	@Override
@@ -87,53 +77,20 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
-	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
-
-		return assetRendererFactory.getPortletId();
-	}
-
-	@Override
-	public String getSearchSummary(Locale locale) {
-		if (_message.isFormatBBCode()) {
-			return HtmlUtil.extractText(
-				BBCodeTranslatorUtil.getHTML(_message.getBody()));
-		}
-
-		return getSummary(null, null);
-	}
-
-	@Override
 	public int getStatus() {
-		return _message.getStatus();
+		return _category.getStatus();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _message.getBody();
-	}
-
-	@Override
-	public String getThumbnailPath(PortletRequest portletRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/message.png";
+		return _category.getDescription();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _message.getSubject();
-	}
-
-	@Override
-	public String getType() {
-		return MBMessageAssetRendererFactory.TYPE;
+		return _category.getName();
 	}
 
 	@Override
@@ -147,9 +104,9 @@ public class MBMessageAssetRenderer
 			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/edit_message");
+			"mvcRenderCommandName", "/message_boards/edit_category");
 		portletURL.setParameter(
-			"messageId", String.valueOf(_message.getMessageId()));
+			"mbCategoryId", String.valueOf(_category.getCategoryId()));
 
 		return portletURL;
 	}
@@ -165,10 +122,9 @@ public class MBMessageAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
+		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/view_message");
-		portletURL.setParameter(
-			"messageId", String.valueOf(_message.getMessageId()));
+			"mbCategoryId", String.valueOf(_category.getCategoryId()));
 		portletURL.setWindowState(windowState);
 
 		return portletURL;
@@ -182,51 +138,39 @@ public class MBMessageAssetRenderer
 
 		return getURLViewInContext(
 			liferayPortletRequest, noSuchEntryRedirect,
-			"/message_boards/find_message", "messageId",
-			_message.getMessageId());
+			"/message_boards/find_category", "mbCategoryId",
+			_category.getCategoryId());
 	}
 
 	@Override
 	public long getUserId() {
-		return _message.getUserId();
+		return _category.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		return _message.getUserName();
+		return _category.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _message.getUuid();
+		return _category.getUuid();
 	}
 
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (_message.isDiscussion()) {
-			return MBDiscussionPermission.contains(
-				permissionChecker, _message.getMessageId(), ActionKeys.UPDATE);
-		}
-		else {
-			return MBMessagePermission.contains(
-				permissionChecker, _message, ActionKeys.UPDATE);
-		}
+		return MBCategoryPermission.contains(
+			permissionChecker, _category, ActionKeys.UPDATE);
 	}
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (_message.isDiscussion()) {
-			return MBDiscussionPermission.contains(
-				permissionChecker, _message.getMessageId(), ActionKeys.VIEW);
-		}
-		else {
-			return MBMessagePermission.contains(
-				permissionChecker, _message, ActionKeys.VIEW);
-		}
+		return MBCategoryPermission.contains(
+			permissionChecker, _category, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -235,21 +179,16 @@ public class MBMessageAssetRenderer
 			String template)
 		throws Exception {
 
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, _message);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY, _category);
 
 		return super.include(request, response, template);
 	}
 
 	@Override
-	public boolean isPrintable() {
-		return true;
-	}
-
-	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/common/message.png";
+		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
 
-	private final MBMessage _message;
+	private final MBCategory _category;
 
 }

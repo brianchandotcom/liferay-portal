@@ -64,8 +64,10 @@ public class PortletDataHandlerBackgroundTaskStatusMessage
 		put("portletIds", portletIds);
 	}
 
-	public <T extends StagedModel> PortletDataHandlerBackgroundTaskStatusMessage(
-		String messageType, T stagedModel, ManifestSummary manifestSummary) {
+	public <T extends StagedModel>
+		PortletDataHandlerBackgroundTaskStatusMessage(
+			String messageType, T stagedModel,
+			ManifestSummary manifestSummary) {
 
 		init(messageType, manifestSummary);
 

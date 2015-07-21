@@ -40,6 +40,12 @@ public class SpringContextHeaderParser {
 			Collections.addAll(beanDefinitionFiles, configs.split(","));
 		}
 
+		String liferayService = headers.get("Liferay-Service");
+
+		if (liferayService != null) {
+			beanDefinitionFiles.add("META-INF/spring/parent");
+		}
+
 		return beanDefinitionFiles.toArray(
 			new String[beanDefinitionFiles.size()]);
 	}

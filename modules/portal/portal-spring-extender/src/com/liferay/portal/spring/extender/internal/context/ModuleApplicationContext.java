@@ -49,7 +49,7 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 	@Override
 	public Resource[] getResources(String locationPattern) {
 		Enumeration<URL> enumeration = _bundle.findEntries(
-			locationPattern, "*.xml", true);
+			locationPattern, "*.xml", false);
 
 		List<Resource> resources = new ArrayList<>();
 

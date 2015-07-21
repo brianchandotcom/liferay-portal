@@ -31,9 +31,9 @@ int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();
 
 String keywords = ParamUtil.getString(request, "keywords");
-String tabName = ParamUtil.getString(request, "tabName");
+String selectedTab = ParamUtil.getString(request, "selectedTab");
 
-if (Validator.isNotNull(keywords) && tabName.equals(wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale))) {
+if (Validator.isNotNull(keywords) && selectedTab.equals(wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale))) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setEnd(searchContainer.getEnd());

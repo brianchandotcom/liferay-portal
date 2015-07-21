@@ -48,11 +48,11 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 	<%
 	long folderId = ParamUtil.getLong(request, "folderId");
 	String keywords = ParamUtil.getString(request, "keywords");
-	String requestTabName = ParamUtil.getString(request, "tabName");
+	String selectedTab = ParamUtil.getString(request, "selectedTab");
 
 	boolean showSearchInfo = false;
 
-	if (Validator.isNotNull(keywords) && tabName.equals(requestTabName)) {
+	if (Validator.isNotNull(keywords) && tabName.equals(selectedTab)) {
 		showSearchInfo = true;
 	}
 

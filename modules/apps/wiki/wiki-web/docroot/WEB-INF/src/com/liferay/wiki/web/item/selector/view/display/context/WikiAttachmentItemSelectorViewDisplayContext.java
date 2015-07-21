@@ -66,7 +66,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 
 		portletURL.setParameter("displayStyle", getDisplayStyle(request));
 		portletURL.setParameter(
-			"tabName", String.valueOf(getTitle(request.getLocale())));
+			"selectedTab", String.valueOf(getTitle(request.getLocale())));
 
 		return portletURL;
 	}

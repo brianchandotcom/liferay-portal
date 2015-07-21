@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.web.social;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,11 +22,11 @@ import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -67,7 +66,7 @@ public class MBThreadSocialActivityManager
 
 		extraDataJSONObject.put("threadId", thread.getThreadId());
 
-		socialActivityLocalService.addActivity(
+		_socialActivityLocalService.addActivity(
 			userId, groupId, MBMessage.class.getName(),
 			thread.getRootMessageId(), SocialActivityConstants.TYPE_SUBSCRIBE,
 			extraDataJSONObject.toString(), 0);
@@ -82,26 +81,34 @@ public class MBThreadSocialActivityManager
 			return;
 		}
 
-		MBMessage rootMessage = mbMessageLocalService.getMessage(
+		MBMessage rootMessage = _mbMessageLocalService.getMessage(
 			thread.getRootMessageId());
 
-		socialActivityLocalService.addActivity(
+		_socialActivityLocalService.addActivity(
 			userId, rootMessage.getGroupId(), MBMessage.class.getName(),
 			rootMessage.getMessageId(), type, extraData, receiverUserId);
 	}
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return socialActivityLocalService;
+		return _socialActivityLocalService;
 	}
 
-	@BeanReference(type = MBMessageLocalService.class)
-	protected MBMessageLocalService mbMessageLocalService;
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
 
-	@BeanReference(type = MBThreadLocalService.class)
-	protected MBThreadLocalService mbThreadLocalService;
+		_mbMessageLocalService = mbMessageLocalService;
+	}
 
-	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService socialActivityLocalService;
+	@Reference(unbind = "-")
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	protected MBMessageLocalService _mbMessageLocalService;
+	protected SocialActivityLocalService _socialActivityLocalService;
 
 }

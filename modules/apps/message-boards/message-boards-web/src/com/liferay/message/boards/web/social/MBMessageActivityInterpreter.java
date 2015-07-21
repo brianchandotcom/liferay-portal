@@ -22,7 +22,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
@@ -30,6 +30,7 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,7 +54,7 @@ public class MBMessageActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+		MBMessage message = _mbMessageLocalService.getMessage(
 			activity.getClassPK());
 
 		if (message.getCategoryId() <= 0) {
@@ -148,13 +149,22 @@ public class MBMessageActivityInterpreter
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(
+		MBMessage message = _mbMessageLocalService.getMessage(
 			activity.getClassPK());
 
 		return MBMessagePermission.contains(
 			permissionChecker, message.getMessageId(), actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {MBMessage.class.getName()};
+
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

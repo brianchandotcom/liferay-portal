@@ -324,7 +324,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		War war = (War)GradleUtil.getTask(
 			copy.getProject(), WarPlugin.WAR_TASK_NAME);
 
-		copySpec.from(war.getOutputs());
+		copySpec.from(war);
 	}
 
 	protected void configureTaskDirectDeploy(

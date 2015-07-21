@@ -29,6 +29,18 @@ public class JspCExtension implements CompileJSPSpec {
 		_project = project;
 	}
 
+	public void copyTo(CompileJSPSpec compileJSPSpec) {
+		compileJSPSpec.setModuleWeb(_moduleWeb);
+
+		if (compileJSPSpec.getPortalDir() == null) {
+			compileJSPSpec.setPortalDir(_portalDir);
+		}
+
+		if (compileJSPSpec.getWebAppDir() == null) {
+			compileJSPSpec.setWebAppDir(_webAppDir);
+		}
+	}
+
 	public String getAntVersion() {
 		return _antVersion;
 	}

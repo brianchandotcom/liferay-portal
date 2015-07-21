@@ -995,51 +995,24 @@
 					YEARLY: 'YEARLY'
 				},
 
-				INTERVAL_UNITS: {
-					DAILY: 'days',
-					MONTHLY: 'months',
-					WEEKLY: 'weeks',
-					YEARLY: 'years'
-				},
+				INTERVAL_UNITS: {},
 
-				MONTH_LABELS: [
-					Liferay.Language.get('january'),
-					Liferay.Language.get('february'),
-					Liferay.Language.get('march'),
-					Liferay.Language.get('april'),
-					Liferay.Language.get('may'),
-					Liferay.Language.get('june'),
-					Liferay.Language.get('july'),
-					Liferay.Language.get('august'),
-					Liferay.Language.get('september'),
-					Liferay.Language.get('october'),
-					Liferay.Language.get('november'),
-					Liferay.Language.get('december')
-				],
+				MONTH_LABELS: [],
 
-				POSITION_LABELS: {
-					'-1': Liferay.Language.get('position.last'),
-					'1': Liferay.Language.get('position.first'),
-					'2': Liferay.Language.get('position.second'),
-					'3': Liferay.Language.get('position.third'),
-					'4': Liferay.Language.get('position.fourth')
-				},
+				POSITION_LABELS: {},
 
-				WEEKDAY_LABELS: {
-					FR: Liferay.Language.get('weekday.FR'),
-					MO: Liferay.Language.get('weekday.MO'),
-					SA: Liferay.Language.get('weekday.SA'),
-					SU: Liferay.Language.get('weekday.SU'),
-					TH: Liferay.Language.get('weekday.TH'),
-					TU: Liferay.Language.get('weekday.TU'),
-					WE: Liferay.Language.get('weekday.WE')
-				},
+				RECURRENCE_SUMMARIES : {},
+
+				WEEKDAY_LABELS: {},
 
 				getSummary: function(recurrence) {
 					var instance = this;
 
+					var key;
+					var mask;
 					var params = [];
 					var parts = [];
+					var summary;
 
 					if (recurrence.interval == 1) {
 						parts.push(A.Lang.String.toLowerCase(recurrence.frequency));
@@ -1086,7 +1059,17 @@
 						params.push(untilDate.getFullYear());
 					}
 
-					return Liferay.Language.get(parts.join(STR_DASH), params);
+					key = parts.join(STR_DASH);
+					mask = instance.RECURRENCE_SUMMARIES[key];
+
+					if (mask) {
+						summary = A.Lang.sub(mask, params);
+					}
+					else {
+						summary = Liferay.Language.get(key, params);
+					}
+
+					return summary;
 				},
 
 				openConfirmationPanel: function(actionName, onlyThisInstanceFn, allFollowingFn, allEventsInFn, cancelFn) {

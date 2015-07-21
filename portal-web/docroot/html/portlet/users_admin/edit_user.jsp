@@ -49,7 +49,6 @@ if (selUser != null) {
 }
 
 List<Organization> organizations = Collections.emptyList();
-String organizationIds = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
 
 if (selUser != null) {
 	organizations = selUser.getOrganizations();
@@ -58,10 +57,14 @@ if (selUser != null) {
 		organizations = UsersAdminUtil.filterOrganizations(permissionChecker, organizations);
 	}
 }
-else if (Validator.isNotNull(organizationIds)) {
-	long[] organizationIdsArray = StringUtil.split(organizationIds, 0L);
+else {
+	String organizationIds = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
 
-	organizations = OrganizationLocalServiceUtil.getOrganizations(organizationIdsArray);
+	if (Validator.isNotNull(organizationIds)) {
+		long[] organizationIdsArray = StringUtil.split(organizationIds, 0L);
+
+		organizations = OrganizationLocalServiceUtil.getOrganizations(organizationIdsArray);
+	}
 }
 
 List<Role> roles = Collections.emptyList();

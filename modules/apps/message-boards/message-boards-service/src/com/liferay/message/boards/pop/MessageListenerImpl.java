@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.pop;
+package com.liferay.message.boards.pop;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,11 +55,14 @@ import javax.mail.MessagingException;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Michael C. Han
  */
+@Component(immediate = true, service = MessageListener.class)
 public class MessageListenerImpl implements MessageListener {
 
 	@Override

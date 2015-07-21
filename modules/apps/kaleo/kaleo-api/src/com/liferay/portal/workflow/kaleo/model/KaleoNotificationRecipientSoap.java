@@ -48,7 +48,7 @@ public class KaleoNotificationRecipientSoap implements Serializable {
 		soapModel.setRecipientRoleType(model.getRecipientRoleType());
 		soapModel.setRecipientScript(model.getRecipientScript());
 		soapModel.setRecipientScriptLanguage(model.getRecipientScriptLanguage());
-		soapModel.setRecipientScriptRequiredContexts(model.getRecipientScriptRequiredContexts());
+		soapModel.setRecipientScriptContexts(model.getRecipientScriptContexts());
 		soapModel.setAddress(model.getAddress());
 		soapModel.setNotificationReceptionType(model.getNotificationReceptionType());
 
@@ -219,13 +219,12 @@ public class KaleoNotificationRecipientSoap implements Serializable {
 		_recipientScriptLanguage = recipientScriptLanguage;
 	}
 
-	public String getRecipientScriptRequiredContexts() {
-		return _recipientScriptRequiredContexts;
+	public String getRecipientScriptContexts() {
+		return _recipientScriptContexts;
 	}
 
-	public void setRecipientScriptRequiredContexts(
-		String recipientScriptRequiredContexts) {
-		_recipientScriptRequiredContexts = recipientScriptRequiredContexts;
+	public void setRecipientScriptContexts(String recipientScriptContexts) {
+		_recipientScriptContexts = recipientScriptContexts;
 	}
 
 	public String getAddress() {
@@ -258,7 +257,7 @@ public class KaleoNotificationRecipientSoap implements Serializable {
 	private int _recipientRoleType;
 	private String _recipientScript;
 	private String _recipientScriptLanguage;
-	private String _recipientScriptRequiredContexts;
+	private String _recipientScriptContexts;
 	private String _address;
 	private String _notificationReceptionType;
 }

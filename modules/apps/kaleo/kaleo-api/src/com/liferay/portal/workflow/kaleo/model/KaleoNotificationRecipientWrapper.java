@@ -70,8 +70,7 @@ public class KaleoNotificationRecipientWrapper
 		attributes.put("recipientRoleType", getRecipientRoleType());
 		attributes.put("recipientScript", getRecipientScript());
 		attributes.put("recipientScriptLanguage", getRecipientScriptLanguage());
-		attributes.put("recipientScriptRequiredContexts",
-			getRecipientScriptRequiredContexts());
+		attributes.put("recipientScriptContexts", getRecipientScriptContexts());
 		attributes.put("address", getAddress());
 		attributes.put("notificationReceptionType",
 			getNotificationReceptionType());
@@ -167,11 +166,11 @@ public class KaleoNotificationRecipientWrapper
 			setRecipientScriptLanguage(recipientScriptLanguage);
 		}
 
-		String recipientScriptRequiredContexts = (String)attributes.get(
-				"recipientScriptRequiredContexts");
+		String recipientScriptContexts = (String)attributes.get(
+				"recipientScriptContexts");
 
-		if (recipientScriptRequiredContexts != null) {
-			setRecipientScriptRequiredContexts(recipientScriptRequiredContexts);
+		if (recipientScriptContexts != null) {
+			setRecipientScriptContexts(recipientScriptContexts);
 		}
 
 		String address = (String)attributes.get("address");
@@ -350,6 +349,16 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	/**
+	* Returns the recipient script contexts of this kaleo notification recipient.
+	*
+	* @return the recipient script contexts of this kaleo notification recipient
+	*/
+	@Override
+	public java.lang.String getRecipientScriptContexts() {
+		return _kaleoNotificationRecipient.getRecipientScriptContexts();
+	}
+
+	/**
 	* Returns the recipient script language of this kaleo notification recipient.
 	*
 	* @return the recipient script language of this kaleo notification recipient
@@ -357,16 +366,6 @@ public class KaleoNotificationRecipientWrapper
 	@Override
 	public java.lang.String getRecipientScriptLanguage() {
 		return _kaleoNotificationRecipient.getRecipientScriptLanguage();
-	}
-
-	/**
-	* Returns the recipient script required contexts of this kaleo notification recipient.
-	*
-	* @return the recipient script required contexts of this kaleo notification recipient
-	*/
-	@Override
-	public java.lang.String getRecipientScriptRequiredContexts() {
-		return _kaleoNotificationRecipient.getRecipientScriptRequiredContexts();
 	}
 
 	/**
@@ -600,6 +599,17 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	/**
+	* Sets the recipient script contexts of this kaleo notification recipient.
+	*
+	* @param recipientScriptContexts the recipient script contexts of this kaleo notification recipient
+	*/
+	@Override
+	public void setRecipientScriptContexts(
+		java.lang.String recipientScriptContexts) {
+		_kaleoNotificationRecipient.setRecipientScriptContexts(recipientScriptContexts);
+	}
+
+	/**
 	* Sets the recipient script language of this kaleo notification recipient.
 	*
 	* @param recipientScriptLanguage the recipient script language of this kaleo notification recipient
@@ -608,17 +618,6 @@ public class KaleoNotificationRecipientWrapper
 	public void setRecipientScriptLanguage(
 		java.lang.String recipientScriptLanguage) {
 		_kaleoNotificationRecipient.setRecipientScriptLanguage(recipientScriptLanguage);
-	}
-
-	/**
-	* Sets the recipient script required contexts of this kaleo notification recipient.
-	*
-	* @param recipientScriptRequiredContexts the recipient script required contexts of this kaleo notification recipient
-	*/
-	@Override
-	public void setRecipientScriptRequiredContexts(
-		java.lang.String recipientScriptRequiredContexts) {
-		_kaleoNotificationRecipient.setRecipientScriptRequiredContexts(recipientScriptRequiredContexts);
 	}
 
 	/**

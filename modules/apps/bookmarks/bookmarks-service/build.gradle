@@ -2,7 +2,7 @@ buildService {
 	apiDirName = "../bookmarks-api/src"
 	autoNamespaceTables = false
 	hbmFileName = "src/META-INF/module-hbm.xml"
-	springFileName = "src/META-INF/module-spring.xml"
+	springFileName = "src/META-INF/spring/module-spring.xml"
 	sqlDirName = "src/META-INF/sql"
 	testDirName = "../bookmarks-test/test/integration"
 }

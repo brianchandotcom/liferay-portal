@@ -12,14 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.notifications;
+package com.liferay.message.boards.web.notifications;
 
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.util.PortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS},
+	service = UserNotificationHandler.class
+)
 public class MessageBoardsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 

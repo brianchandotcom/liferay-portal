@@ -78,8 +78,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>19</portlet-name>
-		<icon>/html/icons/message_boards.png</icon>
-		<struts-path>message_boards</struts-path>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.messageboards.messaging.ExpireBanMessageListener</scheduler-event-listener-class>
 			<trigger>
@@ -92,19 +90,6 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>message_boards</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/messageboards/message-boards-friendly-url-routes.xml</friendly-url-routes>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<!--<user-principal-strategy>screenName</user-principal-strategy>-->
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/message_boards/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/message_boards/js/main.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-message-boards</css-class-wrapper>
-		<facebook-integration>fbml</facebook-integration>
-		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>34</portlet-name>
@@ -353,22 +338,9 @@
 	</portlet>
 	<portlet>
 		<portlet-name>162</portlet-name>
-		<icon>/html/icons/message_boards.png</icon>
-		<struts-path>message_boards_admin</struts-path>
-		<parent-struts-path>message_boards</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>6.0</control-panel-entry-weight>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/message_boards/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/message_boards/js/main.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-message-boards</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>164</portlet-name>

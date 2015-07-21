@@ -288,6 +288,20 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	public void setRestrictionType(int restrictionType);
 
 	/**
+	 * Returns the last publish date of this journal folder.
+	 *
+	 * @return the last publish date of this journal folder
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this journal folder.
+	 *
+	 * @param lastPublishDate the last publish date of this journal folder
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this journal folder.
 	 *
 	 * @return the status of this journal folder

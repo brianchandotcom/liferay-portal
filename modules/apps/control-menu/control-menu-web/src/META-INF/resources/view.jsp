@@ -42,7 +42,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 		<li class="left pull-left">
 			<ul>
 				<li>
-					<a class="sidenav-toggler" href="#1" id="mySidenavToggleId"><span class="icon-align-justify icon-monospaced"></span></a>
+					<a class="control-menu-icon sidenav-toggler" href="#1" id="<portlet:namespace />sidenavToggle"><span class="icon-align-justify icon-monospaced"></span></a>
 				</li>
 			</ul>
 		</li>
@@ -80,6 +80,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 							iconCssClass="icon-plus"
 							id="addPanel"
 							label="add"
+							linkCssClass="control-menu-icon"
 							url="javascript:;"
 						/>
 					</li>
@@ -106,13 +107,46 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 						<liferay-ui:icon
 							iconCssClass="icon-edit"
 							label="edit"
+							linkCssClass="control-menu-icon"
 							url="<%= editPageURLString %>"
 						/>
 					</li>
 				</c:if>
 
 				<c:if test="<%= user.isSetupComplete() || themeDisplay.isImpersonated() %>">
-					<%@ include file="/view_page_customization_bar.jspf" %>
+
+					<%
+					boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isStagingGroup() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
+					boolean linkedLayout = ((!SitesUtil.isLayoutUpdateable(layout) && SitesUtil.isUserGroupLayout(layout)) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
+					boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
+					boolean hasMessages = modifiedLayout || linkedLayout || customizableLayout;
+					%>
+
+					<li>
+						<liferay-ui:icon
+							cssClass='<%= !hasMessages ? "no-info-messages" : StringPool.BLANK %>'
+							iconCssClass="icon-info"
+							id="infoButton"
+							linkCssClass="control-menu-icon"
+							url="javascript:;"
+						/>
+
+						<c:if test="<%= hasMessages %>">
+							<liferay-util:buffer var="infoContainer">
+								<%@ include file="/view_page_customization_bar.jspf" %>
+							</liferay-util:buffer>
+
+							<aui:script sandbox="<%= true %>">
+								$('#<portlet:namespace />infoButton').popover(
+									{
+										content: '<%= HtmlUtil.escapeJS(infoContainer) %>',
+										html: true,
+										placement: 'top'
+									}
+								);
+							</aui:script>
+						</c:if>
+					</li>
 				</c:if>
 
 				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
@@ -121,6 +155,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 							cssClass="toggle-controls"
 							iconCssClass='<%= "controls-state-icon " + (toggleControlsState.equals("visible") ? "icon-eye-open" : "icon-eye-close") %>'
 							label="edit-controls"
+							linkCssClass="control-menu-icon"
 							url="javascript:;"
 						/>
 					</li>
@@ -147,6 +182,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 							iconCssClass="icon-desktop"
 							id="previewPanel"
 							label="preview"
+							linkCssClass="control-menu-icon"
 							url="javascript:;"
 						/>
 					</li>

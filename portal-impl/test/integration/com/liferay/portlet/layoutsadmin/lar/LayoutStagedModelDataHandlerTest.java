@@ -223,6 +223,7 @@ public class LayoutStagedModelDataHandlerTest
 			parentLayoutFriendlyURL.getUuid(), group.getGroupId());
 	}
 
+	@Override
 	protected void validateImportedStagedModel(
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {

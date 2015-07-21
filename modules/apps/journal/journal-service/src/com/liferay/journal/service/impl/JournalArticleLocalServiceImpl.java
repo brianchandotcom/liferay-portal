@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -4788,6 +4789,10 @@ public class JournalArticleLocalServiceImpl
 			final long folderId, final String treePath, final boolean reindex)
 		throws PortalException {
 
+		if (treePath == null) {
+			throw new IllegalArgumentException("Tree path is null");
+		}
+
 		final ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 
@@ -4804,7 +4809,10 @@ public class JournalArticleLocalServiceImpl
 					Property treePathProperty = PropertyFactoryUtil.forName(
 						"treePath");
 
-					dynamicQuery.add(treePathProperty.ne(treePath));
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.or(
+							treePathProperty.isNull(),
+							treePathProperty.ne(treePath)));
 				}
 
 			});

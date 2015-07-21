@@ -74,6 +74,11 @@ public class LockLocalServiceTest {
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_ORACLE,
+				expectedLog = "ORA-00001: unique constraint",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_POSTGRESQL,
 				expectedLog = "Batch entry 0 insert into Lock_ ",
 				expectedType = ExpectedType.PREFIX

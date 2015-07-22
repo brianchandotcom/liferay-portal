@@ -158,27 +158,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 				</c:if>
 			</aui:input>
 
-			<%
-			User selUser = null;
-			Contact selContact = null;
-
-			Locale userLocale = null;
-
-			String languageId = request.getParameter("languageId");
-
-			if (Validator.isNotNull(languageId)) {
-				userLocale = LocaleUtil.fromLanguageId(languageId);
-			}
-			else {
-				User defaultUser = company.getDefaultUser();
-
-				userLocale = LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
-			}
-			%>
-
-			<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>
-
-			<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
+			<liferay-ui:user-name-fields />
 		</aui:col>
 
 		<aui:col width="<%= 50 %>">

@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.trash;
+package com.liferay.message.boards.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
@@ -42,11 +43,17 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Implements trash handling for message boards thread entity.
  *
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBThread"},
+	service = TrashHandler.class
+)
 public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override

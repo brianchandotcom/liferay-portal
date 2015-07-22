@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.trash;
+package com.liferay.message.boards.trash.test;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;

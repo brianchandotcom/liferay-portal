@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.trash;
+package com.liferay.message.boards.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -31,11 +32,17 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Implements trash handling for message boards message entity.
  *
  * @author Zsolt Berentey
  */
+@Component(
+	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBMessage"},
+	service = TrashHandler.class
+)
 public class MBMessageTrashHandler extends BaseTrashHandler {
 
 	@Override

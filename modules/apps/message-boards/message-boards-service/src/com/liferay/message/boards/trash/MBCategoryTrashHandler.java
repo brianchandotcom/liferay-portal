@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.trash;
+package com.liferay.message.boards.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -45,11 +45,17 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Implements trash handling for the message boards category entity.
  *
  * @author Eduardo Garcia
  */
+@Component(
+	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBCategory"},
+	service = TrashHandler.class
+)
 public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager;
 import com.liferay.portal.workflow.kaleo.manager.PortalKaleoManagerUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,12 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	@Override
 	public void onAfterRemove(Company company) throws ModelListenerException {
 		try {
-			PortalKaleoManagerUtil.deleteKaleoData(company.getCompanyId());
+			PortalKaleoManager portalKaleoManager =
+				PortalKaleoManagerUtil.getPortalKaleoManager();
+
+			if (portalKaleoManager != null) {
+				portalKaleoManager.deleteKaleoData(company.getCompanyId());
+			}
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

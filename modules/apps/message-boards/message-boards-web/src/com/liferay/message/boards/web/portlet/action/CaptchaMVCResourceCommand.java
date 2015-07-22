@@ -18,16 +18,17 @@ import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,

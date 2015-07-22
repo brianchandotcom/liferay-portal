@@ -16,7 +16,6 @@ package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.BannedUserException;
@@ -26,10 +25,12 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,

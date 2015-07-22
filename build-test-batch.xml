@@ -30,9 +30,17 @@
 
 			<property name="database.type" value="@{database.type}" />
 
-			<local name="database.service.name" />
+			<local name="database.service.executable" />
 
-			<get-database-property property.name="database.service.name" />
+			<get-database-property property.name="database.service.executable" />
+
+			<local name="database.service.cmd.start" />
+
+			<get-database-property property.name="database.service.cmd.start" />
+
+			<local name="database.service.cmd.stop" />
+
+			<get-database-property property.name="database.service.cmd.stop" />
 
 			<action />
 		</sequential>
@@ -45,9 +53,19 @@
 		<sequential>
 			<database-test-action database.type="@{database.type}">
 				<action>
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} stop" />
-					</exec>
+					<if>
+						<equals arg1="@{database.type}" arg2="db2" />
+						<then>
+							<exec dir="/opt/ibm/db2/V10.5/bin" executable="${database.service.executable}" failonerror="true">
+								<arg line="${database.service.cmd.stop}" />
+							</exec>
+						</then>
+						<else>
+							<exec executable="${database.service.executable}" failonerror="true">
+								<arg line="${database.service.cmd.stop}" />
+							</exec>
+						</else>
+					</if>
 				</action>
 			</database-test-action>
 
@@ -59,9 +77,19 @@
 
 					<set-portal-impl-system-ext-properties />
 
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} start" />
-					</exec>
+					<if>
+						<equals arg1="@{database.type}" arg2="db2" />
+						<then>
+							<exec dir="/opt/ibm/db2/V10.5/bin" executable="${database.service.executable}" failonerror="true">
+								<arg line="${database.service.cmd.start}" />
+							</exec>
+						</then>
+						<else>
+							<exec executable="${database.service.executable}" failonerror="true">
+								<arg line="${database.service.cmd.start}" />
+							</exec>
+						</else>
+					</if>
 
 					<antcall target="copy-optional-jars" inheritall="false" >
 						<param name="database.type" value="@{database.type}" />
@@ -79,9 +107,19 @@
 
 					<test-action />
 
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} stop" />
-					</exec>
+					<if>
+						<equals arg1="@{database.type}" arg2="db2" />
+						<then>
+							<exec dir="/opt/ibm/db2/V10.5/bin" executable="${database.service.executable}" failonerror="true">
+								<arg line="${database.service.cmd.stop}" />
+							</exec>
+						</then>
+						<else>
+							<exec executable="${database.service.executable}" failonerror="true">
+								<arg line="${database.service.cmd.stop}" />
+							</exec>
+						</else>
+					</if>
 				</action>
 			</database-test-action>
 		</sequential>
@@ -226,6 +264,10 @@
 		<run-functional-test database.type="mysql" />
 	</target>
 
+	<target name="integration-db2">
+		<run-integration-test database.type="db2" />
+	</target>
+
 	<target name="integration-mysql">
 		<run-integration-test database.type="mysql" />
 	</target>
@@ -236,6 +278,10 @@
 
 	<target name="integration-postgresql">
 		<run-integration-test database.type="postgresql" />
+	</target>
+
+	<target name="modules-integration-db2">
+		<run-modules-integration-test database.type="db2" />
 	</target>
 
 	<target name="modules-integration-mysql">
@@ -305,8 +351,8 @@
 	<target name="tck">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>
-				<exec executable="service" failonerror="true">
-					<arg line="${database.mysql.service.name} start" />
+				<exec executable="${database.mysql.service.executable}" failonerror="true">
+					<arg line="${database.mysql.service.cmd.start}" />
 				</exec>
 
 				<antcall target="rebuild-database" inheritAll="false" />

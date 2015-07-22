@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;

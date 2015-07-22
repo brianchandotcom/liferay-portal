@@ -145,6 +145,7 @@
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<required>false</required>
+				<defaultValue>icon-cog</defaultValue>
 			</attribute>
 			<attribute>
 				<name>label</name>

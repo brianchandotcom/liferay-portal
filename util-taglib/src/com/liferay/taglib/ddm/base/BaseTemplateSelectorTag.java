@@ -129,7 +129,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_displayStyles = null;
-		_icon = null;
+		_icon = "icon-cog";
 		_label = "display-template";
 		_refreshURL = null;
 		_showEmptyOption = false;
@@ -163,7 +163,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 	private java.lang.String _displayStyle = null;
 	private long _displayStyleGroupId = 0;
 	private java.util.List<java.lang.String> _displayStyles = null;
-	private java.lang.String _icon = null;
+	private java.lang.String _icon = "icon-cog";
 	private java.lang.String _label = "display-template";
 	private java.lang.String _refreshURL = null;
 	private boolean _showEmptyOption = false;

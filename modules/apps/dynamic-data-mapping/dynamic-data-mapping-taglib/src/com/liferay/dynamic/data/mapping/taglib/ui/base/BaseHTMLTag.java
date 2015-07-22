@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ddm.base;
+package com.liferay.dynamic.data.mapping.taglib.ui.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -21,13 +21,17 @@ import javax.servlet.jsp.JspException;
  * @author Bruno Basto
  * @generated
  */
-public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
+	}
+
+	public boolean getCheckRequired() {
+		return _checkRequired;
 	}
 
 	public long getClassNameId() {
@@ -38,8 +42,8 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		return _classPK;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.storage.Field getField() {
-		return _field;
+	public com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues getDdmFormValues() {
+		return _ddmFormValues;
 	}
 
 	public java.lang.String getFieldsNamespace() {
@@ -62,6 +66,12 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		return _showEmptyFieldLabel;
 	}
 
+	public void setCheckRequired(boolean checkRequired) {
+		_checkRequired = checkRequired;
+
+		setScopedAttribute("checkRequired", checkRequired);
+	}
+
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
 
@@ -74,10 +84,10 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		setScopedAttribute("classPK", classPK);
 	}
 
-	public void setField(com.liferay.portlet.dynamicdatamapping.storage.Field field) {
-		_field = field;
+	public void setDdmFormValues(com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues) {
+		_ddmFormValues = ddmFormValues;
 
-		setScopedAttribute("field", field);
+		setScopedAttribute("ddmFormValues", ddmFormValues);
 	}
 
 	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
@@ -114,9 +124,10 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_checkRequired = true;
 		_classNameId = 0;
 		_classPK = 0;
-		_field = null;
+		_ddmFormValues = null;
 		_fieldsNamespace = null;
 		_readOnly = false;
 		_repeatable = true;
@@ -136,9 +147,10 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		setNamespacedAttribute(request, "checkRequired", _checkRequired);
 		setNamespacedAttribute(request, "classNameId", _classNameId);
 		setNamespacedAttribute(request, "classPK", _classPK);
-		setNamespacedAttribute(request, "field", _field);
+		setNamespacedAttribute(request, "ddmFormValues", _ddmFormValues);
 		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
 		setNamespacedAttribute(request, "readOnly", _readOnly);
 		setNamespacedAttribute(request, "repeatable", _repeatable);
@@ -146,17 +158,18 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		setNamespacedAttribute(request, "showEmptyFieldLabel", _showEmptyFieldLabel);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:html-field:";
+	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:html:";
 
 	private static final String _END_PAGE =
-		"/html/taglib/ddm/html_field/end.jsp";
+		"/html/taglib/ddm/html/end.jsp";
 
 	private static final String _START_PAGE =
-		"/html/taglib/ddm/html_field/start.jsp";
+		"/html/taglib/ddm/html/start.jsp";
 
+	private boolean _checkRequired = true;
 	private long _classNameId = 0;
 	private long _classPK = 0;
-	private com.liferay.portlet.dynamicdatamapping.storage.Field _field = null;
+	private com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues _ddmFormValues = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;

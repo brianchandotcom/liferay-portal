@@ -50,7 +50,7 @@ public class MoveThreadMVCRenderCommand implements MVCRenderCommand {
 		catch (NoSuchMessageException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/html/portlet/message_boards/error.jsp";
+			return "/message_boards/error.jsp";
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -59,7 +59,7 @@ public class MoveThreadMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(e);
 		}
 
-		return "/html/portlet/message_boards/move_thread.jsp";
+		return "/message_boards/move_thread.jsp";
 	}
 
 }

@@ -140,7 +140,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, e.getClass());
 
 			actionResponse.setRenderParameter(
-				"mvcPath", "/html/portlet/message_boards/error.jsp");
+				"mvcPath", "/message_boards/error.jsp");
 		}
 		catch (CaptchaConfigurationException | CaptchaMaxChallengesException |
 				CaptchaTextException | CategoryNameException |

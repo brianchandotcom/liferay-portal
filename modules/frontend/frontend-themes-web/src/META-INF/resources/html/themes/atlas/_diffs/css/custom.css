@@ -22,12 +22,8 @@ body {
 				}
 			}
 
-			.nav > li > a {
-				display: inline-block;
-
-				&.dropdown-lft {
-					margin-left: -20px;
-				}
+			.nav > li > a.dropdown-lft {
+				margin-left: -20px;
 			}
 
 			.site-name {

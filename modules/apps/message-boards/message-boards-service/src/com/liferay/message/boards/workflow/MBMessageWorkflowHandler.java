@@ -23,7 +23,7 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.io.Serializable;
 
@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -67,7 +68,7 @@ public class MBMessageWorkflowHandler extends BaseWorkflowHandler<MBMessage> {
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return MBMessageLocalServiceUtil.updateStatus(
+		return _mbMessageLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
 
@@ -75,5 +76,14 @@ public class MBMessageWorkflowHandler extends BaseWorkflowHandler<MBMessage> {
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

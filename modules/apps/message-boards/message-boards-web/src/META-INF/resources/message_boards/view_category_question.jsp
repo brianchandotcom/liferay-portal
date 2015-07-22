@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
@@ -67,7 +67,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 					</liferay-portlet:renderURL>
 
-					<%@ include file="/META-INF/resources/message_boards/category_columns.jspf" %>
+					<%@ include file="/message_boards/category_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator />
@@ -146,20 +146,20 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 		<liferay-ui:search-container-column-jsp
 			cssClass="question"
 			name="question"
-			path="/html/portlet/message_boards/message_summary_question.jsp"
+			path="/message_boards/message_summary_question.jsp"
 		/>
 
 		<liferay-ui:search-container-column-jsp
 			cssClass="last-post"
 			name="last-post"
-			path="/html/portlet/message_boards/last_post_question.jsp"
+			path="/message_boards/last_post_question.jsp"
 		/>
 
 		<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="action-question entry-action"
-				path="/html/portlet/message_boards/message_action.jsp"
+				path="/message_boards/message_action.jsp"
 			/>
 		</c:if>
 	</liferay-ui:search-container-row>

@@ -44,7 +44,7 @@ _buildCategoryBreadcrumb(request, curCategory, sb);
 	value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
 />
 
-<%@ include file="/META-INF/resources/message_boards/subscribed_category_columns_action.jspf" %>
+<%@ include file="/message_boards/subscribed_category_columns_action.jspf" %>
 
 <%!
 private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory category, StringBundler sb) throws Exception {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.ratings.definition;
+package com.liferay.document.library.web.ratings.definition;
 
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.ratings.RatingsType;

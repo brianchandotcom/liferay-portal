@@ -25,11 +25,11 @@
 </c:if>
 
 <div class="subscribe">
-	<c:if test="<%= blogsPortletInstanceSettings.isEnableRSS() %>">
+	<c:if test="<%= rssBlogsGroupServiceSettings.enableRss() %>">
 		<liferay-ui:rss
-			delta="<%= blogsPortletInstanceSettings.getRssDelta() %>"
-			displayStyle="<%= blogsPortletInstanceSettings.getRssDisplayStyle() %>"
-			feedType="<%= blogsPortletInstanceSettings.getRssFeedType() %>"
+			delta="<%= GetterUtil.getInteger(rssBlogsGroupServiceSettings.rssDelta()) %>"
+			displayStyle="<%= rssBlogsGroupServiceSettings.rssDisplayStyle() %>"
+			feedType="<%= rssBlogsGroupServiceSettings.rssFeedType() %>"
 			url='<%= themeDisplay.getPathMain() + "/blogs/rss" %>'
 		/>
 	</c:if>
@@ -74,10 +74,11 @@
 <%
 Map<String, Object> contextObjects = new HashMap<String, Object>();
 
-contextObjects.put("blogsPortletInstanceSettings", blogsPortletInstanceSettings);
+contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSettingsHelper);
+contextObjects.put("blogsPortletInstanceConfiguration", blogsPortletInstanceConfiguration);
 %>
 
-<liferay-ui:ddm-template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceSettings.getDisplayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= _convertToBlogEntries(results) %>">
+<liferay-ui:ddm-template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= _convertToBlogEntries(results) %>">
 
 	<%
 	int index = 0;

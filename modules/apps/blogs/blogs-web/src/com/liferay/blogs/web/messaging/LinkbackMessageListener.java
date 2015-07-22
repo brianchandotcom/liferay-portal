@@ -14,7 +14,9 @@
 
 package com.liferay.blogs.web.messaging;
 
-import com.liferay.blogs.web.configuration.BlogsWebConfigurationValues;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.blogs.configuration.BlogsSystemConfiguration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -26,10 +28,13 @@ import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -43,11 +48,15 @@ import org.osgi.service.component.annotations.Reference;
 public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 
 	@Activate
-	protected void activate() {
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_blogsSystemConfiguration = Configurable.createConfigurable(
+			BlogsSystemConfiguration.class, properties);
+
 		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 		schedulerEntry.setTriggerValue(
-			BlogsWebConfigurationValues.LINKBACK_JOB_INTERVAL);
+			_blogsSystemConfiguration.linkbackJobInterval());
 	}
 
 	@Override
@@ -65,6 +74,7 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 	protected void setServletContext(ServletContext servletContext) {
 	}
 
+	private volatile BlogsSystemConfiguration _blogsSystemConfiguration;
 	private final LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
 

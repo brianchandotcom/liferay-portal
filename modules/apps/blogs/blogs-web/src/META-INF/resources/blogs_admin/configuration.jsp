@@ -18,6 +18,10 @@
 
 <%
 blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId, request.getParameterMap());
+
+SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
+
+com.liferay.blogs.settings.BlogsGroupServiceSettings rssBlogsGroupServiceSettings = settingsFactory.getSettings(com.liferay.blogs.settings.BlogsGroupServiceSettings.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME)));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -31,8 +35,16 @@ blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId, 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
+	<%
+	String tabs1Names = "email-from,entry-added-email,entry-updated-email";
+
+	if (PortalUtil.isRSSFeedsEnabled()) {
+		tabs1Names += ",rss";
+	}
+	%>
+
 	<liferay-ui:tabs
-		names="email-from,entry-added-email,entry-updated-email"
+		names="<%= tabs1Names %>"
 		refresh="<%= false %>"
 	>
 		<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
@@ -96,6 +108,17 @@ blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId, 
 				emailSubject="<%= blogsGroupServiceSettings.getEmailEntryUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
+
+		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+			<liferay-ui:section>
+				<liferay-ui:rss-settings
+					delta="<%= GetterUtil.getInteger(rssBlogsGroupServiceSettings.rssDelta()) %>"
+					displayStyle="<%= rssBlogsGroupServiceSettings.rssDisplayStyle() %>"
+					enabled="<%= rssBlogsGroupServiceSettings.enableRss() %>"
+					feedType="<%= rssBlogsGroupServiceSettings.rssFeedType() %>"
+				/>
+			</liferay-ui:section>
+		</c:if>
 	</liferay-ui:tabs>
 
 	<aui:button-row>

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.blogs.util.BlogsConstants;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
 import com.liferay.portlet.messageboards.util.MBConstants;
 import com.liferay.portlet.shopping.util.ShoppingConstants;
@@ -139,9 +138,6 @@ public class UpgradePortletSettings extends UpgradeProcess {
 
 		// Main portlets
 
-		upgradeMainPortlet(
-			"33", BlogsConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);

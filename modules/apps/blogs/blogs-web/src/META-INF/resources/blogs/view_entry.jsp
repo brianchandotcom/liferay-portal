@@ -193,7 +193,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	</c:if>
 </c:if>
 
-<c:if test="<%= blogsPortletInstanceSettings.isEnableComments() %>">
+<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
 	<liferay-ui:panel-container extended="<%= false %>" id="blogsCommentsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" id="blogsCommentsPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(request, "x-comments", MBMessageLocalServiceUtil.getDiscussionMessagesCount(BlogsEntry.class.getName(), entry.getEntryId(), WorkflowConstants.STATUS_APPROVED)) %>'>
 			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) %>">
@@ -204,7 +204,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
 				formName="fm2"
-				ratingsEnabled="<%= blogsPortletInstanceSettings.isEnableCommentRatings() %>"
+				ratingsEnabled="<%= blogsPortletInstanceConfiguration.enableCommentRatings() %>"
 				redirect="<%= currentURL %>"
 				userId="<%= entry.getUserId() %>"
 			/>

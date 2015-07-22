@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.blogs.web.configuration;
-
-import com.liferay.portal.kernel.util.GetterUtil;
+package com.liferay.blogs.settings;
 
 /**
  * @author Sergio González
  */
-public class BlogsWebConfigurationValues {
+public interface BlogsGroupServiceSettingsOverride {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		BlogsWebConfigurationUtil.get("display.templates.config"));
-
-	public static final String ENTRY_CHECK_INTERVAL = GetterUtil.getString(
-		BlogsWebConfigurationUtil.get("entry.check.interval"));
-
-	public static final String LINKBACK_JOB_INTERVAL = GetterUtil.getString(
-		BlogsWebConfigurationUtil.get("linkback.job.interval"));
+	public boolean enableRss();
 
 }

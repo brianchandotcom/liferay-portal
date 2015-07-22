@@ -15,15 +15,16 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.registry.ServiceReference;
 
-import java.util.Iterator;
-import java.util.Set;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,39 +41,29 @@ public class CustomJspBagRegistryUtilTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			new SyntheticBundleRule("bundle.customjspbagregistryutil"));
 
-	@BeforeClass
-	public static void setUpClass() {
-		_customJspBagRegistryUtil = CustomJspBagRegistryUtil.getInstance();
-	}
-
 	@Test
-	public void testGet() {
-		CustomJspBag customJspBag = _customJspBagRegistryUtil.get(
-			_TEST_SERVLET_CONTEXT_NAME);
-		customJspBag = _customJspBagRegistryUtil.get(
-			_TEST_SERVLET_CONTEXT_NAME);
+	public void testRegistered() {
+		Map<ServiceReference<CustomJspBag>, CustomJspBag> customJspBags =
+			CustomJspBagRegistryUtil.getCustomJspBags();
 
-		Assert.assertTrue(
-			_TEST_SERVLET_CONTEXT_NAME.equals(
-				customJspBag.getServletContextName()));
-	}
+		for (Entry<ServiceReference<CustomJspBag>, CustomJspBag> entry :
+				customJspBags.entrySet()) {
 
-	@Test
-	public void testGetKeys() {
-		Set<String> keys = _customJspBagRegistryUtil.getKeys();
+			ServiceReference<CustomJspBag> serviceReference = entry.getKey();
 
-		Iterator<String> iterator = keys.iterator();
-		while (iterator.hasNext()) {
-			if (_TEST_SERVLET_CONTEXT_NAME.equals(iterator.next())) {
-				return;
+			String contextId = GetterUtil.getString(
+				serviceReference.getProperty("context.id"));
+
+			if (!contextId.equals(_TEST_SERVLET_CONTEXT_NAME)) {
+				continue;
 			}
+
+			return;
 		}
 
 		Assert.fail();
 	}
 
 	private static final String _TEST_SERVLET_CONTEXT_NAME = "test-jsp-bag";
-
-	private static CustomJspBagRegistryUtil _customJspBagRegistryUtil;
 
 }

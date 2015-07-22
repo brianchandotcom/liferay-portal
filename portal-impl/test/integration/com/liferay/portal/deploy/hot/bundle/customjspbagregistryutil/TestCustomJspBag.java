@@ -15,11 +15,14 @@
 package com.liferay.portal.deploy.hot.bundle.customjspbagregistryutil;
 
 import com.liferay.portal.deploy.hot.CustomJspBag;
+import com.liferay.portal.kernel.url.URLContainer;
+
+import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import javax.servlet.ServletContext;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,8 +31,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"service.ranking:Integer=" + Integer.MAX_VALUE},
-	service = CustomJspBag.class
+	property = {
+		"context.id=test-jsp-bag", "context.name=Sample OSGI JSP Overwrite",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	}
 )
 public class TestCustomJspBag implements CustomJspBag {
 
@@ -40,23 +45,12 @@ public class TestCustomJspBag implements CustomJspBag {
 
 	@Override
 	public List<String> getCustomJsps() {
-		_customJsps.add("/html/portlet/nothing.jsp");
 		return _customJsps;
 	}
 
 	@Override
-	public String getPluginPackageName() {
-		return "Sample OSGI JSP Overwrite";
-	}
-
-	@Override
-	public ServletContext getServletContext() {
-		return null;
-	}
-
-	@Override
-	public String getServletContextName() {
-		return "test-jsp-bag";
+	public URLContainer getURLContainer() {
+		return _urlContainer;
 	}
 
 	@Override
@@ -65,5 +59,19 @@ public class TestCustomJspBag implements CustomJspBag {
 	}
 
 	private final List<String> _customJsps = new ArrayList<>();
+
+	private final URLContainer _urlContainer = new URLContainer() {
+
+		@Override
+		public Set<String> getResources(String path) {
+			return Collections.singleton(path + "/html/portlet/nothing.jsp");
+		}
+
+		@Override
+		public URL getResource(String name) {
+			return getClass().getResource("dependencies/nothing.jsp");
+		}
+
+	};
 
 }

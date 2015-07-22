@@ -1,13 +1,20 @@
 AUI.add(
 	'liferay-item-selector-uploader',
 	function(A) {
+		var CSS_PROGRESS = 'progress';
+
 		var CSS_UPLOADING = 'uploading';
 
 		var NAME = 'itemselectoruploader';
 
 		var PROGRESS_HEIGHT = '6';
 
-		var TPL_PROGRESS_BAR = '<div class="col-md-10 progressbar"></div>';
+		var STR_VALUE = 'value';
+
+		var TPL_PROGRESS_BAR = '<div class="progress-container">' +
+				'<div><strong id="itemName"></strong> <a href="#" id="cancel">' + Liferay.Language.get('cancel') + '</a></div>' +
+				'<div class="' + CSS_PROGRESS + '"></div>' +
+			'</div>';
 
 		var ItemUploader = A.Component.create(
 			{
@@ -25,13 +32,16 @@ AUI.add(
 
 						var uploader = instance._getUploader();
 
+						instance._createProgressBar();
+
+						var cancelBtn = instance._progressbarNode.one('#cancel');
+
 						instance._eventHandles = [
 							uploader.on('uploadcomplete', instance._onUploadComplete, instance),
 							uploader.on('uploaderror', instance._onUploadError, instance),
-							uploader.on('uploadprogress', instance._onUploadProgress, instance)
+							uploader.on('uploadprogress', instance._onUploadProgress, instance),
+							cancelBtn.on('click', instance._onCancel, instance)
 						];
-
-						instance._createProgressBar();
 					},
 
 					destructor: function() {
@@ -53,6 +63,10 @@ AUI.add(
 
 						uploader.upload(file, url);
 
+						instance._currentFile = file;
+
+						instance._progressbarNode.one('#itemName').html(file.get('name'));
+
 						instance.rootNode.addClass(CSS_UPLOADING);
 					},
 
@@ -61,13 +75,15 @@ AUI.add(
 
 						var rootNode = instance.rootNode;
 
-						var progressBarNode = A.Node.create(TPL_PROGRESS_BAR);
+						var progressbarNode = A.Node.create(TPL_PROGRESS_BAR);
 
-						rootNode.append(progressBarNode);
+						rootNode.append(progressbarNode);
+
+						instance._progressbarNode = progressbarNode;
 
 						var progressbar = new A.ProgressBar(
 							{
-								boundingBox: progressBarNode,
+								boundingBox: progressbarNode.one('.' + CSS_PROGRESS),
 								height: PROGRESS_HEIGHT
 							}
 						).render();
@@ -93,10 +109,20 @@ AUI.add(
 						return uploader;
 					},
 
+					_onCancel: function() {
+						var instance = this;
+
+						instance._currentFile.cancelUpload();
+
+						instance._stopProgress();
+
+						instance.fire('itemUploadCancel');
+					},
+
 					_onUploadComplete: function(event) {
 						var instance = this;
 
-						instance.rootNode.removeClass(CSS_UPLOADING);
+						instance._stopProgress();
 
 						var data = JSON.parse(event.data);
 
@@ -110,7 +136,7 @@ AUI.add(
 
 						event.target.cancelUpload();
 
-						instance.rootNode.removeClass(CSS_UPLOADING);
+						instance._stopProgress();
 
 						instance.fire('itemUploadError', event.details[0]);
 					},
@@ -120,11 +146,15 @@ AUI.add(
 
 						var percentLoaded = Math.round(event.percentLoaded);
 
-						var progressbar = instance._progressbar;
+						instance._progressbar.set(STR_VALUE, Math.ceil(percentLoaded));
+					},
 
-						if (progressbar) {
-							progressbar.set('value', Math.ceil(percentLoaded));
-						}
+					_stopProgress: function() {
+						var instance = this;
+
+						instance._progressbar.set(STR_VALUE, 0);
+
+						instance.rootNode.removeClass(CSS_UPLOADING);
 					}
 				}
 			}

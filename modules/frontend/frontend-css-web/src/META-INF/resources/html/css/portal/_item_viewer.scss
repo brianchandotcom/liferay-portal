@@ -37,11 +37,26 @@
 		}
 	}
 
-	.progressbar {
+	.progress-container {
+		left: 0;
+		margin: 0 auto;
+		padding: 20px 30px;
 		position: absolute;
-		top: 0;
+		right: 0;
+		text-align: center;
+		top: 50%;
+		transform: translateY(-50%);
 		visibility: hidden;
-		z-index: 1000;
+		width: 80%;
+
+		a {
+			position: absolute;
+			right: 30px;
+		}
+
+		.progress {
+			margin-top: 10px;
+		}
 	}
 
 	.sidenav-menu-slider {
@@ -56,8 +71,9 @@
 		margin: 15px;
 	}
 
-	&.uploading > .progressbar {
+	&.uploading > .progress-container {
 		visibility: visible;
+		z-index: 1000;
 	}
 }
 

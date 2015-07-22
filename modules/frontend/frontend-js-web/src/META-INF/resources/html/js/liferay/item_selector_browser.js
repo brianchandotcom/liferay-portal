@@ -104,6 +104,7 @@ AUI.add(
 							itemViewer.after('currentIndexChange', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
 							itemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
 							uploadItemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
+							itemSelectorUploader.after('itemUploadCancel', instance._onItemUploadCancel, instance),
 							itemSelectorUploader.after('itemUploadComplete', instance._onItemUploadComplete, instance),
 							itemSelectorUploader.after('itemUploadError', instance._onItemUploadError, instance),
 							rootNode.on(STR_DRAG_OVER, instance._ddEventHandler, instance),
@@ -171,6 +172,16 @@ AUI.add(
 								}
 							}
 						);
+					},
+
+					_onItemUploadCancel: function(event) {
+						var instance = this;
+
+						var uploadItemViewer = instance._uploadItemViewer;
+
+						if (uploadItemViewer) {
+							uploadItemViewer.hide();
+						}
 					},
 
 					_onItemUploadComplete: function(itemData) {

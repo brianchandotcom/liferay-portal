@@ -31,7 +31,11 @@
 		}
 	}
 
-	&.uploading > div:not(.progressbar) {
+	.progress-container {
+		background-color: #FFF;
+	}
+
+	&.uploading > div:not(.progress-container) {
 		opacity: 0.3;
 	}
 }

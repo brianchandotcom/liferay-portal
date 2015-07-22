@@ -39,7 +39,7 @@ public abstract class GetMessageMVCRenderCommand implements MVCRenderCommand {
 		catch (NoSuchMessageException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/html/portlet/message_boards/error.jsp";
+			return "/message_boards/error.jsp";
 		}
 		catch (RuntimeException re) {
 			throw re;

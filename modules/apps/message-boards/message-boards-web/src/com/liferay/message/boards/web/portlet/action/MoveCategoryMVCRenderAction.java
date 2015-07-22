@@ -50,14 +50,14 @@ public class MoveCategoryMVCRenderAction implements MVCRenderCommand {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/message_boards/error.jsp";
+				return "/message_boards/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/message_boards/move_category.jsp";
+		return "/message_boards/move_category.jsp";
 	}
 
 }

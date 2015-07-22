@@ -444,7 +444,6 @@
 		<icon>/html/icons/message_boards.png</icon>
 		<struts-path>message_boards_admin</struts-path>
 		<parent-struts-path>message_boards</parent-struts-path>
-		<configuration-action-class>com.liferay.portlet.messageboards.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>6.0</control-panel-entry-weight>

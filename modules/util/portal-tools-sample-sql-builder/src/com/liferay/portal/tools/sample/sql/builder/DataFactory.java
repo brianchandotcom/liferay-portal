@@ -1292,13 +1292,13 @@ public class DataFactory {
 		ddlRecordModel.setVersionUserId(_sampleUserId);
 		ddlRecordModel.setVersionUserName(_SAMPLE_USER_NAME);
 		ddlRecordModel.setCreateDate(new Date());
-		ddlRecordModel.setLastPublishDate(new Date());
 		ddlRecordModel.setModifiedDate(new Date());
 		ddlRecordModel.setDDMStorageId(_counter.get());
 		ddlRecordModel.setRecordSetId(dDLRecordSetModel.getRecordSetId());
 		ddlRecordModel.setVersion(DDLRecordConstants.VERSION_DEFAULT);
 		ddlRecordModel.setDisplayIndex(
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT);
+		ddlRecordModel.setLastPublishDate(new Date());
 
 		return ddlRecordModel;
 	}
@@ -1315,7 +1315,6 @@ public class DataFactory {
 		ddlRecordSetModel.setUserId(_sampleUserId);
 		ddlRecordSetModel.setUserName(_SAMPLE_USER_NAME);
 		ddlRecordSetModel.setCreateDate(new Date());
-		ddlRecordSetModel.setLastPublishDate(new Date());
 		ddlRecordSetModel.setModifiedDate(new Date());
 		ddlRecordSetModel.setDDMStructureId(ddmStructureModel.getStructureId());
 		ddlRecordSetModel.setRecordSetKey(String.valueOf(_counter.get()));
@@ -1334,6 +1333,7 @@ public class DataFactory {
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT);
 		ddlRecordSetModel.setScope(
 			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+		ddlRecordSetModel.setLastPublishDate(new Date());
 
 		return ddlRecordSetModel;
 	}

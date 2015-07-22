@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.url.ServletContextURLContainer;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -840,14 +841,14 @@ public class HookHotDeployListener
 		boolean customJspGlobal = GetterUtil.getBoolean(
 			rootElement.elementText("custom-jsp-global"), true);
 
-		CustomJspBagRegistryUtil customJspBagRegistryUtil =
-			CustomJspBagRegistryUtil.getInstance();
-
 		CustomJspBag customJspBag = new CustomJspBagImpl(
-			servletContext, customJspDir, customJspGlobal,
-			pluginPackage.getName());
+			new ServletContextURLContainer(servletContext), customJspDir,
+			customJspGlobal);
 
-		customJspBagRegistryUtil.register(customJspBag);
+		registerService(
+			servletContextName, "customJsp", CustomJspBag.class, customJspBag,
+			"context.id", servletContextName, "context.name",
+			pluginPackage.getName());
 	}
 
 	protected void initEvent(

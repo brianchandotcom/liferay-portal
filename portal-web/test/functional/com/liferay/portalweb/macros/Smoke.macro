@@ -64,8 +64,8 @@
 			</execute>
 		</task>
 
-		<var name="portletName" value="Blogs" />
-		<var name="portletTitle" value="Blogs" />
+		<var name="portletName" value="Web Content" />
+		<var name="portletTitle" value="Web Content" />
 
 		<task macro-summary="Page#gotoContentCP">
 			<execute macro="Page#gotoContentCP">

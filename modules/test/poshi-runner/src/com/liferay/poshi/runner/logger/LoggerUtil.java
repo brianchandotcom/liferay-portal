@@ -123,7 +123,7 @@ public final class LoggerUtil {
 		}
 
 		return (String)_javascriptExecutor.executeScript(
-			"getClassName(" + loggerElement.getID() + ");");
+			"getClassName('" + loggerElement.getID() + "');");
 	}
 
 	public static String getName(LoggerElement loggerElement) {
@@ -132,7 +132,7 @@ public final class LoggerUtil {
 		}
 
 		return (String)_javascriptExecutor.executeScript(
-			"getName(" + loggerElement.getID() + ");");
+			"getName('" + loggerElement.getID() + "');");
 	}
 
 	public static String getText(LoggerElement loggerElement) {
@@ -141,7 +141,7 @@ public final class LoggerUtil {
 		}
 
 		return (String)_javascriptExecutor.executeScript(
-			"getText(" + loggerElement.getID() + ");");
+			"getText('" + loggerElement.getID() + "');");
 	}
 
 	public static boolean isLoggerStarted() {
@@ -159,7 +159,7 @@ public final class LoggerUtil {
 
 		try {
 			return (boolean)_javascriptExecutor.executeScript(
-				"isWrittenToLogger(" + loggerElement.getID() + ");");
+				"isWrittenToLogger('" + loggerElement.getID() + "');");
 		}
 		catch (Exception e) {
 			return false;
@@ -180,7 +180,7 @@ public final class LoggerUtil {
 			attributeValue);
 
 		_javascriptExecutor.executeScript(
-			"setAttribute(" + loggerElement.getID() + ", '" +
+			"setAttribute('" + loggerElement.getID() + "', '" +
 				escapedAttributeName + "', '" + escapedAttributeValue + "');");
 	}
 
@@ -193,7 +193,7 @@ public final class LoggerUtil {
 			loggerElement.getClassName());
 
 		_javascriptExecutor.executeScript(
-			"setClassName(" + loggerElement.getID() + ", '" + className +
+			"setClassName('" + loggerElement.getID() + "', '" + className +
 				"');");
 	}
 
@@ -218,7 +218,7 @@ public final class LoggerUtil {
 			loggerElement.getName());
 
 		_javascriptExecutor.executeScript(
-			"setName(" + loggerElement.getID() + ", '" + name + "');");
+			"setName('" + loggerElement.getID() + "', '" + name + "');");
 	}
 
 	public static void setText(LoggerElement loggerElement) {
@@ -230,7 +230,7 @@ public final class LoggerUtil {
 			loggerElement.getText());
 
 		_javascriptExecutor.executeScript(
-			"setText(" + loggerElement.getID() + ", '" + text + "');");
+			"setText('" + loggerElement.getID() + "', '" + text + "');");
 	}
 
 	public static void startLogger() throws Exception {

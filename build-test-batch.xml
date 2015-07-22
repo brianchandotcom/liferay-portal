@@ -250,6 +250,10 @@
 		<run-integration-test database.type="postgresql" />
 	</target>
 
+	<target name="modules-integration-db2">
+		<run-modules-integration-test database.type="db2" />
+	</target>
+
 	<target name="modules-integration-mysql">
 		<run-modules-integration-test database.type="mysql" />
 	</target>

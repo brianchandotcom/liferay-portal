@@ -30,8 +30,6 @@ alter table BrowserTracker add companyId LONG;
 
 alter table ClusterGroup add companyId LONG;
 
-alter table Country add companyId LONG;
-
 alter table DLFileEntryMetadata add companyId LONG;
 
 alter table DLFileEntryMetadata drop column fileEntryTypeId;
@@ -122,8 +120,6 @@ alter table PortletPreferences add companyId LONG;
 alter table RatingsEntry add uuid_ VARCHAR(75) null;
 
 alter table RatingsStats add companyId LONG;
-
-alter table Region add companyId LONG;
 
 insert into Region (regionId, countryId, regionCode, name, active_) values (33001, 33, 'AT-1', 'Burgenland', TRUE);
 insert into Region (regionId, countryId, regionCode, name, active_) values (33002, 33, 'AT-2', 'Kärnten', TRUE);

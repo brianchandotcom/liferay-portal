@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.security.permission;
+package com.liferay.message.boards.web.security.permission;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -22,11 +22,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.BasePermissionPropagator;
+import com.liferay.portal.security.permission.PermissionPropagator;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,14 @@ import javax.portlet.ActionRequest;
  * @author Kenneth Chang
  * @author Hugo Huijser
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN
+	},
+	service = PermissionPropagator.class
+)
 public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 	@Override

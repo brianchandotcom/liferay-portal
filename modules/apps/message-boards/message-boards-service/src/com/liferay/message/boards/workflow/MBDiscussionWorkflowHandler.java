@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.workflow;
+package com.liferay.message.boards.workflow;
 
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -21,9 +22,15 @@ import com.liferay.portlet.messageboards.model.MBDiscussion;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion"},
+	service = WorkflowHandler.class
+)
 public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 
 	@Override

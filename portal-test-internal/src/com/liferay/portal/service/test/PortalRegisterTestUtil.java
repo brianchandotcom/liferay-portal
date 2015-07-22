@@ -30,8 +30,6 @@ import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
 import com.liferay.portlet.messageboards.trash.MBMessageTrashHandler;
 import com.liferay.portlet.messageboards.trash.MBThreadTrashHandler;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
-import com.liferay.portlet.messageboards.workflow.MBDiscussionWorkflowHandler;
-import com.liferay.portlet.messageboards.workflow.MBMessageWorkflowHandler;
 import com.liferay.portlet.trash.util.TrashIndexer;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
@@ -102,8 +100,6 @@ public class PortalRegisterTestUtil {
 			return;
 		}
 
-		WorkflowHandlerRegistryUtil.register(new MBDiscussionWorkflowHandler());
-		WorkflowHandlerRegistryUtil.register(new MBMessageWorkflowHandler());
 		WorkflowHandlerRegistryUtil.register(new UserWorkflowHandler());
 
 		_workflowHandlersRegistered = true;

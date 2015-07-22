@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreBlogsEntry" priority="4">
+	<command name="RestoreBlogsEntry" priority="5">
 		<var name="assetRestoreLocation" value="Blogs" />
 
 		<execute macro="Page#gotoContentCP">

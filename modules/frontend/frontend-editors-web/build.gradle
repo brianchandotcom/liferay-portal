@@ -75,8 +75,6 @@ buildCKEditor {
 	File ckEditorDestinationDir = new File(editorsDestinationDir, "ckeditor")
 	File ckEditorZipFile = new File(thirdPartyDir, "ckeditor_${ckEditorVersion}_liferay.zip")
 
-	dependsOn buildCKEditorBBCode
-
 	doFirst {
 		delete ckEditorDestinationDir
 	}

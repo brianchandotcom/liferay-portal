@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.FileUtil
+
 configurations {
 	antlr
 }
@@ -13,10 +15,17 @@ dependencies {
 task buildCreoleParser(type: JavaExec)
 
 buildCreoleParser {
-	args "-o", "../parser"
-	args "Creole10.g"
+	File destinationDir = file("src/com/liferay/wiki/engine/creole/parser/parser")
+	File grammarFile = file("src/com/liferay/wiki/engine/creole/parser/grammar/Creole10.g")
+
+	args "-o", FileUtil.relativize(destinationDir, grammarFile.parentFile)
+	args grammarFile.name
 
 	classpath = configurations.antlr
+
+	doFirst {
+		delete destinationDir
+	}
 
 	doLast {
 		ant.replace(file: "src/com/liferay/wiki/engine/creole/parser/parser/Creole10Lexer.java") {
@@ -40,11 +49,7 @@ public class Creole10Parser"""
 
 	main = "org.antlr.Tool"
 	maxHeapSize = "1512m"
-	workingDir = "src/com/liferay/wiki/engine/creole/parser/grammar"
-}
-
-compileJava {
-	dependsOn buildCreoleParser
+	workingDir = grammarFile.parentFile
 }
 
 liferay {

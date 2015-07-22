@@ -12,32 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.BannedUserException;
-import com.liferay.portlet.messageboards.NoSuchCategoryException;
+import com.liferay.portlet.messageboards.NoSuchMessageException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
-	property = {
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/", "mvc.command.name=/message_boards/view"
-	},
-	service = MVCRenderCommand.class
-)
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public abstract class GetMessageMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -45,11 +34,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getCategory(renderRequest);
+			ActionUtil.getMessage(renderRequest);
 		}
-		catch (BannedUserException | NoSuchCategoryException |
-				PrincipalException e) {
-
+		catch (NoSuchMessageException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
 			return "/html/portlet/message_boards/error.jsp";
@@ -61,7 +48,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(e);
 		}
 
-		return "/html/portlet/message_boards/view.jsp";
+		return getPath();
 	}
+
+	protected abstract String getPath();
 
 }

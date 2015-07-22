@@ -12,41 +12,48 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.struts.BaseStrutsAction;
-import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.util.PortletKeys;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"path=/message_boards/find_category"
+		"mvc.command.name=/message_boards/captcha"
 	},
-	service = StrutsAction.class
+	service = MVCResourceCommand.class
 )
-public class FindCategoryAction extends BaseStrutsAction {
+public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
-	public String execute(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+	public boolean serveResource(
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		_findActionHelper.execute(request, response);
+		try {
+			CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 
-		return null;
+			return false;
+		}
+		catch (Exception e) {
+			_log.error(e);
+
+			return true;
+		}
 	}
 
-	private final FindActionHelper _findActionHelper =
-		new CategoryFindActionHelper();
+	private static final Log _log = LogFactoryUtil.getLog(
+		CaptchaMVCResourceCommand.class);
 
 }

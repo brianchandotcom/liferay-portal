@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -20,24 +20,26 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
+import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 
 import java.io.InputStream;
@@ -55,48 +57,54 @@ import javax.portlet.PortletURL;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/move_thread"
+		"mvc.command.name=/message_boards/split_thread"
 	},
 	service = MVCActionCommand.class
 )
-public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
+public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void doProcessAction(
+	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			moveThread(actionRequest, actionResponse);
+			splitThread(actionRequest, actionResponse);
 		}
-		catch (LockedThreadException | PrincipalException |
-				RequiredMessageException e) {
-
+		catch (PrincipalException | RequiredMessageException e) {
 			SessionErrors.add(actionRequest, e.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
 		catch (MessageBodyException | MessageSubjectException |
-				NoSuchThreadException e) {
+				NoSuchThreadException | SplitThreadException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 		}
 	}
 
-	protected void moveThread(
+	protected void splitThread(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
-		long threadId = ParamUtil.getLong(actionRequest, "threadId");
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
+		String splitThreadSubject = ParamUtil.getString(
+			actionRequest, "splitThreadSubject");
 
-		MBThreadServiceUtil.moveThread(categoryId, threadId);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			MBThread.class.getName(), actionRequest);
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+
+		long oldParentMessageId = message.getParentMessageId();
+
+		MBThread newThread = MBThreadServiceUtil.splitThread(
+			messageId, splitThreadSubject, serviceContext);
 
 		boolean addExplanationPost = ParamUtil.getBoolean(
 			actionRequest, "addExplanationPost");
@@ -109,15 +117,24 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 				MBGroupServiceSettings.getInstance(
 					themeDisplay.getScopeGroupId());
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				MBMessage.class.getName(), actionRequest);
+			String layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
+
+			String newThreadURL =
+				layoutFullURL + "/-/message_boards/view_message/" +
+					message.getMessageId();
+
+			body = StringUtil.replace(
+				body, MBThreadConstants.NEW_THREAD_URL, newThreadURL);
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
 
 			MBMessageServiceUtil.addMessage(
-				thread.getRootMessageId(), subject, body,
+				oldParentMessageId, subject, body,
 				mbGroupServiceSettings.getMessageFormat(),
 				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
-				false, MBThreadConstants.PRIORITY_NOT_GIVEN, false,
-				serviceContext);
+				false, MBThreadConstants.PRIORITY_NOT_GIVEN,
+				message.getAllowPingbacks(), serviceContext);
 		}
 
 		PortletURL portletURL =
@@ -126,7 +143,7 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/view_message");
 		portletURL.setParameter(
-			"messageId", String.valueOf(thread.getRootMessageId()));
+			"messageId", String.valueOf(newThread.getRootMessageId()));
 
 		actionResponse.sendRedirect(portletURL.toString());
 	}

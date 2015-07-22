@@ -12,16 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.NoSuchCategoryException;
 
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -32,33 +28,17 @@ import javax.portlet.RenderResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/edit_category"
+		"mvc.command.name=/message_boards/select_category"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCategoryMVCRenderCommand implements MVCRenderCommand {
+public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		try {
-			ActionUtil.getCategory(renderRequest);
-		}
-		catch (NoSuchCategoryException | PrincipalException e) {
-			SessionErrors.add(renderRequest, e.getClass());
-
-			return "/html/portlet/message_boards/error.jsp";
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-
-		return "/html/portlet/message_boards/edit_category.jsp";
+		return "/portlet/message_boards/select_category.jsp";
 	}
 
 }

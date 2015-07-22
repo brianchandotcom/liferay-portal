@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 
 import javax.portlet.PortletException;
@@ -26,7 +28,15 @@ import javax.portlet.RenderResponse;
 /**
  * @author Adolfo Pérez
  */
-public abstract class GetMessageMVCRenderCommand implements MVCRenderCommand {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/message_boards/move_thread"
+	},
+	service = MVCRenderCommand.class
+)
+public class MoveThreadMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -34,7 +44,7 @@ public abstract class GetMessageMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getMessage(renderRequest);
+			ActionUtil.getThreadMessage(renderRequest);
 		}
 		catch (NoSuchMessageException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
@@ -48,9 +58,7 @@ public abstract class GetMessageMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(e);
 		}
 
-		return getPath();
+		return "/html/portlet/message_boards/move_thread.jsp";
 	}
-
-	protected abstract String getPath();
 
 }

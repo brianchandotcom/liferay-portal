@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -28,16 +28,16 @@ import javax.portlet.RenderResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/search"
+		"mvc.command.name=/message_boards/restore_entry"
 	}
 )
-public class SearchMVCRenderCommand implements MVCRenderCommand {
+public class RestoreEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/portlet/message_boards/search.jsp";
+		return "/portlet/message_boards/restore_entry.jsp";
 	}
 
 }

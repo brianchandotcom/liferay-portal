@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -65,7 +65,7 @@ else {
 }
 %>
 
-<liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
+<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:header
 	backURL="<%= redirect %>"

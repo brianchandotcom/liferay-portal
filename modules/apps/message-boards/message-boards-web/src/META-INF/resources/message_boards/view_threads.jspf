@@ -95,7 +95,7 @@
 		modelVar="result"
 	>
 
-		<%@ include file="/META-INF/resources/message_boards/cast_result.jspf" %>
+		<%@ include file="/message_boards/cast_result.jspf" %>
 
 		<%
 		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());
@@ -119,7 +119,7 @@
 			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<%@ include file="/META-INF/resources/message_boards/user_thread_columns.jspf" %>
+		<%@ include file="/message_boards/user_thread_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator />

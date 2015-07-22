@@ -71,10 +71,10 @@ boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
 		<aui:field-wrapper label="quick-reply">
 			<c:choose>
 				<c:when test='<%= messageFormat.equals("bbcode") %>'>
-					<%@ include file="/META-INF/resources/message_boards/bbcode_editor.jspf" %>
+					<%@ include file="/message_boards/bbcode_editor.jspf" %>
 				</c:when>
 				<c:otherwise>
-					<%@ include file="/META-INF/resources/message_boards/html_editor.jspf" %>
+					<%@ include file="/message_boards/html_editor.jspf" %>
 				</c:otherwise>
 			</c:choose>
 			<aui:input name="body" type="hidden" />

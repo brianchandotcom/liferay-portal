@@ -45,10 +45,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_portletURL = portletURL;
 	}
 
-	public String getDisplayStyle(HttpServletRequest request) {
-		return ParamUtil.getString(request, "displayStyle");
-	}
-
 	public long getFolderId(HttpServletRequest request) {
 		return ParamUtil.getLong(
 			request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -74,7 +70,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, liferayPortletResponse);
 
-		portletURL.setParameter("displayStyle", getDisplayStyle(request));
 		portletURL.setParameter(
 			"folderId", String.valueOf(getFolderId(request)));
 		portletURL.setParameter(

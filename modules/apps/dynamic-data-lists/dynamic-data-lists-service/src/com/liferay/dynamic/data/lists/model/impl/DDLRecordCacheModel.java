@@ -66,7 +66,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -96,6 +96,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		sb.append(version);
 		sb.append(", displayIndex=");
 		sb.append(displayIndex);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -159,6 +161,13 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 		ddlRecordImpl.setDisplayIndex(displayIndex);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			ddlRecordImpl.setLastPublishDate(null);
+		}
+		else {
+			ddlRecordImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		ddlRecordImpl.resetOriginalValues();
 
 		return ddlRecordImpl;
@@ -180,6 +189,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		recordSetId = objectInput.readLong();
 		version = objectInput.readUTF();
 		displayIndex = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -226,6 +236,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		}
 
 		objectOutput.writeInt(displayIndex);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -242,4 +253,5 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 	public long recordSetId;
 	public String version;
 	public int displayIndex;
+	public long lastPublishDate;
 }

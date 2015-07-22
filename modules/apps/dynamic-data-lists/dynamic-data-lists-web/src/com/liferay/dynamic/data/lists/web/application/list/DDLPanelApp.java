@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.portal.service.PortletLocalService;
 
 import org.osgi.service.component.annotations.Component;

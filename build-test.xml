@@ -5328,12 +5328,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
-						<exec executable="${db2.executable}">
-							<arg value="-fdrop.sql" />
+						<exec dir="/opt/ibm/db2/V10.5/bin" executable="${db2.executable}">
+							<arg value="-f${project.dir}/drop.sql" />
 							<arg value="-t" />
 						</exec>
-						<exec executable="${db2.executable}" failonerror="true">
-							<arg value="-fcreate.sql" />
+						<exec dir="/opt/ibm/db2/V10.5/bin" executable="${db2.executable}" failonerror="true">
+							<arg value="-f${project.dir}/create.sql" />
 							<arg value="-t" />
 						</exec>
 					</then>

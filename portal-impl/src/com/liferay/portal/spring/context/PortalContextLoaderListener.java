@@ -16,6 +16,7 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.dao.orm.hibernate.FieldInterceptionHelperUtil;
+import com.liferay.portal.deploy.hot.CustomJspBagRegistryUtil;
 import com.liferay.portal.deploy.hot.IndexerPostProcessorRegistry;
 import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -359,6 +360,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+
+		CustomJspBagRegistryUtil.getCustomJspBags();
 
 		initListeners(servletContext);
 

@@ -5467,6 +5467,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>user-name-fields</name>
+		<tag-class>com.liferay.taglib.ui.UserNameFieldsTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>user-group-search-form</name>
 		<tag-class>com.liferay.taglib.ui.UserGroupSearchFormTag</tag-class>
 		<body-content>JSP</body-content>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.menu.site.administration.application.list;
+package com.liferay.document.library.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
@@ -43,7 +43,7 @@ public class DocumentLibraryPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return PortletKeys.DOCUMENT_LIBRARY_ADMIN;
 	}
 
 	@Reference(unbind = "-")

@@ -3915,7 +3915,7 @@ public class ServiceBuilder {
 					Map<String, String> hints = ModelHintsUtil.getHints(
 						_packagePath + ".model." + entity.getName(), colName);
 
-					int maxLength = 75;
+					int maxLength = _DEFAULT_COLUMN_MAX_LENGTH;
 
 					if (hints != null) {
 						maxLength = GetterUtil.getInteger(
@@ -4038,7 +4038,7 @@ public class ServiceBuilder {
 				Map<String, String> hints = ModelHintsUtil.getHints(
 					_packagePath + ".model." + entity.getName(), colName);
 
-				int maxLength = 75;
+				int maxLength = _DEFAULT_COLUMN_MAX_LENGTH;
 
 				if (hints != null) {
 					maxLength = GetterUtil.getInteger(
@@ -5087,6 +5087,8 @@ public class ServiceBuilder {
 			_createSQLTables(updateSQLFile, createTableSQL, entity, false);
 		}
 	}
+
+	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
 
 	private static final int _SESSION_TYPE_LOCAL = 1;
 

@@ -11,11 +11,9 @@
 
 	<macrodef name="build-bourbon">
 		<sequential>
-			<property name="portal.common.dir" value="${common.css.dir}" />
-
 			<property name="bourbon.version" value="3.2.3" />
 
-			<property name="bourbon.deploy" value="${portal.common.dir}/bourbon" />
+			<property name="bourbon.deploy" value="${common.css.dir}/bourbon" />
 
 			<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
 

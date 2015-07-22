@@ -27,7 +27,12 @@ if (Validator.isNotNull(portletResource)) {
 }
 
 BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
-BlogsPortletInstanceSettings blogsPortletInstanceSettings = BlogsPortletInstanceSettings.getInstance(layout, portletId);
+
+SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
+
+BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = settingsFactory.getSettings(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
+com.liferay.blogs.settings.BlogsGroupServiceSettings rssBlogsGroupServiceSettings = settingsFactory.getSettings(com.liferay.blogs.settings.BlogsGroupServiceSettings.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
+BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new BlogsPortletInstanceSettingsHelper(request, blogsPortletInstanceConfiguration);
 
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
 

@@ -25,8 +25,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.blogs.web.constants.BlogsPortletKeys" %><%@
-page import="com.liferay.blogs.web.settings.internal.BlogsPortletInstanceSettings" %><%@
+<%@ page import="com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration" %><%@
+page import="com.liferay.blogs.web.constants.BlogsPortletKeys" %><%@
+page import="com.liferay.blogs.web.display.context.BlogsPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -47,6 +48,11 @@ page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.search.SearchResultUtil" %><%@
 page import="com.liferay.portal.kernel.search.Summary" %><%@
+page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
+page import="com.liferay.portal.kernel.settings.SettingsFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.upload.LiferayFileItemException" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@

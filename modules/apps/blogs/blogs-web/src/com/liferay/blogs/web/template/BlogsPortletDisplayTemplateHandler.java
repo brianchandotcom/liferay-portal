@@ -14,7 +14,9 @@
 
 package com.liferay.blogs.web.template;
 
-import com.liferay.blogs.web.configuration.BlogsWebConfigurationValues;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.blogs.configuration.BlogsSystemConfiguration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -31,12 +33,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Juan Fernández
  */
 @Component(
+	configurationPid = "com.liferay.blogs.configuration.BlogsSystemConfiguration",
 	immediate = true,
 	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
 	service = TemplateHandler.class
@@ -97,9 +102,18 @@ public class BlogsPortletDisplayTemplateHandler
 		return templateVariableGroups;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_blogsSystemConfiguration = Configurable.createConfigurable(
+			BlogsSystemConfiguration.class, properties);
+	}
+
 	@Override
 	protected String getTemplatesConfigPath() {
-		return BlogsWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return _blogsSystemConfiguration.displayTemplatesConfig();
 	}
+
+	private volatile BlogsSystemConfiguration _blogsSystemConfiguration;
 
 }

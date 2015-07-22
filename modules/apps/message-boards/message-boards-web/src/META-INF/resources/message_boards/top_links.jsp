@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");

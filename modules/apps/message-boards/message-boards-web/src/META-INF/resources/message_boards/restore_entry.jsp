@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <liferay-portlet:actionURL name="/message_boards/edit_message_attachments" varImpl="restoreURL" />
 

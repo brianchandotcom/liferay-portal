@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
@@ -31,7 +31,7 @@ request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.FALSE);
 request.setAttribute("edit_message.jsp-thread", message.getThread());
 %>
 
-<liferay-util:include page="/html/portlet/message_boards/view_thread_message.jsp" />
+<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 
 <c:if test="<%= assetRenderer != null %>">
 	<div class="asset-more">

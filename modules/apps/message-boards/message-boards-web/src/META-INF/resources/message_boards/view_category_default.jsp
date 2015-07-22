@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
@@ -65,7 +65,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 					</liferay-portlet:renderURL>
 
-					<%@ include file="/META-INF/resources/message_boards/category_columns.jspf" %>
+					<%@ include file="/message_boards/category_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator />
@@ -114,7 +114,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 				</liferay-portlet:renderURL>
 
-				<%@ include file="/META-INF/resources/message_boards/thread_columns.jspf" %>
+				<%@ include file="/message_boards/thread_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator />

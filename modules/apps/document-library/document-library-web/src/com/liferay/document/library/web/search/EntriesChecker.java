@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.search;
+package com.liferay.document.library.web.search;
 
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.search.RowChecker;

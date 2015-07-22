@@ -1,6 +1,8 @@
 @import "bourbon";
 @import "mixins";
 
+@import url(custom_responsive.css);
+
 $bg-color: #F5F7F8;
 
 body {
@@ -14,16 +16,19 @@ body {
 
 			#heading {
 				margin-left: 20px;
+
+				.navbar-toggle {
+					margin: 12px;
+				}
+			}
+
+			.nav > li > a.dropdown-lft {
+				margin-left: -20px;
 			}
 
 			.site-name {
 				font-size: 145%;
 				margin-left: 20px;
-			}
-
-			li.dropdown:hover .dropdown-menu {
-				display: block;
-				margin-top: -10px;
 			}
 		}
 
@@ -33,5 +38,10 @@ body {
 			margin-bottom: 60px;
 			padding: 40px 20px;
 		}
+	}
+
+	.modify-pages .delete-tab {
+		height: 20px;
+		top: 22px;
 	}
 }

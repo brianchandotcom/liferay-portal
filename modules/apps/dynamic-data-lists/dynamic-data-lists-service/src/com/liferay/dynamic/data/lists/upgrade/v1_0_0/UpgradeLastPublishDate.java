@@ -14,13 +14,11 @@
 
 package com.liferay.dynamic.data.lists.upgrade.v1_0_0;
 
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate;
-
 /**
  * @author Levente Hudak
  */
-public class UpgradeDDLLastPublishDate extends UpgradeLastPublishDate {
+public class UpgradeLastPublishDate
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
 
 	@Override
 	protected void doUpgrade() throws Exception {

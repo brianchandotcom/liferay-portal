@@ -71,6 +71,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 		attributes.put("defaultCalendar", getDefaultCalendar());
 		attributes.put("enableComments", getEnableComments());
 		attributes.put("enableRatings", getEnableRatings());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -177,6 +178,12 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 
 		if (enableRatings != null) {
 			setEnableRatings(enableRatings);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -377,6 +384,16 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	@Override
 	public long getGroupId() {
 		return _calendar.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this calendar.
+	*
+	* @return the last publish date of this calendar
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _calendar.getLastPublishDate();
 	}
 
 	/**
@@ -789,6 +806,16 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	@Override
 	public void setGroupId(long groupId) {
 		_calendar.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this calendar.
+	*
+	* @param lastPublishDate the last publish date of this calendar
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_calendar.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

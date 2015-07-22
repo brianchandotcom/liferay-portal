@@ -148,6 +148,8 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 		newCalendarNotificationTemplate.setBody(RandomTestUtil.randomString());
 
+		newCalendarNotificationTemplate.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_calendarNotificationTemplates.add(_persistence.update(
 				newCalendarNotificationTemplate));
 
@@ -185,6 +187,10 @@ public class CalendarNotificationTemplatePersistenceTest {
 			newCalendarNotificationTemplate.getSubject());
 		Assert.assertEquals(existingCalendarNotificationTemplate.getBody(),
 			newCalendarNotificationTemplate.getBody());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendarNotificationTemplate.getLastPublishDate()),
+			Time.getShortTimestamp(
+				newCalendarNotificationTemplate.getLastPublishDate()));
 	}
 
 	@Test
@@ -260,7 +266,8 @@ public class CalendarNotificationTemplatePersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "calendarId", true,
 			"notificationType", true, "notificationTypeSettings", true,
-			"notificationTemplateType", true, "subject", true, "body", true);
+			"notificationTemplateType", true, "subject", true, "body", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -537,6 +544,8 @@ public class CalendarNotificationTemplatePersistenceTest {
 		calendarNotificationTemplate.setSubject(RandomTestUtil.randomString());
 
 		calendarNotificationTemplate.setBody(RandomTestUtil.randomString());
+
+		calendarNotificationTemplate.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_calendarNotificationTemplates.add(_persistence.update(
 				calendarNotificationTemplate));

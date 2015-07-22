@@ -51,6 +51,7 @@ public class CalendarSoap implements Serializable {
 		soapModel.setDefaultCalendar(model.getDefaultCalendar());
 		soapModel.setEnableComments(model.getEnableComments());
 		soapModel.setEnableRatings(model.getEnableRatings());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -251,6 +252,14 @@ public class CalendarSoap implements Serializable {
 		_enableRatings = enableRatings;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _calendarId;
 	private long _groupId;
@@ -268,4 +277,5 @@ public class CalendarSoap implements Serializable {
 	private boolean _defaultCalendar;
 	private boolean _enableComments;
 	private boolean _enableRatings;
+	private Date _lastPublishDate;
 }

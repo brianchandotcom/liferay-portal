@@ -16,6 +16,7 @@ package com.liferay.calendar.upgrade;
 
 import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendar;
 import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendarBooking;
+import com.liferay.calendar.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -52,6 +53,7 @@ public class CalendarServiceUpgrade {
 
 		upgradeProcesses.add(new UpgradeCalendar());
 		upgradeProcesses.add(new UpgradeCalendarBooking());
+		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.calendar.service", upgradeProcesses, 1, 1, false);

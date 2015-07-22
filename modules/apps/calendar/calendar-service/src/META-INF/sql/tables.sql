@@ -15,7 +15,8 @@ create table Calendar (
 	color INTEGER,
 	defaultCalendar BOOLEAN,
 	enableComments BOOLEAN,
-	enableRatings BOOLEAN
+	enableRatings BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table CalendarBooking (
@@ -43,6 +44,7 @@ create table CalendarBooking (
 	firstReminderType VARCHAR(75) null,
 	secondReminder LONG,
 	secondReminderType VARCHAR(75) null,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -63,7 +65,8 @@ create table CalendarNotificationTemplate (
 	notificationTypeSettings VARCHAR(75) null,
 	notificationTemplateType VARCHAR(75) null,
 	subject VARCHAR(75) null,
-	body TEXT null
+	body TEXT null,
+	lastPublishDate DATE null
 );
 
 create table CalendarResource (
@@ -82,5 +85,6 @@ create table CalendarResource (
 	code_ VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	lastPublishDate DATE null
 );

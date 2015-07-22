@@ -66,7 +66,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -116,6 +116,8 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		sb.append(secondReminder);
 		sb.append(", secondReminderType=");
 		sb.append(secondReminderType);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -228,6 +230,13 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 			calendarBookingImpl.setSecondReminderType(secondReminderType);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			calendarBookingImpl.setLastPublishDate(null);
+		}
+		else {
+			calendarBookingImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		calendarBookingImpl.setStatus(status);
 		calendarBookingImpl.setStatusByUserId(statusByUserId);
 
@@ -276,6 +285,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		firstReminderType = objectInput.readUTF();
 		secondReminder = objectInput.readLong();
 		secondReminderType = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
@@ -368,6 +378,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 			objectOutput.writeUTF(secondReminderType);
 		}
 
+		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(statusByUserId);
 
@@ -405,6 +416,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 	public String firstReminderType;
 	public long secondReminder;
 	public String secondReminderType;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

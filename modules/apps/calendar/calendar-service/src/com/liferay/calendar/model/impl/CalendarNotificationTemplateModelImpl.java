@@ -85,7 +85,8 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 			{ "notificationTypeSettings", Types.VARCHAR },
 			{ "notificationTemplateType", Types.VARCHAR },
 			{ "subject", Types.VARCHAR },
-			{ "body", Types.CLOB }
+			{ "body", Types.CLOB },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -104,9 +105,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		TABLE_COLUMNS_MAP.put("notificationTemplateType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CalendarNotificationTemplate (uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CalendarNotificationTemplate (uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CalendarNotificationTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY calendarNotificationTemplate.calendarNotificationTemplateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CalendarNotificationTemplate.calendarNotificationTemplateId ASC";
@@ -158,6 +160,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		model.setNotificationTemplateType(soapModel.getNotificationTemplateType());
 		model.setSubject(soapModel.getSubject());
 		model.setBody(soapModel.getBody());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -238,6 +241,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		attributes.put("notificationTemplateType", getNotificationTemplateType());
 		attributes.put("subject", getSubject());
 		attributes.put("body", getBody());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -332,6 +336,12 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 		if (body != null) {
 			setBody(body);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -611,6 +621,17 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		_body = body;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -662,6 +683,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		calendarNotificationTemplateImpl.setNotificationTemplateType(getNotificationTemplateType());
 		calendarNotificationTemplateImpl.setSubject(getSubject());
 		calendarNotificationTemplateImpl.setBody(getBody());
+		calendarNotificationTemplateImpl.setLastPublishDate(getLastPublishDate());
 
 		calendarNotificationTemplateImpl.resetOriginalValues();
 
@@ -840,12 +862,21 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 			calendarNotificationTemplateCacheModel.body = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			calendarNotificationTemplateCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			calendarNotificationTemplateCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return calendarNotificationTemplateCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -875,6 +906,8 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		sb.append(getSubject());
 		sb.append(", body=");
 		sb.append(getBody());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -882,7 +915,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.calendar.model.CalendarNotificationTemplate");
@@ -944,6 +977,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 			"<column><column-name>body</column-name><column-value><![CDATA[");
 		sb.append(getBody());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -978,6 +1015,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	private String _originalNotificationTemplateType;
 	private String _subject;
 	private String _body;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CalendarNotificationTemplate _escapedModel;
 }

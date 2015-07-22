@@ -154,6 +154,8 @@ public class CalendarPersistenceTest {
 
 		newCalendar.setEnableRatings(RandomTestUtil.randomBoolean());
 
+		newCalendar.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_calendars.add(_persistence.update(newCalendar));
 
 		Calendar existingCalendar = _persistence.findByPrimaryKey(newCalendar.getPrimaryKey());
@@ -191,6 +193,9 @@ public class CalendarPersistenceTest {
 			newCalendar.getEnableComments());
 		Assert.assertEquals(existingCalendar.getEnableRatings(),
 			newCalendar.getEnableRatings());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCalendar.getLastPublishDate()),
+			Time.getShortTimestamp(newCalendar.getLastPublishDate()));
 	}
 
 	@Test
@@ -272,7 +277,7 @@ public class CalendarPersistenceTest {
 			"resourceBlockId", true, "calendarResourceId", true, "name", true,
 			"description", true, "timeZoneId", true, "color", true,
 			"defaultCalendar", true, "enableComments", true, "enableRatings",
-			true);
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -521,6 +526,8 @@ public class CalendarPersistenceTest {
 		calendar.setEnableComments(RandomTestUtil.randomBoolean());
 
 		calendar.setEnableRatings(RandomTestUtil.randomBoolean());
+
+		calendar.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_calendars.add(_persistence.update(calendar));
 

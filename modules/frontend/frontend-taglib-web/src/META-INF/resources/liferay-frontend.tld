@@ -9,4 +9,29 @@
 	<tlib-version>1.0</tlib-version>
 	<short-name>frontend</short-name>
 	<uri>http://liferay.com/tld/frontend</uri>
+	<tag>
+		<name>add-menu</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.AddMenuTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>addMenuItems</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>add-menu-item</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.AddMenuItemTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

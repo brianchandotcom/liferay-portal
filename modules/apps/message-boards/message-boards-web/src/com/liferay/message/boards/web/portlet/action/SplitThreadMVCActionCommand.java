@@ -17,7 +17,6 @@ package com.liferay.message.boards.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,9 +37,9 @@ import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageService;
+import com.liferay.portlet.messageboards.service.MBThreadService;
 
 import java.io.InputStream;
 
@@ -50,10 +49,13 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jorge Ferrer
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -84,6 +86,23 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageService(MBMessageService mbMessageService) {
+		_mbMessageService = mbMessageService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadService(MBThreadService mbThreadService) {
+		_mbThreadService = mbThreadService;
+	}
+
 	protected void splitThread(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -99,11 +118,11 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBThread.class.getName(), actionRequest);
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+		MBMessage message = _mbMessageLocalService.getMessage(messageId);
 
 		long oldParentMessageId = message.getParentMessageId();
 
-		MBThread newThread = MBThreadServiceUtil.splitThread(
+		MBThread newThread = _mbThreadService.splitThread(
 			messageId, splitThreadSubject, serviceContext);
 
 		boolean addExplanationPost = ParamUtil.getBoolean(
@@ -129,7 +148,7 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			MBMessageServiceUtil.addMessage(
+			_mbMessageService.addMessage(
 				oldParentMessageId, subject, body,
 				mbGroupServiceSettings.getMessageFormat(),
 				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
@@ -147,5 +166,9 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 
 		actionResponse.sendRedirect(portletURL.toString());
 	}
+
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBMessageService _mbMessageService;
+	private MBThreadService _mbThreadService;
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
@@ -25,16 +24,17 @@ import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageService;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@OSGiBeanProperties(
-	property = "path=/message_boards/rss", service = StrutsAction.class
-)
+@Component(property = "path=/message_boards/rss", service = StrutsAction.class)
 public class RSSAction extends BaseRSSStrutsAction {
 
 	@Override
@@ -66,7 +66,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 		if (companyId > 0) {
 			String feedURL = StringPool.BLANK;
 
-			rss = MBMessageServiceUtil.getCompanyMessagesRSS(
+			rss = _mbMessageService.getCompanyMessagesRSS(
 				companyId, WorkflowConstants.STATUS_APPROVED, max, type,
 				version, displayStyle, feedURL, entryURL, themeDisplay);
 		}
@@ -88,13 +88,13 @@ public class RSSAction extends BaseRSSStrutsAction {
 			}
 
 			if (userId > 0) {
-				rss = MBMessageServiceUtil.getGroupMessagesRSS(
+				rss = _mbMessageService.getGroupMessagesRSS(
 					groupId, userId, WorkflowConstants.STATUS_APPROVED, max,
 					type, version, displayStyle, feedURL, entryURL,
 					themeDisplay);
 			}
 			else {
-				rss = MBMessageServiceUtil.getGroupMessagesRSS(
+				rss = _mbMessageService.getGroupMessagesRSS(
 					groupId, WorkflowConstants.STATUS_APPROVED, max, type,
 					version, displayStyle, feedURL, entryURL, themeDisplay);
 			}
@@ -105,7 +105,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 					"/message_boards/find_category?p_l_id=" + plid +
 						"&mbCategoryId=" + categoryId;
 
-			rss = MBMessageServiceUtil.getCategoryMessagesRSS(
+			rss = _mbMessageService.getCategoryMessagesRSS(
 				groupId, categoryId, WorkflowConstants.STATUS_APPROVED, max,
 				type, version, displayStyle, feedURL, entryURL, themeDisplay);
 		}
@@ -115,7 +115,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 					"/message_boards/find_thread?p_l_id=" + plid +
 						"&threadId=" + threadId;
 
-			rss = MBMessageServiceUtil.getThreadMessagesRSS(
+			rss = _mbMessageService.getThreadMessagesRSS(
 				threadId, WorkflowConstants.STATUS_APPROVED, max, type, version,
 				displayStyle, feedURL, entryURL, themeDisplay);
 		}
@@ -135,5 +135,12 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		return mbGroupServiceSettings.isEnableRSS();
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageService(MBMessageService mbMessageService) {
+		_mbMessageService = mbMessageService;
+	}
+
+	private MBMessageService _mbMessageService;
 
 }

@@ -50,11 +50,16 @@
 
 		<sequential>
 			<build-bourbon />
+
+			<copy todir="${app.server.portal.dir}/html/css/common" overwrite="true" preservelastmodified="true">
+				<fileset dir="${common.css.dir}" />
+			</copy>
 		</sequential>
 	</macrodef>
 
 	<target name="clean">
 		<delete dir="${common.css.dir}/bourbon" />
+		<delete dir="${app.server.portal.dir}/html/css/common" />
 
 		<clean
 			module.dir="${basedir}"

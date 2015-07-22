@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN},
 	service = ConfigurationAction.class
 )
-public class ConfigurationActionImpl
+public class MessageBoardsAdminConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override

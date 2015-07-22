@@ -15,67 +15,42 @@
 package com.liferay.portlet.myaccount.action;
 
 import com.liferay.portal.UserPasswordException;
-import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.RenderRequestImpl;
+import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditUserAction
-	extends com.liferay.portlet.usersadmin.action.EditUserAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MY_ACCOUNT,
+		"mvc.command.name=/users_admin/edit_user"
+	},
+	service = MVCActionCommand.class
+)
+public class EditUserMVCActionCommand
+	extends com.liferay.portlet.usersadmin.action.EditUserMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		if (redirectToLogin(actionRequest, actionResponse)) {
 			return;
 		}
 
-		super.processAction(
-			actionMapping, actionForm, portletConfig, actionRequest,
-			actionResponse);
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		User user = PortalUtil.getUser(renderRequest);
-
-		RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
-
-		DynamicServletRequest dynamicRequest =
-			(DynamicServletRequest)renderRequestImpl.getHttpServletRequest();
-
-		dynamicRequest.setParameter(
-			"p_u_i_d", String.valueOf(user.getUserId()));
-
-		return super.render(
-			actionMapping, actionForm, portletConfig, renderRequest,
-			renderResponse);
+		super.doProcessAction(actionRequest, actionResponse);
 	}
 
 	@Override

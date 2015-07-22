@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portlet.myaccount;
 
-<%@ page import="com.liferay.portal.NoSuchUserGroupException" %><%@
-page import="com.liferay.portlet.social.model.SocialRelationConstants" %>
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
-<%
-String tabs1 = ParamUtil.getString(request, "tabs1", "users");
-
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale);
-%>
-
-<%@ include file="/html/portlet/directory/init-ext.jsp" %>
+/**
+ * @author Pei-Jung Lan
+ */
+public class MyAccountPortlet extends MVCPortlet {
+}

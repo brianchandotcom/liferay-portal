@@ -27,7 +27,6 @@ page import="com.liferay.portal.DuplicateOrganizationException" %><%@
 page import="com.liferay.portal.EmailAddressException" %><%@
 page import="com.liferay.portal.NoSuchCountryException" %><%@
 page import="com.liferay.portal.NoSuchListTypeException" %><%@
-page import="com.liferay.portal.NoSuchOrganizationException" %><%@
 page import="com.liferay.portal.NoSuchRegionException" %><%@
 page import="com.liferay.portal.NoSuchUserGroupException" %><%@
 page import="com.liferay.portal.OrganizationNameException" %><%@

@@ -16,33 +16,42 @@ package com.liferay.portlet.usersadmin.action;
 
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchOrgLaborException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.OrgLaborServiceUtil;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditOrgLaborAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"mvc.command.name=/users_admin/edit_org_labor"
+	},
+	service = MVCActionCommand.class
+)
+public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteOrgLabor(ActionRequest actionRequest)
+		throws Exception {
+
+		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
+
+		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -54,8 +63,6 @@ public class EditOrgLaborAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteOrgLabor(actionRequest);
 			}
-
-			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchOrgLaborException ||
@@ -63,7 +70,8 @@ public class EditOrgLaborAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.users_admin.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/users_admin/error.jsp");
 			}
 			else if (e instanceof NoSuchListTypeException) {
 				SessionErrors.add(actionRequest, e.getClass());
@@ -72,41 +80,6 @@ public class EditOrgLaborAction extends PortletAction {
 				throw e;
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getOrgLabor(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrgLaborException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.users_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.users_admin.edit_org_labor"));
-	}
-
-	protected void deleteOrgLabor(ActionRequest actionRequest)
-		throws Exception {
-
-		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
-
-		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
 	}
 
 	protected void updateOrgLabor(ActionRequest actionRequest)

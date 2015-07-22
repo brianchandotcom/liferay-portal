@@ -169,12 +169,10 @@ if (selUser != null) {
 	/>
 </c:if>
 
-<portlet:actionURL var="editUserActionURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_user" />
-</portlet:actionURL>
+<portlet:actionURL name="/users_admin/edit_user" var="editUserActionURL" />
 
 <portlet:renderURL var="editUserRenderURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_user" />
+	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 

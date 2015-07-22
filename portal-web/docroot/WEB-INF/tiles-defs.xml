@@ -324,14 +324,6 @@
 		<put name="portlet_content" value="/portlet/monitoring/view.jsp" />
 	</definition>
 
-	<!-- My Account -->
-
-	<definition name="portlet.my_account" extends="portlet" />
-
-	<definition name="portlet.my_account.view" extends="portlet.my_account">
-		<put name="portlet_content" value="/portlet/my_account/view.jsp" />
-	</definition>
-
 	<!-- News -->
 
 	<definition name="portlet.news" extends="portlet" />
@@ -548,41 +540,5 @@
 
 	<definition name="portlet.user_statistics.add_activity_counter" extends="portlet.user_statistics">
 		<put name="portlet_content" value="/portlet/user_statistics/add_activity_counter.jsp" />
-	</definition>
-
-	<!-- Users Admin -->
-
-	<definition name="portlet.users_admin" extends="portlet" />
-
-	<definition name="portlet.users_admin.edit_organization" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_organization.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.edit_organization_assignments" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_organization_assignments.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.edit_user" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_user.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.edit_user_details" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/user/details.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.error" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.select_organization" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/select_organization.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.select_user_group" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/select_user_group.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.view" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/view.jsp" />
 	</definition>
 </tiles-definitions>

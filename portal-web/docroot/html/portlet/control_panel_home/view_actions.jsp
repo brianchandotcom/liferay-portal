@@ -109,7 +109,7 @@
 							</p>
 
 							<liferay-portlet:renderURL portletName="<%= PortletKeys.USERS_ADMIN %>" var="addUserURL">
-								<portlet:param name="struts_action" value="/users_admin/edit_user" />
+								<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
 								<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
 							</liferay-portlet:renderURL>
 

@@ -14,15 +14,12 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/html/portlet/my_account/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchUserGroupException" %><%@
-page import="com.liferay.portlet.social.model.SocialRelationConstants" %>
+<liferay-ui:error-header />
 
-<%
-String tabs1 = ParamUtil.getString(request, "tabs1", "users");
+<liferay-ui:error exception="<%= NoSuchOrganizationException.class %>" message="the-organization-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchRoleException.class %>" message="the-role-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchUserException.class %>" message="the-user-could-not-be-found" />
 
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale);
-%>
-
-<%@ include file="/html/portlet/directory/init-ext.jsp" %>
+<liferay-ui:error-principal />

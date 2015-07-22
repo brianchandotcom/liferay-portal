@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -22,7 +22,7 @@ import java.util.Locale;
 /**
  * @author Marcellus Tavares
  */
-public interface DDMTemplate extends StagedModel {
+public interface DDMTemplate extends StagedGroupedModel {
 
 	public boolean getCacheable();
 

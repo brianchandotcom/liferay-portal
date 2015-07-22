@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
-import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
@@ -28,7 +27,7 @@ import java.util.Locale;
  * @author Marcellus Tavares
  * @author Rafael Praxedes
  */
-public class DDMTemplateImpl implements DDMTemplate, StagedGroupedModel {
+public class DDMTemplateImpl implements DDMTemplate {
 
 	public DDMTemplateImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate) {

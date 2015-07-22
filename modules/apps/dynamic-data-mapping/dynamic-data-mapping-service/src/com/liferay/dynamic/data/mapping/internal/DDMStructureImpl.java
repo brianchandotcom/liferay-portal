@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
@@ -35,7 +34,7 @@ import java.util.Set;
  * @author Leonardo Barros
  * @author Rafael Praxedes
  */
-public class DDMStructureImpl implements DDMStructure, StagedGroupedModel {
+public class DDMStructureImpl implements DDMStructure {
 
 	public DDMStructureImpl(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure

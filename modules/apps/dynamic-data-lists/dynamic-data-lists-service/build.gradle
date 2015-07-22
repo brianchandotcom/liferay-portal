@@ -1,9 +1,6 @@
 buildService {
 	apiDirName = "../dynamic-data-lists-api/src"
 	autoNamespaceTables = false
-	hbmFileName = "src/META-INF/module-hbm.xml"
-	springFileName = "src/META-INF/spring/module-spring.xml"
-	sqlDirName = "src/META-INF/sql"
 	testDirName = "../dynamic-data-lists-test/test/integration"
 }
 

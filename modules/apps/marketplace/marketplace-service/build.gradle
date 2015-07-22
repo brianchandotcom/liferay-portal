@@ -1,9 +1,5 @@
 buildService {
 	apiDirName = "../marketplace-api/src"
-	autoNamespaceTables = true
-	hbmFileName = "src/META-INF/module-hbm.xml"
-	springFileName = "src/META-INF/spring/module-spring.xml"
-	sqlDirName = "src/META-INF/sql"
 	testDirName = "../marketplace-test/test/integration"
 }
 

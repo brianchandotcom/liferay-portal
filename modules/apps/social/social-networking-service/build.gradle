@@ -1,9 +1,6 @@
 buildService {
 	apiDirName = "../social-networking-api/src"
 	autoNamespaceTables = false
-	hbmFileName = "src/META-INF/module-hbm.xml"
-	springFileName = "src/META-INF/spring/module-spring.xml"
-	sqlDirName = "src/META-INF/sql"
 	testDirName = "../social-networking-test/test/integration"
 }
 

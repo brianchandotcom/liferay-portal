@@ -16,6 +16,8 @@ package com.liferay.taglib.ui;
 
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Pei-Jung Lan
  */
@@ -24,6 +26,13 @@ public class UserNameFieldsTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		Object bean = pageContext.getAttribute("aui:model-context:bean");
+
+		request.setAttribute("liferay-ui:user-name-fields:bean", bean);
 	}
 
 	private static final String _PAGE =

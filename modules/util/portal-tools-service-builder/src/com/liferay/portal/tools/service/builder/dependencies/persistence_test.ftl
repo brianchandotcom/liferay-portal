@@ -405,7 +405,7 @@ public class ${entity.name}PersistenceTest {
 							RandomTestUtil.nextDate(), null
 						<#elseif finderCol.type == "String">
 							<#assign maxLength = serviceBuilder.getMaxLength(packagePath + ".model." + entity.getName(), finderCol.getName())>
-		
+
 							<#if maxLength < 8>
 								RandomTestUtil.randomString(${maxLength}), StringPool.BLANK, StringPool.NULL, null, null
 							<#else>
@@ -427,7 +427,7 @@ public class ${entity.name}PersistenceTest {
 							RandomTestUtil.nextDate()
 						<#elseif finderCol.type == "String">
 							<#assign maxLength = serviceBuilder.getMaxLength(packagePath + ".model." + entity.getName(), finderCol.getName())>
-		
+
 							<#if maxLength < 8>
 								RandomTestUtil.randomString(${maxLength})
 							<#else>

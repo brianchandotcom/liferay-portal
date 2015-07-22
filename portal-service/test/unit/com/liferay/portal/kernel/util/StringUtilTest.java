@@ -52,6 +52,10 @@ public class StringUtilTest {
 		Assert.assertEquals(
 			"Hello (World) (Liferay)",
 			StringUtil.appendParentheticalSuffix("Hello (World)", "Liferay"));
+		Assert.assertEquals(
+			"Hello (World) (Liferay Portal)",
+			StringUtil.appendParentheticalSuffix(
+				"Hello (World)", "Liferay Portal"));
 	}
 
 	@Test
@@ -434,6 +438,35 @@ public class StringUtilTest {
 			"HeoWor",
 			StringUtil.strip(
 				"Hello World", new char[] {CharPool.SPACE, 'l', 'd'}));
+	}
+
+	@Test
+	public void testStripParentheticalSuffixInteger() throws Exception {
+		Assert.assertEquals(
+			"Hello World",
+			StringUtil.stripParentheticalSuffix("Hello World (2)"));
+		Assert.assertEquals(
+			"Hello World(2)",
+			StringUtil.stripParentheticalSuffix("Hello World(2)"));
+		Assert.assertEquals(
+			"Hello (World)",
+			StringUtil.stripParentheticalSuffix("Hello (World) (2)"));
+		Assert.assertEquals(
+			"Hello World (2)",
+			StringUtil.stripParentheticalSuffix("Hello World (2) (3)"));
+	}
+
+	@Test
+	public void testStripParentheticalSuffixString() throws Exception {
+		Assert.assertEquals(
+			"Hello", StringUtil.stripParentheticalSuffix("Hello (World)"));
+		Assert.assertEquals(
+			"Hello (World)",
+			StringUtil.stripParentheticalSuffix("Hello (World) (Liferay)"));
+		Assert.assertEquals(
+			"Hello (World)",
+			StringUtil.stripParentheticalSuffix(
+				"Hello (World) (Liferay Portal)"));
 	}
 
 	@Test

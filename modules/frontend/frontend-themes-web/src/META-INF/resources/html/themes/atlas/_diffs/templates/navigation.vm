@@ -3,12 +3,12 @@
 
 	<ul aria-label="#language ("site-pages")" class="nav navbar-nav navbar-right" role="menubar">
 		#foreach ($nav_item in $nav_items)
-				#set ($nav_item_attr_selected="")
-				#set ($nav_item_css_class="")
+				#set ($nav_item_attr_selected = "")
+				#set ($nav_item_css_class = "")
 
 			#if ($nav_item.isSelected())
-				#set ($nav_item_attr_selected="aria-selected='true'")
-				#set ($nav_item_css_class="active selected")
+				#set ($nav_item_attr_selected = "aria-selected='true'")
+				#set ($nav_item_css_class = "active selected")
 			#end
 
 			<li class="$nav_item_css_class" id="layout_$nav_item.getLayoutId()">
@@ -17,18 +17,18 @@
 				</a>
 
 				#if ($nav_item.hasChildren())
-					<a aria-expanded="false" aria-haspopup="true" class="dropdown-lft dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" rel="nofollow">
+					<a aria-expanded="false" aria-haspopup="true" class="dropdown-lft dropdown-toggle" data-toggle="dropdown" href="javascript:;" rel="nofollow">
 						<i class="caret"></i>
 					</a>
 
 					<ul aria-expanded="false" class="dropdown-menu" role="menu">
 						#foreach ($nav_child in $nav_item.getChildren())
-							#set ($nav_child_attr_selected="")
-							#set ($nav_child_css_class="lfr-nav-item")
+							#set ($nav_child_attr_selected = "")
+							#set ($nav_child_css_class = "lfr-nav-item")
 
 							#if ($nav_child.isSelected())
-								#set ($nav_child_attr_selected="aria-selected='true'")
-								#set ($nav_child_css_class="active selected")
+								#set ($nav_child_attr_selected = "aria-selected='true'")
+								#set ($nav_child_css_class = "active selected")
 							#end
 
 							<li class="$nav_child_css_class" id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">

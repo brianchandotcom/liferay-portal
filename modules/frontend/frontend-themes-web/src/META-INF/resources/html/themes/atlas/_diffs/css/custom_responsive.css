@@ -1,10 +1,10 @@
 @import "mixins";
 
 @include respond-to(phone) {
-	body #wrapper #banner #navigation {
+	#navigation {
 		font-size: 125%;
 
-		.nav>li>a {
+		.nav > li > a {
 			border-bottom: 1px solid #E1E1E1;
 			display: block;
 
@@ -22,7 +22,7 @@
 		padding: 0 20px;
 	}
 
-	.touch .modify-pages .lfr-nav-sortable>a>span {
+	.touch .modify-pages .lfr-nav-sortable > a > span {
 		padding-left: -18px;
 	}
 }

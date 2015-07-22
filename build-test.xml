@@ -2210,6 +2210,12 @@ create database lportal${database.index} character set utf8;</echo>
 							<replacetoken>create database lportal;</replacetoken>
 							<replacevalue>create database lportal pagesize 8192;</replacevalue>
 						</replace>
+						<replace file="create.sql">
+							<replacetoken>drop database lportal;</replacetoken>
+							<replacevalue></replacevalue>
+						</replace>
+
+						<echo file="drop.sql">drop database lportal;</echo>
 					</then>
 					<elseif>
 						<equals arg1="${database.type}" arg2="sybase" />
@@ -5322,6 +5328,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
+						<exec executable="${db2.executable}">
+							<arg value="-fdrop.sql" />
+							<arg value="-t" />
+						</exec>
 						<exec executable="${db2.executable}" failonerror="true">
 							<arg value="-fcreate.sql" />
 							<arg value="-t" />
@@ -5425,6 +5435,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		</if>
 
 		<delete file="create.sql" />
+		<delete file="drop.sql" />
 	</target>
 
 	<target name="rebuild-legacy-database">

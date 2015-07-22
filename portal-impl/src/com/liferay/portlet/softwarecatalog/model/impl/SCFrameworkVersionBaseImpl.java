@@ -28,7 +28,7 @@ import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalServic
  *
  * @author Brian Wing Shun Chan
  * @see SCFrameworkVersionImpl
- * @see com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion
+ * @see SCFrameworkVersion
  * @generated
  */
 @ProviderType

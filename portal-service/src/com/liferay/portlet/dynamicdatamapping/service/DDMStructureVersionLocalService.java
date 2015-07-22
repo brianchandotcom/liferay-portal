@@ -86,8 +86,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion deleteDDMStructureVersion(
-		long structureVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureVersionId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -95,7 +94,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -185,8 +184,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getDDMStructureVersion(
-		long structureVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureVersionId) throws PortalException;
 
 	/**
 	* Returns a range of all the d d m structure versions.
@@ -213,24 +211,20 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getLatestStructureVersion(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion(
-		long structureId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureId, java.lang.String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion(
-		long structureVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long structureVersionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getStructureVersions(

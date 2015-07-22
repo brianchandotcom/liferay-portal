@@ -424,7 +424,7 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	 *
 	 * @return the repository entry local service
 	 */
-	public com.liferay.portal.service.RepositoryEntryLocalService getRepositoryEntryLocalService() {
+	public RepositoryEntryLocalService getRepositoryEntryLocalService() {
 		return repositoryEntryLocalService;
 	}
 
@@ -434,7 +434,7 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	 * @param repositoryEntryLocalService the repository entry local service
 	 */
 	public void setRepositoryEntryLocalService(
-		com.liferay.portal.service.RepositoryEntryLocalService repositoryEntryLocalService) {
+		RepositoryEntryLocalService repositoryEntryLocalService) {
 		this.repositoryEntryLocalService = repositoryEntryLocalService;
 	}
 
@@ -613,7 +613,7 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.RepositoryEntryLocalService.class)
-	protected com.liferay.portal.service.RepositoryEntryLocalService repositoryEntryLocalService;
+	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

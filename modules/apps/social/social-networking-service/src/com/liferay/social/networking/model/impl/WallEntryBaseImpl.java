@@ -28,7 +28,7 @@ import com.liferay.social.networking.service.WallEntryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see WallEntryImpl
- * @see com.liferay.social.networking.model.WallEntry
+ * @see WallEntry
  * @generated
  */
 @ProviderType

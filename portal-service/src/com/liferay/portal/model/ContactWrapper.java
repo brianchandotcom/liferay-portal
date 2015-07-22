@@ -332,7 +332,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	* @return the birthday of this contact
 	*/
 	@Override
-	public java.util.Date getBirthday() {
+	public Date getBirthday() {
 		return _contact.getBirthday();
 	}
 
@@ -392,7 +392,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	* @return the create date of this contact
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _contact.getCreateDate();
 	}
 
@@ -542,7 +542,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	* @return the modified date of this contact
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _contact.getModifiedDate();
 	}
 
@@ -757,7 +757,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	* @param birthday the birthday of this contact
 	*/
 	@Override
-	public void setBirthday(java.util.Date birthday) {
+	public void setBirthday(Date birthday) {
 		_contact.setBirthday(birthday);
 	}
 
@@ -817,7 +817,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	* @param createDate the create date of this contact
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_contact.setCreateDate(createDate);
 	}
 
@@ -974,7 +974,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	* @param modifiedDate the modified date of this contact
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_contact.setModifiedDate(modifiedDate);
 	}
 

@@ -28,7 +28,7 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see RepositoryImpl
- * @see com.liferay.portal.model.Repository
+ * @see Repository
  * @generated
  */
 @ProviderType

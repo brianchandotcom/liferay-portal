@@ -28,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MBBanImpl
- * @see com.liferay.portlet.messageboards.model.MBBan
+ * @see MBBan
  * @generated
  */
 @ProviderType

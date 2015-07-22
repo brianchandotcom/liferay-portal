@@ -307,7 +307,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	 *
 	 * @return the s c product screenshot local service
 	 */
-	public com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalService getSCProductScreenshotLocalService() {
+	public SCProductScreenshotLocalService getSCProductScreenshotLocalService() {
 		return scProductScreenshotLocalService;
 	}
 
@@ -317,7 +317,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	 * @param scProductScreenshotLocalService the s c product screenshot local service
 	 */
 	public void setSCProductScreenshotLocalService(
-		com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalService scProductScreenshotLocalService) {
+		SCProductScreenshotLocalService scProductScreenshotLocalService) {
 		this.scProductScreenshotLocalService = scProductScreenshotLocalService;
 	}
 
@@ -478,7 +478,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalService.class)
-	protected com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalService scProductScreenshotLocalService;
+	protected SCProductScreenshotLocalService scProductScreenshotLocalService;
 	@BeanReference(type = SCProductScreenshotPersistence.class)
 	protected SCProductScreenshotPersistence scProductScreenshotPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -436,7 +436,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the create date of this journal article
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _journalArticle.getCreateDate();
 	}
 
@@ -560,7 +560,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the locales and localized descriptions of this journal article
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _journalArticle.getDescriptionMap();
 	}
 
@@ -570,7 +570,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the display date of this journal article
 	*/
 	@Override
-	public java.util.Date getDisplayDate() {
+	public Date getDisplayDate() {
 		return _journalArticle.getDisplayDate();
 	}
 
@@ -590,7 +590,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the expiration date of this journal article
 	*/
 	@Override
-	public java.util.Date getExpirationDate() {
+	public Date getExpirationDate() {
 		return _journalArticle.getExpirationDate();
 	}
 
@@ -646,7 +646,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the last publish date of this journal article
 	*/
 	@Override
-	public java.util.Date getLastPublishDate() {
+	public Date getLastPublishDate() {
 		return _journalArticle.getLastPublishDate();
 	}
 
@@ -671,7 +671,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the modified date of this journal article
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _journalArticle.getModifiedDate();
 	}
 
@@ -706,7 +706,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the review date of this journal article
 	*/
 	@Override
-	public java.util.Date getReviewDate() {
+	public Date getReviewDate() {
 		return _journalArticle.getReviewDate();
 	}
 
@@ -792,7 +792,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the status date of this journal article
 	*/
 	@Override
-	public java.util.Date getStatusDate() {
+	public Date getStatusDate() {
 		return _journalArticle.getStatusDate();
 	}
 
@@ -887,7 +887,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the locales and localized titles of this journal article
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap() {
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
 		return _journalArticle.getTitleMap();
 	}
 
@@ -1245,7 +1245,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param createDate the create date of this journal article
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_journalArticle.setCreateDate(createDate);
 	}
 
@@ -1321,7 +1321,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_journalArticle.setDescriptionMap(descriptionMap);
 	}
 
@@ -1333,7 +1333,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_journalArticle.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -1344,7 +1344,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param displayDate the display date of this journal article
 	*/
 	@Override
-	public void setDisplayDate(java.util.Date displayDate) {
+	public void setDisplayDate(Date displayDate) {
 		_journalArticle.setDisplayDate(displayDate);
 	}
 
@@ -1377,7 +1377,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param expirationDate the expiration date of this journal article
 	*/
 	@Override
-	public void setExpirationDate(java.util.Date expirationDate) {
+	public void setExpirationDate(Date expirationDate) {
 		_journalArticle.setExpirationDate(expirationDate);
 	}
 
@@ -1427,7 +1427,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param lastPublishDate the last publish date of this journal article
 	*/
 	@Override
-	public void setLastPublishDate(java.util.Date lastPublishDate) {
+	public void setLastPublishDate(Date lastPublishDate) {
 		_journalArticle.setLastPublishDate(lastPublishDate);
 	}
 
@@ -1447,7 +1447,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param modifiedDate the modified date of this journal article
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_journalArticle.setModifiedDate(modifiedDate);
 	}
 
@@ -1487,7 +1487,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param reviewDate the review date of this journal article
 	*/
 	@Override
-	public void setReviewDate(java.util.Date reviewDate) {
+	public void setReviewDate(Date reviewDate) {
 		_journalArticle.setReviewDate(reviewDate);
 	}
 
@@ -1572,7 +1572,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param statusDate the status date of this journal article
 	*/
 	@Override
-	public void setStatusDate(java.util.Date statusDate) {
+	public void setStatusDate(Date statusDate) {
 		_journalArticle.setStatusDate(statusDate);
 	}
 
@@ -1639,8 +1639,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param titleMap the locales and localized titles of this journal article
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap) {
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
 		_journalArticle.setTitleMap(titleMap);
 	}
 
@@ -1651,8 +1650,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setTitleMap(
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Locale defaultLocale) {
 		_journalArticle.setTitleMap(titleMap, defaultLocale);
 	}

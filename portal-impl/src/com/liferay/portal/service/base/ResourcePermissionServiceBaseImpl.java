@@ -77,7 +77,7 @@ public abstract class ResourcePermissionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the resource permission remote service
 	 */
-	public com.liferay.portal.service.ResourcePermissionService getResourcePermissionService() {
+	public ResourcePermissionService getResourcePermissionService() {
 		return resourcePermissionService;
 	}
 
@@ -87,7 +87,7 @@ public abstract class ResourcePermissionServiceBaseImpl extends BaseServiceImpl
 	 * @param resourcePermissionService the resource permission remote service
 	 */
 	public void setResourcePermissionService(
-		com.liferay.portal.service.ResourcePermissionService resourcePermissionService) {
+		ResourcePermissionService resourcePermissionService) {
 		this.resourcePermissionService = resourcePermissionService;
 	}
 
@@ -340,7 +340,7 @@ public abstract class ResourcePermissionServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.ResourcePermissionLocalService.class)
 	protected com.liferay.portal.service.ResourcePermissionLocalService resourcePermissionLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourcePermissionService.class)
-	protected com.liferay.portal.service.ResourcePermissionService resourcePermissionService;
+	protected ResourcePermissionService resourcePermissionService;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
 	@BeanReference(type = ResourcePermissionFinder.class)

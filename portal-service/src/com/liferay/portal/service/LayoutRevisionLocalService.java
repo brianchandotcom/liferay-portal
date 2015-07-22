@@ -67,7 +67,7 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 		java.lang.String colorSchemeId, java.lang.String wapThemeId,
 		java.lang.String wapColorSchemeId, java.lang.String css,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new layout revision with the primary key. Does not add the layout revision to the database.
@@ -79,7 +79,7 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 		long layoutRevisionId);
 
 	public void deleteLayoutLayoutRevisions(long plid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the layout revision from the database. Also notifies the appropriate model listeners.
@@ -91,7 +91,7 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutRevision deleteLayoutRevision(
 		com.liferay.portal.model.LayoutRevision layoutRevision)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the layout revision with the primary key from the database. Also notifies the appropriate model listeners.
@@ -102,18 +102,16 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutRevision deleteLayoutRevision(
-		long layoutRevisionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutRevisionId) throws PortalException;
 
 	public void deleteLayoutRevisions(long layoutSetBranchId,
-		long layoutBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutBranchId, long plid) throws PortalException;
 
 	public void deleteLayoutRevisions(long layoutSetBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteLayoutSetBranchLayoutRevisions(long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -121,7 +119,7 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -237,18 +235,17 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutRevision getLayoutRevision(
-		long layoutRevisionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutRevisionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutRevision getLayoutRevision(
 		long layoutSetBranchId, long layoutBranchId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutRevision getLayoutRevision(
 		long layoutSetBranchId, long plid, boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutRevision> getLayoutRevisions(
@@ -311,8 +308,7 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -340,10 +336,10 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 		java.lang.String colorSchemeId, java.lang.String wapThemeId,
 		java.lang.String wapColorSchemeId, java.lang.String css,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutRevision updateStatus(long userId,
 		long layoutRevisionId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

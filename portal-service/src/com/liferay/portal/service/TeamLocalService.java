@@ -64,12 +64,12 @@ public interface TeamLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public com.liferay.portal.model.Team addTeam(long userId, long groupId,
 		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.Team addTeam(long userId, long groupId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addUserGroupTeam(long userGroupId,
 		com.liferay.portal.model.Team team);
@@ -108,7 +108,7 @@ public interface TeamLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the team from the database. Also notifies the appropriate model listeners.
@@ -119,8 +119,7 @@ public interface TeamLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Team deleteTeam(
-		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.portal.model.Team team) throws PortalException;
 
 	/**
 	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
@@ -131,10 +130,9 @@ public interface TeamLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Team deleteTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteTeams(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteTeams(long groupId) throws PortalException;
 
 	public void deleteUserGroupTeam(long userGroupId,
 		com.liferay.portal.model.Team team);
@@ -255,13 +253,11 @@ public interface TeamLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Team getTeam(long groupId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String name) throws PortalException;
 
 	/**
 	* Returns the team with the primary key.
@@ -272,7 +268,7 @@ public interface TeamLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Team getTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the team matching the UUID and group.
@@ -284,8 +280,7 @@ public interface TeamLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Team getTeamByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the teams.
@@ -437,5 +432,5 @@ public interface TeamLocalService extends BaseLocalService,
 
 	public com.liferay.portal.model.Team updateTeam(long teamId,
 		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

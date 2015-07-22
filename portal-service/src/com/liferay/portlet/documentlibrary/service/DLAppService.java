@@ -85,7 +85,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String changeLog, byte[] bytes,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a file entry and associated metadata. It is created based on a
@@ -125,7 +125,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String description, java.lang.String changeLog,
 		java.io.File file,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a file entry and associated metadata. It is created based on a
@@ -166,7 +166,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String description, java.lang.String changeLog,
 		java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a file shortcut to the existing file entry. This method is only
@@ -185,7 +185,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
 		long repositoryId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a folder.
@@ -205,7 +205,7 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a temporary file entry.
@@ -230,7 +230,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
 		long groupId, long folderId, java.lang.String folderName,
 		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a temporary file entry. It is created based on the {@link
@@ -257,8 +257,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
 		long groupId, long folderId, java.lang.String folderName,
 		java.lang.String fileName, java.io.InputStream inputStream,
-		java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String mimeType) throws PortalException;
 
 	/**
 	* Cancels the check out of the file entry. If a user has not checked out
@@ -281,8 +280,7 @@ public interface DLAppService extends BaseService {
 	* @see #checkInFileEntry(long, boolean, String, ServiceContext)
 	* @see #checkOutFileEntry(long, ServiceContext)
 	*/
-	public void cancelCheckOut(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void cancelCheckOut(long fileEntryId) throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
@@ -290,7 +288,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@java.lang.Deprecated
 	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Checks in the file entry using the lock's UUID. If a user has not checked
@@ -317,7 +315,7 @@ public interface DLAppService extends BaseService {
 	*/
 	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Checks in the file entry. If a user has not checked out the specified
@@ -345,7 +343,7 @@ public interface DLAppService extends BaseService {
 	public void checkInFileEntry(long fileEntryId, boolean majorVersion,
 		java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Checks out the file entry. This method is primarily used by WebDAV.
@@ -376,7 +374,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.FileEntry checkOutFileEntry(
 		long fileEntryId, java.lang.String owner, long expirationTime,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Check out a file entry.
@@ -400,7 +398,7 @@ public interface DLAppService extends BaseService {
 	*/
 	public void checkOutFileEntry(long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Performs a deep copy of the folder.
@@ -419,7 +417,7 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long sourceFolderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the file entry with the primary key.
@@ -427,8 +425,7 @@ public interface DLAppService extends BaseService {
 	* @param fileEntryId the primary key of the file entry
 	* @throws PortalException if the file entry could not be found
 	*/
-	public void deleteFileEntry(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteFileEntry(long fileEntryId) throws PortalException;
 
 	/**
 	* Deletes the file entry with the title in the folder.
@@ -439,8 +436,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the file entry could not be found
 	*/
 	public void deleteFileEntryByTitle(long repositoryId, long folderId,
-		java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String title) throws PortalException;
 
 	/**
 	* Deletes the file shortcut with the primary key. This method is only
@@ -450,7 +446,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	public void deleteFileShortcut(long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the file version. File versions can only be deleted if it is
@@ -462,7 +458,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the file version could not be found or invalid
 	*/
 	public void deleteFileVersion(long fileEntryId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the folder with the primary key and all of its subfolders and
@@ -471,8 +467,7 @@ public interface DLAppService extends BaseService {
 	* @param folderId the primary key of the folder
 	* @throws PortalException if the folder could not be found
 	*/
-	public void deleteFolder(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteFolder(long folderId) throws PortalException;
 
 	/**
 	* Deletes the folder with the name in the parent folder and all of its
@@ -484,8 +479,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the folder could not be found
 	*/
 	public void deleteFolder(long repositoryId, long parentFolderId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String name) throws PortalException;
 
 	/**
 	* Deletes the temporary file entry.
@@ -500,7 +494,7 @@ public interface DLAppService extends BaseService {
 	*/
 	public void deleteTempFileEntry(long groupId, long folderId,
 		java.lang.String folderName, java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -519,8 +513,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
-		long repositoryId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long repositoryId, long folderId) throws PortalException;
 
 	/**
 	* Returns the file entries with the file entry type in the folder.
@@ -534,7 +527,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 		long repositoryId, long folderId, long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a name-ordered range of all the file entries with the file entry
@@ -551,7 +544,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 		long repositoryId, long folderId, long fileEntryTypeId, int start,
-		int end) throws com.liferay.portal.kernel.exception.PortalException;
+		int end) throws PortalException;
 
 	/**
 	* Returns an ordered range of all the file entries with the file entry type
@@ -573,19 +566,19 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long folderId, long fileEntryTypeId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 		long repositoryId, long folderId, java.lang.String[] mimeTypes)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 		long repositoryId, long folderId, java.lang.String[] mimeTypes,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a name-ordered range of all the file entries in the folder.
@@ -609,7 +602,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 		long repositoryId, long folderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the file entries in the folder.
@@ -637,7 +630,7 @@ public interface DLAppService extends BaseService {
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
 		long repositoryId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a range of all the file entries and shortcuts in the folder.
@@ -662,7 +655,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of file entries and shortcuts in the folder.
@@ -675,8 +668,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesAndFileShortcutsCount(long repositoryId,
-		long folderId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId, int status) throws PortalException;
 
 	/**
 	* Returns the number of file entries and shortcuts in the folder.
@@ -691,7 +683,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesAndFileShortcutsCount(long repositoryId,
 		long folderId, int status, java.lang.String[] mimeTypes)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of file entries in the folder.
@@ -703,7 +695,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long repositoryId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of file entries with the file entry type in the
@@ -717,13 +709,11 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long repositoryId, long folderId,
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryTypeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long repositoryId, long folderId,
-		java.lang.String[] mimeTypes)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String[] mimeTypes) throws PortalException;
 
 	/**
 	* Returns the file entry with the primary key.
@@ -734,8 +724,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId) throws PortalException;
 
 	/**
 	* Returns the file entry with the title in the folder.
@@ -749,7 +738,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry(
 		long groupId, long folderId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the file entry with the UUID and group.
@@ -761,8 +750,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns the file shortcut with the primary key. This method is only
@@ -774,8 +762,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
-		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileShortcutId) throws PortalException;
 
 	/**
 	* Returns the file version with the primary key.
@@ -786,8 +773,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileVersionId) throws PortalException;
 
 	/**
 	* Returns the folder with the primary key.
@@ -798,8 +784,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.repository.model.Folder getFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	/**
 	* Returns the folder with the name in the parent folder.
@@ -813,7 +798,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.repository.model.Folder getFolder(
 		long repositoryId, long parentFolderId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns all immediate subfolders of the parent folder.
@@ -825,8 +810,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
-		long repositoryId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long repositoryId, long parentFolderId) throws PortalException;
 
 	/**
 	* Returns all immediate subfolders of the parent folder, optionally
@@ -842,7 +826,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
 		long repositoryId, long parentFolderId, boolean includeMountFolders)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a name-ordered range of all the immediate subfolders of the
@@ -871,8 +855,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
 		long repositoryId, long parentFolderId, boolean includeMountFolders,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		int start, int end) throws PortalException;
 
 	/**
 	* Returns an ordered range of all the immediate subfolders of the parent
@@ -904,7 +887,7 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long parentFolderId, boolean includeMountFolders,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.Folder> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a name-ordered range of all the immediate subfolders of the
@@ -930,7 +913,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
 		long repositoryId, long parentFolderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the immediate subfolders of the parent
@@ -959,7 +942,7 @@ public interface DLAppService extends BaseService {
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
 		long repositoryId, long parentFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.Folder> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the immediate subfolders of the parent
@@ -992,7 +975,7 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long parentFolderId, int status,
 		boolean includeMountFolders, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.Folder> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a name-ordered range of all the immediate subfolders, file
@@ -1022,7 +1005,7 @@ public interface DLAppService extends BaseService {
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the immediate subfolders, file entries,
@@ -1056,14 +1039,14 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long folderId, int status,
 		boolean includeMountFolders, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long repositoryId, long folderId, int status,
 		java.lang.String[] mimeTypes, boolean includeMountFolders, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator<?> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders, file entries, and file
@@ -1081,14 +1064,13 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long repositoryId, long folderId, int status,
-		boolean includeMountFolders)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeMountFolders) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long repositoryId, long folderId, int status,
 		java.lang.String[] mimeTypes, boolean includeMountFolders)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders of the parent folder.
@@ -1100,7 +1082,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long repositoryId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders of the parent folder,
@@ -1115,8 +1097,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long repositoryId, long parentFolderId,
-		boolean includeMountFolders)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeMountFolders) throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders of the parent folder,
@@ -1132,8 +1113,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long repositoryId, long parentFolderId,
-		int status, boolean includeMountFolders)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		int status, boolean includeMountFolders) throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders and file entries across the
@@ -1150,14 +1130,14 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersFileEntriesCount(long repositoryId,
 		java.util.List<java.lang.Long> folderIds, int status)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
 		long groupId, long userId, long rootFolderId,
 		java.lang.String[] mimeTypes, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the file entries in the group starting at
@@ -1187,7 +1167,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
 		long groupId, long userId, long rootFolderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the file entries in the group starting at
@@ -1221,7 +1201,7 @@ public interface DLAppService extends BaseService {
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
 		long groupId, long userId, long rootFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the file entries in the group starting at
@@ -1250,7 +1230,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
 		long groupId, long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the file entries in the group that are
@@ -1282,7 +1262,7 @@ public interface DLAppService extends BaseService {
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getGroupFileEntries(
 		long groupId, long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of file entries in a group starting at the repository
@@ -1298,7 +1278,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFileEntriesCount(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of file entries in a group starting at the root folder
@@ -1316,13 +1296,12 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFileEntriesCount(long groupId, long userId,
-		long rootFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long rootFolderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFileEntriesCount(long groupId, long userId,
 		long rootFolderId, java.lang.String[] mimeTypes, int status)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns all immediate subfolders of the parent folder that are used for
@@ -1338,8 +1317,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
-		long repositoryId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long repositoryId, long parentFolderId) throws PortalException;
 
 	/**
 	* Returns a name-ordered range of all the immediate subfolders of the
@@ -1367,7 +1345,7 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
 		long repositoryId, long parentFolderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns an ordered range of all the immediate subfolders of the parent
@@ -1399,7 +1377,7 @@ public interface DLAppService extends BaseService {
 	public java.util.List<com.liferay.portal.kernel.repository.model.Folder> getMountFolders(
 		long repositoryId, long parentFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.Folder> obc)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the number of immediate subfolders of the parent folder that are
@@ -1415,7 +1393,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMountFoldersCount(long repositoryId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns all the descendant folders of the folder with the primary key.
@@ -1428,8 +1406,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Long> getSubfolderIds(long repositoryId,
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	/**
 	* Returns descendant folders of the folder with the primary key, optionally
@@ -1444,13 +1421,12 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Long> getSubfolderIds(long repositoryId,
-		long folderId, boolean recurse)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId, boolean recurse) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubfolderIds(long repositoryId,
 		java.util.List<java.lang.Long> folderIds, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns all the temporary file entry names.
@@ -1466,8 +1442,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getTempFileNames(long groupId, long folderId,
-		java.lang.String folderName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String folderName) throws PortalException;
 
 	/**
 	* Locks the folder. This method is primarily used by WebDAV.
@@ -1478,8 +1453,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the repository or folder could not be found
 	*/
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long repositoryId,
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	/**
 	* Locks the folder. This method is primarily used by WebDAV.
@@ -1497,8 +1471,7 @@ public interface DLAppService extends BaseService {
 	*/
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long repositoryId,
 		long folderId, java.lang.String owner, boolean inheritable,
-		long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long expirationTime) throws PortalException;
 
 	/**
 	* Moves the file entry to the new folder.
@@ -1513,7 +1486,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntry(
 		long fileEntryId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Moves the file entry from a trashed folder to the new folder.
@@ -1528,7 +1501,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long fileEntryId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Moves the file entry with the primary key to the trash portlet.
@@ -1538,8 +1511,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the file entry could not be found
 	*/
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId) throws PortalException;
 
 	/**
 	* Moves the file shortcut from a trashed folder to the new folder.
@@ -1554,7 +1526,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		long fileShortcutId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Moves the file shortcut with the primary key to the trash portlet.
@@ -1564,8 +1536,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
-		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileShortcutId) throws PortalException;
 
 	/**
 	* Moves the folder to the new parent folder with the primary key.
@@ -1579,7 +1550,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.Folder moveFolder(
 		long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Moves the folder with the primary key from the trash portlet to the new
@@ -1594,7 +1565,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Moves the folder with the primary key to the trash portlet.
@@ -1604,8 +1575,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the folder could not be found
 	*/
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	/**
 	* Refreshes the lock for the file entry. This method is primarily used by
@@ -1621,7 +1591,7 @@ public interface DLAppService extends BaseService {
 	*/
 	public com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Refreshes the lock for the folder. This method is primarily used by
@@ -1637,7 +1607,7 @@ public interface DLAppService extends BaseService {
 	*/
 	public com.liferay.portal.kernel.lock.Lock refreshFolderLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Restores the file entry with the primary key from the trash portlet.
@@ -1646,7 +1616,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the file entry could not be found
 	*/
 	public void restoreFileEntryFromTrash(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Restores the file shortcut with the primary key from the trash portlet.
@@ -1655,7 +1625,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	public void restoreFileShortcutFromTrash(long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Restores the folder with the primary key from the trash portlet.
@@ -1663,8 +1633,7 @@ public interface DLAppService extends BaseService {
 	* @param folderId the primary key of the folder
 	* @throws PortalException if the folder could not be found
 	*/
-	public void restoreFolderFromTrash(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void restoreFolderFromTrash(long folderId) throws PortalException;
 
 	/**
 	* Reverts the file entry to a previous version. A new version will be
@@ -1677,18 +1646,17 @@ public interface DLAppService extends BaseService {
 	*/
 	public void revertFileEntry(long fileEntryId, java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
 		long creatorUserId, long folderId, java.lang.String[] mimeTypes,
-		int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		int status, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
 		long creatorUserId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
@@ -1718,7 +1686,7 @@ public interface DLAppService extends BaseService {
 	subscribing was not permissible
 	*/
 	public void subscribeFileEntryType(long groupId, long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Subscribe the user to document changes in the folder. This method is only
@@ -1730,15 +1698,14 @@ public interface DLAppService extends BaseService {
 	subscribing was not permissible
 	*/
 	public void subscribeFolder(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	boolean, String, ServiceContext)}.
 	*/
 	@java.lang.Deprecated
-	public void unlockFileEntry(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void unlockFileEntry(long fileEntryId) throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
@@ -1746,7 +1713,7 @@ public interface DLAppService extends BaseService {
 	*/
 	@java.lang.Deprecated
 	public void unlockFileEntry(long fileEntryId, java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Unlocks the folder. This method is primarily used by WebDAV.
@@ -1757,8 +1724,7 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the repository or folder could not be found
 	*/
 	public void unlockFolder(long repositoryId, long folderId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String lockUuid) throws PortalException;
 
 	/**
 	* Unlocks the folder. This method is primarily used by WebDAV.
@@ -1771,7 +1737,7 @@ public interface DLAppService extends BaseService {
 	*/
 	public void unlockFolder(long repositoryId, long parentFolderId,
 		java.lang.String name, java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Unsubscribe the user from changes in documents of the file entry type.
@@ -1783,7 +1749,7 @@ public interface DLAppService extends BaseService {
 	unsubscribing was not permissible
 	*/
 	public void unsubscribeFileEntryType(long groupId, long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Unsubscribe the user from document changes in the folder. This method is
@@ -1795,7 +1761,7 @@ public interface DLAppService extends BaseService {
 	unsubscribing was not permissible
 	*/
 	public void unsubscribeFolder(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates a file entry and associated metadata based on a byte array
@@ -1837,7 +1803,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, byte[] bytes,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates a file entry and associated metadata based on a {@link File}
@@ -1879,7 +1845,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.File file,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates a file entry and associated metadata based on an {@link
@@ -1922,7 +1888,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
 		long fileEntryId, java.lang.String sourceFileName,
@@ -1930,7 +1896,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.File file,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntryAndCheckIn(
 		long fileEntryId, java.lang.String sourceFileName,
@@ -1938,7 +1904,7 @@ public interface DLAppService extends BaseService {
 		java.lang.String description, java.lang.String changeLog,
 		boolean majorVersion, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates a file shortcut to the existing file entry. This method is only
@@ -1957,7 +1923,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
 		long fileShortcutId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the folder.
@@ -1984,7 +1950,7 @@ public interface DLAppService extends BaseService {
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
 		long folderId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns <code>true</code> if the file entry is checked out. This method
@@ -1998,12 +1964,10 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the file entry could not be found
 	*/
 	public boolean verifyFileEntryCheckOut(long repositoryId, long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String lockUuid) throws PortalException;
 
 	public boolean verifyFileEntryLock(long repositoryId, long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String lockUuid) throws PortalException;
 
 	/**
 	* Returns <code>true</code> if the inheritable lock exists. This method is
@@ -2017,6 +1981,5 @@ public interface DLAppService extends BaseService {
 	* @throws PortalException if the folder could not be found
 	*/
 	public boolean verifyInheritableLock(long repositoryId, long folderId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String lockUuid) throws PortalException;
 }

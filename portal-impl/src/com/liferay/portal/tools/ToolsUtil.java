@@ -214,7 +214,7 @@ public class ToolsUtil {
 					break;
 				}
 
-				if (!isInsideQuotes(content, x)) {
+				if (isInsideQuotes(content, x)) {
 					continue;
 				}
 

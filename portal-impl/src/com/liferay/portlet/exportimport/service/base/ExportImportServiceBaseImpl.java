@@ -80,7 +80,7 @@ public abstract class ExportImportServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the export import remote service
 	 */
-	public com.liferay.portlet.exportimport.service.ExportImportService getExportImportService() {
+	public ExportImportService getExportImportService() {
 		return exportImportService;
 	}
 
@@ -89,8 +89,7 @@ public abstract class ExportImportServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param exportImportService the export import remote service
 	 */
-	public void setExportImportService(
-		com.liferay.portlet.exportimport.service.ExportImportService exportImportService) {
+	public void setExportImportService(ExportImportService exportImportService) {
 		this.exportImportService = exportImportService;
 	}
 
@@ -542,7 +541,7 @@ public abstract class ExportImportServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportLocalService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportLocalService exportImportLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportService.class)
-	protected com.liferay.portlet.exportimport.service.ExportImportService exportImportService;
+	protected ExportImportService exportImportService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationService.class)

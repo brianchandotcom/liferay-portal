@@ -28,7 +28,7 @@ import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see UserNotificationEventImpl
- * @see com.liferay.portal.model.UserNotificationEvent
+ * @see UserNotificationEvent
  * @generated
  */
 @ProviderType

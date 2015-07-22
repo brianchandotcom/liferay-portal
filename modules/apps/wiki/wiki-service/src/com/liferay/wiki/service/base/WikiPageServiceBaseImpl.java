@@ -93,7 +93,7 @@ public abstract class WikiPageServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the wiki page remote service
 	 */
-	public com.liferay.wiki.service.WikiPageService getWikiPageService() {
+	public WikiPageService getWikiPageService() {
 		return wikiPageService;
 	}
 
@@ -102,8 +102,7 @@ public abstract class WikiPageServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param wikiPageService the wiki page remote service
 	 */
-	public void setWikiPageService(
-		com.liferay.wiki.service.WikiPageService wikiPageService) {
+	public void setWikiPageService(WikiPageService wikiPageService) {
 		this.wikiPageService = wikiPageService;
 	}
 
@@ -1072,7 +1071,7 @@ public abstract class WikiPageServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.wiki.service.WikiPageLocalService.class)
 	protected com.liferay.wiki.service.WikiPageLocalService wikiPageLocalService;
 	@BeanReference(type = com.liferay.wiki.service.WikiPageService.class)
-	protected com.liferay.wiki.service.WikiPageService wikiPageService;
+	protected WikiPageService wikiPageService;
 	@BeanReference(type = WikiPagePersistence.class)
 	protected WikiPagePersistence wikiPagePersistence;
 	@BeanReference(type = WikiPageFinder.class)

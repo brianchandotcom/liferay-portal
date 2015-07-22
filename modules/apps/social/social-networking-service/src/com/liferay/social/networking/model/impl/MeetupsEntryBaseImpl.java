@@ -28,7 +28,7 @@ import com.liferay.social.networking.service.MeetupsEntryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MeetupsEntryImpl
- * @see com.liferay.social.networking.model.MeetupsEntry
+ * @see MeetupsEntry
  * @generated
  */
 @ProviderType

@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil} service utility. The
+ * {@link DLFileEntryTypeServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -64,7 +64,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see DLFileEntryTypeServiceHttp
  * @see com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap
- * @see com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil
+ * @see DLFileEntryTypeServiceUtil
  * @generated
  */
 @ProviderType

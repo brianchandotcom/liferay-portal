@@ -179,7 +179,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @return the create date of this lock
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _lock.getCreateDate();
 	}
 
@@ -194,7 +194,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @return the expiration date of this lock
 	*/
 	@Override
-	public java.util.Date getExpirationDate() {
+	public Date getExpirationDate() {
 		return _lock.getExpirationDate();
 	}
 
@@ -384,7 +384,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @param createDate the create date of this lock
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_lock.setCreateDate(createDate);
 	}
 
@@ -412,7 +412,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* @param expirationDate the expiration date of this lock
 	*/
 	@Override
-	public void setExpirationDate(java.util.Date expirationDate) {
+	public void setExpirationDate(Date expirationDate) {
 		_lock.setExpirationDate(expirationDate);
 	}
 

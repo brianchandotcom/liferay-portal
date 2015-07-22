@@ -28,7 +28,7 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ClassNameImpl
- * @see com.liferay.portal.model.ClassName
+ * @see ClassName
  * @generated
  */
 @ProviderType

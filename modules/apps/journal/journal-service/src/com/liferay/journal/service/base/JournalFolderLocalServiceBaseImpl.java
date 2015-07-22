@@ -471,7 +471,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 *
 	 * @return the journal folder local service
 	 */
-	public com.liferay.journal.service.JournalFolderLocalService getJournalFolderLocalService() {
+	public JournalFolderLocalService getJournalFolderLocalService() {
 		return journalFolderLocalService;
 	}
 
@@ -481,7 +481,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param journalFolderLocalService the journal folder local service
 	 */
 	public void setJournalFolderLocalService(
-		com.liferay.journal.service.JournalFolderLocalService journalFolderLocalService) {
+		JournalFolderLocalService journalFolderLocalService) {
 		this.journalFolderLocalService = journalFolderLocalService;
 	}
 
@@ -1343,7 +1343,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.journal.service.JournalFolderLocalService.class)
-	protected com.liferay.journal.service.JournalFolderLocalService journalFolderLocalService;
+	protected JournalFolderLocalService journalFolderLocalService;
 	@BeanReference(type = com.liferay.journal.service.JournalFolderService.class)
 	protected com.liferay.journal.service.JournalFolderService journalFolderService;
 	@BeanReference(type = JournalFolderPersistence.class)

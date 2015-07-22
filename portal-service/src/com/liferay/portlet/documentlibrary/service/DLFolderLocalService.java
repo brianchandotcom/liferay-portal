@@ -74,7 +74,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean hidden,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by more general {@link #addFolder(long,
@@ -87,7 +87,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void clearDLFileEntryTypeDLFolders(long fileEntryTypeId);
 
@@ -104,14 +104,12 @@ public interface DLFolderLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
 	*/
 	@java.lang.Deprecated
-	public void deleteAll(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteAll(long groupId) throws PortalException;
 
-	public void deleteAllByGroup(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteAllByGroup(long groupId) throws PortalException;
 
 	public void deleteAllByRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteDLFileEntryTypeDLFolder(long fileEntryTypeId,
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder);
@@ -144,36 +142,32 @@ public interface DLFolderLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFolder deleteDLFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeTrashedEntries) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
-		long folderId, boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId, boolean includeTrashedEntries) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFolder deleteFolder(
 		long userId, long folderId, boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -181,7 +175,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -322,8 +316,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getDLFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	/**
 	* Returns the document library folder matching the UUID and group.
@@ -335,8 +328,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getDLFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library folders.
@@ -421,13 +413,12 @@ public interface DLFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder(
 		long groupId, long parentFolderId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getFolderId(long companyId, long folderId);
@@ -544,8 +535,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getMountFolder(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long repositoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getMountFolders(
@@ -561,8 +551,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Long> getRepositoryFolderIds(
@@ -600,26 +589,23 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public boolean hasFolderLock(long userId, long folderId);
 
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long folderId) throws PortalException;
 
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
 		long folderId, java.lang.String owner, boolean inheritable,
-		long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long expirationTime) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.documentlibrary.model.DLFolder moveFolder(
 		long userId, long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void rebuildTree(long companyId) throws PortalException;
 
 	public void rebuildTree(long companyId, long parentFolderId,
 		java.lang.String parentTreePath, boolean reindex)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -632,11 +618,11 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long[] folderIds);
 
 	public void unlockFolder(long folderId, java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void unlockFolder(long groupId, long parentFolderId,
 		java.lang.String name, java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the document library folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -659,7 +645,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
@@ -667,7 +653,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
@@ -680,7 +666,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
@@ -688,7 +674,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #
@@ -702,22 +688,22 @@ public interface DLFolderLocalService extends BaseLocalService,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		boolean overrideFileEntryTypes,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolderAndFileEntryTypes(
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, long defaultFileEntryTypeId,
 		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.increment.BufferedIncrement(configuration = "DLFolderEntry", incrementClass = com.liferay.portal.kernel.increment.DateOverrideIncrement.class)
 	public void updateLastPostDate(long folderId, java.util.Date lastPostDate)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder updateStatus(
 		long userId, long folderId, int status,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

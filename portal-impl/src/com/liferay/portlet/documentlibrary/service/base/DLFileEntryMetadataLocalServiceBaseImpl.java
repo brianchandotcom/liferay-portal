@@ -310,7 +310,7 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	 *
 	 * @return the document library file entry metadata local service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService getDLFileEntryMetadataLocalService() {
+	public DLFileEntryMetadataLocalService getDLFileEntryMetadataLocalService() {
 		return dlFileEntryMetadataLocalService;
 	}
 
@@ -320,7 +320,7 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	 * @param dlFileEntryMetadataLocalService the document library file entry metadata local service
 	 */
 	public void setDLFileEntryMetadataLocalService(
-		com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
+		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 		this.dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 	}
 
@@ -577,7 +577,7 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
+	protected DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
 	@BeanReference(type = DLFileEntryMetadataPersistence.class)
 	protected DLFileEntryMetadataPersistence dlFileEntryMetadataPersistence;
 	@BeanReference(type = DLFileEntryMetadataFinder.class)

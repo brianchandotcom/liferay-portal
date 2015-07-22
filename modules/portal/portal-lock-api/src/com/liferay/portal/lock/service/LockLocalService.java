@@ -87,7 +87,7 @@ public interface LockLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.lock.model.Lock deleteLock(long lockId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -95,7 +95,7 @@ public interface LockLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -189,12 +189,11 @@ public interface LockLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.lock.model.Lock getLock(
 		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.lock.model.Lock getLock(
-		java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String className, long key) throws PortalException;
 
 	/**
 	* Returns the lock with the primary key.
@@ -205,7 +204,7 @@ public interface LockLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.lock.model.Lock getLock(long lockId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the lock with the matching UUID and company.
@@ -217,8 +216,7 @@ public interface LockLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.lock.model.Lock getLockByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long companyId) throws PortalException;
 
 	/**
 	* Returns a range of all the locks.
@@ -246,8 +244,7 @@ public interface LockLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLock(long userId, java.lang.String className,
@@ -263,29 +260,27 @@ public interface LockLocalService extends BaseLocalService,
 	public boolean isLocked(java.lang.String className, long key);
 
 	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
-	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
 		java.lang.String updatedOwner);
 
 	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
-	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner);
 
 	public com.liferay.portal.lock.model.Lock lock(long userId,
 		java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.lock.model.Lock lock(long userId,
 		java.lang.String className, long key, java.lang.String owner,
-		boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean inheritable, long expirationTime) throws PortalException;
 
 	public com.liferay.portal.lock.model.Lock refresh(java.lang.String uuid,
-		long companyId, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long companyId, long expirationTime) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -299,7 +294,7 @@ public interface LockLocalService extends BaseLocalService,
 	public void unlock(java.lang.String className, java.lang.String key);
 
 	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
-	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner);
 

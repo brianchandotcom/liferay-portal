@@ -66,17 +66,17 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows, int scope,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addRecordSetResources(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addRecordSetResources(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new d d l record set with the primary key. Does not add the d d l record set to the database.
@@ -106,8 +106,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet deleteDDLRecordSet(
-		long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordSetId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -115,21 +114,19 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteRecordSet(long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteRecordSet(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteRecordSet(long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteRecordSet(long recordSetId) throws PortalException;
 
-	public void deleteRecordSets(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteRecordSets(long groupId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -238,8 +235,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSet(
-		long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordSetId) throws PortalException;
 
 	/**
 	* Returns the d d l record set matching the UUID and group.
@@ -251,8 +247,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSetByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the d d l record sets.
@@ -310,18 +305,15 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
-		long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long groupId, java.lang.String recordSetKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
-		long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordSetId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
@@ -371,7 +363,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
 		long recordSetId, int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		long groupId, long ddmStructureId, java.lang.String recordSetKey,
@@ -379,7 +371,7 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		long recordSetId, long ddmStructureId,
@@ -387,5 +379,5 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

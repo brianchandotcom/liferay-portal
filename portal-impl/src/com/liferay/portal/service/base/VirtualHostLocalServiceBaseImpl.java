@@ -304,7 +304,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 *
 	 * @return the virtual host local service
 	 */
-	public com.liferay.portal.service.VirtualHostLocalService getVirtualHostLocalService() {
+	public VirtualHostLocalService getVirtualHostLocalService() {
 		return virtualHostLocalService;
 	}
 
@@ -314,7 +314,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * @param virtualHostLocalService the virtual host local service
 	 */
 	public void setVirtualHostLocalService(
-		com.liferay.portal.service.VirtualHostLocalService virtualHostLocalService) {
+		VirtualHostLocalService virtualHostLocalService) {
 		this.virtualHostLocalService = virtualHostLocalService;
 	}
 
@@ -606,7 +606,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.VirtualHostLocalService.class)
-	protected com.liferay.portal.service.VirtualHostLocalService virtualHostLocalService;
+	protected VirtualHostLocalService virtualHostLocalService;
 	@BeanReference(type = VirtualHostPersistence.class)
 	protected VirtualHostPersistence virtualHostPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

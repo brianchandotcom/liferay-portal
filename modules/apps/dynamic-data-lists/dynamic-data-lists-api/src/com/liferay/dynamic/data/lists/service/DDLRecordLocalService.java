@@ -64,19 +64,19 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		long userId, long groupId, long recordSetId, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long userId, long groupId, long recordSetId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new d d l record with the primary key. Does not add the d d l record to the database.
@@ -106,8 +106,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.dynamic.data.lists.model.DDLRecord deleteDDLRecord(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -115,24 +114,22 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.dynamic.data.lists.model.DDLRecord deleteRecord(
 		com.liferay.dynamic.data.lists.model.DDLRecord record)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteRecord(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteRecord(long recordId) throws PortalException;
 
 	public com.liferay.dynamic.data.lists.model.DDLRecord deleteRecordLocale(
 		long recordId, java.util.Locale locale,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteRecords(long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteRecords(long recordSetId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -245,8 +242,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecord getDDLRecord(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordId) throws PortalException;
 
 	/**
 	* Returns the d d l record matching the UUID and group.
@@ -258,8 +254,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecord getDDLRecordByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the d d l records.
@@ -322,8 +317,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.Long[] getMinAndMaxCompanyRecordIds(long companyId,
@@ -337,13 +331,11 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecord getRecord(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordId) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
@@ -353,8 +345,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordId, java.lang.String version) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
@@ -364,8 +355,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordVersionId) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
@@ -406,7 +396,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public void revertRecord(long userId, long recordId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, long,
@@ -416,7 +406,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public void revertRecordVersion(long userId, long recordId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(
@@ -437,8 +427,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		com.liferay.dynamic.data.lists.model.DDLRecord record,
 		com.liferay.dynamic.data.lists.model.DDLRecordVersion recordVersion,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.util.Locale locale) throws PortalException;
 
 	/**
 	* Updates the d d l record in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -455,25 +444,25 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
 		boolean mergeFields,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long userId, long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long userId, long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
 		boolean mergeFields,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.dynamic.data.lists.model.DDLRecord updateStatus(
 		long userId, long recordVersionId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

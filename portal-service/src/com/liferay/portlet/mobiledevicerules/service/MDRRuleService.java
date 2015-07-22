@@ -48,7 +48,7 @@ public interface MDRRuleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MDRRuleServiceUtil} to access the m d r rule remote service. Add custom service methods to {@link com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule addRule(
 		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -56,7 +56,7 @@ public interface MDRRuleService extends BaseService {
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule addRule(
 		long ruleGroupId,
@@ -64,14 +64,13 @@ public interface MDRRuleService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteRule(long ruleId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteRule(long ruleId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule fetchRule(
-		long ruleId) throws com.liferay.portal.kernel.exception.PortalException;
+		long ruleId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -82,7 +81,7 @@ public interface MDRRuleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule getRule(
-		long ruleId) throws com.liferay.portal.kernel.exception.PortalException;
+		long ruleId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -96,7 +95,7 @@ public interface MDRRuleService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule updateRule(
 		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -104,5 +103,5 @@ public interface MDRRuleService extends BaseService {
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

@@ -115,8 +115,7 @@ public class SCProductEntryUtil {
 	* @param groupId the group ID
 	* @return the matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByGroupId(
-		long groupId) {
+	public static List<SCProductEntry> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -124,7 +123,7 @@ public class SCProductEntryUtil {
 	* Returns a range of all the s c product entries where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -132,8 +131,8 @@ public class SCProductEntryUtil {
 	* @param end the upper bound of the range of s c product entries (not inclusive)
 	* @return the range of matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByGroupId(
-		long groupId, int start, int end) {
+	public static List<SCProductEntry> findByGroupId(long groupId, int start,
+		int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -141,7 +140,7 @@ public class SCProductEntryUtil {
 	* Returns an ordered range of all the s c product entries where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -150,9 +149,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static List<SCProductEntry> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -163,11 +161,10 @@ public class SCProductEntryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a matching s c product entry could not be found
+	* @throws NoSuchProductEntryException if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+	public static SCProductEntry findByGroupId_First(long groupId,
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -179,9 +176,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static SCProductEntry fetchByGroupId_First(long groupId,
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -191,11 +187,10 @@ public class SCProductEntryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a matching s c product entry could not be found
+	* @throws NoSuchProductEntryException if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+	public static SCProductEntry findByGroupId_Last(long groupId,
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -207,9 +202,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static SCProductEntry fetchByGroupId_Last(long groupId,
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -220,11 +214,11 @@ public class SCProductEntryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
+	* @throws NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByGroupId_PrevAndNext(
+	public static SCProductEntry[] findByGroupId_PrevAndNext(
 		long productEntryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(productEntryId, groupId,
@@ -237,8 +231,7 @@ public class SCProductEntryUtil {
 	* @param groupId the group ID
 	* @return the matching s c product entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByGroupId(
-		long groupId) {
+	public static List<SCProductEntry> filterFindByGroupId(long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -246,7 +239,7 @@ public class SCProductEntryUtil {
 	* Returns a range of all the s c product entries that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -254,8 +247,8 @@ public class SCProductEntryUtil {
 	* @param end the upper bound of the range of s c product entries (not inclusive)
 	* @return the range of matching s c product entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByGroupId(
-		long groupId, int start, int end) {
+	public static List<SCProductEntry> filterFindByGroupId(long groupId,
+		int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -263,7 +256,7 @@ public class SCProductEntryUtil {
 	* Returns an ordered range of all the s c product entries that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -272,9 +265,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c product entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static List<SCProductEntry> filterFindByGroupId(long groupId,
+		int start, int end, OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -286,11 +278,11 @@ public class SCProductEntryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
+	* @throws NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] filterFindByGroupId_PrevAndNext(
+	public static SCProductEntry[] filterFindByGroupId_PrevAndNext(
 		long productEntryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(productEntryId, groupId,
@@ -332,8 +324,7 @@ public class SCProductEntryUtil {
 	* @param companyId the company ID
 	* @return the matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByCompanyId(
-		long companyId) {
+	public static List<SCProductEntry> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -341,7 +332,7 @@ public class SCProductEntryUtil {
 	* Returns a range of all the s c product entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -349,8 +340,8 @@ public class SCProductEntryUtil {
 	* @param end the upper bound of the range of s c product entries (not inclusive)
 	* @return the range of matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByCompanyId(
-		long companyId, int start, int end) {
+	public static List<SCProductEntry> findByCompanyId(long companyId,
+		int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -358,7 +349,7 @@ public class SCProductEntryUtil {
 	* Returns an ordered range of all the s c product entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -367,9 +358,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static List<SCProductEntry> findByCompanyId(long companyId,
+		int start, int end, OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -380,11 +370,10 @@ public class SCProductEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a matching s c product entry could not be found
+	* @throws NoSuchProductEntryException if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+	public static SCProductEntry findByCompanyId_First(long companyId,
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -397,9 +386,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static SCProductEntry fetchByCompanyId_First(long companyId,
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -410,11 +398,10 @@ public class SCProductEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a matching s c product entry could not be found
+	* @throws NoSuchProductEntryException if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+	public static SCProductEntry findByCompanyId_Last(long companyId,
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -427,9 +414,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static SCProductEntry fetchByCompanyId_Last(long companyId,
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -441,11 +427,11 @@ public class SCProductEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
+	* @throws NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByCompanyId_PrevAndNext(
+	public static SCProductEntry[] findByCompanyId_PrevAndNext(
 		long productEntryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(productEntryId, companyId,
@@ -478,8 +464,7 @@ public class SCProductEntryUtil {
 	* @param userId the user ID
 	* @return the matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByG_U(
-		long groupId, long userId) {
+	public static List<SCProductEntry> findByG_U(long groupId, long userId) {
 		return getPersistence().findByG_U(groupId, userId);
 	}
 
@@ -487,7 +472,7 @@ public class SCProductEntryUtil {
 	* Returns a range of all the s c product entries where groupId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -496,8 +481,8 @@ public class SCProductEntryUtil {
 	* @param end the upper bound of the range of s c product entries (not inclusive)
 	* @return the range of matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByG_U(
-		long groupId, long userId, int start, int end) {
+	public static List<SCProductEntry> findByG_U(long groupId, long userId,
+		int start, int end) {
 		return getPersistence().findByG_U(groupId, userId, start, end);
 	}
 
@@ -505,7 +490,7 @@ public class SCProductEntryUtil {
 	* Returns an ordered range of all the s c product entries where groupId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -515,9 +500,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findByG_U(
-		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static List<SCProductEntry> findByG_U(long groupId, long userId,
+		int start, int end, OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_U(groupId, userId, start, end, orderByComparator);
 	}
@@ -529,11 +513,10 @@ public class SCProductEntryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a matching s c product entry could not be found
+	* @throws NoSuchProductEntryException if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByG_U_First(
-		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+	public static SCProductEntry findByG_U_First(long groupId, long userId,
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
@@ -547,9 +530,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByG_U_First(
-		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static SCProductEntry fetchByG_U_First(long groupId, long userId,
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -561,11 +543,10 @@ public class SCProductEntryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a matching s c product entry could not be found
+	* @throws NoSuchProductEntryException if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByG_U_Last(
-		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+	public static SCProductEntry findByG_U_Last(long groupId, long userId,
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
@@ -579,9 +560,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByG_U_Last(
-		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static SCProductEntry fetchByG_U_Last(long groupId, long userId,
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -594,11 +574,11 @@ public class SCProductEntryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
+	* @throws NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] findByG_U_PrevAndNext(
-		long productEntryId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+	public static SCProductEntry[] findByG_U_PrevAndNext(long productEntryId,
+		long groupId, long userId,
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(productEntryId, groupId, userId,
@@ -612,8 +592,7 @@ public class SCProductEntryUtil {
 	* @param userId the user ID
 	* @return the matching s c product entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByG_U(
-		long groupId, long userId) {
+	public static List<SCProductEntry> filterFindByG_U(long groupId, long userId) {
 		return getPersistence().filterFindByG_U(groupId, userId);
 	}
 
@@ -621,7 +600,7 @@ public class SCProductEntryUtil {
 	* Returns a range of all the s c product entries that the user has permission to view where groupId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -630,8 +609,8 @@ public class SCProductEntryUtil {
 	* @param end the upper bound of the range of s c product entries (not inclusive)
 	* @return the range of matching s c product entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByG_U(
-		long groupId, long userId, int start, int end) {
+	public static List<SCProductEntry> filterFindByG_U(long groupId,
+		long userId, int start, int end) {
 		return getPersistence().filterFindByG_U(groupId, userId, start, end);
 	}
 
@@ -639,7 +618,7 @@ public class SCProductEntryUtil {
 	* Returns an ordered range of all the s c product entries that the user has permissions to view where groupId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -649,9 +628,9 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c product entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> filterFindByG_U(
-		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static List<SCProductEntry> filterFindByG_U(long groupId,
+		long userId, int start, int end,
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U(groupId, userId, start, end,
 			orderByComparator);
@@ -665,11 +644,11 @@ public class SCProductEntryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
+	* @throws NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry[] filterFindByG_U_PrevAndNext(
+	public static SCProductEntry[] filterFindByG_U_PrevAndNext(
 		long productEntryId, long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator)
+		OrderByComparator<SCProductEntry> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence()
 				   .filterFindByG_U_PrevAndNext(productEntryId, groupId,
@@ -709,15 +688,15 @@ public class SCProductEntryUtil {
 	}
 
 	/**
-	* Returns the s c product entry where repoGroupId = &#63; and repoArtifactId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductEntryException} if it could not be found.
+	* Returns the s c product entry where repoGroupId = &#63; and repoArtifactId = &#63; or throws a {@link NoSuchProductEntryException} if it could not be found.
 	*
 	* @param repoGroupId the repo group ID
 	* @param repoArtifactId the repo artifact ID
 	* @return the matching s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a matching s c product entry could not be found
+	* @throws NoSuchProductEntryException if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByRG_RA(
-		java.lang.String repoGroupId, java.lang.String repoArtifactId)
+	public static SCProductEntry findByRG_RA(java.lang.String repoGroupId,
+		java.lang.String repoArtifactId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence().findByRG_RA(repoGroupId, repoArtifactId);
 	}
@@ -729,8 +708,8 @@ public class SCProductEntryUtil {
 	* @param repoArtifactId the repo artifact ID
 	* @return the matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByRG_RA(
-		java.lang.String repoGroupId, java.lang.String repoArtifactId) {
+	public static SCProductEntry fetchByRG_RA(java.lang.String repoGroupId,
+		java.lang.String repoArtifactId) {
 		return getPersistence().fetchByRG_RA(repoGroupId, repoArtifactId);
 	}
 
@@ -742,9 +721,8 @@ public class SCProductEntryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching s c product entry, or <code>null</code> if a matching s c product entry could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByRG_RA(
-		java.lang.String repoGroupId, java.lang.String repoArtifactId,
-		boolean retrieveFromCache) {
+	public static SCProductEntry fetchByRG_RA(java.lang.String repoGroupId,
+		java.lang.String repoArtifactId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByRG_RA(repoGroupId, repoArtifactId, retrieveFromCache);
 	}
@@ -756,8 +734,8 @@ public class SCProductEntryUtil {
 	* @param repoArtifactId the repo artifact ID
 	* @return the s c product entry that was removed
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry removeByRG_RA(
-		java.lang.String repoGroupId, java.lang.String repoArtifactId)
+	public static SCProductEntry removeByRG_RA(java.lang.String repoGroupId,
+		java.lang.String repoArtifactId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence().removeByRG_RA(repoGroupId, repoArtifactId);
 	}
@@ -779,8 +757,7 @@ public class SCProductEntryUtil {
 	*
 	* @param scProductEntry the s c product entry
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
+	public static void cacheResult(SCProductEntry scProductEntry) {
 		getPersistence().cacheResult(scProductEntry);
 	}
 
@@ -789,8 +766,7 @@ public class SCProductEntryUtil {
 	*
 	* @param scProductEntries the s c product entries
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> scProductEntries) {
+	public static void cacheResult(List<SCProductEntry> scProductEntries) {
 		getPersistence().cacheResult(scProductEntries);
 	}
 
@@ -800,8 +776,7 @@ public class SCProductEntryUtil {
 	* @param productEntryId the primary key for the new s c product entry
 	* @return the new s c product entry
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry create(
-		long productEntryId) {
+	public static SCProductEntry create(long productEntryId) {
 		return getPersistence().create(productEntryId);
 	}
 
@@ -810,28 +785,25 @@ public class SCProductEntryUtil {
 	*
 	* @param productEntryId the primary key of the s c product entry
 	* @return the s c product entry that was removed
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
+	* @throws NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry remove(
-		long productEntryId)
+	public static SCProductEntry remove(long productEntryId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence().remove(productEntryId);
 	}
 
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
+	public static SCProductEntry updateImpl(SCProductEntry scProductEntry) {
 		return getPersistence().updateImpl(scProductEntry);
 	}
 
 	/**
-	* Returns the s c product entry with the primary key or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductEntryException} if it could not be found.
+	* Returns the s c product entry with the primary key or throws a {@link NoSuchProductEntryException} if it could not be found.
 	*
 	* @param productEntryId the primary key of the s c product entry
 	* @return the s c product entry
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException if a s c product entry with the primary key could not be found
+	* @throws NoSuchProductEntryException if a s c product entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry findByPrimaryKey(
-		long productEntryId)
+	public static SCProductEntry findByPrimaryKey(long productEntryId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductEntryException {
 		return getPersistence().findByPrimaryKey(productEntryId);
 	}
@@ -842,12 +814,11 @@ public class SCProductEntryUtil {
 	* @param productEntryId the primary key of the s c product entry
 	* @return the s c product entry, or <code>null</code> if a s c product entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchByPrimaryKey(
-		long productEntryId) {
+	public static SCProductEntry fetchByPrimaryKey(long productEntryId) {
 		return getPersistence().fetchByPrimaryKey(productEntryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCProductEntry> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, SCProductEntry> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -857,7 +828,7 @@ public class SCProductEntryUtil {
 	*
 	* @return the s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findAll() {
+	public static List<SCProductEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -865,15 +836,14 @@ public class SCProductEntryUtil {
 	* Returns a range of all the s c product entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c product entries
 	* @param end the upper bound of the range of s c product entries (not inclusive)
 	* @return the range of s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findAll(
-		int start, int end) {
+	public static List<SCProductEntry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -881,7 +851,7 @@ public class SCProductEntryUtil {
 	* Returns an ordered range of all the s c product entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c product entries
@@ -889,9 +859,8 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of s c product entries
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductEntry> orderByComparator) {
+	public static List<SCProductEntry> findAll(int start, int end,
+		OrderByComparator<SCProductEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -927,7 +896,7 @@ public class SCProductEntryUtil {
 	* @param pk the primary key of the s c product entry
 	* @return the s c licenses associated with the s c product entry
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
+	public static List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
 		long pk) {
 		return getPersistence().getSCLicenses(pk);
 	}
@@ -936,7 +905,7 @@ public class SCProductEntryUtil {
 	* Returns a range of all the s c licenses associated with the s c product entry.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the s c product entry
@@ -944,7 +913,7 @@ public class SCProductEntryUtil {
 	* @param end the upper bound of the range of s c product entries (not inclusive)
 	* @return the range of s c licenses associated with the s c product entry
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
+	public static List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
 		long pk, int start, int end) {
 		return getPersistence().getSCLicenses(pk, start, end);
 	}
@@ -953,7 +922,7 @@ public class SCProductEntryUtil {
 	* Returns an ordered range of all the s c licenses associated with the s c product entry.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the s c product entry
@@ -962,9 +931,9 @@ public class SCProductEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of s c licenses associated with the s c product entry
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
+	public static List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
+		OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator) {
 		return getPersistence().getSCLicenses(pk, start, end, orderByComparator);
 	}
 
@@ -1037,7 +1006,7 @@ public class SCProductEntryUtil {
 	* @param scLicenses the s c licenses
 	*/
 	public static void addSCLicenses(long pk,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> scLicenses) {
+		List<com.liferay.portlet.softwarecatalog.model.SCLicense> scLicenses) {
 		getPersistence().addSCLicenses(pk, scLicenses);
 	}
 
@@ -1088,7 +1057,7 @@ public class SCProductEntryUtil {
 	* @param scLicenses the s c licenses
 	*/
 	public static void removeSCLicenses(long pk,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> scLicenses) {
+		List<com.liferay.portlet.softwarecatalog.model.SCLicense> scLicenses) {
 		getPersistence().removeSCLicenses(pk, scLicenses);
 	}
 
@@ -1109,7 +1078,7 @@ public class SCProductEntryUtil {
 	* @param scLicenses the s c licenses to be associated with the s c product entry
 	*/
 	public static void setSCLicenses(long pk,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> scLicenses) {
+		List<com.liferay.portlet.softwarecatalog.model.SCLicense> scLicenses) {
 		getPersistence().setSCLicenses(pk, scLicenses);
 	}
 

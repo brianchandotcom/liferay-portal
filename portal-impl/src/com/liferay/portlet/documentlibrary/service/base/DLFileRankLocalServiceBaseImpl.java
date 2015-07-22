@@ -305,7 +305,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @return the document library file rank local service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileRankLocalService getDLFileRankLocalService() {
+	public DLFileRankLocalService getDLFileRankLocalService() {
 		return dlFileRankLocalService;
 	}
 
@@ -315,7 +315,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param dlFileRankLocalService the document library file rank local service
 	 */
 	public void setDLFileRankLocalService(
-		com.liferay.portlet.documentlibrary.service.DLFileRankLocalService dlFileRankLocalService) {
+		DLFileRankLocalService dlFileRankLocalService) {
 		this.dlFileRankLocalService = dlFileRankLocalService;
 	}
 
@@ -586,7 +586,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileRankLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileRankLocalService dlFileRankLocalService;
+	protected DLFileRankLocalService dlFileRankLocalService;
 	@BeanReference(type = DLFileRankPersistence.class)
 	protected DLFileRankPersistence dlFileRankPersistence;
 	@BeanReference(type = DLFileRankFinder.class)

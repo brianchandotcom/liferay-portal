@@ -115,8 +115,7 @@ public class DDMTemplateLinkUtil {
 	* @param classNameId the class name ID
 	* @return the matching d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findByClassNameId(
-		long classNameId) {
+	public static List<DDMTemplateLink> findByClassNameId(long classNameId) {
 		return getPersistence().findByClassNameId(classNameId);
 	}
 
@@ -124,7 +123,7 @@ public class DDMTemplateLinkUtil {
 	* Returns a range of all the d d m template links where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -132,8 +131,8 @@ public class DDMTemplateLinkUtil {
 	* @param end the upper bound of the range of d d m template links (not inclusive)
 	* @return the range of matching d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findByClassNameId(
-		long classNameId, int start, int end) {
+	public static List<DDMTemplateLink> findByClassNameId(long classNameId,
+		int start, int end) {
 		return getPersistence().findByClassNameId(classNameId, start, end);
 	}
 
@@ -141,7 +140,7 @@ public class DDMTemplateLinkUtil {
 	* Returns an ordered range of all the d d m template links where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -150,9 +149,8 @@ public class DDMTemplateLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findByClassNameId(
-		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator) {
+	public static List<DDMTemplateLink> findByClassNameId(long classNameId,
+		int start, int end, OrderByComparator<DDMTemplateLink> orderByComparator) {
 		return getPersistence()
 				   .findByClassNameId(classNameId, start, end, orderByComparator);
 	}
@@ -163,11 +161,10 @@ public class DDMTemplateLinkUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink findByClassNameId_First(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator)
+	public static DDMTemplateLink findByClassNameId_First(long classNameId,
+		OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
@@ -180,9 +177,8 @@ public class DDMTemplateLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchByClassNameId_First(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator) {
+	public static DDMTemplateLink fetchByClassNameId_First(long classNameId,
+		OrderByComparator<DDMTemplateLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -193,11 +189,10 @@ public class DDMTemplateLinkUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink findByClassNameId_Last(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator)
+	public static DDMTemplateLink findByClassNameId_Last(long classNameId,
+		OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
@@ -210,9 +205,8 @@ public class DDMTemplateLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchByClassNameId_Last(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator) {
+	public static DDMTemplateLink fetchByClassNameId_Last(long classNameId,
+		OrderByComparator<DDMTemplateLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -224,11 +218,11 @@ public class DDMTemplateLinkUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
+	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink[] findByClassNameId_PrevAndNext(
+	public static DDMTemplateLink[] findByClassNameId_PrevAndNext(
 		long templateLinkId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator)
+		OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(templateLinkId, classNameId,
@@ -260,8 +254,7 @@ public class DDMTemplateLinkUtil {
 	* @param templateId the template ID
 	* @return the matching d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findByTemplateId(
-		long templateId) {
+	public static List<DDMTemplateLink> findByTemplateId(long templateId) {
 		return getPersistence().findByTemplateId(templateId);
 	}
 
@@ -269,7 +262,7 @@ public class DDMTemplateLinkUtil {
 	* Returns a range of all the d d m template links where templateId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
@@ -277,8 +270,8 @@ public class DDMTemplateLinkUtil {
 	* @param end the upper bound of the range of d d m template links (not inclusive)
 	* @return the range of matching d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findByTemplateId(
-		long templateId, int start, int end) {
+	public static List<DDMTemplateLink> findByTemplateId(long templateId,
+		int start, int end) {
 		return getPersistence().findByTemplateId(templateId, start, end);
 	}
 
@@ -286,7 +279,7 @@ public class DDMTemplateLinkUtil {
 	* Returns an ordered range of all the d d m template links where templateId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
@@ -295,9 +288,8 @@ public class DDMTemplateLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findByTemplateId(
-		long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator) {
+	public static List<DDMTemplateLink> findByTemplateId(long templateId,
+		int start, int end, OrderByComparator<DDMTemplateLink> orderByComparator) {
 		return getPersistence()
 				   .findByTemplateId(templateId, start, end, orderByComparator);
 	}
@@ -308,11 +300,10 @@ public class DDMTemplateLinkUtil {
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink findByTemplateId_First(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator)
+	public static DDMTemplateLink findByTemplateId_First(long templateId,
+		OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByTemplateId_First(templateId, orderByComparator);
@@ -325,9 +316,8 @@ public class DDMTemplateLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchByTemplateId_First(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator) {
+	public static DDMTemplateLink fetchByTemplateId_First(long templateId,
+		OrderByComparator<DDMTemplateLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByTemplateId_First(templateId, orderByComparator);
 	}
@@ -338,11 +328,10 @@ public class DDMTemplateLinkUtil {
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink findByTemplateId_Last(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator)
+	public static DDMTemplateLink findByTemplateId_Last(long templateId,
+		OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByTemplateId_Last(templateId, orderByComparator);
@@ -355,9 +344,8 @@ public class DDMTemplateLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchByTemplateId_Last(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator) {
+	public static DDMTemplateLink fetchByTemplateId_Last(long templateId,
+		OrderByComparator<DDMTemplateLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByTemplateId_Last(templateId, orderByComparator);
 	}
@@ -369,11 +357,11 @@ public class DDMTemplateLinkUtil {
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
+	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink[] findByTemplateId_PrevAndNext(
+	public static DDMTemplateLink[] findByTemplateId_PrevAndNext(
 		long templateLinkId, long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator)
+		OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByTemplateId_PrevAndNext(templateLinkId, templateId,
@@ -400,15 +388,14 @@ public class DDMTemplateLinkUtil {
 	}
 
 	/**
-	* Returns the d d m template link where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException} if it could not be found.
+	* Returns the d d m template link where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchTemplateLinkException} if it could not be found.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching d d m template link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink findByC_C(
-		long classNameId, long classPK)
+	public static DDMTemplateLink findByC_C(long classNameId, long classPK)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
@@ -420,8 +407,7 @@ public class DDMTemplateLinkUtil {
 	* @param classPK the class p k
 	* @return the matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchByC_C(
-		long classNameId, long classPK) {
+	public static DDMTemplateLink fetchByC_C(long classNameId, long classPK) {
 		return getPersistence().fetchByC_C(classNameId, classPK);
 	}
 
@@ -433,8 +419,8 @@ public class DDMTemplateLinkUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache) {
+	public static DDMTemplateLink fetchByC_C(long classNameId, long classPK,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_C(classNameId, classPK, retrieveFromCache);
 	}
@@ -446,8 +432,7 @@ public class DDMTemplateLinkUtil {
 	* @param classPK the class p k
 	* @return the d d m template link that was removed
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink removeByC_C(
-		long classNameId, long classPK)
+	public static DDMTemplateLink removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
@@ -468,8 +453,7 @@ public class DDMTemplateLinkUtil {
 	*
 	* @param ddmTemplateLink the d d m template link
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink ddmTemplateLink) {
+	public static void cacheResult(DDMTemplateLink ddmTemplateLink) {
 		getPersistence().cacheResult(ddmTemplateLink);
 	}
 
@@ -478,8 +462,7 @@ public class DDMTemplateLinkUtil {
 	*
 	* @param ddmTemplateLinks the d d m template links
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> ddmTemplateLinks) {
+	public static void cacheResult(List<DDMTemplateLink> ddmTemplateLinks) {
 		getPersistence().cacheResult(ddmTemplateLinks);
 	}
 
@@ -489,8 +472,7 @@ public class DDMTemplateLinkUtil {
 	* @param templateLinkId the primary key for the new d d m template link
 	* @return the new d d m template link
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink create(
-		long templateLinkId) {
+	public static DDMTemplateLink create(long templateLinkId) {
 		return getPersistence().create(templateLinkId);
 	}
 
@@ -499,28 +481,25 @@ public class DDMTemplateLinkUtil {
 	*
 	* @param templateLinkId the primary key of the d d m template link
 	* @return the d d m template link that was removed
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
+	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink remove(
-		long templateLinkId)
+	public static DDMTemplateLink remove(long templateLinkId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence().remove(templateLinkId);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink ddmTemplateLink) {
+	public static DDMTemplateLink updateImpl(DDMTemplateLink ddmTemplateLink) {
 		return getPersistence().updateImpl(ddmTemplateLink);
 	}
 
 	/**
-	* Returns the d d m template link with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException} if it could not be found.
+	* Returns the d d m template link with the primary key or throws a {@link NoSuchTemplateLinkException} if it could not be found.
 	*
 	* @param templateLinkId the primary key of the d d m template link
 	* @return the d d m template link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
+	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink findByPrimaryKey(
-		long templateLinkId)
+	public static DDMTemplateLink findByPrimaryKey(long templateLinkId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
 		return getPersistence().findByPrimaryKey(templateLinkId);
 	}
@@ -531,12 +510,11 @@ public class DDMTemplateLinkUtil {
 	* @param templateLinkId the primary key of the d d m template link
 	* @return the d d m template link, or <code>null</code> if a d d m template link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchByPrimaryKey(
-		long templateLinkId) {
+	public static DDMTemplateLink fetchByPrimaryKey(long templateLinkId) {
 		return getPersistence().fetchByPrimaryKey(templateLinkId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, DDMTemplateLink> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -546,7 +524,7 @@ public class DDMTemplateLinkUtil {
 	*
 	* @return the d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findAll() {
+	public static List<DDMTemplateLink> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -554,15 +532,14 @@ public class DDMTemplateLinkUtil {
 	* Returns a range of all the d d m template links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m template links
 	* @param end the upper bound of the range of d d m template links (not inclusive)
 	* @return the range of d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findAll(
-		int start, int end) {
+	public static List<DDMTemplateLink> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -570,7 +547,7 @@ public class DDMTemplateLinkUtil {
 	* Returns an ordered range of all the d d m template links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m template links
@@ -578,9 +555,8 @@ public class DDMTemplateLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d m template links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> orderByComparator) {
+	public static List<DDMTemplateLink> findAll(int start, int end,
+		OrderByComparator<DDMTemplateLink> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

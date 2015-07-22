@@ -81,7 +81,7 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the journal feed remote service
 	 */
-	public com.liferay.journal.service.JournalFeedService getJournalFeedService() {
+	public JournalFeedService getJournalFeedService() {
 		return journalFeedService;
 	}
 
@@ -90,8 +90,7 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param journalFeedService the journal feed remote service
 	 */
-	public void setJournalFeedService(
-		com.liferay.journal.service.JournalFeedService journalFeedService) {
+	public void setJournalFeedService(JournalFeedService journalFeedService) {
 		this.journalFeedService = journalFeedService;
 	}
 
@@ -496,7 +495,7 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.journal.service.JournalFeedLocalService.class)
 	protected com.liferay.journal.service.JournalFeedLocalService journalFeedLocalService;
 	@BeanReference(type = com.liferay.journal.service.JournalFeedService.class)
-	protected com.liferay.journal.service.JournalFeedService journalFeedService;
+	protected JournalFeedService journalFeedService;
 	@BeanReference(type = JournalFeedPersistence.class)
 	protected JournalFeedPersistence journalFeedPersistence;
 	@BeanReference(type = JournalFeedFinder.class)

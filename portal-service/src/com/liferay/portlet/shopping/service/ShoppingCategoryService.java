@@ -51,10 +51,9 @@ public interface ShoppingCategoryService extends BaseService {
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteCategory(long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteCategory(long categoryId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -76,8 +75,7 @@ public interface ShoppingCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.shopping.model.ShoppingCategory getCategory(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long categoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubcategoryIds(java.util.List<java.lang.Long> categoryIds,
@@ -94,5 +92,5 @@ public interface ShoppingCategoryService extends BaseService {
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentCategory,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

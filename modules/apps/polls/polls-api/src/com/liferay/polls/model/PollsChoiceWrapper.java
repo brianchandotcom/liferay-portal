@@ -187,7 +187,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	* @return the create date of this polls choice
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _pollsChoice.getCreateDate();
 	}
 
@@ -270,7 +270,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	* @return the locales and localized descriptions of this polls choice
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _pollsChoice.getDescriptionMap();
 	}
 
@@ -295,7 +295,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	* @return the last publish date of this polls choice
 	*/
 	@Override
-	public java.util.Date getLastPublishDate() {
+	public Date getLastPublishDate() {
 		return _pollsChoice.getLastPublishDate();
 	}
 
@@ -305,7 +305,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	* @return the modified date of this polls choice
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _pollsChoice.getModifiedDate();
 	}
 
@@ -458,7 +458,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	* @param createDate the create date of this polls choice
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_pollsChoice.setCreateDate(createDate);
 	}
 
@@ -509,7 +509,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_pollsChoice.setDescriptionMap(descriptionMap);
 	}
 
@@ -521,7 +521,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_pollsChoice.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -560,7 +560,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	* @param lastPublishDate the last publish date of this polls choice
 	*/
 	@Override
-	public void setLastPublishDate(java.util.Date lastPublishDate) {
+	public void setLastPublishDate(Date lastPublishDate) {
 		_pollsChoice.setLastPublishDate(lastPublishDate);
 	}
 
@@ -570,7 +570,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	* @param modifiedDate the modified date of this polls choice
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_pollsChoice.setModifiedDate(modifiedDate);
 	}
 

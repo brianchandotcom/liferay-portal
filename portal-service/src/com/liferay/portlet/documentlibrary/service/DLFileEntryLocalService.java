@@ -67,11 +67,10 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> ddmFormValuesMap,
 		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
-		long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long fileEntryId) throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, long,
@@ -79,18 +78,17 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public void checkInFileEntry(long userId, long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String lockUuid) throws PortalException;
 
 	public void checkInFileEntry(long userId, long fileEntryId,
 		java.lang.String lockUuid,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void checkInFileEntry(long userId, long fileEntryId,
 		boolean majorVersion, java.lang.String changeLog,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
@@ -98,8 +96,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
-		long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long fileEntryId) throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
@@ -108,33 +105,32 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		long userId, long fileEntryId, java.lang.String owner,
-		long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long expirationTime) throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		long userId, long fileEntryId, java.lang.String owner,
 		long expirationTime,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		long userId, long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void convertExtraSettings(java.lang.String[] keys)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
 		long userId, long groupId, long repositoryId, long fileEntryId,
 		long destFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void copyFileEntryMetadata(long companyId, long fileEntryTypeId,
 		long fileEntryId, long fromFileVersionId, long toFileVersionId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new document library file entry with the primary key. Does not add the document library file entry to the database.
@@ -164,36 +160,32 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteDLFileEntry(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId) throws PortalException;
 
 	public void deleteFileEntries(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteFileEntries(long groupId, long folderId,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeTrashedEntries) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
 		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
-		long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long fileEntryId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileVersion(
 		long userId, long fileEntryId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -201,14 +193,13 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeTrashedEntries) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -382,8 +373,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntry(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId) throws PortalException;
 
 	/**
 	* Returns the document library file entry matching the UUID and group.
@@ -395,8 +385,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -411,13 +400,11 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.io.File getFile(long fileEntryId, java.lang.String version,
-		boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean incrementCounter) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.io.File getFile(long fileEntryId, java.lang.String version,
-		boolean incrementCounter, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean incrementCounter, int increment) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
@@ -427,7 +414,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.io.File getFile(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
@@ -437,19 +424,18 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.io.File getFile(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public java.io.InputStream getFileAsStream(long fileEntryId,
-		java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String version) throws PortalException;
 
 	public java.io.InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public java.io.InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
@@ -457,8 +443,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
-		java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String version) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
@@ -467,7 +452,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
@@ -476,7 +461,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public java.io.InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
@@ -548,23 +533,21 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
 		long groupId, long folderId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByName(
 		long groupId, long folderId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getGroupFileEntries(
@@ -613,8 +596,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getRepositoryFileEntries(
@@ -628,7 +610,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasFileEntryLock(long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.increment.BufferedIncrement(configuration = "DLFileEntry", incrementClass = com.liferay.portal.kernel.increment.NumberIncrement.class)
 	public void incrementViewCounter(
@@ -637,41 +619,39 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isFileEntryCheckedOut(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isKeepFileVersionLabel(long fileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.lock.Lock lockFileEntry(long userId,
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry moveFileEntry(
 		long userId, long fileEntryId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void rebuildTree(long companyId) throws PortalException;
 
 	public void revertFileEntry(long userId, long fileEntryId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long userId, long creatorUserId, long folderId,
 		java.lang.String[] mimeTypes, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long userId, long creatorUserId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -681,8 +661,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void setTreePaths(long folderId, java.lang.String treePath,
-		boolean reindex)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean reindex) throws PortalException;
 
 	public void unlockFileEntry(long fileEntryId);
 
@@ -704,31 +683,29 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> ddmFormValuesMap,
 		java.io.File file, java.io.InputStream is, long size,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntryType(
 		long userId, long fileEntryId, long fileEntryTypeId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void updateSmallImage(long smallImageId, long largeImageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateStatus(
 		long userId, long fileVersionId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void validateFile(long groupId, long folderId, long fileEntryId,
 		java.lang.String fileName, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public boolean verifyFileEntryCheckOut(long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String lockUuid) throws PortalException;
 
 	public boolean verifyFileEntryLock(long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String lockUuid) throws PortalException;
 }

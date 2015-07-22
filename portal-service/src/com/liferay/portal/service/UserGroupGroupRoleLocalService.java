@@ -77,7 +77,7 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the user group group role from the database. Also notifies the appropriate model listeners.
@@ -99,7 +99,7 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.UserGroupGroupRole deleteUserGroupGroupRole(
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds);
@@ -199,8 +199,7 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the user group group role with the primary key.
@@ -212,7 +211,7 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroupGroupRole getUserGroupGroupRole(
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a range of all the user group group roles.
@@ -259,8 +258,7 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		java.lang.String roleName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String roleName) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

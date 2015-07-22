@@ -238,7 +238,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	* @return the create date of this m d r action
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _mdrAction.getCreateDate();
 	}
 
@@ -321,7 +321,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	* @return the locales and localized descriptions of this m d r action
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _mdrAction.getDescriptionMap();
 	}
 
@@ -346,7 +346,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	* @return the modified date of this m d r action
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _mdrAction.getModifiedDate();
 	}
 
@@ -423,7 +423,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	* @return the locales and localized names of this m d r action
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _mdrAction.getNameMap();
 	}
 
@@ -611,7 +611,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	* @param createDate the create date of this m d r action
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_mdrAction.setCreateDate(createDate);
 	}
 
@@ -662,7 +662,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_mdrAction.setDescriptionMap(descriptionMap);
 	}
 
@@ -674,7 +674,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_mdrAction.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -713,7 +713,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	* @param modifiedDate the modified date of this m d r action
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_mdrAction.setModifiedDate(modifiedDate);
 	}
 
@@ -762,8 +762,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	* @param nameMap the locales and localized names of this m d r action
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
 		_mdrAction.setNameMap(nameMap);
 	}
 
@@ -774,8 +773,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Locale defaultLocale) {
 		_mdrAction.setNameMap(nameMap, defaultLocale);
 	}

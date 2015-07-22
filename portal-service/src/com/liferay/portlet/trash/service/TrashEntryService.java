@@ -56,11 +56,10 @@ public interface TrashEntryService extends BaseService {
 	be found or if the user did not have permission to delete any one
 	of the trash entries
 	*/
-	@com.liferay.portal.kernel.transaction.Transactional(noRollbackFor =  {
+	@Transactional(noRollbackFor =  {
 		com.liferay.portal.TrashPermissionException.class}
 	)
-	public void deleteEntries(long[] entryIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteEntries(long[] entryIds) throws PortalException;
 
 	/**
 	* Deletes the trash entries with the matching group ID considering
@@ -69,11 +68,10 @@ public interface TrashEntryService extends BaseService {
 	* @param groupId the primary key of the group
 	* @throws PortalException if a portal exception occurred
 	*/
-	@com.liferay.portal.kernel.transaction.Transactional(noRollbackFor =  {
+	@Transactional(noRollbackFor =  {
 		com.liferay.portal.TrashPermissionException.class}
 	)
-	public void deleteEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteEntries(long groupId) throws PortalException;
 
 	/**
 	* Deletes the trash entry with the entity class name and class primary key.
@@ -91,7 +89,7 @@ public interface TrashEntryService extends BaseService {
 	permission to delete the entry
 	*/
 	public void deleteEntry(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the trash entry with the primary key.
@@ -107,8 +105,7 @@ public interface TrashEntryService extends BaseService {
 	be found or if the user did not have permission to delete the
 	trash entry
 	*/
-	public void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteEntry(long entryId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -190,19 +187,17 @@ public interface TrashEntryService extends BaseService {
 	public void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String className, long classPK) throws PortalException;
 
 	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
 		java.lang.String className, long classPK, long overrideClassPK,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String name) throws PortalException;
 
 	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Restores the trash entry to its original location. In order to handle a
@@ -244,7 +239,7 @@ public interface TrashEntryService extends BaseService {
 	*/
 	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
 		long entryId, long overrideClassPK, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

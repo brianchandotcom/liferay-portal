@@ -60,23 +60,20 @@ public interface DDLRecordVersionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordId, java.lang.String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordVersionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordVersionsCount(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public int getRecordVersionsCount(long recordId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

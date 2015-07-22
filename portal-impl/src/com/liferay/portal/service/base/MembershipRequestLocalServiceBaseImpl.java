@@ -313,7 +313,7 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	 *
 	 * @return the membership request local service
 	 */
-	public com.liferay.portal.service.MembershipRequestLocalService getMembershipRequestLocalService() {
+	public MembershipRequestLocalService getMembershipRequestLocalService() {
 		return membershipRequestLocalService;
 	}
 
@@ -323,7 +323,7 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	 * @param membershipRequestLocalService the membership request local service
 	 */
 	public void setMembershipRequestLocalService(
-		com.liferay.portal.service.MembershipRequestLocalService membershipRequestLocalService) {
+		MembershipRequestLocalService membershipRequestLocalService) {
 		this.membershipRequestLocalService = membershipRequestLocalService;
 	}
 
@@ -856,7 +856,7 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.MembershipRequestLocalService.class)
-	protected com.liferay.portal.service.MembershipRequestLocalService membershipRequestLocalService;
+	protected MembershipRequestLocalService membershipRequestLocalService;
 	@BeanReference(type = com.liferay.portal.service.MembershipRequestService.class)
 	protected com.liferay.portal.service.MembershipRequestService membershipRequestService;
 	@BeanReference(type = MembershipRequestPersistence.class)

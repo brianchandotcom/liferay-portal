@@ -218,7 +218,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @return the create date of this email address
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _emailAddress.getCreateDate();
 	}
 
@@ -243,7 +243,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @return the modified date of this email address
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _emailAddress.getModifiedDate();
 	}
 
@@ -429,7 +429,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @param createDate the create date of this email address
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_emailAddress.setCreateDate(createDate);
 	}
 
@@ -466,7 +466,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	* @param modifiedDate the modified date of this email address
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_emailAddress.setModifiedDate(modifiedDate);
 	}
 

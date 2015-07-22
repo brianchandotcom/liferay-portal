@@ -28,7 +28,7 @@ import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see SocialActivitySettingImpl
- * @see com.liferay.portlet.social.model.SocialActivitySetting
+ * @see SocialActivitySetting
  * @generated
  */
 @ProviderType

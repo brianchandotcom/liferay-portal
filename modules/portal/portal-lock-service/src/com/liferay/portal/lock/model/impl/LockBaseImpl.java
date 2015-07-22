@@ -28,7 +28,7 @@ import com.liferay.portal.lock.service.LockLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see LockImpl
- * @see com.liferay.portal.lock.model.Lock
+ * @see Lock
  * @generated
  */
 @ProviderType

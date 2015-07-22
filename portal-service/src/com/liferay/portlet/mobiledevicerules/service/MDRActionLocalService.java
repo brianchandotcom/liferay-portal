@@ -54,7 +54,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction addAction(
 		long ruleGroupInstanceId,
@@ -63,7 +63,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the m d r action to the database. Also notifies the appropriate model listeners.
@@ -101,8 +101,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction deleteMDRAction(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long actionId) throws PortalException;
 
 	/**
 	* Deletes the m d r action from the database. Also notifies the appropriate model listeners.
@@ -120,7 +119,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -208,8 +207,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction getAction(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long actionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
@@ -245,8 +243,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction getMDRAction(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long actionId) throws PortalException;
 
 	/**
 	* Returns the m d r action matching the UUID and group.
@@ -258,8 +255,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction getMDRActionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the m d r actions.
@@ -313,8 +309,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -329,7 +324,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction updateAction(
 		long actionId,
@@ -338,7 +333,7 @@ public interface MDRActionLocalService extends BaseLocalService,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the m d r action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -301,7 +301,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 *
 	 * @return the web d a v props local service
 	 */
-	public com.liferay.portal.service.WebDAVPropsLocalService getWebDAVPropsLocalService() {
+	public WebDAVPropsLocalService getWebDAVPropsLocalService() {
 		return webDAVPropsLocalService;
 	}
 
@@ -311,7 +311,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	 * @param webDAVPropsLocalService the web d a v props local service
 	 */
 	public void setWebDAVPropsLocalService(
-		com.liferay.portal.service.WebDAVPropsLocalService webDAVPropsLocalService) {
+		WebDAVPropsLocalService webDAVPropsLocalService) {
 		this.webDAVPropsLocalService = webDAVPropsLocalService;
 	}
 
@@ -473,7 +473,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.WebDAVPropsLocalService.class)
-	protected com.liferay.portal.service.WebDAVPropsLocalService webDAVPropsLocalService;
+	protected WebDAVPropsLocalService webDAVPropsLocalService;
 	@BeanReference(type = WebDAVPropsPersistence.class)
 	protected WebDAVPropsPersistence webDAVPropsPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

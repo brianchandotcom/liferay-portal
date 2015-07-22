@@ -1085,7 +1085,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+	public UserLocalService getUserLocalService() {
 		return userLocalService;
 	}
 
@@ -1094,8 +1094,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param userLocalService the user local service
 	 */
-	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
+	public void setUserLocalService(UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
 	}
 
@@ -3134,7 +3133,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
+	protected UserLocalService userLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserService.class)
 	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)

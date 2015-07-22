@@ -307,7 +307,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 *
 	 * @return the resource block local service
 	 */
-	public com.liferay.portal.service.ResourceBlockLocalService getResourceBlockLocalService() {
+	public ResourceBlockLocalService getResourceBlockLocalService() {
 		return resourceBlockLocalService;
 	}
 
@@ -317,7 +317,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @param resourceBlockLocalService the resource block local service
 	 */
 	public void setResourceBlockLocalService(
-		com.liferay.portal.service.ResourceBlockLocalService resourceBlockLocalService) {
+		ResourceBlockLocalService resourceBlockLocalService) {
 		this.resourceBlockLocalService = resourceBlockLocalService;
 	}
 
@@ -704,7 +704,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.ResourceBlockLocalService.class)
-	protected com.liferay.portal.service.ResourceBlockLocalService resourceBlockLocalService;
+	protected ResourceBlockLocalService resourceBlockLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceBlockService.class)
 	protected com.liferay.portal.service.ResourceBlockService resourceBlockService;
 	@BeanReference(type = ResourceBlockPersistence.class)

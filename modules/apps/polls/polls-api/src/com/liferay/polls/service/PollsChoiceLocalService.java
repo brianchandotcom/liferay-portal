@@ -50,7 +50,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	public com.liferay.polls.model.PollsChoice addChoice(long userId,
 		long questionId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the polls choice to the database. Also notifies the appropriate model listeners.
@@ -76,7 +76,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the polls choice with the primary key from the database. Also notifies the appropriate model listeners.
@@ -87,7 +87,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.polls.model.PollsChoice deletePollsChoice(long choiceId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the polls choice from the database. Also notifies the appropriate model listeners.
@@ -190,7 +190,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsChoice getChoice(long choiceId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices(
@@ -206,8 +206,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the polls choice with the primary key.
@@ -218,7 +217,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsChoice getPollsChoice(long choiceId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the polls choice matching the UUID and group.
@@ -230,8 +229,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the polls choices.
@@ -292,7 +290,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	public com.liferay.polls.model.PollsChoice updateChoice(long choiceId,
 		long questionId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

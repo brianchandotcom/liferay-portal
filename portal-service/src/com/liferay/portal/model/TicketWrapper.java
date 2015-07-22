@@ -184,7 +184,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @return the create date of this ticket
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ticket.getCreateDate();
 	}
 
@@ -199,7 +199,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @return the expiration date of this ticket
 	*/
 	@Override
-	public java.util.Date getExpirationDate() {
+	public Date getExpirationDate() {
 		return _ticket.getExpirationDate();
 	}
 
@@ -344,7 +344,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @param createDate the create date of this ticket
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_ticket.setCreateDate(createDate);
 	}
 
@@ -371,7 +371,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	* @param expirationDate the expiration date of this ticket
 	*/
 	@Override
-	public void setExpirationDate(java.util.Date expirationDate) {
+	public void setExpirationDate(Date expirationDate) {
 		_ticket.setExpirationDate(expirationDate);
 	}
 

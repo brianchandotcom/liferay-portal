@@ -353,7 +353,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @return the export import configuration local service
 	 */
-	public com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService getExportImportConfigurationLocalService() {
+	public ExportImportConfigurationLocalService getExportImportConfigurationLocalService() {
 		return exportImportConfigurationLocalService;
 	}
 
@@ -363,7 +363,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param exportImportConfigurationLocalService the export import configuration local service
 	 */
 	public void setExportImportConfigurationLocalService(
-		com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService) {
+		ExportImportConfigurationLocalService exportImportConfigurationLocalService) {
 		this.exportImportConfigurationLocalService = exportImportConfigurationLocalService;
 	}
 
@@ -736,7 +736,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportService exportImportService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService.class)
-	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
+	protected ExportImportConfigurationLocalService exportImportConfigurationLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationService exportImportConfigurationService;
 	@BeanReference(type = ExportImportConfigurationPersistence.class)

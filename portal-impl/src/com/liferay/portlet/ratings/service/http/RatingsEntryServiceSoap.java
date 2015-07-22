@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portlet.ratings.service.RatingsEntryServiceUtil} service utility. The
+ * {@link RatingsEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,7 +60,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see RatingsEntryServiceHttp
  * @see com.liferay.portlet.ratings.model.RatingsEntrySoap
- * @see com.liferay.portlet.ratings.service.RatingsEntryServiceUtil
+ * @see RatingsEntryServiceUtil
  * @generated
  */
 @ProviderType

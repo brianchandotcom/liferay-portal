@@ -227,7 +227,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the create date of this d d m structure version
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ddmStructureVersion.getCreateDate();
 	}
 
@@ -331,7 +331,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the locales and localized descriptions of this d d m structure version
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _ddmStructureVersion.getDescriptionMap();
 	}
 
@@ -423,7 +423,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the locales and localized names of this d d m structure version
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _ddmStructureVersion.getNameMap();
 	}
 
@@ -498,7 +498,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @return the status date of this d d m structure version
 	*/
 	@Override
-	public java.util.Date getStatusDate() {
+	public Date getStatusDate() {
 		return _ddmStructureVersion.getStatusDate();
 	}
 
@@ -727,7 +727,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param createDate the create date of this d d m structure version
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_ddmStructureVersion.setCreateDate(createDate);
 	}
 
@@ -794,7 +794,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_ddmStructureVersion.setDescriptionMap(descriptionMap);
 	}
 
@@ -806,7 +806,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_ddmStructureVersion.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -884,8 +884,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param nameMap the locales and localized names of this d d m structure version
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
 		_ddmStructureVersion.setNameMap(nameMap);
 	}
 
@@ -896,8 +895,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddmStructureVersion.setNameMap(nameMap, defaultLocale);
 	}
@@ -978,7 +976,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	* @param statusDate the status date of this d d m structure version
 	*/
 	@Override
-	public void setStatusDate(java.util.Date statusDate) {
+	public void setStatusDate(Date statusDate) {
 		_ddmStructureVersion.setStatusDate(statusDate);
 	}
 

@@ -58,8 +58,7 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	public com.liferay.journal.model.JournalContentSearch addJournalContentSearch(
 		com.liferay.journal.model.JournalContentSearch journalContentSearch);
 
-	public void checkContentSearches(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void checkContentSearches(long companyId) throws PortalException;
 
 	/**
 	* Creates a new journal content search with the primary key. Does not add the journal content search to the database.
@@ -88,8 +87,7 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.journal.model.JournalContentSearch deleteJournalContentSearch(
-		long contentSearchId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long contentSearchId) throws PortalException;
 
 	/**
 	* Deletes the journal content search from the database. Also notifies the appropriate model listeners.
@@ -112,7 +110,7 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -213,8 +211,7 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalContentSearch getJournalContentSearch(
-		long contentSearchId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long contentSearchId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal content searchs.
@@ -253,8 +250,7 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.journal.model.JournalContentSearch> getPortletContentSearches(
@@ -270,17 +266,17 @@ public interface JournalContentSearchLocalService extends BaseLocalService,
 	public com.liferay.journal.model.JournalContentSearch updateContentSearch(
 		long groupId, boolean privateLayout, long layoutId,
 		java.lang.String portletId, java.lang.String articleId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.journal.model.JournalContentSearch updateContentSearch(
 		long groupId, boolean privateLayout, long layoutId,
 		java.lang.String portletId, java.lang.String articleId, boolean purge)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public java.util.List<com.liferay.journal.model.JournalContentSearch> updateContentSearch(
 		long groupId, boolean privateLayout, long layoutId,
 		java.lang.String portletId, java.lang.String[] articleIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the journal content search in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

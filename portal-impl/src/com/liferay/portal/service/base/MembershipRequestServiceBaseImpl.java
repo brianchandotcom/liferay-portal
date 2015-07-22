@@ -83,7 +83,7 @@ public abstract class MembershipRequestServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the membership request remote service
 	 */
-	public com.liferay.portal.service.MembershipRequestService getMembershipRequestService() {
+	public MembershipRequestService getMembershipRequestService() {
 		return membershipRequestService;
 	}
 
@@ -93,7 +93,7 @@ public abstract class MembershipRequestServiceBaseImpl extends BaseServiceImpl
 	 * @param membershipRequestService the membership request remote service
 	 */
 	public void setMembershipRequestService(
-		com.liferay.portal.service.MembershipRequestService membershipRequestService) {
+		MembershipRequestService membershipRequestService) {
 		this.membershipRequestService = membershipRequestService;
 	}
 
@@ -605,7 +605,7 @@ public abstract class MembershipRequestServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.MembershipRequestLocalService.class)
 	protected com.liferay.portal.service.MembershipRequestLocalService membershipRequestLocalService;
 	@BeanReference(type = com.liferay.portal.service.MembershipRequestService.class)
-	protected com.liferay.portal.service.MembershipRequestService membershipRequestService;
+	protected MembershipRequestService membershipRequestService;
 	@BeanReference(type = MembershipRequestPersistence.class)
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

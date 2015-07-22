@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil} service utility. The
+ * {@link MDRRuleGroupInstanceServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,7 +60,7 @@ import java.rmi.RemoteException;
  * @author Edward C. Han
  * @see MDRRuleGroupInstanceServiceHttp
  * @see com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstanceSoap
- * @see com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil
+ * @see MDRRuleGroupInstanceServiceUtil
  * @generated
  */
 @ProviderType

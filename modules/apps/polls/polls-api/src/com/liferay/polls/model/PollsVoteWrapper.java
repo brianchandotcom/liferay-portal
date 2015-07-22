@@ -187,7 +187,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @return the create date of this polls vote
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _pollsVote.getCreateDate();
 	}
 
@@ -212,7 +212,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @return the last publish date of this polls vote
 	*/
 	@Override
-	public java.util.Date getLastPublishDate() {
+	public Date getLastPublishDate() {
 		return _pollsVote.getLastPublishDate();
 	}
 
@@ -222,7 +222,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @return the modified date of this polls vote
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _pollsVote.getModifiedDate();
 	}
 
@@ -297,7 +297,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @return the vote date of this polls vote
 	*/
 	@Override
-	public java.util.Date getVoteDate() {
+	public Date getVoteDate() {
 		return _pollsVote.getVoteDate();
 	}
 
@@ -367,7 +367,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @param createDate the create date of this polls vote
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_pollsVote.setCreateDate(createDate);
 	}
 
@@ -405,7 +405,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @param lastPublishDate the last publish date of this polls vote
 	*/
 	@Override
-	public void setLastPublishDate(java.util.Date lastPublishDate) {
+	public void setLastPublishDate(Date lastPublishDate) {
 		_pollsVote.setLastPublishDate(lastPublishDate);
 	}
 
@@ -415,7 +415,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @param modifiedDate the modified date of this polls vote
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_pollsVote.setModifiedDate(modifiedDate);
 	}
 
@@ -495,7 +495,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	* @param voteDate the vote date of this polls vote
 	*/
 	@Override
-	public void setVoteDate(java.util.Date voteDate) {
+	public void setVoteDate(Date voteDate) {
 		_pollsVote.setVoteDate(voteDate);
 	}
 

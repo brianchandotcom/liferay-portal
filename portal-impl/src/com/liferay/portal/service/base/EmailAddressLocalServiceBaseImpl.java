@@ -403,7 +403,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 *
 	 * @return the email address local service
 	 */
-	public com.liferay.portal.service.EmailAddressLocalService getEmailAddressLocalService() {
+	public EmailAddressLocalService getEmailAddressLocalService() {
 		return emailAddressLocalService;
 	}
 
@@ -413,7 +413,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param emailAddressLocalService the email address local service
 	 */
 	public void setEmailAddressLocalService(
-		com.liferay.portal.service.EmailAddressLocalService emailAddressLocalService) {
+		EmailAddressLocalService emailAddressLocalService) {
 		this.emailAddressLocalService = emailAddressLocalService;
 	}
 
@@ -724,7 +724,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.EmailAddressLocalService.class)
-	protected com.liferay.portal.service.EmailAddressLocalService emailAddressLocalService;
+	protected EmailAddressLocalService emailAddressLocalService;
 	@BeanReference(type = com.liferay.portal.service.EmailAddressService.class)
 	protected com.liferay.portal.service.EmailAddressService emailAddressService;
 	@BeanReference(type = EmailAddressPersistence.class)

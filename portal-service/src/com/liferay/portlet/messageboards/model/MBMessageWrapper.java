@@ -399,7 +399,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the create date of this message-boards message
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _mbMessage.getCreateDate();
 	}
 
@@ -463,7 +463,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the modified date of this message-boards message
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _mbMessage.getModifiedDate();
 	}
 
@@ -558,7 +558,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @return the status date of this message-boards message
 	*/
 	@Override
-	public java.util.Date getStatusDate() {
+	public Date getStatusDate() {
 		return _mbMessage.getStatusDate();
 	}
 
@@ -956,7 +956,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param createDate the create date of this message-boards message
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_mbMessage.setCreateDate(createDate);
 	}
 
@@ -1014,7 +1014,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param modifiedDate the modified date of this message-boards message
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_mbMessage.setModifiedDate(modifiedDate);
 	}
 
@@ -1114,7 +1114,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* @param statusDate the status date of this message-boards message
 	*/
 	@Override
-	public void setStatusDate(java.util.Date statusDate) {
+	public void setStatusDate(Date statusDate) {
 		_mbMessage.setStatusDate(statusDate);
 	}
 

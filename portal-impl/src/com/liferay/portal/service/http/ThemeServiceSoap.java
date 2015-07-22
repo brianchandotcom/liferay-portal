@@ -24,7 +24,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portal.service.ThemeServiceUtil} service utility. The
+ * {@link ThemeServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -48,7 +48,7 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see ThemeServiceHttp
- * @see com.liferay.portal.service.ThemeServiceUtil
+ * @see ThemeServiceUtil
  * @generated
  */
 @ProviderType

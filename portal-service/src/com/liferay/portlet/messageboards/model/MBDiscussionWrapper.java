@@ -196,7 +196,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @return the create date of this message boards discussion
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _mbDiscussion.getCreateDate();
 	}
 
@@ -231,7 +231,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @return the modified date of this message boards discussion
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _mbDiscussion.getModifiedDate();
 	}
 
@@ -371,7 +371,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @param createDate the create date of this message boards discussion
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_mbDiscussion.setCreateDate(createDate);
 	}
 
@@ -419,7 +419,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	* @param modifiedDate the modified date of this message boards discussion
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_mbDiscussion.setModifiedDate(modifiedDate);
 	}
 

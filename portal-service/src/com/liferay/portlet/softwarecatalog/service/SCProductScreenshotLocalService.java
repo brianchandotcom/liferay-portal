@@ -73,14 +73,14 @@ public interface SCProductScreenshotLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteProductScreenshot(
 		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot productScreenshot)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteProductScreenshots(long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the s c product screenshot with the primary key from the database. Also notifies the appropriate model listeners.
@@ -91,8 +91,7 @@ public interface SCProductScreenshotLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot deleteSCProductScreenshot(
-		long productScreenshotId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long productScreenshotId) throws PortalException;
 
 	/**
 	* Deletes the s c product screenshot from the database. Also notifies the appropriate model listeners.
@@ -186,23 +185,19 @@ public interface SCProductScreenshotLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshot(
-		long productEntryId, int priority)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long productEntryId, int priority) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshotByFullImageId(
-		long fullImageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fullImageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getProductScreenshotByThumbnailId(
-		long thumbnailId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long thumbnailId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> getProductScreenshots(
@@ -217,8 +212,7 @@ public interface SCProductScreenshotLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCProductScreenshot getSCProductScreenshot(
-		long productScreenshotId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long productScreenshotId) throws PortalException;
 
 	/**
 	* Returns a range of all the s c product screenshots.

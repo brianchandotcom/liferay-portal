@@ -28,7 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DLSyncEventImpl
- * @see com.liferay.portlet.documentlibrary.model.DLSyncEvent
+ * @see DLSyncEvent
  * @generated
  */
 @ProviderType

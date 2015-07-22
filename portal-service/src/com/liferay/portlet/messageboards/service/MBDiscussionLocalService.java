@@ -56,12 +56,12 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public com.liferay.portlet.messageboards.model.MBDiscussion addDiscussion(
 		long userId, long classNameId, long classPK, long threadId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBDiscussion addDiscussion(
 		long userId, long groupId, long classNameId, long classPK,
 		long threadId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the message boards discussion to the database. Also notifies the appropriate model listeners.
@@ -91,8 +91,7 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.messageboards.model.MBDiscussion deleteMBDiscussion(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long discussionId) throws PortalException;
 
 	/**
 	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
@@ -110,7 +109,7 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -216,13 +215,11 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBDiscussion getDiscussion(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String className, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBDiscussion getDiscussion(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long discussionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -237,8 +234,7 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBDiscussion getMBDiscussion(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long discussionId) throws PortalException;
 
 	/**
 	* Returns the message boards discussion matching the UUID and group.
@@ -250,8 +246,7 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBDiscussion getMBDiscussionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the message boards discussions.
@@ -305,13 +300,11 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.messageboards.model.MBDiscussion getThreadDiscussion(
-		long threadId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long threadId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -321,12 +314,10 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeDiscussion(long userId, long groupId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String className, long classPK) throws PortalException;
 
 	public void unsubscribeDiscussion(long userId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long classPK) throws PortalException;
 
 	/**
 	* Updates the message boards discussion in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

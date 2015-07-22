@@ -115,8 +115,7 @@ public class DDMStructureLinkUtil {
 	* @param classNameId the class name ID
 	* @return the matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByClassNameId(
-		long classNameId) {
+	public static List<DDMStructureLink> findByClassNameId(long classNameId) {
 		return getPersistence().findByClassNameId(classNameId);
 	}
 
@@ -124,7 +123,7 @@ public class DDMStructureLinkUtil {
 	* Returns a range of all the d d m structure links where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -132,8 +131,8 @@ public class DDMStructureLinkUtil {
 	* @param end the upper bound of the range of d d m structure links (not inclusive)
 	* @return the range of matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByClassNameId(
-		long classNameId, int start, int end) {
+	public static List<DDMStructureLink> findByClassNameId(long classNameId,
+		int start, int end) {
 		return getPersistence().findByClassNameId(classNameId, start, end);
 	}
 
@@ -141,7 +140,7 @@ public class DDMStructureLinkUtil {
 	* Returns an ordered range of all the d d m structure links where classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -150,9 +149,9 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByClassNameId(
-		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static List<DDMStructureLink> findByClassNameId(long classNameId,
+		int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .findByClassNameId(classNameId, start, end, orderByComparator);
 	}
@@ -163,11 +162,10 @@ public class DDMStructureLinkUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a matching d d m structure link could not be found
+	* @throws NoSuchStructureLinkException if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByClassNameId_First(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+	public static DDMStructureLink findByClassNameId_First(long classNameId,
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
@@ -180,9 +178,8 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByClassNameId_First(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static DDMStructureLink fetchByClassNameId_First(long classNameId,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -193,11 +190,10 @@ public class DDMStructureLinkUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a matching d d m structure link could not be found
+	* @throws NoSuchStructureLinkException if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByClassNameId_Last(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+	public static DDMStructureLink findByClassNameId_Last(long classNameId,
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
@@ -210,9 +206,8 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByClassNameId_Last(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static DDMStructureLink fetchByClassNameId_Last(long classNameId,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -224,11 +219,11 @@ public class DDMStructureLinkUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
+	* @throws NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink[] findByClassNameId_PrevAndNext(
+	public static DDMStructureLink[] findByClassNameId_PrevAndNext(
 		long structureLinkId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(structureLinkId, classNameId,
@@ -260,8 +255,7 @@ public class DDMStructureLinkUtil {
 	* @param structureId the structure ID
 	* @return the matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByStructureId(
-		long structureId) {
+	public static List<DDMStructureLink> findByStructureId(long structureId) {
 		return getPersistence().findByStructureId(structureId);
 	}
 
@@ -269,7 +263,7 @@ public class DDMStructureLinkUtil {
 	* Returns a range of all the d d m structure links where structureId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param structureId the structure ID
@@ -277,8 +271,8 @@ public class DDMStructureLinkUtil {
 	* @param end the upper bound of the range of d d m structure links (not inclusive)
 	* @return the range of matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByStructureId(
-		long structureId, int start, int end) {
+	public static List<DDMStructureLink> findByStructureId(long structureId,
+		int start, int end) {
 		return getPersistence().findByStructureId(structureId, start, end);
 	}
 
@@ -286,7 +280,7 @@ public class DDMStructureLinkUtil {
 	* Returns an ordered range of all the d d m structure links where structureId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param structureId the structure ID
@@ -295,9 +289,9 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByStructureId(
-		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static List<DDMStructureLink> findByStructureId(long structureId,
+		int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .findByStructureId(structureId, start, end, orderByComparator);
 	}
@@ -308,11 +302,10 @@ public class DDMStructureLinkUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a matching d d m structure link could not be found
+	* @throws NoSuchStructureLinkException if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByStructureId_First(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+	public static DDMStructureLink findByStructureId_First(long structureId,
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByStructureId_First(structureId, orderByComparator);
@@ -325,9 +318,8 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByStructureId_First(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static DDMStructureLink fetchByStructureId_First(long structureId,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByStructureId_First(structureId, orderByComparator);
 	}
@@ -338,11 +330,10 @@ public class DDMStructureLinkUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a matching d d m structure link could not be found
+	* @throws NoSuchStructureLinkException if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByStructureId_Last(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+	public static DDMStructureLink findByStructureId_Last(long structureId,
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByStructureId_Last(structureId, orderByComparator);
@@ -355,9 +346,8 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByStructureId_Last(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static DDMStructureLink fetchByStructureId_Last(long structureId,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByStructureId_Last(structureId, orderByComparator);
 	}
@@ -369,11 +359,11 @@ public class DDMStructureLinkUtil {
 	* @param structureId the structure ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
+	* @throws NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink[] findByStructureId_PrevAndNext(
+	public static DDMStructureLink[] findByStructureId_PrevAndNext(
 		long structureLinkId, long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByStructureId_PrevAndNext(structureLinkId, structureId,
@@ -406,8 +396,8 @@ public class DDMStructureLinkUtil {
 	* @param classPK the class p k
 	* @return the matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByC_C(
-		long classNameId, long classPK) {
+	public static List<DDMStructureLink> findByC_C(long classNameId,
+		long classPK) {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -415,7 +405,7 @@ public class DDMStructureLinkUtil {
 	* Returns a range of all the d d m structure links where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -424,8 +414,8 @@ public class DDMStructureLinkUtil {
 	* @param end the upper bound of the range of d d m structure links (not inclusive)
 	* @return the range of matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByC_C(
-		long classNameId, long classPK, int start, int end) {
+	public static List<DDMStructureLink> findByC_C(long classNameId,
+		long classPK, int start, int end) {
 		return getPersistence().findByC_C(classNameId, classPK, start, end);
 	}
 
@@ -433,7 +423,7 @@ public class DDMStructureLinkUtil {
 	* Returns an ordered range of all the d d m structure links where classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
@@ -443,9 +433,9 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static List<DDMStructureLink> findByC_C(long classNameId,
+		long classPK, int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -458,11 +448,10 @@ public class DDMStructureLinkUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a matching d d m structure link could not be found
+	* @throws NoSuchStructureLinkException if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+	public static DDMStructureLink findByC_C_First(long classNameId,
+		long classPK, OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -476,9 +465,8 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static DDMStructureLink fetchByC_C_First(long classNameId,
+		long classPK, OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -490,11 +478,10 @@ public class DDMStructureLinkUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a matching d d m structure link could not be found
+	* @throws NoSuchStructureLinkException if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByC_C_Last(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+	public static DDMStructureLink findByC_C_Last(long classNameId,
+		long classPK, OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -508,9 +495,8 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByC_C_Last(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static DDMStructureLink fetchByC_C_Last(long classNameId,
+		long classPK, OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -523,11 +509,11 @@ public class DDMStructureLinkUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
+	* @throws NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink[] findByC_C_PrevAndNext(
+	public static DDMStructureLink[] findByC_C_PrevAndNext(
 		long structureLinkId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator)
+		OrderByComparator<DDMStructureLink> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(structureLinkId, classNameId,
@@ -556,16 +542,16 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	* Returns the d d m structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException} if it could not be found.
+	* Returns the d d m structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or throws a {@link NoSuchStructureLinkException} if it could not be found.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param structureId the structure ID
 	* @return the matching d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a matching d d m structure link could not be found
+	* @throws NoSuchStructureLinkException if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByC_C_S(
-		long classNameId, long classPK, long structureId)
+	public static DDMStructureLink findByC_C_S(long classNameId, long classPK,
+		long structureId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence().findByC_C_S(classNameId, classPK, structureId);
 	}
@@ -578,8 +564,8 @@ public class DDMStructureLinkUtil {
 	* @param structureId the structure ID
 	* @return the matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByC_C_S(
-		long classNameId, long classPK, long structureId) {
+	public static DDMStructureLink fetchByC_C_S(long classNameId, long classPK,
+		long structureId) {
 		return getPersistence().fetchByC_C_S(classNameId, classPK, structureId);
 	}
 
@@ -592,9 +578,8 @@ public class DDMStructureLinkUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m structure link, or <code>null</code> if a matching d d m structure link could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByC_C_S(
-		long classNameId, long classPK, long structureId,
-		boolean retrieveFromCache) {
+	public static DDMStructureLink fetchByC_C_S(long classNameId, long classPK,
+		long structureId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_C_S(classNameId, classPK, structureId,
 			retrieveFromCache);
@@ -608,8 +593,8 @@ public class DDMStructureLinkUtil {
 	* @param structureId the structure ID
 	* @return the d d m structure link that was removed
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink removeByC_C_S(
-		long classNameId, long classPK, long structureId)
+	public static DDMStructureLink removeByC_C_S(long classNameId,
+		long classPK, long structureId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence().removeByC_C_S(classNameId, classPK, structureId);
 	}
@@ -632,8 +617,7 @@ public class DDMStructureLinkUtil {
 	*
 	* @param ddmStructureLink the d d m structure link
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+	public static void cacheResult(DDMStructureLink ddmStructureLink) {
 		getPersistence().cacheResult(ddmStructureLink);
 	}
 
@@ -642,8 +626,7 @@ public class DDMStructureLinkUtil {
 	*
 	* @param ddmStructureLinks the d d m structure links
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> ddmStructureLinks) {
+	public static void cacheResult(List<DDMStructureLink> ddmStructureLinks) {
 		getPersistence().cacheResult(ddmStructureLinks);
 	}
 
@@ -653,8 +636,7 @@ public class DDMStructureLinkUtil {
 	* @param structureLinkId the primary key for the new d d m structure link
 	* @return the new d d m structure link
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink create(
-		long structureLinkId) {
+	public static DDMStructureLink create(long structureLinkId) {
 		return getPersistence().create(structureLinkId);
 	}
 
@@ -663,28 +645,25 @@ public class DDMStructureLinkUtil {
 	*
 	* @param structureLinkId the primary key of the d d m structure link
 	* @return the d d m structure link that was removed
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
+	* @throws NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink remove(
-		long structureLinkId)
+	public static DDMStructureLink remove(long structureLinkId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence().remove(structureLinkId);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+	public static DDMStructureLink updateImpl(DDMStructureLink ddmStructureLink) {
 		return getPersistence().updateImpl(ddmStructureLink);
 	}
 
 	/**
-	* Returns the d d m structure link with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException} if it could not be found.
+	* Returns the d d m structure link with the primary key or throws a {@link NoSuchStructureLinkException} if it could not be found.
 	*
 	* @param structureLinkId the primary key of the d d m structure link
 	* @return the d d m structure link
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
+	* @throws NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink findByPrimaryKey(
-		long structureLinkId)
+	public static DDMStructureLink findByPrimaryKey(long structureLinkId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException {
 		return getPersistence().findByPrimaryKey(structureLinkId);
 	}
@@ -695,12 +674,11 @@ public class DDMStructureLinkUtil {
 	* @param structureLinkId the primary key of the d d m structure link
 	* @return the d d m structure link, or <code>null</code> if a d d m structure link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchByPrimaryKey(
-		long structureLinkId) {
+	public static DDMStructureLink fetchByPrimaryKey(long structureLinkId) {
 		return getPersistence().fetchByPrimaryKey(structureLinkId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, DDMStructureLink> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -710,7 +688,7 @@ public class DDMStructureLinkUtil {
 	*
 	* @return the d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findAll() {
+	public static List<DDMStructureLink> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -718,15 +696,14 @@ public class DDMStructureLinkUtil {
 	* Returns a range of all the d d m structure links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m structure links
 	* @param end the upper bound of the range of d d m structure links (not inclusive)
 	* @return the range of d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findAll(
-		int start, int end) {
+	public static List<DDMStructureLink> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -734,7 +711,7 @@ public class DDMStructureLinkUtil {
 	* Returns an ordered range of all the d d m structure links.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m structure links
@@ -742,9 +719,8 @@ public class DDMStructureLinkUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> orderByComparator) {
+	public static List<DDMStructureLink> findAll(int start, int end,
+		OrderByComparator<DDMStructureLink> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

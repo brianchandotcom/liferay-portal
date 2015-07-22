@@ -56,25 +56,25 @@ public interface SCProductEntryLocalService extends BaseLocalService,
 		java.lang.String repoArtifactId, long[] licenseIds,
 		java.util.List<byte[]> thumbnails, java.util.List<byte[]> fullImages,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addProductEntryResources(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addProductEntryResources(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addProductEntryResources(long productEntryId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addProductEntryResources(long productEntryId,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addSCLicenseSCProductEntries(long licenseId,
 		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries);
@@ -114,20 +114,18 @@ public interface SCProductEntryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteProductEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteProductEntries(long groupId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long productEntryId) throws PortalException;
 
 	public void deleteSCLicenseSCProductEntries(long licenseId,
 		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries);
@@ -150,8 +148,7 @@ public interface SCProductEntryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteSCProductEntry(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long productEntryId) throws PortalException;
 
 	/**
 	* Deletes the s c product entry from the database. Also notifies the appropriate model listeners.
@@ -252,8 +249,7 @@ public interface SCProductEntryLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getProductEntries(
@@ -281,8 +277,7 @@ public interface SCProductEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry getProductEntry(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long productEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getRepositoryXML(long groupId,
@@ -352,8 +347,7 @@ public interface SCProductEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry getSCProductEntry(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long productEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSCLicenseSCProductEntries(long licenseId);
@@ -380,7 +374,7 @@ public interface SCProductEntryLocalService extends BaseLocalService,
 		java.lang.String author, java.lang.String repoGroupId,
 		java.lang.String repoArtifactId, long[] licenseIds,
 		java.util.List<byte[]> thumbnails, java.util.List<byte[]> fullImages)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the s c product entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

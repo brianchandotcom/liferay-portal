@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.service.access.control.profile.service.SACPEntryServiceUtil} service utility. The
+ * {@link SACPEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -64,7 +64,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see SACPEntryServiceHttp
  * @see com.liferay.service.access.control.profile.model.SACPEntrySoap
- * @see com.liferay.service.access.control.profile.service.SACPEntryServiceUtil
+ * @see SACPEntryServiceUtil
  * @generated
  */
 @ProviderType

@@ -300,7 +300,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	 *
 	 * @return the cluster group local service
 	 */
-	public com.liferay.portal.service.ClusterGroupLocalService getClusterGroupLocalService() {
+	public ClusterGroupLocalService getClusterGroupLocalService() {
 		return clusterGroupLocalService;
 	}
 
@@ -310,7 +310,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	 * @param clusterGroupLocalService the cluster group local service
 	 */
 	public void setClusterGroupLocalService(
-		com.liferay.portal.service.ClusterGroupLocalService clusterGroupLocalService) {
+		ClusterGroupLocalService clusterGroupLocalService) {
 		this.clusterGroupLocalService = clusterGroupLocalService;
 	}
 
@@ -415,7 +415,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.ClusterGroupLocalService.class)
-	protected com.liferay.portal.service.ClusterGroupLocalService clusterGroupLocalService;
+	protected ClusterGroupLocalService clusterGroupLocalService;
 	@BeanReference(type = ClusterGroupPersistence.class)
 	protected ClusterGroupPersistence clusterGroupPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

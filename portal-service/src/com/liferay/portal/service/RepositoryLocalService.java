@@ -63,7 +63,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		boolean hidden, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addRepository(long, long,
@@ -77,7 +77,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void checkRepository(long repositoryId);
 
@@ -96,7 +96,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteRepositories(long groupId);
 
@@ -120,8 +120,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Repository deleteRepository(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long repositoryId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -232,8 +231,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns a range of all the repositories.
@@ -287,12 +285,11 @@ public interface RepositoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Repository getRepository(long groupId,
 		java.lang.String name, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Repository getRepository(long groupId,
-		java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String portletId) throws PortalException;
 
 	/**
 	* Returns the repository with the primary key.
@@ -303,7 +300,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Repository getRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the repository matching the UUID and group.
@@ -315,13 +312,11 @@ public interface RepositoryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Repository getRepositoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long repositoryId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -341,10 +336,9 @@ public interface RepositoryLocalService extends BaseLocalService,
 		com.liferay.portal.model.Repository repository);
 
 	public void updateRepository(long repositoryId, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String description) throws PortalException;
 
 	public void updateRepository(long repositoryId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

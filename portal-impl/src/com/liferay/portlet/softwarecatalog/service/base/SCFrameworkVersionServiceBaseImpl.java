@@ -79,7 +79,7 @@ public abstract class SCFrameworkVersionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the s c framework version remote service
 	 */
-	public com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService getSCFrameworkVersionService() {
+	public SCFrameworkVersionService getSCFrameworkVersionService() {
 		return scFrameworkVersionService;
 	}
 
@@ -89,7 +89,7 @@ public abstract class SCFrameworkVersionServiceBaseImpl extends BaseServiceImpl
 	 * @param scFrameworkVersionService the s c framework version remote service
 	 */
 	public void setSCFrameworkVersionService(
-		com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService scFrameworkVersionService) {
+		SCFrameworkVersionService scFrameworkVersionService) {
 		this.scFrameworkVersionService = scFrameworkVersionService;
 	}
 
@@ -416,7 +416,7 @@ public abstract class SCFrameworkVersionServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService scFrameworkVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService.class)
-	protected com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService scFrameworkVersionService;
+	protected SCFrameworkVersionService scFrameworkVersionService;
 	@BeanReference(type = SCFrameworkVersionPersistence.class)
 	protected SCFrameworkVersionPersistence scFrameworkVersionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

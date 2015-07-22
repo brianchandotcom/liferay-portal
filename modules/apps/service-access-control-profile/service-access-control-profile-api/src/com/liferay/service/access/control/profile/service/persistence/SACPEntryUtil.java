@@ -118,8 +118,7 @@ public class SACPEntryUtil {
 	* @param uuid the uuid
 	* @return the matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByUuid(
-		java.lang.String uuid) {
+	public static List<SACPEntry> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -127,7 +126,7 @@ public class SACPEntryUtil {
 	* Returns a range of all the s a c p entries where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -135,8 +134,8 @@ public class SACPEntryUtil {
 	* @param end the upper bound of the range of s a c p entries (not inclusive)
 	* @return the range of matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<SACPEntry> findByUuid(java.lang.String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -144,7 +143,7 @@ public class SACPEntryUtil {
 	* Returns an ordered range of all the s a c p entries where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -153,9 +152,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static List<SACPEntry> findByUuid(java.lang.String uuid, int start,
+		int end, OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -167,9 +165,8 @@ public class SACPEntryUtil {
 	* @return the first matching s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry findByUuid_First(java.lang.String uuid,
+		OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -181,9 +178,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s a c p entry, or <code>null</code> if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static SACPEntry fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -195,9 +191,8 @@ public class SACPEntryUtil {
 	* @return the last matching s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -209,9 +204,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s a c p entry, or <code>null</code> if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static SACPEntry fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -224,9 +218,8 @@ public class SACPEntryUtil {
 	* @return the previous, current, and next s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry[] findByUuid_PrevAndNext(
-		long sacpEntryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry[] findByUuid_PrevAndNext(long sacpEntryId,
+		java.lang.String uuid, OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(sacpEntryId, uuid, orderByComparator);
@@ -238,8 +231,7 @@ public class SACPEntryUtil {
 	* @param uuid the uuid
 	* @return the matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByUuid(
-		java.lang.String uuid) {
+	public static List<SACPEntry> filterFindByUuid(java.lang.String uuid) {
 		return getPersistence().filterFindByUuid(uuid);
 	}
 
@@ -247,7 +239,7 @@ public class SACPEntryUtil {
 	* Returns a range of all the s a c p entries that the user has permission to view where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -255,8 +247,8 @@ public class SACPEntryUtil {
 	* @param end the upper bound of the range of s a c p entries (not inclusive)
 	* @return the range of matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<SACPEntry> filterFindByUuid(java.lang.String uuid,
+		int start, int end) {
 		return getPersistence().filterFindByUuid(uuid, start, end);
 	}
 
@@ -264,7 +256,7 @@ public class SACPEntryUtil {
 	* Returns an ordered range of all the s a c p entries that the user has permissions to view where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -273,9 +265,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static List<SACPEntry> filterFindByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid(uuid, start, end, orderByComparator);
 	}
@@ -289,9 +280,8 @@ public class SACPEntryUtil {
 	* @return the previous, current, and next s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry[] filterFindByUuid_PrevAndNext(
-		long sacpEntryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry[] filterFindByUuid_PrevAndNext(long sacpEntryId,
+		java.lang.String uuid, OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByUuid_PrevAndNext(sacpEntryId, uuid,
@@ -334,8 +324,8 @@ public class SACPEntryUtil {
 	* @param companyId the company ID
 	* @return the matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<SACPEntry> findByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -343,7 +333,7 @@ public class SACPEntryUtil {
 	* Returns a range of all the s a c p entries where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -352,8 +342,8 @@ public class SACPEntryUtil {
 	* @param end the upper bound of the range of s a c p entries (not inclusive)
 	* @return the range of matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<SACPEntry> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -361,7 +351,7 @@ public class SACPEntryUtil {
 	* Returns an ordered range of all the s a c p entries where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -371,9 +361,9 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static List<SACPEntry> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -387,9 +377,8 @@ public class SACPEntryUtil {
 	* @return the first matching s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -403,9 +392,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s a c p entry, or <code>null</code> if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static SACPEntry fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -419,9 +407,8 @@ public class SACPEntryUtil {
 	* @return the last matching s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -435,9 +422,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s a c p entry, or <code>null</code> if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static SACPEntry fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -452,9 +438,9 @@ public class SACPEntryUtil {
 	* @return the previous, current, and next s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry[] findByUuid_C_PrevAndNext(
-		long sacpEntryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry[] findByUuid_C_PrevAndNext(long sacpEntryId,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(sacpEntryId, uuid, companyId,
@@ -468,8 +454,8 @@ public class SACPEntryUtil {
 	* @param companyId the company ID
 	* @return the matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<SACPEntry> filterFindByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().filterFindByUuid_C(uuid, companyId);
 	}
 
@@ -477,7 +463,7 @@ public class SACPEntryUtil {
 	* Returns a range of all the s a c p entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -486,8 +472,8 @@ public class SACPEntryUtil {
 	* @param end the upper bound of the range of s a c p entries (not inclusive)
 	* @return the range of matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<SACPEntry> filterFindByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -495,7 +481,7 @@ public class SACPEntryUtil {
 	* Returns an ordered range of all the s a c p entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -505,9 +491,9 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static List<SACPEntry> filterFindByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid_C(uuid, companyId, start, end,
 			orderByComparator);
@@ -523,9 +509,9 @@ public class SACPEntryUtil {
 	* @return the previous, current, and next s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry[] filterFindByUuid_C_PrevAndNext(
-		long sacpEntryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry[] filterFindByUuid_C_PrevAndNext(long sacpEntryId,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByUuid_C_PrevAndNext(sacpEntryId, uuid,
@@ -570,8 +556,7 @@ public class SACPEntryUtil {
 	* @param companyId the company ID
 	* @return the matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByCompanyId(
-		long companyId) {
+	public static List<SACPEntry> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -579,7 +564,7 @@ public class SACPEntryUtil {
 	* Returns a range of all the s a c p entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -587,8 +572,8 @@ public class SACPEntryUtil {
 	* @param end the upper bound of the range of s a c p entries (not inclusive)
 	* @return the range of matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByCompanyId(
-		long companyId, int start, int end) {
+	public static List<SACPEntry> findByCompanyId(long companyId, int start,
+		int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -596,7 +581,7 @@ public class SACPEntryUtil {
 	* Returns an ordered range of all the s a c p entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -605,9 +590,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static List<SACPEntry> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -620,9 +604,8 @@ public class SACPEntryUtil {
 	* @return the first matching s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry findByCompanyId_First(long companyId,
+		OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -635,9 +618,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s a c p entry, or <code>null</code> if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static SACPEntry fetchByCompanyId_First(long companyId,
+		OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -650,9 +632,8 @@ public class SACPEntryUtil {
 	* @return the last matching s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry findByCompanyId_Last(long companyId,
+		OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -665,9 +646,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s a c p entry, or <code>null</code> if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static SACPEntry fetchByCompanyId_Last(long companyId,
+		OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -681,9 +661,8 @@ public class SACPEntryUtil {
 	* @return the previous, current, and next s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry[] findByCompanyId_PrevAndNext(
-		long sacpEntryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+	public static SACPEntry[] findByCompanyId_PrevAndNext(long sacpEntryId,
+		long companyId, OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(sacpEntryId, companyId,
@@ -696,8 +675,7 @@ public class SACPEntryUtil {
 	* @param companyId the company ID
 	* @return the matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByCompanyId(
-		long companyId) {
+	public static List<SACPEntry> filterFindByCompanyId(long companyId) {
 		return getPersistence().filterFindByCompanyId(companyId);
 	}
 
@@ -705,7 +683,7 @@ public class SACPEntryUtil {
 	* Returns a range of all the s a c p entries that the user has permission to view where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -713,8 +691,8 @@ public class SACPEntryUtil {
 	* @param end the upper bound of the range of s a c p entries (not inclusive)
 	* @return the range of matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByCompanyId(
-		long companyId, int start, int end) {
+	public static List<SACPEntry> filterFindByCompanyId(long companyId,
+		int start, int end) {
 		return getPersistence().filterFindByCompanyId(companyId, start, end);
 	}
 
@@ -722,7 +700,7 @@ public class SACPEntryUtil {
 	* Returns an ordered range of all the s a c p entries that the user has permissions to view where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -731,9 +709,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s a c p entries that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> filterFindByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static List<SACPEntry> filterFindByCompanyId(long companyId,
+		int start, int end, OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence()
 				   .filterFindByCompanyId(companyId, start, end,
 			orderByComparator);
@@ -748,9 +725,9 @@ public class SACPEntryUtil {
 	* @return the previous, current, and next s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry[] filterFindByCompanyId_PrevAndNext(
+	public static SACPEntry[] filterFindByCompanyId_PrevAndNext(
 		long sacpEntryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator)
+		OrderByComparator<SACPEntry> orderByComparator)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence()
 				   .filterFindByCompanyId_PrevAndNext(sacpEntryId, companyId,
@@ -794,8 +771,7 @@ public class SACPEntryUtil {
 	* @return the matching s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry findByC_N(
-		long companyId, java.lang.String name)
+	public static SACPEntry findByC_N(long companyId, java.lang.String name)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence().findByC_N(companyId, name);
 	}
@@ -807,8 +783,7 @@ public class SACPEntryUtil {
 	* @param name the name
 	* @return the matching s a c p entry, or <code>null</code> if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByC_N(
-		long companyId, java.lang.String name) {
+	public static SACPEntry fetchByC_N(long companyId, java.lang.String name) {
 		return getPersistence().fetchByC_N(companyId, name);
 	}
 
@@ -820,8 +795,8 @@ public class SACPEntryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching s a c p entry, or <code>null</code> if a matching s a c p entry could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByC_N(
-		long companyId, java.lang.String name, boolean retrieveFromCache) {
+	public static SACPEntry fetchByC_N(long companyId, java.lang.String name,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_N(companyId, name, retrieveFromCache);
 	}
 
@@ -832,8 +807,7 @@ public class SACPEntryUtil {
 	* @param name the name
 	* @return the s a c p entry that was removed
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry removeByC_N(
-		long companyId, java.lang.String name)
+	public static SACPEntry removeByC_N(long companyId, java.lang.String name)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence().removeByC_N(companyId, name);
 	}
@@ -854,8 +828,7 @@ public class SACPEntryUtil {
 	*
 	* @param sacpEntry the s a c p entry
 	*/
-	public static void cacheResult(
-		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry) {
+	public static void cacheResult(SACPEntry sacpEntry) {
 		getPersistence().cacheResult(sacpEntry);
 	}
 
@@ -864,8 +837,7 @@ public class SACPEntryUtil {
 	*
 	* @param sacpEntries the s a c p entries
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> sacpEntries) {
+	public static void cacheResult(List<SACPEntry> sacpEntries) {
 		getPersistence().cacheResult(sacpEntries);
 	}
 
@@ -875,8 +847,7 @@ public class SACPEntryUtil {
 	* @param sacpEntryId the primary key for the new s a c p entry
 	* @return the new s a c p entry
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry create(
-		long sacpEntryId) {
+	public static SACPEntry create(long sacpEntryId) {
 		return getPersistence().create(sacpEntryId);
 	}
 
@@ -887,14 +858,12 @@ public class SACPEntryUtil {
 	* @return the s a c p entry that was removed
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry remove(
-		long sacpEntryId)
+	public static SACPEntry remove(long sacpEntryId)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence().remove(sacpEntryId);
 	}
 
-	public static com.liferay.service.access.control.profile.model.SACPEntry updateImpl(
-		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry) {
+	public static SACPEntry updateImpl(SACPEntry sacpEntry) {
 		return getPersistence().updateImpl(sacpEntry);
 	}
 
@@ -905,8 +874,7 @@ public class SACPEntryUtil {
 	* @return the s a c p entry
 	* @throws com.liferay.service.access.control.profile.NoSuchEntryException if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry findByPrimaryKey(
-		long sacpEntryId)
+	public static SACPEntry findByPrimaryKey(long sacpEntryId)
 		throws com.liferay.service.access.control.profile.exception.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(sacpEntryId);
 	}
@@ -917,12 +885,11 @@ public class SACPEntryUtil {
 	* @param sacpEntryId the primary key of the s a c p entry
 	* @return the s a c p entry, or <code>null</code> if a s a c p entry with the primary key could not be found
 	*/
-	public static com.liferay.service.access.control.profile.model.SACPEntry fetchByPrimaryKey(
-		long sacpEntryId) {
+	public static SACPEntry fetchByPrimaryKey(long sacpEntryId) {
 		return getPersistence().fetchByPrimaryKey(sacpEntryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.service.access.control.profile.model.SACPEntry> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, SACPEntry> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -932,7 +899,7 @@ public class SACPEntryUtil {
 	*
 	* @return the s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findAll() {
+	public static List<SACPEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -940,15 +907,14 @@ public class SACPEntryUtil {
 	* Returns a range of all the s a c p entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s a c p entries
 	* @param end the upper bound of the range of s a c p entries (not inclusive)
 	* @return the range of s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findAll(
-		int start, int end) {
+	public static List<SACPEntry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -956,7 +922,7 @@ public class SACPEntryUtil {
 	* Returns an ordered range of all the s a c p entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.service.access.control.profile.model.impl.SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SACPEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s a c p entries
@@ -964,9 +930,8 @@ public class SACPEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of s a c p entries
 	*/
-	public static java.util.List<com.liferay.service.access.control.profile.model.SACPEntry> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.service.access.control.profile.model.SACPEntry> orderByComparator) {
+	public static List<SACPEntry> findAll(int start, int end,
+		OrderByComparator<SACPEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

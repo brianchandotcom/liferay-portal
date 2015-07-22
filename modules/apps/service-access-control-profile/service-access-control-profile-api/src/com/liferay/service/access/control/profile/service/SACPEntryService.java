@@ -54,15 +54,14 @@ public interface SACPEntryService extends BaseService {
 		java.lang.String allowedServiceSignatures, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.service.access.control.profile.model.SACPEntry deleteSACPEntry(
 		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.service.access.control.profile.model.SACPEntry deleteSACPEntry(
-		long sacpEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long sacpEntryId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -85,13 +84,11 @@ public interface SACPEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.service.access.control.profile.model.SACPEntry getSACPEntry(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long companyId, java.lang.String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.service.access.control.profile.model.SACPEntry getSACPEntry(
-		long sacpEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long sacpEntryId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -105,5 +102,5 @@ public interface SACPEntryService extends BaseService {
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

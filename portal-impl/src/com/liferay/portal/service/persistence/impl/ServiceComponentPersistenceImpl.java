@@ -124,7 +124,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * Returns a range of all the service components where buildNamespace = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param buildNamespace the build namespace
@@ -142,7 +142,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * Returns an ordered range of all the service components where buildNamespace = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param buildNamespace the build namespace
@@ -275,7 +275,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * @param buildNamespace the build namespace
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching service component
-	 * @throws com.liferay.portal.NoSuchServiceComponentException if a matching service component could not be found
+	 * @throws NoSuchServiceComponentException if a matching service component could not be found
 	 */
 	@Override
 	public ServiceComponent findByBuildNamespace_First(String buildNamespace,
@@ -326,7 +326,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * @param buildNamespace the build namespace
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching service component
-	 * @throws com.liferay.portal.NoSuchServiceComponentException if a matching service component could not be found
+	 * @throws NoSuchServiceComponentException if a matching service component could not be found
 	 */
 	@Override
 	public ServiceComponent findByBuildNamespace_Last(String buildNamespace,
@@ -384,7 +384,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * @param buildNamespace the build namespace
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next service component
-	 * @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	 * @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	 */
 	@Override
 	public ServiceComponent[] findByBuildNamespace_PrevAndNext(
@@ -633,12 +633,12 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a {@link com.liferay.portal.NoSuchServiceComponentException} if it could not be found.
+	 * Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a {@link NoSuchServiceComponentException} if it could not be found.
 	 *
 	 * @param buildNamespace the build namespace
 	 * @param buildNumber the build number
 	 * @return the matching service component
-	 * @throws com.liferay.portal.NoSuchServiceComponentException if a matching service component could not be found
+	 * @throws NoSuchServiceComponentException if a matching service component could not be found
 	 */
 	@Override
 	public ServiceComponent findByBNS_BNU(String buildNamespace,
@@ -1049,7 +1049,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 *
 	 * @param serviceComponentId the primary key of the service component
 	 * @return the service component that was removed
-	 * @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	 * @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	 */
 	@Override
 	public ServiceComponent remove(long serviceComponentId)
@@ -1062,7 +1062,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 *
 	 * @param primaryKey the primary key of the service component
 	 * @return the service component that was removed
-	 * @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	 * @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	 */
 	@Override
 	public ServiceComponent remove(Serializable primaryKey)
@@ -1130,8 +1130,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	}
 
 	@Override
-	public ServiceComponent updateImpl(
-		com.liferay.portal.model.ServiceComponent serviceComponent) {
+	public ServiceComponent updateImpl(ServiceComponent serviceComponent) {
 		serviceComponent = toUnwrappedModel(serviceComponent);
 
 		boolean isNew = serviceComponent.isNew();
@@ -1226,7 +1225,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 *
 	 * @param primaryKey the primary key of the service component
 	 * @return the service component
-	 * @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	 * @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	 */
 	@Override
 	public ServiceComponent findByPrimaryKey(Serializable primaryKey)
@@ -1246,11 +1245,11 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	}
 
 	/**
-	 * Returns the service component with the primary key or throws a {@link com.liferay.portal.NoSuchServiceComponentException} if it could not be found.
+	 * Returns the service component with the primary key or throws a {@link NoSuchServiceComponentException} if it could not be found.
 	 *
 	 * @param serviceComponentId the primary key of the service component
 	 * @return the service component
-	 * @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	 * @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	 */
 	@Override
 	public ServiceComponent findByPrimaryKey(long serviceComponentId)
@@ -1423,7 +1422,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * Returns a range of all the service components.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of service components
@@ -1439,7 +1438,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 * Returns an ordered range of all the service components.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of service components

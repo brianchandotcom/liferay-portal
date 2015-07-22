@@ -422,7 +422,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	 *
 	 * @return the polls choice local service
 	 */
-	public com.liferay.polls.service.PollsChoiceLocalService getPollsChoiceLocalService() {
+	public PollsChoiceLocalService getPollsChoiceLocalService() {
 		return pollsChoiceLocalService;
 	}
 
@@ -432,7 +432,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	 * @param pollsChoiceLocalService the polls choice local service
 	 */
 	public void setPollsChoiceLocalService(
-		com.liferay.polls.service.PollsChoiceLocalService pollsChoiceLocalService) {
+		PollsChoiceLocalService pollsChoiceLocalService) {
 		this.pollsChoiceLocalService = pollsChoiceLocalService;
 	}
 
@@ -669,7 +669,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.polls.service.PollsChoiceLocalService.class)
-	protected com.liferay.polls.service.PollsChoiceLocalService pollsChoiceLocalService;
+	protected PollsChoiceLocalService pollsChoiceLocalService;
 	@BeanReference(type = com.liferay.polls.service.PollsChoiceService.class)
 	protected com.liferay.polls.service.PollsChoiceService pollsChoiceService;
 	@BeanReference(type = PollsChoicePersistence.class)

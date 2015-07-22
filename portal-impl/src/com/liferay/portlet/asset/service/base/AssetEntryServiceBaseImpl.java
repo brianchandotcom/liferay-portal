@@ -91,7 +91,7 @@ public abstract class AssetEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the asset entry remote service
 	 */
-	public com.liferay.portlet.asset.service.AssetEntryService getAssetEntryService() {
+	public AssetEntryService getAssetEntryService() {
 		return assetEntryService;
 	}
 
@@ -100,8 +100,7 @@ public abstract class AssetEntryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param assetEntryService the asset entry remote service
 	 */
-	public void setAssetEntryService(
-		com.liferay.portlet.asset.service.AssetEntryService assetEntryService) {
+	public void setAssetEntryService(AssetEntryService assetEntryService) {
 		this.assetEntryService = assetEntryService;
 	}
 
@@ -841,7 +840,7 @@ public abstract class AssetEntryServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetEntryLocalService assetEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetEntryService.class)
-	protected com.liferay.portlet.asset.service.AssetEntryService assetEntryService;
+	protected AssetEntryService assetEntryService;
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)

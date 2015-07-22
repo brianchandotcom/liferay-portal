@@ -28,7 +28,7 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see JournalArticleImpl
- * @see com.liferay.journal.model.JournalArticle
+ * @see JournalArticle
  * @generated
  */
 @ProviderType

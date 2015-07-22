@@ -51,13 +51,11 @@ public interface RepositoryService extends BaseService {
 		java.lang.String description, java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void checkRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void checkRepository(long repositoryId) throws PortalException;
 
-	public void deleteRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteRepository(long repositoryId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -68,7 +66,7 @@ public interface RepositoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Repository getRepository(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getSupportedConfigurations(long classNameId);
@@ -88,8 +86,7 @@ public interface RepositoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long repositoryId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -99,6 +96,5 @@ public interface RepositoryService extends BaseService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateRepository(long repositoryId, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String description) throws PortalException;
 }

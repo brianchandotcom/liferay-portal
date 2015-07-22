@@ -214,7 +214,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @return the create date of this phone
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _phone.getCreateDate();
 	}
 
@@ -239,7 +239,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @return the modified date of this phone
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _phone.getModifiedDate();
 	}
 
@@ -435,7 +435,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @param createDate the create date of this phone
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_phone.setCreateDate(createDate);
 	}
 
@@ -472,7 +472,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* @param modifiedDate the modified date of this phone
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_phone.setModifiedDate(modifiedDate);
 	}
 

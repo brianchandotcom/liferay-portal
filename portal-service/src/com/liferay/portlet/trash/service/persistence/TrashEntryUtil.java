@@ -115,8 +115,7 @@ public class TrashEntryUtil {
 	* @param groupId the group ID
 	* @return the matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByGroupId(
-		long groupId) {
+	public static List<TrashEntry> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -124,7 +123,7 @@ public class TrashEntryUtil {
 	* Returns a range of all the trash entries where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -132,8 +131,8 @@ public class TrashEntryUtil {
 	* @param end the upper bound of the range of trash entries (not inclusive)
 	* @return the range of matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByGroupId(
-		long groupId, int start, int end) {
+	public static List<TrashEntry> findByGroupId(long groupId, int start,
+		int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -141,7 +140,7 @@ public class TrashEntryUtil {
 	* Returns an ordered range of all the trash entries where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -150,9 +149,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static List<TrashEntry> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -163,11 +161,10 @@ public class TrashEntryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry findByGroupId_First(long groupId,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -179,9 +176,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static TrashEntry fetchByGroupId_First(long groupId,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -191,11 +187,10 @@ public class TrashEntryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry findByGroupId_Last(long groupId,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -207,9 +202,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static TrashEntry fetchByGroupId_Last(long groupId,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -220,11 +214,10 @@ public class TrashEntryUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a trash entry with the primary key could not be found
+	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry[] findByGroupId_PrevAndNext(
-		long entryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry[] findByGroupId_PrevAndNext(long entryId,
+		long groupId, OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(entryId, groupId,
@@ -256,8 +249,7 @@ public class TrashEntryUtil {
 	* @param companyId the company ID
 	* @return the matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByCompanyId(
-		long companyId) {
+	public static List<TrashEntry> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -265,7 +257,7 @@ public class TrashEntryUtil {
 	* Returns a range of all the trash entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -273,8 +265,8 @@ public class TrashEntryUtil {
 	* @param end the upper bound of the range of trash entries (not inclusive)
 	* @return the range of matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByCompanyId(
-		long companyId, int start, int end) {
+	public static List<TrashEntry> findByCompanyId(long companyId, int start,
+		int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -282,7 +274,7 @@ public class TrashEntryUtil {
 	* Returns an ordered range of all the trash entries where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -291,9 +283,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static List<TrashEntry> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -304,11 +295,10 @@ public class TrashEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry findByCompanyId_First(long companyId,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -321,9 +311,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static TrashEntry fetchByCompanyId_First(long companyId,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -334,11 +323,10 @@ public class TrashEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry findByCompanyId_Last(long companyId,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -351,9 +339,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static TrashEntry fetchByCompanyId_Last(long companyId,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -365,11 +352,10 @@ public class TrashEntryUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a trash entry with the primary key could not be found
+	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry[] findByCompanyId_PrevAndNext(
-		long entryId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry[] findByCompanyId_PrevAndNext(long entryId,
+		long companyId, OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(entryId, companyId,
@@ -402,8 +388,8 @@ public class TrashEntryUtil {
 	* @param createDate the create date
 	* @return the matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByG_LtCD(
-		long groupId, java.util.Date createDate) {
+	public static List<TrashEntry> findByG_LtCD(long groupId,
+		java.util.Date createDate) {
 		return getPersistence().findByG_LtCD(groupId, createDate);
 	}
 
@@ -411,7 +397,7 @@ public class TrashEntryUtil {
 	* Returns a range of all the trash entries where groupId = &#63; and createDate &lt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -420,8 +406,8 @@ public class TrashEntryUtil {
 	* @param end the upper bound of the range of trash entries (not inclusive)
 	* @return the range of matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByG_LtCD(
-		long groupId, java.util.Date createDate, int start, int end) {
+	public static List<TrashEntry> findByG_LtCD(long groupId,
+		java.util.Date createDate, int start, int end) {
 		return getPersistence().findByG_LtCD(groupId, createDate, start, end);
 	}
 
@@ -429,7 +415,7 @@ public class TrashEntryUtil {
 	* Returns an ordered range of all the trash entries where groupId = &#63; and createDate &lt; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -439,9 +425,9 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByG_LtCD(
-		long groupId, java.util.Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static List<TrashEntry> findByG_LtCD(long groupId,
+		java.util.Date createDate, int start, int end,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_LtCD(groupId, createDate, start, end,
 			orderByComparator);
@@ -454,11 +440,11 @@ public class TrashEntryUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByG_LtCD_First(
-		long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry findByG_LtCD_First(long groupId,
+		java.util.Date createDate,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_First(groupId, createDate, orderByComparator);
@@ -472,9 +458,9 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByG_LtCD_First(
-		long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static TrashEntry fetchByG_LtCD_First(long groupId,
+		java.util.Date createDate,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtCD_First(groupId, createDate, orderByComparator);
 	}
@@ -486,11 +472,11 @@ public class TrashEntryUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByG_LtCD_Last(
-		long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry findByG_LtCD_Last(long groupId,
+		java.util.Date createDate,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_Last(groupId, createDate, orderByComparator);
@@ -504,9 +490,9 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByG_LtCD_Last(
-		long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static TrashEntry fetchByG_LtCD_Last(long groupId,
+		java.util.Date createDate,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_LtCD_Last(groupId, createDate, orderByComparator);
 	}
@@ -519,11 +505,11 @@ public class TrashEntryUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a trash entry with the primary key could not be found
+	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry[] findByG_LtCD_PrevAndNext(
-		long entryId, long groupId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry[] findByG_LtCD_PrevAndNext(long entryId,
+		long groupId, java.util.Date createDate,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_LtCD_PrevAndNext(entryId, groupId, createDate,
@@ -558,8 +544,7 @@ public class TrashEntryUtil {
 	* @param classNameId the class name ID
 	* @return the matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByG_C(
-		long groupId, long classNameId) {
+	public static List<TrashEntry> findByG_C(long groupId, long classNameId) {
 		return getPersistence().findByG_C(groupId, classNameId);
 	}
 
@@ -567,7 +552,7 @@ public class TrashEntryUtil {
 	* Returns a range of all the trash entries where groupId = &#63; and classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -576,8 +561,8 @@ public class TrashEntryUtil {
 	* @param end the upper bound of the range of trash entries (not inclusive)
 	* @return the range of matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByG_C(
-		long groupId, long classNameId, int start, int end) {
+	public static List<TrashEntry> findByG_C(long groupId, long classNameId,
+		int start, int end) {
 		return getPersistence().findByG_C(groupId, classNameId, start, end);
 	}
 
@@ -585,7 +570,7 @@ public class TrashEntryUtil {
 	* Returns an ordered range of all the trash entries where groupId = &#63; and classNameId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -595,9 +580,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findByG_C(
-		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static List<TrashEntry> findByG_C(long groupId, long classNameId,
+		int start, int end, OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .findByG_C(groupId, classNameId, start, end,
 			orderByComparator);
@@ -610,11 +594,10 @@ public class TrashEntryUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByG_C_First(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry findByG_C_First(long groupId, long classNameId,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
@@ -628,9 +611,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByG_C_First(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static TrashEntry fetchByG_C_First(long groupId, long classNameId,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -642,11 +624,10 @@ public class TrashEntryUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByG_C_Last(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry findByG_C_Last(long groupId, long classNameId,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
@@ -660,9 +641,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByG_C_Last(
-		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static TrashEntry fetchByG_C_Last(long groupId, long classNameId,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -675,11 +655,11 @@ public class TrashEntryUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a trash entry with the primary key could not be found
+	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry[] findByG_C_PrevAndNext(
-		long entryId, long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator)
+	public static TrashEntry[] findByG_C_PrevAndNext(long entryId,
+		long groupId, long classNameId,
+		OrderByComparator<TrashEntry> orderByComparator)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(entryId, groupId, classNameId,
@@ -708,15 +688,14 @@ public class TrashEntryUtil {
 	}
 
 	/**
-	* Returns the trash entry where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portlet.trash.NoSuchEntryException} if it could not be found.
+	* Returns the trash entry where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a matching trash entry could not be found
+	* @throws NoSuchEntryException if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByC_C(
-		long classNameId, long classPK)
+	public static TrashEntry findByC_C(long classNameId, long classPK)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
@@ -728,8 +707,7 @@ public class TrashEntryUtil {
 	* @param classPK the class p k
 	* @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByC_C(
-		long classNameId, long classPK) {
+	public static TrashEntry fetchByC_C(long classNameId, long classPK) {
 		return getPersistence().fetchByC_C(classNameId, classPK);
 	}
 
@@ -741,8 +719,8 @@ public class TrashEntryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache) {
+	public static TrashEntry fetchByC_C(long classNameId, long classPK,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_C(classNameId, classPK, retrieveFromCache);
 	}
@@ -754,8 +732,7 @@ public class TrashEntryUtil {
 	* @param classPK the class p k
 	* @return the trash entry that was removed
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry removeByC_C(
-		long classNameId, long classPK)
+	public static TrashEntry removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
@@ -776,8 +753,7 @@ public class TrashEntryUtil {
 	*
 	* @param trashEntry the trash entry
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.trash.model.TrashEntry trashEntry) {
+	public static void cacheResult(TrashEntry trashEntry) {
 		getPersistence().cacheResult(trashEntry);
 	}
 
@@ -786,8 +762,7 @@ public class TrashEntryUtil {
 	*
 	* @param trashEntries the trash entries
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.trash.model.TrashEntry> trashEntries) {
+	public static void cacheResult(List<TrashEntry> trashEntries) {
 		getPersistence().cacheResult(trashEntries);
 	}
 
@@ -797,8 +772,7 @@ public class TrashEntryUtil {
 	* @param entryId the primary key for the new trash entry
 	* @return the new trash entry
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry create(
-		long entryId) {
+	public static TrashEntry create(long entryId) {
 		return getPersistence().create(entryId);
 	}
 
@@ -807,27 +781,26 @@ public class TrashEntryUtil {
 	*
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry that was removed
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a trash entry with the primary key could not be found
+	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry remove(
-		long entryId) throws com.liferay.portlet.trash.NoSuchEntryException {
+	public static TrashEntry remove(long entryId)
+		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence().remove(entryId);
 	}
 
-	public static com.liferay.portlet.trash.model.TrashEntry updateImpl(
-		com.liferay.portlet.trash.model.TrashEntry trashEntry) {
+	public static TrashEntry updateImpl(TrashEntry trashEntry) {
 		return getPersistence().updateImpl(trashEntry);
 	}
 
 	/**
-	* Returns the trash entry with the primary key or throws a {@link com.liferay.portlet.trash.NoSuchEntryException} if it could not be found.
+	* Returns the trash entry with the primary key or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry
-	* @throws com.liferay.portlet.trash.NoSuchEntryException if a trash entry with the primary key could not be found
+	* @throws NoSuchEntryException if a trash entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry findByPrimaryKey(
-		long entryId) throws com.liferay.portlet.trash.NoSuchEntryException {
+	public static TrashEntry findByPrimaryKey(long entryId)
+		throws com.liferay.portlet.trash.NoSuchEntryException {
 		return getPersistence().findByPrimaryKey(entryId);
 	}
 
@@ -837,12 +810,11 @@ public class TrashEntryUtil {
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry, or <code>null</code> if a trash entry with the primary key could not be found
 	*/
-	public static com.liferay.portlet.trash.model.TrashEntry fetchByPrimaryKey(
-		long entryId) {
+	public static TrashEntry fetchByPrimaryKey(long entryId) {
 		return getPersistence().fetchByPrimaryKey(entryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.trash.model.TrashEntry> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, TrashEntry> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -852,7 +824,7 @@ public class TrashEntryUtil {
 	*
 	* @return the trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findAll() {
+	public static List<TrashEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -860,15 +832,14 @@ public class TrashEntryUtil {
 	* Returns a range of all the trash entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of trash entries
 	* @param end the upper bound of the range of trash entries (not inclusive)
 	* @return the range of trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findAll(
-		int start, int end) {
+	public static List<TrashEntry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -876,7 +847,7 @@ public class TrashEntryUtil {
 	* Returns an ordered range of all the trash entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.trash.model.impl.TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrashEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of trash entries
@@ -884,9 +855,8 @@ public class TrashEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of trash entries
 	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> orderByComparator) {
+	public static List<TrashEntry> findAll(int start, int end,
+		OrderByComparator<TrashEntry> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -396,7 +396,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 *
 	 * @return the password policy local service
 	 */
-	public com.liferay.portal.service.PasswordPolicyLocalService getPasswordPolicyLocalService() {
+	public PasswordPolicyLocalService getPasswordPolicyLocalService() {
 		return passwordPolicyLocalService;
 	}
 
@@ -406,7 +406,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	 * @param passwordPolicyLocalService the password policy local service
 	 */
 	public void setPasswordPolicyLocalService(
-		com.liferay.portal.service.PasswordPolicyLocalService passwordPolicyLocalService) {
+		PasswordPolicyLocalService passwordPolicyLocalService) {
 		this.passwordPolicyLocalService = passwordPolicyLocalService;
 	}
 
@@ -737,7 +737,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.PasswordPolicyLocalService.class)
-	protected com.liferay.portal.service.PasswordPolicyLocalService passwordPolicyLocalService;
+	protected PasswordPolicyLocalService passwordPolicyLocalService;
 	@BeanReference(type = com.liferay.portal.service.PasswordPolicyService.class)
 	protected com.liferay.portal.service.PasswordPolicyService passwordPolicyService;
 	@BeanReference(type = PasswordPolicyPersistence.class)

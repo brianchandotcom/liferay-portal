@@ -114,7 +114,7 @@ public class LayoutRevisionUtil {
 	* @param layoutSetBranchId the layout set branch ID
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByLayoutSetBranchId(
+	public static List<LayoutRevision> findByLayoutSetBranchId(
 		long layoutSetBranchId) {
 		return getPersistence().findByLayoutSetBranchId(layoutSetBranchId);
 	}
@@ -123,7 +123,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where layoutSetBranchId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -131,7 +131,7 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByLayoutSetBranchId(
+	public static List<LayoutRevision> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end) {
 		return getPersistence()
 				   .findByLayoutSetBranchId(layoutSetBranchId, start, end);
@@ -141,7 +141,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -150,9 +150,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByLayoutSetBranchId(
+	public static List<LayoutRevision> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByLayoutSetBranchId(layoutSetBranchId, start, end,
 			orderByComparator);
@@ -164,11 +164,11 @@ public class LayoutRevisionUtil {
 	* @param layoutSetBranchId the layout set branch ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByLayoutSetBranchId_First(
+	public static LayoutRevision findByLayoutSetBranchId_First(
 		long layoutSetBranchId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByLayoutSetBranchId_First(layoutSetBranchId,
@@ -182,9 +182,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByLayoutSetBranchId_First(
+	public static LayoutRevision fetchByLayoutSetBranchId_First(
 		long layoutSetBranchId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutSetBranchId_First(layoutSetBranchId,
 			orderByComparator);
@@ -196,11 +196,11 @@ public class LayoutRevisionUtil {
 	* @param layoutSetBranchId the layout set branch ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByLayoutSetBranchId_Last(
+	public static LayoutRevision findByLayoutSetBranchId_Last(
 		long layoutSetBranchId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByLayoutSetBranchId_Last(layoutSetBranchId,
@@ -214,9 +214,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByLayoutSetBranchId_Last(
+	public static LayoutRevision fetchByLayoutSetBranchId_Last(
 		long layoutSetBranchId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutSetBranchId_Last(layoutSetBranchId,
 			orderByComparator);
@@ -229,11 +229,11 @@ public class LayoutRevisionUtil {
 	* @param layoutSetBranchId the layout set branch ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByLayoutSetBranchId_PrevAndNext(
+	public static LayoutRevision[] findByLayoutSetBranchId_PrevAndNext(
 		long layoutRevisionId, long layoutSetBranchId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByLayoutSetBranchId_PrevAndNext(layoutRevisionId,
@@ -265,8 +265,7 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid(
-		long plid) {
+	public static List<LayoutRevision> findByPlid(long plid) {
 		return getPersistence().findByPlid(plid);
 	}
 
@@ -274,7 +273,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param plid the plid
@@ -282,8 +281,7 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid(
-		long plid, int start, int end) {
+	public static List<LayoutRevision> findByPlid(long plid, int start, int end) {
 		return getPersistence().findByPlid(plid, start, end);
 	}
 
@@ -291,7 +289,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param plid the plid
@@ -300,9 +298,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByPlid(
-		long plid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByPlid(long plid, int start,
+		int end, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence().findByPlid(plid, start, end, orderByComparator);
 	}
 
@@ -312,11 +309,10 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByPlid_First(
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByPlid_First(long plid,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence().findByPlid_First(plid, orderByComparator);
 	}
@@ -328,9 +324,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByPlid_First(
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByPlid_First(long plid,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence().fetchByPlid_First(plid, orderByComparator);
 	}
 
@@ -340,11 +335,10 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByPlid_Last(
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByPlid_Last(long plid,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence().findByPlid_Last(plid, orderByComparator);
 	}
@@ -356,9 +350,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByPlid_Last(
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByPlid_Last(long plid,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence().fetchByPlid_Last(plid, orderByComparator);
 	}
 
@@ -369,11 +362,11 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByPlid_PrevAndNext(
+	public static LayoutRevision[] findByPlid_PrevAndNext(
 		long layoutRevisionId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByPlid_PrevAndNext(layoutRevisionId, plid,
@@ -406,8 +399,8 @@ public class LayoutRevisionUtil {
 	* @param head the head
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head) {
+	public static List<LayoutRevision> findByL_H(long layoutSetBranchId,
+		boolean head) {
 		return getPersistence().findByL_H(layoutSetBranchId, head);
 	}
 
@@ -415,7 +408,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -424,8 +417,8 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head, int start, int end) {
+	public static List<LayoutRevision> findByL_H(long layoutSetBranchId,
+		boolean head, int start, int end) {
 		return getPersistence().findByL_H(layoutSetBranchId, head, start, end);
 	}
 
@@ -433,7 +426,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -443,9 +436,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByL_H(long layoutSetBranchId,
+		boolean head, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByL_H(layoutSetBranchId, head, start, end,
 			orderByComparator);
@@ -458,11 +451,10 @@ public class LayoutRevisionUtil {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_H_First(
-		long layoutSetBranchId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_H_First(long layoutSetBranchId,
+		boolean head, OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_H_First(layoutSetBranchId, head, orderByComparator);
@@ -476,9 +468,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_H_First(
-		long layoutSetBranchId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_H_First(long layoutSetBranchId,
+		boolean head, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_H_First(layoutSetBranchId, head, orderByComparator);
 	}
@@ -490,11 +481,10 @@ public class LayoutRevisionUtil {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_H_Last(
-		long layoutSetBranchId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_H_Last(long layoutSetBranchId,
+		boolean head, OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_H_Last(layoutSetBranchId, head, orderByComparator);
@@ -508,9 +498,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_H_Last(
-		long layoutSetBranchId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_H_Last(long layoutSetBranchId,
+		boolean head, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_H_Last(layoutSetBranchId, head, orderByComparator);
 	}
@@ -523,11 +512,11 @@ public class LayoutRevisionUtil {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByL_H_PrevAndNext(
+	public static LayoutRevision[] findByL_H_PrevAndNext(
 		long layoutRevisionId, long layoutSetBranchId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_H_PrevAndNext(layoutRevisionId, layoutSetBranchId,
@@ -562,8 +551,8 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P(
-		long layoutSetBranchId, long plid) {
+	public static List<LayoutRevision> findByL_P(long layoutSetBranchId,
+		long plid) {
 		return getPersistence().findByL_P(layoutSetBranchId, plid);
 	}
 
@@ -571,7 +560,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -580,8 +569,8 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P(
-		long layoutSetBranchId, long plid, int start, int end) {
+	public static List<LayoutRevision> findByL_P(long layoutSetBranchId,
+		long plid, int start, int end) {
 		return getPersistence().findByL_P(layoutSetBranchId, plid, start, end);
 	}
 
@@ -589,7 +578,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -599,9 +588,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P(
-		long layoutSetBranchId, long plid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByL_P(long layoutSetBranchId,
+		long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByL_P(layoutSetBranchId, plid, start, end,
 			orderByComparator);
@@ -614,11 +603,10 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_P_First(
-		long layoutSetBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_P_First(long layoutSetBranchId,
+		long plid, OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_First(layoutSetBranchId, plid, orderByComparator);
@@ -632,9 +620,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_P_First(
-		long layoutSetBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_P_First(long layoutSetBranchId,
+		long plid, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_P_First(layoutSetBranchId, plid, orderByComparator);
 	}
@@ -646,11 +633,10 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_P_Last(
-		long layoutSetBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_P_Last(long layoutSetBranchId,
+		long plid, OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_Last(layoutSetBranchId, plid, orderByComparator);
@@ -664,9 +650,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_P_Last(
-		long layoutSetBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_P_Last(long layoutSetBranchId,
+		long plid, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_P_Last(layoutSetBranchId, plid, orderByComparator);
 	}
@@ -679,11 +664,11 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByL_P_PrevAndNext(
+	public static LayoutRevision[] findByL_P_PrevAndNext(
 		long layoutRevisionId, long layoutSetBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_PrevAndNext(layoutRevisionId, layoutSetBranchId,
@@ -718,8 +703,8 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_S(
-		long layoutSetBranchId, int status) {
+	public static List<LayoutRevision> findByL_S(long layoutSetBranchId,
+		int status) {
 		return getPersistence().findByL_S(layoutSetBranchId, status);
 	}
 
@@ -727,7 +712,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -736,8 +721,8 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_S(
-		long layoutSetBranchId, int status, int start, int end) {
+	public static List<LayoutRevision> findByL_S(long layoutSetBranchId,
+		int status, int start, int end) {
 		return getPersistence().findByL_S(layoutSetBranchId, status, start, end);
 	}
 
@@ -745,7 +730,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -755,9 +740,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_S(
-		long layoutSetBranchId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByL_S(long layoutSetBranchId,
+		int status, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByL_S(layoutSetBranchId, status, start, end,
 			orderByComparator);
@@ -770,11 +755,10 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_S_First(
-		long layoutSetBranchId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_S_First(long layoutSetBranchId,
+		int status, OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_S_First(layoutSetBranchId, status, orderByComparator);
@@ -788,9 +772,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_S_First(
-		long layoutSetBranchId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_S_First(long layoutSetBranchId,
+		int status, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_S_First(layoutSetBranchId, status,
 			orderByComparator);
@@ -803,11 +786,10 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_S_Last(
-		long layoutSetBranchId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_S_Last(long layoutSetBranchId,
+		int status, OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_S_Last(layoutSetBranchId, status, orderByComparator);
@@ -821,9 +803,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_S_Last(
-		long layoutSetBranchId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_S_Last(long layoutSetBranchId,
+		int status, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_S_Last(layoutSetBranchId, status, orderByComparator);
 	}
@@ -836,11 +817,11 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByL_S_PrevAndNext(
+	public static LayoutRevision[] findByL_S_PrevAndNext(
 		long layoutRevisionId, long layoutSetBranchId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_S_PrevAndNext(layoutRevisionId, layoutSetBranchId,
@@ -875,8 +856,7 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByH_P(
-		boolean head, long plid) {
+	public static List<LayoutRevision> findByH_P(boolean head, long plid) {
 		return getPersistence().findByH_P(head, plid);
 	}
 
@@ -884,7 +864,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where head = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param head the head
@@ -893,8 +873,8 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByH_P(
-		boolean head, long plid, int start, int end) {
+	public static List<LayoutRevision> findByH_P(boolean head, long plid,
+		int start, int end) {
 		return getPersistence().findByH_P(head, plid, start, end);
 	}
 
@@ -902,7 +882,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where head = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param head the head
@@ -912,9 +892,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByH_P(
-		boolean head, long plid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByH_P(boolean head, long plid,
+		int start, int end, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByH_P(head, plid, start, end, orderByComparator);
 	}
@@ -926,11 +905,10 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByH_P_First(
-		boolean head, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByH_P_First(boolean head, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence().findByH_P_First(head, plid, orderByComparator);
 	}
@@ -943,9 +921,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByH_P_First(
-		boolean head, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByH_P_First(boolean head, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence().fetchByH_P_First(head, plid, orderByComparator);
 	}
 
@@ -956,11 +933,10 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByH_P_Last(
-		boolean head, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByH_P_Last(boolean head, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence().findByH_P_Last(head, plid, orderByComparator);
 	}
@@ -973,9 +949,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByH_P_Last(
-		boolean head, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByH_P_Last(boolean head, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence().fetchByH_P_Last(head, plid, orderByComparator);
 	}
 
@@ -987,11 +962,11 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByH_P_PrevAndNext(
+	public static LayoutRevision[] findByH_P_PrevAndNext(
 		long layoutRevisionId, boolean head, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByH_P_PrevAndNext(layoutRevisionId, head, plid,
@@ -1026,8 +1001,7 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
-		long plid, int status) {
+	public static List<LayoutRevision> findByP_NotS(long plid, int status) {
 		return getPersistence().findByP_NotS(plid, status);
 	}
 
@@ -1035,7 +1009,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where plid = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param plid the plid
@@ -1044,8 +1018,8 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
-		long plid, int status, int start, int end) {
+	public static List<LayoutRevision> findByP_NotS(long plid, int status,
+		int start, int end) {
 		return getPersistence().findByP_NotS(plid, status, start, end);
 	}
 
@@ -1053,7 +1027,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where plid = &#63; and status &ne; &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param plid the plid
@@ -1063,9 +1037,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByP_NotS(
-		long plid, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByP_NotS(long plid, int status,
+		int start, int end, OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByP_NotS(plid, status, start, end, orderByComparator);
 	}
@@ -1077,11 +1050,10 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByP_NotS_First(
-		long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByP_NotS_First(long plid, int status,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByP_NotS_First(plid, status, orderByComparator);
@@ -1095,9 +1067,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByP_NotS_First(
-		long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByP_NotS_First(long plid, int status,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_NotS_First(plid, status, orderByComparator);
 	}
@@ -1109,11 +1080,10 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByP_NotS_Last(
-		long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByP_NotS_Last(long plid, int status,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByP_NotS_Last(plid, status, orderByComparator);
@@ -1127,9 +1097,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByP_NotS_Last(
-		long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByP_NotS_Last(long plid, int status,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByP_NotS_Last(plid, status, orderByComparator);
 	}
@@ -1142,11 +1111,11 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByP_NotS_PrevAndNext(
+	public static LayoutRevision[] findByP_NotS_PrevAndNext(
 		long layoutRevisionId, long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByP_NotS_PrevAndNext(layoutRevisionId, plid, status,
@@ -1182,8 +1151,8 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid) {
+	public static List<LayoutRevision> findByL_L_P(long layoutSetBranchId,
+		long layoutBranchId, long plid) {
 		return getPersistence()
 				   .findByL_L_P(layoutSetBranchId, layoutBranchId, plid);
 	}
@@ -1192,7 +1161,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -1202,9 +1171,8 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid, int start,
-		int end) {
+	public static List<LayoutRevision> findByL_L_P(long layoutSetBranchId,
+		long layoutBranchId, long plid, int start, int end) {
 		return getPersistence()
 				   .findByL_L_P(layoutSetBranchId, layoutBranchId, plid, start,
 			end);
@@ -1214,7 +1182,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -1225,10 +1193,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByL_L_P(long layoutSetBranchId,
+		long layoutBranchId, long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByL_L_P(layoutSetBranchId, layoutBranchId, plid, start,
 			end, orderByComparator);
@@ -1242,11 +1209,11 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_L_P_First(
-		long layoutSetBranchId, long layoutBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_L_P_First(long layoutSetBranchId,
+		long layoutBranchId, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_L_P_First(layoutSetBranchId, layoutBranchId, plid,
@@ -1262,9 +1229,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_L_P_First(
-		long layoutSetBranchId, long layoutBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_L_P_First(long layoutSetBranchId,
+		long layoutBranchId, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_L_P_First(layoutSetBranchId, layoutBranchId, plid,
 			orderByComparator);
@@ -1278,11 +1245,11 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_L_P_Last(
-		long layoutSetBranchId, long layoutBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_L_P_Last(long layoutSetBranchId,
+		long layoutBranchId, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_L_P_Last(layoutSetBranchId, layoutBranchId, plid,
@@ -1298,9 +1265,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_L_P_Last(
-		long layoutSetBranchId, long layoutBranchId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_L_P_Last(long layoutSetBranchId,
+		long layoutBranchId, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_L_P_Last(layoutSetBranchId, layoutBranchId, plid,
 			orderByComparator);
@@ -1315,12 +1282,11 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByL_L_P_PrevAndNext(
+	public static LayoutRevision[] findByL_L_P_PrevAndNext(
 		long layoutRevisionId, long layoutSetBranchId, long layoutBranchId,
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		long plid, OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_L_P_PrevAndNext(layoutRevisionId,
@@ -1361,8 +1327,8 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid) {
+	public static List<LayoutRevision> findByL_P_P(long layoutSetBranchId,
+		long parentLayoutRevisionId, long plid) {
 		return getPersistence()
 				   .findByL_P_P(layoutSetBranchId, parentLayoutRevisionId, plid);
 	}
@@ -1371,7 +1337,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -1381,9 +1347,8 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		int start, int end) {
+	public static List<LayoutRevision> findByL_P_P(long layoutSetBranchId,
+		long parentLayoutRevisionId, long plid, int start, int end) {
 		return getPersistence()
 				   .findByL_P_P(layoutSetBranchId, parentLayoutRevisionId,
 			plid, start, end);
@@ -1393,7 +1358,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -1404,10 +1369,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByL_P_P(long layoutSetBranchId,
+		long parentLayoutRevisionId, long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByL_P_P(layoutSetBranchId, parentLayoutRevisionId,
 			plid, start, end, orderByComparator);
@@ -1421,11 +1385,11 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_P_P_First(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_P_P_First(long layoutSetBranchId,
+		long parentLayoutRevisionId, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_P_First(layoutSetBranchId,
@@ -1441,9 +1405,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_P_P_First(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_P_P_First(long layoutSetBranchId,
+		long parentLayoutRevisionId, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_P_P_First(layoutSetBranchId,
 			parentLayoutRevisionId, plid, orderByComparator);
@@ -1457,11 +1421,11 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_P_P_Last(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_P_P_Last(long layoutSetBranchId,
+		long parentLayoutRevisionId, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_P_Last(layoutSetBranchId, parentLayoutRevisionId,
@@ -1477,9 +1441,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_P_P_Last(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_P_P_Last(long layoutSetBranchId,
+		long parentLayoutRevisionId, long plid,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_P_P_Last(layoutSetBranchId,
 			parentLayoutRevisionId, plid, orderByComparator);
@@ -1494,12 +1458,12 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByL_P_P_PrevAndNext(
+	public static LayoutRevision[] findByL_P_P_PrevAndNext(
 		long layoutRevisionId, long layoutSetBranchId,
 		long parentLayoutRevisionId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_P_PrevAndNext(layoutRevisionId,
@@ -1534,16 +1498,16 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	* Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutRevisionException} if it could not be found.
+	* Returns the layout revision where layoutSetBranchId = &#63; and head = &#63; and plid = &#63; or throws a {@link NoSuchLayoutRevisionException} if it could not be found.
 	*
 	* @param layoutSetBranchId the layout set branch ID
 	* @param head the head
 	* @param plid the plid
 	* @return the matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_H_P(
-		long layoutSetBranchId, boolean head, long plid)
+	public static LayoutRevision findByL_H_P(long layoutSetBranchId,
+		boolean head, long plid)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence().findByL_H_P(layoutSetBranchId, head, plid);
 	}
@@ -1556,8 +1520,8 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_H_P(
-		long layoutSetBranchId, boolean head, long plid) {
+	public static LayoutRevision fetchByL_H_P(long layoutSetBranchId,
+		boolean head, long plid) {
 		return getPersistence().fetchByL_H_P(layoutSetBranchId, head, plid);
 	}
 
@@ -1570,9 +1534,8 @@ public class LayoutRevisionUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_H_P(
-		long layoutSetBranchId, boolean head, long plid,
-		boolean retrieveFromCache) {
+	public static LayoutRevision fetchByL_H_P(long layoutSetBranchId,
+		boolean head, long plid, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByL_H_P(layoutSetBranchId, head, plid,
 			retrieveFromCache);
@@ -1586,8 +1549,8 @@ public class LayoutRevisionUtil {
 	* @param plid the plid
 	* @return the layout revision that was removed
 	*/
-	public static com.liferay.portal.model.LayoutRevision removeByL_H_P(
-		long layoutSetBranchId, boolean head, long plid)
+	public static LayoutRevision removeByL_H_P(long layoutSetBranchId,
+		boolean head, long plid)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence().removeByL_H_P(layoutSetBranchId, head, plid);
 	}
@@ -1613,8 +1576,8 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @return the matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status) {
+	public static List<LayoutRevision> findByL_P_S(long layoutSetBranchId,
+		long plid, int status) {
 		return getPersistence().findByL_P_S(layoutSetBranchId, plid, status);
 	}
 
@@ -1622,7 +1585,7 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -1632,8 +1595,8 @@ public class LayoutRevisionUtil {
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status, int start, int end) {
+	public static List<LayoutRevision> findByL_P_S(long layoutSetBranchId,
+		long plid, int status, int start, int end) {
 		return getPersistence()
 				   .findByL_P_S(layoutSetBranchId, plid, status, start, end);
 	}
@@ -1642,7 +1605,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param layoutSetBranchId the layout set branch ID
@@ -1653,9 +1616,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findByL_P_S(long layoutSetBranchId,
+		long plid, int status, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .findByL_P_S(layoutSetBranchId, plid, status, start, end,
 			orderByComparator);
@@ -1669,11 +1632,11 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_P_S_First(
-		long layoutSetBranchId, long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_P_S_First(long layoutSetBranchId,
+		long plid, int status,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_S_First(layoutSetBranchId, plid, status,
@@ -1689,9 +1652,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_P_S_First(
-		long layoutSetBranchId, long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_P_S_First(long layoutSetBranchId,
+		long plid, int status,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_P_S_First(layoutSetBranchId, plid, status,
 			orderByComparator);
@@ -1705,11 +1668,11 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a matching layout revision could not be found
+	* @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByL_P_S_Last(
-		long layoutSetBranchId, long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+	public static LayoutRevision findByL_P_S_Last(long layoutSetBranchId,
+		long plid, int status,
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_S_Last(layoutSetBranchId, plid, status,
@@ -1725,9 +1688,9 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout revision, or <code>null</code> if a matching layout revision could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByL_P_S_Last(
-		long layoutSetBranchId, long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static LayoutRevision fetchByL_P_S_Last(long layoutSetBranchId,
+		long plid, int status,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence()
 				   .fetchByL_P_S_Last(layoutSetBranchId, plid, status,
 			orderByComparator);
@@ -1742,11 +1705,11 @@ public class LayoutRevisionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision[] findByL_P_S_PrevAndNext(
+	public static LayoutRevision[] findByL_P_S_PrevAndNext(
 		long layoutRevisionId, long layoutSetBranchId, long plid, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator)
+		OrderByComparator<LayoutRevision> orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence()
 				   .findByL_P_S_PrevAndNext(layoutRevisionId,
@@ -1782,8 +1745,7 @@ public class LayoutRevisionUtil {
 	*
 	* @param layoutRevision the layout revision
 	*/
-	public static void cacheResult(
-		com.liferay.portal.model.LayoutRevision layoutRevision) {
+	public static void cacheResult(LayoutRevision layoutRevision) {
 		getPersistence().cacheResult(layoutRevision);
 	}
 
@@ -1792,8 +1754,7 @@ public class LayoutRevisionUtil {
 	*
 	* @param layoutRevisions the layout revisions
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.LayoutRevision> layoutRevisions) {
+	public static void cacheResult(List<LayoutRevision> layoutRevisions) {
 		getPersistence().cacheResult(layoutRevisions);
 	}
 
@@ -1803,8 +1764,7 @@ public class LayoutRevisionUtil {
 	* @param layoutRevisionId the primary key for the new layout revision
 	* @return the new layout revision
 	*/
-	public static com.liferay.portal.model.LayoutRevision create(
-		long layoutRevisionId) {
+	public static LayoutRevision create(long layoutRevisionId) {
 		return getPersistence().create(layoutRevisionId);
 	}
 
@@ -1813,28 +1773,25 @@ public class LayoutRevisionUtil {
 	*
 	* @param layoutRevisionId the primary key of the layout revision
 	* @return the layout revision that was removed
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision remove(
-		long layoutRevisionId)
+	public static LayoutRevision remove(long layoutRevisionId)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence().remove(layoutRevisionId);
 	}
 
-	public static com.liferay.portal.model.LayoutRevision updateImpl(
-		com.liferay.portal.model.LayoutRevision layoutRevision) {
+	public static LayoutRevision updateImpl(LayoutRevision layoutRevision) {
 		return getPersistence().updateImpl(layoutRevision);
 	}
 
 	/**
-	* Returns the layout revision with the primary key or throws a {@link com.liferay.portal.NoSuchLayoutRevisionException} if it could not be found.
+	* Returns the layout revision with the primary key or throws a {@link NoSuchLayoutRevisionException} if it could not be found.
 	*
 	* @param layoutRevisionId the primary key of the layout revision
 	* @return the layout revision
-	* @throws com.liferay.portal.NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
+	* @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision findByPrimaryKey(
-		long layoutRevisionId)
+	public static LayoutRevision findByPrimaryKey(long layoutRevisionId)
 		throws com.liferay.portal.NoSuchLayoutRevisionException {
 		return getPersistence().findByPrimaryKey(layoutRevisionId);
 	}
@@ -1845,12 +1802,11 @@ public class LayoutRevisionUtil {
 	* @param layoutRevisionId the primary key of the layout revision
 	* @return the layout revision, or <code>null</code> if a layout revision with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.LayoutRevision fetchByPrimaryKey(
-		long layoutRevisionId) {
+	public static LayoutRevision fetchByPrimaryKey(long layoutRevisionId) {
 		return getPersistence().fetchByPrimaryKey(layoutRevisionId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.LayoutRevision> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, LayoutRevision> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -1860,7 +1816,7 @@ public class LayoutRevisionUtil {
 	*
 	* @return the layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findAll() {
+	public static List<LayoutRevision> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1868,15 +1824,14 @@ public class LayoutRevisionUtil {
 	* Returns a range of all the layout revisions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of layout revisions
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findAll(
-		int start, int end) {
+	public static List<LayoutRevision> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1884,7 +1839,7 @@ public class LayoutRevisionUtil {
 	* Returns an ordered range of all the layout revisions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutRevisionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of layout revisions
@@ -1892,9 +1847,8 @@ public class LayoutRevisionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of layout revisions
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutRevision> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutRevision> orderByComparator) {
+	public static List<LayoutRevision> findAll(int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

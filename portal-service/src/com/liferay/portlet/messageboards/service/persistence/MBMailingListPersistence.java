@@ -46,14 +46,13 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param uuid the uuid
 	* @return the matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<MBMailingList> findByUuid(java.lang.String uuid);
 
 	/**
 	* Returns a range of all the message boards mailing lists where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -61,14 +60,14 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<MBMailingList> findByUuid(java.lang.String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards mailing lists where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -77,9 +76,9 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public java.util.List<MBMailingList> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the first message boards mailing list in the ordered set where uuid = &#63;.
@@ -87,11 +86,10 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
+	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList findByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -101,9 +99,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public MBMailingList fetchByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the last message boards mailing list in the ordered set where uuid = &#63;.
@@ -111,11 +108,10 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
+	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList findByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -125,9 +121,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public MBMailingList fetchByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where uuid = &#63;.
@@ -136,11 +131,11 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
+	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList[] findByUuid_PrevAndNext(
-		long mailingListId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList[] findByUuid_PrevAndNext(long mailingListId,
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -159,15 +154,14 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.messageboards.NoSuchMailingListException} if it could not be found.
+	* Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchMailingListException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
+	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public MBMailingList findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -177,8 +171,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param groupId the group ID
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUUID_G(
-		java.lang.String uuid, long groupId);
+	public MBMailingList fetchByUUID_G(java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -188,8 +181,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache);
+	public MBMailingList fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the message boards mailing list where uuid = &#63; and groupId = &#63; from the database.
@@ -198,8 +191,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param groupId the group ID
 	* @return the message boards mailing list that was removed
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public MBMailingList removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -218,14 +210,14 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param companyId the company ID
 	* @return the matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<MBMailingList> findByUuid_C(java.lang.String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the message boards mailing lists where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -234,14 +226,14 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<MBMailingList> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards mailing lists where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -251,9 +243,9 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public java.util.List<MBMailingList> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the first message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -262,11 +254,11 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
+	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList findByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -277,9 +269,9 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public MBMailingList fetchByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the last message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -288,11 +280,11 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
+	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList findByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -303,9 +295,9 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public MBMailingList fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -315,11 +307,11 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
+	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList[] findByUuid_C_PrevAndNext(
-		long mailingListId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList[] findByUuid_C_PrevAndNext(long mailingListId,
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -345,14 +337,13 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param active the active
 	* @return the matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByActive(
-		boolean active);
+	public java.util.List<MBMailingList> findByActive(boolean active);
 
 	/**
 	* Returns a range of all the message boards mailing lists where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -360,14 +351,14 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByActive(
-		boolean active, int start, int end);
+	public java.util.List<MBMailingList> findByActive(boolean active,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards mailing lists where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -376,9 +367,9 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByActive(
-		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public java.util.List<MBMailingList> findByActive(boolean active,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the first message boards mailing list in the ordered set where active = &#63;.
@@ -386,11 +377,10 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
+	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList findByActive_First(boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -400,9 +390,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public MBMailingList fetchByActive_First(boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the last message boards mailing list in the ordered set where active = &#63;.
@@ -410,11 +399,10 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
+	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByActive_Last(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList findByActive_Last(boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -424,9 +412,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByActive_Last(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public MBMailingList fetchByActive_Last(boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where active = &#63;.
@@ -435,11 +422,11 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
+	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList[] findByActive_PrevAndNext(
-		long mailingListId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator)
+	public MBMailingList[] findByActive_PrevAndNext(long mailingListId,
+		boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -458,15 +445,14 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	public int countByActive(boolean active);
 
 	/**
-	* Returns the message boards mailing list where groupId = &#63; and categoryId = &#63; or throws a {@link com.liferay.portlet.messageboards.NoSuchMailingListException} if it could not be found.
+	* Returns the message boards mailing list where groupId = &#63; and categoryId = &#63; or throws a {@link NoSuchMailingListException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the matching message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
+	* @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByG_C(
-		long groupId, long categoryId)
+	public MBMailingList findByG_C(long groupId, long categoryId)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -476,8 +462,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param categoryId the category ID
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByG_C(
-		long groupId, long categoryId);
+	public MBMailingList fetchByG_C(long groupId, long categoryId);
 
 	/**
 	* Returns the message boards mailing list where groupId = &#63; and categoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -487,8 +472,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByG_C(
-		long groupId, long categoryId, boolean retrieveFromCache);
+	public MBMailingList fetchByG_C(long groupId, long categoryId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the message boards mailing list where groupId = &#63; and categoryId = &#63; from the database.
@@ -497,8 +482,7 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param categoryId the category ID
 	* @return the message boards mailing list that was removed
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList removeByG_C(
-		long groupId, long categoryId)
+	public MBMailingList removeByG_C(long groupId, long categoryId)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -515,16 +499,14 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*
 	* @param mbMailingList the message boards mailing list
 	*/
-	public void cacheResult(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList);
+	public void cacheResult(MBMailingList mbMailingList);
 
 	/**
 	* Caches the message boards mailing lists in the entity cache if it is enabled.
 	*
 	* @param mbMailingLists the message boards mailing lists
 	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> mbMailingLists);
+	public void cacheResult(java.util.List<MBMailingList> mbMailingLists);
 
 	/**
 	* Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
@@ -532,32 +514,28 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param mailingListId the primary key for the new message boards mailing list
 	* @return the new message boards mailing list
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList create(
-		long mailingListId);
+	public MBMailingList create(long mailingListId);
 
 	/**
 	* Removes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param mailingListId the primary key of the message boards mailing list
 	* @return the message boards mailing list that was removed
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
+	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList remove(
-		long mailingListId)
+	public MBMailingList remove(long mailingListId)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
-	public com.liferay.portlet.messageboards.model.MBMailingList updateImpl(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList);
+	public MBMailingList updateImpl(MBMailingList mbMailingList);
 
 	/**
-	* Returns the message boards mailing list with the primary key or throws a {@link com.liferay.portlet.messageboards.NoSuchMailingListException} if it could not be found.
+	* Returns the message boards mailing list with the primary key or throws a {@link NoSuchMailingListException} if it could not be found.
 	*
 	* @param mailingListId the primary key of the message boards mailing list
 	* @return the message boards mailing list
-	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
+	* @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList findByPrimaryKey(
-		long mailingListId)
+	public MBMailingList findByPrimaryKey(long mailingListId)
 		throws com.liferay.portlet.messageboards.NoSuchMailingListException;
 
 	/**
@@ -566,11 +544,10 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param mailingListId the primary key of the message boards mailing list
 	* @return the message boards mailing list, or <code>null</code> if a message boards mailing list with the primary key could not be found
 	*/
-	public com.liferay.portlet.messageboards.model.MBMailingList fetchByPrimaryKey(
-		long mailingListId);
+	public MBMailingList fetchByPrimaryKey(long mailingListId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.messageboards.model.MBMailingList> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, MBMailingList> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -578,27 +555,26 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	*
 	* @return the message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll();
+	public java.util.List<MBMailingList> findAll();
 
 	/**
 	* Returns a range of all the message boards mailing lists.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of message boards mailing lists
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll(
-		int start, int end);
+	public java.util.List<MBMailingList> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the message boards mailing lists.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.messageboards.model.impl.MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMailingListModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of message boards mailing lists
@@ -606,9 +582,8 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of message boards mailing lists
 	*/
-	public java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.messageboards.model.MBMailingList> orderByComparator);
+	public java.util.List<MBMailingList> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	* Removes all the message boards mailing lists from the database.

@@ -152,7 +152,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @return the create date of this message boards thread flag
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _mbThreadFlag.getCreateDate();
 	}
 
@@ -177,7 +177,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @return the modified date of this message boards thread flag
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _mbThreadFlag.getModifiedDate();
 	}
 
@@ -302,7 +302,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @param createDate the create date of this message boards thread flag
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_mbThreadFlag.setCreateDate(createDate);
 	}
 
@@ -340,7 +340,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	* @param modifiedDate the modified date of this message boards thread flag
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_mbThreadFlag.setModifiedDate(modifiedDate);
 	}
 

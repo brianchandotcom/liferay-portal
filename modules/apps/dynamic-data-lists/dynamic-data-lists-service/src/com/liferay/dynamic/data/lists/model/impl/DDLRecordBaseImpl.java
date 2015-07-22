@@ -28,7 +28,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordImpl
- * @see com.liferay.dynamic.data.lists.model.DDLRecord
+ * @see DDLRecord
  * @generated
  */
 @ProviderType

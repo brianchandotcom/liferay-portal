@@ -27,10 +27,10 @@ import com.liferay.portlet.shopping.service.ShoppingItemServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.portlet.shopping.service.ShoppingItemServiceUtil} service utility. The
+ * {@link ShoppingItemServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -49,8 +49,8 @@ import com.liferay.portlet.shopping.service.ShoppingItemServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ShoppingItemServiceSoap
- * @see com.liferay.portal.security.auth.HttpPrincipal
- * @see com.liferay.portlet.shopping.service.ShoppingItemServiceUtil
+ * @see HttpPrincipal
+ * @see ShoppingItemServiceUtil
  * @generated
  */
 @ProviderType

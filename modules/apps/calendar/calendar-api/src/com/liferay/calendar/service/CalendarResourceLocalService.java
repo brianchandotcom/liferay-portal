@@ -65,7 +65,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new calendar resource with the primary key. Does not add the calendar resource to the database.
@@ -87,7 +87,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.calendar.model.CalendarResource deleteCalendarResource(
 		com.liferay.calendar.model.CalendarResource calendarResource)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the calendar resource with the primary key from the database. Also notifies the appropriate model listeners.
@@ -98,11 +98,9 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.calendar.model.CalendarResource deleteCalendarResource(
-		long calendarResourceId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long calendarResourceId) throws PortalException;
 
-	public void deleteCalendarResources(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteCalendarResources(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -110,7 +108,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -215,8 +213,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarResource getCalendarResource(
-		long calendarResourceId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long calendarResourceId) throws PortalException;
 
 	/**
 	* Returns the calendar resource matching the UUID and group.
@@ -228,8 +225,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarResource getCalendarResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarResource> getCalendarResources(
@@ -291,8 +287,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarResource> search(
@@ -328,7 +323,7 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	public void updateAsset(long userId,
 		com.liferay.calendar.model.CalendarResource calendarResource,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the calendar resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -345,5 +340,5 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

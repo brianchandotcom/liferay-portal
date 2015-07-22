@@ -82,10 +82,9 @@ public interface TrashEntryLocalService extends BaseLocalService,
 		int status,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> statusOVPs,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void checkEntries()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void checkEntries() throws PortalException;
 
 	/**
 	* Creates a new trash entry with the primary key. Does not add the trash entry to the database.
@@ -108,8 +107,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	be found
 	*/
 	public com.liferay.portlet.trash.model.TrashEntry deleteEntry(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* Deletes the trash entry with the primary key.
@@ -120,7 +118,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	be found
 	*/
 	public com.liferay.portlet.trash.model.TrashEntry deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.trash.model.TrashEntry deleteEntry(
@@ -132,7 +130,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the trash entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -143,8 +141,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.trash.model.TrashEntry deleteTrashEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long entryId) throws PortalException;
 
 	/**
 	* Deletes the trash entry from the database. Also notifies the appropriate model listeners.
@@ -319,8 +316,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.trash.model.TrashEntry getEntry(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* Returns the trash entry with the primary key.
@@ -332,13 +328,12 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.trash.model.TrashEntry getEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns a range of all the trash entries.
@@ -372,8 +367,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long companyId,

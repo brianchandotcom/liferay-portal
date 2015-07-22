@@ -74,7 +74,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		boolean history, int historyCount, boolean expireable, long maxAge,
 		long warningTime, int graceLimit, boolean lockout, int maxFailure,
 		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		long userId, boolean defaultPolicy, java.lang.String name,
@@ -87,10 +87,10 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void checkDefaultPasswordPolicy(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new password policy with the primary key. Does not add the password policy to the database.
@@ -102,7 +102,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		long passwordPolicyId);
 
 	public void deleteNondefaultPasswordPolicies(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the password policy from the database. Also notifies the appropriate model listeners.
@@ -115,7 +115,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
 		com.liferay.portal.model.PasswordPolicy passwordPolicy)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the password policy with the primary key from the database. Also notifies the appropriate model listeners.
@@ -126,8 +126,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
-		long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long passwordPolicyId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -135,7 +134,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -233,8 +232,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -270,12 +268,11 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long companyId, long organizationId, long locationId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
-		long companyId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long companyId, long[] organizationIds) throws PortalException;
 
 	/**
 	* Returns the password policy with the primary key.
@@ -286,13 +283,12 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
-		long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long passwordPolicyId) throws PortalException;
 
 	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicyByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.PortalException;
+		long userId) throws PortalException;
 
 	/**
 	* Returns the password policy with the matching UUID and company.
@@ -304,14 +300,12 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicyByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long companyId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.PasswordPolicy> search(
@@ -355,7 +349,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		boolean history, int historyCount, boolean expireable, long maxAge,
 		long warningTime, int graceLimit, boolean lockout, int maxFailure,
 		long lockoutDuration, long resetFailureCount, long resetTicketMaxAge)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
@@ -368,5 +362,5 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		boolean lockout, int maxFailure, long lockoutDuration,
 		long resetFailureCount, long resetTicketMaxAge,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

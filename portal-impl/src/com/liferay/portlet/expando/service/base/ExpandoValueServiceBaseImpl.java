@@ -213,7 +213,7 @@ public abstract class ExpandoValueServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the expando value remote service
 	 */
-	public com.liferay.portlet.expando.service.ExpandoValueService getExpandoValueService() {
+	public ExpandoValueService getExpandoValueService() {
 		return expandoValueService;
 	}
 
@@ -222,8 +222,7 @@ public abstract class ExpandoValueServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param expandoValueService the expando value remote service
 	 */
-	public void setExpandoValueService(
-		com.liferay.portlet.expando.service.ExpandoValueService expandoValueService) {
+	public void setExpandoValueService(ExpandoValueService expandoValueService) {
 		this.expandoValueService = expandoValueService;
 	}
 
@@ -490,7 +489,7 @@ public abstract class ExpandoValueServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoValueLocalService.class)
 	protected com.liferay.portlet.expando.service.ExpandoValueLocalService expandoValueLocalService;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoValueService.class)
-	protected com.liferay.portlet.expando.service.ExpandoValueService expandoValueService;
+	protected ExpandoValueService expandoValueService;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -333,7 +333,7 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	 *
 	 * @return the social relation local service
 	 */
-	public com.liferay.portlet.social.service.SocialRelationLocalService getSocialRelationLocalService() {
+	public SocialRelationLocalService getSocialRelationLocalService() {
 		return socialRelationLocalService;
 	}
 
@@ -343,7 +343,7 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	 * @param socialRelationLocalService the social relation local service
 	 */
 	public void setSocialRelationLocalService(
-		com.liferay.portlet.social.service.SocialRelationLocalService socialRelationLocalService) {
+		SocialRelationLocalService socialRelationLocalService) {
 		this.socialRelationLocalService = socialRelationLocalService;
 	}
 
@@ -579,7 +579,7 @@ public abstract class SocialRelationLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRelationLocalService.class)
-	protected com.liferay.portlet.social.service.SocialRelationLocalService socialRelationLocalService;
+	protected SocialRelationLocalService socialRelationLocalService;
 	@BeanReference(type = SocialRelationPersistence.class)
 	protected SocialRelationPersistence socialRelationPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

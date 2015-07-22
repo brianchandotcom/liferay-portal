@@ -373,7 +373,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @return the create date of this password policy
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _passwordPolicy.getCreateDate();
 	}
 
@@ -558,7 +558,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @return the modified date of this password policy
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _passwordPolicy.getModifiedDate();
 	}
 
@@ -873,7 +873,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @param createDate the create date of this password policy
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_passwordPolicy.setCreateDate(createDate);
 	}
 
@@ -1070,7 +1070,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	* @param modifiedDate the modified date of this password policy
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_passwordPolicy.setModifiedDate(modifiedDate);
 	}
 

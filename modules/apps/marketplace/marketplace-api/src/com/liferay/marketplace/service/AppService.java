@@ -50,7 +50,7 @@ public interface AppService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link AppServiceUtil} to access the app remote service. Add custom service methods to {@link com.liferay.marketplace.service.impl.AppServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.marketplace.model.App deleteApp(long appId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -59,8 +59,7 @@ public interface AppService extends BaseService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	public void installApp(long remoteAppId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void installApp(long remoteAppId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -69,10 +68,8 @@ public interface AppService extends BaseService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void uninstallApp(long remoteAppId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void uninstallApp(long remoteAppId) throws PortalException;
 
 	public com.liferay.marketplace.model.App updateApp(long remoteAppId,
-		java.lang.String version, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String version, java.io.File file) throws PortalException;
 }

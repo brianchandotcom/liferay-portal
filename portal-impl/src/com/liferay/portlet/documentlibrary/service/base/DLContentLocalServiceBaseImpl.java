@@ -302,7 +302,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 		try {
 			session = dlContentPersistence.openSession();
 
-			return (com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel)session.get(DLContentDataBlobModel.class,
+			return (DLContentDataBlobModel)session.get(DLContentDataBlobModel.class,
 				primaryKey);
 		}
 		catch (Exception e) {
@@ -318,7 +318,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the document library content local service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLContentLocalService getDLContentLocalService() {
+	public DLContentLocalService getDLContentLocalService() {
 		return dlContentLocalService;
 	}
 
@@ -328,7 +328,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dlContentLocalService the document library content local service
 	 */
 	public void setDLContentLocalService(
-		com.liferay.portlet.documentlibrary.service.DLContentLocalService dlContentLocalService) {
+		DLContentLocalService dlContentLocalService) {
 		this.dlContentLocalService = dlContentLocalService;
 	}
 
@@ -433,7 +433,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLContentLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLContentLocalService dlContentLocalService;
+	protected DLContentLocalService dlContentLocalService;
 	@BeanReference(type = DLContentPersistence.class)
 	protected DLContentPersistence dlContentPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

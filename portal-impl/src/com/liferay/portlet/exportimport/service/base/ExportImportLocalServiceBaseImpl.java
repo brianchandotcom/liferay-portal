@@ -65,7 +65,7 @@ public abstract class ExportImportLocalServiceBaseImpl
 	 *
 	 * @return the export import local service
 	 */
-	public com.liferay.portlet.exportimport.service.ExportImportLocalService getExportImportLocalService() {
+	public ExportImportLocalService getExportImportLocalService() {
 		return exportImportLocalService;
 	}
 
@@ -75,7 +75,7 @@ public abstract class ExportImportLocalServiceBaseImpl
 	 * @param exportImportLocalService the export import local service
 	 */
 	public void setExportImportLocalService(
-		com.liferay.portlet.exportimport.service.ExportImportLocalService exportImportLocalService) {
+		ExportImportLocalService exportImportLocalService) {
 		this.exportImportLocalService = exportImportLocalService;
 	}
 
@@ -544,7 +544,7 @@ public abstract class ExportImportLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportLocalService.class)
-	protected com.liferay.portlet.exportimport.service.ExportImportLocalService exportImportLocalService;
+	protected ExportImportLocalService exportImportLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportService exportImportService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService.class)

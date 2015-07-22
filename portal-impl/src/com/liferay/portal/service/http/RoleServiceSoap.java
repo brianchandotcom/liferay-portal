@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portal.service.RoleServiceUtil} service utility. The
+ * {@link RoleServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -63,7 +63,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see RoleServiceHttp
  * @see com.liferay.portal.model.RoleSoap
- * @see com.liferay.portal.service.RoleServiceUtil
+ * @see RoleServiceUtil
  * @generated
  */
 @ProviderType

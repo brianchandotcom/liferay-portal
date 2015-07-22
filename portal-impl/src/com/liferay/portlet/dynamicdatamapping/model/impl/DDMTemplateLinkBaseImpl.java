@@ -28,7 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalServic
  *
  * @author Brian Wing Shun Chan
  * @see DDMTemplateLinkImpl
- * @see com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink
+ * @see DDMTemplateLink
  * @generated
  */
 @ProviderType

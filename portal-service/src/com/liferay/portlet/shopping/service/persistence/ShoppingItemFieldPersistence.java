@@ -46,14 +46,13 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param itemId the item ID
 	* @return the matching shopping item fields
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findByItemId(
-		long itemId);
+	public java.util.List<ShoppingItemField> findByItemId(long itemId);
 
 	/**
 	* Returns a range of all the shopping item fields where itemId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param itemId the item ID
@@ -61,14 +60,14 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param end the upper bound of the range of shopping item fields (not inclusive)
 	* @return the range of matching shopping item fields
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findByItemId(
-		long itemId, int start, int end);
+	public java.util.List<ShoppingItemField> findByItemId(long itemId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping item fields where itemId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param itemId the item ID
@@ -77,9 +76,9 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping item fields
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findByItemId(
-		long itemId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator);
+	public java.util.List<ShoppingItemField> findByItemId(long itemId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator);
 
 	/**
 	* Returns the first shopping item field in the ordered set where itemId = &#63;.
@@ -87,11 +86,10 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param itemId the item ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping item field
-	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a matching shopping item field could not be found
+	* @throws NoSuchItemFieldException if a matching shopping item field could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField findByItemId_First(
-		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator)
+	public ShoppingItemField findByItemId_First(long itemId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	/**
@@ -101,9 +99,8 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping item field, or <code>null</code> if a matching shopping item field could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField fetchByItemId_First(
-		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator);
+	public ShoppingItemField fetchByItemId_First(long itemId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator);
 
 	/**
 	* Returns the last shopping item field in the ordered set where itemId = &#63;.
@@ -111,11 +108,10 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param itemId the item ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping item field
-	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a matching shopping item field could not be found
+	* @throws NoSuchItemFieldException if a matching shopping item field could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField findByItemId_Last(
-		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator)
+	public ShoppingItemField findByItemId_Last(long itemId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	/**
@@ -125,9 +121,8 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping item field, or <code>null</code> if a matching shopping item field could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField fetchByItemId_Last(
-		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator);
+	public ShoppingItemField fetchByItemId_Last(long itemId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator);
 
 	/**
 	* Returns the shopping item fields before and after the current shopping item field in the ordered set where itemId = &#63;.
@@ -136,11 +131,11 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param itemId the item ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping item field
-	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
+	* @throws NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField[] findByItemId_PrevAndNext(
-		long itemFieldId, long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator)
+	public ShoppingItemField[] findByItemId_PrevAndNext(long itemFieldId,
+		long itemId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	/**
@@ -163,8 +158,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*
 	* @param shoppingItemField the shopping item field
 	*/
-	public void cacheResult(
-		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField);
+	public void cacheResult(ShoppingItemField shoppingItemField);
 
 	/**
 	* Caches the shopping item fields in the entity cache if it is enabled.
@@ -172,7 +166,7 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param shoppingItemFields the shopping item fields
 	*/
 	public void cacheResult(
-		java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> shoppingItemFields);
+		java.util.List<ShoppingItemField> shoppingItemFields);
 
 	/**
 	* Creates a new shopping item field with the primary key. Does not add the shopping item field to the database.
@@ -180,32 +174,28 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param itemFieldId the primary key for the new shopping item field
 	* @return the new shopping item field
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField create(
-		long itemFieldId);
+	public ShoppingItemField create(long itemFieldId);
 
 	/**
 	* Removes the shopping item field with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemFieldId the primary key of the shopping item field
 	* @return the shopping item field that was removed
-	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
+	* @throws NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField remove(
-		long itemFieldId)
+	public ShoppingItemField remove(long itemFieldId)
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
-	public com.liferay.portlet.shopping.model.ShoppingItemField updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField);
+	public ShoppingItemField updateImpl(ShoppingItemField shoppingItemField);
 
 	/**
-	* Returns the shopping item field with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchItemFieldException} if it could not be found.
+	* Returns the shopping item field with the primary key or throws a {@link NoSuchItemFieldException} if it could not be found.
 	*
 	* @param itemFieldId the primary key of the shopping item field
 	* @return the shopping item field
-	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
+	* @throws NoSuchItemFieldException if a shopping item field with the primary key could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField findByPrimaryKey(
-		long itemFieldId)
+	public ShoppingItemField findByPrimaryKey(long itemFieldId)
 		throws com.liferay.portlet.shopping.NoSuchItemFieldException;
 
 	/**
@@ -214,11 +204,10 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param itemFieldId the primary key of the shopping item field
 	* @return the shopping item field, or <code>null</code> if a shopping item field with the primary key could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingItemField fetchByPrimaryKey(
-		long itemFieldId);
+	public ShoppingItemField fetchByPrimaryKey(long itemFieldId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingItemField> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, ShoppingItemField> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -226,27 +215,26 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	*
 	* @return the shopping item fields
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findAll();
+	public java.util.List<ShoppingItemField> findAll();
 
 	/**
 	* Returns a range of all the shopping item fields.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping item fields
 	* @param end the upper bound of the range of shopping item fields (not inclusive)
 	* @return the range of shopping item fields
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findAll(
-		int start, int end);
+	public java.util.List<ShoppingItemField> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping item fields.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping item fields
@@ -254,9 +242,8 @@ public interface ShoppingItemFieldPersistence extends BasePersistence<ShoppingIt
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of shopping item fields
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItemField> orderByComparator);
+	public java.util.List<ShoppingItemField> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingItemField> orderByComparator);
 
 	/**
 	* Removes all the shopping item fields from the database.

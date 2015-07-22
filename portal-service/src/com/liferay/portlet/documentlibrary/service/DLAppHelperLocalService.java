@@ -47,7 +47,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public void addFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void cancelCheckOut(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
@@ -55,23 +55,23 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void checkAssetEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteFileEntry(
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteFolder(
 		com.liferay.portal.kernel.repository.model.Folder folder)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteRepositoryFileEntries(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -115,15 +115,14 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 
 	public void moveDependentsToTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long trashEntryId) throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Moves the file entry to the recycle bin.
@@ -136,14 +135,14 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutFromTrash(
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut,
 		long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Moves the file shortcut to the recycle bin.
@@ -156,13 +155,13 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public com.liferay.portal.kernel.repository.model.FileShortcut moveFileShortcutToTrash(
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
 		long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Moves the folder to the recycle bin.
@@ -174,11 +173,11 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	*/
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void restoreDependentsFromTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
@@ -187,20 +186,19 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long trashEntryId) throws PortalException;
 
 	public void restoreFileEntryFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void restoreFileShortcutFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void restoreFolderFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -213,39 +211,35 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long[] assetLinkEntryIds) throws PortalException;
 
 	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long assetClassPk)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long assetClassPk) throws PortalException;
 
 	public com.liferay.portlet.asset.model.AssetEntry updateAsset(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long[] assetLinkEntryIds) throws PortalException;
 
 	public void updateFileEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		long assetClassPk)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long assetClassPk) throws PortalException;
 
 	public void updateFileEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void updateFolder(long userId,
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void updateStatus(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
@@ -253,5 +247,5 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		int oldStatus, int newStatus,
 		com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

@@ -302,7 +302,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	 *
 	 * @return the resource action local service
 	 */
-	public com.liferay.portal.service.ResourceActionLocalService getResourceActionLocalService() {
+	public ResourceActionLocalService getResourceActionLocalService() {
 		return resourceActionLocalService;
 	}
 
@@ -312,7 +312,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	 * @param resourceActionLocalService the resource action local service
 	 */
 	public void setResourceActionLocalService(
-		com.liferay.portal.service.ResourceActionLocalService resourceActionLocalService) {
+		ResourceActionLocalService resourceActionLocalService) {
 		this.resourceActionLocalService = resourceActionLocalService;
 	}
 
@@ -493,7 +493,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.ResourceActionLocalService.class)
-	protected com.liferay.portal.service.ResourceActionLocalService resourceActionLocalService;
+	protected ResourceActionLocalService resourceActionLocalService;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

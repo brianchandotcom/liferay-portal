@@ -251,7 +251,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	* @return the create date of this layout set branch
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _layoutSetBranch.getCreateDate();
 	}
 
@@ -367,7 +367,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	* @return the modified date of this layout set branch
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _layoutSetBranch.getModifiedDate();
 	}
 
@@ -613,7 +613,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	* @param createDate the create date of this layout set branch
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_layoutSetBranch.setCreateDate(createDate);
 	}
 
@@ -722,7 +722,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	* @param modifiedDate the modified date of this layout set branch
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_layoutSetBranch.setModifiedDate(modifiedDate);
 	}
 

@@ -28,7 +28,7 @@ import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see PasswordPolicyRelImpl
- * @see com.liferay.portal.model.PasswordPolicyRel
+ * @see PasswordPolicyRel
  * @generated
  */
 @ProviderType

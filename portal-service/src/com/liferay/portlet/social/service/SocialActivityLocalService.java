@@ -51,7 +51,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addActivity(
 		com.liferay.portlet.social.model.SocialActivity activity,
 		com.liferay.portlet.social.model.SocialActivity mirrorActivity)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Records an activity in the database, using a time based on the current
@@ -69,7 +69,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Records an activity with the given time in the database.
@@ -112,7 +112,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addActivity(long userId, long groupId,
 		java.util.Date createDate, java.lang.String className, long classPK,
 		int type, java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the social activity to the database. Also notifies the appropriate model listeners.
@@ -145,7 +145,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addUniqueActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
 		java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Records an activity in the database, but only if there isn't already an
@@ -169,7 +169,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public void addUniqueActivity(long userId, long groupId,
 		java.util.Date createDate, java.lang.String className, long classPK,
 		int type, java.lang.String extraData, long receiverUserId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new social activity with the primary key. Does not add the social activity to the database.
@@ -188,7 +188,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	public void deleteActivities(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Removes stored activities for the asset identified by the class name and
@@ -200,7 +200,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	deleted
 	*/
 	public void deleteActivities(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteActivities(long groupId);
 
@@ -213,7 +213,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	public void deleteActivity(
 		com.liferay.portlet.social.model.SocialActivity activity)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Removes the stored activity from the database.
@@ -221,8 +221,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param activityId the primary key of the stored activity
 	* @throws PortalException if the activity could not be found
 	*/
-	public void deleteActivity(long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteActivity(long activityId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -230,7 +229,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
@@ -241,8 +240,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.social.model.SocialActivity deleteSocialActivity(
-		long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long activityId) throws PortalException;
 
 	/**
 	* Deletes the social activity from the database. Also notifies the appropriate model listeners.
@@ -266,8 +264,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @throws PortalException if the user's activity counters could not be
 	deleted
 	*/
-	public void deleteUserActivities(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteUserActivities(long userId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -497,8 +494,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getActivity(
-		long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long activityId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivitySetActivities(
@@ -598,8 +594,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getMirrorActivity(
-		long mirrorActivityId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long mirrorActivityId) throws PortalException;
 
 	/**
 	* Returns a range of all the activities done in the organization. This
@@ -668,8 +663,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns a range of all the activities done by users in a relationship
@@ -771,8 +765,7 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getSocialActivity(
-		long activityId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long activityId) throws PortalException;
 
 	/**
 	* Returns a range of all the activities done by the user.

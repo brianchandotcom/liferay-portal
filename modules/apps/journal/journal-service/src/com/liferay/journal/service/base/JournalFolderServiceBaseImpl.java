@@ -91,7 +91,7 @@ public abstract class JournalFolderServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the journal folder remote service
 	 */
-	public com.liferay.journal.service.JournalFolderService getJournalFolderService() {
+	public JournalFolderService getJournalFolderService() {
 		return journalFolderService;
 	}
 
@@ -101,7 +101,7 @@ public abstract class JournalFolderServiceBaseImpl extends BaseServiceImpl
 	 * @param journalFolderService the journal folder remote service
 	 */
 	public void setJournalFolderService(
-		com.liferay.journal.service.JournalFolderService journalFolderService) {
+		JournalFolderService journalFolderService) {
 		this.journalFolderService = journalFolderService;
 	}
 
@@ -942,7 +942,7 @@ public abstract class JournalFolderServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.journal.service.JournalFolderLocalService.class)
 	protected com.liferay.journal.service.JournalFolderLocalService journalFolderLocalService;
 	@BeanReference(type = com.liferay.journal.service.JournalFolderService.class)
-	protected com.liferay.journal.service.JournalFolderService journalFolderService;
+	protected JournalFolderService journalFolderService;
 	@BeanReference(type = JournalFolderPersistence.class)
 	protected JournalFolderPersistence journalFolderPersistence;
 	@BeanReference(type = JournalFolderFinder.class)

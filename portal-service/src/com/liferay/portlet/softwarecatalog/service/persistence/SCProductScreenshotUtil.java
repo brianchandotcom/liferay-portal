@@ -116,7 +116,7 @@ public class SCProductScreenshotUtil {
 	* @param productEntryId the product entry ID
 	* @return the matching s c product screenshots
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
+	public static List<SCProductScreenshot> findByProductEntryId(
 		long productEntryId) {
 		return getPersistence().findByProductEntryId(productEntryId);
 	}
@@ -125,7 +125,7 @@ public class SCProductScreenshotUtil {
 	* Returns a range of all the s c product screenshots where productEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductScreenshotModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param productEntryId the product entry ID
@@ -133,7 +133,7 @@ public class SCProductScreenshotUtil {
 	* @param end the upper bound of the range of s c product screenshots (not inclusive)
 	* @return the range of matching s c product screenshots
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
+	public static List<SCProductScreenshot> findByProductEntryId(
 		long productEntryId, int start, int end) {
 		return getPersistence().findByProductEntryId(productEntryId, start, end);
 	}
@@ -142,7 +142,7 @@ public class SCProductScreenshotUtil {
 	* Returns an ordered range of all the s c product screenshots where productEntryId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductScreenshotModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param productEntryId the product entry ID
@@ -151,9 +151,9 @@ public class SCProductScreenshotUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c product screenshots
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findByProductEntryId(
+	public static List<SCProductScreenshot> findByProductEntryId(
 		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator) {
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		return getPersistence()
 				   .findByProductEntryId(productEntryId, start, end,
 			orderByComparator);
@@ -165,11 +165,11 @@ public class SCProductScreenshotUtil {
 	* @param productEntryId the product entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws NoSuchProductScreenshotException if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_First(
+	public static SCProductScreenshot findByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
+		OrderByComparator<SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence()
 				   .findByProductEntryId_First(productEntryId, orderByComparator);
@@ -182,9 +182,9 @@ public class SCProductScreenshotUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_First(
+	public static SCProductScreenshot fetchByProductEntryId_First(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator) {
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		return getPersistence()
 				   .fetchByProductEntryId_First(productEntryId,
 			orderByComparator);
@@ -196,11 +196,11 @@ public class SCProductScreenshotUtil {
 	* @param productEntryId the product entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws NoSuchProductScreenshotException if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByProductEntryId_Last(
+	public static SCProductScreenshot findByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
+		OrderByComparator<SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence()
 				   .findByProductEntryId_Last(productEntryId, orderByComparator);
@@ -213,9 +213,9 @@ public class SCProductScreenshotUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByProductEntryId_Last(
+	public static SCProductScreenshot fetchByProductEntryId_Last(
 		long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator) {
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		return getPersistence()
 				   .fetchByProductEntryId_Last(productEntryId, orderByComparator);
 	}
@@ -227,11 +227,11 @@ public class SCProductScreenshotUtil {
 	* @param productEntryId the product entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
+	* @throws NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot[] findByProductEntryId_PrevAndNext(
+	public static SCProductScreenshot[] findByProductEntryId_PrevAndNext(
 		long productScreenshotId, long productEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator)
+		OrderByComparator<SCProductScreenshot> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence()
 				   .findByProductEntryId_PrevAndNext(productScreenshotId,
@@ -258,14 +258,13 @@ public class SCProductScreenshotUtil {
 	}
 
 	/**
-	* Returns the s c product screenshot where thumbnailId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
+	* Returns the s c product screenshot where thumbnailId = &#63; or throws a {@link NoSuchProductScreenshotException} if it could not be found.
 	*
 	* @param thumbnailId the thumbnail ID
 	* @return the matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws NoSuchProductScreenshotException if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByThumbnailId(
-		long thumbnailId)
+	public static SCProductScreenshot findByThumbnailId(long thumbnailId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence().findByThumbnailId(thumbnailId);
 	}
@@ -276,8 +275,7 @@ public class SCProductScreenshotUtil {
 	* @param thumbnailId the thumbnail ID
 	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByThumbnailId(
-		long thumbnailId) {
+	public static SCProductScreenshot fetchByThumbnailId(long thumbnailId) {
 		return getPersistence().fetchByThumbnailId(thumbnailId);
 	}
 
@@ -288,8 +286,8 @@ public class SCProductScreenshotUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByThumbnailId(
-		long thumbnailId, boolean retrieveFromCache) {
+	public static SCProductScreenshot fetchByThumbnailId(long thumbnailId,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByThumbnailId(thumbnailId, retrieveFromCache);
 	}
@@ -300,8 +298,7 @@ public class SCProductScreenshotUtil {
 	* @param thumbnailId the thumbnail ID
 	* @return the s c product screenshot that was removed
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByThumbnailId(
-		long thumbnailId)
+	public static SCProductScreenshot removeByThumbnailId(long thumbnailId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence().removeByThumbnailId(thumbnailId);
 	}
@@ -317,14 +314,13 @@ public class SCProductScreenshotUtil {
 	}
 
 	/**
-	* Returns the s c product screenshot where fullImageId = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
+	* Returns the s c product screenshot where fullImageId = &#63; or throws a {@link NoSuchProductScreenshotException} if it could not be found.
 	*
 	* @param fullImageId the full image ID
 	* @return the matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws NoSuchProductScreenshotException if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByFullImageId(
-		long fullImageId)
+	public static SCProductScreenshot findByFullImageId(long fullImageId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence().findByFullImageId(fullImageId);
 	}
@@ -335,8 +331,7 @@ public class SCProductScreenshotUtil {
 	* @param fullImageId the full image ID
 	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByFullImageId(
-		long fullImageId) {
+	public static SCProductScreenshot fetchByFullImageId(long fullImageId) {
 		return getPersistence().fetchByFullImageId(fullImageId);
 	}
 
@@ -347,8 +342,8 @@ public class SCProductScreenshotUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByFullImageId(
-		long fullImageId, boolean retrieveFromCache) {
+	public static SCProductScreenshot fetchByFullImageId(long fullImageId,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByFullImageId(fullImageId, retrieveFromCache);
 	}
@@ -359,8 +354,7 @@ public class SCProductScreenshotUtil {
 	* @param fullImageId the full image ID
 	* @return the s c product screenshot that was removed
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByFullImageId(
-		long fullImageId)
+	public static SCProductScreenshot removeByFullImageId(long fullImageId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence().removeByFullImageId(fullImageId);
 	}
@@ -376,15 +370,15 @@ public class SCProductScreenshotUtil {
 	}
 
 	/**
-	* Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
+	* Returns the s c product screenshot where productEntryId = &#63; and priority = &#63; or throws a {@link NoSuchProductScreenshotException} if it could not be found.
 	*
 	* @param productEntryId the product entry ID
 	* @param priority the priority
 	* @return the matching s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a matching s c product screenshot could not be found
+	* @throws NoSuchProductScreenshotException if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByP_P(
-		long productEntryId, int priority)
+	public static SCProductScreenshot findByP_P(long productEntryId,
+		int priority)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence().findByP_P(productEntryId, priority);
 	}
@@ -396,8 +390,8 @@ public class SCProductScreenshotUtil {
 	* @param priority the priority
 	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByP_P(
-		long productEntryId, int priority) {
+	public static SCProductScreenshot fetchByP_P(long productEntryId,
+		int priority) {
 		return getPersistence().fetchByP_P(productEntryId, priority);
 	}
 
@@ -409,8 +403,8 @@ public class SCProductScreenshotUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching s c product screenshot, or <code>null</code> if a matching s c product screenshot could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByP_P(
-		long productEntryId, int priority, boolean retrieveFromCache) {
+	public static SCProductScreenshot fetchByP_P(long productEntryId,
+		int priority, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByP_P(productEntryId, priority, retrieveFromCache);
 	}
@@ -422,8 +416,8 @@ public class SCProductScreenshotUtil {
 	* @param priority the priority
 	* @return the s c product screenshot that was removed
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot removeByP_P(
-		long productEntryId, int priority)
+	public static SCProductScreenshot removeByP_P(long productEntryId,
+		int priority)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence().removeByP_P(productEntryId, priority);
 	}
@@ -444,8 +438,7 @@ public class SCProductScreenshotUtil {
 	*
 	* @param scProductScreenshot the s c product screenshot
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot) {
+	public static void cacheResult(SCProductScreenshot scProductScreenshot) {
 		getPersistence().cacheResult(scProductScreenshot);
 	}
 
@@ -455,7 +448,7 @@ public class SCProductScreenshotUtil {
 	* @param scProductScreenshots the s c product screenshots
 	*/
 	public static void cacheResult(
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> scProductScreenshots) {
+		List<SCProductScreenshot> scProductScreenshots) {
 		getPersistence().cacheResult(scProductScreenshots);
 	}
 
@@ -465,8 +458,7 @@ public class SCProductScreenshotUtil {
 	* @param productScreenshotId the primary key for the new s c product screenshot
 	* @return the new s c product screenshot
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot create(
-		long productScreenshotId) {
+	public static SCProductScreenshot create(long productScreenshotId) {
 		return getPersistence().create(productScreenshotId);
 	}
 
@@ -475,28 +467,26 @@ public class SCProductScreenshotUtil {
 	*
 	* @param productScreenshotId the primary key of the s c product screenshot
 	* @return the s c product screenshot that was removed
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
+	* @throws NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot remove(
-		long productScreenshotId)
+	public static SCProductScreenshot remove(long productScreenshotId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence().remove(productScreenshotId);
 	}
 
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCProductScreenshot scProductScreenshot) {
+	public static SCProductScreenshot updateImpl(
+		SCProductScreenshot scProductScreenshot) {
 		return getPersistence().updateImpl(scProductScreenshot);
 	}
 
 	/**
-	* Returns the s c product screenshot with the primary key or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException} if it could not be found.
+	* Returns the s c product screenshot with the primary key or throws a {@link NoSuchProductScreenshotException} if it could not be found.
 	*
 	* @param productScreenshotId the primary key of the s c product screenshot
 	* @return the s c product screenshot
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
+	* @throws NoSuchProductScreenshotException if a s c product screenshot with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot findByPrimaryKey(
-		long productScreenshotId)
+	public static SCProductScreenshot findByPrimaryKey(long productScreenshotId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException {
 		return getPersistence().findByPrimaryKey(productScreenshotId);
 	}
@@ -507,12 +497,12 @@ public class SCProductScreenshotUtil {
 	* @param productScreenshotId the primary key of the s c product screenshot
 	* @return the s c product screenshot, or <code>null</code> if a s c product screenshot with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCProductScreenshot fetchByPrimaryKey(
+	public static SCProductScreenshot fetchByPrimaryKey(
 		long productScreenshotId) {
 		return getPersistence().fetchByPrimaryKey(productScreenshotId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, SCProductScreenshot> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -522,7 +512,7 @@ public class SCProductScreenshotUtil {
 	*
 	* @return the s c product screenshots
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findAll() {
+	public static List<SCProductScreenshot> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -530,15 +520,14 @@ public class SCProductScreenshotUtil {
 	* Returns a range of all the s c product screenshots.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductScreenshotModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c product screenshots
 	* @param end the upper bound of the range of s c product screenshots (not inclusive)
 	* @return the range of s c product screenshots
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findAll(
-		int start, int end) {
+	public static List<SCProductScreenshot> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -546,7 +535,7 @@ public class SCProductScreenshotUtil {
 	* Returns an ordered range of all the s c product screenshots.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCProductScreenshotModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCProductScreenshotModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c product screenshots
@@ -554,9 +543,8 @@ public class SCProductScreenshotUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of s c product screenshots
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> orderByComparator) {
+	public static List<SCProductScreenshot> findAll(int start, int end,
+		OrderByComparator<SCProductScreenshot> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

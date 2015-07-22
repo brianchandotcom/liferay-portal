@@ -468,7 +468,7 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the message boards thread local service
 	 */
-	public com.liferay.portlet.messageboards.service.MBThreadLocalService getMBThreadLocalService() {
+	public MBThreadLocalService getMBThreadLocalService() {
 		return mbThreadLocalService;
 	}
 
@@ -478,7 +478,7 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param mbThreadLocalService the message boards thread local service
 	 */
 	public void setMBThreadLocalService(
-		com.liferay.portlet.messageboards.service.MBThreadLocalService mbThreadLocalService) {
+		MBThreadLocalService mbThreadLocalService) {
 		this.mbThreadLocalService = mbThreadLocalService;
 	}
 
@@ -1314,7 +1314,7 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBThreadLocalService.class)
-	protected com.liferay.portlet.messageboards.service.MBThreadLocalService mbThreadLocalService;
+	protected MBThreadLocalService mbThreadLocalService;
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBThreadService.class)
 	protected com.liferay.portlet.messageboards.service.MBThreadService mbThreadService;
 	@BeanReference(type = MBThreadPersistence.class)

@@ -301,7 +301,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 *
 	 * @return the user tracker local service
 	 */
-	public com.liferay.portal.service.UserTrackerLocalService getUserTrackerLocalService() {
+	public UserTrackerLocalService getUserTrackerLocalService() {
 		return userTrackerLocalService;
 	}
 
@@ -311,7 +311,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @param userTrackerLocalService the user tracker local service
 	 */
 	public void setUserTrackerLocalService(
-		com.liferay.portal.service.UserTrackerLocalService userTrackerLocalService) {
+		UserTrackerLocalService userTrackerLocalService) {
 		this.userTrackerLocalService = userTrackerLocalService;
 	}
 
@@ -454,7 +454,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.UserTrackerLocalService.class)
-	protected com.liferay.portal.service.UserTrackerLocalService userTrackerLocalService;
+	protected UserTrackerLocalService userTrackerLocalService;
 	@BeanReference(type = UserTrackerPersistence.class)
 	protected UserTrackerPersistence userTrackerPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

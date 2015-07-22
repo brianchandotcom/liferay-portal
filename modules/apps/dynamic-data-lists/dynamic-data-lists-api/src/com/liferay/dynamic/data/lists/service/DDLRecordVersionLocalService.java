@@ -86,8 +86,7 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion deleteDDLRecordVersion(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordVersionId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -95,7 +94,7 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -185,8 +184,7 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getDDLRecordVersion(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordVersionId) throws PortalException;
 
 	/**
 	* Returns a range of all the d d l record versions.
@@ -213,24 +211,20 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordId, java.lang.String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long recordVersionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(

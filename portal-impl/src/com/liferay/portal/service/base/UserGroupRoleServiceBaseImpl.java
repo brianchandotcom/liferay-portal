@@ -80,7 +80,7 @@ public abstract class UserGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the user group role remote service
 	 */
-	public com.liferay.portal.service.UserGroupRoleService getUserGroupRoleService() {
+	public UserGroupRoleService getUserGroupRoleService() {
 		return userGroupRoleService;
 	}
 
@@ -90,7 +90,7 @@ public abstract class UserGroupRoleServiceBaseImpl extends BaseServiceImpl
 	 * @param userGroupRoleService the user group role remote service
 	 */
 	public void setUserGroupRoleService(
-		com.liferay.portal.service.UserGroupRoleService userGroupRoleService) {
+		UserGroupRoleService userGroupRoleService) {
 		this.userGroupRoleService = userGroupRoleService;
 	}
 
@@ -433,7 +433,7 @@ public abstract class UserGroupRoleServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.UserGroupRoleLocalService.class)
 	protected com.liferay.portal.service.UserGroupRoleLocalService userGroupRoleLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserGroupRoleService.class)
-	protected com.liferay.portal.service.UserGroupRoleService userGroupRoleService;
+	protected UserGroupRoleService userGroupRoleService;
 	@BeanReference(type = UserGroupRolePersistence.class)
 	protected UserGroupRolePersistence userGroupRolePersistence;
 	@BeanReference(type = UserGroupRoleFinder.class)

@@ -17,21 +17,23 @@ package com.liferay.message.boards.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Garcia
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -73,8 +75,15 @@ public class MoveCategoryMVCActionCommand extends BaseMVCActionCommand {
 		boolean mergeWithParentCategory = ParamUtil.getBoolean(
 			actionRequest, "mergeWithParentCategory");
 
-		MBCategoryServiceUtil.moveCategory(
+		_mbCategoryService.moveCategory(
 			categoryId, parentCategoryId, mergeWithParentCategory);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryService(MBCategoryService mbCategoryService) {
+		_mbCategoryService = mbCategoryService;
+	}
+
+	private MBCategoryService _mbCategoryService;
 
 }

@@ -17,7 +17,6 @@ package com.liferay.message.boards.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -25,15 +24,18 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBBan;
-import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
+import com.liferay.portlet.messageboards.service.MBBanService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael Young
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -49,7 +51,7 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBBan.class.getName(), actionRequest);
 
-		MBBanServiceUtil.addBan(banUserId, serviceContext);
+		_mbBanService.addBan(banUserId, serviceContext);
 	}
 
 	@Override
@@ -75,13 +77,20 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBBanService(MBBanService mbBanService) {
+		_mbBanService = mbBanService;
+	}
+
 	protected void unbanUser(ActionRequest actionRequest) throws Exception {
 		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBBan.class.getName(), actionRequest);
 
-		MBBanServiceUtil.deleteBan(banUserId, serviceContext);
+		_mbBanService.deleteBan(banUserId, serviceContext);
 	}
+
+	private MBBanService _mbBanService;
 
 }

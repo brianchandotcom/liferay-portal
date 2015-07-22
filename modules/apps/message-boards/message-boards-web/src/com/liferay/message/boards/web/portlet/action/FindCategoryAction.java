@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.struts.FindActionHelper;
@@ -23,10 +22,8 @@ import com.liferay.portal.util.PortletKeys;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author Brian Wing Shun Chan
- */
-@OSGiBeanProperties(
+import org.osgi.service.component.annotations.Component;
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,

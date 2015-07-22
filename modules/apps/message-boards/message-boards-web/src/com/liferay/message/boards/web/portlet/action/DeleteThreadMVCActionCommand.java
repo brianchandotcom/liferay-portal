@@ -17,7 +17,6 @@ package com.liferay.message.boards.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -26,7 +25,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
@@ -35,12 +34,15 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Deepak Gothe
  * @author Sergio González
  * @author Zsolt Berentey
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -70,13 +72,13 @@ public class DeleteThreadMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteThreadId : deleteThreadIds) {
 			if (moveToTrash) {
-				MBThread thread = MBThreadServiceUtil.moveThreadToTrash(
+				MBThread thread = _mbThreadService.moveThreadToTrash(
 					deleteThreadId);
 
 				trashedModels.add(thread);
 			}
 			else {
-				MBThreadServiceUtil.deleteThread(deleteThreadId);
+				_mbThreadService.deleteThread(deleteThreadId);
 			}
 		}
 
@@ -109,5 +111,12 @@ public class DeleteThreadMVCActionCommand extends BaseMVCActionCommand {
 				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadService(MBThreadService mbThreadService) {
+		_mbThreadService = mbThreadService;
+	}
+
+	private MBThreadService _mbThreadService;
 
 }

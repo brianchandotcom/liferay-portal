@@ -24,8 +24,13 @@ public class UpgradeLastPublishDate
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		runSQL("alter table DDLRecord add lastPublishDate DATE null");
+
 		super.updateLastPublishDates(
 			DDLPortletKeys.DYNAMIC_DATA_LISTS, "DDLRecord");
+
+		runSQL("alter table DDLRecordSet add lastPublishDate DATE null");
+
 		super.updateLastPublishDates(
 			DDLPortletKeys.DYNAMIC_DATA_LISTS, "DDLRecordSet");
 	}

@@ -92,9 +92,6 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>message_boards</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/messageboards/message-boards-friendly-url-routes.xml</friendly-url-routes>
-		<trash-handler>com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler</trash-handler>
-		<trash-handler>com.liferay.portlet.messageboards.trash.MBMessageTrashHandler</trash-handler>
-		<trash-handler>com.liferay.portlet.messageboards.trash.MBThreadTrashHandler</trash-handler>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>true</use-default-template>

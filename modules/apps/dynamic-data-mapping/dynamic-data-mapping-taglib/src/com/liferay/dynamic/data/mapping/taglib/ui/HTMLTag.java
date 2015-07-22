@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.taglib.ddm;
+package com.liferay.dynamic.data.mapping.taglib.ui;
 
+import com.liferay.dynamic.data.mapping.taglib.ui.base.BaseHTMLTag;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.taglib.ddm.base.BaseHTMLTag;
 
 import javax.servlet.http.HttpServletRequest;
 

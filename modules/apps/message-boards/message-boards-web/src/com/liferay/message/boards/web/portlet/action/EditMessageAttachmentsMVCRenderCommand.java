@@ -35,8 +35,7 @@ public class EditMessageAttachmentsMVCRenderCommand
 
 	@Override
 	protected String getPath() {
-		return
-			"/html/portlet/message_boards/view_deleted_message_attachments.jsp";
+		return "/message_boards/view_deleted_message_attachments.jsp";
 	}
 
 }

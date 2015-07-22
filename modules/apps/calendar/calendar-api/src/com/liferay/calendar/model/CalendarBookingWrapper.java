@@ -79,6 +79,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 		attributes.put("firstReminderType", getFirstReminderType());
 		attributes.put("secondReminder", getSecondReminder());
 		attributes.put("secondReminderType", getSecondReminderType());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -232,6 +233,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 
 		if (secondReminderType != null) {
 			setSecondReminderType(secondReminderType);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -502,6 +509,16 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public int getInstanceIndex() {
 		return _calendarBooking.getInstanceIndex();
+	}
+
+	/**
+	* Returns the last publish date of this calendar booking.
+	*
+	* @return the last publish date of this calendar booking
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _calendarBooking.getLastPublishDate();
 	}
 
 	/**
@@ -1187,6 +1204,16 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public void setInstanceIndex(int instanceIndex) {
 		_calendarBooking.setInstanceIndex(instanceIndex);
+	}
+
+	/**
+	* Sets the last publish date of this calendar booking.
+	*
+	* @param lastPublishDate the last publish date of this calendar booking
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_calendarBooking.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

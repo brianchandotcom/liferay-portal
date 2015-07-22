@@ -58,6 +58,7 @@ public class CalendarBookingSoap implements Serializable {
 		soapModel.setFirstReminderType(model.getFirstReminderType());
 		soapModel.setSecondReminder(model.getSecondReminder());
 		soapModel.setSecondReminderType(model.getSecondReminderType());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -312,6 +313,14 @@ public class CalendarBookingSoap implements Serializable {
 		_secondReminderType = secondReminderType;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -368,6 +377,7 @@ public class CalendarBookingSoap implements Serializable {
 	private String _firstReminderType;
 	private long _secondReminder;
 	private String _secondReminderType;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

@@ -65,7 +65,7 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -101,6 +101,8 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		sb.append(enableComments);
 		sb.append(", enableRatings=");
 		sb.append(enableRatings);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -172,6 +174,13 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		calendarImpl.setEnableComments(enableComments);
 		calendarImpl.setEnableRatings(enableRatings);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			calendarImpl.setLastPublishDate(null);
+		}
+		else {
+			calendarImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		calendarImpl.resetOriginalValues();
 
 		return calendarImpl;
@@ -196,6 +205,7 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		defaultCalendar = objectInput.readBoolean();
 		enableComments = objectInput.readBoolean();
 		enableRatings = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -250,6 +260,7 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		objectOutput.writeBoolean(defaultCalendar);
 		objectOutput.writeBoolean(enableComments);
 		objectOutput.writeBoolean(enableRatings);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -269,4 +280,5 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 	public boolean defaultCalendar;
 	public boolean enableComments;
 	public boolean enableRatings;
+	public long lastPublishDate;
 }

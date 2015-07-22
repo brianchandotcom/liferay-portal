@@ -21,6 +21,7 @@
 		<field name="defaultCalendar" type="boolean" />
 		<field name="enableComments" type="boolean" />
 		<field name="enableRatings" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.calendar.model.CalendarBooking">
 		<field name="uuid" type="String" />
@@ -59,6 +60,7 @@
 		<field name="firstReminderType" type="String" />
 		<field name="secondReminder" type="long" />
 		<field name="secondReminderType" type="String" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -81,6 +83,7 @@
 		<field name="body" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.calendar.model.CalendarResource">
 		<field name="uuid" type="String" />
@@ -101,5 +104,6 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

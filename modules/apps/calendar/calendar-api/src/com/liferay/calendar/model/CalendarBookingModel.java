@@ -626,6 +626,20 @@ public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
 	public void setSecondReminderType(String secondReminderType);
 
 	/**
+	 * Returns the last publish date of this calendar booking.
+	 *
+	 * @return the last publish date of this calendar booking
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this calendar booking.
+	 *
+	 * @param lastPublishDate the last publish date of this calendar booking
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this calendar booking.
 	 *
 	 * @return the status of this calendar booking

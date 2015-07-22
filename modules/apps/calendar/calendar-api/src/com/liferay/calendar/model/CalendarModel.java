@@ -532,6 +532,20 @@ public interface CalendarModel extends BaseModel<Calendar>, LocalizedModel,
 	 */
 	public void setEnableRatings(boolean enableRatings);
 
+	/**
+	 * Returns the last publish date of this calendar.
+	 *
+	 * @return the last publish date of this calendar
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this calendar.
+	 *
+	 * @param lastPublishDate the last publish date of this calendar
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

@@ -58,6 +58,14 @@ public class FileImplTest {
 	}
 
 	@Test
+	public void testAppendSuffixWithMultipleStringWithSpaceValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test.jsp", "A B");
+
+		Assert.assertEquals("test (A B).jsp", fileName);
+	}
+
+	@Test
 	public void testAppendSuffixWithSingleNumericalValue() {
 		String fileName = _fileImpl.appendParentheticalSuffix("test.jsp", "1");
 
@@ -137,6 +145,15 @@ public class FileImplTest {
 	public void testStripSuffixAppendedWithMultipleStringValue() {
 		String fileName = _fileImpl.appendParentheticalSuffix(
 			"test.jsp", "AAAAAAA");
+
+		Assert.assertEquals(
+			"test.jsp", _fileImpl.stripParentheticalSuffix(fileName));
+	}
+
+	@Test
+	public void testStripSuffixAppendedWithMultipleStringWithSpaceValue() {
+		String fileName = _fileImpl.appendParentheticalSuffix(
+			"test.jsp", "A B");
 
 		Assert.assertEquals(
 			"test.jsp", _fileImpl.stripParentheticalSuffix(fileName));

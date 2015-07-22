@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -60,8 +59,8 @@ import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
@@ -75,12 +74,15 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Sanz
  * @author Shuyang Zhou
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -93,7 +95,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	protected void deleteMessage(ActionRequest actionRequest) throws Exception {
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
-		MBMessageServiceUtil.deleteMessage(messageId);
+		_mbMessageService.deleteMessage(messageId);
 	}
 
 	@Override
@@ -280,12 +282,24 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setMBMessageService(MBMessageService mbMessageService) {
+		_mbMessageService = mbMessageService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
 	protected void subscribeMessage(ActionRequest actionRequest)
 		throws Exception {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
-		MBMessageServiceUtil.subscribeMessage(messageId);
+		_mbMessageService.subscribeMessage(messageId);
 	}
 
 	protected void unlockThreads(ActionRequest actionRequest) throws Exception {
@@ -309,7 +323,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
-		MBMessageServiceUtil.unsubscribeMessage(messageId);
+		_mbMessageService.unsubscribeMessage(messageId);
 	}
 
 	protected MBMessage updateMessage(
@@ -382,14 +396,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 					// Post new thread
 
-					message = MBMessageServiceUtil.addMessage(
+					message = _mbMessageService.addMessage(
 						groupId, categoryId, subject, body,
 						mbGroupServiceSettings.getMessageFormat(),
 						inputStreamOVPs, anonymous, priority, allowPingbacks,
 						serviceContext);
 
 					if (question) {
-						MBThreadLocalServiceUtil.updateQuestion(
+						_mbThreadLocalService.updateQuestion(
 							message.getThreadId(), true);
 					}
 				}
@@ -397,7 +411,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 					// Post reply
 
-					message = MBMessageServiceUtil.addMessage(
+					message = _mbMessageService.addMessage(
 						parentMessageId, subject, body,
 						mbGroupServiceSettings.getMessageFormat(),
 						inputStreamOVPs, anonymous, priority, allowPingbacks,
@@ -418,12 +432,12 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				// Update message
 
-				message = MBMessageServiceUtil.updateMessage(
+				message = _mbMessageService.updateMessage(
 					messageId, subject, body, inputStreamOVPs, existingFiles,
 					priority, allowPingbacks, serviceContext);
 
 				if (message.isRoot()) {
-					MBThreadLocalServiceUtil.updateQuestion(
+					_mbThreadLocalService.updateQuestion(
 						message.getThreadId(), question);
 				}
 			}
@@ -438,7 +452,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				MBMessagePermission.contains(
 					permissionChecker, message, ActionKeys.SUBSCRIBE)) {
 
-				MBMessageServiceUtil.subscribeMessage(message.getMessageId());
+				_mbMessageService.subscribeMessage(message.getMessageId());
 			}
 
 			return message;
@@ -453,5 +467,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	private MBMessageService _mbMessageService;
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

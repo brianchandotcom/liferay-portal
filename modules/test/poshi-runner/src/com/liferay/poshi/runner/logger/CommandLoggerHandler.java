@@ -442,8 +442,8 @@ public final class CommandLoggerHandler {
 		loggerElement.setAttribute("data-status01", status);
 
 		LoggerUtil.executeJavaScript(
-			"loggerInterface.fire('command-complete', " +
-				loggerElement.getID() + ")");
+			"loggerInterface.fire('command-complete', '" +
+				loggerElement.getID() + "')");
 	}
 
 	private static int _btnLinkId;

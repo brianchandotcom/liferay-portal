@@ -91,10 +91,15 @@ public class SectionTag extends IncludeTag {
 		}
 	}
 
-	public void setData(
-		java.util.Map<java.lang.String, java.lang.Object> data) {
-
+	public void setData(Map<String, Object> data) {
 		_data = data;
+	}
+
+	@Override
+	protected void cleanUp() {
+		_data = null;
+		_sectionSelected = false;
+		_tabsTag = null;
 	}
 
 	@Override

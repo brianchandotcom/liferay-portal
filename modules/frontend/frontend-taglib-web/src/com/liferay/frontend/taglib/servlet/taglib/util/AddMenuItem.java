@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
+package com.liferay.frontend.taglib.servlet.taglib.util;
+
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 
 /**
  * @author Ambrín Chaudhary

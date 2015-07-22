@@ -14,6 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ page import="com.liferay.frontend.taglib.servlet.taglib.util.AddMenuItem" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+
+<%@ page import="java.util.List" %>

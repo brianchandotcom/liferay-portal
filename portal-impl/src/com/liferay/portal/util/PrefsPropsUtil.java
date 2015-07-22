@@ -88,9 +88,8 @@ public class PrefsPropsUtil {
 		if (Validator.isNotNull(value)) {
 			return value;
 		}
-		else {
-			return ContentUtil.get(PropsUtil.get(name));
-		}
+
+		return ContentUtil.get(PropsUtil.get(name));
 	}
 
 	public static String getContent(String name) {
@@ -364,12 +363,17 @@ public class PrefsPropsUtil {
 		PortletPreferences preferences, long companyId, String name,
 		boolean defaultValue) {
 
+		String value = getString(preferences, companyId, name);
+
+		if (value != null) {
+			return value;
+		}
+
 		if (defaultValue) {
 			return preferences.getValue(name, StringPool.TRUE);
 		}
-		else {
-			return preferences.getValue(name, StringPool.FALSE);
-		}
+
+		return preferences.getValue(name, StringPool.FALSE);
 	}
 
 	public static String getString(
@@ -381,9 +385,8 @@ public class PrefsPropsUtil {
 		if (value != null) {
 			return value;
 		}
-		else {
-			return String.valueOf(defaultValue);
-		}
+
+		return String.valueOf(defaultValue);
 	}
 
 	public static String getString(
@@ -395,9 +398,8 @@ public class PrefsPropsUtil {
 		if (value != null) {
 			return value;
 		}
-		else {
-			return String.valueOf(defaultValue);
-		}
+
+		return String.valueOf(defaultValue);
 	}
 
 	public static String getString(
@@ -409,9 +411,8 @@ public class PrefsPropsUtil {
 		if (value != null) {
 			return value;
 		}
-		else {
-			return String.valueOf(defaultValue);
-		}
+
+		return String.valueOf(defaultValue);
 	}
 
 	public static String getString(
@@ -423,9 +424,8 @@ public class PrefsPropsUtil {
 		if (value != null) {
 			return value;
 		}
-		else {
-			return String.valueOf(defaultValue);
-		}
+
+		return String.valueOf(defaultValue);
 	}
 
 	public static String getString(
@@ -437,9 +437,8 @@ public class PrefsPropsUtil {
 		if (value != null) {
 			return value;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static String getString(String name) {
@@ -491,9 +490,8 @@ public class PrefsPropsUtil {
 		if (value == null) {
 			return defaultValue;
 		}
-		else {
-			return StringUtil.split(value, delimiter);
-		}
+
+		return StringUtil.split(value, delimiter);
 	}
 
 	public static String[] getStringArray(String name, String delimiter) {

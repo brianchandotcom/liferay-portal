@@ -12,32 +12,41 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.util.PortletKeys;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Adolfo Pérez
+ * @author Brian Wing Shun Chan
  */
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/restore_entry"
-	}
+		"path=/message_boards/find_message"
+	},
+	service = StrutsAction.class
 )
-public class RestoreEntryMVCRenderCommand implements MVCRenderCommand {
+public class FindMessageAction extends BaseStrutsAction {
 
 	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
 
-		return "/portlet/message_boards/restore_entry.jsp";
+		_findActionHelper.execute(request, response);
+
+		return null;
 	}
+
+	private final FindActionHelper _findActionHelper =
+		new MessageFindActionHelper();
 
 }

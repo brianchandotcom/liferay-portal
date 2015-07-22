@@ -12,11 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Adolfo Pérez
@@ -25,15 +31,32 @@ import com.liferay.portal.util.PortletKeys;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/split_thread"
+		"mvc.command.name=/message_boards/move_category"
 	},
 	service = MVCRenderCommand.class
 )
-public class SplitThreadMVCRenderCommand extends GetMessageMVCRenderCommand {
+public class MoveCategoryMVCRenderAction implements MVCRenderCommand {
 
 	@Override
-	protected String getPath() {
-		return "/html/portlet/message_boards/split_thread.jsp";
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			ActionUtil.getCategory(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof PrincipalException) {
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/html/portlet/message_boards/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
+		return "/html/portlet/message_boards/move_category.jsp";
 	}
 
 }

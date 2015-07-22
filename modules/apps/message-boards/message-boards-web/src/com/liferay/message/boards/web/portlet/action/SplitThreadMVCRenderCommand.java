@@ -34,7 +34,7 @@ public class SplitThreadMVCRenderCommand extends GetMessageMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/message_boards/split_thread.jsp";
+		return "/message_boards/split_thread.jsp";
 	}
 
 }

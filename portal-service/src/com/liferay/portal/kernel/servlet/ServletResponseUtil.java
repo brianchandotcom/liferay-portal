@@ -499,13 +499,14 @@ public class ServletResponseUtil {
 			// LEP-3122
 
 			if (!response.isCommitted()) {
-				int contentLength = 0;
+				long contentLength = 0;
 
 				for (byte[] bytes : bytesArray) {
 					contentLength += bytes.length;
 				}
 
-				response.setContentLength(contentLength);
+				response.setHeader(
+					HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
 
 				response.flushBuffer();
 
@@ -582,9 +583,10 @@ public class ServletResponseUtil {
 			FileInputStream fileInputStream = new FileInputStream(file);
 
 			try (FileChannel fileChannel = fileInputStream.getChannel()) {
-				int contentLength = (int)fileChannel.size();
+				long contentLength = fileChannel.size();
 
-				response.setContentLength(contentLength);
+				response.setHeader(
+					HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
 
 				response.flushBuffer();
 

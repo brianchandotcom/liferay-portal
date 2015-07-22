@@ -14,7 +14,9 @@
 
 package com.liferay.blogs.web.messaging;
 
-import com.liferay.blogs.web.configuration.BlogsWebConfigurationValues;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.blogs.configuration.BlogsSystemConfiguration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -24,16 +26,20 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
  */
 @Component(
+	configurationPid = "com.liferay.blogs.configuration.BlogsSystemConfiguration",
 	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
 	service = SchedulerEntry.class
 )
@@ -41,11 +47,15 @@ public class CheckEntryMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
 	@Activate
-	protected void activate() {
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_blogsSystemConfiguration = Configurable.createConfigurable(
+			BlogsSystemConfiguration.class, properties);
+
 		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 		schedulerEntry.setTriggerValue(
-			BlogsWebConfigurationValues.ENTRY_CHECK_INTERVAL);
+			_blogsSystemConfiguration.entryCheckInterval());
 	}
 
 	@Override
@@ -60,5 +70,7 @@ public class CheckEntryMessageListener
 	@Reference(target = "(original.bean=*)", unbind = "-")
 	protected void setServletContext(ServletContext servletContext) {
 	}
+
+	private volatile BlogsSystemConfiguration _blogsSystemConfiguration;
 
 }

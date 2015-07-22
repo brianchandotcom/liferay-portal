@@ -686,7 +686,9 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="WebContent#moveToRecycleBinCP" />
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />

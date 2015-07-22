@@ -479,10 +479,19 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
+			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageName" value="${sitePageName}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
 		<if>
@@ -714,10 +723,19 @@
 	<command name="viewPG">
 		<execute macro="Page#gotoPG">
 			<var name="defaultURL" value="${defaultURL}" />
+			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageName" value="${sitePageName}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteURL" value="${siteURL}" />
 			<var name="soDashboard" value="${soDashboard}" />
 			<var name="soPage" value="${soPage}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />

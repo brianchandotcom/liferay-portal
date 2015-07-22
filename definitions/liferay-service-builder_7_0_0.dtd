@@ -130,6 +130,9 @@ The trash-enabled value specifies whether trash related methods should be
 generated or not.
 
 The deprecated value specifies whether the entity's services are deprecated.
+
+If the partitionable value is true, then the entity will have associated a
+companyId.
 -->
 <!ATTLIST entity
 	name CDATA #REQUIRED
@@ -149,6 +152,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	mvcc-enabled CDATA #IMPLIED
 	trash-enabled CDATA #IMPLIED
 	deprecated CDATA #IMPLIED
+	partitionable CDATA #IMPLIED
 >
 
 <!--

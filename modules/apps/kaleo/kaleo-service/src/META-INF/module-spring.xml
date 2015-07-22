@@ -2,156 +2,37 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoActionLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoAction" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoActionPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoActionPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoActionPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoActionPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoConditionLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoCondition" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoConditionPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoDefinition" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService" ref="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoDefinition" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoDefinitionPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoInstanceLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoInstance" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstancePersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoInstancePersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstancePersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstancePersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoInstanceTokenLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoInstanceToken" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoInstanceTokenPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoLogLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoLog" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoLogPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoLogPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoLogPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoLogPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoNodeLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoNode" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodePersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoNodePersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodePersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodePersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoNotificationLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoNotification" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoNotificationPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoNotificationRecipientLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoNotificationRecipient" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRecipientPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoNotificationRecipientPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRecipientPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRecipientPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoTask" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTaskPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskAssignmentLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoTaskAssignment" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTaskAssignmentPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskAssignmentInstanceLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoTaskAssignmentInstance" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentInstancePersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTaskAssignmentInstancePersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentInstancePersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentInstancePersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskInstanceTokenLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoTaskInstanceToken" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTaskInstanceTokenPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenFinder" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTaskInstanceTokenFinderImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenFinder" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenFinder" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoTimerLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoTimer" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTimerPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoTimerInstanceTokenLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoTimerInstanceToken" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerInstanceTokenPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTimerInstanceTokenPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerInstanceTokenPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerInstanceTokenPersistence" />
 	<bean id="com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService" class="com.liferay.portal.workflow.kaleo.service.impl.KaleoTransitionLocalServiceImpl" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService" ref="com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService">
-		<osgi:service-properties>
-			<entry key="json.web.service.context.name" value="kaleo" />
-			<entry key="json.web.service.context.path" value="KaleoTransition" />
-		</osgi:service-properties>
-	</osgi:service>
 	<bean id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTransitionPersistence" class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTransitionPersistenceImpl" parent="basePersistence" />
-	<osgi:service interface="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTransitionPersistence" ref="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTransitionPersistence" />
 </beans>

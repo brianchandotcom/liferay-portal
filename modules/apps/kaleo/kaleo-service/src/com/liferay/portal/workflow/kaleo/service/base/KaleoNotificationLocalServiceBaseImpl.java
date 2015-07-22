@@ -1204,7 +1204,7 @@ public abstract class KaleoNotificationLocalServiceBaseImpl
 	protected com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService kaleoNodeLocalService;
 	@BeanReference(type = KaleoNodePersistence.class)
 	protected KaleoNodePersistence kaleoNodePersistence;
-	@BeanReference(type = KaleoNotificationLocalService.class)
+	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService.class)
 	protected KaleoNotificationLocalService kaleoNotificationLocalService;
 	@BeanReference(type = KaleoNotificationPersistence.class)
 	protected KaleoNotificationPersistence kaleoNotificationPersistence;

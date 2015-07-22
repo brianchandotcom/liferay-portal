@@ -1171,7 +1171,7 @@ public abstract class KaleoActionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = KaleoActionLocalService.class)
+	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService.class)
 	protected KaleoActionLocalService kaleoActionLocalService;
 	@BeanReference(type = KaleoActionPersistence.class)
 	protected KaleoActionPersistence kaleoActionPersistence;

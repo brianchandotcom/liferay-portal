@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.constants;
+package com.liferay.dynamic.data.lists.constants;
 
 /**
  * @author Marcellus Tavares

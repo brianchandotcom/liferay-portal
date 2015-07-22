@@ -102,25 +102,25 @@ public class BrowserTag extends IncludeTag {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-		if (Validator.isNull(_displayStyle)) {
-			return portalPreferences.getValue(
-				ItemSelectorPortletKeys.ITEM_SELECTOR, "display-style",
-				DISPLAY_STYLES[0]);
-		}
+		String displayStyle = ParamUtil.getString(request, "displayStyle");
 
-		if (!ArrayUtil.contains(DISPLAY_STYLES, _displayStyle)) {
-			return DISPLAY_STYLES[0];
-		}
+		if (Validator.isNotNull(displayStyle)) {
+			displayStyle = getSafeDisplayStyle(displayStyle);
 
-		String selectedTab = ParamUtil.getString(request, "selectedTab");
-
-		if (Validator.isNotNull(selectedTab) && selectedTab.equals(_tabName)) {
 			portalPreferences.setValue(
 				ItemSelectorPortletKeys.ITEM_SELECTOR, "display-style",
-				_displayStyle);
+				displayStyle);
+
+			return displayStyle;
 		}
 
-		return _displayStyle;
+		if (Validator.isNotNull(_displayStyle)) {
+			return getSafeDisplayStyle(_displayStyle);
+		}
+
+		return portalPreferences.getValue(
+			ItemSelectorPortletKeys.ITEM_SELECTOR, "display-style",
+			DISPLAY_STYLES[0]);
 	}
 
 	protected ItemSelectorReturnType getDraggableFileReturnType() {
@@ -143,6 +143,14 @@ public class BrowserTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	protected String getSafeDisplayStyle(String displayStyle) {
+		if (ArrayUtil.contains(DISPLAY_STYLES, displayStyle)) {
+			return displayStyle;
+		}
+
+		return DISPLAY_STYLES[0];
 	}
 
 	@Override

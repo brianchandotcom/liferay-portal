@@ -3921,14 +3921,13 @@ public class StringUtil {
 			return s;
 		}
 
-		s = StringUtil.replaceLast(s, s.substring(x, y + 1), StringPool.BLANK);
+		int z = x - 1;
 
-		if (s.endsWith(StringPool.SPACE)) {
-			s = StringUtil.replaceLast(
-				s, s.substring(x - 1, s.length()), StringPool.BLANK);
+		if (!s.substring(z, x).equals(StringPool.SPACE)) {
+			return s;
 		}
 
-		return s;
+		return s.substring(0, z).concat(s.substring(y + 1, s.length()));
 	}
 
 	/**

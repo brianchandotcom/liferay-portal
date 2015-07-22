@@ -34,6 +34,8 @@
 								'aui-base',
 								'liferay-control-menu',
 								'liferay-layout',
+								'liferay-layout-column',
+								'liferay-layout-freeform',
 								'transition'
 							]
 						},

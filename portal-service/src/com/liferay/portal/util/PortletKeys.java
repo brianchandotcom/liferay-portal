@@ -101,7 +101,8 @@ public class PortletKeys {
 
 	public static final String MESSAGE_BOARDS_ADMIN = "162";
 
-	public static final String MOBILE_DEVICE_SITE_ADMIN = "178";
+	public static final String MOBILE_DEVICE_SITE_ADMIN =
+		"com_liferay_mobile_device_rules_web_portlet_MobileDeviceSiteAdminPortlet";
 
 	public static final String MONITORING = "131";
 

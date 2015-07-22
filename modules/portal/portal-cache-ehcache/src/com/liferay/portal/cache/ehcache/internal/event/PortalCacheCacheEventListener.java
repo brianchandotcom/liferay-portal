@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
+import com.liferay.portal.cache.ehcache.SerializableObjectWrapper;
 import com.liferay.portal.cache.ehcache.internal.SerializableEhcachePortalCache;
-import com.liferay.portal.cache.ehcache.internal.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListener;

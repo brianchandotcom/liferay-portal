@@ -1,0 +1,123 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+MBMessage replyMessage = null;
+
+long messageId = 0;
+
+long categoryId = messageDisplay.getMessage().getCategoryId();
+long threadId = messageDisplay.getMessage().getThreadId();
+long parentMessageId = messageDisplay.getMessage().getMessageId();
+
+String subject = BeanParamUtil.getString(replyMessage, request, "subject");
+
+MBMessage curParentMessage = null;
+String parentAuthor = null;
+
+if (threadId > 0) {
+	try {
+		curParentMessage = MBMessageLocalServiceUtil.getMessage(parentMessageId);
+
+		if (Validator.isNull(subject)) {
+			if (curParentMessage.getSubject().startsWith("RE: ")) {
+				subject = curParentMessage.getSubject();
+			}
+			else {
+				subject = "RE: " + curParentMessage.getSubject();
+			}
+		}
+
+		parentAuthor = curParentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(curParentMessage.getUserId(), curParentMessage.getUserName(), StringPool.BLANK));
+	}
+	catch (Exception e) {
+	}
+}
+
+String body = BeanParamUtil.getString(replyMessage, request, "body");
+boolean quote = ParamUtil.getBoolean(request, "quote");
+boolean splitThread = ParamUtil.getBoolean(request, "splitThread");
+%>
+
+<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
+
+<aui:form action="<%= editMessageURL %>" method="post" name="addQuickReplyFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage();" %>'>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
+	<aui:input name="mbCategoryId" type="hidden" value="<%= categoryId %>" />
+	<aui:input name="threadId" type="hidden" value="<%= threadId %>" />
+	<aui:input name="parentMessageId" type="hidden" value="<%= parentMessageId %>" />
+	<aui:input name="subject" type="hidden" value="<%= subject %>" />
+	<aui:input name="propagatePermissions" type="hidden" value="<%= true %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
+
+	<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+
+	<aui:fieldset>
+		<aui:field-wrapper label="quick-reply">
+			<c:choose>
+				<c:when test='<%= messageFormat.equals("bbcode") %>'>
+					<%@ include file="/META-INF/resources/message_boards/bbcode_editor.jspf" %>
+				</c:when>
+				<c:otherwise>
+					<%@ include file="/META-INF/resources/message_boards/html_editor.jspf" %>
+				</c:otherwise>
+			</c:choose>
+			<aui:input name="body" type="hidden" />
+		</aui:field-wrapper>
+
+		<c:if test="<%= themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
+			<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
+		</c:if>
+
+		<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
+			<liferay-ui:custom-attribute-list
+				className="<%= MBMessage.class.getName() %>"
+				classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
+				editable="<%= true %>"
+				label="<%= true %>"
+			/>
+		</liferay-ui:custom-attributes-available>
+	</aui:fieldset>
+
+	<aui:button-row>
+
+		<%
+		String publishButtonLabel = "publish";
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBMessage.class.getName())) {
+			publishButtonLabel = "submit-for-publication";
+		}
+		%>
+
+		<aui:button name="publishButton" type="submit" value="publish" />
+
+		<%
+		String taglibCancelReply = renderResponse.getNamespace() + "addQuickReply('cancel', '');";
+		%>
+
+		<aui:button onClick="<%= taglibCancelReply %>" type="cancel" />
+	</aui:button-row>
+</aui:form>
+
+<aui:script>
+	function <portlet:namespace />saveMessage() {
+		document.<portlet:namespace />addQuickReplyFm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
+
+		submitForm(document.<portlet:namespace />addQuickReplyFm);
+	}
+</aui:script>

@@ -34,24 +34,6 @@ birthday.set(Calendar.YEAR, 1970);
 if (selContact != null) {
 	birthday.setTime(selContact.getBirthday());
 }
-
-Locale userLocale = null;
-
-String languageId = request.getParameter("languageId");
-
-if (Validator.isNotNull(languageId)) {
-	userLocale = LocaleUtil.fromLanguageId(languageId);
-}
-else {
-	if (selUser != null) {
-		userLocale = selUser.getLocale();
-	}
-	else {
-		User defaultUser = company.getDefaultUser();
-
-		userLocale = LocaleUtil.fromLanguageId(defaultUser.getLanguageId());
-	}
-}
 %>
 
 <liferay-ui:error-marker key="errorSection" value="details" />
@@ -168,9 +150,7 @@ else {
 			</c:otherwise>
 		</c:choose>
 
-		<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>
-
-		<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
+		<liferay-ui:user-name-fields />
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="col-md-5">

@@ -65,7 +65,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -105,6 +105,8 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		sb.append(parentTitle);
 		sb.append(", redirectTitle=");
 		sb.append(redirectTitle);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -205,6 +207,13 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 			wikiPageImpl.setRedirectTitle(redirectTitle);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			wikiPageImpl.setLastPublishDate(null);
+		}
+		else {
+			wikiPageImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		wikiPageImpl.setStatus(status);
 		wikiPageImpl.setStatusByUserId(statusByUserId);
 
@@ -248,6 +257,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		head = objectInput.readBoolean();
 		parentTitle = objectInput.readUTF();
 		redirectTitle = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
@@ -328,6 +338,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 			objectOutput.writeUTF(redirectTitle);
 		}
 
+		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(statusByUserId);
 
@@ -360,6 +371,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 	public boolean head;
 	public String parentTitle;
 	public String redirectTitle;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;
